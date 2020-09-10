@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_language">ভাষা নির্বাচন কর</string>
+    <string name="login_to_ndss_hrm_system">লগইন করুন \n ডিএসএস এইচআরএম সিস্টেম</string>
+    <string name="user_id_email_address">ব্যবহারকারী আইডি / ইমেল</string>
+    <string name="password">পাসওয়ার্ড</string>
+    <string name="remember_me">আমাকে মনে রাখুন</string>
+    <string name="forgot_password">পাসওয়ার্ড ভুলে গেছেন?</string>
+    <string name="login">প্রবেশ করুন</string>
+</resources>

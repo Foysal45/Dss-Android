@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ac_login_signup.view.LoginSignupActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/back_img"
+        android:scaleType="centerCrop"
+        android:src="@drawable/back_img_top_lay" />
+
+    <!--  <ScrollView
+          android:layout_width="match_parent"
+          android:scrollbars="none"
+          android:layout_height="wrap_content">
+
+          <LinearLayout
+              android:paddingBottom="300dp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+              <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="100dp"
+                  android:layout_marginTop="48dp"
+                  android:src="@drawable/logo" />
+             <LinearLayout
+                 android:visibility="gone"
+                 android:gravity="center_horizontal"
+                 android:layout_width="match_parent"
+                 android:orientation="vertical"
+                 android:layout_height="wrap_content">
+                 <TextView
+                     android:textColor="@color/colorGreen"
+                     android:layout_marginTop="16dp"
+                     android:layout_marginBottom="16dp"
+                     android:textSize="18sp"
+                     android:textStyle="bold"
+                     android:letterSpacing=".10"
+                     android:lineSpacingMultiplier="1.15"
+                     android:textAlignment="center"
+                     android:text="RESISTRATION TO\nDSS HRM SYSTEM"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
+                 <EditText
+                     android:paddingRight="10dp"
+                     android:drawablePadding="10dp"
+                     android:drawableRight="@drawable/ic_user"
+                     android:textSize="14sp"
+                     android:gravity="center_vertical"
+                     android:paddingLeft="10dp"
+                     android:hint="User Name / ID"
+                     android:layout_marginLeft="32dp"
+                     android:layout_marginRight="32dp"
+                     android:layout_width="match_parent"
+                     android:layout_height="40dp"
+                     android:background="@drawable/shape_input"/>
+                 <EditText
+                     android:paddingRight="10dp"
+                     android:drawablePadding="10dp"
+                     android:drawableRight="@drawable/ic_user"
+                     android:layout_marginTop="16dp"
+                     android:textSize="14sp"
+                     android:gravity="center_vertical"
+                     android:paddingLeft="10dp"
+                     android:hint="NID / Passport"
+                     android:layout_marginLeft="32dp"
+                     android:layout_marginRight="32dp"
+                     android:layout_width="match_parent"
+                     android:layout_height="40dp"
+                     android:background="@drawable/shape_input"/>
+                 <EditText
+                     android:paddingRight="10dp"
+                     android:drawablePadding="10dp"
+                     android:drawableRight="@drawable/ic_user"
+                     android:layout_marginTop="16dp"
+                     android:textSize="14sp"
+                     android:gravity="center_vertical"
+                     android:paddingLeft="10dp"
+                     android:hint="Email address"
+                     android:layout_marginLeft="32dp"
+                     android:layout_marginRight="32dp"
+                     android:layout_width="match_parent"
+                     android:layout_height="40dp"
+                     android:background="@drawable/shape_input"/>
+                 <EditText
+                     android:paddingRight="10dp"
+                     android:drawablePadding="10dp"
+                     android:drawableRight="@drawable/ic_pass"
+                     android:layout_marginTop="16dp"
+                     android:textSize="14sp"
+                     android:gravity="center_vertical"
+                     android:paddingLeft="10dp"
+                     android:hint="Password"
+                     android:layout_marginLeft="32dp"
+                     android:layout_marginRight="32dp"
+                     android:layout_width="match_parent"
+                     android:layout_height="40dp"
+                     android:background="@drawable/shape_input"/>
+                 <EditText
+                     android:paddingRight="10dp"
+                     android:drawablePadding="10dp"
+                     android:drawableRight="@drawable/ic_pass"
+                     android:layout_marginTop="16dp"
+                     android:textSize="14sp"
+                     android:gravity="center_vertical"
+                     android:paddingLeft="10dp"
+                     android:hint="Confirm Password"
+                     android:layout_marginLeft="32dp"
+                     android:layout_marginRight="32dp"
+                     android:layout_width="match_parent"
+                     android:layout_height="40dp"
+                     android:background="@drawable/shape_input"/>
+                 <TextView
+                     android:layout_marginTop="24dp"
+                     android:textSize="18sp"
+                     android:paddingLeft="32dp"
+                     android:paddingTop="5dp"
+                     android:paddingBottom="5dp"
+                     android:paddingRight="32dp"
+                     android:textColor="@color/colorWhite"
+                     android:background="@drawable/shape_rec_bottom_green_10dp_solod"
+                     android:textStyle="bold"
+                     android:letterSpacing=".10"
+                     android:lineSpacingMultiplier="1.15"
+                     android:textAlignment="center"
+                     android:text="RESISTRATION"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
+                 <LinearLayout
+                     android:layout_width="wrap_content"
+                     android:orientation="horizontal"
+                     android:layout_marginTop="24dp"
+                     android:layout_height="wrap_content">
+                     <TextView
+                         android:textColor="@color/colorBlack"
+                         android:textSize="14sp"
+                         android:text="Already I have an Account  "
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"/>
+                     <TextView
+                         android:textStyle="bold"
+                         android:textColor="@color/colorGreen"
+                         android:textSize="14sp"
+                         android:text="LOGIN"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"/>
+                 </LinearLayout>
+             </LinearLayout>
+              <LinearLayout
+
+                 android:gravity="center_horizontal"
+                 android:layout_width="match_parent"
+                 android:orientation="vertical"
+                 android:layout_height="wrap_content">
+                 <TextView
+                     android:textColor="@color/colorGreen"
+                     android:layout_marginTop="16dp"
+                     android:layout_marginBottom="16dp"
+                     android:textSize="18sp"
+                     android:textStyle="bold"
+                     android:letterSpacing=".10"
+                     android:lineSpacingMultiplier="1.15"
+                     android:textAlignment="center"
+                     android:text="LOGIN TO\nDSS HRM SYSTEM"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
+                 <EditText
+                     android:paddingRight="10dp"
+                     android:drawablePadding="10dp"
+                     android:drawableRight="@drawable/ic_user"
+                     android:textSize="14sp"
+                     android:gravity="center_vertical"
+                     android:paddingLeft="10dp"
+                     android:hint="User ID / Email address"
+                     android:layout_marginLeft="32dp"
+                     android:layout_marginRight="32dp"
+                     android:layout_width="match_parent"
+                     android:layout_height="40dp"
+                     android:background="@drawable/shape_input"/>
+
+                  <EditText
+                     android:paddingRight="10dp"
+                     android:drawablePadding="10dp"
+                     android:drawableRight="@drawable/ic_pass"
+                     android:layout_marginTop="16dp"
+                     android:textSize="14sp"
+                     android:gravity="center_vertical"
+                     android:paddingLeft="10dp"
+                     android:hint="Password"
+                     android:layout_marginLeft="32dp"
+                     android:layout_marginRight="32dp"
+                     android:layout_width="match_parent"
+                     android:layout_height="40dp"
+                     android:background="@drawable/shape_input"/>
+                  <RelativeLayout
+      android:layout_marginTop="16dp"
+      android:layout_marginRight="32dp"
+      android:layout_marginLeft="32dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+  <com.google.android.material.checkbox.MaterialCheckBox
+      android:layout_width="wrap_content"
+      android:checked="true"
+      android:layout_height="30dp"
+      android:textSize="14sp"
+      android:text="Remember Me"
+      />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="30dp"
+          android:textSize="12sp"
+          android:gravity="center_vertical"
+          android:text="Forgot password?"
+          android:layout_alignParentRight="true"
+          android:textColor="@color/colorRed"
+          />
+  </RelativeLayout>
+                  <TextView
+                     android:layout_marginTop="24dp"
+                     android:textSize="18sp"
+                     android:paddingLeft="32dp"
+                     android:paddingTop="5dp"
+                     android:paddingBottom="5dp"
+                     android:paddingRight="32dp"
+                     android:textColor="@color/colorWhite"
+                     android:background="@drawable/shape_rec_bottom_green_10dp_solod"
+                     android:textStyle="bold"
+                     android:letterSpacing=".10"
+                     android:lineSpacingMultiplier="1.15"
+                     android:textAlignment="center"
+                     android:text="LOGIN"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
+
+                 <LinearLayout
+                     android:visibility="gone"
+                     android:layout_width="wrap_content"
+                     android:orientation="horizontal"
+                     android:layout_marginTop="24dp"
+                     android:layout_height="wrap_content">
+                     <TextView
+                         android:textColor="@color/colorBlack"
+                         android:textSize="14sp"
+                         android:text="I have no Account  "
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"/>
+                     <TextView
+                         android:textStyle="bold"
+                         android:textColor="@color/colorGreen"
+                         android:textSize="14sp"
+                         android:text="REGISTRATION"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"/>
+                 </LinearLayout>
+             </LinearLayout>
+
+
+          </LinearLayout>
+      </ScrollView>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:letterSpacing=".10"
+            android:lineSpacingMultiplier="1.15"
+            android:text="@string/select_language"
+            android:textAlignment="center"
+            android:textColor="@color/colorGreen"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="1dp"
+            android:orientation="horizontal"
+            android:translationZ="1dp">
+
+            <TextView
+                android:id="@+id/en"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_rec_left_green_10dp_solod"
+                android:gravity="center"
+                android:text="English"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/bn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_rec_right_white_light_10dp_solod"
+                android:gravity="center"
+                android:text="বাংলা"
+                android:textColor="@color/colorBlack" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:letterSpacing=".10"
+            android:lineSpacingMultiplier="1.15"
+            android:text="@string/login_to_ndss_hrm_system"
+            android:textAlignment="center"
+            android:textColor="@color/colorGreen"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:background="@drawable/shape_input"
+            android:drawableRight="@drawable/ic_user"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:hint="@string/user_id_email_address"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="14sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="32dp"
+            android:background="@drawable/shape_input"
+            android:drawableRight="@drawable/ic_pass"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:hint="@string/password"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="32dp">
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:checked="true"
+                android:text="@string/remember_me"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:text="@string/forgot_password"
+                android:textColor="@color/colorRed"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/shape_rec_bottom_green_10dp_solod"
+            android:letterSpacing=".10"
+            android:lineSpacingMultiplier="1.15"
+            android:paddingLeft="32dp"
+            android:paddingTop="5dp"
+            android:paddingRight="32dp"
+            android:paddingBottom="5dp"
+            android:text="@string/login"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I have no Account  "
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="REGISTRATION"
+                android:textColor="@color/colorGreen"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
