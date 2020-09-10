@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_language">Select Language</string>
+    <string name="login_to_ndss_hrm_system">LOGIN TO\nDSS HRM SYSTEM</string>
+    <string name="user_id_email_address">User ID / Email address</string>
+    <string name="password">Password</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="login">LOGIN</string>
+</resources>
