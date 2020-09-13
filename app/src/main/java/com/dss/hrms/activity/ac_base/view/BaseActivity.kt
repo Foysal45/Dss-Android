@@ -1,14 +1,18 @@
 package com.dss.hrms.activity.ac_base.view
 
 import android.app.Activity
+import android.content.Context
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.StrictMode
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.dss.hrms.R
 import java.lang.reflect.Method
+
 
 open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +24,7 @@ open class BaseActivity : AppCompatActivity() {
         StatusBarLightMode(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
+
     }
 
     fun StatusBarLightMode(activity: Activity): Int {
@@ -103,5 +108,8 @@ open class BaseActivity : AppCompatActivity() {
             }
         }
         return result
+    }
+    fun toast(context: Context, massage: String) {
+        Toast.makeText(context, massage, Toast.LENGTH_SHORT).show()
     }
 }

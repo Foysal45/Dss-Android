@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">DSS-HRMS</string>
     <string name="select_language">Select Language</string>
     <string name="login_to_ndss_hrm_system">LOGIN TO\nDSS HRM SYSTEM</string>
     <string name="user_id_email_address">User ID / Email address</string>
