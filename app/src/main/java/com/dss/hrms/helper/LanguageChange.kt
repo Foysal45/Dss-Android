@@ -1,4 +1,4 @@
-package com.dss.hrms.Helper
+package com.dss.hrms.helper
 
 import android.content.Context
 import android.content.SharedPreferences

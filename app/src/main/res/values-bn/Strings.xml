@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">DSS-HRMS</string>
     <string name="select_language">ভাষা নির্বাচন কর</string>
     <string name="login_to_ndss_hrm_system">লগইন করুন \n ডিএসএস এইচআরএম সিস্টেম</string>
     <string name="user_id_email_address">ব্যবহারকারী আইডি / ইমেল</string>
