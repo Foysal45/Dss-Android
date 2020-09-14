@@ -24,9 +24,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
+    implementation 'androidx.navigation:navigation-fragment:2.1.0'
+    implementation 'androidx.navigation:navigation-ui:2.1.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     def lifecycle_version = "2.2.0"
     def arch_version = "2.1.0"
 
@@ -53,7 +60,7 @@ dependencies {
 
     // optional - Test helpers for LiveData
     testImplementation "androidx.arch.core:core-testing:$arch_version"
-    implementation 'com.google.android.material:material:1.1.0'
+
 
     //network library
     implementation 'com.squareup.retrofit2:retrofit:2.7.2'
@@ -64,7 +71,7 @@ dependencies {
     //implementation 'com.android.support:recyclerview-v7:29.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     //implementation 'com.android.support:design:29.0.0'
-    implementation 'com.google.android.material:material:1.3.0-alpha01'
+    implementation 'com.google.android.material:material:1.2.1'
     //implementation 'com.android.support:support-v4:29.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     //Listener
@@ -73,6 +80,8 @@ dependencies {
     implementation 'com.karumi:dexter:4.2.0'
     // image loading and caching
     implementation 'com.squareup.picasso:picasso:2.71828'
+    // expandable
+    implementation 'com.github.aakira:expandable-layout:1.6.0'
 
 
 

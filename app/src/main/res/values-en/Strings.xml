@@ -8,4 +8,7 @@
     <string name="remember_me">Remember Me</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="login">LOGIN</string>
+    <string name="hrm">HRM</string>
+    <string name="profile">Profile</string>
+    <string name="present_permanent_address"><![CDATA[Present & Permanent Address]]></string>
 </resources>

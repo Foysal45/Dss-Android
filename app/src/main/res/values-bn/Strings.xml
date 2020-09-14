@@ -8,4 +8,7 @@
     <string name="remember_me">আমাকে মনে রাখুন</string>
     <string name="forgot_password">পাসওয়ার্ড ভুলে গেছেন?</string>
     <string name="login">প্রবেশ করুন</string>
+    <string name="hrm">এইচআরএম</string>
+    <string name="profile">প্রোফাইল</string>
+    <string name="present_permanent_address"><![CDATA[Present & Permanent Address]]></string>
 </resources>
