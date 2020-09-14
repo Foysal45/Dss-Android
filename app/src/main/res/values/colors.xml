@@ -6,6 +6,8 @@
     <color name="colorAccent">#EC1C24</color>
     <color name="colorGray">#A5A3A3</color>
     <color name="colorGreen">#008F4C</color>
+    <color name="colorLowGreen">#62BA90</color>
+    <color name="colorLightGreen">#E8F5EE</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorRed">#EC1C24</color>
