@@ -30,7 +30,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".activity.ac_main.view.MainActivity"
             android:theme="@style/AppThemeRegular">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

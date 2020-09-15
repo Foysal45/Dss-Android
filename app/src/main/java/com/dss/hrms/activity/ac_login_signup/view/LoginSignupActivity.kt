@@ -5,14 +5,13 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.chaadride.shared_pref.SharedPref
-import com.dss.hrms.MainActivity
+import com.dss.hrms.activity.ac_main.view.MainActivity
 import com.dss.hrms.helper.LanguageChange
 import com.dss.hrms.R
 import com.dss.hrms.activity.ac_base.view.BaseActivity
