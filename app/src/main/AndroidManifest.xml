@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".activity.ac_common.view.CommonActivity"></activity>
         <activity android:name=".activity.change_pass.view.ChangePassActivity" />
         <activity android:name=".activity.ac_otp.view.OTPActivity" />
         <activity android:name=".activity.ac_forget_pass.view.ForgetPAssActivity" />
@@ -30,7 +30,8 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".activity.ac_main.view.MainActivity"
+        <activity
+            android:name=".activity.ac_main.view.MainActivity"
             android:theme="@style/AppThemeRegular">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
