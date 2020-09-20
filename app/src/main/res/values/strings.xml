@@ -8,8 +8,7 @@
     <string name="forgot_password">Forgot password?</string>
     <string name="login">LOGIN</string>
     <string name="hrm">HRM</string>
-    <string name="profile">Profile</string>
-    <string name="present_permanent_address"><![CDATA[Present & Permanent Address]]></string>
+    <string name="profile">EMPLOYEE PERSONAL INFORMATION</string>
     <string name="title_activity_main2">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -21,4 +20,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="permanent_address">Permanent Address</string>
+    <string name="present_address">Present Address</string>
 </resources>

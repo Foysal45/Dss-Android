@@ -6,8 +6,8 @@
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="AppThemeRegular" parent="Theme.AppCompat.Light.NoActionBar">
 
+    <style name="AppThemeRegular" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorGreen</item>
         <item name="colorAccent">@color/colorAccent</item>
