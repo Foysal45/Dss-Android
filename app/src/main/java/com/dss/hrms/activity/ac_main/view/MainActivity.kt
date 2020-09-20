@@ -8,7 +8,7 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chaadride.fragment.fg_hubList.adapter.RecyclerAdapter_dashboard
 import com.dss.hrms.R
-import com.dss.hrms.activity.ac_Profile.ProfileActivity
+import com.dss.hrms.activity.ac_profile.view.ProfileActivity
 import com.dss.hrms.activity.ac_main.model.Dashboard
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dashboard_header.menu_icon

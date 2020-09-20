@@ -1,10 +1,11 @@
-package com.dss.hrms.activity.ac_Profile
+package com.dss.hrms.activity.ac_profile.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.*
 import com.dss.hrms.R
+import com.dss.hrms.activity.ac_profile.adapter.viewpager.ViewPageAdapter
 import com.dss.hrms.fragment.view.FragmentEmployeePersonalInfo
 import kotlinx.android.synthetic.main.activity_profile.*
 

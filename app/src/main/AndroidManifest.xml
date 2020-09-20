@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         >
 
-        <activity android:name=".activity.ac_Profile.ProfileActivity"
+        <activity android:name=".activity.ac_profile.view.ProfileActivity"
             android:theme="@style/AppThemeRegular"/>
 
         <activity android:name=".activity.change_pass.view.ChangePassActivity" />
