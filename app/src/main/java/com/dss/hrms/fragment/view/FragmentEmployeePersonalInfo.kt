@@ -18,6 +18,7 @@ import com.dss.hrms.R
 import com.dss.hrms.fragment.model.Box
 import com.dss.hrms.fragment.adapter.RecyclerAdapter_box
 import com.dss.hrms.fragment.viewModel.*
+import com.dss.hrms.network.model.additional_profile_qualification.response.AdditionalProfileQualificationRes
 import com.dss.hrms.network.model.honours_award.response.Data
 import com.dss.hrms.network.model.honours_award.response.HonorAwardRes
 import kotlinx.android.synthetic.main.fragment_red.view.*
@@ -25,17 +26,6 @@ import kotlinx.android.synthetic.main.fragment_red.view.*
 class FragmentEmployeePersonalInfo : Fragment() {
     var boxList = mutableListOf<Box>()
     var recyclerAdapter_Box: RecyclerAdapter_box?=null
-
-
-
-
-
-
-
-
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -196,10 +186,28 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             13->{
                 //Additional Profile Qualification
-                var EmployeePersonalInfoViewModel_additionalProfileQualification: EmployeePersonalInfoViewModel_additionalProfileQualification?= null
-                boxList.add(Box("Qualification Name", "Qualification name", ""))
-                boxList.add(Box("Qualification Details", "Qualification details", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
+                var employeePersonalInfoViewModel_additionalProfileQualification=ViewModelProvider(this)[EmployeePersonalInfoViewModel_additionalProfileQualification::class.java]
+                employeePersonalInfoViewModel_additionalProfileQualification.additionalProfileQualification(view.context).observe(activity!!, Observer<Any> { any ->
+
+                    if (any is AdditionalProfileQualificationRes) {
+                        for (n in any.getData().indices )
+                        {
+                            boxList.add(Box("Qualification Name", "Qualification name", any.getData()[n].getQualificationName()))
+                            boxList.add(Box("Qualification Details", "Qualification details", any.getData()[n].getQualificationDetails()))
+                        }
+                        recyclerAdapter_Box!!.notifyDataSetChanged()
+
+                    } else if (any is ApiError) {
+
+                        toast(view.context, any.getMessage())
+
+
+                    } else if (any is Throwable) {
+                        toast(view.context, "Please check your internet connection")
+
+                    }
+
+                })
 
             }
             14->{

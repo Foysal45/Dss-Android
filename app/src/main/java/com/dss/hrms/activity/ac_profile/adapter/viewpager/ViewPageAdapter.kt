@@ -1,4 +1,4 @@
-package com.dss.hrms.activity.ac_Profile
+package com.dss.hrms.activity.ac_profile.adapter.viewpager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
