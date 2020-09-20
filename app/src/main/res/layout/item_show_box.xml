@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/box_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        tools:text="Qualification Name" />
+
+    <TextView
+        android:id="@+id/box_details"
+        android:layout_marginTop="4dp"
+        android:padding="8dp"
+        android:background="@drawable/shape_rec_border_low_black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:hint="Qualification Name"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp" />
+
+</LinearLayout>

@@ -15,7 +15,6 @@ import com.dss.hrms.activity.ac_main.view.MainActivity
 import com.dss.hrms.helper.LanguageChange
 import com.dss.hrms.R
 import com.dss.hrms.activity.ac_base.view.BaseActivity
-import com.dss.hrms.activity.ac_login_signup.viewModel.LoginSignupActivityViewModel
 import com.dss.hrms.activity.ac_login_signup.viewModel.SignInActivityViewModel
 import com.dss.hrms.network.model.user_login.request.UserLoginReq
 import com.dss.hrms.network.model.user_login.response.UserLoginRes
@@ -25,7 +24,6 @@ import java.util.*
 
 class LoginSignupActivity : BaseActivity() {
     var sharedPref: SharedPref? = null
-    var loginSignupActivityViewModel: LoginSignupActivityViewModel? = null
     var signInActivityViewModel: SignInActivityViewModel? = null
     var lan: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +31,6 @@ class LoginSignupActivity : BaseActivity() {
         LanguageChange.languageSet(this)
         setContentView(R.layout.activity_login_signup)
         sharedPref = SharedPref(this)
-        loginSignupActivityViewModel =
-            ViewModelProvider(this)[LoginSignupActivityViewModel::class.java]
         signInActivityViewModel =
             ViewModelProvider(this)[SignInActivityViewModel::class.java]
 

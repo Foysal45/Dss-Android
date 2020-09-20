@@ -1,5 +1,7 @@
 package com.dss.hrms.network.model.user_login.response
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * UserLoginReq.kt
  * DSS-HRMS
@@ -7,7 +9,9 @@ package com.dss.hrms.network.model.user_login.response
  * Copyright © 2020 SIMEC System LTD. All rights reserved.
  */
 class Data(
+    @SerializedName("employee_id")
     private var employeeId: Int?,
+    @SerializedName("phone_number")
     private var phoneNumber: String?,
     private var username: String?,
     private var email: String?,

@@ -1,5 +1,6 @@
 package com.dss.hrms.activity.ac_main.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -7,6 +8,7 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chaadride.fragment.fg_hubList.adapter.RecyclerAdapter_dashboard
 import com.dss.hrms.R
+import com.dss.hrms.activity.ac_Profile.ProfileActivity
 import com.dss.hrms.activity.ac_main.model.Dashboard
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dashboard_header.menu_icon
@@ -40,6 +42,10 @@ class MainActivity : AppCompatActivity() {
 
         recyclerAdapter_dashboard.notifyDataSetChanged()
 
+
+
+
+
     }
 
     private fun menu() {
@@ -71,6 +77,276 @@ class MainActivity : AppCompatActivity() {
         }
         menu_icon.setOnClickListener { drawer_menu.openDrawer(GravityCompat.START) }
         menu_back.setOnClickListener { drawer_menu.closeDrawer(GravityCompat.START) }
+
+        //profile sub menu
+        menu_profile_personal_info.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    0
+                )
+            )
+        }
+        menu_profile_job_joining_information.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    1
+                )
+            )
+        }
+        menu_profile_quata_information.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    2
+                )
+            )
+        }
+        menu_profile_present_address.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    3
+                )
+            )
+        }
+        menu_profile_permanent_address.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    4
+                )
+            )
+        }
+        menu_profile_educational_qualification.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    5
+                )
+            )
+        }
+        menu_profile_spouse.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    6
+                )
+            )
+        }
+        menu_profile_child_information.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    7
+                )
+            )
+        }
+        menu_profile_language_information.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    8
+                )
+            )
+        }
+        menu_profile_local_training.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    9
+                )
+            )
+        }
+        menu_profile_foreign_training.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    10
+                )
+            )
+        }
+        menu_profile_Official_residential_information.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    11
+                )
+            )
+        }
+        menu_profile_foreign_travel.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    12
+                )
+            )
+        }
+        menu_profile_additional_professional_qualification.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    13
+                )
+            )
+        }
+        menu_profile_publication.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    14
+                )
+            )
+        }
+        menu_profile_honours_award.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    15
+                )
+            )
+        }
+        menu_profile_posting_record.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    16
+                )
+            )
+        }
+        menu_profile_disciplinary_action.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    17
+                )
+            )
+        }
+        menu_profile_leave.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    18
+                )
+            )
+        }
+        menu_profile_job_information.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    19
+                )
+            )
+        }
+        menu_profile_promotion.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    20
+                )
+            )
+        }
+        menu_profile_reference.setOnClickListener {
+            startActivity(
+                Intent(this, ProfileActivity
+                ::class.java).putExtra("page", "personalInfo").putExtra(
+                    "title",
+                    resources.getString(R.string.profile)
+                ).putExtra(
+                    "position",
+                    21
+                )
+            )
+        }
+
+
+
+
     }
     override fun onBackPressed() {
         if (drawer_menu.isDrawerOpen(GravityCompat.START)) {

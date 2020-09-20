@@ -13,8 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ac_common.view.CommonActivity"></activity>
+        android:usesCleartextTraffic="true"
+        >
+
+        <activity android:name=".activity.ac_Profile.ProfileActivity"
+            android:theme="@style/AppThemeRegular"/>
+
         <activity android:name=".activity.change_pass.view.ChangePassActivity" />
         <activity android:name=".activity.ac_otp.view.OTPActivity" />
         <activity android:name=".activity.ac_forget_pass.view.ForgetPAssActivity" />
@@ -31,7 +35,7 @@
         </provider>
 
         <activity
-            android:name=".activity.ac_main.view.MainActivity"
+            android:name=".activity.ac_login_signup.view.LoginSignupActivity"
             android:theme="@style/AppThemeRegular">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +43,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ac_login_signup.view.LoginSignupActivity" />
+        <activity android:name=".activity.ac_main.view.MainActivity"
+            android:theme="@style/AppThemeRegular"
+            />
     </application>
 
 </manifest>
