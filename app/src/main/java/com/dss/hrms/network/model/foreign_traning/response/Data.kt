@@ -1,4 +1,4 @@
-package com.dss.hrms.network.model.local_training.response
+package com.dss.hrms.network.model.foreign_traning.response
 
 import com.google.gson.annotations.SerializedName
 

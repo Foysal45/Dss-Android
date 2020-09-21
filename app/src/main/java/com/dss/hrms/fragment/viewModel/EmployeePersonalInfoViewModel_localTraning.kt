@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.chaadride.network.api.RetrofitClient
 import com.chaadride.network.error.ErrorUtils2.parseError
 import com.chaadride.shared_pref.SharedPref
-import com.dss.hrms.network.model.honours_award.response.HonorAwardRes
 import com.dss.hrms.network.model.local_training.response.LocalTraningRes
-import com.dss.hrms.network.model.user_login.request.UserLoginReq
-import com.dss.hrms.network.model.user_login.response.UserLoginRes
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
