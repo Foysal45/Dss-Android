@@ -1,14 +1,14 @@
-package com.dss.hrms.network.model.local_training.response
+package com.dss.hrms.network.model.foreign_traning.response
 
 import com.google.gson.annotations.SerializedName
 
 /**
- * LocalTraningRes.kt
+ * ForeignTraningRes.kt
  * DSS-HRMS
  * Crated by Towhidur Rahman on 21-Sep-20
  * Copyright © 2020 SIMEC System LTD. All rights reserved.
  */
-class LocalTraningRes(
+class ForeignTraningRes(
     private var message: String?,
     @SerializedName("data")
     private var data: List<Data>

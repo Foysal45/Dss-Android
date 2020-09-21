@@ -1,9 +1,7 @@
 package com.dss.hrms.fragment.view
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chaadride.network.error.ApiError
-import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.fragment.model.Box
 import com.dss.hrms.fragment.adapter.RecyclerAdapter_box
 import com.dss.hrms.fragment.viewModel.*
 import com.dss.hrms.network.model.additional_profile_qualification.response.AdditionalProfileQualificationRes
 import com.dss.hrms.network.model.educational_qualification.response.EducationalQualificationRes
-import com.dss.hrms.network.model.honours_award.response.Data
+import com.dss.hrms.network.model.foreign_traning.response.ForeignTraningRes
 import com.dss.hrms.network.model.honours_award.response.HonorAwardRes
 import com.dss.hrms.network.model.local_training.response.LocalTraningRes
 import kotlinx.android.synthetic.main.fragment_red.view.*
@@ -194,14 +191,32 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             10->{
                 //Foreign training
-                var EmployeePersonalInfoViewModel_foreignTraning: EmployeePersonalInfoViewModel_foreignTraning?= null
-                boxList.add(Box("Course Title", "Course Title", ""))
-                boxList.add(Box("Name of institution", "Name of institution", ""))
-                boxList.add(Box("From Date", "From date", ""))
-                boxList.add(Box("To Date", "To date", ""))
-                boxList.add(Box("Certificate", "Certificate", ""))
-                boxList.add(Box("Position", "Position", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
+                var employeePersonalInfoViewModel_foreignTraning=ViewModelProvider(this)[EmployeePersonalInfoViewModel_foreignTraning::class.java]
+                employeePersonalInfoViewModel_foreignTraning.foreignTraning(view.context).observe(activity!!, Observer<Any> { any ->
+
+                    if (any is ForeignTraningRes) {
+                        for (n in any.getData().indices )
+                        {
+                            boxList.add(Box("Course Title", "Course Title", any.getData()[n].getCourse_title()))
+                            boxList.add(Box("Name of institution", "Name of institution", any.getData()[n].getName_of_institute()))
+                            boxList.add(Box("From Date", "From date", any.getData()[n].getFrom_date()))
+                            boxList.add(Box("To Date", "To date", any.getData()[n].getTo_date()))
+                            boxList.add(Box("Certificate", "Certificate", any.getData()[n].getCertificate()))
+                        }
+                        recyclerAdapter_Box!!.notifyDataSetChanged()
+
+                    } else if (any is ApiError) {
+
+                        toast(view.context, any.getMessage())
+
+
+                    } else if (any is Throwable) {
+                        toast(view.context, "Please check your internet connection")
+
+                    }
+
+                })
+
             }
             11->{
                 //official residential
