@@ -3,6 +3,7 @@ package com.chaadride.network.api
 import com.dss.hrms.network.model.additional_profile_qualification.response.AdditionalProfileQualificationRes
 import com.dss.hrms.network.model.educational_qualification.response.EducationalQualificationRes
 import com.dss.hrms.network.model.honours_award.response.HonorAwardRes
+import com.dss.hrms.network.model.local_training.response.LocalTraningRes
 import com.dss.hrms.network.model.user_login.request.UserLoginReq
 import com.dss.hrms.network.model.user_login.response.UserLoginRes
 import retrofit2.Call
@@ -40,6 +41,14 @@ interface Api {
         @Header("Authorization") token: String,
         @Query("employee_id") employee_id: Int
     ): Call<EducationalQualificationRes>
+
+    @GET("auth/local-training?employee_id=1")
+    fun LocalTraningRes_(
+        @Header("Content-Type") Content_Type: String,
+        @Header("Accept") Accept: String,
+        @Header("Authorization") token: String,
+        @Query("employee_id") employee_id: Int
+    ): Call<LocalTraningRes>
 
 
 }
