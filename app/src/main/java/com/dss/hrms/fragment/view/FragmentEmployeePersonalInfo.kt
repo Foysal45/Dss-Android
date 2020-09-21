@@ -19,6 +19,7 @@ import com.dss.hrms.fragment.model.Box
 import com.dss.hrms.fragment.adapter.RecyclerAdapter_box
 import com.dss.hrms.fragment.viewModel.*
 import com.dss.hrms.network.model.additional_profile_qualification.response.AdditionalProfileQualificationRes
+import com.dss.hrms.network.model.educational_qualification.response.EducationalQualificationRes
 import com.dss.hrms.network.model.honours_award.response.Data
 import com.dss.hrms.network.model.honours_award.response.HonorAwardRes
 import kotlinx.android.synthetic.main.fragment_red.view.*
@@ -76,7 +77,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             3->{
                 //present address
-                var EmployeePersonalInfoViewModel_presentAdderss: EmployeePersonalInfoViewModel_presentAdderss?= null
+                var employeePersonalInfoViewModel_presentAdderss:EmployeePersonalInfoViewModel_presentAdderss?=null
                 boxList.add(Box("Village/House No.", "Village/House No", ""))
                 boxList.add(Box("Road/Word No.", "Road/Word No", ""))
                 boxList.add(Box("Post Office", "Post Office", ""))
@@ -89,7 +90,8 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             4->{
                 //permanent address
-                var EmployeePersonalInfoViewModel_permanentAddress: EmployeePersonalInfoViewModel_permanentAddress?= null
+                var EmployeePersonalInfoViewModel_permanentAddress:EmployeePersonalInfoViewModel_permanentAddress?=null
+
                 boxList.add(Box("Village/House No.", "Village/House No", ""))
                 boxList.add(Box("Road/Word No.", "Road/Word No", ""))
                 boxList.add(Box("Post Office", "Post Office", ""))
@@ -102,13 +104,33 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             5->{
                 //education
-                var EmployeePersonalInfoViewModel_eduationInfo: EmployeePersonalInfoViewModel_eduationInfo?= null
-                boxList.add(Box("Name of Degree", "Name of Degree", ""))
-                boxList.add(Box("Name of Institute", "Name of Institute", ""))
-                boxList.add(Box("Board/University", "Board/University", ""))
-                boxList.add(Box("Passing Year", "Passing Year", ""))
-                boxList.add(Box("Division / CGPA", "Division / CGPA", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
+                var employeePersonalInfoViewModel_eduationInfo=ViewModelProvider(this)[EmployeePersonalInfoViewModel_eduationInfo::class.java]
+                employeePersonalInfoViewModel_eduationInfo.educationalQualification(view.context).observe(activity!!, Observer<Any> { any ->
+
+                    if (any is EducationalQualificationRes) {
+                        for (n in any.getData().indices )
+                        {
+                            boxList.add(Box("Name of Degree", "Name of Degree", any.getData()[n].getNameDegree()))
+                            boxList.add(Box("Name of Institute", "Name of Institute", any.getData()[n].getNameInstitute()))
+                            boxList.add(Box("Board/University", "Board/University", any.getData()[n].getBoard()))
+                            boxList.add(Box("Passing Year", "Passing Year", any.getData()[n].getYear()))
+                            boxList.add(Box("Division / CGPA", "Division / CGPA", any.getData()[n].getCgpa()))
+                        }
+                        recyclerAdapter_Box!!.notifyDataSetChanged()
+
+                    } else if (any is ApiError) {
+
+                        toast(view.context, any.getMessage())
+
+
+                    } else if (any is Throwable) {
+                        toast(view.context, "Please check your internet connection")
+
+                    }
+
+                })
+
+
             }
             6->{
                 //spouse
