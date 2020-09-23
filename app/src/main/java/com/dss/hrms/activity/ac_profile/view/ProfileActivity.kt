@@ -18,13 +18,11 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-
         menu_title.text = intent.getStringExtra("title")
         menu_topic.text = showTopic(intent.getIntExtra("position", 0))
         viewPager = findViewById<ViewPager>(R.id.viewpager_go)
         adapter = ViewPageAdapter(supportFragmentManager)
         //add fragment
-        //education
         for (i in 0..21) {
             val bundle = Bundle()
             bundle.putInt("message", i)
@@ -32,8 +30,6 @@ class ProfileActivity : AppCompatActivity() {
             fragobj.arguments = bundle
             adapter!!.addFragment(fragobj, "Home")
         }
-
-
         // adding setup
         viewPager!!.adapter = adapter
         viewPager!!.addOnPageChangeListener(object : OnPageChangeListener {
@@ -53,16 +49,12 @@ class ProfileActivity : AppCompatActivity() {
             }
         })
         viewPager!!.currentItem = intent.getIntExtra("position", 0)
-
-
-
         back.setOnClickListener { onBackPressed() }
     }
 
     override fun onBackPressed() {
         finish()
     }
-
     fun showTopic(pos: Int): String {
         when (pos) {
             0 -> {

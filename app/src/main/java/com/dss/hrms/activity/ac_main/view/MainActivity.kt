@@ -3,6 +3,8 @@ package com.dss.hrms.activity.ac_main.view
 import BaseModel
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -10,12 +12,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chaadride.fragment.fg_hubList.adapter.RecyclerAdapter_dashboard
+import com.chaadride.shared_pref.SharedPref
 import com.dss.hrms.R
-import com.dss.hrms.activity.ac_profile.view.ProfileActivity
 import com.dss.hrms.activity.ac_main.model.Dashboard
 import com.dss.hrms.activity.ac_main.viewModel.MainActivityViewModel
+import com.dss.hrms.activity.ac_profile.view.ProfileActivity
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dashboard_header.menu_icon
+import kotlinx.android.synthetic.main.dashboard_header.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.nav_menu_layout.*
 
@@ -29,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         var recyclerAdapter_dashboard = RecyclerAdapter_dashboard(this, dashboardList)
         rec_dashboard.layoutManager = GridLayoutManager(this, 3)
         rec_dashboard.adapter = recyclerAdapter_dashboard
-
+        loading_lay.setOnClickListener {  }
         dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
         dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
         dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
@@ -49,14 +53,16 @@ class MainActivity : AppCompatActivity() {
         var profileActivityViewModel=
             ViewModelProvider(this)[MainActivityViewModel::class.java]
         profileActivityViewModel.baseData(this).observe(this, Observer<Any> { any ->
-
             if (any is BaseModel) {
-
+                SharedPref(this).json= Gson().toJson(any)
+                Handler().postDelayed(Runnable {
+                    loading_lay.visibility = View.GONE
+                }, 1000)
+            } else {
+                loading_lay.visibility = View.GONE
             }
 
         })
-
-
 
     }
 
@@ -93,8 +99,10 @@ class MainActivity : AppCompatActivity() {
         //profile sub menu
         menu_profile_personal_info.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -105,8 +113,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_job_joining_information.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -117,8 +127,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_quata_information.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -129,8 +141,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_present_address.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -141,8 +155,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_permanent_address.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -153,8 +169,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_educational_qualification.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -165,8 +183,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_spouse.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -177,8 +197,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_child_information.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -189,8 +211,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_language_information.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -201,8 +225,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_local_training.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -213,8 +239,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_foreign_training.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -225,8 +253,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_Official_residential_information.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -237,8 +267,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_foreign_travel.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -249,8 +281,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_additional_professional_qualification.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -261,8 +295,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_publication.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -273,8 +309,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_honours_award.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -285,8 +323,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_posting_record.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -297,8 +337,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_disciplinary_action.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -309,8 +351,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_leave.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -321,8 +365,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_job_information.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -333,8 +379,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_promotion.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
@@ -345,8 +393,10 @@ class MainActivity : AppCompatActivity() {
         }
         menu_profile_reference.setOnClickListener {
             startActivity(
-                Intent(this, ProfileActivity
-                ::class.java).putExtra("page", "personalInfo").putExtra(
+                Intent(
+                    this, ProfileActivity
+                    ::class.java
+                ).putExtra("page", "personalInfo").putExtra(
                     "title",
                     resources.getString(R.string.profile)
                 ).putExtra(
