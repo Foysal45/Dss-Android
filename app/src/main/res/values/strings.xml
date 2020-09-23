@@ -53,5 +53,9 @@
     <string name="job_information">Job Information</string>
     <string name="promotion">Promotion</string>
     <string name="reference">Reference</string>
+    <string name="name_child">Name of Children</string>
+    <string name="name_child_bn">Name of children bangla</string>
+    <string name="child_bd">Date of Birth</string>
+    <string name="child_sex">Gender/Sex</string>
 
 </resources>

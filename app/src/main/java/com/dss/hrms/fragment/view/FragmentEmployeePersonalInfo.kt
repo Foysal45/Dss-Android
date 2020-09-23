@@ -187,23 +187,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                     boxList.add(Box(getString(R.string.mobile), getString(R.string.mobile), ""))
                     boxList.add(Box(getString(R.string.religion), getString(R.string.religion), ""))
                 }
-                else{
-                    for (n in baseModel.data.spouses.indices) {
-
-                       /* baseModel.data.spouses[n].g_name()
-                        baseModel.data.spouses[n].g_name_bn()
-                        baseModel.data.spouses[n].distric.g_name()
-                        baseModel.data.spouses[n].distric.g_name_bn()
-                        baseModel.data.spouses[n].g_email_address()
-                        baseModel.data.spouses[n].g_occupation()
-                        baseModel.data.spouses[n].g_occupation_bn()
-                        baseModel.data.spouses[n].g_phone_no()
-                        baseModel.data.spouses[n].g_phone_no_bn()
-                        baseModel.data.spouses[n].g_mobile_no()
-                        baseModel.data.spouses[n].g_mobile_no_bn()*/
-                       // baseModel.data.spouses[n].g_religion()
-
-
+                else{ for (n in baseModel.data.spouses.indices) {
                         if (LanguageChange.langA == "en"){
                             boxList.add(Box(getString(R.string.name), getString(R.string.name), baseModel.data.spouses[n].g_name()))
                             boxList.add(Box(getString(R.string.name_b), getString(R.string.name_b), baseModel.data.spouses[n].g_name_bn()))
@@ -240,13 +224,29 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             7 -> {
                 //child information
-                var EmployeePersonalInfoViewModel_childInfo: EmployeePersonalInfoViewModel_childInfo? =
-                    null
-                boxList.add(Box("Name of Children", "Name of Children", ""))
-                boxList.add(Box("Name of Children (Bangla)", "Name of children bangla", ""))
-                boxList.add(Box("Date of Birth", "Date of Birth", ""))
-                boxList.add(Box("Gender/Sex", "Gender/Sex", ""))
+                if (baseModel.data.childs.size==0){
+                    boxList.add(Box(getString(R.string.name_child), getString(R.string.name_child), ""))
+                    boxList.add(Box(getString(R.string.name_child_bn), getString(R.string.name_child_bn), ""))
+                    boxList.add(Box(getString(R.string.child_bd), getString(R.string.child_bd), ""))
+                    boxList.add(Box(getString(R.string.child_sex), getString(R.string.child_sex), ""))
+                }
+                else{ for (n in baseModel.data.childs.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.name_child), getString(R.string.name_child), baseModel.data.childs[n].g_name_of_children()))
+                        boxList.add(Box(getString(R.string.name_child_bn), getString(R.string.name_child_bn), baseModel.data.childs[n].g_name_of_children_bn()))
+                        boxList.add(Box(getString(R.string.child_bd), getString(R.string.child_bd),  baseModel.data.childs[n].g_date_of_birth()))
+                        boxList.add(Box(getString(R.string.child_sex), getString(R.string.child_sex), baseModel.data.childs[n].gender.g_name()))
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.name_child), getString(R.string.name_child), baseModel.data.childs[n].g_name_of_children()))
+                        boxList.add(Box(getString(R.string.name_child_bn), getString(R.string.name_child_bn), baseModel.data.childs[n].g_name_of_children_bn()))
+                        boxList.add(Box(getString(R.string.child_bd), getString(R.string.child_bd),  baseModel.data.childs[n].g_date_of_birth()))
+                        boxList.add(Box(getString(R.string.child_sex), getString(R.string.child_sex), baseModel.data.childs[n].gender.g_name_bn()))
+                    }
+                }
+                }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
+
             }
             8 -> {
                 //language info

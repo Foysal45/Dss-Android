@@ -8,3 +8,20 @@ data class Childs (
 	@SerializedName("date_of_birth") val date_of_birth : String?,
 	@SerializedName("gender") val gender : Gender
 )
+{
+	fun g_name_of_children(): String {
+		if (name_of_children.equals(null))
+			return ""
+		return name_of_children!!
+	}
+	fun g_name_of_children_bn(): String {
+		if (name_of_children_bn.equals(null))
+			return ""
+		return name_of_children_bn!!
+	}
+	fun g_date_of_birth(): String {
+		if (date_of_birth.equals(null))
+			return ""
+		return date_of_birth!!
+	}
+}

@@ -58,5 +58,10 @@
     <string name="promotion">পদোন্নতি</string>
     <string name="reference">রেফারেন্স</string>
 
+    <string name="name_child">শিশুদের নাম</string>
+    <string name="name_child_bn">বাচ্চাদের নাম বাংলা</string>
+    <string name="child_bd">জন্ম তারিখ</string>
+    <string name="child_sex">লিঙ্গ</string>
+
 
 </resources>
