@@ -59,4 +59,7 @@
     <string name="name_child_bn">Name of children bangla</string>
     <string name="child_bd">Date of Birth</string>
     <string name="child_sex">Gender/Sex</string>
+    <string name="name_language">Name of Language</string>
+    <string name="name_institute">Name of Institute</string>
+    <string name="exp_level">Experties Level</string>
 </resources>

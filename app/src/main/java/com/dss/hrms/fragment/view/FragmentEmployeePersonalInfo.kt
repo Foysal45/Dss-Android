@@ -250,13 +250,11 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             8 -> {
                 //language info
-                var EmployeePersonalInfoViewModel_langInfo: EmployeePersonalInfoViewModel_langInfo? =
-                    null
-                boxList.add(Box("Name of Language", "Name of Language", ""))
-                boxList.add(Box("Name of Institute", "Name of Institute", ""))
-                boxList.add(Box("Experties Level", "Experties Level", ""))
-                boxList.add(Box("Division/CGPA", "Division/CGPA", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
+
+
+
+
+
             }
             9 -> {
                 //local training
