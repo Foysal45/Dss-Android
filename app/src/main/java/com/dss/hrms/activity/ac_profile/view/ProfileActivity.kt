@@ -24,7 +24,7 @@ class ProfileActivity : AppCompatActivity() {
         viewPager = findViewById<ViewPager>(R.id.viewpager_go)
         adapter = ViewPageAdapter(supportFragmentManager)
         //add fragment
-
+        //education
         for (i in 0..21) {
             val bundle = Bundle()
             bundle.putInt("message", i)
@@ -36,7 +36,6 @@ class ProfileActivity : AppCompatActivity() {
 
         // adding setup
         viewPager!!.adapter = adapter
-
         viewPager!!.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(

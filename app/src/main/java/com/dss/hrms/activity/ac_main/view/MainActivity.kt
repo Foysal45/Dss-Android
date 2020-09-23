@@ -1,15 +1,19 @@
 package com.dss.hrms.activity.ac_main.view
 
+import BaseModel
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chaadride.fragment.fg_hubList.adapter.RecyclerAdapter_dashboard
 import com.dss.hrms.R
 import com.dss.hrms.activity.ac_profile.view.ProfileActivity
 import com.dss.hrms.activity.ac_main.model.Dashboard
+import com.dss.hrms.activity.ac_main.viewModel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dashboard_header.menu_icon
 import kotlinx.android.synthetic.main.nav_header.*
@@ -42,7 +46,15 @@ class MainActivity : AppCompatActivity() {
 
         recyclerAdapter_dashboard.notifyDataSetChanged()
 
+        var profileActivityViewModel=
+            ViewModelProvider(this)[MainActivityViewModel::class.java]
+        profileActivityViewModel.baseData(this).observe(this, Observer<Any> { any ->
 
+            if (any is BaseModel) {
+
+            }
+
+        })
 
 
 
