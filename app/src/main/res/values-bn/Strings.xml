@@ -63,5 +63,9 @@
     <string name="child_bd">জন্ম তারিখ</string>
     <string name="child_sex">লিঙ্গ</string>
 
+    <string name="name_language">ভাষার নাম</string>
+    <string name="name_institute">প্রতিষ্ঠানের নাম</string>
+    <string name="exp_level">বিশেষজ্ঞের স্তর</string>
+
 
 </resources>
