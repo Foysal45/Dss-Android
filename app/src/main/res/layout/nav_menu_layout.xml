@@ -417,7 +417,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/shape_line_white"/>
+            <RelativeLayout
+                android:id="@+id/menu_dashboard_signout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/colorLightGreen">
 
+                <ImageView
+                    android:id="@+id/icon_signout"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_user_green" />
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:text="Sign Out"
+                    android:layout_toRightOf="@id/icon_signout"
+                    android:textColor="@color/colorRed"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"/>
+            </RelativeLayout>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

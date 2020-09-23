@@ -1,5 +1,6 @@
 package com.chaadride.network.api
 
+import BaseLogout
 import BaseModel
 import com.dss.hrms.network.model.additional_profile_qualification.response.AdditionalProfileQualificationRes
 import com.dss.hrms.network.model.educational_qualification.response.EducationalQualificationRes
@@ -67,6 +68,13 @@ interface Api {
         @Header("Authorization") token: String,
         @Path("Id") employee_id: Int
     ): Call<BaseModel>
+
+    @GET("auth/logout")
+    fun logout_(
+        @Header("Content-Type") Content_Type: String,
+        @Header("Accept") Accept: String,
+        @Header("Authorization") token: String
+    ): Call<BaseLogout>
 
 
 }

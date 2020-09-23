@@ -3,14 +3,14 @@ import com.google.gson.annotations.SerializedName
 
 
 data class Data (
-	@SerializedName("name") val name : String,
-	@SerializedName("name_bn") val name_bn : String,
-	@SerializedName("photo") val photo : String,
-	@SerializedName("date_of_birth") val date_of_birth : String,
-	@SerializedName("fathers_name") val fathers_name : String,
-	@SerializedName("fathers_name_bn") val fathers_name_bn : String,
-	@SerializedName("mothers_name") val mothers_name : String,
-	@SerializedName("mothers_name_bn") val mothers_name_bn : String,
+	@SerializedName("name") val name : String?,
+	@SerializedName("name_bn") val name_bn : String?,
+	@SerializedName("photo") val photo : String?,
+	@SerializedName("date_of_birth") val date_of_birth : String?,
+	@SerializedName("fathers_name") val fathers_name : String?,
+	@SerializedName("fathers_name_bn") val fathers_name_bn : String?,
+	@SerializedName("mothers_name") val mothers_name : String?,
+	@SerializedName("mothers_name_bn") val mothers_name_bn : String?,
 	@SerializedName("promotions") val promotions : List<Promotions>,
 	@SerializedName("references") val references : List<References>,
 	@SerializedName("gender") val gender : Gender,

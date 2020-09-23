@@ -1,5 +1,6 @@
 package com.dss.hrms.activity.ac_main.viewModel
 
+import BaseLogout
 import BaseModel
 import android.app.Activity
 import android.content.Context
@@ -18,26 +19,22 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivityViewModel : ViewModel() {
-    var resultLiveData: MutableLiveData<Any>? = null
-    fun baseData(activity: Activity,context: Context): MutableLiveData<Any> {
+class MainActivityViewModel_logout :ViewModel(){
+    var resultLiveData : MutableLiveData<Any>?=null
+    fun logout(activity:Activity,context: Context): MutableLiveData<Any> {
         val sharedPref = SharedPref(context)
         if (resultLiveData == null) {
             resultLiveData = MutableLiveData()
         }
-        val call: Call<BaseModel> = RetrofitClient.getInstance().getApi().BaseModel_(
-            "application/json",
-            "application/json",
-            sharedPref.access_token!!,
-            sharedPref.uEmployeeId!!
+        val call: Call<BaseLogout> = RetrofitClient.getInstance().getApi().logout_(
+            "application/json","application/json",sharedPref.access_token!!
         )
-        call.enqueue(object : Callback<BaseModel> {
-            override fun onResponse(call: Call<BaseModel>, response: Response<BaseModel>) {
+        call.enqueue(object : Callback<BaseLogout> {
+            override fun onResponse(call: Call<BaseLogout>, response: Response<BaseLogout>) {
                 resultLiveData!!.postValue(null)
-                if (response.isSuccessful) {
-                    resultLiveData!!.setValue(response.body())
-                } else if (response.code() == 401) {
-                    var intent=Intent(context,LoginSignupActivity::class.java)
+                Log.d("code", "response code logout: " + response.code())
+                if (response.isSuccessful){
+                    var intent= Intent(context, LoginSignupActivity::class.java)
                     sharedPref.access_token = ""
                     sharedPref.uEmployeeId = 0
                     //sharedPref!!.uEmail = any.getData().getEmail()
@@ -47,14 +44,10 @@ class MainActivityViewModel : ViewModel() {
                     sharedPref.isLogin = false
                     context.startActivity(intent)
                     activity.finish()
-                } else {
-                    resultLiveData!!.setValue(parseError(response))
                 }
             }
-
-            override fun onFailure(call: Call<BaseModel>, t: Throwable) {
+            override fun onFailure(call: Call<BaseLogout>, t: Throwable) {
                 resultLiveData!!.postValue(null)
-                resultLiveData!!.value = t
             }
         })
         return resultLiveData as MutableLiveData<Any>
