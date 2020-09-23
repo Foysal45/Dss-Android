@@ -70,6 +70,13 @@ class SharedPref(context: Context) {
             editor.putString("access_token", "Bearer " + access_token)
             editor.apply()
         }
+    var json : String?
+        get() = mySharedPref.getString("json ", "")
+        set(json ) {
+            val editor = mySharedPref.edit()
+            editor.putString("json ",json )
+            editor.apply()
+        }
 
 
     var isLogin: Boolean?
