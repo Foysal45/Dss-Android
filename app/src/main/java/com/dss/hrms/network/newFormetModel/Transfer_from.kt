@@ -5,6 +5,6 @@ import com.google.gson.annotations.SerializedName
 
 data class Transfer_from (
 
-	@SerializedName("office_name") val office_name : String,
-	@SerializedName("office_name_bn") val office_name_bn : String
+	@SerializedName("office_name") val office_name : String?,
+	@SerializedName("office_name_bn") val office_name_bn : String?
 )

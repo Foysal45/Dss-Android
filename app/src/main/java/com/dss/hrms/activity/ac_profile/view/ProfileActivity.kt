@@ -1,12 +1,16 @@
 package com.dss.hrms.activity.ac_profile.view
 
+import BaseModel
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.*
+import com.chaadride.shared_pref.SharedPref
 import com.dss.hrms.R
 import com.dss.hrms.activity.ac_profile.adapter.viewpager.ViewPageAdapter
 import com.dss.hrms.fragment.view.FragmentEmployeePersonalInfo
+import com.dss.hrms.helper.LanguageChange
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_profile.*
 
 
@@ -18,6 +22,7 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+        LanguageChange.languageSet(this)
         menu_title.text = intent.getStringExtra("title")
         menu_topic.text = showTopic(intent.getIntExtra("position", 0))
         viewPager = findViewById<ViewPager>(R.id.viewpager_go)
@@ -43,8 +48,8 @@ class ProfileActivity : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 menu_topic.text = showTopic(position)
-                menu_next.setOnClickListener {viewPager!!.currentItem= position+1}
-                menu_back.setOnClickListener {viewPager!!.currentItem= position-1 }
+                menu_next.setOnClickListener { viewPager!!.currentItem = position + 1 }
+                menu_back.setOnClickListener { viewPager!!.currentItem = position - 1 }
 
             }
         })
@@ -55,6 +60,7 @@ class ProfileActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finish()
     }
+
     fun showTopic(pos: Int): String {
         when (pos) {
             0 -> {

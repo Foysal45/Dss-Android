@@ -25,4 +25,17 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="permanent_address">Permanent Address</string>
     <string name="present_address">Present Address</string>
+
+    <!--Spouse-->
+    <string name="name">নাম</string>
+    <string name="name_b">নাম (বাংলা)</string>
+    <string name="office">দপ্তর</string>
+    <string name="district">জেলা</string>
+    <string name="email">ই-মেইল ঠিকানা</string>
+    <string name="occupation">পেশা</string>
+    <string name="mobile">মোবাইল নাম্বার</string>
+    <string name="religion">ধর্ম</string>
+    <string name="phone">ফোন নম্বর</string>
+
+
 </resources>
