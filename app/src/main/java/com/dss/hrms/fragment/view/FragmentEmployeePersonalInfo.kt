@@ -250,7 +250,26 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             8 -> {
                 //language info
-
+                if (baseModel.data.languages.size==0){
+                    boxList.add(Box(getString(R.string.name_language), getString(R.string.name_language), ""))
+                    boxList.add(Box(getString(R.string.name_institute), getString(R.string.name_institute), ""))
+                    boxList.add(Box(getString(R.string.exp_level), getString(R.string.exp_level), ""))
+                    // boxList.add(Box("Division/CGPA", "Division/CGPA", ""))
+                }
+                else{ for (n in baseModel.data.languages.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.name_language), getString(R.string.name_language), baseModel.data.languages[n].g_name_of_language()))
+                        boxList.add(Box(getString(R.string.name_institute), getString(R.string.name_institute), baseModel.data.languages[n].g_name_of_institute()))
+                        boxList.add(Box(getString(R.string.exp_level), getString(R.string.exp_level), baseModel.data.languages[n].g_expertise_level()))
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.name_language), getString(R.string.name_language), baseModel.data.languages[n].g_name_of_language_bn()))
+                        boxList.add(Box(getString(R.string.name_institute), getString(R.string.name_institute), baseModel.data.languages[n].g_name_of_institute_bn()))
+                        boxList.add(Box(getString(R.string.exp_level), getString(R.string.exp_level), baseModel.data.languages[n].g_expertise_level()))
+                    }
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
 
 
 
