@@ -66,112 +66,112 @@ class ProfileActivity : AppCompatActivity() {
             0 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = GONE
-                return "Personal Information"
+                return resources.getString(R.string.personal_information)
             }
             1 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Job Joining Information"
+                return resources.getString(R.string.job_joining_information)
             }
             2 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Quota Information"
+                return resources.getString(R.string.quota_information)
             }
             3 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Present Address"
+                return resources.getString(R.string.present_address)
             }
             4 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Permanent Address"
+                return resources.getString(R.string.permanent_address)
             }
             5 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Eduation Qualification"
+                return resources.getString(R.string.educational_qualification)
             }
             6 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Spouse"
+                return resources.getString(R.string.spouse)
             }
             7 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Child Information"
+                return resources.getString(R.string.child_information)
             }
             8 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Language Information"
+                return resources.getString(R.string.language_information)
             }
             9 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Local Training"
+                return resources.getString(R.string.local_training)
             }
             10 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Foreign Training"
+                return resources.getString(R.string.foreign_training)
             }
             11 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Official Residential Information"
+                return resources.getString(R.string.official_residential_information)
             }
             12 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Foreign Travel"
+                return resources.getString(R.string.foreign_training)
             }
             13 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Additional Professional Qualification"
+                return resources.getString(R.string.additional_professional_qualification)
             }
             14 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Publication"
+                return resources.getString(R.string.publication)
             }
             15 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Honours and Award"
+                return resources.getString(R.string.honours_and_award)
             }
             16 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Posting Record"
+                return resources.getString(R.string.posting_record)
             }
             17 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Disciplinary Action"
+                return resources.getString(R.string.disciplinary_action)
             }
             18 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Leave"
+                return resources.getString(R.string.leave)
             }
             19 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Job Information"
+                return resources.getString(R.string.job_information)
             }
             20 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return "Promotion"
+                return resources.getString(R.string.promotion)
             }
             21 -> {
                 menu_next.visibility = GONE
                 menu_back.visibility = VISIBLE
-                return "Reference"
+                return resources.getString(R.string.reference)
             }
             else -> {
                 return ""

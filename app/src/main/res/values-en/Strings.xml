@@ -35,4 +35,24 @@
     <string name="mobile">Mobile No.</string>
     <string name="religion">Religion</string>
     <string name="phone">Phone No</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="job_joining_information">Job Joining Information</string>
+    <string name="quota_information">Quota Information</string>
+    <string name="educational_qualification">Educational Qualification</string>
+    <string name="spouse">Spouse</string>
+    <string name="child_information">Child Information</string>
+    <string name="language_information">Language Information</string>
+    <string name="local_training">Local Training</string>
+    <string name="foreign_training">Foreign Training</string>
+    <string name="official_residential_information">Official Residential Information</string>
+    <string name="foreign_travel">Foreign Travel</string>
+    <string name="additional_professional_qualification">Additional Professional Qualification</string>
+    <string name="publication">Publication</string>
+    <string name="honours_and_award">Honours and Award</string>
+    <string name="posting_record">Posting Record</string>
+    <string name="disciplinary_action">Disciplinary Action</string>
+    <string name="leave">Leave</string>
+    <string name="job_information">Job Information</string>
+    <string name="promotion">Promotion</string>
+    <string name="reference">Reference</string>
 </resources>

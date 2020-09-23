@@ -36,6 +36,27 @@
     <string name="mobile">মোবাইল নাম্বার</string>
     <string name="religion">ধর্ম</string>
     <string name="phone">ফোন নম্বর</string>
+   <!--  menu-->
+    <string name="personal_information">ব্যক্তিগত তথ্য</string>
+    <string name="job_joining_information">জব যোগদানের তথ্য</string>
+    <string name="quota_information">কোটার তথ্য</string>
+    <string name="educational_qualification">শিক্ষাগত যোগ্যতা</string>
+    <string name="spouse">স্বামী / স্ত্রী</string>
+    <string name="child_information">শিশু তথ্য</string>
+    <string name="language_information">ভাষার তথ্য</string>
+    <string name="local_training">স্থানীয় প্রশিক্ষণ</string>
+    <string name="foreign_training">বিদেশী প্রশিক্ষণ</string>
+    <string name="official_residential_information">সরকারী আবাসিক তথ্য</string>
+    <string name="foreign_travel">বিদেশ ভ্রমন</string>
+    <string name="additional_professional_qualification">অতিরিক্ত পেশাদার যোগ্যতা</string>
+    <string name="publication">প্রকাশনা</string>
+    <string name="honours_and_award">সম্মান এবং পুরষ্কার</string>
+    <string name="posting_record">রেকর্ডিং পোস্ট</string>
+    <string name="disciplinary_action">শাস্তিমূলক ব্যবস্থা</string>
+    <string name="leave">ছেড়ে দিন</string>
+    <string name="job_information">কাজের তথ্য</string>
+    <string name="promotion">পদোন্নতি</string>
+    <string name="reference">রেফারেন্স</string>
 
 
 </resources>

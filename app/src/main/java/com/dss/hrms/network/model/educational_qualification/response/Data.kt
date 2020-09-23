@@ -28,6 +28,7 @@ class Data(
 
     fun getEmployeeId(): Int {
         if (employeeId==null) {
+            employeeId!!
             return 0
         }
         return employeeId!!
