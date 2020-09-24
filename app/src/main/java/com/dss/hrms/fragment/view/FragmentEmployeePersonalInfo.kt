@@ -604,7 +604,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                 boxList.add(Box("Date", "Date", ""))
                 recyclerAdapter_Box!!.notifyDataSetChanged()
             }
-            18 -> {
+         /*   18 -> {
                 //leave
                 var EmployeePersonalInfoViewModel_leave: EmployeePersonalInfoViewModel_leave? = null
                 boxList.add(Box("Leave Title", "leave title", ""))
@@ -623,8 +623,8 @@ class FragmentEmployeePersonalInfo : Fragment() {
                 boxList.add(Box("Office/Zone", "office zone", ""))
                 boxList.add(Box("Pay Scale/Basic Pay", "pay scale basic pay", ""))
                 recyclerAdapter_Box!!.notifyDataSetChanged()
-            }
-            20 -> {
+            }*/
+            18 -> {
                 //promotion
                 var EmployeePersonalInfoViewModel_promotion: EmployeePersonalInfoViewModel_promotion? =
                     null
@@ -634,16 +634,12 @@ class FragmentEmployeePersonalInfo : Fragment() {
                 boxList.add(Box("Current Position", "current position", ""))
                 recyclerAdapter_Box!!.notifyDataSetChanged()
             }
-            21 -> {
+            19 -> {
                 //reference
-                var EmployeePersonalInfoViewModel_refrence: EmployeePersonalInfoViewModel_refrence? =
-                    null
-                boxList.add(Box("Name", "name", ""))
-                boxList.add(Box("Name (Bangla)", "name bangla", ""))
-                boxList.add(Box("Relation", "relation", ""))
-                boxList.add(Box("Address", "address", ""))
-                boxList.add(Box("Contact No.", "contact no", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
+
+
+
+
             }
         }
         recyclerAdapter_Box!!.notifyDataSetChanged()

@@ -28,7 +28,7 @@ class ProfileActivity : AppCompatActivity() {
         viewPager = findViewById<ViewPager>(R.id.viewpager_go)
         adapter = ViewPageAdapter(supportFragmentManager)
         //add fragment
-        for (i in 0..21) {
+        for (i in 0..19) {
             val bundle = Bundle()
             bundle.putInt("message", i)
             val fragobj = FragmentEmployeePersonalInfo()
@@ -156,23 +156,24 @@ class ProfileActivity : AppCompatActivity() {
             18 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
+                return resources.getString(R.string.promotion)
+            }
+            19 -> {
+                menu_next.visibility = GONE
+                menu_back.visibility = VISIBLE
+                return resources.getString(R.string.reference)
+            }
+     /*       18 -> {
+                menu_next.visibility = VISIBLE
+                menu_back.visibility = VISIBLE
                 return resources.getString(R.string.leave)
             }
             19 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
                 return resources.getString(R.string.job_information)
-            }
-            20 -> {
-                menu_next.visibility = VISIBLE
-                menu_back.visibility = VISIBLE
-                return resources.getString(R.string.promotion)
-            }
-            21 -> {
-                menu_next.visibility = GONE
-                menu_back.visibility = VISIBLE
-                return resources.getString(R.string.reference)
-            }
+            }*/
+
             else -> {
                 return ""
             }

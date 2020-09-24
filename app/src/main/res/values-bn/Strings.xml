@@ -85,6 +85,9 @@
     <string name="transfer_from">থেকে স্থানান্তর</string>
     <string name="transfer_to">স্থানান্তর করা</string>
     <string name="eff_date">কার্যকর দিন</string>
+    <string name="relation">Relation</string>
+    <string name="address">address</string>
+    <string name="contact">contact no</string>
 
 
 </resources>

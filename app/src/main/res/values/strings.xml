@@ -79,5 +79,8 @@
     <string name="transfer_from">Transfer From</string>
     <string name="transfer_to">Transfer To</string>
     <string name="eff_date">Effective Date</string>
+    <string name="relation">Relation</string>
+    <string name="address">address</string>
+    <string name="contact">contact no</string>
 
 </resources>

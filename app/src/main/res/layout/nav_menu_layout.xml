@@ -367,10 +367,12 @@
                         android:textSize="14sp"
                         android:gravity="center_vertical"
                         android:layout_width="match_parent"
+                        android:visibility="gone"
                         android:layout_height="30dp"/>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
+                        android:visibility="gone"
                         android:background="@drawable/shape_line_green"/>
                     <TextView
                         android:paddingLeft="64dp"
@@ -379,12 +381,14 @@
                         android:text="@string/job_information"
                         android:textColor="@color/colorGreen"
                         android:textSize="14sp"
+                        android:visibility="gone"
                         android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"/>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
+                        android:visibility="gone"
                         android:background="@drawable/shape_line_green"/>
                     <TextView
                         android:paddingLeft="64dp"

@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         sharedPref = SharedPref(this)
-        nav_menu.alpha = 0f
+     //   nav_menu.alpha = 0f
         menu()
         var dashboardList = mutableListOf<Dashboard>()
         var recyclerAdapter_dashboard = RecyclerAdapter_dashboard(this, dashboardList)
@@ -64,10 +64,10 @@ class MainActivity : AppCompatActivity() {
             if (any is BaseModel) {
                 sharedPref!!.json = Gson().toJson(any)
                 Handler().postDelayed(Runnable {
-                    nav_menu.alpha = 1f
+                    //nav_menu.alpha = 1f
                     loading_lay.alpha = 0f
                     loading_lay.visibility = View.GONE
-                    drawer_menu.isEnabled = true
+                  //  drawer_menu.isEnabled = true
                 }, 1000)
             } else {
                 loading_lay.alpha = 0f
@@ -407,7 +407,7 @@ class MainActivity : AppCompatActivity() {
                     resources.getString(R.string.profile)
                 ).putExtra(
                     "position",
-                    20
+                    18
                 )
             )
         }
@@ -421,7 +421,7 @@ class MainActivity : AppCompatActivity() {
                     resources.getString(R.string.profile)
                 ).putExtra(
                     "position",
-                    21
+                    19
                 )
             )
         }
