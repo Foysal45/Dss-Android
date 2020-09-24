@@ -432,6 +432,27 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             12 -> {
                 //foreign Travel
+                if (baseModel.data.foreign_travels.size==0){
+                    boxList.add(Box(getString(R.string.country), getString(R.string.country), ""))
+                    boxList.add(Box(getString(R.string.purpose), getString(R.string.purpose), ""))
+                    boxList.add(Box(getString(R.string.from_date), getString(R.string.from_date), ""))
+                    boxList.add(Box(getString(R.string.to_date), getString(R.string.to_date), ""))
+                }
+                else{ for (n in baseModel.data.foreign_travels.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.country), getString(R.string.country), baseModel.data.foreign_travels[n].country.g_name()))
+                        boxList.add(Box(getString(R.string.purpose), getString(R.string.purpose), baseModel.data.foreign_travels[n].g_purpose()))
+                        boxList.add(Box(getString(R.string.from_date), getString(R.string.from_date), baseModel.data.foreign_travels[n].g_from_date()))
+                        boxList.add(Box(getString(R.string.to_date), getString(R.string.to_date), baseModel.data.foreign_travels[n].g_to_date()))
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.country), getString(R.string.country), baseModel.data.foreign_travels[n].country.g_name_bn()))
+                        boxList.add(Box(getString(R.string.purpose), getString(R.string.purpose), baseModel.data.foreign_travels[n].g_purpose_bn()))
+                        boxList.add(Box(getString(R.string.from_date), getString(R.string.from_date), baseModel.data.foreign_travels[n].g_from_date()))
+                        boxList.add(Box(getString(R.string.to_date), getString(R.string.to_date), baseModel.data.foreign_travels[n].g_to_date()))               }
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
 
             }
             13 -> {
