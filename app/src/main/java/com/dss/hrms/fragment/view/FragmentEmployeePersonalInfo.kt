@@ -462,49 +462,31 @@ class FragmentEmployeePersonalInfo : Fragment() {
 
             }
             15 -> {
-                //Honours and awards
-                var employeePersonalInfoViewModel_honourAward =
-                    ViewModelProvider(this)[EmployeePersonalInfoViewModel_honourAward::class.java]
-                employeePersonalInfoViewModel_honourAward.honoursAward(view.context)
-                    .observe(activity!!, Observer<Any> { any ->
+                //honor award
+                if (baseModel.data.honours_awards.size==0){
+                    boxList.add(Box(getString(R.string.aware_t), getString(R.string.aware_t), ""))
+                    boxList.add(Box(getString(R.string.award_details),getString(R.string.award_details), ""))
+                    boxList.add(Box(getString(R.string.award_date),getString(R.string.award_date), ""))
 
-                        if (any is HonorAwardRes) {
-                            for (n in any.getData().indices) {
-                                boxList.add(
-                                    Box(
-                                        "Award Title",
-                                        "Award title",
-                                        any.getData()[n].getAwardTitle()
-                                    )
-                                )
-                                boxList.add(
-                                    Box(
-                                        "Award Details",
-                                        "Award details",
-                                        any.getData()[n].getAwardDetails()
-                                    )
-                                )
-                                boxList.add(
-                                    Box(
-                                        "Award Date",
-                                        "Award details",
-                                        any.getData()[n].getAwardDate()
-                                    )
-                                )
-                            }
-                            recyclerAdapter_Box!!.notifyDataSetChanged()
+                }
+                else{ for (n in baseModel.data.honours_awards.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.aware_t), getString(R.string.aware_t), baseModel.data.honours_awards[n].g_award_title()))
+                        boxList.add(Box(getString(R.string.award_details),getString(R.string.award_details), baseModel.data.honours_awards[n].g_award_details()))
+                        boxList.add(Box(getString(R.string.award_date),getString(R.string.award_date), baseModel.data.honours_awards[n].g_award_date()))
 
-                        } else if (any is ApiError) {
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.aware_t), getString(R.string.aware_t), baseModel.data.honours_awards[n].g_award_title_bn()))
+                        boxList.add(Box(getString(R.string.award_details),getString(R.string.award_details), baseModel.data.honours_awards[n].g_award_details_bn()))
+                        boxList.add(Box(getString(R.string.award_date),getString(R.string.award_date), baseModel.data.honours_awards[n].g_award_date()))
 
-                            toast(view.context, any.getMessage())
+                    }
 
 
-                        } else if (any is Throwable) {
-                            toast(view.context, "Please check your internet connection")
-
-                        }
-
-                    })
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
             }
             16 -> {
                 //posting record
