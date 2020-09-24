@@ -87,4 +87,7 @@
     <string name="course_title">Course Title</string>
     <string name="name_institution">Name of institution</string>
     <string name="certificate">Certificate</string>
+    <string name="aware_t">Award Title</string>
+    <string name="award_details">Award Details</string>
+    <string name="award_date">Award Date</string>
 </resources>

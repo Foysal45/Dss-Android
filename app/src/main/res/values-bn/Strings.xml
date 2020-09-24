@@ -91,6 +91,9 @@
     <string name="course_title">কোর্সের শিরোনাম</string>
     <string name="name_institution">প্রতিষ্ঠানের নাম</string>
     <string name="certificate">সনদপত্র</string>
+    <string name="aware_t">পুরষ্কার শিরোনাম</string>
+    <string name="award_details">পুরষ্কার বিশদ</string>
+    <string name="award_date">পুরুস্কারের দিন</string>
 
 
 </resources>
