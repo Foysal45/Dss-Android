@@ -568,6 +568,28 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             16 -> {
                 //posting record
+                if (baseModel.data.posting_records.size==0){
+                    boxList.add(Box(getString(R.string.transfer_type), getString(R.string.transfer_type), ""))
+                    boxList.add(Box(getString(R.string.transfer_from), getString(R.string.transfer_from), ""))
+                    boxList.add(Box(getString(R.string.transfer_to), getString(R.string.transfer_to), ""))
+                    boxList.add(Box(getString(R.string.eff_date), getString(R.string.eff_date), ""))
+                }
+                else{ for (n in baseModel.data.posting_records.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.transfer_type), getString(R.string.transfer_type),  baseModel.data.posting_records[n].transfer_type.g_name()))
+                        boxList.add(Box(getString(R.string.transfer_from), getString(R.string.transfer_from), baseModel.data.posting_records[n].transfer_from.g_office_name()))
+                        boxList.add(Box(getString(R.string.transfer_to), getString(R.string.transfer_to), baseModel.data.posting_records[n].transfer_to.g_office_name()))
+                        boxList.add(Box(getString(R.string.eff_date), getString(R.string.eff_date),baseModel.data.posting_records[n].g_effective_date()))
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.transfer_type), getString(R.string.transfer_type),  baseModel.data.posting_records[n].transfer_type.g_name_bn()))
+                        boxList.add(Box(getString(R.string.transfer_from), getString(R.string.transfer_from), baseModel.data.posting_records[n].transfer_from.g_office_name_bn()))
+                        boxList.add(Box(getString(R.string.transfer_to), getString(R.string.transfer_to), baseModel.data.posting_records[n].transfer_to.g_office_name_bn()))
+                        boxList.add(Box(getString(R.string.eff_date), getString(R.string.eff_date),baseModel.data.posting_records[n].g_effective_date()))
+                    }
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
 
             }
             17 -> {
