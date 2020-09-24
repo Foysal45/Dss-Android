@@ -396,6 +396,38 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             11 -> {
                 //official residential
+                if (baseModel.data.official_residentials.size==0){
+                    boxList.add(Box(getString(R.string.memo_no), getString(R.string.memo_no), ""))
+                    boxList.add(Box(getString(R.string.memo_date), getString(R.string.memo_date), ""))
+                    boxList.add(Box(getString(R.string.desi), getString(R.string.desi), ""))
+                    boxList.add(Box(getString(R.string.office_zoon), getString(R.string.office_zoon), ""))
+                    boxList.add(Box( getString(R.string.location), getString(R.string.location), ""))
+                    boxList.add(Box(getString(R.string.quarter_name), getString(R.string.quarter_name), ""))
+                    boxList.add(Box(getString(R.string.flat_no), getString(R.string.flat_no), ""))
+                }
+                else{
+                    for (n in baseModel.data.official_residentials.indices) {
+                        if (LanguageChange.langA == "en"){
+                            boxList.add(Box(getString(R.string.memo_no), getString(R.string.memo_no),  baseModel.data.official_residentials[n].g_memo_no()))
+                            boxList.add(Box(getString(R.string.memo_date), getString(R.string.memo_date), baseModel.data.official_residentials[n].g_memo_date()))
+                            boxList.add(Box(getString(R.string.desi), getString(R.string.desi), baseModel.data.official_residentials[n].designation.g_desi_name()))
+                            boxList.add(Box(getString(R.string.office_zoon), getString(R.string.office_zoon), baseModel.data.official_residentials[n].g_office_zone()))
+                            boxList.add(Box( getString(R.string.location), getString(R.string.location), baseModel.data.official_residentials[n].g_location()))
+                            boxList.add(Box(getString(R.string.quarter_name), getString(R.string.quarter_name), baseModel.data.official_residentials[n].g_quarter_name()))
+                            boxList.add(Box(getString(R.string.flat_no), getString(R.string.flat_no), baseModel.data.official_residentials[n].g_flat_no_flat_type()))
+                        }
+                        else{
+                            boxList.add(Box(getString(R.string.memo_no), getString(R.string.memo_no),  baseModel.data.official_residentials[n].g_memo_no_bn()))
+                            boxList.add(Box(getString(R.string.memo_date), getString(R.string.memo_date), baseModel.data.official_residentials[n].g_memo_date()))
+                            boxList.add(Box(getString(R.string.desi), getString(R.string.desi), baseModel.data.official_residentials[n].designation.g_desi_name_bn()))
+                            boxList.add(Box(getString(R.string.office_zoon), getString(R.string.office_zoon), baseModel.data.official_residentials[n].g_office_zone()))
+                            boxList.add(Box( getString(R.string.location), getString(R.string.location), baseModel.data.official_residentials[n].g_location()))
+                            boxList.add(Box(getString(R.string.quarter_name), getString(R.string.quarter_name), baseModel.data.official_residentials[n].g_quarter_name()))
+                            boxList.add(Box(getString(R.string.flat_no), getString(R.string.flat_no), baseModel.data.official_residentials[n].g_flat_no_flat_type()))
+                        }
+                    }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
 
             }
             12 -> {
