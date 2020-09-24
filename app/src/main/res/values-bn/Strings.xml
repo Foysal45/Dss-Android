@@ -85,9 +85,12 @@
     <string name="transfer_from">থেকে স্থানান্তর</string>
     <string name="transfer_to">স্থানান্তর করা</string>
     <string name="eff_date">কার্যকর দিন</string>
-    <string name="relation">Relation</string>
-    <string name="address">address</string>
-    <string name="contact">contact no</string>
+    <string name="relation">সম্পর্ক</string>
+    <string name="address">ঠিকানা</string>
+    <string name="contact">যোগাযোগের নম্বর</string>
+    <string name="course_title">কোর্সের শিরোনাম</string>
+    <string name="name_institution">প্রতিষ্ঠানের নাম</string>
+    <string name="certificate">সনদপত্র</string>
 
 
 </resources>

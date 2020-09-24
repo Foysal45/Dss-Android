@@ -276,62 +276,31 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             9 -> {
                 //local training
-                var employeePersonalInfoViewModel_localTraning =
-                    ViewModelProvider(this)[EmployeePersonalInfoViewModel_localTraning::class.java]
-                employeePersonalInfoViewModel_localTraning.localTraning(view.context)
-                    .observe(activity!!, Observer<Any> { any ->
-
-                        if (any is LocalTraningRes) {
-                            for (n in any.getData().indices) {
-                                boxList.add(
-                                    Box(
-                                        "Course Title",
-                                        "Course Title",
-                                        any.getData()[n].getCourse_title()
-                                    )
-                                )
-                                boxList.add(
-                                    Box(
-                                        "Name of institution",
-                                        "Name of institution",
-                                        any.getData()[n].getName_of_institute()
-                                    )
-                                )
-                                boxList.add(
-                                    Box(
-                                        "From Date",
-                                        "From date",
-                                        any.getData()[n].getFrom_date()
-                                    )
-                                )
-                                boxList.add(
-                                    Box(
-                                        "To Date",
-                                        "To date",
-                                        any.getData()[n].getTo_date()
-                                    )
-                                )
-                                boxList.add(
-                                    Box(
-                                        "Certificate",
-                                        "Certificate",
-                                        any.getData()[n].getCertificate()
-                                    )
-                                )
-                            }
-                            recyclerAdapter_Box!!.notifyDataSetChanged()
-
-                        } else if (any is ApiError) {
-
-                            toast(view.context, any.getMessage())
-
-
-                        } else if (any is Throwable) {
-                            toast(view.context, "Please check your internet connection")
-
-                        }
-
-                    })
+                if (baseModel.data.local_trainings.size==0){
+                    boxList.add(Box(getString(R.string.course_title), getString(R.string.course_title), ""))
+                    boxList.add(Box(getString(R.string.name_institution), getString(R.string.name_institution), ""))
+                    boxList.add(Box(getString(R.string.from_date), getString(R.string.from_date), ""))
+                    boxList.add(Box(getString(R.string.to_date), getString(R.string.to_date), ""))
+                    boxList.add(Box(getString(R.string.certificate), getString(R.string.certificate), ""))
+                }
+                else{ for (n in baseModel.data.local_trainings.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.course_title), getString(R.string.course_title), baseModel.data.local_trainings[n].g_course_title()))
+                        boxList.add(Box(getString(R.string.name_institution), getString(R.string.name_institution), baseModel.data.local_trainings[n].g_name_of_institute()))
+                        boxList.add(Box(getString(R.string.from_date), getString(R.string.from_date), baseModel.data.local_trainings[n].g_from_date()))
+                        boxList.add(Box(getString(R.string.to_date), getString(R.string.to_date), baseModel.data.local_trainings[n].g_to_date()))
+                        boxList.add(Box(getString(R.string.certificate), getString(R.string.certificate), baseModel.data.local_trainings[n].g_certificate()))
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.course_title), getString(R.string.course_title), baseModel.data.local_trainings[n].g_course_title_bn()))
+                        boxList.add(Box(getString(R.string.name_institution), getString(R.string.name_institution), baseModel.data.local_trainings[n].g_name_of_institute_bn()))
+                        boxList.add(Box(getString(R.string.from_date), getString(R.string.from_date), baseModel.data.local_trainings[n].g_from_date()))
+                        boxList.add(Box(getString(R.string.to_date), getString(R.string.to_date), baseModel.data.local_trainings[n].g_to_date()))
+                        boxList.add(Box(getString(R.string.certificate), getString(R.string.certificate), baseModel.data.local_trainings[n].g_certificate()))
+                    }
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
             }
             10 -> {
                 //Foreign training
