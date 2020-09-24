@@ -64,8 +64,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             1 -> {
                 //job join info
-                var EmployeePersonalInfoViewModel_jobJoinInfo: EmployeePersonalInfoViewModel_jobJoinInfo? =
-                    null
+
                 boxList.add(Box("Designation", "Designation", ""))
                 boxList.add(Box("Department", "Department", ""))
                 boxList.add(Box("Job Type", "Job Type", ""))
@@ -626,8 +625,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }*/
             18 -> {
                 //promotion
-                var EmployeePersonalInfoViewModel_promotion: EmployeePersonalInfoViewModel_promotion? =
-                    null
+                baseModel.data.promotions
                 boxList.add(Box("Memo no & Date", "memo no date", ""))
                 boxList.add(Box("Office/Zone", "office zone", ""))
                 boxList.add(Box("Previous Post", "previous post", ""))
@@ -636,7 +634,31 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             19 -> {
                 //reference
-
+                if (baseModel.data.references.size==0){
+                    boxList.add(Box(getString(R.string.name), getString(R.string.name), ""))
+                    boxList.add(Box(getString(R.string.name_b), getString(R.string.name_b), ""))
+                    boxList.add(Box(getString(R.string.relation), getString(R.string.relation), ""))
+                    boxList.add(Box(getString(R.string.address), getString(R.string.address), ""))
+                    boxList.add(Box( getString(R.string.contact), getString(R.string.contact), ""))
+                }
+                else{ for (n in baseModel.data.references.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.name), getString(R.string.name), baseModel.data.references[n].g_name()))
+                        boxList.add(Box(getString(R.string.name_b), getString(R.string.name_b),baseModel.data.references[n].g_name_bn()))
+                        boxList.add(Box(getString(R.string.relation), getString(R.string.relation), baseModel.data.references[n].g_relation()))
+                        boxList.add(Box(getString(R.string.address), getString(R.string.address), baseModel.data.references[n].g_address()))
+                        boxList.add(Box( getString(R.string.contact), getString(R.string.contact), baseModel.data.references[n].g_contact_no()))
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.name), getString(R.string.name), baseModel.data.references[n].g_name()))
+                        boxList.add(Box(getString(R.string.name_b), getString(R.string.name_b),baseModel.data.references[n].g_name_bn()))
+                        boxList.add(Box(getString(R.string.relation), getString(R.string.relation), baseModel.data.references[n].g_relation_bn()))
+                        boxList.add(Box(getString(R.string.address), getString(R.string.address), baseModel.data.references[n].g_address_bn()))
+                        boxList.add(Box( getString(R.string.contact), getString(R.string.contact), baseModel.data.references[n].g_contact_no_bn()))
+                    }
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
 
 
 
