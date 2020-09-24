@@ -84,4 +84,7 @@
     <string name="relation">Relation</string>
     <string name="address">address</string>
     <string name="contact">contact no</string>
+    <string name="course_title">Course Title</string>
+    <string name="name_institution">Name of institution</string>
+    <string name="certificate">Certificate</string>
 </resources>
