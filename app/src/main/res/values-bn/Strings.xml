@@ -66,25 +66,25 @@
     <string name="name_language">ভাষার নাম</string>
     <string name="name_institute">প্রতিষ্ঠানের নাম</string>
     <string name="exp_level">বিশেষজ্ঞের স্তর</string>
-    <string name="memo_no">Memo no</string>
-    <string name="memo_date">Memo Date</string>
-    <string name="desi">Designation</string>
-    <string name="office_zoon">Office / Zone</string>
-    <string name="location">Location</string>
-    <string name="quarter_name">Quarter Name</string>
-    <string name="flat_no"><![CDATA[Flat No & Flat Type]]></string>
-    <string name="country">Country</string>
-    <string name="purpose">Purpose</string>
-    <string name="from_date">From Date</string>
-    <string name="to_date">To Date</string>
-    <string name="type_of_pub">Type of Publication</string>
-    <string name="public_details">Publication Details</string>
-    <string name="pub_name">Publication Name</string>
-    <string name="pub_name_bn">Publication Name (Bangla)</string>
-    <string name="transfer_type">Transfer Type</string>
-    <string name="transfer_from">Transfer From</string>
-    <string name="transfer_to">Transfer To</string>
-    <string name="eff_date">Effective Date</string>
+    <string name="memo_no">মেমো নং</string>
+    <string name="memo_date">মেমো তারিখ</string>
+    <string name="desi">উপাধি</string>
+    <string name="office_zoon">অফিস / জোন</string>
+    <string name="location">অবস্থান</string>
+    <string name="quarter_name">কোয়ার্টার নাম</string>
+    <string name="flat_no"><![CDATA[ফ্ল্যাট নং এবং ফ্ল্যাট প্রকার]]></string>
+    <string name="country">দেশ</string>
+    <string name="purpose">উদ্দেশ্য</string>
+    <string name="from_date">তারিখ হইতে</string>
+    <string name="to_date">এখন পর্যন্ত</string>
+    <string name="type_of_pub">প্রকাশনার ধরণ</string>
+    <string name="public_details">প্রকাশের বিবরণ</string>
+    <string name="pub_name">প্রকাশের নাম</string>
+    <string name="pub_name_bn">প্রকাশের নাম (বাংলা)</string>
+    <string name="transfer_type">স্থানান্তর প্রকার</string>
+    <string name="transfer_from">থেকে স্থানান্তর</string>
+    <string name="transfer_to">স্থানান্তর করা</string>
+    <string name="eff_date">কার্যকর দিন</string>
 
 
 </resources>
