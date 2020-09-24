@@ -497,6 +497,28 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             14 -> {
                 //Publication
+                if (baseModel.data.publications.size==0){
+                    boxList.add(Box(getString(R.string.type_of_pub), getString(R.string.type_of_pub), ""))
+                    boxList.add(Box(getString(R.string.public_details), getString(R.string.public_details), ""))
+                    boxList.add(Box(getString(R.string.pub_name), getString(R.string.pub_name), ""))
+                    boxList.add(Box(getString(R.string.pub_name_bn), getString(R.string.pub_name_bn), ""))
+                }
+                else{ for (n in baseModel.data.publications.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.type_of_pub), getString(R.string.type_of_pub), baseModel.data.publications[n].publication_type.g_name()))
+                        boxList.add(Box(getString(R.string.public_details), getString(R.string.public_details), baseModel.data.publications[n].g_publication_details()))
+                        boxList.add(Box(getString(R.string.pub_name), getString(R.string.pub_name), baseModel.data.publications[n].g_publication_name()))
+                        boxList.add(Box(getString(R.string.pub_name_bn), getString(R.string.pub_name_bn), baseModel.data.publications[n].g_publication_name_bn()))
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.type_of_pub), getString(R.string.type_of_pub), baseModel.data.publications[n].publication_type.g_name_bn()))
+                        boxList.add(Box(getString(R.string.public_details), getString(R.string.public_details), baseModel.data.publications[n].g_publication_details_bn()))
+                        boxList.add(Box(getString(R.string.pub_name), getString(R.string.pub_name), baseModel.data.publications[n].g_publication_name()))
+                        boxList.add(Box(getString(R.string.pub_name_bn), getString(R.string.pub_name_bn), baseModel.data.publications[n].g_publication_name_bn()))
+                    }
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
 
             }
             15 -> {
