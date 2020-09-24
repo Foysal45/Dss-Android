@@ -66,6 +66,25 @@
     <string name="name_language">ভাষার নাম</string>
     <string name="name_institute">প্রতিষ্ঠানের নাম</string>
     <string name="exp_level">বিশেষজ্ঞের স্তর</string>
+    <string name="memo_no">Memo no</string>
+    <string name="memo_date">Memo Date</string>
+    <string name="desi">Designation</string>
+    <string name="office_zoon">Office / Zone</string>
+    <string name="location">Location</string>
+    <string name="quarter_name">Quarter Name</string>
+    <string name="flat_no"><![CDATA[Flat No & Flat Type]]></string>
+    <string name="country">Country</string>
+    <string name="purpose">Purpose</string>
+    <string name="from_date">From Date</string>
+    <string name="to_date">To Date</string>
+    <string name="type_of_pub">Type of Publication</string>
+    <string name="public_details">Publication Details</string>
+    <string name="pub_name">Publication Name</string>
+    <string name="pub_name_bn">Publication Name (Bangla)</string>
+    <string name="transfer_type">Transfer Type</string>
+    <string name="transfer_from">Transfer From</string>
+    <string name="transfer_to">Transfer To</string>
+    <string name="eff_date">Effective Date</string>
 
 
 </resources>

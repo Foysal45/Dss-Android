@@ -396,26 +396,11 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             11 -> {
                 //official residential
-                var EmployeePersonalInfoViewModel_officialResidentInfo: EmployeePersonalInfoViewModel_officialResidentInfo? =
-                    null
-                boxList.add(Box("Memo no & Date", "Memo no & Date", ""))
-                boxList.add(Box("Designation", "Designation", ""))
-                boxList.add(Box("Office / Zone", "Office / Zone", ""))
-                boxList.add(Box("Location", "Location", ""))
-                boxList.add(Box("Quarter Name", "Quarter Name", ""))
-                boxList.add(Box("Flat No & Flat Type", "Flat No & Flat Type", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
+
             }
             12 -> {
                 //foreign Travel
-                var EmployeePersonalInfoViewModel_foreignTravel: EmployeePersonalInfoViewModel_foreignTravel? =
-                    null
-                boxList.add(Box("Employee ID", "Employee id", ""))
-                boxList.add(Box("Country", "Country", ""))
-                boxList.add(Box("Purpose", "Purpose", ""))
-                boxList.add(Box("From Date", "Date will goes here", ""))
-                boxList.add(Box("To Date", "Date will goes here", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
+
             }
             13 -> {
                 //Additional Profile Qualification
@@ -459,13 +444,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             14 -> {
                 //Publication
-                var EmployeePersonalInfoViewModel_publication: EmployeePersonalInfoViewModel_publication? =
-                    null
-                boxList.add(Box("Type of Publication", "Type of publication", ""))
-                boxList.add(Box("Publication Details", "Publication details", ""))
-                boxList.add(Box("Publication Name", "Publication name", ""))
-                boxList.add(Box("Publication Name (Bangla)", "Publication name in Bangla", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
+
             }
             15 -> {
                 //Honours and awards
@@ -514,17 +493,11 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             16 -> {
                 //posting record
-                var EmployeePersonalInfoViewModel_postingRecord: EmployeePersonalInfoViewModel_postingRecord? =
-                    null
-                boxList.add(Box("Transfer From", "Transfer from", ""))
-                boxList.add(Box("Transfer To", "Transfer to", ""))
-                boxList.add(Box("Effective Date", "Effective date", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
+
             }
             17 -> {
                 //disciplinary
-                var EmployeePersonalInfoViewModel_disciplinaryAction: EmployeePersonalInfoViewModel_disciplinaryAction? =
-                    null
+
                 boxList.add(Box("Category", "Category", ""))
                 boxList.add(Box("Present Status", "Present status", ""))
                 boxList.add(Box("Description", "Description", ""))
