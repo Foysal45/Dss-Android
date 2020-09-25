@@ -29,8 +29,13 @@ class LoginSignupActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LanguageChange.languageSet(this)
-        setContentView(R.layout.activity_login_signup)
         sharedPref = SharedPref(this)
+        if (sharedPref!!.isLogin!!)
+        {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+        setContentView(R.layout.activity_login_signup)
         signInActivityViewModel =
             ViewModelProvider(this)[SignInActivityViewModel::class.java]
 

@@ -82,7 +82,10 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     // expandable
     implementation 'com.github.aakira:expandable-layout:1.6.0'
-
+    // gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+    //lotti loading
+    implementation 'com.airbnb.android:lottie:3.4.2'
 
 
 
