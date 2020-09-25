@@ -64,6 +64,44 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             1 -> {
                 //job join info
+                if (baseModel.data.jobjoinings.size==0){
+                    boxList.add(Box(getString(R.string.designation), getString(R.string.designation), ""))
+                    boxList.add(Box(getString(R.string.depertment), getString(R.string.depertment), ""))
+                    boxList.add(Box(getString(R.string.job_type), getString(R.string.job_type), ""))
+                    boxList.add(Box(getString(R.string.joning_date), getString(R.string.joning_date), ""))
+                    boxList.add(Box(getString(R.string.pension), getString(R.string.pension), ""))
+                    boxList.add(Box(getString(R.string._class), getString(R.string._class), ""))
+                    boxList.add(Box(getString(R.string.grade), getString(R.string.grade), ""))
+                    boxList.add(Box(getString(R.string.prl_date), getString(R.string.prl_date), ""))
+                }
+                else{ for (n in baseModel.data.jobjoinings.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.designation), getString(R.string.designation), baseModel.data.jobjoinings[n].designation.g_desi_name()))
+                        boxList.add(Box(getString(R.string.depertment), getString(R.string.depertment), baseModel.data.jobjoinings[n].department.g_name()))
+                        boxList.add(Box(getString(R.string.job_type), getString(R.string.job_type), baseModel.data.jobjoinings[n].job_type.g_name()))
+                        boxList.add(Box(getString(R.string.joning_date), getString(R.string.joning_date), baseModel.data.jobjoinings[n].g_joining_date()))
+                        boxList.add(Box(getString(R.string.pension), getString(R.string.pension), baseModel.data.jobjoinings[n].g_pension_date()))
+                        boxList.add(Box(getString(R.string._class), getString(R.string._class),baseModel.data.jobjoinings[n].employee_class.g_name()))
+                        boxList.add(Box(getString(R.string.grade), getString(R.string.grade), baseModel.data.jobjoinings[n].grade.g_name()))
+                        boxList.add(Box(getString(R.string.prl_date), getString(R.string.prl_date), baseModel.data.jobjoinings[n].g_prl_date()))
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.designation), getString(R.string.designation), baseModel.data.jobjoinings[n].designation.g_desi_name_bn()))
+                        boxList.add(Box(getString(R.string.depertment), getString(R.string.depertment), baseModel.data.jobjoinings[n].department.g_name_bn()))
+                        boxList.add(Box(getString(R.string.job_type), getString(R.string.job_type), baseModel.data.jobjoinings[n].job_type.g_name_bn()))
+                        boxList.add(Box(getString(R.string.joning_date), getString(R.string.joning_date), baseModel.data.jobjoinings[n].g_joining_date()))
+                        boxList.add(Box(getString(R.string.pension), getString(R.string.pension), baseModel.data.jobjoinings[n].g_pension_date()))
+                        boxList.add(Box(getString(R.string._class), getString(R.string._class),baseModel.data.jobjoinings[n].employee_class.g_name_bn()))
+                        boxList.add(Box(getString(R.string.grade), getString(R.string.grade), baseModel.data.jobjoinings[n].grade.g_name_bn()))
+                        boxList.add(Box(getString(R.string.prl_date), getString(R.string.prl_date), baseModel.data.jobjoinings[n].g_prl_date()))
+                    }
+
+
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
+
+
 
             }
             2 -> {
