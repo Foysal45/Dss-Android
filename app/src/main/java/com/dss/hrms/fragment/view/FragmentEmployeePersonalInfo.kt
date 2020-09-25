@@ -498,7 +498,42 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             17 -> {
                 //disciplinary
+                if (baseModel.data.disciplinary_actions.size==0){
+                    boxList.add(Box(getString(R.string.catagory),getString(R.string.catagory), ""))
+                    boxList.add(Box(getString(R.string.present_status), getString(R.string.present_status), ""))
+                    boxList.add(Box(getString(R.string.description), getString(R.string.description), ""))
+                    boxList.add(Box(getString(R.string.judgment), getString(R.string.judgment), ""))
+                    boxList.add(Box(getString(R.string.final_judment), getString(R.string.final_judment), ""))
+                    boxList.add(Box(getString(R.string.remakrs), getString(R.string.remakrs), ""))
+                    boxList.add(Box(getString(R.string.date), getString(R.string.date), ""))
 
+                }
+                else{ for (n in baseModel.data.disciplinary_actions.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.catagory),getString(R.string.catagory), baseModel.data.disciplinary_actions[n].disciplinary_action_category.g_name()))
+                        boxList.add(Box(getString(R.string.present_status), getString(R.string.present_status), ""))
+                        boxList.add(Box(getString(R.string.description), getString(R.string.description), baseModel.data.disciplinary_actions[n].g_disciplinary_action_details()))
+                        boxList.add(Box(getString(R.string.judgment), getString(R.string.judgment), baseModel.data.disciplinary_actions[n].g_judgment()))
+                        boxList.add(Box(getString(R.string.final_judment), getString(R.string.final_judment), baseModel.data.disciplinary_actions[n].g_final_judgment()))
+                        boxList.add(Box(getString(R.string.remakrs), getString(R.string.remakrs), baseModel.data.disciplinary_actions[n].g_remarks()))
+                        boxList.add(Box(getString(R.string.date), getString(R.string.date),baseModel.data.disciplinary_actions[n].g_date()))
+
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.catagory),getString(R.string.catagory), baseModel.data.disciplinary_actions[n].disciplinary_action_category.g_name_bn()))
+                        boxList.add(Box(getString(R.string.present_status), getString(R.string.present_status), ""))
+                        boxList.add(Box(getString(R.string.description), getString(R.string.description), baseModel.data.disciplinary_actions[n].g_disciplinary_action_details_bn()))
+                        boxList.add(Box(getString(R.string.judgment), getString(R.string.judgment), baseModel.data.disciplinary_actions[n].g_judgment_bn()))
+                        boxList.add(Box(getString(R.string.final_judment), getString(R.string.final_judment), baseModel.data.disciplinary_actions[n].g_final_judgment_bn()))
+                        boxList.add(Box(getString(R.string.remakrs), getString(R.string.remakrs), baseModel.data.disciplinary_actions[n].g_remarks_bn()))
+                        boxList.add(Box(getString(R.string.date), getString(R.string.date),baseModel.data.disciplinary_actions[n].g_date()))
+
+                    }
+
+
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
             }
          /*   18 -> {
                 //leave
