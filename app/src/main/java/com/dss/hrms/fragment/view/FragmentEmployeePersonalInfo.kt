@@ -153,7 +153,43 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             4 -> {
                 //permanent address
+                if (baseModel.data.permanent_addresses.size==0){
+                    boxList.add(Box(getString(R.string.vill_house), getString(R.string.vill_house), ""))
+                    boxList.add(Box(getString(R.string.road_word), getString(R.string.road_word), ""))
+                    boxList.add(Box(getString(R.string.post_off), getString(R.string.post_off), ""))
+                    boxList.add(Box(getString(R.string.police_station), getString(R.string.police_station), ""))
+                    boxList.add(Box(getString(R.string.district), getString(R.string.district), ""))
+                    boxList.add(Box(getString(R.string.division), getString(R.string.division), ""))
+                    boxList.add(Box(getString(R.string.phone_mobile), getString(R.string.phone_mobile), ""))
+                    boxList.add(Box(getString(R.string.email), getString(R.string.email), ""))
+                }
+                else{ for (n in baseModel.data.permanent_addresses.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.vill_house), getString(R.string.vill_house), baseModel.data.permanent_addresses[n].g_village_house_no()))
+                        boxList.add(Box(getString(R.string.road_word), getString(R.string.road_word), baseModel.data.permanent_addresses[n].g_road_word_no()))
+                        boxList.add(Box(getString(R.string.post_off), getString(R.string.post_off), baseModel.data.permanent_addresses[n].g_post_office()))
+                        boxList.add(Box(getString(R.string.police_station), getString(R.string.police_station), baseModel.data.permanent_addresses[n].g_police_station()))
+                        boxList.add(Box(getString(R.string.district), getString(R.string.district), baseModel.data.permanent_addresses[n].district.g_name()))
+                        boxList.add(Box(getString(R.string.division), getString(R.string.division),baseModel.data.permanent_addresses[n].division.g_name()))
+                        boxList.add(Box(getString(R.string.phone_mobile), getString(R.string.phone_mobile), baseModel.data.permanent_addresses[n].g_phone_no()))
+                        boxList.add(Box(getString(R.string.email), getString(R.string.email), ""))
 
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.vill_house), getString(R.string.vill_house), baseModel.data.permanent_addresses[n].g_village_house_no_bn()))
+                        boxList.add(Box(getString(R.string.road_word), getString(R.string.road_word), baseModel.data.permanent_addresses[n].g_road_word_no_bn()))
+                        boxList.add(Box(getString(R.string.post_off), getString(R.string.post_off), baseModel.data.permanent_addresses[n].g_post_office_bn()))
+                        boxList.add(Box(getString(R.string.police_station), getString(R.string.police_station), baseModel.data.permanent_addresses[n].g_police_station_bn()))
+                        boxList.add(Box(getString(R.string.district), getString(R.string.district), baseModel.data.permanent_addresses[n].district.g_name_bn()))
+                        boxList.add(Box(getString(R.string.division), getString(R.string.division),baseModel.data.permanent_addresses[n].division.g_name_bn()))
+                        boxList.add(Box(getString(R.string.phone_mobile), getString(R.string.phone_mobile), baseModel.data.permanent_addresses[n].g_phone_no()))
+                        boxList.add(Box(getString(R.string.email), getString(R.string.email), ""))
+                    }
+
+
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
             }
             5 -> {
                 //education
