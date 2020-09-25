@@ -65,111 +65,23 @@ class FragmentEmployeePersonalInfo : Fragment() {
             1 -> {
                 //job join info
 
-                boxList.add(Box("Designation", "Designation", ""))
-                boxList.add(Box("Department", "Department", ""))
-                boxList.add(Box("Job Type", "Job Type", ""))
-                boxList.add(Box("Joining Date", "Joining Date", ""))
-                boxList.add(Box("Pension Date", "Pension Date", ""))
-                boxList.add(Box("Class", "Class", ""))
-                boxList.add(Box("Grade(Scale)", "Grade(Scale)", ""))
-                boxList.add(Box("PRL Date", "PRL Date", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
             }
             2 -> {
                 //quota info
-                var EmployeePersonalInfoViewModel_quotaInfo: EmployeePersonalInfoViewModel_quotaInfo? =
-                    null
                 boxList.add(Box("Quota Type", "Quota Type", ""))
                 boxList.add(Box("Description", "Description", ""))
                 recyclerAdapter_Box!!.notifyDataSetChanged()
             }
             3 -> {
                 //present address
-                var employeePersonalInfoViewModel_presentAdderss: EmployeePersonalInfoViewModel_presentAdderss? =
-                    null
-                boxList.add(Box("Village/House No.", "Village/House No", ""))
-                boxList.add(Box("Road/Word No.", "Road/Word No", ""))
-                boxList.add(Box("Post Office", "Post Office", ""))
-                boxList.add(Box("Police Station", "Police Station", ""))
-                boxList.add(Box("District", "District", ""))
-                boxList.add(Box("Division", "Division", ""))
-                boxList.add(Box("Phone & Mobile No.", "Phone & Mobile No", ""))
-                boxList.add(Box("E-mail Address", "email address", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
+
             }
             4 -> {
                 //permanent address
-                var EmployeePersonalInfoViewModel_permanentAddress: EmployeePersonalInfoViewModel_permanentAddress? =
-                    null
 
-                boxList.add(Box("Village/House No.", "Village/House No", ""))
-                boxList.add(Box("Road/Word No.", "Road/Word No", ""))
-                boxList.add(Box("Post Office", "Post Office", ""))
-                boxList.add(Box("Police Station", "Police Station", ""))
-                boxList.add(Box("District", "District", ""))
-                boxList.add(Box("Division", "Division", ""))
-                boxList.add(Box("Phone & Mobile No.", "Phone & Mobile No", ""))
-                boxList.add(Box("E-mail Address", "email address", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
             }
             5 -> {
                 //education
-                var employeePersonalInfoViewModel_eduationInfo =
-                    ViewModelProvider(this)[EmployeePersonalInfoViewModel_eduationInfo::class.java]
-                employeePersonalInfoViewModel_eduationInfo.educationalQualification(view.context)
-                    .observe(activity!!, Observer<Any> { any ->
-
-                        if (any is EducationalQualificationRes) {
-                            for (n in any.getData().indices) {
-                                boxList.add(
-                                    Box(
-                                        "Name of Degree",
-                                        "Name of Degree",
-                                        any.getData()[n].getNameDegree()
-                                    )
-                                )
-                                boxList.add(
-                                    Box(
-                                        "Name of Institute",
-                                        "Name of Institute",
-                                        any.getData()[n].getNameInstitute()
-                                    )
-                                )
-                                boxList.add(
-                                    Box(
-                                        "Board/University",
-                                        "Board/University",
-                                        any.getData()[n].getBoard()
-                                    )
-                                )
-                                boxList.add(
-                                    Box(
-                                        "Passing Year",
-                                        "Passing Year",
-                                        any.getData()[n].getYear()
-                                    )
-                                )
-                                boxList.add(
-                                    Box(
-                                        "Division / CGPA",
-                                        "Division / CGPA",
-                                        any.getData()[n].getCgpa()
-                                    )
-                                )
-                            }
-                            recyclerAdapter_Box!!.notifyDataSetChanged()
-
-                        } else if (any is ApiError) {
-
-                            toast(view.context, any.getMessage())
-
-
-                        } else if (any is Throwable) {
-                            toast(view.context, "Please check your internet connection")
-
-                        }
-
-                    })
 
 
             }
@@ -215,11 +127,6 @@ class FragmentEmployeePersonalInfo : Fragment() {
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
-
-
-
-
-
             }
             7 -> {
                 //child information
@@ -397,42 +304,6 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             13 -> {
                 //Additional Profile Qualification
-                var employeePersonalInfoViewModel_additionalProfileQualification =
-                    ViewModelProvider(this)[EmployeePersonalInfoViewModel_additionalProfileQualification::class.java]
-                employeePersonalInfoViewModel_additionalProfileQualification.additionalProfileQualification(
-                    view.context
-                ).observe(activity!!, Observer<Any> { any ->
-
-                    if (any is AdditionalProfileQualificationRes) {
-                        for (n in any.getData().indices) {
-                            boxList.add(
-                                Box(
-                                    "Qualification Name",
-                                    "Qualification name",
-                                    any.getData()[n].getQualificationName()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    "Qualification Details",
-                                    "Qualification details",
-                                    any.getData()[n].getQualificationDetails()
-                                )
-                            )
-                        }
-                        recyclerAdapter_Box!!.notifyDataSetChanged()
-
-                    } else if (any is ApiError) {
-
-                        toast(view.context, any.getMessage())
-
-
-                    } else if (any is Throwable) {
-                        toast(view.context, "Please check your internet connection")
-
-                    }
-
-                })
 
             }
             14 -> {
@@ -517,14 +388,6 @@ class FragmentEmployeePersonalInfo : Fragment() {
             17 -> {
                 //disciplinary
 
-                boxList.add(Box("Category", "Category", ""))
-                boxList.add(Box("Present Status", "Present status", ""))
-                boxList.add(Box("Description", "Description", ""))
-                boxList.add(Box("Judgement", "Judgement", ""))
-                boxList.add(Box("Final Judgement", "Final Judgement", ""))
-                boxList.add(Box("Remarks", "Remarks", ""))
-                boxList.add(Box("Date", "Date", ""))
-                recyclerAdapter_Box!!.notifyDataSetChanged()
             }
          /*   18 -> {
                 //leave

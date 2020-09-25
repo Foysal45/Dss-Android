@@ -24,5 +24,10 @@ data class Data (
 	@SerializedName("publications") val publications : List<Publications>,
 	@SerializedName("honours_awards") val honours_awards : List<Honours_awards>,
 	@SerializedName("posting_records") val posting_records : List<Posting_records>,
-	@SerializedName("official_residentials") val official_residentials : List<Official_residentials>
+	@SerializedName("official_residentials") val official_residentials : List<Official_residentials>,
+	@SerializedName("jobjoinings") val jobjoinings : List<Jobjoinings>,
+	@SerializedName("present_addresses") val present_addresses : List<Present_addresses>,
+	@SerializedName("permanent_addresses") val permanent_addresses : List<Permanent_addresses>,
+	@SerializedName("educational_qualifications") val educational_qualifications : List<Educational_qualifications>,
+	@SerializedName("disciplinary_actions") val disciplinary_actions : List<Disciplinary_actions>
 )

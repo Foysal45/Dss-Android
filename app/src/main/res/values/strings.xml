@@ -88,5 +88,33 @@
     <string name="aware_t">Award Title</string>
     <string name="award_details">Award Details</string>
     <string name="award_date">Award Date</string>
+    <string name="designation">Designation</string>
+    <string name="depertment">Department</string>
+    <string name="job_type">Job Type</string>
+    <string name="joning_date">Joining Date</string>
+    <string name="pension">Pension Date</string>
+    <string name="_class">Class</string>
+    <string name="grade">Grade(Scale)</string>
+    <string name="prl_date">PRL Date</string>
+    <string name="vill_house">Village/House No.</string>
+    <string name="road_word">Road/Word No.</string>
+    <string name="post_off">Post Office</string>
+    <string name="police_station">Police Station</string>
+    <string name="division">Division</string>
+    <string name="phone_mobile"><![CDATA[Phone & Mobile No.]]></string>
+    <string name="name_deg">Name of Degree</string>
+    <string name="name_ins">Name of Institute</string>
+    <string name="board_uni">Board/University</string>
+    <string name="passing_year">Passing Year</string>
+    <string name="div_cgpa">Division / CGPA</string>
+    <string name="catagory">Category</string>
+    <string name="present_status">Present Status</string>
+    <string name="description">Description</string>
+    <string name="judgment">Judgement</string>
+    <string name="final_judment">Final Judgement</string>
+    <string name="remakrs">Remarks</string>
+    <string name="date">Date</string>
+    <string name="qualification_name">Qualification Name</string>
+    <string name="qualification_details">Qualification Details</string>
 
 </resources>

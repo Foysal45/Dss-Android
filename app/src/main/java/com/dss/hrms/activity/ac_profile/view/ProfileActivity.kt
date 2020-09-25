@@ -126,7 +126,7 @@ class ProfileActivity : AppCompatActivity() {
             12 -> {
                 menu_next.visibility = VISIBLE
                 menu_back.visibility = VISIBLE
-                return resources.getString(R.string.foreign_training)
+                return resources.getString(R.string.foreign_travel)
             }
             13 -> {
                 menu_next.visibility = VISIBLE

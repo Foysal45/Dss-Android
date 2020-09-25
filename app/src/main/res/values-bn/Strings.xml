@@ -94,6 +94,34 @@
     <string name="aware_t">পুরষ্কার শিরোনাম</string>
     <string name="award_details">পুরষ্কার বিশদ</string>
     <string name="award_date">পুরুস্কারের দিন</string>
+    <string name="designation">উপাধি</string>
+    <string name="depertment">বিভাগ</string>
+    <string name="job_type">কাজের ধরন</string>
+    <string name="joning_date">যোগদান তারিখ</string>
+    <string name="pension">পেনশনের তারিখ</string>
+    <string name="_class">ক্লাস</string>
+    <string name="grade">গ্রেড (স্কেল)</string>
+    <string name="prl_date">পিআরএল তারিখ</string>
+    <string name="vill_house">গ্রাম / বাড়ি নং</string>
+    <string name="road_word">রাস্তা / শব্দ নং</string>
+    <string name="post_off">ডাক ঘর</string>
+    <string name="police_station">থানা</string>
+    <string name="division">বিভাগ</string>
+    <string name="phone_mobile"><![CDATA[ফোন এবং মোবাইল নং]]></string>
+    <string name="name_deg">ডিগ্রির নাম</string>
+    <string name="name_ins">প্রতিষ্ঠানের নাম</string>
+    <string name="board_uni">বোর্ড / বিশ্ববিদ্যালয়</string>
+    <string name="passing_year">বছর পার করছে</string>
+    <string name="div_cgpa">বিভাগ / সিজিপিএ</string>
+    <string name="catagory">বিভাগ</string>
+    <string name="present_status">বর্তমান অবস্থা</string>
+    <string name="description">বর্ণনা</string>
+    <string name="judgment">বিচার</string>
+    <string name="final_judment">চূড়ান্ত রায়</string>
+    <string name="remakrs">মন্তব্য</string>
+    <string name="date">তারিখ</string>
+    <string name="qualification_name">যোগ্যতার নাম</string>
+    <string name="qualification_details">যোগ্যতার বিবরণ</string>
 
 
 </resources>
