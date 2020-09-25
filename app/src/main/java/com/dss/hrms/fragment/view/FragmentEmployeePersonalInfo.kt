@@ -415,7 +415,23 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             13 -> {
                 //Additional Profile Qualification
+                if (baseModel.data.additional_qualifications.size==0){
+                    boxList.add(Box(getString(R.string.qualification_name), getString(R.string.qualification_name), ""))
+                    boxList.add(Box(getString(R.string.qualification_details), getString(R.string.qualification_details), ""))
+                }
+                else{ for (n in baseModel.data.additional_qualifications.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.qualification_name), getString(R.string.qualification_name), baseModel.data.additional_qualifications[n].g_qualification_name()))
+                        boxList.add(Box(getString(R.string.qualification_details), getString(R.string.qualification_details), baseModel.data.additional_qualifications[n].g_qualification_details()))
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.qualification_name), getString(R.string.qualification_name), baseModel.data.additional_qualifications[n].g_qualification_details_bn()))
+                        boxList.add(Box(getString(R.string.qualification_details), getString(R.string.qualification_details), baseModel.data.additional_qualifications[n].g_qualification_details_bn()))
 
+                    }
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
             }
             14 -> {
                 //Publication
