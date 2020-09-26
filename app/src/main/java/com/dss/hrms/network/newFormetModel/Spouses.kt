@@ -12,7 +12,7 @@ data class Spouses(
 	@SerializedName("mobile_no") val mobile_no: String?,
 	@SerializedName("mobile_no_bn") val mobile_no_bn: String?,
 	@SerializedName("distric") val distric: Distric,
-	@SerializedName("religion") val religion: String?
+	@SerializedName("religion") val religion: Religion
 ) {
     fun g_name(): String {
         if (name.equals(null))
@@ -68,10 +68,6 @@ data class Spouses(
         return mobile_no_bn!!
     }
 
-    fun g_religion(): String {
-        if (religion.equals(null))
-            return ""
-        return religion!!
-    }
+
 
 }

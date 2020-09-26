@@ -20,9 +20,7 @@ class Data(
     @SerializedName("police_station")
     private var police_station: String?,
     @SerializedName("district_id")
-    private var district_id: String?,
-    @SerializedName("district_id")
-    private var district_id: String?,
+    private var district_id: String?
 ) {
     fun setEmployeeId(employeeId: Int) {
         this.employeeId = employeeId
@@ -35,27 +33,30 @@ class Data(
         return employeeId!!
     }
 
-    fun setQualificationName(qualificationName: String) {
-        this.qualificationName = qualificationName
+    fun setVillage_house_no(villageHouseNo: String) {
+        this.villageHouseNo = villageHouseNo
     }
 
-    fun getQualificationName(): String {
-        if (qualificationName.equals(null)) {
+    fun getVillage_house_no(): String {
+        if (villageHouseNo.equals(null)) {
             return ""
         }
-        return qualificationName!!
+        return villageHouseNo!!
     }
 
-    fun setQualificationDetails(qualificationDetails: String) {
-        this.qualificationDetails = qualificationDetails
+
+    fun setRoad_word_no(road_word_no: String) {
+        this.road_word_no = road_word_no
     }
 
-    fun getQualificationDetails(): String {
-        if (qualificationDetails.equals(null)) {
+
+    fun getRoad_word_no(): String {
+        if (road_word_no.equals(null)) {
             return ""
         }
-        return qualificationDetails!!
+        return road_word_no!!
     }
+
 
 
 
