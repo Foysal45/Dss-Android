@@ -193,7 +193,32 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             5 -> {
                 //education
+                if (baseModel.data.educational_qualifications.size==0){
+                    boxList.add(Box(getString(R.string.name_deg), getString(R.string.name_deg), ""))
+                    boxList.add(Box(getString(R.string.name_ins), getString(R.string.name_deg), ""))
+                    boxList.add(Box(getString(R.string.board_uni), getString(R.string.board_uni), ""))
+                    boxList.add(Box(getString(R.string.passing_year), getString(R.string.passing_year), ""))
+                    boxList.add(Box(getString(R.string.div_cgpa), getString(R.string.div_cgpa), ""))
+                }
+                else{ for (n in baseModel.data.educational_qualifications.indices) {
+                    if (LanguageChange.langA == "en"){
+                        boxList.add(Box(getString(R.string.name_deg), getString(R.string.name_deg), baseModel.data.educational_qualifications[n].g_name_of_degree()))
+                        boxList.add(Box(getString(R.string.name_ins), getString(R.string.name_deg), baseModel.data.educational_qualifications[n].g_name_of_institute()))
+                        boxList.add(Box(getString(R.string.board_uni), getString(R.string.board_uni), baseModel.data.educational_qualifications[n].g_board_university()))
+                        boxList.add(Box(getString(R.string.passing_year), getString(R.string.passing_year), baseModel.data.educational_qualifications[n].g_passing_year()))
+                        boxList.add(Box(getString(R.string.div_cgpa), getString(R.string.div_cgpa), baseModel.data.educational_qualifications[n].g_division_cgpa()))
 
+                    }
+                    else{
+                        boxList.add(Box(getString(R.string.name_deg), getString(R.string.name_deg), baseModel.data.educational_qualifications[n].g_name_of_degree_bn()))
+                        boxList.add(Box(getString(R.string.name_ins), getString(R.string.name_deg), baseModel.data.educational_qualifications[n].g_name_of_institute_bn()))
+                        boxList.add(Box(getString(R.string.board_uni), getString(R.string.board_uni), baseModel.data.educational_qualifications[n].g_board_university()))
+                        boxList.add(Box(getString(R.string.passing_year), getString(R.string.passing_year), baseModel.data.educational_qualifications[n].g_passing_year()))
+                        boxList.add(Box(getString(R.string.div_cgpa), getString(R.string.div_cgpa), baseModel.data.educational_qualifications[n].g_division_cgpa()))
+                    }
+                }
+                }
+                recyclerAdapter_Box!!.notifyDataSetChanged()
 
             }
             6 -> {
