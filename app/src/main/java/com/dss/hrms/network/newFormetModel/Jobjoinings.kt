@@ -3,9 +3,9 @@ import com.google.gson.annotations.SerializedName
 
 data class Jobjoinings(
 
-	@SerializedName("joining_date") val joining_date: String,
-	@SerializedName("pension_date") val pension_date: String,
-	@SerializedName("prl_date") val prl_date: String,
+	@SerializedName("joining_date") val joining_date: String?,
+	@SerializedName("pension_date") val pension_date: String?,
+	@SerializedName("prl_date") val prl_date: String?,
 	@SerializedName("office") val office: Office,
 	@SerializedName("designation") val designation: Designation,
 	@SerializedName("department") val department: Department,

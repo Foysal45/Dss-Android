@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName
 
 data class Permanent_addresses (
 
-	@SerializedName("phone_no") val phone_no : String,
-	@SerializedName("police_station") val police_station : String,
-	@SerializedName("police_station_bn") val police_station_bn : String,
-	@SerializedName("post_office") val post_office : String,
-	@SerializedName("post_office_bn") val post_office_bn : String,
-	@SerializedName("road_word_no") val road_word_no : String,
-	@SerializedName("road_word_no_bn") val road_word_no_bn : String,
-	@SerializedName("village_house_no") val village_house_no : String,
-	@SerializedName("village_house_no_bn") val village_house_no_bn : String,
+	@SerializedName("phone_no") val phone_no : String?,
+	@SerializedName("police_station") val police_station : String?,
+	@SerializedName("police_station_bn") val police_station_bn : String?,
+	@SerializedName("post_office") val post_office : String?,
+	@SerializedName("post_office_bn") val post_office_bn : String?,
+	@SerializedName("road_word_no") val road_word_no : String?,
+	@SerializedName("road_word_no_bn") val road_word_no_bn : String?,
+	@SerializedName("village_house_no") val village_house_no : String?,
+	@SerializedName("village_house_no_bn") val village_house_no_bn : String?,
 	@SerializedName("division") val division : Division,
 	@SerializedName("district") val district : Distric,
 	@SerializedName("upazila") val upazila : Upazila

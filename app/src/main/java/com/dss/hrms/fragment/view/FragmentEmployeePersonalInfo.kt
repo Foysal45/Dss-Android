@@ -1892,11 +1892,29 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }*/
             18 -> {
                 //promotion
-                baseModel.data.promotions
-                boxList.add(Box("Memo no & Date", "memo no date", ""))
-                boxList.add(Box("Office/Zone", "office zone", ""))
-                boxList.add(Box("Previous Post", "previous post", ""))
-                boxList.add(Box("Current Position", "current position", ""))
+                if (baseModel.data.promotions.size == 0) {
+                    boxList.add(Box(getString(R.string.memo_no), getString(R.string.memo_no), ""))
+                    boxList.add(Box(getString(R.string.memo_date), getString(R.string.memo_date), ""))
+                    boxList.add(Box(getString(R.string.office_zoon), getString(R.string.office_zoon), ""))
+                    boxList.add(Box(getString(R.string.previous_post), getString(R.string.previous_post), ""))
+                    boxList.add(Box(getString(R.string.curent_post), getString(R.string.curent_post), ""))
+                } else {
+                    for (n in baseModel.data.promotions.indices) {
+                        if (LanguageChange.langA == "en") {
+                            boxList.add(Box(getString(R.string.memo_no), getString(R.string.memo_no), baseModel.data.promotions[n].g_memo_no()))
+                            boxList.add(Box(getString(R.string.memo_date), getString(R.string.memo_date), baseModel.data.promotions[n].g_memo_date()))
+                            boxList.add(Box(getString(R.string.office_zoon), getString(R.string.office_zoon), ""))
+                            boxList.add(Box(getString(R.string.previous_post), getString(R.string.previous_post), baseModel.data.promotions[n].previous_posts.g_name()))
+                            boxList.add(Box(getString(R.string.curent_post), getString(R.string.curent_post), baseModel.data.promotions[n].current_position.g_name()))
+                        } else {
+                            boxList.add(Box(getString(R.string.memo_no), getString(R.string.memo_no), baseModel.data.promotions[n].g_memo_no_bn()))
+                            boxList.add(Box(getString(R.string.memo_date), getString(R.string.memo_date), baseModel.data.promotions[n].g_memo_date()))
+                            boxList.add(Box(getString(R.string.office_zoon), getString(R.string.office_zoon), ""))
+                            boxList.add(Box(getString(R.string.previous_post), getString(R.string.previous_post), baseModel.data.promotions[n].previous_posts.g_name_bn()))
+                            boxList.add(Box(getString(R.string.curent_post), getString(R.string.curent_post), baseModel.data.promotions[n].current_position.g_name_bn()))
+                        }
+                    }
+                }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
             }
             19 -> {
