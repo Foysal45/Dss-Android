@@ -116,5 +116,14 @@
     <string name="date">Date</string>
     <string name="qualification_name">Qualification Name</string>
     <string name="qualification_details">Qualification Details</string>
+    <string name="employee_id">Employee ID</string>
+    <string name="birth">Date of Birth</string>
+    <string name="f_name">Father’s Name</string>
+    <string name="f_name_b">Father’s name (Bangla)</string>
+    <string name="m_name">Mother’s Name</string>
+    <string name="m_name_b">Mother’s Name (Bangla)</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="gender">Gender</string>
 
 </resources>
