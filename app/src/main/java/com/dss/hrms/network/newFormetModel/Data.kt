@@ -29,6 +29,7 @@ data class Data(
     @SerializedName("publications") val publications: List<Publications>,
     @SerializedName("honours_awards") val honours_awards: List<Honours_awards>,
     @SerializedName("spouses") val spouses: List<Spouses>,
+    @SerializedName("employee_quotas") val employee_quotas: List<Quotas>,
     //check end
     @SerializedName("disciplinary_actions") val disciplinary_actions: List<Disciplinary_actions>
 ) {
