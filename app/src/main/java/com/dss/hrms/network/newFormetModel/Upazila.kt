@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 
 data class Upazila (
 
-	@SerializedName("name") val name : String,
-	@SerializedName("name_bn") val name_bn : String
+	@SerializedName("name") val name : String?,
+	@SerializedName("name_bn") val name_bn : String?
 )
 {	fun g_name(): String {
 	if (name.equals(null))

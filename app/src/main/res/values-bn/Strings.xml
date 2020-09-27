@@ -131,6 +131,8 @@
     <string name="male">পুরুষ</string>
     <string name="female">মহিলা</string>
     <string name="gender">লিঙ্গ</string>
+    <string name="previous_post">পূর্ববর্তী পোস্ট</string>
+    <string name="curent_post">বর্তমান অবস্থান</string>
 
 
 </resources>

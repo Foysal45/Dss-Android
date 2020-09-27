@@ -125,5 +125,7 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="gender">Gender</string>
+    <string name="previous_post">previous post</string>
+    <string name="curent_post">current position</string>
 
 </resources>
