@@ -217,8 +217,21 @@ class FragmentEmployeePersonalInfo : Fragment() {
             }
             2 -> {
                 //quota info
-                boxList.add(Box("Quota Type", "Quota Type", ""))
-                boxList.add(Box("Description", "Description", ""))
+                if (baseModel.data.employee_quotas.size == 0) {
+                    boxList.add(Box(getString(R.string.quota_type), getString(R.string.quota_type), ""))
+                    boxList.add(Box(getString(R.string.description), getString(R.string.description), ""))
+                } else {
+                    for (n in baseModel.data.employee_quotas.indices) {
+                        if (LanguageChange.langA == "en") {
+                            boxList.add(Box(getString(R.string.quota_type), getString(R.string.quota_type),baseModel.data.employee_quotas[n].quota_information.g_name()))
+                            boxList.add(Box(getString(R.string.description), getString(R.string.description), baseModel.data.employee_quotas[n].quota_information_details.g_name()))
+                        } else {
+                            boxList.add(Box(getString(R.string.quota_type), getString(R.string.quota_type),baseModel.data.employee_quotas[n].quota_information.g_name_bn()))
+                            boxList.add(Box(getString(R.string.description), getString(R.string.description), baseModel.data.employee_quotas[n].quota_information_details.g_name_bn()))
+                        }
+                    }
+                }
+
                 recyclerAdapter_Box!!.notifyDataSetChanged()
             }
             3 -> {
