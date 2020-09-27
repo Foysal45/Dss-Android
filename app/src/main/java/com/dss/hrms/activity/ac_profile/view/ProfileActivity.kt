@@ -2,6 +2,8 @@ package com.dss.hrms.activity.ac_profile.view
 
 import BaseModel
 import android.os.Bundle
+import android.view.View
+import android.view.View.INVISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.*
@@ -9,15 +11,17 @@ import com.chaadride.shared_pref.SharedPref
 import com.dss.hrms.R
 import com.dss.hrms.activity.ac_profile.adapter.viewpager.ViewPageAdapter
 import com.dss.hrms.fragment.view.FragmentEmployeePersonalInfo
+import com.dss.hrms.fragment.view.FragmentPersonal
 import com.dss.hrms.helper.LanguageChange
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_profile.*
+import androidx.viewpager.widget.ViewPager.INVISIBLE as INVISIBLE1
 
 
 class ProfileActivity : AppCompatActivity() {
     private var viewPager: ViewPager? = null
     private var adapter: ViewPageAdapter? = null
-
+    private var pos = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +32,13 @@ class ProfileActivity : AppCompatActivity() {
         viewPager = findViewById<ViewPager>(R.id.viewpager_go)
         adapter = ViewPageAdapter(supportFragmentManager)
         //add fragment
+
+
         for (i in 0..19) {
+            if (i == 0) {
+                adapter!!.addFragment(FragmentPersonal(), "Home")
+                continue
+            }
             val bundle = Bundle()
             bundle.putInt("message", i)
             val fragobj = FragmentEmployeePersonalInfo()
@@ -48,11 +58,12 @@ class ProfileActivity : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 menu_topic.text = showTopic(position)
-                menu_next.setOnClickListener { viewPager!!.currentItem = position + 1 }
-                menu_back.setOnClickListener { viewPager!!.currentItem = position - 1 }
+                pos=position
 
             }
         })
+        menu_next.setOnClickListener { viewPager!!.currentItem = pos + 1 }
+        menu_back.setOnClickListener { viewPager!!.currentItem = pos - 1 }
         viewPager!!.currentItem = intent.getIntExtra("position", 0)
         back.setOnClickListener { onBackPressed() }
     }
@@ -65,7 +76,7 @@ class ProfileActivity : AppCompatActivity() {
         when (pos) {
             0 -> {
                 menu_next.visibility = VISIBLE
-                menu_back.visibility = GONE
+                menu_back.visibility = INVISIBLE
                 return resources.getString(R.string.personal_information)
             }
             1 -> {
@@ -159,20 +170,20 @@ class ProfileActivity : AppCompatActivity() {
                 return resources.getString(R.string.promotion)
             }
             19 -> {
-                menu_next.visibility = GONE
+                menu_next.visibility = INVISIBLE
                 menu_back.visibility = VISIBLE
                 return resources.getString(R.string.reference)
             }
-     /*       18 -> {
-                menu_next.visibility = VISIBLE
-                menu_back.visibility = VISIBLE
-                return resources.getString(R.string.leave)
-            }
-            19 -> {
-                menu_next.visibility = VISIBLE
-                menu_back.visibility = VISIBLE
-                return resources.getString(R.string.job_information)
-            }*/
+            /*       18 -> {
+                       menu_next.visibility = VISIBLE
+                       menu_back.visibility = VISIBLE
+                       return resources.getString(R.string.leave)
+                   }
+                   19 -> {
+                       menu_next.visibility = VISIBLE
+                       menu_back.visibility = VISIBLE
+                       return resources.getString(R.string.job_information)
+                   }*/
 
             else -> {
                 return ""
