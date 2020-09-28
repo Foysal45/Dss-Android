@@ -15,6 +15,7 @@ import com.dss.hrms.activity.ac_main.view.MainActivity
 import com.dss.hrms.helper.LanguageChange
 import com.dss.hrms.R
 import com.dss.hrms.activity.ac_base.view.BaseActivity
+import com.dss.hrms.activity.ac_forget_pass.view.ForgetPAssActivity
 import com.dss.hrms.activity.ac_login_signup.viewModel.SignInActivityViewModel
 import com.dss.hrms.network.model.user_login.request.UserLoginReq
 import com.dss.hrms.network.model.user_login.response.UserLoginRes
@@ -82,7 +83,8 @@ class LoginSignupActivity : BaseActivity() {
                         sharedPref!!.isLogin = true
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
-                    } else if (any is ApiError) {
+                    }
+                    else if (any is ApiError) {
                         e_email.visibility = View.GONE
                         e_password.visibility = View.GONE
                         try {
@@ -119,7 +121,10 @@ class LoginSignupActivity : BaseActivity() {
 
 
         })
-
+        f_pass.setOnClickListener {
+            startActivity(Intent(this, ForgetPAssActivity::class.java))
+            finish()
+        }
 
     }
 

@@ -14,10 +14,12 @@ tools:context=".activity.ac_forget_pass.view.ForgetPAssActivity">
     android:scaleType="centerCrop"
     android:src="@drawable/back_img_top_lay" />
 <ImageView
+    android:id="@+id/back"
     android:src="@drawable/ic_baseline_arrow_back_24"
     android:layout_width="40dp"
     android:padding="10dp"
-    android:layout_height="40dp"/>
+    android:layout_height="40dp"
+    android:visibility="gone"/>
 <LinearLayout
     android:layout_centerVertical="true"
     android:gravity="center_horizontal"
@@ -37,24 +39,34 @@ tools:context=".activity.ac_forget_pass.view.ForgetPAssActivity">
         android:letterSpacing=".10"
         android:lineSpacingMultiplier="1.15"
         android:textAlignment="center"
-        android:text="FORGOT PASSWORD"
+        android:text="@string/forgot_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <EditText
+        android:id="@+id/phone_email"
         android:paddingRight="10dp"
         android:drawablePadding="10dp"
         android:drawableRight="@drawable/ic_user"
         android:textSize="14sp"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:hint="Email address / phone"
+        android:hint="@string/email_address_phone"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/shape_input"/>
-
     <TextView
+        android:id="@+id/e_phone_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="10sp"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/sent"
         android:layout_marginTop="32dp"
         android:textSize="18sp"
         android:paddingLeft="32dp"
@@ -67,7 +79,7 @@ tools:context=".activity.ac_forget_pass.view.ForgetPAssActivity">
         android:letterSpacing=".10"
         android:lineSpacingMultiplier="1.15"
         android:textAlignment="center"
-        android:text="SEND"
+        android:text="@string/send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">DSS-HRMS</string>
     <string name="select_language">Select Language</string>
-    <string name="login_to_ndss_hrm_system">LOGIN TO\nDSS HRM SYSTEM</string>
-    <string name="user_id_email_address">User ID / Email address</string>
+    <string name="login_to_ndss_hrm_system">LOGIN</string>
+    <string name="user_id_email_address">User ID / Email</string>
     <string name="password">Password</string>
     <string name="remember_me">Remember Me</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="login">LOGIN</string>
     <string name="hrm">HRM</string>
-    <string name="profile">EMPLOYEE PERSONAL INFORMATION</string>
+    <string name="profile">Employee Personal Information</string>
     <string name="title_activity_main2">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -128,5 +128,16 @@
     <string name="previous_post">previous post</string>
     <string name="curent_post">current position</string>
     <string name="quota_type">Quota Type</string>
+    <string name="forgot_pass">FORGOT PASSWORD</string>
+    <string name="email_address_phone">Email address / phone</string>
+    <string name="send">SEND</string>
+    <string name="otp">OTP</string>
+    <string name="enter_otp_code">Enter OTP code</string>
+    <string name="submit">SUBMIT</string>
+    <string name="change_password">CHANGE PASSWORD</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="copyright"><![CDATA[©DSS , Design & Developed by SIMEC System Ltd.]]></string>
 
 </resources>
