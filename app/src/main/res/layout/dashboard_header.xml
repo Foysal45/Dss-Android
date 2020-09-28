@@ -17,7 +17,20 @@
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:src="@drawable/logo" />
+    <TextView
+        android:layout_toLeftOf="@id/notification"
+        android:layout_centerVertical="true"
+        android:id="@+id/menu_name"
+        android:text="@string/hrm"
+        android:layout_toRightOf="@id/logo"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <EditText
+        android:visibility="gone"
         android:drawablePadding="8dp"
         android:drawableRight="@drawable/ic_baseline_search_24"
         android:paddingLeft="8dp"

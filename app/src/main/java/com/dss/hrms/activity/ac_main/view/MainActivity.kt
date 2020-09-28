@@ -42,18 +42,7 @@ class MainActivity : AppCompatActivity() {
         rec_dashboard.layoutManager = GridLayoutManager(this, 3)
         rec_dashboard.adapter = recyclerAdapter_dashboard
         loading_lay.setOnClickListener { }
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
-        dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
+
         dashboardList.add(Dashboard("Home", R.drawable.ic_dashboard))
 
         recyclerAdapter_dashboard.notifyDataSetChanged()
@@ -76,8 +65,6 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-
-
         this.menu_dashboard_signout.setOnClickListener {
             var mainActivityViewModel_logout =
                 ViewModelProvider(this)[MainActivityViewModel_logout::class.java]
@@ -89,6 +76,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun menu() {
         menu_profile_lay_expandableLayout.collapse()
+        menu_dashboard_lay_head.setOnClickListener {
+            drawer_menu.closeDrawer(GravityCompat.START)
+        }
         menu_profile_lay_head.setOnClickListener {
             menu_profile_lay_expandableLayout.toggle()
             if (!menu_profile_lay_expandableLayout.isExpanded) {

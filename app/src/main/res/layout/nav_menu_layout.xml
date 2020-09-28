@@ -33,7 +33,7 @@
                     android:layout_toLeftOf="@id/more_dashboard"
                     android:layout_centerVertical="true"
                     android:id="@+id/menu_name"
-                    android:text="DASHBOARD"
+                    android:text="@string/dashboard"
                     android:layout_toRightOf="@id/icon_dashboard"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp"
@@ -297,7 +297,7 @@
                         android:textSize="14sp"
                         android:gravity="center_vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"/>
+                        android:layout_height="36dp"/>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"

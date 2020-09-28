@@ -8,21 +8,37 @@
     tools:openDrawer="start"
     tools:context=".activity.ac_main.view.MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
+        <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
         <include layout="@layout/dashboard_header" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/header"
+            android:layout_above="@id/copy_right"
             android:clipToPadding="false"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:id="@+id/rec_dashboard"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </LinearLayout>
+        <TextView
+            android:id="@+id/copy_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/copyright"
+            android:textAlignment="center" />
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/loading_lay"
         android:background="#40000000"

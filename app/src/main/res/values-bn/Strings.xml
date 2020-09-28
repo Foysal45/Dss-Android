@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">DSS-HRMS</string>
     <string name="select_language">ভাষা নির্বাচন কর</string>
-    <string name="login_to_ndss_hrm_system">লগইন করুন \n ডিএসএস এইচআরএম সিস্টেম</string>
+    <string name="login_to_ndss_hrm_system">লগইন</string>
     <string name="user_id_email_address">ব্যবহারকারী আইডি / ইমেল</string>
     <string name="password">পাসওয়ার্ড</string>
     <string name="remember_me">আমাকে মনে রাখুন</string>
@@ -134,6 +134,17 @@
     <string name="previous_post">পূর্ববর্তী পোস্ট</string>
     <string name="curent_post">বর্তমান অবস্থান</string>
     <string name="quota_type">কোটার প্রকার</string>
+    <string name="forgot_pass">পাসওয়ার্ড ভুলে গেছেন</string>
+    <string name="email_address_phone">ইমেল ঠিকানা / ফোন</string>
+    <string name="send">পাঠান</string>
+    <string name="otp">ওটিপি</string>
+    <string name="enter_otp_code">ওটিপি কোড লিখুন</string>
+    <string name="submit">জমা দিন</string>
+    <string name="change_password">পাসওয়ার্ড পরিবর্তন করুন</string>
+    <string name="new_password">নতুন পাসওয়ার্ড</string>
+    <string name="confirm_password">পাসওয়ার্ড নিশ্চিত করুন</string>
+    <string name="dashboard">ড্যাশবোর্ড</string>
+    <string name="copyright"><![CDATA[©DSS , Design & Developed by SIMEC System Ltd.]]></string>
 
 
 </resources>

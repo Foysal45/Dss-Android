@@ -33,24 +33,36 @@ tools:context=".activity.change_pass.view.ChangePassActivity">
         android:letterSpacing=".10"
         android:lineSpacingMultiplier="1.15"
         android:textAlignment="center"
-        android:text="CHANGE PASSWORD"
+        android:text="@string/change_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <EditText
+        android:id="@+id/password"
         android:paddingRight="10dp"
         android:drawablePadding="10dp"
         android:drawableRight="@drawable/ic_pass"
         android:textSize="14sp"
+        android:inputType="textPassword"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:hint="New Password"
+        android:hint="@string/new_password"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/shape_input"/>
+    <TextView
+        android:id="@+id/e_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="10sp"
+        android:visibility="gone" />
 
     <EditText
+        android:id="@+id/confirm_password"
         android:paddingRight="10dp"
         android:drawablePadding="10dp"
         android:drawableRight="@drawable/ic_pass"
@@ -58,14 +70,24 @@ tools:context=".activity.change_pass.view.ChangePassActivity">
         android:textSize="14sp"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:hint="@string/confirm_password"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/shape_input"/>
-
     <TextView
+        android:id="@+id/e_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="10sp"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -76,7 +98,7 @@ tools:context=".activity.change_pass.view.ChangePassActivity">
         android:paddingTop="5dp"
         android:paddingRight="32dp"
         android:paddingBottom="5dp"
-        android:text="SUBMIT"
+        android:text="@string/submit"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"

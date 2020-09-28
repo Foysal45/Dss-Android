@@ -28,9 +28,15 @@
         android:textSize="14sp" />
     <LinearLayout
         android:id="@+id/space"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:visibility="gone"/>
+        android:visibility="gone">
+        <ImageView
+            android:layout_marginTop="38dp"
+            android:src="@drawable/shape_line_green"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"/>
+    </LinearLayout>
 
 </LinearLayout>

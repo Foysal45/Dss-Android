@@ -5,8 +5,14 @@ import BaseModel
 import com.dss.hrms.network.model.additional_profile_qualification.response.AdditionalProfileQualificationRes
 import com.dss.hrms.network.model.educational_qualification.response.EducationalQualificationRes
 import com.dss.hrms.network.model.foreign_traning.response.ForeignTraningRes
+import com.dss.hrms.network.model.forget_pass.request.ForgetPassReq
+import com.dss.hrms.network.model.forget_pass.response.ForgetPassRes
 import com.dss.hrms.network.model.honours_award.response.HonorAwardRes
 import com.dss.hrms.network.model.local_training.response.LocalTraningRes
+import com.dss.hrms.network.model.otp.reponse.OtpRes
+import com.dss.hrms.network.model.otp.request.OtpReq
+import com.dss.hrms.network.model.reset_pass.request.ResetPassReq
+import com.dss.hrms.network.model.reset_pass.response.ResetPassRes
 import com.dss.hrms.network.model.user_login.request.UserLoginReq
 import com.dss.hrms.network.model.user_login.response.UserLoginRes
 import retrofit2.Call
@@ -76,6 +82,28 @@ interface Api {
         @Header("Authorization") token: String
     ): Call<BaseLogout>
 
+    @POST("auth/reset-password-otp")
+    fun ForgetPassRes_(
+        @Header("Content-Type") Content_Type: String,
+        @Header("Accept") Accept: String,
+        @Body forgetPassReq: ForgetPassReq
+    ): Call<ForgetPassRes>
+
+
+    @POST("auth/verify-otp")
+    fun OtpRes_(
+        @Header("Content-Type") Content_Type: String,
+        @Header("Accept") Accept: String,
+        @Body otpReq: OtpReq
+    ): Call<OtpRes>
+
+
+    @POST("auth/reset-password")
+    fun ResetPassRes_(
+        @Header("Content-Type") Content_Type: String,
+        @Header("Accept") Accept: String,
+        @Body resetPassReq: ResetPassReq
+    ): Call<ResetPassRes>
 
 }
 
