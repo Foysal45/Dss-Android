@@ -26,5 +26,11 @@
         tools:hint="Qualification Name"
         android:textColor="@color/colorBlack"
         android:textSize="14sp" />
+    <LinearLayout
+        android:id="@+id/space"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:visibility="gone"/>
 
 </LinearLayout>

@@ -1,11 +1,15 @@
 package com.dss.hrms.fragment.model
 
+import android.view.View
+
 class Box(
     private var title: String,
     private var hint: String,
-    private var description: String
+    private var description: String,
+    private var spaceShow: Int=View.GONE
 
 ) {
+
 
     fun getTitle(): String {
         if (title.equals(null))
@@ -21,5 +25,8 @@ class Box(
         if (description.equals(null))
             return ""
         return description
+    }
+    fun getSpaceShow(): Int {
+        return spaceShow
     }
 }
