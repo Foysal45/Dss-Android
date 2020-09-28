@@ -146,7 +146,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.prl_date),
                                     getString(R.string.prl_date),
-                                    baseModel.data.jobjoinings[n].g_prl_date()
+                                    baseModel.data.jobjoinings[n].g_prl_date(), View.VISIBLE
                                 )
                             )
                         } else {
@@ -203,7 +203,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.prl_date),
                                     getString(R.string.prl_date),
-                                    baseModel.data.jobjoinings[n].g_prl_date()
+                                    baseModel.data.jobjoinings[n].g_prl_date(), View.VISIBLE
                                 )
                             )
                         }
@@ -218,16 +218,52 @@ class FragmentEmployeePersonalInfo : Fragment() {
             2 -> {
                 //quota info
                 if (baseModel.data.employee_quotas.size == 0) {
-                    boxList.add(Box(getString(R.string.quota_type), getString(R.string.quota_type), ""))
-                    boxList.add(Box(getString(R.string.description), getString(R.string.description), ""))
+                    boxList.add(
+                        Box(
+                            getString(R.string.quota_type),
+                            getString(R.string.quota_type),
+                            ""
+                        )
+                    )
+                    boxList.add(
+                        Box(
+                            getString(R.string.description),
+                            getString(R.string.description),
+                            ""
+                        )
+                    )
                 } else {
                     for (n in baseModel.data.employee_quotas.indices) {
                         if (LanguageChange.langA == "en") {
-                            boxList.add(Box(getString(R.string.quota_type), getString(R.string.quota_type),baseModel.data.employee_quotas[n].quota_information.g_name()))
-                            boxList.add(Box(getString(R.string.description), getString(R.string.description), baseModel.data.employee_quotas[n].quota_information_details.g_name()))
+                            boxList.add(
+                                Box(
+                                    getString(R.string.quota_type),
+                                    getString(R.string.quota_type),
+                                    baseModel.data.employee_quotas[n].quota_information.g_name()
+                                )
+                            )
+                            boxList.add(
+                                Box(
+                                    getString(R.string.description),
+                                    getString(R.string.description),
+                                    baseModel.data.employee_quotas[n].quota_information_details.g_name(),View.VISIBLE
+                                )
+                            )
                         } else {
-                            boxList.add(Box(getString(R.string.quota_type), getString(R.string.quota_type),baseModel.data.employee_quotas[n].quota_information.g_name_bn()))
-                            boxList.add(Box(getString(R.string.description), getString(R.string.description), baseModel.data.employee_quotas[n].quota_information_details.g_name_bn()))
+                            boxList.add(
+                                Box(
+                                    getString(R.string.quota_type),
+                                    getString(R.string.quota_type),
+                                    baseModel.data.employee_quotas[n].quota_information.g_name_bn()
+                                )
+                            )
+                            boxList.add(
+                                Box(
+                                    getString(R.string.description),
+                                    getString(R.string.description),
+                                    baseModel.data.employee_quotas[n].quota_information_details.g_name_bn(),View.VISIBLE
+                                )
+                            )
                         }
                     }
                 }
@@ -325,7 +361,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.email),
                                     getString(R.string.email),
-                                    ""
+                                    "",View.VISIBLE
                                 )
                             )
 
@@ -383,7 +419,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.email),
                                     getString(R.string.email),
-                                    ""
+                                    "",View.VISIBLE
                                 )
                             )
                         }
@@ -485,7 +521,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.email),
                                     getString(R.string.email),
-                                    ""
+                                    "",View.VISIBLE
                                 )
                             )
 
@@ -543,7 +579,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.email),
                                     getString(R.string.email),
-                                    ""
+                                    "",View.VISIBLE
                                 )
                             )
                         }
@@ -608,7 +644,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.div_cgpa),
                                     getString(R.string.div_cgpa),
-                                    baseModel.data.educational_qualifications[n].g_division_cgpa()
+                                    baseModel.data.educational_qualifications[n].g_division_cgpa(),View.VISIBLE
                                 )
                             )
 
@@ -645,7 +681,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.div_cgpa),
                                     getString(R.string.div_cgpa),
-                                    baseModel.data.educational_qualifications[n].g_division_cgpa()
+                                    baseModel.data.educational_qualifications[n].g_division_cgpa(),View.VISIBLE
                                 )
                             )
                         }
@@ -735,7 +771,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.religion),
                                     getString(R.string.religion),
-                                    ""
+                                    "",View.VISIBLE
                                 )
                             )
 
@@ -800,7 +836,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.religion),
                                     getString(R.string.religion),
-                                    ""
+                                    "",View.VISIBLE
                                 )
                             )
                         }
@@ -863,7 +899,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.child_sex),
                                     getString(R.string.child_sex),
-                                    baseModel.data.childs[n].gender.g_name()
+                                    baseModel.data.childs[n].gender.g_name(),View.VISIBLE
                                 )
                             )
                         } else {
@@ -892,7 +928,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.child_sex),
                                     getString(R.string.child_sex),
-                                    baseModel.data.childs[n].gender.g_name_bn()
+                                    baseModel.data.childs[n].gender.g_name_bn(),View.VISIBLE
                                 )
                             )
                         }
@@ -947,7 +983,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.exp_level),
                                     getString(R.string.exp_level),
-                                    baseModel.data.languages[n].g_expertise_level()
+                                    baseModel.data.languages[n].g_expertise_level(),View.VISIBLE
                                 )
                             )
                         } else {
@@ -969,7 +1005,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.exp_level),
                                     getString(R.string.exp_level),
-                                    baseModel.data.languages[n].g_expertise_level()
+                                    baseModel.data.languages[n].g_expertise_level(),View.VISIBLE
                                 )
                             )
                         }
@@ -1046,7 +1082,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.certificate),
                                     getString(R.string.certificate),
-                                    baseModel.data.local_trainings[n].g_certificate()
+                                    baseModel.data.local_trainings[n].g_certificate(),View.VISIBLE
                                 )
                             )
                         } else {
@@ -1082,7 +1118,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.certificate),
                                     getString(R.string.certificate),
-                                    baseModel.data.local_trainings[n].g_certificate()
+                                    baseModel.data.local_trainings[n].g_certificate(),View.VISIBLE
                                 )
                             )
                         }
@@ -1165,7 +1201,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.country),
                                     getString(R.string.country),
-                                    baseModel.data.foreigntrainings[n].country.g_name()
+                                    baseModel.data.foreigntrainings[n].country.g_name(),View.VISIBLE
                                 )
                             )
                         } else {
@@ -1208,7 +1244,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.country),
                                     getString(R.string.country),
-                                    baseModel.data.foreigntrainings[n].country.g_name_bn()
+                                    baseModel.data.foreigntrainings[n].country.g_name_bn(),View.VISIBLE
                                 )
                             )
                         }
@@ -1294,7 +1330,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.flat_no),
                                     getString(R.string.flat_no),
-                                    baseModel.data.official_residentials[n].g_flat_no_flat_type()
+                                    baseModel.data.official_residentials[n].g_flat_no_flat_type(),View.VISIBLE
                                 )
                             )
                         } else {
@@ -1344,7 +1380,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.flat_no),
                                     getString(R.string.flat_no),
-                                    baseModel.data.official_residentials[n].g_flat_no_flat_type()
+                                    baseModel.data.official_residentials[n].g_flat_no_flat_type(),View.VISIBLE
                                 )
                             )
                         }
@@ -1394,7 +1430,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.to_date),
                                     getString(R.string.to_date),
-                                    baseModel.data.foreign_travels[n].g_to_date()
+                                    baseModel.data.foreign_travels[n].g_to_date(),View.VISIBLE
                                 )
                             )
                         } else {
@@ -1423,7 +1459,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.to_date),
                                     getString(R.string.to_date),
-                                    baseModel.data.foreign_travels[n].g_to_date()
+                                    baseModel.data.foreign_travels[n].g_to_date(),View.VISIBLE
                                 )
                             )
                         }
@@ -1463,7 +1499,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.qualification_details),
                                     getString(R.string.qualification_details),
-                                    baseModel.data.additional_qualifications[n].g_qualification_details()
+                                    baseModel.data.additional_qualifications[n].g_qualification_details(),View.VISIBLE
                                 )
                             )
                         } else {
@@ -1478,7 +1514,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.qualification_details),
                                     getString(R.string.qualification_details),
-                                    baseModel.data.additional_qualifications[n].g_qualification_details_bn()
+                                    baseModel.data.additional_qualifications[n].g_qualification_details_bn(),View.VISIBLE
                                 )
                             )
 
@@ -1540,7 +1576,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.pub_name_bn),
                                     getString(R.string.pub_name_bn),
-                                    baseModel.data.publications[n].g_publication_name_bn()
+                                    baseModel.data.publications[n].g_publication_name_bn(),View.VISIBLE
                                 )
                             )
                         } else {
@@ -1569,7 +1605,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.pub_name_bn),
                                     getString(R.string.pub_name_bn),
-                                    baseModel.data.publications[n].g_publication_name_bn()
+                                    baseModel.data.publications[n].g_publication_name_bn(),View.VISIBLE
                                 )
                             )
                         }
@@ -1618,7 +1654,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.award_date),
                                     getString(R.string.award_date),
-                                    baseModel.data.honours_awards[n].g_award_date()
+                                    baseModel.data.honours_awards[n].g_award_date(),View.VISIBLE
                                 )
                             )
 
@@ -1641,7 +1677,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.award_date),
                                     getString(R.string.award_date),
-                                    baseModel.data.honours_awards[n].g_award_date()
+                                    baseModel.data.honours_awards[n].g_award_date(),View.VISIBLE
                                 )
                             )
 
@@ -1705,7 +1741,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.eff_date),
                                     getString(R.string.eff_date),
-                                    baseModel.data.posting_records[n].g_effective_date()
+                                    baseModel.data.posting_records[n].g_effective_date(),View.VISIBLE
                                 )
                             )
                         } else {
@@ -1734,7 +1770,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.eff_date),
                                     getString(R.string.eff_date),
-                                    baseModel.data.posting_records[n].g_effective_date()
+                                    baseModel.data.posting_records[n].g_effective_date(),View.VISIBLE
                                 )
                             )
                         }
@@ -1821,7 +1857,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.date),
                                     getString(R.string.date),
-                                    baseModel.data.disciplinary_actions[n].g_date()
+                                    baseModel.data.disciplinary_actions[n].g_date(),View.VISIBLE
                                 )
                             )
 
@@ -1872,7 +1908,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.date),
                                     getString(R.string.date),
-                                    baseModel.data.disciplinary_actions[n].g_date()
+                                    baseModel.data.disciplinary_actions[n].g_date(),View.VISIBLE
                                 )
                             )
 
@@ -1907,24 +1943,108 @@ class FragmentEmployeePersonalInfo : Fragment() {
                 //promotion
                 if (baseModel.data.promotions.size == 0) {
                     boxList.add(Box(getString(R.string.memo_no), getString(R.string.memo_no), ""))
-                    boxList.add(Box(getString(R.string.memo_date), getString(R.string.memo_date), ""))
-                    boxList.add(Box(getString(R.string.office_zoon), getString(R.string.office_zoon), ""))
-                    boxList.add(Box(getString(R.string.previous_post), getString(R.string.previous_post), ""))
-                    boxList.add(Box(getString(R.string.curent_post), getString(R.string.curent_post), ""))
+                    boxList.add(
+                        Box(
+                            getString(R.string.memo_date),
+                            getString(R.string.memo_date),
+                            ""
+                        )
+                    )
+                    boxList.add(
+                        Box(
+                            getString(R.string.office_zoon),
+                            getString(R.string.office_zoon),
+                            ""
+                        )
+                    )
+                    boxList.add(
+                        Box(
+                            getString(R.string.previous_post),
+                            getString(R.string.previous_post),
+                            ""
+                        )
+                    )
+                    boxList.add(
+                        Box(
+                            getString(R.string.curent_post),
+                            getString(R.string.curent_post),
+                            ""
+                        )
+                    )
                 } else {
                     for (n in baseModel.data.promotions.indices) {
                         if (LanguageChange.langA == "en") {
-                            boxList.add(Box(getString(R.string.memo_no), getString(R.string.memo_no), baseModel.data.promotions[n].g_memo_no()))
-                            boxList.add(Box(getString(R.string.memo_date), getString(R.string.memo_date), baseModel.data.promotions[n].g_memo_date()))
-                            boxList.add(Box(getString(R.string.office_zoon), getString(R.string.office_zoon), ""))
-                            boxList.add(Box(getString(R.string.previous_post), getString(R.string.previous_post), baseModel.data.promotions[n].previous_posts.g_name()))
-                            boxList.add(Box(getString(R.string.curent_post), getString(R.string.curent_post), baseModel.data.promotions[n].current_position.g_name()))
+                            boxList.add(
+                                Box(
+                                    getString(R.string.memo_no),
+                                    getString(R.string.memo_no),
+                                    baseModel.data.promotions[n].g_memo_no()
+                                )
+                            )
+                            boxList.add(
+                                Box(
+                                    getString(R.string.memo_date),
+                                    getString(R.string.memo_date),
+                                    baseModel.data.promotions[n].g_memo_date()
+                                )
+                            )
+                            boxList.add(
+                                Box(
+                                    getString(R.string.office_zoon),
+                                    getString(R.string.office_zoon),
+                                    ""
+                                )
+                            )
+                            boxList.add(
+                                Box(
+                                    getString(R.string.previous_post),
+                                    getString(R.string.previous_post),
+                                    baseModel.data.promotions[n].previous_posts.g_name()
+                                )
+                            )
+                            boxList.add(
+                                Box(
+                                    getString(R.string.curent_post),
+                                    getString(R.string.curent_post),
+                                    baseModel.data.promotions[n].current_position.g_name(),View.VISIBLE
+                                )
+                            )
                         } else {
-                            boxList.add(Box(getString(R.string.memo_no), getString(R.string.memo_no), baseModel.data.promotions[n].g_memo_no_bn()))
-                            boxList.add(Box(getString(R.string.memo_date), getString(R.string.memo_date), baseModel.data.promotions[n].g_memo_date()))
-                            boxList.add(Box(getString(R.string.office_zoon), getString(R.string.office_zoon), ""))
-                            boxList.add(Box(getString(R.string.previous_post), getString(R.string.previous_post), baseModel.data.promotions[n].previous_posts.g_name_bn()))
-                            boxList.add(Box(getString(R.string.curent_post), getString(R.string.curent_post), baseModel.data.promotions[n].current_position.g_name_bn()))
+                            boxList.add(
+                                Box(
+                                    getString(R.string.memo_no),
+                                    getString(R.string.memo_no),
+                                    baseModel.data.promotions[n].g_memo_no_bn()
+                                )
+                            )
+                            boxList.add(
+                                Box(
+                                    getString(R.string.memo_date),
+                                    getString(R.string.memo_date),
+                                    baseModel.data.promotions[n].g_memo_date()
+                                )
+                            )
+                            boxList.add(
+                                Box(
+                                    getString(R.string.office_zoon),
+                                    getString(R.string.office_zoon),
+                                    ""
+                                )
+                            )
+                            boxList.add(
+                                Box(
+                                    getString(R.string.previous_post),
+                                    getString(R.string.previous_post),
+                                    baseModel.data.promotions[n].previous_posts.g_name_bn()
+                                )
+                            )
+                            boxList.add(
+                                Box(
+                                    getString(R.string.curent_post),
+                                    getString(R.string.curent_post),
+                                    baseModel.data.promotions[n].current_position.g_name_bn(),View.VISIBLE
+                                )
+                            )
                         }
                     }
                 }
@@ -1973,7 +2093,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.contact),
                                     getString(R.string.contact),
-                                    baseModel.data.references[n].g_contact_no()
+                                    baseModel.data.references[n].g_contact_no(),View.VISIBLE
                                 )
                             )
                         } else {
@@ -2009,7 +2129,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.contact),
                                     getString(R.string.contact),
-                                    baseModel.data.references[n].g_contact_no_bn()
+                                    baseModel.data.references[n].g_contact_no_bn(),View.VISIBLE
                                 )
                             )
                         }
