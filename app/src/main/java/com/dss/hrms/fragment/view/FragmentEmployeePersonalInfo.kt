@@ -771,7 +771,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.religion),
                                     getString(R.string.religion),
-                                    "",View.VISIBLE
+                                    baseModel.data.spouses[n].religion.g_name(),View.VISIBLE
                                 )
                             )
 
@@ -836,7 +836,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 Box(
                                     getString(R.string.religion),
                                     getString(R.string.religion),
-                                    "",View.VISIBLE
+                                    baseModel.data.spouses[n].religion.g_name_bn(),View.VISIBLE
                                 )
                             )
                         }

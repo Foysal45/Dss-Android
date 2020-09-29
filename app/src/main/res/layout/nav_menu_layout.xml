@@ -19,7 +19,8 @@
             <RelativeLayout
                 android:id="@+id/menu_dashboard_lay_head"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
                 android:background="@color/colorLightGreen">
 
                 <ImageView
@@ -40,7 +41,8 @@
                     android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"/>
                 <ImageView
                     android:id="@+id/more_dashboard"
                     android:layout_alignParentRight="true"
@@ -58,7 +60,8 @@
             <RelativeLayout
                 android:id="@+id/menu_profile_lay_head"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
                 android:background="@color/colorLightGreen">
 
                 <ImageView
@@ -79,7 +82,8 @@
                     android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"/>
                 <ImageView
                     android:id="@+id/more_profile"
                     android:layout_alignParentRight="true"
@@ -123,8 +127,8 @@
                     <TextView
                         android:paddingLeft="64dp"
                         android:layout_centerVertical="true"
-                        android:id="@+id/menu_profile_job_joining_information"
-                        android:text="@string/job_joining_information"
+                        android:id="@+id/menu_profile_spouse"
+                        android:text="@string/spouse"
                         android:textColor="@color/colorGreen"
                         android:textSize="14sp"
                         android:gravity="center_vertical"
@@ -137,8 +141,8 @@
                     <TextView
                         android:paddingLeft="64dp"
                         android:layout_centerVertical="true"
-                        android:id="@+id/menu_profile_quata_information"
-                        android:text="@string/quota_information"
+                        android:id="@+id/menu_profile_child_information"
+                        android:text="@string/child_information"
                         android:textColor="@color/colorGreen"
                         android:textSize="14sp"
                         android:gravity="center_vertical"
@@ -193,36 +197,36 @@
                     <TextView
                         android:paddingLeft="64dp"
                         android:layout_centerVertical="true"
-                        android:id="@+id/menu_profile_spouse"
-                        android:text="@string/spouse"
-                        android:textColor="@color/colorGreen"
-                        android:textSize="14sp"
-                        android:gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@drawable/shape_line_green"/>
-                    <TextView
-                        android:paddingLeft="64dp"
-                        android:layout_centerVertical="true"
-                        android:id="@+id/menu_profile_child_information"
-                        android:text="@string/child_information"
-                        android:textColor="@color/colorGreen"
-                        android:textSize="14sp"
-                        android:gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@drawable/shape_line_green"/>
-                    <TextView
-                        android:paddingLeft="64dp"
-                        android:layout_centerVertical="true"
                         android:id="@+id/menu_profile_language_information"
                         android:text="@string/language_information"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="14sp"
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@drawable/shape_line_green"/>
+                    <TextView
+                        android:paddingLeft="64dp"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/menu_profile_job_joining_information"
+                        android:text="@string/job_joining_information"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="14sp"
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@drawable/shape_line_green"/>
+                    <TextView
+                        android:paddingLeft="64dp"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/menu_profile_quata_information"
+                        android:text="@string/quota_information"
                         android:textColor="@color/colorGreen"
                         android:textSize="14sp"
                         android:gravity="center_vertical"
@@ -424,7 +428,8 @@
             <RelativeLayout
                 android:id="@+id/menu_dashboard_signout"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
                 android:background="@color/colorLightGreen">
 
                 <ImageView
@@ -443,7 +448,8 @@
                     android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"/>
             </RelativeLayout>
         </LinearLayout>
 
