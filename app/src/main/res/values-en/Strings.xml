@@ -35,12 +35,12 @@
     <string name="mobile">Mobile No.</string>
     <string name="religion">Religion</string>
     <string name="phone">Phone No</string>
-    <string name="personal_information">Personal Information</string>
+    <string name="personal_information">Basic Information</string>
     <string name="job_joining_information">Job Joining Information</string>
     <string name="quota_information">Quota Information</string>
     <string name="educational_qualification">Educational Qualification</string>
     <string name="spouse">Spouse</string>
-    <string name="child_information">Child Information</string>
+    <string name="child_information">Children Information</string>
     <string name="language_information">Language Information</string>
     <string name="local_training">Local Training</string>
     <string name="foreign_training">Foreign Training</string>

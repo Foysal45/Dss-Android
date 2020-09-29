@@ -20,11 +20,12 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="permanent_address">Permanent Address</string>
     <string name="present_address">Present Address</string>
-    <string name="name">Name</string>
+
+    <!--Spouse-->
+    <string name="name">Name (English)</string>
     <string name="name_b">Name (Bangla)</string>
     <string name="office">Office</string>
     <string name="district">District</string>
@@ -33,12 +34,12 @@
     <string name="mobile">Mobile No.</string>
     <string name="religion">Religion</string>
     <string name="phone">Phone No</string>
-    <string name="personal_information">Personal Information</string>
+    <string name="personal_information">Basic Information</string>
     <string name="job_joining_information">Job Joining Information</string>
     <string name="quota_information">Quota Information</string>
     <string name="educational_qualification">Educational Qualification</string>
     <string name="spouse">Spouse</string>
-    <string name="child_information">Child Information</string>
+    <string name="child_information">Children  Information</string>
     <string name="language_information">Language Information</string>
     <string name="local_training">Local Training</string>
     <string name="foreign_training">Foreign Training</string>
@@ -53,8 +54,8 @@
     <string name="job_information">Job Information</string>
     <string name="promotion">Promotion</string>
     <string name="reference">Reference</string>
-    <string name="name_child">Name of Children</string>
-    <string name="name_child_bn">Name of children bangla</string>
+    <string name="name_child">Name of Children (English)</string>
+    <string name="name_child_bn">Name of children (Bangla)</string>
     <string name="child_bd">Date of Birth</string>
     <string name="child_sex">Gender/Sex</string>
     <string name="name_language">Name of Language</string>
@@ -73,7 +74,7 @@
     <string name="to_date">To Date</string>
     <string name="type_of_pub">Type of Publication</string>
     <string name="public_details">Publication Details</string>
-    <string name="pub_name">Publication Name</string>
+    <string name="pub_name">Publication Name (English)</string>
     <string name="pub_name_bn">Publication Name (Bangla)</string>
     <string name="transfer_type">Transfer Type</string>
     <string name="transfer_from">Transfer From</string>
@@ -106,7 +107,7 @@
     <string name="name_ins">Name of Institute</string>
     <string name="board_uni">Board/University</string>
     <string name="passing_year">Passing Year</string>
-    <string name="div_cgpa">Division / CGPA</string>
+    <string name="div_cgpa">Division/CGPA</string>
     <string name="catagory">Category</string>
     <string name="present_status">Present Status</string>
     <string name="description">Description</string>
@@ -118,9 +119,9 @@
     <string name="qualification_details">Qualification Details</string>
     <string name="employee_id">Employee ID</string>
     <string name="birth">Date of Birth</string>
-    <string name="f_name">Father’s Name</string>
+    <string name="f_name">Father’s Name (English)</string>
     <string name="f_name_b">Father’s name (Bangla)</string>
-    <string name="m_name">Mother’s Name</string>
+    <string name="m_name">Mother’s Name (English)</string>
     <string name="m_name_b">Mother’s Name (Bangla)</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
@@ -129,7 +130,7 @@
     <string name="curent_post">current position</string>
     <string name="quota_type">Quota Type</string>
     <string name="forgot_pass">FORGOT PASSWORD</string>
-    <string name="email_address_phone">Email address / phone</string>
+    <string name="email_address_phone">Email/phone</string>
     <string name="send">SEND</string>
     <string name="otp">OTP</string>
     <string name="enter_otp_code">Enter OTP code</string>
@@ -139,5 +140,4 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="dashboard">Dashboard</string>
     <string name="copyright"><![CDATA[©DSS , Design & Developed by SIMEC System Ltd.]]></string>
-
 </resources>
