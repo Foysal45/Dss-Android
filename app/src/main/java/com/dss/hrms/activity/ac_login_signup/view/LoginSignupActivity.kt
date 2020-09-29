@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.CompoundButton
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -41,6 +42,22 @@ class LoginSignupActivity : BaseActivity() {
             ViewModelProvider(this)[SignInActivityViewModel::class.java]
 
         lan = LanguageChange.langA
+        remenber.isChecked=sharedPref!!.remenber!!
+        if (!sharedPref!!.remenber!!){
+            sharedPref!!.uEmail=""
+            sharedPref!!.uPassword=""
+        }
+        remenber.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                sharedPref!!.remenber = true
+            }
+            else{
+                sharedPref!!.remenber = false
+                sharedPref!!.uEmail=""
+                sharedPref!!.uPassword=""
+            }
+        })
+
         loadScreen()
 
 
@@ -125,6 +142,9 @@ class LoginSignupActivity : BaseActivity() {
             startActivity(Intent(this, ForgetPAssActivity::class.java))
             finish()
         }
+        email.setText(sharedPref!!.uEmail)
+        password.setText(sharedPref!!.uPassword)
+
 
     }
 
