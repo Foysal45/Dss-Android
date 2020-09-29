@@ -19,7 +19,8 @@
             <RelativeLayout
                 android:id="@+id/menu_dashboard_lay_head"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
                 android:background="@color/colorLightGreen">
 
                 <ImageView
@@ -40,7 +41,8 @@
                     android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"/>
                 <ImageView
                     android:id="@+id/more_dashboard"
                     android:layout_alignParentRight="true"
@@ -58,7 +60,8 @@
             <RelativeLayout
                 android:id="@+id/menu_profile_lay_head"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
                 android:background="@color/colorLightGreen">
 
                 <ImageView
@@ -79,7 +82,8 @@
                     android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"/>
                 <ImageView
                     android:id="@+id/more_profile"
                     android:layout_alignParentRight="true"
@@ -424,7 +428,8 @@
             <RelativeLayout
                 android:id="@+id/menu_dashboard_signout"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
                 android:background="@color/colorLightGreen">
 
                 <ImageView
@@ -443,7 +448,8 @@
                     android:textStyle="bold"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"/>
             </RelativeLayout>
         </LinearLayout>
 
