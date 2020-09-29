@@ -86,6 +86,13 @@ class SharedPref(context: Context) {
             editor.putBoolean("isLogin", isLogin!!)
             editor.apply()
         }
+    var remenber: Boolean?
+        get() = mySharedPref.getBoolean("remenber", false)
+        set(remenber) {
+            val editor = mySharedPref.edit()
+            editor.putBoolean("remenber", remenber!!)
+            editor.apply()
+        }
 
 
 
