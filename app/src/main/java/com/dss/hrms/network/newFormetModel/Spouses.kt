@@ -67,7 +67,4 @@ data class Spouses(
             return ""
         return mobile_no_bn!!
     }
-
-
-
 }
