@@ -63,7 +63,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
 
                 recyclerAdapter_Box!!.notifyDataSetChanged()
             }
-            1 -> {
+            1 ->  {
                 //job join info
                 if (baseModel.data.jobjoinings.size == 0) {
                     boxList.add(
@@ -92,116 +92,65 @@ class FragmentEmployeePersonalInfo : Fragment() {
                     boxList.add(Box(getString(R.string._class), getString(R.string._class), ""))
                     boxList.add(Box(getString(R.string.grade), getString(R.string.grade), ""))
                     boxList.add(Box(getString(R.string.prl_date), getString(R.string.prl_date), ""))
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.jobjoinings.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.designation),
                                     getString(R.string.designation),
                                     baseModel.data.jobjoinings[n].designation.g_desi_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.depertment),
                                     getString(R.string.depertment),
                                     baseModel.data.jobjoinings[n].department.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.job_type),
                                     getString(R.string.job_type),
                                     baseModel.data.jobjoinings[n].job_type.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.joning_date),
                                     getString(R.string.joning_date),
                                     baseModel.data.jobjoinings[n].g_joining_date()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.pension),
                                     getString(R.string.pension),
                                     baseModel.data.jobjoinings[n].g_pension_date()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string._class),
                                     getString(R.string._class),
                                     baseModel.data.jobjoinings[n].employee_class.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.grade),
                                     getString(R.string.grade),
                                     baseModel.data.jobjoinings[n].grade.g_name()
                                 )
                             )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.prl_date),
-                                    getString(R.string.prl_date),
-                                    baseModel.data.jobjoinings[n].g_prl_date(), View.VISIBLE
-                                )
-                            )
-                        } else {
-                            boxList.add(
-                                Box(
-                                    getString(R.string.designation),
-                                    getString(R.string.designation),
-                                    baseModel.data.jobjoinings[n].designation.g_desi_name_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.depertment),
-                                    getString(R.string.depertment),
-                                    baseModel.data.jobjoinings[n].department.g_name_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.job_type),
-                                    getString(R.string.job_type),
-                                    baseModel.data.jobjoinings[n].job_type.g_name_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.joning_date),
-                                    getString(R.string.joning_date),
-                                    baseModel.data.jobjoinings[n].g_joining_date()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.pension),
-                                    getString(R.string.pension),
-                                    baseModel.data.jobjoinings[n].g_pension_date()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string._class),
-                                    getString(R.string._class),
-                                    baseModel.data.jobjoinings[n].employee_class.g_name_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.grade),
-                                    getString(R.string.grade),
-                                    baseModel.data.jobjoinings[n].grade.g_name_bn()
-                                )
-                            )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.prl_date),
                                     getString(R.string.prl_date),
@@ -209,8 +158,65 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
-
-
+                        else {
+                            boxb.add(
+                                Box(
+                                    getString(R.string.designation),
+                                    getString(R.string.designation),
+                                    baseModel.data.jobjoinings[n].designation.g_desi_name_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.depertment),
+                                    getString(R.string.depertment),
+                                    baseModel.data.jobjoinings[n].department.g_name_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.job_type),
+                                    getString(R.string.job_type),
+                                    baseModel.data.jobjoinings[n].job_type.g_name_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.joning_date),
+                                    getString(R.string.joning_date),
+                                    baseModel.data.jobjoinings[n].g_joining_date()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.pension),
+                                    getString(R.string.pension),
+                                    baseModel.data.jobjoinings[n].g_pension_date()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string._class),
+                                    getString(R.string._class),
+                                    baseModel.data.jobjoinings[n].employee_class.g_name_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.grade),
+                                    getString(R.string.grade),
+                                    baseModel.data.jobjoinings[n].grade.g_name_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.prl_date),
+                                    getString(R.string.prl_date),
+                                    baseModel.data.jobjoinings[n].g_prl_date(), View.VISIBLE
+                                )
+                            )
+                        }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -234,32 +240,40 @@ class FragmentEmployeePersonalInfo : Fragment() {
                             ""
                         )
                     )
-                } else {
+                }
+                else {
+
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.employee_quotas.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.quota_type),
                                     getString(R.string.quota_type),
                                     baseModel.data.employee_quotas[n].quota_information.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.description),
                                     getString(R.string.description),
                                     baseModel.data.employee_quotas[n].quota_information_details.g_name(),View.VISIBLE
                                 )
                             )
-                        } else {
-                            boxList.add(
+                        }
+                        else {
+                            boxb.add(
                                 Box(
                                     getString(R.string.quota_type),
                                     getString(R.string.quota_type),
                                     baseModel.data.employee_quotas[n].quota_information.g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.description),
                                     getString(R.string.description),
@@ -267,9 +281,9 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
-
                 recyclerAdapter_Box!!.notifyDataSetChanged()
             }
             3 -> {
@@ -307,59 +321,65 @@ class FragmentEmployeePersonalInfo : Fragment() {
                         )
                     )
                     boxList.add(Box(getString(R.string.email), getString(R.string.email), ""))
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.present_addresses.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.vill_house),
                                     getString(R.string.vill_house),
                                     baseModel.data.present_addresses[n].g_village_house_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.road_word),
                                     getString(R.string.road_word),
                                     baseModel.data.present_addresses[n].g_road_word_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.post_off),
                                     getString(R.string.post_off),
                                     baseModel.data.present_addresses[n].g_post_office()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.police_station),
                                     getString(R.string.police_station),
                                     baseModel.data.present_addresses[n].g_police_station()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.district),
                                     getString(R.string.district),
                                     baseModel.data.present_addresses[n].district.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.division),
                                     getString(R.string.division),
                                     baseModel.data.present_addresses[n].division.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.phone_mobile),
                                     getString(R.string.phone_mobile),
                                     baseModel.data.present_addresses[n].g_phone_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.email),
                                     getString(R.string.email),
@@ -367,57 +387,58 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
 
-                        } else {
-                            boxList.add(
+                        }
+                        else {
+                            boxb.add(
                                 Box(
                                     getString(R.string.vill_house),
                                     getString(R.string.vill_house),
                                     baseModel.data.present_addresses[n].g_village_house_no_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.road_word),
                                     getString(R.string.road_word),
                                     baseModel.data.present_addresses[n].g_road_word_no_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.post_off),
                                     getString(R.string.post_off),
                                     baseModel.data.present_addresses[n].g_post_office_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.police_station),
                                     getString(R.string.police_station),
                                     baseModel.data.present_addresses[n].g_police_station_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.district),
                                     getString(R.string.district),
                                     baseModel.data.present_addresses[n].district.g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.division),
                                     getString(R.string.division),
                                     baseModel.data.present_addresses[n].division.g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.phone_mobile),
                                     getString(R.string.phone_mobile),
                                     baseModel.data.present_addresses[n].g_phone_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.email),
                                     getString(R.string.email),
@@ -425,8 +446,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
-
-
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -467,59 +487,65 @@ class FragmentEmployeePersonalInfo : Fragment() {
                         )
                     )
                     boxList.add(Box(getString(R.string.email), getString(R.string.email), ""))
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.permanent_addresses.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.vill_house),
                                     getString(R.string.vill_house),
                                     baseModel.data.permanent_addresses[n].g_village_house_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.road_word),
                                     getString(R.string.road_word),
                                     baseModel.data.permanent_addresses[n].g_road_word_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.post_off),
                                     getString(R.string.post_off),
                                     baseModel.data.permanent_addresses[n].g_post_office()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.police_station),
                                     getString(R.string.police_station),
                                     baseModel.data.permanent_addresses[n].g_police_station()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.district),
                                     getString(R.string.district),
                                     baseModel.data.permanent_addresses[n].district.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.division),
                                     getString(R.string.division),
                                     baseModel.data.permanent_addresses[n].division.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.phone_mobile),
                                     getString(R.string.phone_mobile),
                                     baseModel.data.permanent_addresses[n].g_phone_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.email),
                                     getString(R.string.email),
@@ -527,57 +553,58 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
 
-                        } else {
-                            boxList.add(
+                        }
+                        else {
+                            boxb.add(
                                 Box(
                                     getString(R.string.vill_house),
                                     getString(R.string.vill_house),
                                     baseModel.data.permanent_addresses[n].g_village_house_no_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.road_word),
                                     getString(R.string.road_word),
                                     baseModel.data.permanent_addresses[n].g_road_word_no_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.post_off),
                                     getString(R.string.post_off),
                                     baseModel.data.permanent_addresses[n].g_post_office_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.police_station),
                                     getString(R.string.police_station),
                                     baseModel.data.permanent_addresses[n].g_police_station_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.district),
                                     getString(R.string.district),
                                     baseModel.data.permanent_addresses[n].district.g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.division),
                                     getString(R.string.division),
                                     baseModel.data.permanent_addresses[n].division.g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.phone_mobile),
                                     getString(R.string.phone_mobile),
                                     baseModel.data.permanent_addresses[n].g_phone_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.email),
                                     getString(R.string.email),
@@ -585,8 +612,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
-
-
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -611,38 +637,44 @@ class FragmentEmployeePersonalInfo : Fragment() {
                         )
                     )
                     boxList.add(Box(getString(R.string.div_cgpa), getString(R.string.div_cgpa), ""))
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.educational_qualifications.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_deg),
                                     getString(R.string.name_deg),
                                     baseModel.data.educational_qualifications[n].g_name_of_degree()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_ins),
                                     getString(R.string.name_deg),
                                     baseModel.data.educational_qualifications[n].g_name_of_institute()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.board_uni),
                                     getString(R.string.board_uni),
                                     baseModel.data.educational_qualifications[n].g_board_university()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.passing_year),
                                     getString(R.string.passing_year),
                                     baseModel.data.educational_qualifications[n].g_passing_year()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.div_cgpa),
                                     getString(R.string.div_cgpa),
@@ -650,36 +682,37 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
 
-                        } else {
-                            boxList.add(
+                        }
+                        else {
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_deg),
                                     getString(R.string.name_deg),
                                     baseModel.data.educational_qualifications[n].g_name_of_degree_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_ins),
                                     getString(R.string.name_deg),
                                     baseModel.data.educational_qualifications[n].g_name_of_institute_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.board_uni),
                                     getString(R.string.board_uni),
                                     baseModel.data.educational_qualifications[n].g_board_university()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.passing_year),
                                     getString(R.string.passing_year),
                                     baseModel.data.educational_qualifications[n].g_passing_year()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.div_cgpa),
                                     getString(R.string.div_cgpa),
@@ -687,6 +720,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -710,66 +744,73 @@ class FragmentEmployeePersonalInfo : Fragment() {
                     boxList.add(Box(getString(R.string.phone), getString(R.string.phone), ""))
                     boxList.add(Box(getString(R.string.mobile), getString(R.string.mobile), ""))
                     boxList.add(Box(getString(R.string.religion), getString(R.string.religion), ""))
-                } else {
+                }
+                else {
+
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.spouses.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name),
                                     getString(R.string.name),
                                     baseModel.data.spouses[n].g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_b),
                                     getString(R.string.name_b),
                                     baseModel.data.spouses[n].g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.office),
                                     getString(R.string.office),
                                     ""
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.district),
                                     getString(R.string.district),
                                     baseModel.data.spouses[n].distric.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.email),
                                     getString(R.string.email),
                                     baseModel.data.spouses[n].g_email_address()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.occupation),
                                     getString(R.string.occupation),
                                     baseModel.data.spouses[n].g_occupation()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.phone),
                                     getString(R.string.phone),
                                     baseModel.data.spouses[n].g_phone_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.mobile),
                                     getString(R.string.mobile),
                                     baseModel.data.spouses[n].g_mobile_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.religion),
                                     getString(R.string.religion),
@@ -777,64 +818,65 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
 
-                        } else {
-                            boxList.add(
+                        }
+                        else {
+                            boxb.add(
                                 Box(
                                     getString(R.string.name),
                                     getString(R.string.name),
                                     baseModel.data.spouses[n].g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_b),
                                     getString(R.string.name_b),
                                     baseModel.data.spouses[n].g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.office),
                                     getString(R.string.office),
                                     ""
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.district),
                                     getString(R.string.district),
                                     baseModel.data.spouses[n].distric.g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.email),
                                     getString(R.string.email),
                                     baseModel.data.spouses[n].g_email_address()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.occupation),
                                     getString(R.string.occupation),
                                     baseModel.data.spouses[n].g_occupation_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.phone),
                                     getString(R.string.phone),
                                     baseModel.data.spouses[n].g_phone_no_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.mobile),
                                     getString(R.string.mobile),
                                     baseModel.data.spouses[n].g_mobile_no_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.religion),
                                     getString(R.string.religion),
@@ -842,8 +884,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
-
-
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -873,60 +914,67 @@ class FragmentEmployeePersonalInfo : Fragment() {
                             ""
                         )
                     )
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.childs.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_child),
                                     getString(R.string.name_child),
                                     baseModel.data.childs[n].g_name_of_children()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_child_bn),
                                     getString(R.string.name_child_bn),
                                     baseModel.data.childs[n].g_name_of_children_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.child_bd),
                                     getString(R.string.child_bd),
                                     baseModel.data.childs[n].g_date_of_birth()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.child_sex),
                                     getString(R.string.child_sex),
                                     baseModel.data.childs[n].gender.g_name(),View.VISIBLE
                                 )
                             )
-                        } else {
-                            boxList.add(
+                        }
+                        else {
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_child),
                                     getString(R.string.name_child),
                                     baseModel.data.childs[n].g_name_of_children()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_child_bn),
                                     getString(R.string.name_child_bn),
                                     baseModel.data.childs[n].g_name_of_children_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.child_bd),
                                     getString(R.string.child_bd),
                                     baseModel.data.childs[n].g_date_of_birth()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.child_sex),
                                     getString(R.string.child_sex),
@@ -934,6 +982,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -964,46 +1013,30 @@ class FragmentEmployeePersonalInfo : Fragment() {
                         )
                     )
                     // boxList.add(Box("Division/CGPA", "Division/CGPA", ""))
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.languages.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_language),
                                     getString(R.string.name_language),
                                     baseModel.data.languages[n].g_name_of_language()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_institute),
                                     getString(R.string.name_institute),
                                     baseModel.data.languages[n].g_name_of_institute()
                                 )
                             )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.exp_level),
-                                    getString(R.string.exp_level),
-                                    baseModel.data.languages[n].g_expertise_level(),View.VISIBLE
-                                )
-                            )
-                        } else {
-                            boxList.add(
-                                Box(
-                                    getString(R.string.name_language),
-                                    getString(R.string.name_language),
-                                    baseModel.data.languages[n].g_name_of_language_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.name_institute),
-                                    getString(R.string.name_institute),
-                                    baseModel.data.languages[n].g_name_of_institute_bn()
-                                )
-                            )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.exp_level),
                                     getString(R.string.exp_level),
@@ -1011,6 +1044,30 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
+                        else {
+                            boxb.add(
+                                Box(
+                                    getString(R.string.name_language),
+                                    getString(R.string.name_language),
+                                    baseModel.data.languages[n].g_name_of_language_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.name_institute),
+                                    getString(R.string.name_institute),
+                                    baseModel.data.languages[n].g_name_of_institute_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.exp_level),
+                                    getString(R.string.exp_level),
+                                    baseModel.data.languages[n].g_expertise_level(),View.VISIBLE
+                                )
+                            )
+                        }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -1049,74 +1106,45 @@ class FragmentEmployeePersonalInfo : Fragment() {
                             ""
                         )
                     )
-                } else {
+                }
+                else {
+
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.local_trainings.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.course_title),
                                     getString(R.string.course_title),
                                     baseModel.data.local_trainings[n].g_course_title()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_institution),
                                     getString(R.string.name_institution),
                                     baseModel.data.local_trainings[n].g_name_of_institute()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.from_date),
                                     getString(R.string.from_date),
                                     baseModel.data.local_trainings[n].g_from_date()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.to_date),
                                     getString(R.string.to_date),
                                     baseModel.data.local_trainings[n].g_to_date()
                                 )
                             )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.certificate),
-                                    getString(R.string.certificate),
-                                    baseModel.data.local_trainings[n].g_certificate(),View.VISIBLE
-                                )
-                            )
-                        } else {
-                            boxList.add(
-                                Box(
-                                    getString(R.string.course_title),
-                                    getString(R.string.course_title),
-                                    baseModel.data.local_trainings[n].g_course_title_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.name_institution),
-                                    getString(R.string.name_institution),
-                                    baseModel.data.local_trainings[n].g_name_of_institute_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.from_date),
-                                    getString(R.string.from_date),
-                                    baseModel.data.local_trainings[n].g_from_date()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.to_date),
-                                    getString(R.string.to_date),
-                                    baseModel.data.local_trainings[n].g_to_date()
-                                )
-                            )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.certificate),
                                     getString(R.string.certificate),
@@ -1124,6 +1152,44 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
+                        else {
+                            boxb.add(
+                                Box(
+                                    getString(R.string.course_title),
+                                    getString(R.string.course_title),
+                                    baseModel.data.local_trainings[n].g_course_title_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.name_institution),
+                                    getString(R.string.name_institution),
+                                    baseModel.data.local_trainings[n].g_name_of_institute_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.from_date),
+                                    getString(R.string.from_date),
+                                    baseModel.data.local_trainings[n].g_from_date()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.to_date),
+                                    getString(R.string.to_date),
+                                    baseModel.data.local_trainings[n].g_to_date()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.certificate),
+                                    getString(R.string.certificate),
+                                    baseModel.data.local_trainings[n].g_certificate(),View.VISIBLE
+                                )
+                            )
+                        }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -1161,88 +1227,96 @@ class FragmentEmployeePersonalInfo : Fragment() {
                         )
                     )
                     boxList.add(Box(getString(R.string.country), getString(R.string.country), ""))
-                } else {
+                }
+                else {
+
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.foreigntrainings.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.course_title),
                                     getString(R.string.course_title),
                                     baseModel.data.foreigntrainings[n].g_course_title()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_institution),
                                     getString(R.string.name_institution),
                                     baseModel.data.foreigntrainings[n].g_name_of_institute()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.from_date),
                                     getString(R.string.from_date),
                                     baseModel.data.foreigntrainings[n].g_from_date()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.to_date),
                                     getString(R.string.to_date),
                                     baseModel.data.foreigntrainings[n].g_to_date()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.certificate),
                                     getString(R.string.certificate),
                                     baseModel.data.foreigntrainings[n].g_certificate()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.country),
                                     getString(R.string.country),
                                     baseModel.data.foreigntrainings[n].country.g_name(),View.VISIBLE
                                 )
                             )
-                        } else {
-                            boxList.add(
+                        }
+                        else {
+                            boxb.add(
                                 Box(
                                     getString(R.string.course_title),
                                     getString(R.string.course_title),
                                     baseModel.data.foreigntrainings[n].g_course_title_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_institution),
                                     getString(R.string.name_institution),
                                     baseModel.data.foreigntrainings[n].g_name_of_institute_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.from_date),
                                     getString(R.string.from_date),
                                     baseModel.data.foreigntrainings[n].g_from_date()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.to_date),
                                     getString(R.string.to_date),
                                     baseModel.data.foreigntrainings[n].g_to_date()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.certificate),
                                     getString(R.string.certificate),
                                     baseModel.data.foreigntrainings[n].g_certificate()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.country),
                                     getString(R.string.country),
@@ -1250,6 +1324,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -1283,102 +1358,58 @@ class FragmentEmployeePersonalInfo : Fragment() {
                         )
                     )
                     boxList.add(Box(getString(R.string.flat_no), getString(R.string.flat_no), ""))
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.official_residentials.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.memo_no),
                                     getString(R.string.memo_no),
                                     baseModel.data.official_residentials[n].g_memo_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.memo_date),
                                     getString(R.string.memo_date),
                                     baseModel.data.official_residentials[n].g_memo_date()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.desi),
                                     getString(R.string.desi),
                                     baseModel.data.official_residentials[n].designation.g_desi_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.office_zoon),
                                     getString(R.string.office_zoon),
                                     baseModel.data.official_residentials[n].g_office_zone()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.location),
                                     getString(R.string.location),
                                     baseModel.data.official_residentials[n].g_location()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.quarter_name),
                                     getString(R.string.quarter_name),
                                     baseModel.data.official_residentials[n].g_quarter_name()
                                 )
                             )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.flat_no),
-                                    getString(R.string.flat_no),
-                                    baseModel.data.official_residentials[n].g_flat_no_flat_type(),View.VISIBLE
-                                )
-                            )
-                        } else {
-                            boxList.add(
-                                Box(
-                                    getString(R.string.memo_no),
-                                    getString(R.string.memo_no),
-                                    baseModel.data.official_residentials[n].g_memo_no_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.memo_date),
-                                    getString(R.string.memo_date),
-                                    baseModel.data.official_residentials[n].g_memo_date()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.desi),
-                                    getString(R.string.desi),
-                                    baseModel.data.official_residentials[n].designation.g_desi_name_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.office_zoon),
-                                    getString(R.string.office_zoon),
-                                    baseModel.data.official_residentials[n].g_office_zone()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.location),
-                                    getString(R.string.location),
-                                    baseModel.data.official_residentials[n].g_location()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.quarter_name),
-                                    getString(R.string.quarter_name),
-                                    baseModel.data.official_residentials[n].g_quarter_name()
-                                )
-                            )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.flat_no),
                                     getString(R.string.flat_no),
@@ -1386,6 +1417,58 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
+                        else {
+                            boxb.add(
+                                Box(
+                                    getString(R.string.memo_no),
+                                    getString(R.string.memo_no),
+                                    baseModel.data.official_residentials[n].g_memo_no_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.memo_date),
+                                    getString(R.string.memo_date),
+                                    baseModel.data.official_residentials[n].g_memo_date()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.desi),
+                                    getString(R.string.desi),
+                                    baseModel.data.official_residentials[n].designation.g_desi_name_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.office_zoon),
+                                    getString(R.string.office_zoon),
+                                    baseModel.data.official_residentials[n].g_office_zone()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.location),
+                                    getString(R.string.location),
+                                    baseModel.data.official_residentials[n].g_location()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.quarter_name),
+                                    getString(R.string.quarter_name),
+                                    baseModel.data.official_residentials[n].g_quarter_name()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.flat_no),
+                                    getString(R.string.flat_no),
+                                    baseModel.data.official_residentials[n].g_flat_no_flat_type(),View.VISIBLE
+                                )
+                            )
+                        }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -1404,60 +1487,38 @@ class FragmentEmployeePersonalInfo : Fragment() {
                         )
                     )
                     boxList.add(Box(getString(R.string.to_date), getString(R.string.to_date), ""))
-                } else {
+                }
+                else {
+
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.foreign_travels.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.country),
                                     getString(R.string.country),
                                     baseModel.data.foreign_travels[n].country.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.purpose),
                                     getString(R.string.purpose),
                                     baseModel.data.foreign_travels[n].g_purpose()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.from_date),
                                     getString(R.string.from_date),
                                     baseModel.data.foreign_travels[n].g_from_date()
                                 )
                             )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.to_date),
-                                    getString(R.string.to_date),
-                                    baseModel.data.foreign_travels[n].g_to_date(),View.VISIBLE
-                                )
-                            )
-                        } else {
-                            boxList.add(
-                                Box(
-                                    getString(R.string.country),
-                                    getString(R.string.country),
-                                    baseModel.data.foreign_travels[n].country.g_name_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.purpose),
-                                    getString(R.string.purpose),
-                                    baseModel.data.foreign_travels[n].g_purpose_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.from_date),
-                                    getString(R.string.from_date),
-                                    baseModel.data.foreign_travels[n].g_from_date()
-                                )
-                            )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.to_date),
                                     getString(R.string.to_date),
@@ -1465,6 +1526,37 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
+                        else {
+                            boxb.add(
+                                Box(
+                                    getString(R.string.country),
+                                    getString(R.string.country),
+                                    baseModel.data.foreign_travels[n].country.g_name_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.purpose),
+                                    getString(R.string.purpose),
+                                    baseModel.data.foreign_travels[n].g_purpose_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.from_date),
+                                    getString(R.string.from_date),
+                                    baseModel.data.foreign_travels[n].g_from_date()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.to_date),
+                                    getString(R.string.to_date),
+                                    baseModel.data.foreign_travels[n].g_to_date(),View.VISIBLE
+                                )
+                            )
+                        }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -1487,32 +1579,39 @@ class FragmentEmployeePersonalInfo : Fragment() {
                             ""
                         )
                     )
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.additional_qualifications.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.qualification_name),
                                     getString(R.string.qualification_name),
                                     baseModel.data.additional_qualifications[n].g_qualification_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.qualification_details),
                                     getString(R.string.qualification_details),
                                     baseModel.data.additional_qualifications[n].g_qualification_details(),View.VISIBLE
                                 )
                             )
-                        } else {
-                            boxList.add(
+                        }
+                        else {
+                            boxb.add(
                                 Box(
                                     getString(R.string.qualification_name),
                                     getString(R.string.qualification_name),
                                     baseModel.data.additional_qualifications[n].g_qualification_details_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.qualification_details),
                                     getString(R.string.qualification_details),
@@ -1521,6 +1620,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                             )
 
                         }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -1550,60 +1650,37 @@ class FragmentEmployeePersonalInfo : Fragment() {
                             ""
                         )
                     )
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.publications.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.type_of_pub),
                                     getString(R.string.type_of_pub),
                                     baseModel.data.publications[n].publication_type.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.public_details),
                                     getString(R.string.public_details),
                                     baseModel.data.publications[n].g_publication_details()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.pub_name),
                                     getString(R.string.pub_name),
                                     baseModel.data.publications[n].g_publication_name()
                                 )
                             )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.pub_name_bn),
-                                    getString(R.string.pub_name_bn),
-                                    baseModel.data.publications[n].g_publication_name_bn(),View.VISIBLE
-                                )
-                            )
-                        } else {
-                            boxList.add(
-                                Box(
-                                    getString(R.string.type_of_pub),
-                                    getString(R.string.type_of_pub),
-                                    baseModel.data.publications[n].publication_type.g_name_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.public_details),
-                                    getString(R.string.public_details),
-                                    baseModel.data.publications[n].g_publication_details_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.pub_name),
-                                    getString(R.string.pub_name),
-                                    baseModel.data.publications[n].g_publication_name()
-                                )
-                            )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.pub_name_bn),
                                     getString(R.string.pub_name_bn),
@@ -1611,6 +1688,37 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
+                        else {
+                            boxb.add(
+                                Box(
+                                    getString(R.string.type_of_pub),
+                                    getString(R.string.type_of_pub),
+                                    baseModel.data.publications[n].publication_type.g_name_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.public_details),
+                                    getString(R.string.public_details),
+                                    baseModel.data.publications[n].g_publication_details_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.pub_name),
+                                    getString(R.string.pub_name),
+                                    baseModel.data.publications[n].g_publication_name()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.pub_name_bn),
+                                    getString(R.string.pub_name_bn),
+                                    baseModel.data.publications[n].g_publication_name_bn(),View.VISIBLE
+                                )
+                            )
+                        }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -1998,74 +2106,81 @@ class FragmentEmployeePersonalInfo : Fragment() {
                             ""
                         )
                     )
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.promotions.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.memo_no),
                                     getString(R.string.memo_no),
                                     baseModel.data.promotions[n].g_memo_no()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.memo_date),
                                     getString(R.string.memo_date),
                                     baseModel.data.promotions[n].g_memo_date()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.office_zoon),
                                     getString(R.string.office_zoon),
                                     ""
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.previous_post),
                                     getString(R.string.previous_post),
                                     baseModel.data.promotions[n].previous_posts.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.curent_post),
                                     getString(R.string.curent_post),
                                     baseModel.data.promotions[n].current_position.g_name(),View.VISIBLE
                                 )
                             )
-                        } else {
-                            boxList.add(
+                        }
+                        else {
+                            boxb.add(
                                 Box(
                                     getString(R.string.memo_no),
                                     getString(R.string.memo_no),
                                     baseModel.data.promotions[n].g_memo_no_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.memo_date),
                                     getString(R.string.memo_date),
                                     baseModel.data.promotions[n].g_memo_date()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.office_zoon),
                                     getString(R.string.office_zoon),
                                     ""
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.previous_post),
                                     getString(R.string.previous_post),
                                     baseModel.data.promotions[n].previous_posts.g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.curent_post),
                                     getString(R.string.curent_post),
@@ -2073,6 +2188,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -2085,74 +2201,81 @@ class FragmentEmployeePersonalInfo : Fragment() {
                     boxList.add(Box(getString(R.string.relation), getString(R.string.relation), ""))
                     boxList.add(Box(getString(R.string.address), getString(R.string.address), ""))
                     boxList.add(Box(getString(R.string.contact), getString(R.string.contact), ""))
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.references.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name),
                                     getString(R.string.name),
                                     baseModel.data.references[n].g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_b),
                                     getString(R.string.name_b),
                                     baseModel.data.references[n].g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.relation),
                                     getString(R.string.relation),
                                     baseModel.data.references[n].g_relation()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.address),
                                     getString(R.string.address),
                                     baseModel.data.references[n].g_address()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.contact),
                                     getString(R.string.contact),
                                     baseModel.data.references[n].g_contact_no(),View.VISIBLE
                                 )
                             )
-                        } else {
-                            boxList.add(
+                        }
+                        else {
+                            boxb.add(
                                 Box(
                                     getString(R.string.name),
                                     getString(R.string.name),
                                     baseModel.data.references[n].g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.name_b),
                                     getString(R.string.name_b),
                                     baseModel.data.references[n].g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.relation),
                                     getString(R.string.relation),
                                     baseModel.data.references[n].g_relation_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.address),
                                     getString(R.string.address),
                                     baseModel.data.references[n].g_address_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.contact),
                                     getString(R.string.contact),
@@ -2160,6 +2283,7 @@ class FragmentEmployeePersonalInfo : Fragment() {
                                 )
                             )
                         }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
