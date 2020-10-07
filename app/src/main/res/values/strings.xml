@@ -140,4 +140,5 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="dashboard">Dashboard</string>
     <string name="copyright"><![CDATA[©DSS , Design & Developed by SIMEC System Ltd.]]></string>
+    <string name="edit">Edit</string>
 </resources>
