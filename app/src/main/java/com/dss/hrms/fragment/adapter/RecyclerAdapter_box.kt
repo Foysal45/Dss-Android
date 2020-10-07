@@ -26,7 +26,7 @@ class RecyclerAdapter_box(var mcontext: Context, var mData: MutableList<Box>) :
         holder.box_title.text = mData[position].getTitle()
         holder.box_details.hint = mData[position].getHint()
         holder.box_details.text = mData[position].getDescription()
-        holder.space.visibility = mData[position].getSpaceShow()
+      //  holder.space.visibility = mData[position].getSpaceShow()
 
     }
 
@@ -37,11 +37,11 @@ class RecyclerAdapter_box(var mcontext: Context, var mData: MutableList<Box>) :
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val box_title: TextView
         val box_details: TextView
-        val space: LinearLayout
+       // val space: LinearLayout
         init {
             box_title = itemView.box_title
             box_details = itemView.box_details
-            space = itemView.space
+            //space = itemView.space
         }
     }
 

@@ -16,6 +16,8 @@ import com.chaadride.shared_pref.SharedPref
 import com.dss.hrms.R
 import com.dss.hrms.fragment.model.Box
 import com.dss.hrms.fragment.adapter.RecyclerAdapter_box
+import com.dss.hrms.fragment.adapter.RecyclerAdapter_faq_p
+import com.dss.hrms.fragment.model.BoxParent
 import com.dss.hrms.fragment.viewModel.*
 import com.dss.hrms.helper.LanguageChange
 import com.dss.hrms.network.model.additional_profile_qualification.response.AdditionalProfileQualificationRes
@@ -1633,47 +1635,32 @@ class FragmentEmployeePersonalInfo : Fragment() {
                         )
                     )
 
-                } else {
+                }
+                else {
+
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.honours_awards.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+
+                            boxb.add(
                                 Box(
                                     getString(R.string.aware_t),
                                     getString(R.string.aware_t),
                                     baseModel.data.honours_awards[n].g_award_title()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.award_details),
                                     getString(R.string.award_details),
                                     baseModel.data.honours_awards[n].g_award_details()
                                 )
                             )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.award_date),
-                                    getString(R.string.award_date),
-                                    baseModel.data.honours_awards[n].g_award_date(),View.VISIBLE
-                                )
-                            )
-
-                        } else {
-                            boxList.add(
-                                Box(
-                                    getString(R.string.aware_t),
-                                    getString(R.string.aware_t),
-                                    baseModel.data.honours_awards[n].g_award_title_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.award_details),
-                                    getString(R.string.award_details),
-                                    baseModel.data.honours_awards[n].g_award_details_bn()
-                                )
-                            )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.award_date),
                                     getString(R.string.award_date),
@@ -1682,8 +1669,31 @@ class FragmentEmployeePersonalInfo : Fragment() {
                             )
 
                         }
+                        else {
+                            boxb.add(
+                                Box(
+                                    getString(R.string.aware_t),
+                                    getString(R.string.aware_t),
+                                    baseModel.data.honours_awards[n].g_award_title_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.award_details),
+                                    getString(R.string.award_details),
+                                    baseModel.data.honours_awards[n].g_award_details_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.award_date),
+                                    getString(R.string.award_date),
+                                    baseModel.data.honours_awards[n].g_award_date(),View.VISIBLE
+                                )
+                            )
 
-
+                        }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -1713,67 +1723,78 @@ class FragmentEmployeePersonalInfo : Fragment() {
                         )
                     )
                     boxList.add(Box(getString(R.string.eff_date), getString(R.string.eff_date), ""))
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.posting_records.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+
+                            boxb.add(
                                 Box(
                                     getString(R.string.transfer_type),
                                     getString(R.string.transfer_type),
                                     baseModel.data.posting_records[n].transfer_type.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.transfer_from),
                                     getString(R.string.transfer_from),
                                     baseModel.data.posting_records[n].transfer_from.g_office_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.transfer_to),
                                     getString(R.string.transfer_to),
                                     baseModel.data.posting_records[n].transfer_to.g_office_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.eff_date),
                                     getString(R.string.eff_date),
                                     baseModel.data.posting_records[n].g_effective_date(),View.VISIBLE
                                 )
                             )
-                        } else {
-                            boxList.add(
+
+                        }
+                        else {
+                            boxb.add(
                                 Box(
                                     getString(R.string.transfer_type),
                                     getString(R.string.transfer_type),
                                     baseModel.data.posting_records[n].transfer_type.g_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.transfer_from),
                                     getString(R.string.transfer_from),
                                     baseModel.data.posting_records[n].transfer_from.g_office_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.transfer_to),
                                     getString(R.string.transfer_to),
                                     baseModel.data.posting_records[n].transfer_to.g_office_name_bn()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.eff_date),
                                     getString(R.string.eff_date),
                                     baseModel.data.posting_records[n].g_effective_date(),View.VISIBLE
                                 )
                             )
+
                         }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
@@ -1808,103 +1829,58 @@ class FragmentEmployeePersonalInfo : Fragment() {
                     boxList.add(Box(getString(R.string.remakrs), getString(R.string.remakrs), ""))
                     boxList.add(Box(getString(R.string.date), getString(R.string.date), ""))
 
-                } else {
+                }
+                else {
+                    var boxparent = mutableListOf<BoxParent>()
+                    var recyclerAdapter_Box: RecyclerAdapter_faq_p=  RecyclerAdapter_faq_p(view.context,boxparent)
+                    view.rec_red.layoutManager = LinearLayoutManager(view.context)
+                    view.rec_red.adapter = recyclerAdapter_Box
                     for (n in baseModel.data.disciplinary_actions.indices) {
+                        var boxb = mutableListOf<Box>()
                         if (LanguageChange.langA == "en") {
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.catagory),
                                     getString(R.string.catagory),
                                     baseModel.data.disciplinary_actions[n].disciplinary_action_category.g_name()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.present_status),
                                     getString(R.string.present_status),
                                     ""
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.description),
                                     getString(R.string.description),
                                     baseModel.data.disciplinary_actions[n].g_disciplinary_action_details()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.judgment),
                                     getString(R.string.judgment),
                                     baseModel.data.disciplinary_actions[n].g_judgment()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.final_judment),
                                     getString(R.string.final_judment),
                                     baseModel.data.disciplinary_actions[n].g_final_judgment()
                                 )
                             )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.remakrs),
                                     getString(R.string.remakrs),
                                     baseModel.data.disciplinary_actions[n].g_remarks()
                                 )
                             )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.date),
-                                    getString(R.string.date),
-                                    baseModel.data.disciplinary_actions[n].g_date(),View.VISIBLE
-                                )
-                            )
-
-                        } else {
-                            boxList.add(
-                                Box(
-                                    getString(R.string.catagory),
-                                    getString(R.string.catagory),
-                                    baseModel.data.disciplinary_actions[n].disciplinary_action_category.g_name_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.present_status),
-                                    getString(R.string.present_status),
-                                    ""
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.description),
-                                    getString(R.string.description),
-                                    baseModel.data.disciplinary_actions[n].g_disciplinary_action_details_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.judgment),
-                                    getString(R.string.judgment),
-                                    baseModel.data.disciplinary_actions[n].g_judgment_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.final_judment),
-                                    getString(R.string.final_judment),
-                                    baseModel.data.disciplinary_actions[n].g_final_judgment_bn()
-                                )
-                            )
-                            boxList.add(
-                                Box(
-                                    getString(R.string.remakrs),
-                                    getString(R.string.remakrs),
-                                    baseModel.data.disciplinary_actions[n].g_remarks_bn()
-                                )
-                            )
-                            boxList.add(
+                            boxb.add(
                                 Box(
                                     getString(R.string.date),
                                     getString(R.string.date),
@@ -1913,8 +1889,59 @@ class FragmentEmployeePersonalInfo : Fragment() {
                             )
 
                         }
+                        else {
+                            boxb.add(
+                                Box(
+                                    getString(R.string.catagory),
+                                    getString(R.string.catagory),
+                                    baseModel.data.disciplinary_actions[n].disciplinary_action_category.g_name_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.present_status),
+                                    getString(R.string.present_status),
+                                    ""
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.description),
+                                    getString(R.string.description),
+                                    baseModel.data.disciplinary_actions[n].g_disciplinary_action_details_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.judgment),
+                                    getString(R.string.judgment),
+                                    baseModel.data.disciplinary_actions[n].g_judgment_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.final_judment),
+                                    getString(R.string.final_judment),
+                                    baseModel.data.disciplinary_actions[n].g_final_judgment_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.remakrs),
+                                    getString(R.string.remakrs),
+                                    baseModel.data.disciplinary_actions[n].g_remarks_bn()
+                                )
+                            )
+                            boxb.add(
+                                Box(
+                                    getString(R.string.date),
+                                    getString(R.string.date),
+                                    baseModel.data.disciplinary_actions[n].g_date(),View.VISIBLE
+                                )
+                            )
 
-
+                        }
+                        boxparent.add(BoxParent(boxb))
                     }
                 }
                 recyclerAdapter_Box!!.notifyDataSetChanged()
