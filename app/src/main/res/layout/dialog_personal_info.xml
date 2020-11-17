@@ -1,0 +1,1404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="employee"
+            type="com.dss.hrms.model.Employee" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <!-- ....................................basic info............................................... -->
+                <LinearLayout
+                    android:id="@+id/llBasicInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hBasicInformation"
+                                layout="@layout/personal_information_create_field_header"
+
+                                app:title="@{@string/personal_information}" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fProfileId"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/profile_id}"
+                                    app:title="@{@string/profile_id}" />
+
+                                <include
+                                    android:id="@+id/fNameEng"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name}"
+                                    app:title="@{@string/name}" />
+
+                                <include
+                                    android:id="@+id/fNameBangla"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_b}"
+                                    app:title="@{@string/name_b}" />
+
+                                <include
+                                    android:id="@+id/fDOB"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/birth}" />
+
+                                <include
+                                    android:id="@+id/fGender"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/gender}" />
+
+                                <include
+                                    android:id="@+id/fMaritalStatus"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/gender}" />
+
+                                <include
+                                    android:id="@+id/fFatherNameEng"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/f_name}"
+                                    app:title="@{@string/f_name}" />
+
+                                <include
+                                    android:id="@+id/fFatherNameBangla"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/f_name_b}"
+                                    app:title="@{@string/f_name_b}" />
+
+                                <include
+                                    android:id="@+id/fMotherNameEng"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/m_name}"
+                                    app:title="@{@string/m_name}" />
+
+                                <include
+                                    android:id="@+id/fMotherNameBangla"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/m_name_b}"
+                                    app:title="@{@string/m_name_b}" />
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tvImageTitle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_weight="1"
+                                            android:text="@string/photo"
+                                            android:textColor="@color/light_black"
+                                            android:textSize="@dimen/text_size_small"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text=":" />
+
+                                        <ImageView
+                                            android:id="@+id/ivEmployee"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_100sdp"
+                                            android:paddingLeft="@dimen/_5sdp"
+                                            android:paddingRight="@dimen/_10sdp"
+                                            android:src="@drawable/ic_baseline_person_24" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom"
+                                        android:layout_weight="1">
+
+                                        <include
+                                            android:id="@+id/basicUpdate"
+                                            layout="@layout/personal_info_update_button" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- ...........................JobJoining info start ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llJobjoningInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hJobJoiningInformation"
+
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/job_joining_information}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+
+                                <include
+                                    android:id="@+id/fJobJoiningOffice"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/office}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningDesignation"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/designation}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningDepartment"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/depertment}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningJobType"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/job_type}" />
+
+
+                                <include
+                                    android:id="@+id/fJobJoiningClass"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/_class}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningGrade"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/grade}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningJoiningDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/joning_date}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningPensionDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/pention_date}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningPrlDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/prl_date}" />
+
+                                <include
+                                    android:id="@+id/jobjoiningUpdateButton"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- ...........................Quota info start ........................................ -->
+                <LinearLayout
+                    android:id="@+id/llQuotaInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hQuota"
+
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/quota_information}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fQuotaName"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/quota_name}" />
+
+                                <include
+                                    android:id="@+id/fQuotaType"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/quota_type}" />
+
+                                <include
+                                    android:id="@+id/fQuotaDescription"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/description}"
+                                    app:title="@{@string/description}" />
+
+                                <include
+                                    android:id="@+id/fQuotaDescriptionBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/description_bn}"
+                                    app:title="@{@string/description_bn}" />
+
+                                <include
+                                    android:id="@+id/quotaBtnUpdate"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+                <!-- ........................... address info start ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <include
+                                android:id="@+id/hAddress"
+                                layout="@layout/personal_information_create_field_header" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+
+                                <include
+                                    android:id="@+id/fAddressDivision"
+
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/division}" />
+
+                                <include
+                                    android:id="@+id/fAddressDistrict"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/district}" />
+
+                                <include
+                                    android:id="@+id/fAddressUpazila"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/upazila}" />
+
+                                <include
+                                    android:id="@+id/fAddressPoliceStation"
+
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/police_station}"
+                                    app:title="@{@string/police_station}" />
+
+                                <include
+                                    android:id="@+id/fAddressPoliceStationBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/police_station_bn}"
+                                    app:title="@{@string/police_station_bn}" />
+
+                                <include
+                                    android:id="@+id/fAddressPostOffice"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/post_off}"
+                                    app:title="@{@string/post_off}" />
+
+                                <include
+                                    android:id="@+id/fAddressPostOfficeBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/post_off_bn}"
+                                    app:title="@{@string/post_off_bn}" />
+
+                                <include
+                                    android:id="@+id/fAddressRoadOrWordNo"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/road_word}"
+                                    app:title="@{@string/road_word}" />
+
+                                <include
+                                    android:id="@+id/fAddressRoadOrWordNoBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/road_word_bn}"
+                                    app:title="@{@string/road_word_bn}" />
+
+                                <include
+                                    android:id="@+id/fAddressVillageOrHouseNo"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/vill_house}"
+                                    app:title="@{@string/vill_house}" />
+
+                                <include
+                                    android:id="@+id/fAddressVillageOrHouseNoBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/vill_house_bn}"
+                                    app:title="@{@string/vill_house_bn}" />
+
+                                <include
+                                    android:id="@+id/addressBtnUpdate"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- ...........................Education Qualification start ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llEducationQualificaion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <include
+                                android:id="@+id/hEducationQualification"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/educational_qualification}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fEQNameOfD"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/name_deg}" />
+
+                                <include
+                                    android:id="@+id/fEQBoardOrUniversity"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/board_uni}" />
+
+                                <include
+                                    android:id="@+id/fEQInstitute"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/name_institute}" />
+
+                                <include
+                                    android:id="@+id/fEQPassingYear"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/passing_year}"
+                                    app:title="@{@string/passing_year}" />
+
+                                <include
+                                    android:id="@+id/fEQDivisionOrCgpa"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/div_cgpa}"
+                                    app:title="@{@string/div_cgpa}" />
+
+                                <include
+                                    android:id="@+id/educationBtnUpdate"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+                <!-- ...........................Spouse start ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llSpouse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <include
+                                android:id="@+id/hSpouse"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/spouse}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fSpouseNameBn"
+
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_b}"
+                                    app:title="@{@string/name_b}" />
+
+                                <include
+                                    android:id="@+id/fSpouseNameEn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name}"
+                                    app:title="@{@string/name}" />
+
+                                <include
+                                    android:id="@+id/fSpouseOccupation"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/occupation}" />
+
+                                <include
+                                    android:id="@+id/fSpouseOffice"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/workstation}" />
+
+                                <include
+                                    android:id="@+id/fSpouseJobType"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/job_type}" />
+
+                                <include
+                                    android:id="@+id/fSpouseRelation"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/relation}" />
+
+                                <include
+                                    android:id="@+id/fSpouseDivision"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/division}" />
+
+                                <include
+                                    android:id="@+id/fSpouseDistrict"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/district}" />
+
+
+                                <include
+                                    android:id="@+id/fSpousePhoneNo"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/phone}"
+                                    app:title="@{@string/phone}" />
+
+                                <include
+                                    android:id="@+id/fSpouseMobileNo"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/mobile}"
+                                    app:title="@{@string/mobile}" />
+
+                                <include
+                                    android:id="@+id/spouseBtnAddUpdate"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+                <!-- ...........................children information start ........................................ -->
+                <LinearLayout
+                    android:id="@+id/llChildrenInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hChildren"
+
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/child_information}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fChildrenNameOChEn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_child}"
+                                    app:title="@{@string/name_child}" />
+
+                                <include
+                                    android:id="@+id/fChildrenNameOChBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_child_bn}"
+                                    app:title="@{@string/name_child_bn}" />
+
+                                <include
+                                    android:id="@+id/fChildrenDOB"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/birth}" />
+
+                                <include
+                                    android:id="@+id/fChildrenBirthCertificateNo"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/birth_certificate_no}"
+                                    app:title="@{@string/birth_certificate_no}" />
+
+                                <include
+                                    android:id="@+id/fChildrenNidNo"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/nid_no}"
+                                    app:title="@{@string/nid_no}" />
+
+                                <include
+                                    android:id="@+id/fChildrenPassportNo"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/passport_no}"
+                                    app:title="@{@string/passport_no}" />
+
+                                <include
+                                    android:id="@+id/fChildrenGenderOrSex"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/gender}" />
+
+                                <include
+                                    android:id="@+id/childrenBtnAddUpdate"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+                <!-- ...........................Language info start ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llLanguageInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <include
+                                android:id="@+id/hLanguage"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/language_information}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fLanguageNOLanguage"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_language}"
+                                    app:title="@{@string/name_language}" />
+
+                                <include
+                                    android:id="@+id/fLanguageNOLanguageBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_language_bn}"
+                                    app:title="@{@string/name_language_bn}" />
+
+                                <include
+                                    android:id="@+id/fLanguageNOInstitute"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_institute}"
+                                    app:title="@{@string/name_institute}" />
+
+                                <include
+                                    android:id="@+id/fLanguageNOInstituteBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_institute_bn}"
+                                    app:title="@{@string/name_institute_bn}" />
+
+                                <include
+                                    android:id="@+id/fLanguageExperienceLevel"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/exp_level}" />
+
+                                <include
+                                    android:id="@+id/fLanguageCertificationDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/certification_date}" />
+
+
+                                <include
+                                    android:id="@+id/languageBtnAddUpdate"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- ........................... Training info start ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llLocalTrainingInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hLocaltraining"
+                                layout="@layout/personal_information_create_field_header" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fLocalTrainingCourseT"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/course_title}"
+                                    app:title="@{@string/course_title}" />
+                                
+                                <include
+                                    android:id="@+id/fLocalTrainingCourseTBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/course_title_bn}"
+                                    app:title="@{@string/course_title_bn}" />
+
+                                <include
+                                    android:id="@+id/fLocalTrainingNOInst"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_institute}"
+                                    app:title="@{@string/name_institute}" />
+
+                                <include
+                                    android:id="@+id/fLocalTrainingNOInstBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_institute_bn}"
+                                    app:title="@{@string/name_institute_bn}" />
+
+                                <include
+                                    android:id="@+id/fLocalTrainingLocation"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/location}"
+                                    app:title="@{@string/location}" />
+
+                                <include
+                                    android:id="@+id/fLocalTrainingLocationBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/location_bn}"
+                                    app:title="@{@string/location_bn}" />
+
+                                <include
+                                    android:id="@+id/fLocalTrainingCountry"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/country}" />
+
+                                <include
+                                    android:id="@+id/fLocalTrainingFromDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:hint="@{@string/from_date}"
+                                    app:title="@{@string/from_date}" />
+
+                                <include
+                                    android:id="@+id/fLocalTrainingToDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:hint="@{@string/to_date}"
+                                    app:title="@{@string/to_date}" />
+
+                                <include
+                                    android:id="@+id/trainingBtnAddUpdate"
+                                    layout="@layout/personal_info_update_button" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+                <!-- ........................... OfficialResidentialInfo  start ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llOfficialResidentialInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <include
+                                android:id="@+id/hOfficialResidentialInfo"
+                                layout="@layout/personal_information_create_field_header"
+
+                                app:title="@{@string/official_residential_information}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fORInfoMemoNo"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/memo_no}"
+                                    app:title="@{@string/memo_no}" />
+
+                                <include
+                                    android:id="@+id/fORInfoMemoNoBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/memo_no_bn}"
+                                    app:title="@{@string/memo_no_bn}" />
+
+                                <include
+                                    android:id="@+id/fORInfoMemoDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/memo_date}" />
+
+
+                                <include
+                                    android:id="@+id/fORInfoOfficeZone"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/office_zoon}"
+                                    app:title="@{@string/office_zoon}" />
+
+
+                                <include
+                                    android:id="@+id/fORInfoDesignation"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/designation}" />
+
+                                <include
+                                    android:id="@+id/fORInfoDivision"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/division}" />
+
+                                <include
+                                    android:id="@+id/fORInfoDistrict"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/district}" />
+
+                                <include
+                                    android:id="@+id/fORInfoUpazila"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/upazila}" />
+
+                                <include
+                                    android:id="@+id/fORInfoAddress"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/address}"
+                                    app:title="@{@string/address}" />
+
+                                <include
+                                    android:id="@+id/fORInfoQuarterName"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/quarter_name}"
+                                    app:title="@{@string/quarter_name}" />
+
+                                <include
+                                    android:id="@+id/fORInfoFlatNo"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/flat_no}"
+                                    app:title="@{@string/flat_no}" />
+
+                                <include
+                                    android:id="@+id/fORInfoStatus"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/status}" />
+
+                                <include
+                                    android:id="@+id/residentialBtnAddUpdate"
+                                    layout="@layout/personal_info_update_button" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+                <!-- ...........................Foreign travel start ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llForeingTravelInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hForeignTravelInfo"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/foreign_travel}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fForeignTravelCountry"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/country}" />
+
+
+                                <include
+                                    android:id="@+id/fForeignTravelFromDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/from_date}" />
+
+
+                                <include
+                                    android:id="@+id/fForeignTravelToDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/to_date}" />
+
+
+                                <include
+                                    android:id="@+id/fForeignTravelPurpose"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/purpose}"
+                                    app:title="@{@string/purpose}" />
+
+
+                                <include
+                                    android:id="@+id/fForeignTravelPurposeBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/purpose_bangla}"
+                                    app:title="@{@string/purpose_bangla}" />
+
+                                <include
+                                    android:id="@+id/foreignTravelBtnAddUpdate"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- ...........................Additional Professional qualification start ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llAdditionalQualification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hAdditionalQualification"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/additional_professional_qualification}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fAQName"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/qualification_name}"
+                                    app:title="@{@string/qualification_name}" />
+
+                                <include
+                                    android:id="@+id/fAQNameBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/qualification_name_bangla}"
+                                    app:title="@{@string/qualification_name_bangla}" />
+
+
+                                <include
+                                    android:id="@+id/fAQDetails"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/qualification_details}"
+                                    app:title="@{@string/qualification_details}" />
+
+                                <include
+                                    android:id="@+id/fAQDetailsBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/qualification_details_bangla}"
+                                    app:title="@{@string/qualification_details_bangla}" />
+
+                                <include
+                                    android:id="@+id/additionalPQBtnAddUpdate"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- ...........................publication start ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llPublication"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hPublication"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/publication}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fPublicationType"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/type_of_pub}" />
+
+                                <include
+                                    android:id="@+id/fPublicationNameEn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/pub_name}"
+                                    app:title="@{@string/pub_name}" />
+
+                                <include
+                                    android:id="@+id/fPublicationNameBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/pub_name_bn}"
+                                    app:title="@{@string/pub_name_bn}" />
+
+                                <include
+                                    android:id="@+id/fPublicationDetails"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/public_details}"
+                                    app:title="@{@string/public_details}" />
+
+                                <include
+                                    android:id="@+id/fPublicationDetailsBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/public_details_bn}"
+                                    app:title="@{@string/public_details_bn}" />
+
+
+                                <include
+                                    android:id="@+id/publicationBtnAddUpdate"
+                                    layout="@layout/personal_info_update_button" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- ...........................Honours and award start ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llHonoursAndAward"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hHonoursAndAward"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/honours_and_award}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fAwardTitle"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/aware_t}"
+                                    app:title="@{@string/aware_t}" />
+
+                                <include
+                                    android:id="@+id/fAwardTitleBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/aware_t_bn}"
+                                    app:title="@{@string/aware_t_bn}" />
+
+                                <include
+                                    android:id="@+id/fAwardDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/award_date}" />
+
+                                <include
+                                    android:id="@+id/fAwardDetailsDetails"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/award_details}"
+                                    app:title="@{@string/award_details}" />
+
+                                <include
+                                    android:id="@+id/fAwardDetailsDetailsBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/award_details_bn}"
+                                    app:title="@{@string/award_details_bn}" />
+
+                                <include
+                                    android:id="@+id/honoursAwardBtnAddUpdate"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- ...........................Reference start ........................................ -->
+                <LinearLayout
+                    android:id="@+id/llReference"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hReference"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/reference}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fReferenceNameEn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name}"
+                                    app:title="@{@string/name}" />
+
+
+                                <include
+                                    android:id="@+id/fReferenceNameBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_b}"
+                                    app:title="@{@string/name_b}" />
+
+
+                                <include
+                                    android:id="@+id/fReferenceRelation"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/relation}"
+                                    app:title="@{@string/relation}" />
+
+                                <include
+                                    android:id="@+id/fReferenceRelationBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/relation_bn}"
+                                    app:title="@{@string/relation_bn}" />
+
+                                <include
+                                    android:id="@+id/fReferenceContactNo"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/contact}"
+                                    app:title="@{@string/contact}" />
+
+                                <include
+                                    android:id="@+id/fReferenceContactNoBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/contact_bn}"
+                                    app:title="@{@string/contact_bn}" />
+
+                                <include
+                                    android:id="@+id/fReferenceAddress"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/address}"
+                                    app:title="@{@string/address}" />
+
+
+                                <include
+                                    android:id="@+id/fReferenceAddressBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/address_bn}"
+                                    app:title="@{@string/address_bn}" />
+
+                                <include
+                                    android:id="@+id/referenceBtnAddUpdate"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>
+

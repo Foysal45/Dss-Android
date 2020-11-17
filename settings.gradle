@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "DSS-HRMS"
+rootProject.name = "dss-android"

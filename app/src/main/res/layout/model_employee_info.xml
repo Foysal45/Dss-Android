@@ -1,0 +1,1237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- ........................... address info start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white"
+                    app:neumorph_strokeWidth="-50dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hAddress"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+
+                            <include
+                                android:id="@+id/fAddressDivision"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAddressDistrict"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAddressPoliceStation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAddressPostOffice"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAddressPostOfficeBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fAddressRoadOrWordNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAddressRoadOrWordNoBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fAddressVillageOrHouseNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAddressVillageOrHouseNoBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAddressPhoneOrMobileNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAddressEmailAddress"
+                                layout="@layout/personel_information_view_field" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+            <!-- ...........................Quota info start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llQuotaInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hQuota"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fQuotaName"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fQuotaType"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fQuotaDescription"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fQuotaDescriptionBn"
+                                layout="@layout/personel_information_view_field" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+
+            <!-- ...........................JobJoining info start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llJobjoningInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hJobJoiningInformation"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fJobJoiningOffice"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningDesignation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningDepartment"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningJobType"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningClass"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningGrade"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningJoiningDate"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningPensionDate"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fJobJoiningPrlDate"
+                                layout="@layout/personel_information_view_field" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+            <!-- ...........................Education Qualification start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llEducationQualificaion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hEducationQualification"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fEQNameOfD"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEQNameOIn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEQBoardOrUniversity"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEQPassingYear"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEQDivisionOrCgpa"
+                                layout="@layout/personel_information_view_field" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+            <!-- ...........................Spouse start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llSpouse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hSpouse"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fSpouseNameBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseNameEn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseOccupation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseOffice"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/f_spouse_job_type"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/f_spouse_relation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseDivision"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseDistrict"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fSpousePhoneNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseMobileNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseReligion"
+                                layout="@layout/personel_information_view_field" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+            <!-- ...........................children information start ........................................ -->
+            <LinearLayout
+                android:id="@+id/llChildrenInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hChildren"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fChildrenNameOChEn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fChildrenNameOChBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fChildrenDOB"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fChildrenBirthCertificateNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fChildrenNidNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fChildrenPassportNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fChildrenGenderOrSex"
+                                layout="@layout/personel_information_view_field" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+            <!-- ...........................Language info start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llLanguageInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hLanguage"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fLanguageNOLanguage"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLanguageNOLanguageBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLanguageNOInstitute"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLanguageNOInstituteBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLanguageExperienceLevel"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fLanguageCertificationDate"
+                                layout="@layout/personel_information_view_field" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+            <!-- ...........................Local Training info start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llLocalTrainingInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hLocaltraining"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fLocalTrainingCourseT"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLocalTrainingCourseTBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLocalTrainingNOInst"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLocalTrainingNOInstBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLocalTrainingLocation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLocalTrainingLocationBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLocalTrainingCountry"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLocalTrainingFromDate"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fLocalTrainingToDate"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <!--                            <include-->
+                            <!--                                android:id="@+id/fLocalTrainingCertificate"-->
+                            <!--                                layout="@layout/personel_information_view_field" />-->
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+
+            <!-- ...........................Local OfficialResidentialInfo  start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llOfficialResidentialInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hOfficialResidentialInfo"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fORInfoMemoNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fORInfoMemoNoBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fORInfoMemoDate"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fORInfoOfficeZone"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fORInfoDesignation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fORInfoDivision"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fORInfoDistrict"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fORInfoUpazila"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fORInfoLocation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fORInfoQuarterName"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fORInfoFlatNo"
+                                layout="@layout/personel_information_view_field" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+            <!-- ...........................Foreign travel start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llForeingTravelInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hForeignTravelInfo"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fForeignTravelCountry"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fForeignTravelPurpose"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fForeignTravelFromDate"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fForeignTravelToDate"
+                                layout="@layout/personel_information_view_field" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+
+            <!-- ...........................Additional Professional qualification start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llAdditionalQualification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_marginTop="15dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hAdditionalQualification"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fAQName"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAQNameBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fAQDetails"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAQDetailsBn"
+                                layout="@layout/personel_information_view_field" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+            <!-- ...........................publication start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llPublication"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hPublication"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fPublicationType"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPublicationNameEn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPublicationNameBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPublicationDetails"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPublicationDetailsBn"
+                                layout="@layout/personel_information_view_field" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+            <!-- ...........................Honours and award start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llHonoursAndAward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hHonoursAndAward"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fAwardTitle"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fAwardTitleBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fAwardDate"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAwardDetailsDetails"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAwardDetailsDetailsBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+            <!-- ...........................posting record start ........................................ -->
+            <LinearLayout
+                android:id="@+id/llPostingRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hPostingRecord"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fPostingRType"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPostingRFrom"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPostingRTo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPostingREffectiveDate"
+                                layout="@layout/personel_information_view_field" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+
+            <!-- ...........................Disciplinary Action start ........................................ -->
+            <LinearLayout
+                android:id="@+id/llDisciplinaryAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hDiscipilinaryAction"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fDACategory"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDAPresentStatus"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDADescription"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDAJudgment"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDAFinalJud"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDARemarks"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDADate"
+                                layout="@layout/personel_information_view_field" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+
+            <!-- ...........................promotion start ........................................ -->
+            <LinearLayout
+                android:id="@+id/llPromotion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hPromotion"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fPromotionMemoNo"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fPromotionMemoDate"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fPromotionOfficeZone"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fPromotionPreviousPost"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fPromotionCurrentPosition"
+                                layout="@layout/personel_information_view_field" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+
+            <!-- ...........................Reference start ........................................ -->
+            <LinearLayout
+                android:id="@+id/llReference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hReference"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fReferenceNameEn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fReferenceNameBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fReferenceRelation"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fReferenceRelationBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fReferenceContactNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fReferenceContactNoBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fReferenceAddress"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fReferenceAddressBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

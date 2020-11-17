@@ -4,11 +4,35 @@
     <color name="colorLightGray">#F2F2F2</color>
     <color name="colorPrimaryDark">#008F4C</color>
     <color name="colorAccent">#008F4C</color>
-    <color name="colorGray">#A5A3A3</color>
-    <color name="colorGreen">#008F4C</color>
     <color name="colorLowGreen">#62BA90</color>
     <color name="colorLightGreen">#E8F5EE</color>
-    <color name="colorWhite">#ffffff</color>
-    <color name="colorBlack">#000000</color>
-    <color name="colorRed">#EC1C24</color>
+    <color name="color_click">#F1FAF5</color>
+    <color name="statusbar_color">#008F4C</color>
+    <color name="statusbar_color_deep">#008F4C</color>
+
+
+
+
+
+    <color name="white">#ffffff</color>
+    <color name="off_white">#F5F5F5</color>
+    <color name="black">#000000</color>
+    <color name="light_black">#716F6F</color>
+    <color name="gray">#A5A5A5</color>
+    <color name="green">#0C7810</color>
+    <color name="green_light">#62BA90</color>
+    <color name="red">#D31D10</color>
+    <color name="blue">#0089F8</color>
+    <color name="yellow">#FFD24B</color>
+    <color name="pink">#E1C4C2</color>
+    <color name="purpel">#600DF4</color>
+
+    <color name="color_accent">#000000</color>
+    <color name="background">#EFEEEE</color>
+<!--    <color name="background">#ECF3FB</color>-->
+
+    <color name="gradient_start_accent_color">#BF0966B1</color>
+    <color name="gradient_center_accent_color">#D90966B1</color>
+    <color name="gradient_end_accent_color">#BF0966B1</color>
+    <color name="icon_color">#596770</color>
 </resources>
