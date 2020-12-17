@@ -5,4 +5,20 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="text_size_extream">22sp</dimen>
+    <dimen name="text_size_extra_large">18sp</dimen>
+    <dimen name="text_size_large">16sp</dimen>
+    <dimen name="text_size_medium">14sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_extra_small">10sp</dimen>
+    <dimen name="box_size">60dp</dimen>
+    <dimen name="box__alarm_icon_padding">16dp</dimen>
+    <dimen name="edittext_height_extra_large">50dp</dimen>
+    <dimen name="edittext_height_large">45dp</dimen>
+    <dimen name="personal_information_header_height">@dimen/_40sdp</dimen>
+    <dimen name="personal_information_body_padding_horizontal">@dimen/_15sdp</dimen>
+    <dimen name="personal_information_body_padding_vertical">@dimen/_5sdp</dimen>
+
+
 </resources>
