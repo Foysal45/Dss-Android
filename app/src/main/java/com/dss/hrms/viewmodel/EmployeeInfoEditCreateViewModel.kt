@@ -6,14 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import com.dss.hrms.repository.EmployeeInfoEditCreateRepo
 import com.dss.hrms.repository.LoginRepo
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Part
+import javax.inject.Inject
 
-class EmployeeInfoEditCreateViewModel(application: Application) : AndroidViewModel(application) {
-    private var employeeInfoEditCreateRepo: EmployeeInfoEditCreateRepo? = null
+class EmployeeInfoEditCreateViewModel @Inject constructor(application: Application) :
+    AndroidViewModel(application) {
 
-    init {
-        employeeInfoEditCreateRepo = EmployeeInfoEditCreateRepo(application)
-    }
+    @Inject
+    lateinit var employeeInfoEditCreateRepo: EmployeeInfoEditCreateRepo
+
 
     fun updateJobJoiningInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any>? {
         return employeeInfoEditCreateRepo?.editJobjoiningInfo(id, map)
@@ -21,6 +23,10 @@ class EmployeeInfoEditCreateViewModel(application: Application) : AndroidViewMod
 
     fun updateQuotaInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any>? {
         return employeeInfoEditCreateRepo?.updateQuotaInfo(id, map)
+    }
+
+    fun updateBasicInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any>? {
+        return employeeInfoEditCreateRepo?.updateBasicInfo(id, map)
     }
 
     fun updatePresentInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any>? {
@@ -173,8 +179,12 @@ class EmployeeInfoEditCreateViewModel(application: Application) : AndroidViewMod
     }
 
 
-    fun uploadProfilePic(@Part filenames: MultipartBody.Part?, picName: String): MutableLiveData<Any>? {
-        return employeeInfoEditCreateRepo?.uploadProfilePic(filenames,picName)
+    fun uploadProfilePic(
+        file: MultipartBody.Part?,
+        picName: String,
+        profile_pic: RequestBody
+    ): MutableLiveData<Any>? {
+        return employeeInfoEditCreateRepo?.uploadProfilePic(file, picName, profile_pic)
     }
 
 

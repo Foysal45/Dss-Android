@@ -59,6 +59,7 @@
                 android:drawableRight="@drawable/ic_baseline_calendar_today_24"
                 android:gravity="center|left"
                 android:hint="@{title}"
+                android:textColor="@color/light_black"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:paddingRight="10dp"
                 android:textColorHint="@color/gray"

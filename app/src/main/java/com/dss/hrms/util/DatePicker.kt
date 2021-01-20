@@ -2,7 +2,7 @@ package com.dss.hrms.util
 
 import android.app.DatePickerDialog
 import android.content.Context
-import com.dss.hrms.view.`interface`.OnDateListener
+import com.dss.hrms.view.allInterface.OnDateListener
 import java.util.*
 
 class DatePicker {
@@ -19,7 +19,7 @@ class DatePicker {
                 it,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     // Display Selected date in TextView
-                    onDatelistener.onDate("" + year + "-" + (month + 1) + "-" + dayOfMonth)
+                    onDatelistener.onDate("" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth)
                 }, year, month, day
             )
         }

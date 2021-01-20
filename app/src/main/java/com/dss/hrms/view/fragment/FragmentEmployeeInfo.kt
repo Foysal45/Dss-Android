@@ -1,36 +1,148 @@
 package com.dss.hrms.view.fragment
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Nullable
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dss.hrms.R
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.util.FilePath
 import com.dss.hrms.util.StaticKey
-import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.OnEmployeeInfoClickListener
+import com.dss.hrms.view.allInterface.FileClickListener
+import com.dss.hrms.view.allInterface.OnEmployeeInfoClickListener
+import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
 import com.dss.hrms.view.adapter.EmployeeInfoAdapter
+import com.dss.hrms.view.bottomsheet.SelectImageBottomSheet
 import com.dss.hrms.view.dialog.*
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
+import com.namaztime.namaztime.database.MySharedPreparence
+import com.theartofdev.edmodo.cropper.CropImage
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_employee_info.view.*
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
-    // TODO: Rename and change types of parameters
+class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
+    SelectImageBottomSheet.BottomSheetListener {
+
+    @Inject
+    lateinit var editAndCreateAdditionalQualificationInfo: EditAndCreateAdditionalQualificationInfo
+
+    @Inject
+    lateinit var editCreateChildInfo: EditAndCreateChildInfo
+
+    @Inject
+    lateinit var editAndCreateForeignTrainingInfo: EditAndCreateForeignTrainingInfo
+
+
+    @Inject
+    lateinit var editEducationQualificationInfo: EditEducationQualificationInfo
+
+
+    @Inject
+    lateinit var editAndCreateForeignTravelInfo: EditAndCreateForeignTravelInfo
+
+    @Inject
+    lateinit var editCreateHonoursAwardInfo: EditAndCreateHonoursAwardInfo
+
+    @Inject
+    lateinit var editAndCreateLanguageInfo: EditAndCreateLanguageInfo
+
+    @Inject
+    lateinit var editCreateLocalTrainingInfo: EditAndCreateLocalTrainingInfo
+
+    @Inject
+    lateinit var editAndCreatePublicatioInfo: EditAndCreatePublicatioInfo
+
+    @Inject
+    lateinit var editAndCreateSpouseInfo: EditAndCreateSpouseInfo
+
+    @Inject
+    lateinit var editCreateQualificationInfo: EditEducationQualificationInfo
+
+    @Inject
+    lateinit var editJobJoiningInformation: EditJobJoiningInformation
+
+    @Inject
+    lateinit var editOfficialResidentialIInfo: EditOfficialResidentialIInfo
+
+    @Inject
+    lateinit var editPermanentAddressInfo: EditPermanentAddressInfo
+
+    @Inject
+    lateinit var editPresentAddressInfo: EditPresentAddressInfo
+
+    @Inject
+    lateinit var editQuotaInfo: EditQuotaInfo
+
+    @Inject
+    lateinit var editReferenceInfo: EditReferenceInfo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var preparence: MySharedPreparence
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    @Inject
+    lateinit var adapter: EmployeeInfoAdapter
+
+    var employee: Employee? = null
+
+
+    // Storage Permissions
+    private val REQUEST_EXTERNAL_STORAGE = 1
+
+    private val PERMISSIONS_STORAGE = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+
+    private val REQUEST_TAKE_PHOTO = 1
+    private val REQUEST_SELECT_PHOTO = 2
+    private var selectImageBottomSheet: SelectImageBottomSheet? = null
+    private var imageFile: File? = null
+    private var currentPhotoPath: String? = null
+    private var onFilevalueReceiveListener: OnFilevalueReceiveListener? = null
+
+
     private var position: Int? = null
     private var addButtonWiilAppear = false
     private var key: String? = null
-    lateinit var adapter: EmployeeInfoAdapter
+
     lateinit var v: View
-    lateinit var binding: FragmentPermanentAddresses
+    lateinit var binding: FragmentEmployeeInfo
     var dataList: List<Any>? = null
+    var title: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,9 +162,12 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
         // binding = DataBindingUtil.inflate(inflater, R.layout.fragment_employee_info, container, false)
         v = inflater.inflate(R.layout.fragment_employee_info, container, false)
         Log.e("position", "position : " + position)
-        initRV()
+
+        this.employee = employeeProfileData.employee
+
+
         v.fab.setOnClickListener({
-            operation(key, null, StaticKey.CREATE)
+            operation(key, null, StaticKey.CREATE, null)
         })
 
         if (addButtonWiilAppear) {
@@ -60,6 +175,7 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
         } else {
             v.fab.visibility = View.GONE
         }
+        initRV()
         return v
     }
 
@@ -72,128 +188,169 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
     private fun initRV() {
         when (key) {
             StaticKey.PERMANENT_ADDRESS -> {
-                dataList = MainActivity.employee?.permanentAddresses
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().PermanentAddresses())
+                dataList = employee?.permanentAddresses
+                this.title = getString(R.string.permanent_address)
+                if (dataList != null && dataList?.size!! > 0) {
+                    v.fab.visibility = View.GONE
+                } else {
+                    v.fab.visibility = View.VISIBLE
+                }
+//                    dataList = listOf(Employee().PermanentAddresses())
                 Log.e("list size", "list size :  " + dataList?.size)
             }
             StaticKey.PRESENT_ADDRESS -> {
-                dataList = MainActivity.employee?.presentAddresses
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().PresentAddresses())
+                dataList = employee?.presentAddresses
+                this.title = getString(R.string.present_address)
+                if (dataList != null && dataList?.size!! > 0) {
+                    v.fab.visibility = View.GONE
+                } else {
+                    v.fab.visibility = View.VISIBLE
+                }
+
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().PresentAddresses())
             }
             StaticKey.EducationalQualifications -> {
-                dataList =
-                    MainActivity.employee?.educationalQualifications
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().EducationalQualifications())
+                dataList = employee?.educationalQualifications
+                this.title = getString(R.string.educational_qualification)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().EducationalQualifications())
             }
             StaticKey.Jobjoining -> {
-                dataList = MainActivity.employee?.jobjoinings
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().Jobjoinings())
+                dataList = employee?.jobjoinings
+                this.title = getString(R.string.job_joining_information)
+
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().Jobjoinings())
             }
             StaticKey.Quota -> {
-                dataList = MainActivity.employee?.employee_quotas
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().EmployeeQuotas())
+                dataList = employee?.employee_quotas
+                this.title = getString(R.string.quota_information)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().EmployeeQuotas())
             }
             StaticKey.Spouse -> {
-                dataList = MainActivity.employee?.spouses
+                dataList = employee?.spouses
+                this.title = getString(R.string.spouse)
                 if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().Spouses())
+                    v.fab.visibility = View.VISIBLE
+                else
+                    v.fab.visibility = View.GONE
             }
             StaticKey.Children -> {
-                dataList = MainActivity.employee?.childs
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().Childs())
+                dataList = employee?.childs
+                this.title = getString(R.string.child_information)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().Childs())
             }
 
             StaticKey.Language -> {
-                dataList = MainActivity.employee?.languages
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().Languages())
+                dataList = employee?.languages
+                this.title = getString(R.string.language_information)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().Languages())
             }
 
 
             StaticKey.LocalTraining -> {
-                dataList = MainActivity.employee?.local_trainings
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().LocalTrainings())
+                dataList = employee?.local_trainings
+                this.title = getString(R.string.local_training)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().LocalTrainings())
             }
 
 
             StaticKey.ForeingTraining -> {
-                dataList = MainActivity.employee?.foreigntrainings
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().Foreigntrainings())
+                dataList = employee?.foreigntrainings
+                this.title = getString(R.string.foreign_training)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().Foreigntrainings())
             }
 
 
             StaticKey.OfficialResidentials -> {
-                dataList = MainActivity.employee?.official_residentials
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().OfficialResidentials())
+                dataList = employee?.official_residentials
+                this.title = getString(R.string.official_residential_information)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().OfficialResidentials())
             }
 
 
             StaticKey.ForeignTravel -> {
-                dataList = MainActivity.employee?.foreign_travels
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().ForeignTravels())
+                dataList = employee?.foreign_travels
+                this.title = getString(R.string.foreign_travel)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().ForeignTravels())
             }
 
 
             StaticKey.AdditionalQualifications -> {
-                dataList = MainActivity.employee?.additional_qualifications
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().AdditionalQualifications())
+                dataList = employee?.additional_qualifications
+                this.title = getString(R.string.additional_professional_qualification)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().AdditionalQualifications())
             }
 
 
             StaticKey.Publication -> {
-                dataList = MainActivity.employee?.publications
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().Publications())
+                dataList = employee?.publications
+                this.title = getString(R.string.publication)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().Publications())
             }
 
 
             StaticKey.HonoursAwards -> {
-                dataList = MainActivity.employee?.honours_awards
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().HonoursAwards())
+                dataList = employee?.honours_awards
+                this.title = getString(R.string.honours_and_award)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().HonoursAwards())
             }
 
 
             StaticKey.DisciplinaryAction -> {
-                dataList = MainActivity.employee?.disciplinaryActions
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().DisciplinaryAction())
+                dataList = employee?.disciplinaryActions
+                this.title = getString(R.string.disciplinary_action)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().DisciplinaryAction())
             }
 
 
             StaticKey.Promotion -> {
-                dataList = MainActivity.employee?.promotions
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().Promotions())
+                dataList = employee?.promotions
+                this.title = getString(R.string.promotion)
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().Promotions())
             }
 
             StaticKey.References -> {
-                dataList = MainActivity.employee?.references
-                if (dataList == null || dataList?.size == 0)
-                    dataList = listOf(Employee().References())
+                dataList = employee?.references
+                this.title = getString(R.string.reference)
+                if (dataList != null && dataList?.size!! > 0) {
+                    v.fab.visibility = View.GONE
+                } else {
+                    v.fab.visibility = View.VISIBLE
+                }
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().References())
             }
         }
 
-        if (dataList != null) {
-            adapter = dataList?.let {
-                activity?.let { it1 ->
-                    EmployeeInfoAdapter(
-                        it1,
-                        it, key!!, this
-                    )
-                }
-            }!!
+        if (dataList != null && dataList?.size!! > 0) {
+            v.recyclerView.visibility = View.VISIBLE
+
+            dataList?.let { key?.let { it1 -> activity?.let { it2 ->
+                adapter.setRequiredData(it, it1,
+                    it2,this)
+            } } }
+//            adapter = dataList?.let {
+//                activity?.let { it1 ->
+//                    EmployeeInfoAdapter(
+//                        it1,
+//                        it, key!!,this
+//                    )
+//                }
+//            }!!
             v.recyclerView.setLayoutManager(
                 LinearLayoutManager(
                     activity,
@@ -202,6 +359,13 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
                 )
             )
             v.recyclerView.setAdapter(adapter)
+            // v.recyclerView.isNestedScrollingEnabled = true
+
+
+        } else {
+            v.rlEmptyView.visibility = View.VISIBLE
+            title?.let { v.tvTitle?.setText(it) }
+
         }
 
     }
@@ -210,7 +374,7 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FragmentPermanentAddresses().apply {
+            FragmentEmployeeInfo().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -218,28 +382,28 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             }
     }
 
-    override fun onClick(any: Any, key: String) {
+    override fun onClick(any: Any, key: String, position: Int?) {
 
-        operation(key, any, StaticKey.EDIT)
+        operation(key, any, StaticKey.EDIT, position)
     }
 
 
-    private fun operation(key: String?, any: Any?, operation: String?) {
+    private fun operation(key: String?, any: Any?, operation: String?, position: Int?) {
         when (key) {
             StaticKey.PERMANENT_ADDRESS -> {
                 if (operation.equals(StaticKey.EDIT)) {
                     activity?.let { it2 ->
-                        EditPermanentAddressInfo().showDialog(
+                        editPermanentAddressInfo.showDialog(
                             it2,
-                            any as Employee.PermanentAddresses,
+                            position,
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation.equals(StaticKey.CREATE)) {
                     activity?.let { it2 ->
-                        EditPermanentAddressInfo().showDialog(
+                        editPermanentAddressInfo.showDialog(
                             it2,
-                            Employee().PermanentAddresses(),
+                            position,
                             StaticKey.CREATE
                         )
                     }
@@ -248,17 +412,17 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.PRESENT_ADDRESS -> {
                 if (operation.equals(StaticKey.EDIT)) {
                     activity?.let { it2 ->
-                        EditPresentAddressInfo().showDialog(
+                        editPresentAddressInfo.showDialog(
                             it2,
-                            any as Employee.PresentAddresses,
+                            position,
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation.equals(StaticKey.CREATE)) {
                     activity?.let { it2 ->
-                        EditPresentAddressInfo().showDialog(
+                        editPresentAddressInfo.showDialog(
                             it2,
-                            Employee().PresentAddresses(),
+                            position,
                             StaticKey.CREATE
                         )
                     }
@@ -267,17 +431,17 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.EducationalQualifications -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditEducationQualificationInfo().showDialog(
+                        editEducationQualificationInfo.showDialog(
                             it2,
-                            any as Employee.EducationalQualifications,
+                            position,
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditEducationQualificationInfo().showDialog(
+                        editEducationQualificationInfo.showDialog(
                             it2,
-                            Employee().EducationalQualifications(),
+                            position,
                             StaticKey.CREATE
                         )
                     }
@@ -286,9 +450,9 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.Jobjoining -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditJobJoiningInformation().showDialog(
+                        editJobJoiningInformation.showDialog(
                             it2,
-                            any as Employee.Jobjoinings
+                            position
                         )
                     }
                 }
@@ -298,9 +462,9 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
                 Log.e("quota", "quota : ")
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditQuotaInfo().showDialog(
+                        editQuotaInfo.showDialog(
                             it2,
-                            any as Employee.EmployeeQuotas
+                            position
                         )
                     }
                 }
@@ -308,18 +472,18 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.Spouse -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateSpouseInfo().showDialog(
+                        editAndCreateSpouseInfo.showDialog(
                             it2,
-                            any as Employee.Spouses,
+                            position,
                             StaticKey.EDIT
                         )
                     }
 
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateSpouseInfo().showDialog(
+                        editAndCreateSpouseInfo.showDialog(
                             it2,
-                            Employee().Spouses(),
+                            position,
                             StaticKey.CREATE
                         )
                     }
@@ -328,17 +492,17 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.Children -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateChildInfo().showDialog(
+                        editCreateChildInfo.showDialog(
                             it2,
-                            any as Employee.Childs,
+                            position,
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateChildInfo().showDialog(
+                        editCreateChildInfo.showDialog(
                             it2,
-                            Employee().Childs(),
+                            position,
                             StaticKey.CREATE
                         )
                     }
@@ -347,17 +511,29 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.Language -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateLanguageInfo().showDialog(
+                        editAndCreateLanguageInfo.showDialog(
                             it2,
-                            any as Employee.Languages,
+                            position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateLanguageInfo().showDialog(
+                        editAndCreateLanguageInfo.showDialog(
                             it2,
-                            Employee().Languages(),
+                            position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.CREATE
                         )
                     }
@@ -367,17 +543,29 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.LocalTraining -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateLocalTrainingInfo().showDialog(
+                        editCreateLocalTrainingInfo.showDialog(
                             it2,
-                            any as Employee.LocalTrainings,
+                            position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateLocalTrainingInfo().showDialog(
+                        editCreateLocalTrainingInfo.showDialog(
                             it2,
-                            Employee().LocalTrainings(),
+                            position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.CREATE
                         )
                     }
@@ -385,19 +573,32 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             }
 
             StaticKey.ForeingTraining -> {
+
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateForeignTrainingInfo().showDialog(
+                        editAndCreateForeignTrainingInfo.showDialog(
                             it2,
-                            any as Employee.Foreigntrainings,
+                            position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateForeignTrainingInfo().showDialog(
+                        editAndCreateForeignTrainingInfo.showDialog(
                             it2,
-                            Employee().Foreigntrainings(),
+                            position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.CREATE
                         )
                     }
@@ -407,17 +608,17 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.OfficialResidentials -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditOfficialResidentialIInfo().showDialog(
+                        editOfficialResidentialIInfo.showDialog(
                             it2,
-                            any as Employee.OfficialResidentials,
+                            position,
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditOfficialResidentialIInfo().showDialog(
+                        editOfficialResidentialIInfo.showDialog(
                             it2,
-                            Employee().OfficialResidentials(),
+                            position,
                             StaticKey.CREATE
                         )
                     }
@@ -427,17 +628,17 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.ForeignTravel -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateForeignTravelInfo().showDialog(
+                        editAndCreateForeignTravelInfo.showDialog(
                             it2,
-                            any as Employee.ForeignTravels,
+                            position,
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateForeignTravelInfo().showDialog(
+                        editAndCreateForeignTravelInfo.showDialog(
                             it2,
-                            Employee().ForeignTravels(),
+                            position,
                             StaticKey.CREATE
                         )
                     }
@@ -447,17 +648,17 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.AdditionalQualifications -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateAdditionalQualificationInfo().showDialog(
+                        editAndCreateAdditionalQualificationInfo.showDialog(
                             it2,
-                            any as Employee.AdditionalQualifications,
+                            position,
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateAdditionalQualificationInfo().showDialog(
+                        editAndCreateAdditionalQualificationInfo.showDialog(
                             it2,
-                            Employee().AdditionalQualifications(),
+                            position,
                             StaticKey.CREATE
                         )
                     }
@@ -467,18 +668,18 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.Publication -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditAndCreatePublicatioInfo().showDialog(
+                        editAndCreatePublicatioInfo.showDialog(
                             it2,
-                            any as Employee.Publications,
+                            position,
                             StaticKey.EDIT
                         )
                     }
 
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditAndCreatePublicatioInfo().showDialog(
+                        editAndCreatePublicatioInfo.showDialog(
                             it2,
-                            Employee().Publications(),
+                            position,
                             StaticKey.CREATE
                         )
                     }
@@ -488,17 +689,17 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.HonoursAwards -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateHonoursAwardInfo().showDialog(
+                        editCreateHonoursAwardInfo.showDialog(
                             it2,
-                            any as Employee.HonoursAwards,
+                            position,
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditAndCreateHonoursAwardInfo().showDialog(
+                        editCreateHonoursAwardInfo.showDialog(
                             it2,
-                            Employee().HonoursAwards(),
+                            position,
                             StaticKey.CREATE
                         )
                     }
@@ -520,17 +721,17 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             StaticKey.References -> {
                 if (operation?.equals(StaticKey.EDIT)!!) {
                     activity?.let { it2 ->
-                        EditReferenceInfo().showDialog(
+                        editReferenceInfo.showDialog(
                             it2,
-                            any as Employee.References,
+                            position,
                             StaticKey.EDIT
                         )
                     }
                 } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
-                        EditReferenceInfo().showDialog(
+                        editReferenceInfo.showDialog(
                             it2,
-                            Employee().References(),
+                            position,
                             StaticKey.CREATE
                         )
                     }
@@ -538,4 +739,174 @@ class FragmentPermanentAddresses : Fragment(), OnEmployeeInfoClickListener {
             }
         }
     }
+
+
+    private fun openSelectImageBottomSheet() {
+        selectImageBottomSheet = SelectImageBottomSheet(this)
+        activity?.getSupportFragmentManager()
+            ?.let { selectImageBottomSheet?.show(it, "selectImage") }
+    }
+
+    override fun onCameraButtonClicked() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (activity?.let { ContextCompat.checkSelfPermission(it, Manifest.permission.CAMERA) }
+                == PackageManager.PERMISSION_GRANTED
+            ) {
+                dispatchTakePictureIntent()
+            } else {
+                activity?.let {
+                    ActivityCompat.requestPermissions(
+                        it,
+                        arrayOf(Manifest.permission.CAMERA),
+                        1030
+                    )
+                }
+            }
+        } else {
+            dispatchTakePictureIntent()
+        }
+        selectImageBottomSheet!!.dismiss()
+    }
+
+    override fun onGalleryButtonClicked() {
+
+        val galleryIntent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+        startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
+        selectImageBottomSheet!!.dismiss()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1030) {
+            onCameraButtonClicked();
+        }
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        @Nullable data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+            val resultUri: Uri? = Uri.fromFile(File(currentPhotoPath))
+            try {
+                activity?.let {
+                    resultUri?.let { it1 ->
+                        FilePath().getPath(
+                            it,
+                            it1
+                        )?.let { getImageFile(it) }
+                    }
+                };
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            val bitmap =
+                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
+
+            imageFile?.let {
+                bitmap?.let { it1 ->
+                    resultUri?.let { it2 ->
+                        onFilevalueReceiveListener?.onFileValue(it, it1)
+                    }
+                }
+            }
+        } else if (requestCode == REQUEST_SELECT_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
+            val resultUri: Uri? = data.data
+            try {
+                activity?.let {
+                    resultUri?.let { it1 ->
+                        FilePath().getPath(
+                            it,
+                            it1
+                        )?.let { getImageFile(it) }
+                    }
+                };
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            val bitmap =
+                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
+
+            imageFile?.let {
+                bitmap?.let { it1 ->
+                    resultUri?.let { it2 ->
+                        onFilevalueReceiveListener?.onFileValue(it, it1)
+                    }
+                }
+            }
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+        }
+    }
+
+    private fun getImageFile(photoPath: String) {
+        imageFile = File(photoPath)
+
+    }
+
+    private fun setImageToView(bitmap: Bitmap) {
+        // headerBinding.profileImageCIV.setImageBitmap(bitmap)
+    }
+
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File? {
+        val timeStamp: String =
+            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "JPEG_" + timeStamp + "_"
+        val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(
+            imageFileName,
+            ".jpg",
+            storageDir
+        )
+        currentPhotoPath = image.absolutePath
+        return image
+    }
+
+
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (activity?.getPackageManager()?.let { takePictureIntent.resolveActivity(it) } != null) {
+            var photoFile: File? = null
+            try {
+                photoFile = createImageFile()
+            } catch (ignored: IOException) {
+            }
+            if (photoFile != null) {
+                val photoURI: Uri = FileProvider.getUriForFile(
+                    activity!!,
+                    "com.dss.hrms.customerfileprovider",
+                    photoFile
+                )
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+            }
+        }
+    }
+
+    fun getPath(uri: Uri?): String? {
+        val projection =
+            arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor =
+            uri?.let { activity?.getContentResolver()?.query(it, projection, null, null, null) }
+                ?: return null
+        val column_index: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor.moveToFirst()
+        val s: String = cursor.getString(column_index)
+        cursor.close()
+        return s
+    }
+
+
 }

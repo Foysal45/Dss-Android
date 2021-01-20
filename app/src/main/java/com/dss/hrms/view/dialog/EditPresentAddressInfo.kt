@@ -15,33 +15,54 @@ import androidx.lifecycle.ViewModelProviders
 import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
-import com.dss.hrms.databinding.DialogConfirmationBinding
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.CommonDataValueListener
-import com.dss.hrms.view.`interface`.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.allInterface.CommonDataValueListener
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import javax.inject.Inject
 
-class EditPresentAddressInfo {
+class EditPresentAddressInfo @Inject constructor() {
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+
     var dialogCustome: Dialog? = null
     var division: SpinnerDataModel? = null
     var district: SpinnerDataModel? = null
     var upazila: SpinnerDataModel? = null
-    var presentAddresses: Employee.PresentAddresses? = null
+    var presentAddress: Employee.PresentAddresses? = null
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
     lateinit var key: String
-    fun showDialog(context: Context, presentAddresses: Employee.PresentAddresses, key: String) {
-        this.presentAddresses = presentAddresses
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    var position: Int? = 0
+
+    fun showDialog(
+        context: Context,
+        position: Int?,
+        key: String
+    ) {
+        this.position = position
+        this.presentAddress =
+            position?.let { employeeProfileData?.employee?.presentAddresses?.get(it) }
         this.context = context
         this.key = key
         dialogCustome = Dialog(context)
@@ -58,14 +79,13 @@ class EditPresentAddressInfo {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updatePresentAddressInfo(context, presentAddresses)
+        updatePresentAddressInfo(context)
         dialogCustome?.show()
 
     }
 
     fun updatePresentAddressInfo(
-        context: Context,
-        presentAddresses: Employee.PresentAddresses?
+        context: Context
     ) {
 
         binding?.hAddress?.title = context.getString(R.string.present_address)
@@ -80,17 +100,17 @@ class EditPresentAddressInfo {
             binding?.addressBtnUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
         }
 
-        binding?.fAddressPoliceStation?.etText?.setText(presentAddresses?.police_station)
-        binding?.fAddressPoliceStationBn?.etText?.setText(presentAddresses?.police_station_bn)
-        binding?.fAddressPostOffice?.etText?.setText(presentAddresses?.post_office)
-        binding?.fAddressPostOfficeBn?.etText?.setText(presentAddresses?.post_office_bn)
-        binding?.fAddressRoadOrWordNo?.etText?.setText(presentAddresses?.road_word_no)
-        binding?.fAddressRoadOrWordNoBn?.etText?.setText(presentAddresses?.road_word_no_bn)
-        binding?.fAddressVillageOrHouseNo?.etText?.setText(presentAddresses?.village_house_no)
-        binding?.fAddressVillageOrHouseNoBn?.etText?.setText(presentAddresses?.village_house_no_bn)
+        binding?.fAddressPoliceStation?.etText?.setText(presentAddress?.police_station)
+        binding?.fAddressPoliceStationBn?.etText?.setText(presentAddress?.police_station_bn)
+        binding?.fAddressPostOffice?.etText?.setText(presentAddress?.post_office)
+        binding?.fAddressPostOfficeBn?.etText?.setText(presentAddress?.post_office_bn)
+        binding?.fAddressRoadOrWordNo?.etText?.setText(presentAddress?.road_word_no)
+        binding?.fAddressRoadOrWordNoBn?.etText?.setText(presentAddress?.road_word_no_bn)
+        binding?.fAddressVillageOrHouseNo?.etText?.setText(presentAddress?.village_house_no)
+        binding?.fAddressVillageOrHouseNoBn?.etText?.setText(presentAddress?.village_house_no_bn)
 
 
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/division/list",
+        commonRepo.getCommonData("/api/auth/division/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
@@ -99,11 +119,11 @@ class EditPresentAddressInfo {
                             binding?.fAddressDivision?.spinner!!,
                             context,
                             list,
-                            presentAddresses?.division_id,
+                            presentAddress?.division_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     division = any as SpinnerDataModel
-                                    getDistrict(division?.id, presentAddresses?.district_id)
+                                    getDistrict(division?.id, presentAddress?.district_id)
                                 }
 
                             }
@@ -114,14 +134,15 @@ class EditPresentAddressInfo {
 
 
         binding?.addressBtnUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
+            var employeeInfoEditCreateRepo =
+                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
+                    .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
                 if (it.equals(StaticKey.EDIT)) {
                     employeeInfoEditCreateRepo?.updatePresentInfo(
-                        presentAddresses?.id,
+                        presentAddress?.id,
                         getMapData()
                     )
                         ?.observe(EmployeeInfoActivity.context!!,
@@ -262,7 +283,7 @@ class EditPresentAddressInfo {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("division_id", division?.id)
         map.put("district_id", district?.id)
         map.put("upazila_id", upazila?.id)
@@ -274,13 +295,13 @@ class EditPresentAddressInfo {
         map.put("road_word_no_bn", binding?.fAddressRoadOrWordNoBn?.etText?.text.toString())
         map.put("village_house_no", binding?.fAddressVillageOrHouseNo?.etText?.text.toString())
         map.put("village_house_no_bn", binding?.fAddressVillageOrHouseNoBn?.etText?.text.toString())
-        map.put("status", presentAddresses?.status)
+        map.put("status", presentAddress?.status)
         return map
     }
 
 
     fun getDistrict(divisionId: Int?, districtId: Int?) {
-        CommonRepo(MainActivity.appContext).getDistrict(divisionId,
+        commonRepo.getDistrict(divisionId,
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -293,7 +314,7 @@ class EditPresentAddressInfo {
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     district = any as SpinnerDataModel
-                                    getUpazila(district?.id, presentAddresses?.upazila_id)
+                                    getUpazila(district?.id, presentAddress?.upazila_id)
                                 }
 
                             }
@@ -305,7 +326,7 @@ class EditPresentAddressInfo {
 
 
     fun getUpazila(districtId: Int?, upazilaId: Int?) {
-        CommonRepo(MainActivity.appContext).getUpazila(districtId,
+        commonRepo.getUpazila(districtId,
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))

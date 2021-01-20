@@ -16,21 +16,31 @@ import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.CommonDataValueListener
-import com.dss.hrms.view.`interface`.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.allInterface.CommonDataValueListener
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import javax.inject.Inject
 
-class EditAndCreateSpouseInfo {
+class EditAndCreateSpouseInfo @Inject constructor() {
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+
     var dialogCustome: Dialog? = null
     var spouses: Employee.Spouses? = null
     var binding: DialogPersonalInfoBinding? = null
@@ -42,13 +52,20 @@ class EditAndCreateSpouseInfo {
     var relation: SpinnerDataModel? = null
     var division: SpinnerDataModel? = null
     var district: SpinnerDataModel? = null
+    var upazila: SpinnerDataModel? = null
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    var position: Int? = 0
 
     fun showDialog(
         context: Context,
-        spouses1: Employee.Spouses,
+        position: Int?,
         key: String
     ) {
-        this.spouses = spouses1
+        this.position = position
+        this.spouses = position?.let { employeeProfileData?.employee?.spouses?.get(it) }
         this.context = context
         this.key = key
         dialogCustome = Dialog(context)
@@ -65,14 +82,13 @@ class EditAndCreateSpouseInfo {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updateEducationQualification(context, spouses1)
+        updateEducationQualification(context)
         dialogCustome?.show()
 
     }
 
     fun updateEducationQualification(
-        context: Context,
-        spouses1: Employee.Spouses?
+        context: Context
     ) {
 
         binding?.llSpouse?.visibility = View.VISIBLE
@@ -86,13 +102,13 @@ class EditAndCreateSpouseInfo {
             binding?.spouseBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
         }
 
-        binding?.fSpouseNameEn?.etText?.setText(spouses1?.name)
-        binding?.fSpouseNameBn?.etText?.setText(spouses1?.name_bn)
-        binding?.fSpousePhoneNo?.etText?.setText(spouses1?.phone_no)
-        binding?.fSpouseMobileNo?.etText?.setText(spouses1?.mobile_no)
+        binding?.fSpouseNameEn?.etText?.setText(spouses?.name)
+        binding?.fSpouseNameBn?.etText?.setText(spouses?.name_bn)
+        binding?.fSpousePhoneNo?.etText?.setText(spouses?.phone_no)
+        binding?.fSpouseMobileNo?.etText?.setText(spouses?.mobile_no)
 
 
-        CommonRepo(MainActivity.appContext).getCommonData2("/api/auth/spouse-occupation/list",
+        commonRepo.getCommonData("/api/auth/spouse-occupation/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
@@ -101,7 +117,7 @@ class EditAndCreateSpouseInfo {
                             binding?.fSpouseOccupation?.spinner!!,
                             context,
                             list,
-                            spouses1?.occupation_id,
+                            spouses?.occupation_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     occupation = any as SpinnerDataModel
@@ -114,7 +130,7 @@ class EditAndCreateSpouseInfo {
             })
 
 
-        CommonRepo(MainActivity.appContext).getCommonData2("/api/auth/spouse-workstation/list",
+        commonRepo.getCommonData("/api/auth/spouse-workstation/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -123,7 +139,7 @@ class EditAndCreateSpouseInfo {
                             binding?.fSpouseOffice?.spinner!!,
                             context,
                             list,
-                            spouses1?.spouse_workstation_id,
+                            spouses?.spouse_workstation_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     workStation = any as SpinnerDataModel
@@ -134,7 +150,7 @@ class EditAndCreateSpouseInfo {
                     }
                 }
             })
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/job-type/list",
+        commonRepo.getCommonData("/api/auth/job-type/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -143,7 +159,7 @@ class EditAndCreateSpouseInfo {
                             binding?.fSpouseJobType?.spinner!!,
                             context,
                             list,
-                            spouses1?.spouse_job_type_id,
+                            spouses?.spouse_job_type_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     jobType = any as SpinnerDataModel
@@ -157,11 +173,11 @@ class EditAndCreateSpouseInfo {
 
 
         getRelationList()?.let {
-            SpinnerAdapter().setSpinner(
+            SpinnerAdapter().setSpinnerForStringMatch(
                 binding?.fSpouseRelation?.spinner!!,
                 context,
-                getRelationList(),
-                spouses1?.spouse_job_type_id,
+                it,
+                spouses?.relation,
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
                         relation = any as SpinnerDataModel
@@ -170,7 +186,7 @@ class EditAndCreateSpouseInfo {
                 }
             )
         }
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/division/list",
+        commonRepo.getCommonData("/api/auth/division/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
@@ -179,11 +195,11 @@ class EditAndCreateSpouseInfo {
                             binding?.fSpouseDivision?.spinner!!,
                             context,
                             list,
-                            spouses1?.division_id,
+                            spouses?.division_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     division = any as SpinnerDataModel
-                                    getDistrict(division?.id, spouses1?.district_id)
+                                    getDistrict(division?.id, spouses?.district_id)
                                 }
 
                             }
@@ -193,14 +209,14 @@ class EditAndCreateSpouseInfo {
             })
 
         binding?.spouseBtnAddUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
+            var employeeInfoEditCreateRepo =
+                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
+                    .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
                 if (it.equals(StaticKey.EDIT)) {
-                    employeeInfoEditCreateRepo?.updateSpouseInfo(
-                        spouses1?.id,
+                    employeeInfoEditCreateRepo?.addSpouseInfo(
                         getMapData()
                     )
                         ?.observe(EmployeeInfoActivity.context!!,
@@ -226,7 +242,13 @@ class EditAndCreateSpouseInfo {
 
     fun showResponse(any: Any) {
         if (any is String) {
-            toast(EmployeeInfoActivity.context, any)
+            key?.let {
+                if (StaticKey.EDIT.equals(it)) toast(
+                    EmployeeInfoActivity.context,
+                    "" + context?.getString(R.string.updated)
+                ) else toast(EmployeeInfoActivity.context, any)
+            }
+
             MainActivity.selectedPosition = 1
             EmployeeInfoActivity.refreshEmployeeInfo()
             dialogCustome?.dismiss()
@@ -298,6 +320,12 @@ class EditAndCreateSpouseInfo {
                                 binding?.fSpouseDistrict?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
+                            "upazila_id" -> {
+                                binding?.fSpouseThana?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fSpouseThana?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
                             "phone_no" -> {
                                 binding?.fSpousePhoneNo?.tvError?.visibility =
                                     View.VISIBLE
@@ -332,15 +360,17 @@ class EditAndCreateSpouseInfo {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("name", binding?.fSpouseNameEn?.etText?.text.toString())
-        map.put("name_bn", binding?.fSpouseNameBn?.etText?.text.toString())
+        key?.let { if (it.equals(StaticKey.EDIT)) map.put("id", spouses?.id) }
+        map.put("name_bn", binding?.fSpouseNameBn?.etText?.text?.trim().toString())
         map.put("relation", relation?.name)
         map.put("division_id", division?.id)
         map.put("occupation_id", occupation?.id)
         map.put("spouse_workstation_id", workStation?.id)
         map.put("spouse_job_type_id", jobType?.id)
         map.put("district_id", district?.id)
+        map.put("upazila_id", upazila?.id)
         map.put("phone_no", binding?.fSpousePhoneNo?.etText?.text.toString())
         map.put("mobile_no", binding?.fSpouseMobileNo?.etText?.text.toString())
         map.put("status", spouses?.status)
@@ -359,6 +389,8 @@ class EditAndCreateSpouseInfo {
             View.GONE
 
         binding?.fSpouseDivision?.tvError?.visibility =
+            View.GONE
+        binding?.fSpouseThana?.tvError?.visibility =
             View.GONE
 
         binding?.fSpouseOccupation?.tvError?.visibility =
@@ -384,7 +416,7 @@ class EditAndCreateSpouseInfo {
 
 
     fun getDistrict(divisionId: Int?, districtId: Int?) {
-        CommonRepo(MainActivity.appContext).getDistrict(divisionId,
+        commonRepo.getDistrict(divisionId,
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -397,6 +429,30 @@ class EditAndCreateSpouseInfo {
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     district = any as SpinnerDataModel
+                                    getUpazila(district?.id, spouses?.upazila_id)
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+    }
+
+    fun getUpazila(districtId: Int?, upazilaId: Int?) {
+        commonRepo.getUpazila(districtId,
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    //    Log.e("gender", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding?.fSpouseThana?.spinner!!,
+                            context,
+                            list,
+                            upazilaId,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    upazila = any as SpinnerDataModel
                                 }
 
                             }

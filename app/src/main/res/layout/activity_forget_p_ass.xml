@@ -83,6 +83,7 @@
                     android:gravity="center_vertical"
                     android:hint="@string/email_address_phone"
                     android:paddingLeft="10dp"
+                    android:textColor="@color/light_black"
                     android:paddingRight="10dp"
                     android:textSize="14sp" />
             </soup.neumorphism.NeumorphCardView>

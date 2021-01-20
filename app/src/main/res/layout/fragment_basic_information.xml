@@ -29,7 +29,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:outlineSpotShadowColor="@color/off_white"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
+                    app:neumorph_shadowColorLight="#D5D5D5"
                     app:neumorph_shadowElevation="4dp"
                     app:neumorph_strokeColor="@color/off_white">
 
@@ -68,6 +68,45 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
+                                android:id="@+id/fGender"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fMaritalStatus"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fReligion"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fBloodGroup"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fPresentBasicSalary"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPresentGrossSalary"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNid"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fTIN"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fPunchId"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
                                 android:id="@+id/fFatherNameEng"
                                 layout="@layout/personel_information_view_field" />
 
@@ -85,7 +124,39 @@
 
 
                             <include
-                                android:id="@+id/fGender"
+                                android:id="@+id/fEmail"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fUserName"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPhone"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEmployeeType"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEmployeeRole"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDisability"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDisabilityType"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDisabilityDegree"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDisabledPersonId"
                                 layout="@layout/personel_information_view_field" />
 
                             <LinearLayout
@@ -116,7 +187,7 @@
                                     android:layout_weight="1.5"
                                     android:paddingLeft="@dimen/_5sdp"
                                     android:paddingRight="@dimen/_10sdp"
-                                    android:src="@drawable/ic_baseline_person_24" />
+                                    android:src="@drawable/ic_baseline_image_24" />
                             </LinearLayout>
 
                         </LinearLayout>

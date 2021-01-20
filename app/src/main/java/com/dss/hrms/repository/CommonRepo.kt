@@ -1,15 +1,14 @@
 package com.dss.hrms.repository
 
 import android.app.Application
-import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.btbapp.alquranapp.retrofit.ApiService
 import com.dss.hrms.model.Office
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.retrofit.RetrofitInstance.retrofitInstance
-import com.dss.hrms.view.`interface`.CommonDataValueListener
-import com.dss.hrms.view.`interface`.OfficeDataValueListener
+import com.dss.hrms.view.allInterface.CommonDataValueListener
+import com.dss.hrms.view.allInterface.OfficeDataValueListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.namaztime.namaztime.database.MySharedPreparence
@@ -19,16 +18,18 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.reflect.Type
+import javax.inject.Inject
 
 
-class CommonRepo {
-    private var application: Application? = null
-    private var apiService: ApiService? = null
+class CommonRepo @Inject constructor() {
+    @Inject
+    lateinit var application: Application
 
-    constructor(application: Application?) {
-        this.application = application
-        apiService = retrofitInstance!!.create(ApiService::class.java)
-    }
+    @Inject
+    lateinit var apiService: ApiService
+
+    @Inject
+    lateinit var preparence: MySharedPreparence
 
     fun getDivision(): MutableLiveData<List<SpinnerDataModel>>? {
         val liveData: MutableLiveData<List<SpinnerDataModel>> =
@@ -47,7 +48,7 @@ class CommonRepo {
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
 
-                        if (code == 200 && !TextUtils.isEmpty(status) && status.equals("success")) {
+                        if (code == 200 || code == 201) {
                             val dObj = jsonObjectParent.getJSONObject("data")
                             val dataJA = dObj.getJSONArray("data")
                             val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
@@ -97,7 +98,7 @@ class CommonRepo {
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
 
-                        if (code == 200 && !TextUtils.isEmpty(status) && status.equals("success")) {
+                        if (code == 200 || code == 201) {
                             val dataJO = jsonObjectParent.getJSONObject("data")
                             val dataJA = dataJO.getJSONArray("districts")
                             val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
@@ -150,7 +151,7 @@ class CommonRepo {
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
 
-                        if (code == 200) {
+                        if (code == 200 || code == 201) {
                             val dataJO = jsonObjectParent.getJSONObject("data")
                             val dataJA = dataJO.getJSONArray("upazilas")
                             val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
@@ -204,7 +205,7 @@ class CommonRepo {
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
 
-                        if (code == 200) {
+                        if (code == 200 || code == 201) {
                             val dataJA = jsonObjectParent.getJSONArray("data")
                             val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
                             val dataList: List<SpinnerDataModel> =
@@ -257,7 +258,7 @@ class CommonRepo {
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
 
-                        if (code == 200) {
+                        if (code == 200 || code == 201) {
                             val dObj = jsonObjectParent.getJSONObject("data")
                             val dataJA = dObj.getJSONArray("data")
                             val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
@@ -311,7 +312,7 @@ class CommonRepo {
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
 
-                        if (code == 200) {
+                        if (code == 200 || code == 201) {
                             val dataJA = jsonObjectParent.getJSONArray("data")
                             val type: Type = object : TypeToken<List<Office?>?>() {}.type
                             val dataList: List<Office> =

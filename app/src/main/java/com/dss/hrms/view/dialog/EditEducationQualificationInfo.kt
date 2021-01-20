@@ -16,23 +16,36 @@ import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.CommonDataValueListener
-import com.dss.hrms.view.`interface`.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.adapter.SpinnerAdapter
+import com.dss.hrms.view.allInterface.CommonDataValueListener
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import javax.inject.Inject
 
-class EditEducationQualificationInfo {
+class EditEducationQualificationInfo @Inject constructor() {
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    var position: Int? = 0
     var dialogCustome: Dialog? = null
-    var qualifications: Employee.EducationalQualifications? = null
+    var educationalQualification: Employee.EducationalQualifications? = null
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
     lateinit var key: String
@@ -42,12 +55,11 @@ class EditEducationQualificationInfo {
     var instituteId: String? = null
     var boardId: String? = null
 
-    fun showDialog(
-        context: Context,
-        qualifications: Employee.EducationalQualifications,
-        key: String
-    ) {
-        this.qualifications = qualifications
+
+    fun showDialog(context: Context, position: Int?, key: String) {
+        this.position = position
+        this.educationalQualification =
+            position?.let { employeeProfileData?.employee?.educationalQualifications?.get(it) }
         this.context = context
         this.key = key
         dialogCustome = Dialog(context)
@@ -64,14 +76,13 @@ class EditEducationQualificationInfo {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updateEducationQualification(context, qualifications)
+        updateEducationQualification(context)
         dialogCustome?.show()
 
     }
 
     fun updateEducationQualification(
-        context: Context,
-        educationalQualifications: Employee.EducationalQualifications?
+        context: Context
     ) {
 
         binding?.llEducationQualificaion?.visibility = View.VISIBLE
@@ -88,11 +99,11 @@ class EditEducationQualificationInfo {
             View.GONE
         binding?.fEQInstitute?.llBody?.visibility =
             View.GONE
-        binding?.fEQPassingYear?.etText?.setText(educationalQualifications?.passing_year)
-        binding?.fEQDivisionOrCgpa?.etText?.setText(educationalQualifications?.division_cgpa)
+        binding?.fEQPassingYear?.etText?.setText(educationalQualification?.passing_year)
+        binding?.fEQDivisionOrCgpa?.etText?.setText(educationalQualification?.division_cgpa)
 
 
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/examination/list",
+        commonRepo.getCommonData("/api/auth/examination/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
@@ -101,7 +112,7 @@ class EditEducationQualificationInfo {
                             binding?.fEQNameOfD?.spinner!!,
                             context,
                             list,
-                            educationalQualifications?.examination_id,
+                            educationalQualification?.examination_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     degreeName = any as SpinnerDataModel
@@ -128,7 +139,7 @@ class EditEducationQualificationInfo {
             })
 
 
-        CommonRepo(MainActivity.appContext).getCommonData2("/api/auth/board/list",
+        commonRepo.getCommonData("/api/auth/board/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -137,13 +148,13 @@ class EditEducationQualificationInfo {
                             binding?.fEQBoardOrUniversity?.spinner!!,
                             context,
                             list,
-                            educationalQualifications?.board_id,
+                            educationalQualification?.board_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     board = any as SpinnerDataModel
                                     instituteName = null
-                                    boardId = board?.id.toString()
-                                    instituteId = ""
+                                    boardId = board?.id?.toString()
+                                    instituteId = null
 
                                 }
 
@@ -152,7 +163,7 @@ class EditEducationQualificationInfo {
                     }
                 }
             })
-        CommonRepo(MainActivity.appContext).getCommonData2("/api/auth/education-institute/list",
+        commonRepo.getCommonData("/api/auth/education-institute/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -161,13 +172,13 @@ class EditEducationQualificationInfo {
                             binding?.fEQInstitute?.spinner!!,
                             context,
                             list,
-                            educationalQualifications?.educational_institute_id,
+                            educationalQualification?.educational_institute_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     instituteName = any as SpinnerDataModel
                                     board = null
-                                    instituteId = instituteName?.id.toString()
-                                    boardId = ""
+                                    instituteId = instituteName?.id?.toString()
+                                    boardId = null
                                 }
 
                             }
@@ -178,14 +189,15 @@ class EditEducationQualificationInfo {
 
 
         binding?.educationBtnUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
+            var employeeInfoEditCreateRepo =
+                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
+                    .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
                 if (it.equals(StaticKey.EDIT)) {
                     employeeInfoEditCreateRepo?.updateEducationQualificationInfo(
-                        educationalQualifications?.id,
+                        educationalQualification?.id,
                         getMapData()
                     )
                         ?.observe(EmployeeInfoActivity.context!!,
@@ -287,13 +299,16 @@ class EditEducationQualificationInfo {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("examination_id", degreeName?.id)
-        map.put("educational_institute_id", instituteId)
-        map.put("board_id", boardId)
+        if (instituteId != null) map.put(
+            "educational_institute_id",
+            instituteId
+        ) else map.put("educational_institute_id", "")
+        if (boardId != null) map.put("board_id", boardId) else map.put("board_id", "")
         map.put("passing_year", binding?.fEQPassingYear?.etText?.text.toString())
         map.put("division_cgpa", binding?.fEQDivisionOrCgpa?.etText?.text.toString())
-        map.put("status", qualifications?.status)
+        map.put("status", educationalQualification?.status)
         return map
     }
 

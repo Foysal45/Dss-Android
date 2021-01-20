@@ -5,13 +5,25 @@ import com.google.gson.annotations.SerializedName
 class SpinnerDataModel {
 
     @SerializedName("id")
-    var id: Int = 0
+    var id: Int? = null
 
     @SerializedName("name")
     var name: String? = null
 
     @SerializedName("name_bn")
     var name_bn: String? = null
+
+    @SerializedName("disability_type")
+    var disability_type: String? = null
+
+    @SerializedName("disability_type_bn")
+    var disability_type_bn: String? = null
+
+    @SerializedName("disability_degree")
+    var disability_degree: String? = null
+
+    @SerializedName("disability_degree_bn")
+    var disability_degree_bn: String? = null
 
     @SerializedName("status")
     var status: Int = 0
@@ -27,4 +39,9 @@ class SpinnerDataModel {
 
     @SerializedName("updated_at")
     var updated_at: String? = null
+
+    @SerializedName("paysacle")
+    var paysacle: List<Paysacle>? = null
+
+
 }

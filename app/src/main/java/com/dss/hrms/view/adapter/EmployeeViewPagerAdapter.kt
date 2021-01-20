@@ -4,11 +4,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import java.util.*
+import javax.inject.Inject
 
-class EmployeeViewPagerAdapter(fm: FragmentManager) :
+class EmployeeViewPagerAdapter @Inject constructor(fm: FragmentManager) :
     FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    private val fragmentList: MutableList <Fragment> = ArrayList()
-    private val fragmentListTitle: MutableList <String> = ArrayList()
+    private val fragmentList: MutableList<Fragment> = ArrayList()
+    private val fragmentListTitle: MutableList<String> = ArrayList()
 
     override fun getItem(position: Int): Fragment {
         return fragmentList.get(position)
@@ -22,7 +23,7 @@ class EmployeeViewPagerAdapter(fm: FragmentManager) :
         return fragmentListTitle.get(position)
     }
 
-    fun addFragment(fragment: Fragment,title:String){
+    fun addFragment(fragment: Fragment, title: String) {
         fragmentList.add(fragment)
         fragmentListTitle.add(title)
     }

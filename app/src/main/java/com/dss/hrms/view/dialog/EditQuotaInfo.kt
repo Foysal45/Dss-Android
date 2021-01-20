@@ -16,24 +16,44 @@ import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.CommonDataValueListener
-import com.dss.hrms.view.`interface`.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.allInterface.CommonDataValueListener
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import javax.inject.Inject
 
-class EditQuotaInfo {
+class EditQuotaInfo @Inject constructor() {
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    var position: Int? = 0
     var dialogCustome: Dialog? = null
+    var employeeQuotas: Employee.EmployeeQuotas? = null
 
-    fun showDialog(context: Context, quotaInfo: Employee.EmployeeQuotas) {
+    fun showDialog(
+        context: Context, position: Int?
 
+    ) {
+
+        this.position = position
+        this.employeeQuotas =
+            position?.let { employeeProfileData?.employee?.employee_quotas?.get(it) }
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         var dialogCustomeBinding: DialogPersonalInfoBinding = DataBindingUtil.inflate(
@@ -48,15 +68,14 @@ class EditQuotaInfo {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updateJobjoiningInfo(context, dialogCustomeBinding, quotaInfo)
+        updateJobjoiningInfo(context, dialogCustomeBinding)
         dialogCustome?.show()
 
     }
 
     fun updateJobjoiningInfo(
         context: Context,
-        binding: DialogPersonalInfoBinding,
-        employeeQuotas: Employee.EmployeeQuotas?
+        binding: DialogPersonalInfoBinding
     ) {
         binding.llQuotaInfo.visibility = View.VISIBLE
         binding.hQuota.tvClose.setOnClickListener({
@@ -70,7 +89,7 @@ class EditQuotaInfo {
         binding.fQuotaDescriptionBn.etText.setText(employeeQuotas?.description_bn)
 
 
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/quota-information/list",
+        commonRepo.getCommonData("/api/auth/quota-information/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
@@ -92,7 +111,7 @@ class EditQuotaInfo {
             })
 
 
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/quota-information-details/list",
+        commonRepo.getCommonData("/api/auth/quota-information-details/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -116,11 +135,11 @@ class EditQuotaInfo {
 
         binding.quotaBtnUpdate.btnUpdate.setOnClickListener({
             var employeeInfoEditCreateRepo =
-                ViewModelProviders.of(MainActivity.context!!)
+                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
 
             var map = HashMap<Any, Any?>()
-            map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+            map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
             map.put("quota_information_id", quotaName?.id)
             map.put("quota_information_detail_id", quotaType?.id)
             map.put("description", binding.fQuotaDescription.etText.text.toString())

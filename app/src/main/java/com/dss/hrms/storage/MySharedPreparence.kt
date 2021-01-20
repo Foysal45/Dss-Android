@@ -39,7 +39,7 @@ class MySharedPreparence {
     }
 
     fun getLanguage(): String? {
-        return preferences!!.getString(LANGUAGE, "en");
+        return preferences!!.getString(LANGUAGE, "bn");
     }
 
     fun setLoginStatus(value: Boolean) {

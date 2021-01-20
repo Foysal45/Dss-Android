@@ -17,19 +17,26 @@ import com.dss.hrms.model.login.ResetPassword
 import com.dss.hrms.model.login.VerifyOtp
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.viewmodel.LoginViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.android.synthetic.main.activity_change_pass.*
+import javax.inject.Inject
 
 
 class ChangePassActivity : BaseActivity() {
 
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var preparence: MySharedPreparence
+
     var loginViewModel: LoginViewModel? = null
-    var preparence: MySharedPreparence? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        preparence = MySharedPreparence(this)
-        setLocalLanguage(preparence!!.getLanguage())
+        setLocalLanguage(preparence?.getLanguage())
         setContentView(R.layout.activity_change_pass)
         backBtnIV.setOnClickListener({
             onBackPressed()
@@ -111,7 +118,8 @@ class ChangePassActivity : BaseActivity() {
     }
 
     fun init() {
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        loginViewModel =
+            ViewModelProviders.of(this, viewModelProviderFactory).get(LoginViewModel::class.java)
     }
 
     fun toast(context: Context, massage: String) {

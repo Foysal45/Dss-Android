@@ -16,21 +16,35 @@ import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.CommonDataValueListener
-import com.dss.hrms.view.`interface`.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.allInterface.CommonDataValueListener
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import javax.inject.Inject
 
-class EditPermanentAddressInfo {
+class EditPermanentAddressInfo @Inject constructor() {
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    var position: Int? = 0
     var dialogCustome: Dialog? = null
     var division: SpinnerDataModel? = null
     var district: SpinnerDataModel? = null
@@ -38,13 +52,17 @@ class EditPermanentAddressInfo {
     var permanentAddresses: Employee.PermanentAddresses? = null
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
+
     lateinit var key: String
+
     fun showDialog(
         context: Context,
-        permanentAddresses1: Employee.PermanentAddresses,
+        position: Int?,
         key: String
     ) {
-        this.permanentAddresses = permanentAddresses1
+        this.position = position
+        this.permanentAddresses =
+            position?.let { employeeProfileData?.employee?.permanentAddresses?.get(it) }
         this.context = context
         this.key = key
         dialogCustome = Dialog(context)
@@ -61,7 +79,7 @@ class EditPermanentAddressInfo {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updatePresentAddressInfo(context, permanentAddresses1)
+        updatePresentAddressInfo(context, permanentAddresses)
         dialogCustome?.show()
 
     }
@@ -72,9 +90,9 @@ class EditPermanentAddressInfo {
     ) {
 
         binding?.llAddress?.visibility = View.VISIBLE
-        binding?.hAddress?.title=context.getString(R.string.permanent_address)
-        Log.e("address","permanent")
-      //  binding?.hAddress?.tvTitle?.setText(context?.getString(R.string.permanent_address))
+        binding?.hAddress?.title = context.getString(R.string.permanent_address)
+        Log.e("address", "permanent")
+        //  binding?.hAddress?.tvTitle?.setText(context?.getString(R.string.permanent_address))
         binding?.hAddress?.tvClose?.setOnClickListener({
             dialogCustome?.dismiss()
         })
@@ -95,7 +113,7 @@ class EditPermanentAddressInfo {
         binding?.fAddressVillageOrHouseNoBn?.etText?.setText(permanentAddresses1?.village_house_no_bn)
 
 
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/division/list",
+        commonRepo.getCommonData("/api/auth/division/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
@@ -119,8 +137,9 @@ class EditPermanentAddressInfo {
 
 
         binding?.addressBtnUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
+            var employeeInfoEditCreateRepo =
+                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
+                    .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
@@ -269,7 +288,7 @@ class EditPermanentAddressInfo {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("division_id", division?.id)
         map.put("district_id", district?.id)
         map.put("upazila_id", upazila?.id)
@@ -287,7 +306,7 @@ class EditPermanentAddressInfo {
 
 
     fun getDistrict(divisionId: Int?, districtId: Int?) {
-        CommonRepo(MainActivity.appContext).getDistrict(divisionId,
+        commonRepo.getDistrict(divisionId,
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -312,7 +331,7 @@ class EditPermanentAddressInfo {
 
 
     fun getUpazila(districtId: Int?, upazilaId: Int?) {
-        CommonRepo(MainActivity.appContext).getUpazila(districtId,
+        commonRepo.getUpazila(districtId,
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))

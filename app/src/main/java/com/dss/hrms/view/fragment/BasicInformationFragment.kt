@@ -24,19 +24,23 @@ import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.FilePath
-import com.dss.hrms.util.FileUtil
-import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.FileClickListener
+import com.dss.hrms.util.StaticKey
+import com.dss.hrms.view.allInterface.FileClickListener
+import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.bottomsheet.SelectImageBottomSheet
 import com.dss.hrms.view.dialog.EditEmployeeBasicInfoDialog
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import com.theartofdev.edmodo.cropper.CropImage
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_basic_information.view.*
 import kotlinx.android.synthetic.main.personal_information_header_field.view.*
 import kotlinx.android.synthetic.main.personel_information_view_field.view.*
@@ -45,6 +49,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -52,12 +57,7 @@ import java.util.*
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BasicInformationFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class BasicInformationFragment : Fragment(), SelectImageBottomSheet.BottomSheetListener {
+class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.BottomSheetListener {
 
     // Storage Permissions
     private val REQUEST_EXTERNAL_STORAGE = 1
@@ -66,18 +66,32 @@ class BasicInformationFragment : Fragment(), SelectImageBottomSheet.BottomSheetL
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var preparence: MySharedPreparence
+
+    @Inject
+    lateinit var editEmployeeBasicInfoDialog: EditEmployeeBasicInfoDialog
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    var employee: Employee? = null
+
     private val REQUEST_TAKE_PHOTO = 1
     private val REQUEST_SELECT_PHOTO = 2
     private var selectImageBottomSheet: SelectImageBottomSheet? = null
     private var imageFile: File? = null
     private var currentPhotoPath: String? = null
+    private var onFilevalueReceiveListener: OnFilevalueReceiveListener? = null
 
 
     private var param1: String? = null
     private var param2: String? = null
     lateinit var v: View
-    var preparence: MySharedPreparence? = null
-    var editEmployeeBasicInfoDialog: EditEmployeeBasicInfoDialog? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,8 +107,7 @@ class BasicInformationFragment : Fragment(), SelectImageBottomSheet.BottomSheetL
     ): View? {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_basic_information, container, false)
-        preparence = activity?.let { MySharedPreparence(it) }
-        editEmployeeBasicInfoDialog = EditEmployeeBasicInfoDialog()
+        this.employee = employeeProfileData.employee
         setData()
         EmployeeInfoActivity.context?.let { verifyStoragePermissions(it) }
 
@@ -111,50 +124,131 @@ class BasicInformationFragment : Fragment(), SelectImageBottomSheet.BottomSheetL
         v.fNameBangla.tvTitle.setText(getString(R.string.name_b))
 
         v.fDOB.tvTitle.setText(getString(R.string.birth))
+        v.fGender.tvTitle.setText(getString(R.string.gender))
+        v.fMaritalStatus.tvTitle.setText(getString(R.string.marital_status))
+        v.fReligion.tvTitle.setText(getString(R.string.religion))
+        v.fBloodGroup.tvTitle.setText(getString(R.string.blood_group))
+        v.fPresentBasicSalary.tvTitle.setText(getString(R.string.present_basic_salary))
+        v.fPresentGrossSalary.tvTitle.setText(getString(R.string.present_gross_salary))
+        v.fTIN.tvTitle.setText(getString(R.string.tin_no))
+        v.fPunchId.tvTitle.setText(getString(R.string.punch_id))
 
         v.fFatherNameEng.tvTitle.setText(getString(R.string.f_name))
         v.fFatherNameBangla.tvTitle.setText(getString(R.string.f_name_b))
         v.fMotherNameEng.tvTitle.setText(getString(R.string.m_name))
         v.fMotherNameBangla.tvTitle.setText(getString(R.string.m_name_b))
-        v.fGender.tvTitle.setText(getString(R.string.gender))
+        v.fEmail.tvTitle.setText(getString(R.string.email))
+        v.fUserName.tvTitle.setText(getString(R.string.user_name))
+        v.fPhone.tvTitle.setText(getString(R.string.phone))
+        v.fEmployeeType.tvTitle.setText(getString(R.string.employee_type))
+        v.fDisability.tvTitle.setText(getString(R.string.has_disability))
         v.tvImageTitle.setText(getString(R.string.photo))
+        v.fEmployeeRole.tvTitle.setText(getString(R.string.employee_role))
+        v.fDisabilityType.tvTitle.setText(getString(R.string.disability_type))
+        v.fDisabilityDegree.tvTitle.setText(getString(R.string.disability_degree))
+        v.fDisabledPersonId.tvTitle.setText(getString(R.string.disabled_person_id))
+        v.fNid.tvTitle.setText(getString(R.string.nid_no))
 
 
 
-        v.fEmployeeId.tvText.setText("" + MainActivity.employee?.user?.employee_id)
-        MainActivity.employee?.name?.let { v.fNameEng.tvText.setText(it) }
-        MainActivity.employee?.name_bn?.let { v.fNameBangla.tvText.setText(it) }
-        MainActivity.employee?.date_of_birth?.let { v.fDOB.tvText.setText(it) }
-        MainActivity.employee?.fathers_name?.let { v.fFatherNameEng.tvText.setText(it) }
-        MainActivity.employee?.fathers_name_bn?.let { v.fFatherNameBangla.tvText.setText(it) }
-        MainActivity.employee?.mothers_name?.let { v.fMotherNameEng.tvText.setText(it) }
-        MainActivity.employee?.mothers_name_bn?.let { v.fMotherNameBangla.tvText.setText(it) }
+        v.fEmployeeId.tvText.setText("" + employee?.profile_id)
+        employee?.name?.let { v.fNameEng.tvText.setText(it) }
+        employee?.name_bn?.let { v.fNameBangla.tvText.setText(it) }
+        employee?.date_of_birth?.let { v.fDOB.tvText.setText(it) }
+        employee?.fathers_name?.let { v.fFatherNameEng.tvText.setText(it) }
+        employee?.fathers_name_bn?.let { v.fFatherNameBangla.tvText.setText(it) }
+        employee?.mothers_name?.let { v.fMotherNameEng.tvText.setText(it) }
+        employee?.mothers_name_bn?.let { v.fMotherNameBangla.tvText.setText(it) }
+        employee?.user?.email?.let { v.fEmail.tvText.setText(it) }
+        employee?.user?.username?.let { v.fUserName.tvText.setText(it) }
+        employee?.user?.phone_number?.let { v.fPhone.tvText.setText(it) }
+        employee?.nid_no?.let { v.fNid.tvText.setText(it) }
+        employee?.tin_no?.let { v.fTIN.tvText.setText(it) }
+        employee?.punch_id?.let { v.fPunchId.tvText.setText(it) }
+        employee?.present_basic_salary?.let { v.fPresentBasicSalary.tvText.setText(it) }
+        employee?.present_gross_salary?.let { v.fPresentGrossSalary.tvText.setText(it) }
+        employee?.user?.roles?.let {
+            if (it.size > 0) {
+                v.fEmployeeRole.tvText.setText(it.get(0).name)
+            }
+        }
+
+        if (employee?.has_disability == 0) {
+            Log.e("hasdisability", "" + employee?.has_disability)
+            v.fDisability.tvText.setText("" + context?.getString(R.string.no))
+            v.fDisabilityDegree.llBody.visibility = View.GONE
+            v.fDisabilityType?.llBody?.visibility = View.GONE
+            v.fDisabledPersonId?.llBody?.visibility = View.GONE
+
+        } else {
+            v.fDisability.tvText.setText("" + context?.getString(R.string.yes))
+            v.fDisabilityDegree?.llBody?.visibility = View.VISIBLE
+            v.fDisabilityType?.llBody?.visibility = View.VISIBLE
+            v.fDisabledPersonId?.llBody?.visibility = View.VISIBLE
+            v.fDisabledPersonId.tvText.setText(employee?.disabled_person_id)
+
+
+            if (preparence?.getLanguage()
+                    .equals("en")
+            ) {
+                v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type)
+                v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree)
+                v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type)
+
+            } else {
+                v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type_bn)
+                v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree_bn)
+                v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type_bn)
+
+            }
+
+        }
         if (preparence?.getLanguage()
                 .equals("en")
-        ) MainActivity.employee?.gender?.name.let { v.fGender.tvText.setText(it) }
-        else {
-            MainActivity.employee?.gender?.name_bn.let { v.fGender.tvText.setText(it) }
+        ) {
+            employee?.gender?.name.let { v.fGender.tvText.setText(it) }
+            employee?.marital_status?.name.let { v.fMaritalStatus.tvText.setText(it) }
+            employee?.employee_type?.employee_type.let {
+                v.fEmployeeType.tvText.setText(
+                    it
+                )
+            }
+
+            v.fBloodGroup.tvText.setText(employee?.blood_group?.name)
+            v.fReligion.tvText.setText(employee?.religion?.name)
+
+        } else {
+            employee?.gender?.name_bn.let { v.fGender.tvText.setText(it) }
+            employee?.marital_status?.name_bn.let { v.fMaritalStatus.tvText.setText(it) }
+            employee?.employee_type?.employee_type_bn.let {
+                v.fEmployeeType.tvText.setText(
+                    it
+                )
+            }
+            v.fBloodGroup.tvText.setText(employee?.blood_group?.name_bn)
+            v.fReligion.tvText.setText(employee?.religion?.name_bn)
         }
 
         activity?.let {
             Glide.with(it).applyDefaultRequestOptions(
                 RequestOptions()
-                    .placeholder(R.drawable.ic_baseline_person_24)
-            ).load(MainActivity.employee?.photo)
+                    .placeholder(R.drawable.ic_baseline_image_24)
+            ).load(RetrofitInstance.BASE_URL + employee?.photo)
                 .into(v.ivEmployee)
         }
 
         v.hBasicInformation.tvEdit.setOnClickListener({
-            MainActivity.employee?.let { it1 ->
+            employee?.let { it1 ->
                 activity?.let { it2 ->
                     editEmployeeBasicInfoDialog?.showDialog(
                         it2,
-                        it1,
                         object : FileClickListener {
-                            override fun onFileClick() {
+                            override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                onFilevalueReceiveListener = onFilevalueReceiveListener1
                                 openSelectImageBottomSheet()
                             }
-                        }
+                        },
+                        StaticKey.EDIT
                     )
                 }
             }
@@ -211,25 +305,8 @@ class BasicInformationFragment : Fragment(), SelectImageBottomSheet.BottomSheetL
             Intent.ACTION_PICK,
             android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
+        galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
-
-//        if (Build.VERSION.SDK_INT < 19) {
-//            var intent = Intent()
-//            intent.type = "image/*"
-//            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-//            intent.action = Intent.ACTION_GET_CONTENT
-//            startActivityForResult(
-//                Intent.createChooser(intent, "Choose Pictures")
-//                , REQUEST_SELECT_PHOTO
-//            )
-//        }
-//        else { // For latest versions API LEVEL 19+
-//            var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-//            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-//            intent.addCategory(Intent.CATEGORY_OPENABLE)
-//            intent.type = "image/*"
-//            startActivityForResult(intent, REQUEST_SELECT_PHOTO);
-//        }
         selectImageBottomSheet!!.dismiss()
     }
 
@@ -254,69 +331,6 @@ class BasicInformationFragment : Fragment(), SelectImageBottomSheet.BottomSheetL
 
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             val resultUri: Uri? = Uri.fromFile(File(currentPhotoPath))
-
-            try {
-                imageFile =
-                    resultUri?.let { activity?.let { it1 -> FileUtil().from(it1, it) } }!!
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            val bitmap =
-                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
-
-            imageFile?.let {
-                bitmap?.let { it1 ->
-                    resultUri?.let { it2 ->
-                        editEmployeeBasicInfoDialog?.imagePath(
-                            it,
-                            it1,
-                            it2
-                        )
-                    }
-                }
-            }
-        } else if (requestCode == REQUEST_SELECT_PHOTO && resultCode == RESULT_OK && data != null) {
-            val resultUri: Uri? = data.data
-
-            if (data != null) {
-                // Get the Image from data
-                val selectedImage = data.data
-                val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-
-                val cursor = EmployeeInfoActivity.context!!.contentResolver.query(
-                    selectedImage!!,
-                    filePathColumn,
-                    null,
-                    null,
-                    null
-                )
-                assert(cursor != null)
-                cursor!!.moveToFirst()
-
-                val columnIndex = cursor.getColumnIndex(filePathColumn[0])
-                var mediaPath = cursor.getString(columnIndex)
-                Log.e(
-                    "mediaPath",
-                    "mediaPath " + FilePath().getPath(EmployeeInfoActivity.context!!, resultUri!!)
-                )
-                // Set the Image in ImageView for Previewing the Media
-                //   imageView.setImageBitmap(BitmapFactory.decodeFile(mediaPath))
-                cursor.close()
-
-
-                var postPath = mediaPath
-                Log.e("postPath", "postPath " + mediaPath)
-            }
-
-
-//            try {
-//                imageFile =
-//                    resultUri?.let { activity?.let { it1 -> FileUtil().from(it1, it) } }!!
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//            }
-
-
             try {
                 activity?.let {
                     resultUri?.let { it1 ->
@@ -335,25 +349,43 @@ class BasicInformationFragment : Fragment(), SelectImageBottomSheet.BottomSheetL
             imageFile?.let {
                 bitmap?.let { it1 ->
                     resultUri?.let { it2 ->
-                        editEmployeeBasicInfoDialog?.imagePath(
-                            it,
-                            it1,
-                            it2
-                        )
+                        onFilevalueReceiveListener?.onFileValue(it, it1)
                     }
                 }
             }
+        } else if (requestCode == REQUEST_SELECT_PHOTO && resultCode == RESULT_OK && data != null) {
+            val resultUri: Uri? = data.data
+            try {
+                activity?.let {
+                    resultUri?.let { it1 ->
+                        FilePath().getPath(
+                            it,
+                            it1
+                        )?.let { getImageFile(it) }
+                    }
+                };
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            val bitmap =
+                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
 
+            imageFile?.let {
+                bitmap?.let { it1 ->
+                    resultUri?.let { it2 ->
+                        onFilevalueReceiveListener?.onFileValue(it, it1)
+                    }
+                }
+            }
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
 
-            //  changeProfilePic()
         }
     }
 
 
     private fun getImageFile(photoPath: String) {
         imageFile = File(photoPath)
-       // imageFile= activity?.getExternalFilesDir(photoPath)
+
     }
 
     private fun setImageToView(bitmap: Bitmap) {

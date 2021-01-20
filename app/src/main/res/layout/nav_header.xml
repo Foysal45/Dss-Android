@@ -2,59 +2,62 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:background="@drawable/shadow_custome"
     android:paddingVertical="@dimen/_15sdp">
 
-    <ImageView
-        android:id="@+id/menu_logo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="2dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_baseline_person_24"
-        app:tint="@color/green" />
-
-    <TextView
-        android:id="@+id/menu_name"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/menu_logo"
-        android:gravity="center_vertical"
-        android:text="@string/employee_name"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_medium"
-        android:textStyle="bold" />
+        android:id="@+id/rlPersonalInfo"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/menu_designation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/menu_name"
-        android:layout_toRightOf="@id/menu_logo"
-        android:gravity="center_vertical"
-        android:text="@string/designation"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_small"
-        android:textStyle="bold" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/menu_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/ic_baseline_image_24" />
 
-    <TextView
-        android:id="@+id/menu_office_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/menu_designation"
-        android:layout_toRightOf="@id/menu_logo"
-        android:gravity="center_vertical"
-        android:text="@string/designation"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_small"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/menu_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/menu_logo"
+            android:gravity="center_vertical"
+            android:text="@string/employee_name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/menu_designation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/menu_name"
+            android:layout_toRightOf="@id/menu_logo"
+            android:gravity="center_vertical"
+            android:text="@string/designation"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/menu_office_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/menu_designation"
+            android:layout_toRightOf="@id/menu_logo"
+            android:gravity="center_vertical"
+            android:text="@string/office"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold" />
+    </RelativeLayout>
 </RelativeLayout>

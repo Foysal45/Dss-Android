@@ -10,44 +10,272 @@
         android:layout_height="@dimen/_100sdp"
         android:orientation="horizontal">
 
-        <soup.neumorphism.NeumorphFloatingActionButton
-
-            style="@style/Widget.Neumorph.FloatingActionButton"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:neumorph_shadowElevation="@dimen/_3sdp"
-            app:neumorph_shapeType="flat" />
+            android:gravity="center">
 
-        <soup.neumorphism.NeumorphFloatingActionButton
+            <soup.neumorphism.NeumorphFloatingActionButton
+                android:id="@+id/btnPersonalInfo"
+                style="@style/Widget.Neumorph.FloatingActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shadowElevation="@dimen/_3sdp"
+                app:neumorph_shapeType="flat" />
 
-            style="@style/Widget.Neumorph.FloatingActionButton"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/personal_information_icon"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:text="@string/my_profile"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:neumorph_shadowElevation="@dimen/_3sdp"
-            app:neumorph_shapeType="flat" />
+            android:gravity="center">
 
-        <soup.neumorphism.NeumorphFloatingActionButton
+            <soup.neumorphism.NeumorphFloatingActionButton
+                style="@style/Widget.Neumorph.FloatingActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shadowElevation="@dimen/_3sdp"
+                app:neumorph_shapeType="flat" />
 
-            style="@style/Widget.Neumorph.FloatingActionButton"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/training_management_icon"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:text="@string/training"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center">
 
-            app:neumorph_shadowElevation="@dimen/_3sdp"
-            app:neumorph_shapeType="flat" />
+            <soup.neumorphism.NeumorphFloatingActionButton
+                style="@style/Widget.Neumorph.FloatingActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shadowElevation="@dimen/_3sdp"
+                app:neumorph_shapeType="flat" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="12dp">
 
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_leave_management"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:text="@string/leave"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <soup.neumorphism.NeumorphFloatingActionButton
+                style="@style/Widget.Neumorph.FloatingActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shadowElevation="@dimen/_3sdp"
+                app:neumorph_shapeType="flat" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/payroll_icon"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:text="@string/payroll"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <soup.neumorphism.NeumorphFloatingActionButton
+                style="@style/Widget.Neumorph.FloatingActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shadowElevation="@dimen/_3sdp"
+                app:neumorph_shapeType="flat" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/messaging_system_icon"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:text="@string/messaging"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <soup.neumorphism.NeumorphFloatingActionButton
+                android:id="@+id/btnSettings"
+                style="@style/Widget.Neumorph.FloatingActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shadowElevation="@dimen/_3sdp"
+                app:neumorph_shapeType="flat" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/setup_icon"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:text="@string/action_settings"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -11,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogConfirmationBinding
+import dagger.android.support.DaggerAppCompatActivity
 
 import java.util.*
 
-
-open class BaseActivity : AppCompatActivity() {
+ open class BaseActivity : DaggerAppCompatActivity() {
     protected var dialogConfirmation: Dialog? = null
     protected var dialogConfirmationBinding: DialogConfirmationBinding? = null
 

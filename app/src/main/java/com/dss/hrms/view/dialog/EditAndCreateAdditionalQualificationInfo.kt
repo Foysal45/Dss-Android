@@ -16,31 +16,50 @@ import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.OnDateListener
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import javax.inject.Inject
 
-class EditAndCreateAdditionalQualificationInfo {
+class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
+
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+
     var dialogCustome: Dialog? = null
+
+
     var additionalQualifications: Employee.AdditionalQualifications? = null
+
+
     var binding: DialogPersonalInfoBinding? = null
+
     var context: Context? = null
     lateinit var key: String
+    var position: Int? = 0
 
 
     fun showDialog(
         context: Context,
-        additionalQualifications1: Employee.AdditionalQualifications,
+        position: Int?,
         key: String
     ) {
-        this.additionalQualifications = additionalQualifications1
         this.context = context
         this.key = key
         dialogCustome = Dialog(context)
@@ -57,14 +76,22 @@ class EditAndCreateAdditionalQualificationInfo {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updateAdditionalQualification(context, additionalQualifications1)
+
+
+        Log.e("editcreate", "edit create " + employeeProfileData.employee?.profile_id)
+
+        additionalQualifications = position?.let {
+            employeeProfileData?.employee?.additional_qualifications?.get(
+                it
+            )
+        }
+        updateAdditionalQualification(context)
         dialogCustome?.show()
 
     }
 
     fun updateAdditionalQualification(
-        context: Context,
-        additionalQualifications1: Employee.AdditionalQualifications?
+        context: Context
     ) {
 
         binding?.llAdditionalQualification?.visibility = View.VISIBLE
@@ -78,21 +105,22 @@ class EditAndCreateAdditionalQualificationInfo {
             binding?.additionalPQBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
         }
 
-        binding?.fAQName?.etText?.setText(additionalQualifications1?.qualification_name)
-        binding?.fAQNameBn?.etText?.setText(additionalQualifications1?.qualification_name_bn)
-        binding?.fAQDetails?.etText?.setText(additionalQualifications1?.qualification_details)
-        binding?.fAQDetailsBn?.etText?.setText(additionalQualifications1?.qualification_details_bn)
+        binding?.fAQName?.etText?.setText(additionalQualifications?.qualification_name)
+        binding?.fAQNameBn?.etText?.setText(additionalQualifications?.qualification_name_bn)
+        binding?.fAQDetails?.etText?.setText(additionalQualifications?.qualification_details)
+        binding?.fAQDetailsBn?.etText?.setText(additionalQualifications?.qualification_details_bn)
 
 
         binding?.additionalPQBtnAddUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
+            var employeeInfoEditCreateRepo =
+                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
+                    .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
                 if (it.equals(StaticKey.EDIT)) {
                     employeeInfoEditCreateRepo?.updateAdditionalQualificationInfo(
-                        additionalQualifications1?.id,
+                        additionalQualifications?.id,
                         getMapData()
                     )
                         ?.observe(EmployeeInfoActivity.context!!,
@@ -187,7 +215,7 @@ class EditAndCreateAdditionalQualificationInfo {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("qualification_name", binding?.fAQName?.etText?.text.toString())
         map.put("qualification_name_bn", binding?.fAQNameBn?.etText?.text.toString())
         map.put("qualification_details", binding?.fAQDetails?.etText?.text.toString())

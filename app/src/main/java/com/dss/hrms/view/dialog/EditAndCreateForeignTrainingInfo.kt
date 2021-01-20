@@ -2,6 +2,7 @@ package com.dss.hrms.view.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Bitmap
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,43 +13,73 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
+import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.CommonDataValueListener
-import com.dss.hrms.view.`interface`.CommonSpinnerSelectedItemListener
-import com.dss.hrms.view.`interface`.OnDateListener
+import com.dss.hrms.view.allInterface.*
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+import javax.inject.Inject
 
-class EditAndCreateForeignTrainingInfo {
+class EditAndCreateForeignTrainingInfo @Inject constructor() {
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+
+    var position: Int? = 0
+
     var dialogCustome: Dialog? = null
-    var foreigntrainings: Employee.Foreigntrainings? = null
+    var foreigntraining: Employee.Foreigntrainings? = null
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
     lateinit var key: String
     var country: SpinnerDataModel? = null
-
+    var fileClickListener: FileClickListener? = null
+    var imageFile: File? = null
+    var imageUrl: String? = null
+    var dialog: Dialog? = null
 
     fun showDialog(
         context: Context,
-        foreigntrainings1: Employee.Foreigntrainings,
+        position: Int?,
+        fileClickListener: FileClickListener,
         key: String
     ) {
-        this.foreigntrainings = foreigntrainings1
+        this.foreigntraining = position?.let {
+            employeeProfileData.employee?.foreigntrainings?.get(
+                it
+            )
+        }
         this.context = context
         this.key = key
+        this.fileClickListener = fileClickListener
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DataBindingUtil.inflate(
@@ -63,21 +94,22 @@ class EditAndCreateForeignTrainingInfo {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updateForeignTraining(context, foreigntrainings1)
+        updateForeignTraining(context)
         dialogCustome?.show()
 
     }
 
     fun updateForeignTraining(
-        context: Context,
-        foreigntrainings1: Employee.Foreigntrainings?
+        context: Context
     ) {
 
+
         binding?.llLocalTrainingInfo?.visibility = View.VISIBLE
+        binding?.llTraining?.visibility = View.GONE
         binding?.fLocalTrainingLocation?.llBody?.visibility = View.GONE
         binding?.fLocalTrainingLocationBn?.llBody?.visibility = View.GONE
         binding?.llLocalTrainingInfo?.visibility = View.VISIBLE
-        binding?.hLocaltraining?.title=context.getString(R.string.foreign_training)
+        binding?.hLocaltraining?.title = context.getString(R.string.foreign_training)
         binding?.hLocaltraining?.tvClose?.setOnClickListener({
             dialogCustome?.dismiss()
         })
@@ -88,12 +120,38 @@ class EditAndCreateForeignTrainingInfo {
             binding?.trainingBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
         }
 
-        binding?.fLocalTrainingCourseT?.etText?.setText(foreigntrainings1?.course_title)
-        binding?.fLocalTrainingCourseTBn?.etText?.setText(foreigntrainings1?.course_title_bn)
-        binding?.fLocalTrainingNOInst?.etText?.setText(foreigntrainings1?.name_of_institute)
-        binding?.fLocalTrainingNOInstBn?.etText?.setText(foreigntrainings1?.name_of_institute_bn)
-        binding?.fLocalTrainingFromDate?.tvText?.setText(foreigntrainings1?.from_date)
-        binding?.fLocalTrainingToDate?.tvText?.setText(foreigntrainings1?.to_date)
+        binding?.fLocalTrainingCourseT?.etText?.setText(foreigntraining?.course_title)
+        binding?.fLocalTrainingCourseTBn?.etText?.setText(foreigntraining?.course_title_bn)
+        binding?.fLocalTrainingNOInst?.etText?.setText(foreigntraining?.name_of_institute)
+        binding?.fLocalTrainingNOInstBn?.etText?.setText(foreigntraining?.name_of_institute_bn)
+        binding?.fLocalTrainingFromDate?.tvText?.setText(foreigntraining?.from_date)
+        binding?.fLocalTrainingToDate?.tvText?.setText(foreigntraining?.to_date)
+
+
+        binding?.tvTrainingCertificate?.setText(context.getString(R.string.certificate))
+
+        context?.let {
+            binding?.ivTraining?.let { it1 ->
+                foreigntraining?.certificate?.let { it2 ->
+                    Glide.with(it).applyDefaultRequestOptions(
+                        RequestOptions()
+                            .placeholder(R.drawable.ic_baseline_image_24)
+                    ).load(it2)
+                        .into(it1)
+                }
+            }
+        }
+
+        binding?.ivTraining?.setOnClickListener({
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap) {
+                    imageFile = imgFile
+                    binding?.ivTraining?.setImageBitmap(bitmap)
+                    //   Toast.makeText(context, "image", Toast.LENGTH_LONG).show()
+                    Log.e("image", "dialog imageFile  : " + imageFile)
+                }
+            })
+        })
 
         binding?.fLocalTrainingToDate?.tvText?.setOnClickListener({
             DatePicker().showDatePicker(context, object : OnDateListener {
@@ -110,7 +168,7 @@ class EditAndCreateForeignTrainingInfo {
             })
         })
 
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/country/list",
+        commonRepo.getCommonData("/api/auth/country/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -119,7 +177,7 @@ class EditAndCreateForeignTrainingInfo {
                             binding?.fLocalTrainingCountry?.spinner!!,
                             context,
                             list,
-                            foreigntrainings?.country_id,
+                            foreigntraining?.country_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     country = any as SpinnerDataModel
@@ -132,31 +190,11 @@ class EditAndCreateForeignTrainingInfo {
             })
 
         binding?.trainingBtnAddUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
-            invisiableAllError(binding)
-            var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
-            key?.let {
-                if (it.equals(StaticKey.EDIT)) {
-                    employeeInfoEditCreateRepo?.updateForeignTrainingInfo(
-                        foreigntrainings1?.id,
-                        getMapData()
-                    )
-                        ?.observe(EmployeeInfoActivity.context!!,
-                            Observer { any ->
-                                dialog?.dismiss()
-                                Log.e("yousuf", "error : " + Gson().toJson(any))
-                                showResponse(any)
-                            })
-                } else {
-                    employeeInfoEditCreateRepo?.addForeignTrainingInfo(getMapData())
-                        ?.observe(EmployeeInfoActivity.context!!,
-                            Observer { any ->
-                                dialog?.dismiss()
-                                Log.e("yousuf", "error : " + Gson().toJson(any))
-                                showResponse(any)
-                            })
-                }
+            dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
+            if (imageFile != null) {
+                imageFile?.let { it1 -> uploadImage(it1) }
+            } else {
+                uploadData()
             }
         })
 
@@ -266,7 +304,7 @@ class EditAndCreateForeignTrainingInfo {
     fun getMapData(): HashMap<Any, Any?> {
 
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("course_title", binding?.fLocalTrainingCourseT?.etText?.text.toString())
         map.put("course_title_bn", binding?.fLocalTrainingCourseTBn?.etText?.text.toString())
         map.put("name_of_institute", binding?.fLocalTrainingNOInst?.etText?.text.toString())
@@ -274,10 +312,71 @@ class EditAndCreateForeignTrainingInfo {
         map.put("country_id", country?.id)
         map.put("from_date", binding?.fLocalTrainingFromDate?.tvText?.text.toString())
         map.put("to_date", binding?.fLocalTrainingToDate?.tvText?.text.toString())
-        map.put("status", foreigntrainings?.status)
+        imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
+        map.put("status", foreigntraining?.status)
         return map
     }
 
+
+    fun uploadData() {
+        var employeeInfoEditCreateRepo =
+            ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        invisiableAllError(binding)
+        key?.let {
+            if (it.equals(StaticKey.EDIT)) {
+                employeeInfoEditCreateRepo?.updateForeignTrainingInfo(
+                    foreigntraining?.id,
+                    getMapData()
+                )
+                    ?.observe(EmployeeInfoActivity.context!!,
+                        Observer { any ->
+                            dialog?.dismiss()
+                            Log.e("yousuf", "error : " + Gson().toJson(any))
+                            showResponse(any)
+                        })
+            } else {
+                employeeInfoEditCreateRepo?.addForeignTrainingInfo(getMapData())
+                    ?.observe(EmployeeInfoActivity.context!!,
+                        Observer { any ->
+                            dialog?.dismiss()
+                            Log.e("yousuf", "error : " + Gson().toJson(any))
+                            showResponse(any)
+                        })
+            }
+        }
+    }
+
+
+    fun uploadImage(imageFile: File) {
+        var profilePic: MultipartBody.Part?
+        if (imageFile != null) {
+            val profile_photo: RequestBody =
+                RequestBody.create(MediaType.parse("text/plain"), "profile_photo")
+            val requestFile: RequestBody =
+                RequestBody.create(MediaType.parse("multipart/form-data"), imageFile)
+            profilePic =
+                MultipartBody.Part.createFormData("filenames[]", "filenames[]", requestFile)
+
+            var employeeInfoEditCreateRepo =
+                ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                    .get(EmployeeInfoEditCreateViewModel::class.java)
+            employeeInfoEditCreateRepo?.uploadProfilePic(profilePic, imageFile.name, profile_photo)
+                ?.observe(
+                    EmployeeInfoActivity.context!!,
+                    androidx.lifecycle.Observer { any ->
+                        Log.e("yousuf", "profile pic : " + any)
+                        //  showResponse(any)
+                        if (any != null) {
+                            imageUrl = any as String
+                            uploadData()
+                        } else {
+                            dialog?.dismiss()
+                        }
+
+                    })
+        }
+    }
 
     fun invisiableAllError(binding: DialogPersonalInfoBinding?) {
         binding?.fLocalTrainingCourseT?.tvError?.visibility =

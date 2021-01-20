@@ -16,23 +16,31 @@ import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.CommonDataValueListener
-import com.dss.hrms.view.`interface`.CommonSpinnerSelectedItemListener
-import com.dss.hrms.view.`interface`.OnDateListener
+import com.dss.hrms.view.allInterface.CommonDataValueListener
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import javax.inject.Inject
 
-class EditAndCreatePublicatioInfo {
+class EditAndCreatePublicatioInfo @Inject constructor() {
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+
     var dialogCustome: Dialog? = null
     var publications: Employee.Publications? = null
     var binding: DialogPersonalInfoBinding? = null
@@ -40,13 +48,17 @@ class EditAndCreatePublicatioInfo {
     lateinit var key: String
     var publicationType: SpinnerDataModel? = null
 
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    var position: Int? = 0
 
     fun showDialog(
         context: Context,
-        publications1: Employee.Publications,
+        position: Int?,
         key: String
     ) {
-        this.publications = publications1
+        this.position = position
         this.context = context
         this.key = key
         dialogCustome = Dialog(context)
@@ -63,14 +75,13 @@ class EditAndCreatePublicatioInfo {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updatePublicationInfo(context, publications1)
+        updatePublicationInfo(context)
         dialogCustome?.show()
 
     }
 
     fun updatePublicationInfo(
-        context: Context,
-        publications1: Employee.Publications?
+        context: Context
     ) {
 
         binding?.llPublication?.visibility = View.VISIBLE
@@ -84,14 +95,14 @@ class EditAndCreatePublicatioInfo {
             binding?.publicationBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
         }
 
-        binding?.fPublicationNameEn?.etText?.setText(publications1?.publication_name)
-        binding?.fPublicationNameBn?.etText?.setText(publications1?.publication_name_bn)
-        binding?.fPublicationDetails?.etText?.setText(publications1?.publication_details)
-        binding?.fPublicationDetailsBn?.etText?.setText(publications1?.publication_details_bn)
+        binding?.fPublicationNameEn?.etText?.setText(publications?.publication_name)
+        binding?.fPublicationNameBn?.etText?.setText(publications?.publication_name_bn)
+        binding?.fPublicationDetails?.etText?.setText(publications?.publication_details)
+        binding?.fPublicationDetailsBn?.etText?.setText(publications?.publication_details_bn)
 
 
 
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/publication-type/list",
+        commonRepo.getCommonData("/api/auth/publication-type/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -113,14 +124,15 @@ class EditAndCreatePublicatioInfo {
             })
 
         binding?.publicationBtnAddUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
+            var employeeInfoEditCreateRepo =
+                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
+                    .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
                 if (it.equals(StaticKey.EDIT)) {
                     employeeInfoEditCreateRepo?.updatePublicationInfo(
-                        publications1?.id,
+                        publications?.id,
                         getMapData()
                     )
                         ?.observe(EmployeeInfoActivity.context!!,
@@ -222,7 +234,7 @@ class EditAndCreatePublicatioInfo {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("publication_type", publicationType?.id)
         map.put("publication_name", binding?.fPublicationNameEn?.etText?.text.toString())
         map.put("publication_name_bn", binding?.fPublicationNameBn?.etText?.text.toString())

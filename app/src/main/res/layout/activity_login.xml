@@ -199,6 +199,7 @@
                             android:inputType="textEmailAddress"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
+                            android:textColor="@color/light_black"
                             android:singleLine="true"
                             android:textSize="14sp" />
 
@@ -237,6 +238,7 @@
                             android:inputType="textPassword"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
+                            android:textColor="@color/light_black"
                             android:singleLine="true"
                             android:textSize="14sp" />
 
@@ -405,6 +407,7 @@
         android:layout_alignParentBottom="true"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:textColor="@color/light_black"
         android:text="@string/copyright"
         android:textAlignment="center" />
 

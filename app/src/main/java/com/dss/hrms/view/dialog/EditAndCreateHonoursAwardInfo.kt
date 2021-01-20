@@ -16,25 +16,35 @@ import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
-import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.CommonDataValueListener
-import com.dss.hrms.view.`interface`.CommonSpinnerSelectedItemListener
-import com.dss.hrms.view.`interface`.OnDateListener
+import com.dss.hrms.view.allInterface.OnDateListener
 import com.dss.hrms.view.activity.EmployeeInfoActivity
-import com.dss.hrms.view.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import javax.inject.Inject
 
-class EditAndCreateHonoursAwardInfo {
+class EditAndCreateHonoursAwardInfo @Inject constructor() {
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    var position: Int? = 0
+
     var dialogCustome: Dialog? = null
-    var honoursAwards: Employee.HonoursAwards? = null
+    var honoursAward: Employee.HonoursAwards? = null
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
     lateinit var key: String
@@ -42,10 +52,11 @@ class EditAndCreateHonoursAwardInfo {
 
     fun showDialog(
         context: Context,
-        honoursAwards1: Employee.HonoursAwards,
+        position: Int?,
         key: String
     ) {
-        this.honoursAwards = honoursAwards1
+        this.position = position
+        this.honoursAward = position?.let { employeeProfileData?.employee?.honours_awards?.get(it) }
         this.context = context
         this.key = key
         dialogCustome = Dialog(context)
@@ -62,14 +73,13 @@ class EditAndCreateHonoursAwardInfo {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updateHonoursAward(context, honoursAwards1)
+        updateHonoursAward(context)
         dialogCustome?.show()
 
     }
 
     fun updateHonoursAward(
-        context: Context,
-        honoursAwards1: Employee.HonoursAwards?
+        context: Context
     ) {
 
         binding?.llHonoursAndAward?.visibility = View.VISIBLE
@@ -83,11 +93,11 @@ class EditAndCreateHonoursAwardInfo {
             binding?.honoursAwardBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
         }
 
-        binding?.fAwardTitle?.etText?.setText(honoursAwards1?.award_title)
-        binding?.fAwardTitleBn?.etText?.setText(honoursAwards1?.award_title_bn)
-        binding?.fAwardDetailsDetails?.etText?.setText(honoursAwards1?.award_details)
-        binding?.fAwardDetailsDetailsBn?.etText?.setText(honoursAwards1?.award_details_bn)
-        binding?.fAwardDate?.tvText?.setText(honoursAwards1?.award_date)
+        binding?.fAwardTitle?.etText?.setText(honoursAward?.award_title)
+        binding?.fAwardTitleBn?.etText?.setText(honoursAward?.award_title_bn)
+        binding?.fAwardDetailsDetails?.etText?.setText(honoursAward?.award_details)
+        binding?.fAwardDetailsDetailsBn?.etText?.setText(honoursAward?.award_details_bn)
+        binding?.fAwardDate?.tvText?.setText(honoursAward?.award_date)
 
         binding?.fAwardDate?.tvText?.setOnClickListener({
             DatePicker().showDatePicker(context, object : OnDateListener {
@@ -99,14 +109,15 @@ class EditAndCreateHonoursAwardInfo {
 
 
         binding?.honoursAwardBtnAddUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
+            var employeeInfoEditCreateRepo =
+                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
+                    .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
                 if (it.equals(StaticKey.EDIT)) {
                     employeeInfoEditCreateRepo?.updateHonoursAwardInfo(
-                        honoursAwards1?.id,
+                        honoursAward?.id,
                         getMapData()
                     )
                         ?.observe(EmployeeInfoActivity.context!!,
@@ -208,13 +219,13 @@ class EditAndCreateHonoursAwardInfo {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("award_title", binding?.fAwardTitle?.etText?.text.toString())
         map.put("award_title_bn", binding?.fAwardTitleBn?.etText?.text.toString())
         map.put("award_details", binding?.fAwardDetailsDetails?.etText?.text.toString())
         map.put("award_details_bn", binding?.fAwardDetailsDetailsBn?.etText?.text.toString())
         map.put("award_date", binding?.fAwardDate?.tvText?.text.toString())
-        map.put("status", honoursAwards?.status)
+        map.put("status", honoursAward?.status)
         return map
     }
 

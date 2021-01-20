@@ -16,25 +16,39 @@ import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.CommonDataValueListener
-import com.dss.hrms.view.`interface`.CommonSpinnerSelectedItemListener
-import com.dss.hrms.view.`interface`.OnDateListener
+import com.dss.hrms.view.allInterface.CommonDataValueListener
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.allInterface.OnDateListener
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import javax.inject.Inject
 
-class EditAndCreateForeignTravelInfo {
+class EditAndCreateForeignTravelInfo @Inject constructor() {
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    var position: Int? = 0
+
     var dialogCustome: Dialog? = null
-    var foreignTravels: Employee.ForeignTravels? = null
+    var foreignTravels1: Employee.ForeignTravels? = null
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
     lateinit var key: String
@@ -43,10 +57,11 @@ class EditAndCreateForeignTravelInfo {
 
     fun showDialog(
         context: Context,
-        foreignTravels1: Employee.ForeignTravels,
+        position: Int?,
         key: String
     ) {
-        this.foreignTravels = foreignTravels1
+        this.foreignTravels1 =
+            position?.let { employeeProfileData?.employee?.foreign_travels?.get(it) }
         this.context = context
         this.key = key
         dialogCustome = Dialog(context)
@@ -63,14 +78,13 @@ class EditAndCreateForeignTravelInfo {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updateForeignTravel(context, foreignTravels1)
+        updateForeignTravel(context)
         dialogCustome?.show()
 
     }
 
     fun updateForeignTravel(
-        context: Context,
-        foreignTravels1: Employee.ForeignTravels?
+        context: Context
     ) {
 
         binding?.llForeingTravelInfo?.visibility = View.VISIBLE
@@ -85,6 +99,8 @@ class EditAndCreateForeignTravelInfo {
         }
         binding?.fForeignTravelPurpose?.etText?.setText(foreignTravels1?.purpose)
         binding?.fForeignTravelPurposeBn?.etText?.setText(foreignTravels1?.purpose_bn)
+        binding?.fForeignTravelDetailsEn?.etText?.setText(foreignTravels1?.details)
+        binding?.fForeignTravelDetailsBn?.etText?.setText(foreignTravels1?.details_bn)
         binding?.fForeignTravelToDate?.tvText?.setText(foreignTravels1?.to_date)
         binding?.fForeignTravelFromDate?.tvText?.setText(foreignTravels1?.from_date)
 
@@ -102,7 +118,7 @@ class EditAndCreateForeignTravelInfo {
                 }
             })
         })
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/country/list",
+        commonRepo.getCommonData("/api/auth/country/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
@@ -126,8 +142,9 @@ class EditAndCreateForeignTravelInfo {
 
 
         binding?.foreignTravelBtnAddUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
+            var employeeInfoEditCreateRepo =
+                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
+                    .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
@@ -200,6 +217,18 @@ class EditAndCreateForeignTravelInfo {
                                 binding?.fForeignTravelPurposeBn?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
+                            "details" -> {
+                                binding?.fForeignTravelDetailsEn?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fForeignTravelDetailsEn?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "details_bn" -> {
+                                binding?.fForeignTravelDetailsBn?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fForeignTravelDetailsBn?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
                             "from_date" -> {
                                 binding?.fForeignTravelFromDate?.tvError?.visibility =
                                     View.VISIBLE
@@ -234,13 +263,15 @@ class EditAndCreateForeignTravelInfo {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("country_id", country?.id)
         map.put("purpose", binding?.fForeignTravelPurpose?.etText?.text.toString())
         map.put("purpose_bn", binding?.fForeignTravelPurposeBn?.etText?.text.toString())
+        map.put("details", binding?.fForeignTravelDetailsEn?.etText?.text.toString())
+        map.put("details_bn", binding?.fForeignTravelDetailsBn?.etText?.text.toString())
         map.put("from_date", binding?.fForeignTravelFromDate?.tvText?.text.toString())
         map.put("to_date", binding?.fForeignTravelToDate?.tvText?.text.toString())
-        map.put("status", foreignTravels?.status)
+        map.put("status", foreignTravels1?.status)
         return map
     }
 
@@ -253,6 +284,10 @@ class EditAndCreateForeignTravelInfo {
             View.GONE
 
         binding?.fForeignTravelPurposeBn?.tvError?.visibility =
+            View.GONE
+        binding?.fForeignTravelDetailsEn?.tvError?.visibility =
+            View.GONE
+        binding?.fForeignTravelDetailsBn?.tvError?.visibility =
             View.GONE
 
         binding?.fForeignTravelFromDate?.tvError?.visibility =

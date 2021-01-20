@@ -1,26 +1,30 @@
 package com.btbapp.alquranapp.retrofit
 
 
+import com.dss.hrms.model.employeeProfile.EmployeeResponse
+import com.dss.hrms.model.login.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 
 interface ApiService {
     @Headers("Accept: application/json")
     @POST("/api/auth/login")
-    fun userLogin(
+    suspend fun login(
         @Header("X-Localization") language: String,
         @Body map: HashMap<Any, Any>
-    ): Call<Any?>?
+    ): Response<LoginResponse?>?
+
 
     @Headers("Accept: application/json")
     @GET("/api/auth/employee/{Id}")
-    fun getEmployeeInfo(
+    suspend fun getEmployeeInfo(
         @Header("Authorization") token: String,
         @Path("Id") employee_id: Int?
-    ): Call<Any?>?
+    ): Response<EmployeeResponse?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
@@ -29,24 +33,24 @@ interface ApiService {
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/reset-password-otp")
-    fun resetPasswordOtp(
+    suspend fun resetPasswordOtp(
         @Header("X-Localization") language: String,
         @Body map: HashMap<Any, Any>
-    ): Call<Any>
+    ): Response<ResetPasswordReq?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/verify-otp")
-    fun verifyOtp(
+    suspend fun verifyOtp(
         @Header("X-Localization") language: String,
         @Body map: HashMap<Any, Any>
-    ): Call<Any?>?
+    ): Response<VerifyOtp?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/reset-password")
-    fun resetPass(
+    suspend fun resetPass(
         @Header("X-Localization") language: String,
         @Body map: HashMap<Any, Any>
-    ): Call<Any?>?
+    ): Response<ResetPassword?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
@@ -104,6 +108,15 @@ interface ApiService {
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/present/address/{Id}")
     fun updatePresentInfo(
+        @Header("X-Localization") language: String,
+        @Header("Authorization") token: String?,
+        @Path("Id") id: Int?,
+        @Body map: HashMap<Any, Any?>?
+    ): Call<Any?>?
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @PUT("/api/auth/employee/{Id}")
+    fun updateBasicInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
@@ -354,12 +367,12 @@ interface ApiService {
     ): Call<Any?>?
 
     @Multipart
-    @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/file-upload")
     fun uploadProfilePic(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
-        @Part filenames: MultipartBody.Part?
+        @Part("type ") type: RequestBody?,
+        @Part file: MultipartBody.Part?
     ): Call<Any?>?
 
 

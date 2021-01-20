@@ -7,6 +7,7 @@ import com.btbapp.alquranapp.retrofit.ApiService
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.namaztime.namaztime.database.MySharedPreparence
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -17,16 +18,19 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.Part
+import javax.inject.Inject
 
 
-class EmployeeInfoEditCreateRepo {
-    private var application: Application? = null
-    private var apiService: ApiService? = null
+class EmployeeInfoEditCreateRepo @Inject constructor() {
+    @Inject
+    lateinit var application: Application
 
-    constructor(application: Application?) {
-        this.application = application
-        apiService = RetrofitInstance.retrofitInstance!!.create(ApiService::class.java)
-    }
+    @Inject
+    lateinit var apiService: ApiService
+
+    @Inject
+    lateinit var preparence: MySharedPreparence
+
 
     fun editJobjoiningInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
         val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
@@ -60,7 +64,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -105,11 +109,59 @@ class EmployeeInfoEditCreateRepo {
                         }
                     } catch (e: JSONException) {
                         liveData.postValue(null)
+                        //    Log.e("response", "JSONException : " + e.message)
+                    }
+                } else {
+                    liveData.postValue(ErrorUtils2.parseError(response))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //  liveData.postValue(ErrorUtils2.parseError(response))
+                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
+                    // Log.e("response", "response.body() : " + response.errorBody())
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
+                Log.e("response", "onFailure : " + t.message)
+            }
+
+        })
+        return liveData
+    }
+
+    fun updateBasicInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
+        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? = apiService?.updateBasicInfo(
+            preparence?.getLanguage()!!,
+            "Bearer ${preparence?.getToken()}",
+            id,
+            map
+        )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+
+                if (response.isSuccessful) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+                        Log.e("response", "response : " + jsonObjectParent)
+                        if (code == 200 || code == 201
+                        ) {
+                            Log.e("response", "response : " + jsonObjectParent)
+
+                            liveData.postValue("Updated")
+                        } else {
+                            liveData.postValue(null)
+                        }
+                    } catch (e: JSONException) {
+                        liveData.postValue(null)
                         Log.e("response", "JSONException : " + e.message)
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -157,7 +209,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -201,11 +253,11 @@ class EmployeeInfoEditCreateRepo {
                         }
                     } catch (e: JSONException) {
                         liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
+                        //    Log.e("response", "JSONException : " + e.message)
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    // Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -254,7 +306,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -298,11 +350,11 @@ class EmployeeInfoEditCreateRepo {
                         }
                     } catch (e: JSONException) {
                         liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
+                        //   Log.e("response", "JSONException : " + e.message)
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -350,7 +402,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    // Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -398,7 +450,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    // Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -407,7 +459,7 @@ class EmployeeInfoEditCreateRepo {
 
             override fun onFailure(call: Call<Any?>, t: Throwable) {
                 liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
+                //  Log.e("response", "onFailure : " + t.message)
             }
 
         })
@@ -430,10 +482,10 @@ class EmployeeInfoEditCreateRepo {
                         val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
+                        //   Log.e("response", "response : " + jsonObjectParent)
                         if (code == 200 || code == 201
                         ) {
-                            Log.e("response", "response : " + jsonObjectParent)
+                            //   Log.e("response", "response : " + jsonObjectParent)
 
                             liveData.postValue("Added")
                         } else {
@@ -441,11 +493,11 @@ class EmployeeInfoEditCreateRepo {
                         }
                     } catch (e: JSONException) {
                         liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
+                        // Log.e("response", "JSONException : " + e.message)
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -454,7 +506,7 @@ class EmployeeInfoEditCreateRepo {
 
             override fun onFailure(call: Call<Any?>, t: Throwable) {
                 liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
+                //  Log.e("response", "onFailure : " + t.message)
             }
 
         })
@@ -495,7 +547,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //     Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -543,7 +595,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -593,7 +645,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -642,7 +694,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -692,7 +744,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -741,7 +793,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -791,7 +843,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //      Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -806,7 +858,6 @@ class EmployeeInfoEditCreateRepo {
         })
         return liveData
     }
-
 
     fun addForeignTrainingInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
@@ -840,7 +891,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -890,7 +941,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    // Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -939,7 +990,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -990,7 +1041,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -1005,7 +1056,6 @@ class EmployeeInfoEditCreateRepo {
         })
         return liveData
     }
-
 
     fun addReferenceInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
         val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
@@ -1038,7 +1088,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -1088,7 +1138,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -1103,7 +1153,6 @@ class EmployeeInfoEditCreateRepo {
         })
         return liveData
     }
-
 
     fun addOfficialResidentialInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
@@ -1137,7 +1186,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -1187,7 +1236,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -1202,7 +1251,6 @@ class EmployeeInfoEditCreateRepo {
         })
         return liveData
     }
-
 
     fun addForeignTravellInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
@@ -1236,7 +1284,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    // Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -1286,7 +1334,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -1301,7 +1349,6 @@ class EmployeeInfoEditCreateRepo {
         })
         return liveData
     }
-
 
     fun addHonoursAwardInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
         val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
@@ -1334,7 +1381,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -1384,7 +1431,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -1399,7 +1446,6 @@ class EmployeeInfoEditCreateRepo {
         })
         return liveData
     }
-
 
     fun addAdditionalQualificationInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
@@ -1433,7 +1479,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -1450,7 +1496,7 @@ class EmployeeInfoEditCreateRepo {
     }
 
     fun uploadProfilePic(
-        @Part filenames: MultipartBody.Part?, picName: String
+        file: MultipartBody.Part?, picName: String, profile_pic: RequestBody
     ): MutableLiveData<Any> {
 //        var arr = arrayListOf<MultipartBody.Part?>(filenames)
         val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
@@ -1458,7 +1504,9 @@ class EmployeeInfoEditCreateRepo {
         val call: Call<Any?>? = apiService?.uploadProfilePic(
             preparence?.getLanguage()!!,
             "Bearer ${preparence?.getToken()}",
-            filenames
+            profile_pic,
+            file
+
         )
         call?.enqueue(object : Callback<Any?> {
             override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
@@ -1471,8 +1519,13 @@ class EmployeeInfoEditCreateRepo {
                         Log.e("response", "response : " + jsonObjectParent)
                         if (code == 200 || code == 201) {
                             Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue(jsonObjectParent)
+                            var array = jsonObjectParent.getJSONArray("data")
+                            if (array != null && array.length() > 0) {
+                                var obj = array.getJSONObject(0)
+                                liveData.postValue(obj.getString("path"))
+                            } else {
+                                liveData.postValue(null)
+                            }
                         } else {
                             liveData.postValue(null)
                         }
@@ -1481,8 +1534,8 @@ class EmployeeInfoEditCreateRepo {
                         Log.e("response", "JSONException : " + e.message)
                     }
                 } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " +response)
+                    liveData.postValue(null)
+                    //    Log.e("response", "response.body() : " + response)
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())
@@ -1535,7 +1588,7 @@ class EmployeeInfoEditCreateRepo {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
+                    //    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
                     //  liveData.postValue(ErrorUtils2.parseError(response))
                     ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
                     // Log.e("response", "response.body() : " + response.errorBody())

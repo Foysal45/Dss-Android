@@ -16,17 +16,25 @@ import com.dss.hrms.R
 import com.dss.hrms.model.login.VerifyOtp
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.viewmodel.LoginViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.android.synthetic.main.activity_o_t_p.*
+import javax.inject.Inject
 
 
 class OTPActivity : BaseActivity() {
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var preparence: MySharedPreparence
+
     var loginViewModel: LoginViewModel? = null
-    var preparence: MySharedPreparence? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        preparence = MySharedPreparence(this)
         setLocalLanguage(preparence!!.getLanguage())
         setContentView(R.layout.activity_o_t_p)
         backBtnIV.setOnClickListener({
@@ -57,7 +65,7 @@ class OTPActivity : BaseActivity() {
         e_otp_code.visibility = View.GONE
         if (otpSum != null && otpSum.equals(intent.getStringExtra("otp"))) {
             var dialog = CustomLoadingDialog().createLoadingDialog(this)
-            loginViewModel!!.verifyOtp(
+            loginViewModel?.verifyOtp(
                 "" + intent.getStringExtra("token"),
                 otpSum
             )?.observe(this, Observer<Any> { any ->
@@ -110,7 +118,8 @@ class OTPActivity : BaseActivity() {
     }
 
     fun init() {
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        loginViewModel =
+            ViewModelProviders.of(this, viewModelProviderFactory).get(LoginViewModel::class.java)
 
 
         val textWatcher1: TextWatcher = object : TextWatcher {

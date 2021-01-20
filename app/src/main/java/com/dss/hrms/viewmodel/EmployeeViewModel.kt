@@ -1,21 +1,30 @@
 package com.dss.hrms.viewmodel
 
 import android.app.Application
-import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.dss.hrms.model.Employee
+import androidx.lifecycle.viewModelScope
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.repository.EmployeeInfoRepo
+import com.dss.hrms.util.Status
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import java.lang.Exception
+import javax.inject.Inject
 
-class EmployeeViewModel(application: Application) : AndroidViewModel(application) {
-    private var employeeInfoRepo: EmployeeInfoRepo? = null
+class EmployeeViewModel @Inject constructor(application: Application) :
+    AndroidViewModel(application) {
 
-    init {
-        employeeInfoRepo = EmployeeInfoRepo(application)
+    @Inject
+    lateinit var employeeInfoRepo: EmployeeInfoRepo
+
+
+    suspend fun getEmployeeInfo(employeeId: Int?): Flow<Any?>? = flow {
+        //   val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
+        //  viewModelScope.launch(dispatcher.Main) {
+        emit( employeeInfoRepo?.getEmployeeInfo(employeeId))
+        // }
     }
 
-    fun getEmployeeInfo(employeeId: Int?): MutableLiveData<Any>? {
-        return employeeInfoRepo?.getEmployeeInfo(employeeId)
-    }
 }

@@ -16,29 +16,45 @@ import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
-import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import javax.inject.Inject
 
-class EditReferenceInfo {
+class EditReferenceInfo @Inject constructor() {
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    var position: Int? = 0
     var dialogCustome: Dialog? = null
     var references: Employee.References? = null
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
+
     lateinit var key: String
 
     fun showDialog(
         context: Context,
-        references: Employee.References,
+        position: Int?,
         key: String
     ) {
-        this.references = references
+        this.position = position
+        this.references = position?.let { employeeProfileData?.employee?.references?.get(it) }
         this.context = context
         this.key = key
         dialogCustome = Dialog(context)
@@ -78,8 +94,9 @@ class EditReferenceInfo {
         binding?.fReferenceAddressBn?.etText?.setText(references?.address_bn)
 
         binding?.referenceBtnAddUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
+            var employeeInfoEditCreateRepo =
+                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
+                    .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
@@ -208,7 +225,7 @@ class EditReferenceInfo {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("name", binding?.fReferenceNameEn?.etText?.text.toString())
         map.put("name_bn", binding?.fReferenceNameBn?.etText?.text.toString())
         map.put("relation", binding?.fReferenceRelation?.etText?.text.toString())

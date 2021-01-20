@@ -60,6 +60,7 @@
                 android:hint="@{hint}"
                 android:inputType="text"
                 android:paddingHorizontal="@dimen/_5sdp"
+                android:textColor="@color/light_black"
                 android:textColorHint="@color/gray"
                 android:textSize="@dimen/text_size_small" />
 
@@ -69,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
                 android:gravity="center|left"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="@dimen/_5sdp"
                 android:paddingVertical="5dp"
                 android:text="error"
                 android:textColor="@color/red"

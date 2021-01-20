@@ -16,39 +16,57 @@ import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.CommonDataValueListener
-import com.dss.hrms.view.`interface`.CommonSpinnerSelectedItemListener
-import com.dss.hrms.view.`interface`.OnDateListener
+import com.dss.hrms.view.allInterface.CommonDataValueListener
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.allInterface.OnDateListener
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import javax.inject.Inject
 
-class EditOfficialResidentialIInfo {
+class EditOfficialResidentialIInfo @Inject constructor() {
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    var position: Int? = 0
+
     var dialogCustome: Dialog? = null
     var designation: SpinnerDataModel? = null
     var division: SpinnerDataModel? = null
     var district: SpinnerDataModel? = null
     var upazila: SpinnerDataModel? = null
     var status: SpinnerDataModel? = null
-    var officialResidentials: Employee.OfficialResidentials? = null
+    var officialResidential: Employee.OfficialResidentials? = null
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
+
     lateinit var key: String
+
     fun showDialog(
         context: Context,
-        officialResidentials1: Employee.OfficialResidentials,
+        position: Int?,
         key: String
     ) {
-        this.officialResidentials = officialResidentials1
+        this.position = position
+        officialResidential =
+            position?.let { employeeProfileData?.employee?.official_residentials?.get(it) }
         this.context = context
         this.key = key
         dialogCustome = Dialog(context)
@@ -65,14 +83,13 @@ class EditOfficialResidentialIInfo {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updateOfficialResidentialInfo(context, officialResidentials1)
+        updateOfficialResidentialInfo(context)
         dialogCustome?.show()
 
     }
 
     fun updateOfficialResidentialInfo(
-        context: Context,
-        officialResidentials1: Employee.OfficialResidentials?
+        context: Context
     ) {
 
         binding?.llOfficialResidentialInfo?.visibility = View.VISIBLE
@@ -86,13 +103,13 @@ class EditOfficialResidentialIInfo {
             binding?.residentialBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
         }
 
-        binding?.fORInfoMemoNo?.etText?.setText(officialResidentials1?.memo_no)
-        binding?.fORInfoMemoNoBn?.etText?.setText(officialResidentials1?.memo_no_bn)
-        binding?.fORInfoOfficeZone?.etText?.setText(officialResidentials1?.office_zone)
-        binding?.fORInfoAddress?.etText?.setText(officialResidentials1?.location)
-        binding?.fORInfoQuarterName?.etText?.setText(officialResidentials1?.quarter_name)
-        binding?.fORInfoFlatNo?.etText?.setText(officialResidentials1?.flat_no_flat_type)
-        binding?.fORInfoMemoDate?.tvText?.setText(officialResidentials1?.memo_date)
+        binding?.fORInfoMemoNo?.etText?.setText(officialResidential?.memo_no)
+        binding?.fORInfoMemoNoBn?.etText?.setText(officialResidential?.memo_no_bn)
+        binding?.fORInfoOfficeZone?.etText?.setText(officialResidential?.office_zone)
+        binding?.fORInfoAddress?.etText?.setText(officialResidential?.location)
+        binding?.fORInfoQuarterName?.etText?.setText(officialResidential?.quarter_name)
+        binding?.fORInfoFlatNo?.etText?.setText(officialResidential?.flat_no_flat_type)
+        binding?.fORInfoMemoDate?.tvText?.setText(officialResidential?.memo_date)
 
 
 
@@ -104,7 +121,7 @@ class EditOfficialResidentialIInfo {
             })
         })
 
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/designation/list",
+        commonRepo.getCommonData("/api/auth/designation/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
@@ -113,7 +130,7 @@ class EditOfficialResidentialIInfo {
                             binding?.fORInfoDesignation?.spinner!!,
                             context,
                             list,
-                            officialResidentials?.designation_id,
+                            officialResidential?.designation_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     designation = any as SpinnerDataModel
@@ -127,7 +144,7 @@ class EditOfficialResidentialIInfo {
             })
 
 
-        CommonRepo(MainActivity.appContext).getCommonData("/api/auth/division/list",
+        commonRepo.getCommonData("/api/auth/division/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
@@ -136,11 +153,11 @@ class EditOfficialResidentialIInfo {
                             binding?.fORInfoDivision?.spinner!!,
                             context,
                             list,
-                            officialResidentials?.division_id,
+                            officialResidential?.division_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     division = any as SpinnerDataModel
-                                    getDistrict(division?.id, officialResidentials?.district_id)
+                                    getDistrict(division?.id, officialResidential?.district_id)
                                 }
 
                             }
@@ -155,7 +172,7 @@ class EditOfficialResidentialIInfo {
                 binding?.fORInfoStatus?.spinner!!,
                 context,
                 it,
-                officialResidentials1?.status,
+                officialResidential?.status,
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
                         status = any as SpinnerDataModel
@@ -167,14 +184,15 @@ class EditOfficialResidentialIInfo {
 
 
         binding?.residentialBtnAddUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
+            var employeeInfoEditCreateRepo =
+                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
+                    .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
                 if (it.equals(StaticKey.EDIT)) {
                     employeeInfoEditCreateRepo?.updateOfficialResidentialInfo(
-                        officialResidentials1?.id,
+                        officialResidential?.id,
                         getMapData()
                     )
                         ?.observe(EmployeeInfoActivity.context!!,
@@ -322,7 +340,7 @@ class EditOfficialResidentialIInfo {
     fun getMapData(): HashMap<Any, Any?> {
         Log.e("designation ", "id : " + designation?.id)
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", MainActivity?.employee?.user?.employee_id)
+        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("designation_id", designation?.id)
         map.put("division_id", division?.id)
         map.put("district_id", district?.id)
@@ -340,7 +358,7 @@ class EditOfficialResidentialIInfo {
 
 
     fun getDistrict(divisionId: Int?, districtId: Int?) {
-        CommonRepo(MainActivity.appContext).getDistrict(divisionId,
+        commonRepo.getDistrict(divisionId,
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -353,7 +371,7 @@ class EditOfficialResidentialIInfo {
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     district = any as SpinnerDataModel
-                                    getUpazila(district?.id, officialResidentials?.upazila_id)
+                                    getUpazila(district?.id, officialResidential?.upazila_id)
                                 }
 
                             }
@@ -365,7 +383,7 @@ class EditOfficialResidentialIInfo {
 
 
     fun getUpazila(districtId: Int?, upazilaId: Int?) {
-        CommonRepo(MainActivity.appContext).getUpazila(districtId,
+        commonRepo.getUpazila(districtId,
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))

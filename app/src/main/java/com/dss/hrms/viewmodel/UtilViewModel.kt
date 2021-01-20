@@ -3,16 +3,15 @@ package com.dss.hrms.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.dss.hrms.model.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.UtilRepoRepo
+import javax.inject.Inject
 
-class UtilViewModel(application: Application) : AndroidViewModel(application) {
-    private var utilRepoRepo: UtilRepoRepo? = null
+class UtilViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
-    init {
-        utilRepoRepo = UtilRepoRepo(application)
-    }
+    @Inject
+    lateinit var utilRepoRepo: UtilRepoRepo
+
 
     fun getDivision(): MutableLiveData<List<SpinnerDataModel>>? {
         return utilRepoRepo?.getDivision()

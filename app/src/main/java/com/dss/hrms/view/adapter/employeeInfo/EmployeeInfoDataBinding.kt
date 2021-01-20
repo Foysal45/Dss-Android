@@ -2,68 +2,131 @@ package com.dss.hrms.view.adapter.employeeInfo
 
 import android.content.Context
 import android.view.View
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelEmployeeInfoBinding
-import com.dss.hrms.model.Employee
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.employeeProfile.Employee
 import com.namaztime.namaztime.database.MySharedPreparence
+import kotlinx.android.synthetic.main.fragment_basic_information.view.*
+import javax.inject.Inject
 
-class EmployeeInfoDataBinding {
+
+class EmployeeInfoDataBinding @Inject constructor() {
+//
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    @Inject
+    lateinit var preparence: MySharedPreparence
+
+    var employee: Employee? = null
+
 
     fun bindPermanentAddressData(
         binding: ModelEmployeeInfoBinding,
-        permanentAddresses: Employee.PermanentAddresses,
+        addresses: Employee.PermanentAddresses,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
+        binding.fAddressEmailAddress.llBody.visibility = View.GONE
+        binding.fAddressPhoneOrMobileNo.llBody.visibility = View.GONE
         binding.hAddress.tvTitle.setText(heading)
         binding.fAddressPostOffice.tvTitle.setText(context.getString(R.string.post_off))
+        binding.fAddressPostOfficeBn.tvTitle.setText(context.getString(R.string.post_off_bn))
         binding.fAddressRoadOrWordNo.tvTitle.setText(context.getString(R.string.road_word))
+        binding.fAddressRoadOrWordNoBn.tvTitle.setText(context.getString(R.string.road_word_bn))
         binding.fAddressPoliceStation.tvTitle.setText(context.getString(R.string.police_station))
+
         binding.fAddressDivision.tvTitle.setText(context.getString(R.string.division))
         binding.fAddressDistrict.tvTitle.setText(context.getString(R.string.district))
+        binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+        binding.fAddressPoliceStationBn.tvTitle.setText(context.getString(R.string.police_station_bn))
         binding.fAddressPhoneOrMobileNo.tvTitle.setText(context.getString(R.string.phone_mobile))
-        binding.fAddressVillageOrHouseNo.tvTitle.setText(context.getString(R.string.district))
+        binding.fAddressVillageOrHouseNo.tvTitle.setText(context.getString(R.string.vill_house))
+        binding.fAddressVillageOrHouseNoBn.tvTitle.setText(context.getString(R.string.vill_house_bn))
         binding.fAddressEmailAddress.tvTitle.setText(context.getString(R.string.email))
+
+
         if (preparence.getLanguage()
                 .equals("en")
         ) {
-            permanentAddresses.village_house_no?.let {
+            addresses.village_house_no?.let {
                 binding.fAddressVillageOrHouseNo.tvText.setText(it)
             }
-            permanentAddresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
-            permanentAddresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
-            permanentAddresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
-            permanentAddresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
-            permanentAddresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
-            permanentAddresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
-        } else {
-            permanentAddresses.district?.name_bn?.let {
-                binding.fAddressDistrict.tvText.setText(it)
-
-            }
-            permanentAddresses.road_word_no_bn?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
-            permanentAddresses.post_office_bn?.let { binding.fAddressPostOffice.tvText.setText(it) }
-            permanentAddresses.police_station_bn?.let {
-                binding.fAddressPoliceStation.tvText.setText(
+            addresses.village_house_no?.let {
+                binding.fAddressVillageOrHouseNo.tvText.setText(
                     it
                 )
             }
-            permanentAddresses.division?.name_bn?.let { binding.fAddressDivision.tvText.setText(it) }
-            permanentAddresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.setText(it) }
-            permanentAddresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
+            addresses.village_house_no_bn?.let {
+                binding.fAddressVillageOrHouseNoBn.tvText.setText(
+                    it
+                )
+            }
+            addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
+            addresses.road_word_no_bn?.let {
+                binding.fAddressRoadOrWordNoBn.tvText.setText(
+                    it
+                )
+            }
+            addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
+            addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
+            addresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
+            addresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
+            addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
+            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
+            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
+            addresses.police_station_bn?.let { binding.fAddressPoliceStationBn.tvText.setText(it) }
+            addresses.upazila?.name?.let { binding.fAddressUpazila.tvText.setText(it) }
+        } else {
+            addresses.district?.name_bn?.let {
+                binding.fAddressDistrict.tvText.setText(it)
+
+            }
+            addresses.village_house_no?.let {
+                binding.fAddressVillageOrHouseNo.tvText.setText(
+                    it
+                )
+            }
+            addresses.village_house_no_bn?.let {
+                binding.fAddressVillageOrHouseNoBn.tvText.setText(
+                    it
+                )
+            }
+            addresses.road_word_no_bn?.let {
+                binding.fAddressRoadOrWordNoBn.tvText.setText(
+                    it
+                )
+            }
+            addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
+            addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
+            addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
+            addresses.police_station_bn?.let {
+                binding.fAddressPoliceStationBn.tvText.setText(
+                    it
+                )
+            }
+            addresses.division?.name_bn?.let { binding.fAddressDivision.tvText.setText(it) }
+            addresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.setText(it) }
+            addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
+            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
+            addresses.upazila?.name_bn?.let { binding.fAddressUpazila.tvText.setText(it) }
+
         }
     }
 
 
     fun bindPrensentAddressData(
         binding: ModelEmployeeInfoBinding,
-        permanentAddresses: Employee.PresentAddresses,
+        addresses: Employee.PresentAddresses,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hAddress.tvTitle.setText(heading)
+        binding.fAddressEmailAddress.llBody.visibility = View.GONE
+        binding.fAddressPhoneOrMobileNo.llBody.visibility = View.GONE
         binding.fAddressPostOffice.tvTitle.setText(context.getString(R.string.post_off))
         binding.fAddressPostOfficeBn.tvTitle.setText(context.getString(R.string.post_off_bn))
         binding.fAddressRoadOrWordNo.tvTitle.setText(context.getString(R.string.road_word))
@@ -71,6 +134,8 @@ class EmployeeInfoDataBinding {
         binding.fAddressPoliceStation.tvTitle.setText(context.getString(R.string.police_station))
         binding.fAddressDivision.tvTitle.setText(context.getString(R.string.division))
         binding.fAddressDistrict.tvTitle.setText(context.getString(R.string.district))
+        binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+        binding.fAddressPoliceStationBn.tvTitle.setText(context.getString(R.string.police_station_bn))
         binding.fAddressPhoneOrMobileNo.tvTitle.setText(context.getString(R.string.phone_mobile))
         binding.fAddressVillageOrHouseNo.tvTitle.setText(context.getString(R.string.vill_house))
         binding.fAddressVillageOrHouseNoBn.tvTitle.setText(context.getString(R.string.vill_house_bn))
@@ -78,30 +143,67 @@ class EmployeeInfoDataBinding {
         if (preparence.getLanguage()
                 .equals("en")
         ) {
-            permanentAddresses.village_house_no?.let {
+            addresses.village_house_no?.let {
                 binding.fAddressVillageOrHouseNo.tvText.setText(it)
             }
-            permanentAddresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
-            permanentAddresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
-            permanentAddresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
-            permanentAddresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
-            permanentAddresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
-            permanentAddresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
-        } else {
-            permanentAddresses.district?.name_bn?.let {
-                binding.fAddressDistrict.tvText.setText(it)
-
-            }
-            permanentAddresses.road_word_no_bn?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
-            permanentAddresses.post_office_bn?.let { binding.fAddressPostOffice.tvText.setText(it) }
-            permanentAddresses.police_station_bn?.let {
-                binding.fAddressPoliceStation.tvText.setText(
+            addresses.village_house_no?.let {
+                binding.fAddressVillageOrHouseNo.tvText.setText(
                     it
                 )
             }
-            permanentAddresses.division?.name_bn?.let { binding.fAddressDivision.tvText.setText(it) }
-            permanentAddresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.setText(it) }
-            permanentAddresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
+            addresses.village_house_no_bn?.let {
+                binding.fAddressVillageOrHouseNoBn.tvText.setText(
+                    it
+                )
+            }
+            addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
+            addresses.road_word_no_bn?.let {
+                binding.fAddressRoadOrWordNoBn.tvText.setText(
+                    it
+                )
+            }
+            addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
+            addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
+            addresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
+            addresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
+            addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
+            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
+            addresses.upazila?.name?.let { binding.fAddressUpazila.tvText.setText(it) }
+            addresses.police_station_bn?.let { binding.fAddressPoliceStationBn.tvText.setText(it) }
+
+        } else {
+            addresses.district?.name_bn?.let {
+                binding.fAddressDistrict.tvText.setText(it)
+
+            }
+            addresses.village_house_no?.let {
+                binding.fAddressVillageOrHouseNo.tvText.setText(
+                    it
+                )
+            }
+            addresses.village_house_no_bn?.let {
+                binding.fAddressVillageOrHouseNoBn.tvText.setText(
+                    it
+                )
+            }
+            addresses.road_word_no_bn?.let {
+                binding.fAddressRoadOrWordNoBn.tvText.setText(
+                    it
+                )
+            }
+            addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
+            addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
+            addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
+            addresses.police_station_bn?.let {
+                binding.fAddressPoliceStationBn.tvText.setText(
+                    it
+                )
+            }
+            addresses.division?.name_bn?.let { binding.fAddressDivision.tvText.setText(it) }
+            addresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.setText(it) }
+            addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
+            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
+            addresses.upazila?.name_bn?.let { binding.fAddressUpazila.tvText.setText(it) }
         }
     }
 
@@ -110,7 +212,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         qualifications: Employee.EducationalQualifications,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.fEQBoardOrUniversity.llBody.visibility = View.GONE
@@ -164,7 +265,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         spouses: Employee.Spouses,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hSpouse.tvTitle.setText(heading)
@@ -174,6 +274,7 @@ class EmployeeInfoDataBinding {
         binding.fSpouseRelation.tvTitle.setText(context.getString(R.string.relation))
         binding.fSpouseDivision.tvTitle.setText(context.getString(R.string.division))
         binding.fSpouseDistrict.tvTitle.setText(context.getString(R.string.district))
+        binding.fSpouseThana.tvTitle.setText(context.getString(R.string.upazila))
         binding.fSpouseJobType.tvTitle.setText(context.getString(R.string.job_type))
         binding.fSpouseOccupation.tvTitle.setText(context.getString(R.string.occupation))
         binding.fSpousePhoneNo.tvTitle.setText(context.getString(R.string.phone))
@@ -188,6 +289,7 @@ class EmployeeInfoDataBinding {
             spouses.name_bn?.let { binding.fSpouseNameBn.tvText.setText(it) }
             spouses.name?.let { binding.fSpouseNameEn.tvText.setText(it) }
             spouses.spouse_workstation?.name?.let { binding.fSpouseOffice.tvText.setText(it) }
+            spouses.upazila?.name?.let { binding.fSpouseThana.tvText.setText(it) }
             spouses.distric?.name?.let { binding.fSpouseDistrict.tvText.setText(it) }
             spouses.division?.name?.let { binding.fSpouseDivision.tvText.setText(it) }
             spouses.spouse_job_type?.name?.let { binding.fSpouseJobType.tvText.setText(it) }
@@ -200,11 +302,12 @@ class EmployeeInfoDataBinding {
             spouses.name_bn?.let { binding.fSpouseNameBn.tvText.setText(it) }
             spouses.name?.let { binding.fSpouseNameEn.tvText.setText(it) }
             spouses.spouse_workstation?.name_bn?.let { binding.fSpouseOffice.tvText.setText(it) }
+            spouses.upazila?.name_bn?.let { binding.fSpouseThana.tvText.setText(it) }
             spouses.distric?.name_bn?.let { binding.fSpouseDistrict.tvText.setText(it) }
             spouses.spouse_job_type?.name_bn?.let { binding.fSpouseJobType.tvText.setText(it) }
             spouses.occupation?.name_bn.let { binding.fSpouseOccupation.tvText.setText(it) }
-            spouses.phone_no_bn?.let { binding.fSpousePhoneNo.tvText.setText(it) }
-            spouses.mobile_no_bn?.let { binding.fSpouseMobileNo.tvText.setText(it) }
+            spouses.phone_no?.let { binding.fSpousePhoneNo.tvText.setText(it) }
+            spouses.mobile_no?.let { binding.fSpouseMobileNo.tvText.setText(it) }
             spouses.relation?.let { binding.fSpouseRelation.tvText.setText(it) }
             spouses.division?.name_bn?.let { binding.fSpouseDivision.tvText.setText(it) }
             // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
@@ -215,9 +318,12 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         jobjoinings: Employee.Jobjoinings,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
+
+
+       employee = employeeProfileData.employee
+
         binding.hJobJoiningInformation.tvTitle.setText(heading)
         binding.fJobJoiningOffice.tvTitle.setText(context.getString(R.string.office))
         binding.fJobJoiningDesignation.tvTitle.setText(context.getString(R.string.designation))
@@ -227,7 +333,19 @@ class EmployeeInfoDataBinding {
         binding.fJobJoiningPensionDate.tvTitle.setText(context.getString(R.string.pension))
         binding.fJobJoiningClass.tvTitle.setText(context.getString(R.string._class))
         binding.fJobJoiningGrade.tvTitle.setText(context.getString(R.string.grade))
+        binding.fJobJoiningPayScale.tvTitle.setText(context.getString(R.string.pay_scale))
         binding.fJobJoiningPrlDate.tvTitle.setText(context.getString(R.string.prl_date))
+        binding.tvLanguageCertificate.setText(context.getString(R.string.certificate))
+
+        context?.let {
+            Glide.with(it).applyDefaultRequestOptions(
+                RequestOptions()
+                    .placeholder(R.drawable.ic_baseline_person_24)
+            ).load(employee?.photo)
+                .into(binding.ivLanguageCertificate)
+        }
+
+        jobjoinings.pay_scale?.let { binding.fJobJoiningPayScale.tvText.setText(it) }
 
         if (preparence.getLanguage()
                 .equals("en")
@@ -241,6 +359,7 @@ class EmployeeInfoDataBinding {
             jobjoinings.employee_class?.name?.let { binding.fJobJoiningClass.tvText.setText(it) }
             jobjoinings.grade?.name?.let { binding.fJobJoiningGrade.tvText.setText(it) }
             jobjoinings.prl_date?.let { binding.fJobJoiningPrlDate.tvText.setText(it) }
+
             // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
         } else {
             jobjoinings.office?.office_name_bn?.let { binding.fJobJoiningOffice.tvText.setText(it) }
@@ -260,7 +379,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         childs: Employee.Childs,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hChildren.tvTitle.setText(heading)
@@ -298,9 +416,9 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         languages: Employee.Languages,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
+        binding.llLanguageCertificate.visibility = View.GONE
         binding.hLanguage.tvTitle.setText(heading)
         binding.fLanguageNOLanguage.tvTitle.setText(context.getString(R.string.name_language))
         binding.fLanguageNOLanguageBn.tvTitle.setText(context.getString(R.string.name_language_bn))
@@ -308,6 +426,18 @@ class EmployeeInfoDataBinding {
         binding.fLanguageNOInstitute.tvTitle.setText(context.getString(R.string.name_institute))
         binding.fLanguageExperienceLevel.tvTitle.setText(context.getString(R.string.exp_level))
         binding.fLanguageCertificationDate.tvTitle.setText(context.getString(R.string.certification_date))
+
+        binding?.tvLanguageCertificate?.setText(context.getString(R.string.certificate))
+
+        context?.let {
+            binding?.ivLanguageCertificate?.let { it1 ->
+                Glide.with(it).applyDefaultRequestOptions(
+                    RequestOptions()
+                        .placeholder(R.drawable.ic_baseline_image_24)
+                ).load(languages?.certificate)
+                    .into(it1)
+            }
+        }
 
         if (preparence.getLanguage()
                 .equals("en")
@@ -334,11 +464,11 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         localTrainings: Employee.LocalTrainings,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hLocaltraining.tvTitle.setText(heading)
         binding.fLocalTrainingCountry.llBody.visibility = View.GONE
+        binding.llTrainingCertification.visibility = View.GONE
 
         binding.fLocalTrainingCourseT.tvTitle.setText(context.getString(R.string.course_title))
         binding.fLocalTrainingCourseTBn.tvTitle.setText(context.getString(R.string.course_title_bn))
@@ -349,6 +479,17 @@ class EmployeeInfoDataBinding {
         binding.fLocalTrainingFromDate.tvTitle.setText(context.getString(R.string.from_date))
         binding.fLocalTrainingToDate.tvTitle.setText(context.getString(R.string.to_date))
 
+        binding?.tvTrainingTitle?.setText(context.getString(R.string.certificate))
+
+        context?.let {
+            binding?.ivTraining?.let { it1 ->
+                Glide.with(it).applyDefaultRequestOptions(
+                    RequestOptions()
+                        .placeholder(R.drawable.ic_baseline_image_24)
+                ).load(localTrainings?.certificate)
+                    .into(it1)
+            }
+        }
 
         if (preparence.getLanguage()
                 .equals("en")
@@ -390,12 +531,12 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         foreigntrainings: Employee.Foreigntrainings,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hLocaltraining.tvTitle.setText(heading)
         binding.fLocalTrainingLocation.llBody.visibility = View.GONE
         binding.fLocalTrainingLocationBn.llBody.visibility = View.GONE
+        binding.llTrainingCertification.visibility = View.GONE
 
         binding.fLocalTrainingCourseT.tvTitle.setText(context.getString(R.string.course_title))
         binding.fLocalTrainingCourseTBn.tvTitle.setText(context.getString(R.string.course_title_bn))
@@ -405,7 +546,17 @@ class EmployeeInfoDataBinding {
         binding.fLocalTrainingToDate.tvTitle.setText(context.getString(R.string.to_date))
 
         binding.fLocalTrainingCountry.tvTitle.setText(context.getString(R.string.country))
+        binding?.tvTrainingTitle?.setText(context.getString(R.string.certificate))
 
+        context?.let {
+            binding?.ivTraining?.let { it1 ->
+                Glide.with(it).applyDefaultRequestOptions(
+                    RequestOptions()
+                        .placeholder(R.drawable.ic_baseline_image_24)
+                ).load(foreigntrainings?.certificate)
+                    .into(it1)
+            }
+        }
         if (preparence.getLanguage()
                 .equals("en")
         ) {
@@ -463,7 +614,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         officialResidentials: Employee.OfficialResidentials,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hOfficialResidentialInfo.tvTitle.setText(heading)
@@ -554,12 +704,14 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         foreignTravels: Employee.ForeignTravels,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hForeignTravelInfo.tvTitle.setText(heading)
         binding.fForeignTravelCountry.tvTitle.setText(context.getString(R.string.country))
         binding.fForeignTravelPurpose.tvTitle.setText(context.getString(R.string.purpose))
+        binding.fForeignTravelPurposeBn.tvTitle.setText(context.getString(R.string.purpose_bangla))
+        binding.fForeignTravelDetailsEn.tvTitle.setText(context.getString(R.string.details_en))
+        binding.fForeignTravelDetailsBn.tvTitle.setText(context.getString(R.string.details_bn))
         binding.fForeignTravelFromDate.tvTitle.setText(context.getString(R.string.from_date))
         binding.fForeignTravelToDate.tvTitle.setText(context.getString(R.string.to_date))
 
@@ -569,6 +721,9 @@ class EmployeeInfoDataBinding {
         ) {
             foreignTravels.country?.name?.let { binding.fForeignTravelCountry.tvText.setText(it) }
             foreignTravels.purpose?.let { binding.fForeignTravelPurpose.tvText.setText(it) }
+            foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
+            foreignTravels.details?.let { binding.fForeignTravelDetailsEn.tvText.setText(it) }
+            foreignTravels.details_bn?.let { binding.fForeignTravelDetailsBn.tvText.setText(it) }
             foreignTravels.from_date?.let { binding.fForeignTravelFromDate.tvText.setText(it) }
             foreignTravels.to_date?.let { binding.fForeignTravelToDate.tvText.setText(it) }
 
@@ -576,6 +731,9 @@ class EmployeeInfoDataBinding {
         } else {
             foreignTravels.country?.name_bn?.let { binding.fForeignTravelCountry.tvText.setText(it) }
             foreignTravels.purpose_bn?.let { binding.fForeignTravelPurpose.tvText.setText(it) }
+            foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
+            foreignTravels.details?.let { binding.fForeignTravelDetailsEn.tvText.setText(it) }
+            foreignTravels.details_bn?.let { binding.fForeignTravelDetailsBn.tvText.setText(it) }
             foreignTravels.from_date?.let { binding.fForeignTravelFromDate.tvText.setText(it) }
             foreignTravels.to_date?.let { binding.fForeignTravelToDate.tvText.setText(it) }
 
@@ -586,7 +744,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         additionalQualifications: Employee.AdditionalQualifications,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hAdditionalQualification.tvTitle.setText(heading)
@@ -642,7 +799,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         qualifications: Employee.Publications,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hPublication.tvTitle.setText(heading)
@@ -717,7 +873,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         honoursAwards: Employee.HonoursAwards,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hHonoursAndAward.tvTitle.setText(heading)
@@ -781,7 +936,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         postingRecords: Employee.PostingRecords,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hPostingRecord.tvTitle.setText(heading)
@@ -846,7 +1000,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         disciplinaryAction: Employee.DisciplinaryAction,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hDiscipilinaryAction.tvEdit.visibility = View.GONE
@@ -912,7 +1065,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         references: Employee.References,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hReference.tvTitle.setText(heading)
@@ -984,7 +1136,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         promotions: Employee.Promotions,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hPromotion.tvEdit.visibility = View.GONE
@@ -1046,7 +1197,6 @@ class EmployeeInfoDataBinding {
         binding: ModelEmployeeInfoBinding,
         quotas: Employee.EmployeeQuotas,
         context: Context,
-        preparence: MySharedPreparence,
         heading: String
     ) {
         binding.hQuota.tvTitle.setText(heading)

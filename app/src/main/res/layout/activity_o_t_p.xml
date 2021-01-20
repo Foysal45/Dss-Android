@@ -76,6 +76,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:textColor="@color/light_black"
                         android:textSize="14sp" />
                 </soup.neumorphism.NeumorphCardView>
 
@@ -96,6 +97,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:textColor="@color/light_black"
                         android:textSize="14sp" />
                 </soup.neumorphism.NeumorphCardView>
 
@@ -116,6 +118,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:textColor="@color/light_black"
                         android:textSize="14sp" />
                 </soup.neumorphism.NeumorphCardView>
 
@@ -136,6 +139,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:textColor="@color/light_black"
                         android:textSize="14sp" />
                 </soup.neumorphism.NeumorphCardView>
 
@@ -156,6 +160,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:textColor="@color/light_black"
                         android:textSize="14sp" />
                 </soup.neumorphism.NeumorphCardView>
 
@@ -176,6 +181,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:textColor="@color/light_black"
                         android:textSize="14sp" />
                 </soup.neumorphism.NeumorphCardView>
 

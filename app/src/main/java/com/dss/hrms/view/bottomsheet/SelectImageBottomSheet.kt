@@ -58,7 +58,7 @@ class SelectImageBottomSheet : BottomSheetDialogFragment {
     }
 
 
-    interface BottomSheetListener {
+  open  interface BottomSheetListener {
         fun onCameraButtonClicked()
         fun onGalleryButtonClicked()
     }

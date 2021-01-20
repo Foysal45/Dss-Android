@@ -13,45 +13,64 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.RequestManager
 import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
-import com.dss.hrms.model.LoginInfo
-import com.dss.hrms.model.login.ResetPasswordReq
-import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.model.login.LoginInfo
 import com.dss.hrms.util.CustomVisibility
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.`interface`.OnNetworkStateChangeListener
-import com.dss.hrms.view.activity.BaseActivity
+import com.dss.hrms.view.allInterface.OnNetworkStateChangeListener
 import com.dss.hrms.view.receiver.NetworkChangeReceiver
 import com.dss.hrms.viewmodel.LoginViewModel
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.android.synthetic.main.activity_login.*
-import org.w3c.dom.Text
-
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
-    var preparence: MySharedPreparence? = null
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var preparence: MySharedPreparence
+
+    @Inject
+    lateinit var requestManager: RequestManager
+
+
     var loginViewModel: LoginViewModel? = null
     var lan: String? = null
     var mNetworkReceiver: NetworkChangeReceiver? = null
     var isShowPassword = false
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        preparence = MySharedPreparence(this)
-        setLocalLanguage(preparence!!.getLanguage())
-        if (preparence!!.isLogin()!!) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+        preparence?.let {
+            setLocalLanguage(preparence.getLanguage())
+            if (preparence.isLogin()!!) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
         }
+        viewModelProviderFactory?.let {
+            Log.e("loginactivity", "viewmodel factory module : " + viewModelProviderFactory)
+        }
+
         setContentView(R.layout.activity_login)
         init()
         loadScreen()
         clickListener()
+
 
 //        if (preparence!!.isRemember()!!) {
 //            setData()
@@ -63,6 +82,7 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
 //        etEmail.setText(preparence?.getEmail())
 //        etPassword.setText(preparence?.getPassword())
 //    }
+
 
     fun clickListener() {
         ivPassword.setOnClickListener({
@@ -127,87 +147,163 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
     }
 
     fun init() {
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        loginViewModel =
+            ViewModelProviders.of(this, viewModelProviderFactory).get(LoginViewModel::class.java)
+
         cbRemenber.isChecked = preparence?.isRemember()!!
         mNetworkReceiver = NetworkChangeReceiver(this)
         registerNetworkBroadcast()
     }
 
+    fun getDeviceToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.e("device_token", "Fetching FCM registration token failed ", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            Log.e("device_token", "token : " + token)
+
+            Intent(this, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(this)
+            }
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        })
+    }
+
     fun login() {
         var email = etEmail.text.toString().trim()
         var password = etPassword.text.toString().trim()
-        //   if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
         loading_dialog.visibility = View.VISIBLE
         login.visibility = View.GONE
-        //var dialog = CustomLoadingDialog().createLoadingDialog(this)
-        loginViewModel?.login(email, password)?.observe(this, Observer { any ->
-            //  dialog?.dismiss()
-            loading_dialog.visibility = View.GONE
-            login.visibility = View.VISIBLE
-            Log.e("LoginActivity", "response : " + any)
-            if (any is LoginInfo) {
+        //  var dialog = CustomLoadingDialog().createLoadingDialog(this)
+        lifecycleScope.launch {
+            async { loginViewModel?.login(email, password) }.await()
+                ?.collect {
+                    loading_dialog.visibility = View.GONE
+                    login.visibility = View.VISIBLE
+                    Log.e("LoginActivity", "response : " + it)
 
-                preparence?.setLoginStatus(true)
-                preparence?.setEmail(email)
-                preparence?.setPassword(password)
-                preparence?.setLoginStatus(true)
-                any.token?.let { preparence?.setToken(it) }
-                var loginInfo = any as LoginInfo
-                preparence?.setLoginInfo(loginInfo?.apply { this.password = password }
-                    .let { Gson().toJson(it) })
-                startActivity(
-                    Intent(this, MainActivity::class.java)
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                )
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
-            } else if (any is ApiError) {
-                e_email.visibility = View.GONE
-                e_password.visibility = View.GONE
-                try {
-                    if (any.getError().isEmpty()) {
-                        toast(this, any.getMessage())
-                        Log.d("ok", "error")
-                    } else {
-                        for (n in any.getError().indices) {
-                            val error = any.getError()[n].getField()
-                            val message = any.getError()[n].getMessage()
-                            if (TextUtils.isEmpty(error)) {
-                                message?.let {
-                                    e_password.visibility = View.VISIBLE
-                                    e_password.text = ErrorUtils2.mainError(message)
-                                }
-
-                            }
-
-                            when (error) {
-                                "email" -> {
-                                    e_email.visibility = View.VISIBLE
-                                    e_email.text = ErrorUtils2.mainError(message)
-                                }
-                                "password" -> {
-                                    e_password.visibility = View.VISIBLE
-                                    e_password.text = ErrorUtils2.mainError(message)
+                    if (it is LoginInfo) {
+                        preparence?.setLoginStatus(true)
+                        preparence?.setEmail(email)
+                        preparence?.setPassword(password)
+                        preparence?.setLoginStatus(true)
+                        it.token?.let { preparence?.setToken(it) }
+                        var loginInfo = it as LoginInfo
+                        preparence?.setLoginInfo(loginInfo?.apply { this.password = password }
+                            .let { Gson().toJson(it) })
+                        getDeviceToken()
+                    } else if (it is ApiError) {
+                        e_email.visibility = View.GONE
+                        e_password.visibility = View.GONE
+                        try {
+                            if (it.getError().isEmpty()) {
+                                toast(applicationContext, it.getMessage())
+                                Log.d("ok", "error")
+                            } else {
+                                for (n in it.getError().indices) {
+                                    val error = it.getError()[n].getField()
+                                    val message = it.getError()[n].getMessage()
+                                    if (TextUtils.isEmpty(error)) {
+                                        message?.let {
+                                            e_password.visibility = View.VISIBLE
+                                            e_password.text = ErrorUtils2.mainError(message)
+                                        }
+                                    }
+                                    when (error) {
+                                        "email" -> {
+                                            e_email.visibility = View.VISIBLE
+                                            e_email.text = ErrorUtils2.mainError(message)
+                                        }
+                                        "password" -> {
+                                            e_password.visibility = View.VISIBLE
+                                            e_password.text = ErrorUtils2.mainError(message)
+                                        }
+                                    }
                                 }
                             }
+                        } catch (e: Exception) {
+                            toast(applicationContext, e.toString())
                         }
+                    } else if (it is Throwable) {
+                        toast(applicationContext, it.toString())
+                    } else {
+                        toast(applicationContext, getString(R.string.failed))
                     }
-                } catch (e: Exception) {
-                    toast(this, e.toString())
+
                 }
-
-
-            } else if (any is Throwable) {
-                toast(this, any.toString())
-            } else {
-                toast(this, getString(R.string.failed))
-            }
-        })
-        //   } else {
-        //   toast(this, getString(R.string.required_field_cannot_be_empty))
-
-        // }
+        }
     }
+
+
+//    fun login() {
+//        var email = etEmail.text.toString().trim()
+//        var password = etPassword.text.toString().trim()
+//        loading_dialog.visibility = View.VISIBLE
+//        login.visibility = View.GONE
+//        //var dialog = CustomLoadingDialog().createLoadingDialog(this)
+//        loginViewModel?.login(email, password)?.observe(this, Observer { any ->
+//            //  dialog?.dismiss()
+//            loading_dialog.visibility = View.GONE
+//            login.visibility = View.VISIBLE
+//            Log.e("LoginActivity", "response : " + any)
+//            if (any is LoginInfo) {
+//                preparence?.setLoginStatus(true)
+//                preparence?.setEmail(email)
+//                preparence?.setPassword(password)
+//                preparence?.setLoginStatus(true)
+//                any.token?.let { preparence?.setToken(it) }
+//                var loginInfo = any as LoginInfo
+//                preparence?.setLoginInfo(loginInfo?.apply { this.password = password }
+//                    .let { Gson().toJson(it) })
+//                getDeviceToken()
+//            } else if (any is ApiError) {
+//                e_email.visibility = View.GONE
+//                e_password.visibility = View.GONE
+//                try {
+//                    if (any.getError().isEmpty()) {
+//                        toast(this, any.getMessage())
+//                        Log.d("ok", "error")
+//                    } else {
+//                        for (n in any.getError().indices) {
+//                            val error = any.getError()[n].getField()
+//                            val message = any.getError()[n].getMessage()
+//                            if (TextUtils.isEmpty(error)) {
+//                                message?.let {
+//                                    e_password.visibility = View.VISIBLE
+//                                    e_password.text = ErrorUtils2.mainError(message)
+//                                }
+//                            }
+//                            when (error) {
+//                                "email" -> {
+//                                    e_email.visibility = View.VISIBLE
+//                                    e_email.text = ErrorUtils2.mainError(message)
+//                                }
+//                                "password" -> {
+//                                    e_password.visibility = View.VISIBLE
+//                                    e_password.text = ErrorUtils2.mainError(message)
+//                                }
+//                            }
+//                        }
+//                    }
+//                } catch (e: Exception) {
+//                    toast(this, e.toString())
+//                }
+//            } else if (any is Throwable) {
+//                toast(this, any.toString())
+//            } else {
+//                toast(this, getString(R.string.failed))
+//            }
+//        })
+//        //   } else {
+//        //   toast(this, getString(R.string.required_field_cannot_be_empty))
+//
+//        // }
+//    }
 
     private fun loadScreen() {
         if (preparence!!.getLanguage().equals("en")) {

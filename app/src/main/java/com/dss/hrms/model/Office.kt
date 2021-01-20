@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 class Office {
     @SerializedName("id")
-    val id: Int = 0
+    val id: Int? = null
 
     @SerializedName("office_type_id")
     val office_type_id: Int? = 0
