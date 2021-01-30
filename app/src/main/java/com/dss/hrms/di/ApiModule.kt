@@ -3,6 +3,7 @@ package com.dss.hrms.di
 import android.app.Application
 import com.btbapp.alquranapp.retrofit.ApiService
 import com.dss.hrms.util.StaticKey
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -50,6 +51,7 @@ class ApiModule {
         ): Retrofit {
             return Retrofit.Builder().baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient).build()
 
         }

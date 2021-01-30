@@ -19,7 +19,8 @@ class DatePicker {
                 it,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     // Display Selected date in TextView
-                    onDatelistener.onDate("" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth)
+                    //  onDatelistener.onDate("" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth)
+                    onDatelistener.onDate("" + dayOfMonth + "-" + (monthOfYear + 1) + "-" + year)
                 }, year, month, day
             )
         }

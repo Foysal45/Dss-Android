@@ -5,11 +5,15 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.btbapp.alquranapp.retrofit.ApiService
 import com.chaadride.network.error.ErrorUtils2
-import com.dss.hrms.retrofit.RetrofitInstance
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.namaztime.namaztime.database.MySharedPreparence
-import okhttp3.MediaType
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONException
@@ -17,7 +21,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Part
 import javax.inject.Inject
 
 
@@ -31,57 +34,106 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
     @Inject
     lateinit var preparence: MySharedPreparence
 
-
     fun editJobjoiningInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
         val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateJobjoiningInfo(
+        apiService?.updateJobjoiningInfo(
             preparence?.getLanguage()!!,
             "Bearer ${preparence?.getToken()}",
             id,
             map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
-                        } else {
-                            liveData.postValue(null)
-                        }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
-                    }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
+        )?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe(object : Observer<Response<Any>?> {
+                override fun onComplete() {
+                    Log.e("TAG", "observable list - onComplete")
+                    //   liveData.postValue(null)
                 }
-            }
 
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
+                override fun onSubscribe(d: Disposable) {
+                    Log.e("TAG", "observable list - onSubscribe")
+                }
 
-        })
+                override fun onError(e: Throwable) {
+                    Log.e("TAG", "observable list - onError ${e.message}")
+                    liveData.postValue(null)
+                }
+
+                override fun onNext(response: Response<Any>) {
+                    if (response.isSuccessful) {
+                        try {
+                            val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                            val code: Int = jsonObjectParent.getInt("code")
+                            val status = jsonObjectParent.getString("status")
+                            Log.e("response", "response : " + jsonObjectParent)
+                            if (code == 200 || code == 201
+                            ) {
+                                Log.e("response", "response : " + jsonObjectParent)
+                                liveData.postValue("Updated")
+                            } else {
+                                liveData.postValue(null)
+                            }
+                        } catch (e: JSONException) {
+                            liveData.postValue(null)
+                            Log.e("response", "JSONException : " + e.message)
+                        }
+                    } else {
+                        liveData.postValue(ErrorUtils2.parseError(response))
+                    }
+                }
+            })
         return liveData
     }
 
 
     fun updateQuotaInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
+        apiService?.updateQuotaInfo1(
+            preparence?.getLanguage()!!,
+            "Bearer ${preparence?.getToken()}",
+            id,
+            map
+        )?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe(object : Observer<Response<Any>?> {
+                override fun onComplete() {
+                    Log.e("TAG", "observable list - onComplete")
+                    // liveData.postValue(null)
+                }
+
+                override fun onSubscribe(d: Disposable) {
+                    Log.e("TAG", "observable list - onSubscribe")
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.e("TAG", "observable list - onError ${e.message}")
+                    liveData.postValue(null)
+                }
+
+                override fun onNext(response: Response<Any>) {
+                    if (response.isSuccessful) {
+                        try {
+                            val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                            val code: Int = jsonObjectParent.getInt("code")
+                            val status = jsonObjectParent.getString("status")
+                            Log.e("response", "response : " + jsonObjectParent)
+                            if (code == 200 || code == 201
+                            ) {
+                                Log.e("response", "response : " + jsonObjectParent)
+                                liveData.postValue("Updated")
+                            } else {
+                                liveData.postValue(null)
+                            }
+                        } catch (e: JSONException) {
+                            liveData.postValue(null)
+                            //    Log.e("response", "JSONException : " + e.message)
+                        }
+                    } else {
+                        liveData.postValue(ErrorUtils2.parseError(response))
+                    }
+                }
+            })
+        return liveData
+    }
+
+    fun updateQuotaInfo1(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
         val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
         var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
         val call: Call<Any?>? = apiService?.updateQuotaInfo(
@@ -113,10 +165,6 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
                     }
                 } else {
                     liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
                 }
             }
 
@@ -129,1369 +177,1221 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
         return liveData
     }
 
-    fun updateBasicInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateBasicInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+    suspend fun updateBasicInfo(
+        id: Int?,
+        map: HashMap<Any, Any?>?,
+        liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateBasicInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                                Log.e("response", "JSONException : " + e.message)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun updatePresentInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updatePresentInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
 
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
+    suspend fun updatePresentInfo(
+        id: Int?,
+        map: HashMap<Any, Any?>?,
+        liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
 
-                            liveData.postValue("Updated")
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updatePresentInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-
-    fun addPresentInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addPresentInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+    suspend fun addPresentInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addPresentInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        //    Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    // Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-
-    fun updatePermanentInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updatePermanetInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+    suspend fun updatePermanentInfo(
+        id: Int?, map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updatePermanetInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
 
-    fun addPermanentInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addPermanentInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+    suspend fun addPermanentInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addPermanentInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        //   Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun updateEducationQualification(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateEducationQualificationInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+    suspend fun updateEducationQualification(
+        id: Int?, map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateEducationQualificationInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    // Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun addEducationQualificationInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+    suspend fun addEducationQualificationInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addEducationQualificationInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            arr
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addEducationQualificationInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    arr
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    // Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                //  Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun addSpouseInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addSpouseInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        //   Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            //   Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+    suspend fun addSpouseInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addSpouseInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        // Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                //  Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun updateSpouseInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        Log.e("id", "id : " + id)
-        Log.e("test", "test map data " + Gson().toJson(map))
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateSpouseInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+    suspend fun updateSpouseInfo(
+        id: Int?, map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateSpouseInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //     Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun addChildInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+    suspend fun addChildInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addChildInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            arr
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addChildInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    arr
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
+
     }
 
-    fun updateChildInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        Log.e("id", "id : " + id)
-        Log.e("test", "test map data " + Gson().toJson(map))
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateChildInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+    suspend fun updateChildInfo(
+        id: Int?, map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateChildInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
 
-    fun addLanguageInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+    suspend fun addLanguageInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addLanguageInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            arr
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addLanguageInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    arr
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun updateLanguageInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        Log.e("id", "id : " + id)
-        Log.e("test", "test map data " + Gson().toJson(map))
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateLanguageInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+    suspend fun updateLanguageInfo(
+        id: Int?, map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateLanguageInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
 
-    fun addLocalTrainingInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+    suspend fun addLocalTrainingInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addLocalTrainingInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            arr
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addLocalTrainingInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    arr
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
+
     }
 
-    fun updateLocalTrainingInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        Log.e("id", "id : " + id)
-        Log.e("test", "test map data " + Gson().toJson(map))
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateLocalTrainingInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+    suspend fun updateLocalTrainingInfo(
+        id: Int?, map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateLocalTrainingInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //      Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
+
+
     }
 
-    fun addForeignTrainingInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+    suspend fun addForeignTrainingInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addForeignTrainingInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            arr
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addForeignTrainingInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    arr
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun updateForeignTrainingInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        Log.e("id", "id : " + id)
-        Log.e("test", "test map data " + Gson().toJson(map))
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateForeignTrainingInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+    suspend fun updateForeignTrainingInfo(
+        id: Int?, map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateForeignTrainingInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    // Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
 
-    fun addPublicationInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+    suspend fun addPublicationInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addPublicationInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            arr
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addPublicationInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    arr
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun updatePublicationInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        Log.e("id", "id : " + id)
-        Log.e("test", "test map data " + Gson().toJson(map))
-
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updatePublicationInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+    suspend fun updatePublicationInfo(
+        id: Int?, map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updatePublicationInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
+        }
+        return liveData
 
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
+    }
+
+    suspend fun addReferenceInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addReferenceInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
+                        } else {
+                            liveData?.postValue(ErrorUtils2.parseError(response))
+                        }
+                    }
             }
+        }
+        return liveData
 
-        })
+    }
+
+    suspend fun updateReferenceInfo(
+        id: Int?, map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateReferenceInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
+                        } else {
+                            liveData?.postValue(ErrorUtils2.parseError(response))
+                        }
+                    }
+            }
+        }
         return liveData
     }
 
-    fun addReferenceInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addReferenceInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
-                        } else {
-                            liveData.postValue(null)
-                        }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
-                    }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
-            }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
-        return liveData
-    }
-
-    fun updateReferenceInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        Log.e("id", "id : " + id)
-        Log.e("test", "test map data " + Gson().toJson(map))
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateReferenceInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
-                        } else {
-                            liveData.postValue(null)
-                        }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
-                    }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
-            }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
-        return liveData
-    }
-
-    fun addOfficialResidentialInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+    suspend fun addOfficialResidentialInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addOfficialResidentialInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            arr
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addOfficialResidentialInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    arr
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
+        }
+        return liveData
 
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
+    }
+
+    suspend fun updateOfficialResidentialInfo(
+        id: Int?,
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateOfficialResidentialInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
+                        } else {
+                            liveData?.postValue(ErrorUtils2.parseError(response))
+                        }
+                    }
             }
-
-        })
+        }
         return liveData
     }
 
-    fun updateOfficialResidentialInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        Log.e("id", "id : " + id)
-        Log.e("test", "test map data " + Gson().toJson(map))
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateOfficialResidentialInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
-                        } else {
-                            liveData.postValue(null)
-                        }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
-                    }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
-            }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
-        return liveData
-    }
-
-    fun addForeignTravellInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+    suspend fun addForeignTravellInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addForeignTravelInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            arr
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addForeignTravelInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    arr
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    // Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun updateForeignTravelInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        Log.e("id", "id : " + id)
-        Log.e("test", "test map data " + Gson().toJson(map))
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateForeignTravelInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+    suspend fun updateForeignTravelInfo(
+        id: Int?, map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateForeignTravelInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //  Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun addHonoursAwardInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addHonoursAwardInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+    suspend fun addHonoursAwardInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addHonoursAwardInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun updateHonoursAwardInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
-        Log.e("id", "id : " + id)
-        Log.e("test", "test map data " + Gson().toJson(map))
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateHonoursAwardInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+    suspend fun updateHonoursAwardInfo(
+        id: Int?, map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateHonoursAwardInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
-    fun addAdditionalQualificationInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+    suspend fun addAdditionalQualificationInfo(
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
         var arr = arrayListOf<HashMap<Any, Any?>?>(map)
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.addAdditionalQualificationInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            arr
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Added")
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.addAdditionalQualificationInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    arr
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Added")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //   Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
 
@@ -1551,58 +1451,48 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
         return liveData
     }
 
-    fun updateAdditionalQualificationInfo(
+    suspend fun updateAdditionalQualificationInfo(
         id: Int?,
-        map: HashMap<Any, Any?>?
-    ): MutableLiveData<Any> {
-        Log.e("id", "id : " + id)
-        Log.e("test", "test map data " + Gson().toJson(map))
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        var preparence: MySharedPreparence? = application?.let { MySharedPreparence(it) }
-        val call: Call<Any?>? = apiService?.updateAdditionalQualificationInfo(
-            preparence?.getLanguage()!!,
-            "Bearer ${preparence?.getToken()}",
-            id,
-            map
-        )
-        call?.enqueue(object : Callback<Any?> {
-            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-
-                if (response.isSuccessful) {
-                    try {
-                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
-                        val code: Int = jsonObjectParent.getInt("code")
-                        val status = jsonObjectParent.getString("status")
-                        Log.e("response", "response : " + jsonObjectParent)
-                        if (code == 200 || code == 201
-                        ) {
-                            Log.e("response", "response : " + jsonObjectParent)
-
-                            liveData.postValue("Updated")
+        map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        var arr = arrayListOf<HashMap<Any, Any?>?>(map)
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateAdditionalQualificationInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    id,
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue("Updated")
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                            }
                         } else {
-                            liveData.postValue(null)
+                            liveData?.postValue(ErrorUtils2.parseError(response))
                         }
-                    } catch (e: JSONException) {
-                        liveData.postValue(null)
-                        Log.e("response", "JSONException : " + e.message)
                     }
-                } else {
-                    liveData.postValue(ErrorUtils2.parseError(response))
-                    //    Log.e("response", "response.body() : " + Gson().toJson(response.raw()))
-                    //  liveData.postValue(ErrorUtils2.parseError(response))
-                    ///  val jsonObjectParent = JSONObject(Gson().toJson(response.errorBody()))
-                    // Log.e("response", "response.body() : " + response.errorBody())
-                }
             }
-
-            override fun onFailure(call: Call<Any?>, t: Throwable) {
-                liveData.postValue(null)
-                Log.e("response", "onFailure : " + t.message)
-            }
-
-        })
+        }
         return liveData
     }
-
-
 }

@@ -3,6 +3,7 @@ package com.dss.hrms.view.activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.RequestManager
@@ -112,44 +114,38 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
             if (preparence!!.getLanguage().equals("en"))
                 return@setOnClickListener
             preparence?.setLanguage("en")
-            finish()
-            startActivity(
-                Intent(this, LoginActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
+            Intent(this, LoginActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(this)
+            }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
         tvBn.setOnClickListener {
-            if (preparence!!.getLanguage().equals("bn"))
+            if (preparence?.getLanguage().equals("bn"))
                 return@setOnClickListener
             preparence?.setLanguage("bn")
-            finish()
-            startActivity(
-                Intent(this, LoginActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
+            Intent(this, LoginActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(this)
+            }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
-
         login.setOnClickListener({
             login()
         })
-
         f_pass.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    ForgetPAssActivity::class.java
-                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
+            Intent(this, ForgetPAssActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(this)
+            }
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
     fun init() {
-        loginViewModel =
-            ViewModelProviders.of(this, viewModelProviderFactory).get(LoginViewModel::class.java)
-
+           lazy {loginViewModel= ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel::class.java) }
+//        loginViewModel =
+//            ViewModelProviders(this, viewModelProviderFactory).get(LoginViewModel::class.java)
         cbRemenber.isChecked = preparence?.isRemember()!!
         mNetworkReceiver = NetworkChangeReceiver(this)
         registerNetworkBroadcast()
@@ -161,7 +157,6 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
                 Log.e("device_token", "Fetching FCM registration token failed ", task.exception)
                 return@OnCompleteListener
             }
-
             // Get new FCM registration token
             val token = task.result
             Log.e("device_token", "token : " + token)
@@ -186,7 +181,6 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
                     loading_dialog.visibility = View.GONE
                     login.visibility = View.VISIBLE
                     Log.e("LoginActivity", "response : " + it)
-
                     if (it is LoginInfo) {
                         preparence?.setLoginStatus(true)
                         preparence?.setEmail(email)
@@ -239,74 +233,8 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
         }
     }
 
-
-//    fun login() {
-//        var email = etEmail.text.toString().trim()
-//        var password = etPassword.text.toString().trim()
-//        loading_dialog.visibility = View.VISIBLE
-//        login.visibility = View.GONE
-//        //var dialog = CustomLoadingDialog().createLoadingDialog(this)
-//        loginViewModel?.login(email, password)?.observe(this, Observer { any ->
-//            //  dialog?.dismiss()
-//            loading_dialog.visibility = View.GONE
-//            login.visibility = View.VISIBLE
-//            Log.e("LoginActivity", "response : " + any)
-//            if (any is LoginInfo) {
-//                preparence?.setLoginStatus(true)
-//                preparence?.setEmail(email)
-//                preparence?.setPassword(password)
-//                preparence?.setLoginStatus(true)
-//                any.token?.let { preparence?.setToken(it) }
-//                var loginInfo = any as LoginInfo
-//                preparence?.setLoginInfo(loginInfo?.apply { this.password = password }
-//                    .let { Gson().toJson(it) })
-//                getDeviceToken()
-//            } else if (any is ApiError) {
-//                e_email.visibility = View.GONE
-//                e_password.visibility = View.GONE
-//                try {
-//                    if (any.getError().isEmpty()) {
-//                        toast(this, any.getMessage())
-//                        Log.d("ok", "error")
-//                    } else {
-//                        for (n in any.getError().indices) {
-//                            val error = any.getError()[n].getField()
-//                            val message = any.getError()[n].getMessage()
-//                            if (TextUtils.isEmpty(error)) {
-//                                message?.let {
-//                                    e_password.visibility = View.VISIBLE
-//                                    e_password.text = ErrorUtils2.mainError(message)
-//                                }
-//                            }
-//                            when (error) {
-//                                "email" -> {
-//                                    e_email.visibility = View.VISIBLE
-//                                    e_email.text = ErrorUtils2.mainError(message)
-//                                }
-//                                "password" -> {
-//                                    e_password.visibility = View.VISIBLE
-//                                    e_password.text = ErrorUtils2.mainError(message)
-//                                }
-//                            }
-//                        }
-//                    }
-//                } catch (e: Exception) {
-//                    toast(this, e.toString())
-//                }
-//            } else if (any is Throwable) {
-//                toast(this, any.toString())
-//            } else {
-//                toast(this, getString(R.string.failed))
-//            }
-//        })
-//        //   } else {
-//        //   toast(this, getString(R.string.required_field_cannot_be_empty))
-//
-//        // }
-//    }
-
     private fun loadScreen() {
-        if (preparence!!.getLanguage().equals("en")) {
+        if (preparence?.getLanguage().equals("en")) {
             tvEn.setBackgroundResource(R.drawable.shape_rec_left_green_10dp_solod)
             tvEn.setTextColor(ContextCompat.getColor(this, R.color.white))
             tvBn.setBackgroundResource(R.drawable.shape_rec_right_white_light_10dp_solod)

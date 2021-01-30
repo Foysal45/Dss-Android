@@ -2,6 +2,7 @@ package com.dss.hrms.view.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -91,7 +92,8 @@ class EditAndCreateChildInfo @Inject constructor() {
         context: Context
 
     ) {
-
+        binding?.fChildrenNidNo?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
+        binding?.fChildrenNidNo?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
         binding?.llChildrenInfo?.visibility = View.VISIBLE
         binding?.hChildren?.tvClose?.setOnClickListener({
             dialogCustome?.dismiss()

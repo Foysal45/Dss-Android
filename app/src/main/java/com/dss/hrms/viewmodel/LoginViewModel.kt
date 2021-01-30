@@ -27,14 +27,11 @@ class LoginViewModel @Inject constructor(application: Application) : AndroidView
     }
 
 
-    fun resetPasswordOtp(number: String): MutableLiveData<Any>? {
-        //  return loginRepo?.resetPasswordOtp(number)
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        viewModelScope.launch {
-            var value = async { loginRepo?.resetPasswordOtp(number) }.await()
-            liveData?.postValue(value)
-        }
-        return liveData
+    fun resetPasswordOtp(number: String): Flow<Any?>? = flow {
+        // viewModelScope.launch() {
+        // var value = async { loginRepo.login(email, password) }.await()
+        emit(loginRepo.resetPasswordOtp(number))
+        // }
     }
 
     fun verifyOtp(token: String, otp: String): MutableLiveData<Any>? {

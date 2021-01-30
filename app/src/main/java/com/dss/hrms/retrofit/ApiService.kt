@@ -3,11 +3,15 @@ package com.btbapp.alquranapp.retrofit
 
 import com.dss.hrms.model.employeeProfile.EmployeeResponse
 import com.dss.hrms.model.login.*
+import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 interface ApiService {
@@ -86,7 +90,6 @@ interface ApiService {
         @Url url: String
     ): Call<Any?>?
 
-
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/job/joining/information/{Id}")
     fun updateJobjoiningInfo(
@@ -94,7 +97,16 @@ interface ApiService {
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Observable<Response<Any>?>?
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @PUT("/api/auth/employee-quota/{Id}")
+    fun updateQuotaInfo1(
+        @Header("X-Localization") language: String,
+        @Header("Authorization") token: String?,
+        @Path("Id") id: Int?,
+        @Body map: HashMap<Any, Any?>?
+    ): Observable<Response<Any>?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/employee-quota/{Id}")
@@ -107,264 +119,264 @@ interface ApiService {
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/present/address/{Id}")
-    fun updatePresentInfo(
+    suspend fun updatePresentInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/employee/{Id}")
-    fun updateBasicInfo(
+    suspend fun updateBasicInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/present/address")
-    fun addPresentInfo(
+    suspend fun addPresentInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/permanent/address/{Id}")
-    fun updatePermanetInfo(
+    suspend fun updatePermanetInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/permanent/address")
-    fun addPermanentInfo(
+    suspend fun addPermanentInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/education-qualification/{Id}")
-    fun updateEducationQualificationInfo(
+    suspend fun updateEducationQualificationInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/education-qualification")
-    fun addEducationQualificationInfo(
+    suspend fun addEducationQualificationInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: ArrayList<HashMap<Any, Any?>?>
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/spouse/{Id}")
-    fun updateSpouseInfo(
+    suspend fun updateSpouseInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/spouse")
-    fun addSpouseInfo(
+    suspend fun addSpouseInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/child/{Id}")
-    fun updateChildInfo(
+    suspend fun updateChildInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/child")
-    fun addChildInfo(
+    suspend fun addChildInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: ArrayList<HashMap<Any, Any?>?>
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/language/{Id}")
-    fun updateLanguageInfo(
+    suspend fun updateLanguageInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/language")
-    fun addLanguageInfo(
+    suspend fun addLanguageInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: ArrayList<HashMap<Any, Any?>?>
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/local-training/{Id}")
-    fun updateLocalTrainingInfo(
+    suspend fun updateLocalTrainingInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/local-training")
-    fun addLocalTrainingInfo(
+    suspend fun addLocalTrainingInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: ArrayList<HashMap<Any, Any?>?>
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/foreign-training/{Id}")
-    fun updateForeignTrainingInfo(
+    suspend fun updateForeignTrainingInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/foreign-training")
-    fun addForeignTrainingInfo(
+    suspend fun addForeignTrainingInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: ArrayList<HashMap<Any, Any?>?>
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/reference")
-    fun addReferenceInfo(
+    suspend fun addReferenceInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/reference/{Id}")
-    fun updateReferenceInfo(
+    suspend fun updateReferenceInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/publication/{Id}")
-    fun updatePublicationInfo(
+    suspend fun updatePublicationInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/publication")
-    fun addPublicationInfo(
+    suspend fun addPublicationInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: ArrayList<HashMap<Any, Any?>?>
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/official-residential/{Id}")
-    fun updateOfficialResidentialInfo(
+    suspend fun updateOfficialResidentialInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/official-residential")
-    fun addOfficialResidentialInfo(
+    suspend fun addOfficialResidentialInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: ArrayList<HashMap<Any, Any?>?>
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/foreign-travel/{Id}")
-    fun updateForeignTravelInfo(
+    suspend fun updateForeignTravelInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/foreign-travel")
-    fun addForeignTravelInfo(
+    suspend fun addForeignTravelInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: ArrayList<HashMap<Any, Any?>?>
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/honours-award/{Id}")
-    fun updateHonoursAwardInfo(
+    suspend fun updateHonoursAwardInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/honours-award")
-    fun addHonoursAwardInfo(
+    suspend fun addHonoursAwardInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/additional-qualification/{Id}")
-    fun updateAdditionalQualificationInfo(
+    suspend fun updateAdditionalQualificationInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Path("Id") id: Int?,
         @Body map: HashMap<Any, Any?>?
-    ): Call<Any?>?
+    ): Response<Any?>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/additional-qualification")
-    fun addAdditionalQualificationInfo(
+    suspend fun addAdditionalQualificationInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
         @Body map: ArrayList<HashMap<Any, Any?>?>
-    ): Call<Any?>?
+    ): Response<Any?>?
 
     @Multipart
     @POST("/api/auth/file-upload")

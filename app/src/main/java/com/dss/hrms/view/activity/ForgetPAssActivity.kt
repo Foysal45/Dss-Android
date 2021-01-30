@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
@@ -22,6 +23,9 @@ import kotlinx.android.synthetic.main.activity_forget_p_ass.*
 import kotlinx.android.synthetic.main.activity_forget_p_ass.backBtnIV
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_o_t_p.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.EnumSet.of
 import javax.inject.Inject
 
@@ -34,7 +38,7 @@ class ForgetPAssActivity : BaseActivity() {
     lateinit var preparence: MySharedPreparence
 
     var loginViewModel: LoginViewModel? = null
-    var lan: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLocalLanguage(preparence?.getLanguage())
@@ -61,59 +65,57 @@ class ForgetPAssActivity : BaseActivity() {
         // if (!TextUtils.isEmpty(phone)) {
         var dialog = CustomLoadingDialog().createLoadingDialog(this)
         Log.e("apiresponse", "called Activity")
-        loginViewModel?.resetPasswordOtp(phone)?.observe(this, Observer<Any> { any ->
-                dialog?.dismiss()
-                if (any is ResetPasswordReq) {
-                    var resetPasswordReq: ResetPasswordReq = any as ResetPasswordReq
-                    if (resetPasswordReq.code == 200) {
-                        Log.e("otp", "otp : " + resetPasswordReq.data?.otp)
-                        startActivity(
-                            Intent(this, OTPActivity::class.java)
-                                .putExtra("otp", resetPasswordReq.data?.otp)
-                                .putExtra("token", resetPasswordReq.data?.token)
-                        )
-                        finish()
-                    }
-                } else if (any is ApiError) {
-                    e_phone_email.visibility = View.GONE
-                    try {
-                        if (any.getError().isEmpty()) {
-                            toast(this, any.getMessage())
-                            Log.d("ok", "error")
-                        } else {
-                            for (n in any.getError().indices) {
-                                val error = any.getError()[n].getField()
-                                val message = any.getError()[n].getMessage()
+        lifecycleScope.launch {
+            async { loginViewModel?.resetPasswordOtp(phone) }.await()
+                ?.collect { any ->
+                    dialog?.dismiss()
+                    if (any is ResetPasswordReq) {
+                        var resetPasswordReq: ResetPasswordReq = any as ResetPasswordReq
+                        if (resetPasswordReq.code == 200) {
+                            Log.e("otp", "otp : " + resetPasswordReq.data?.otp)
+                            Intent(this@ForgetPAssActivity, OTPActivity::class.java).apply {
+                                putExtra("otp", resetPasswordReq.data?.otp)
+                                putExtra("token", resetPasswordReq.data?.token)
+                                startActivity(this)
+                            }
+                            finish()
+                        }
+                    } else if (any is ApiError) {
+                        e_phone_email.visibility = View.GONE
+                        try {
+                            if (any.getError().isEmpty()) {
+                                toast(this@ForgetPAssActivity, any.getMessage())
+                                Log.d("ok", "error")
+                            } else {
+                                for (n in any.getError().indices) {
+                                    val error = any.getError()[n].getField()
+                                    val message = any.getError()[n].getMessage()
+                                    if (TextUtils.isEmpty(error)) {
+                                        message?.let {
+                                            e_phone_email.visibility = View.VISIBLE
+                                            e_phone_email.text = ErrorUtils2.mainError(message)
+                                        }
 
-
-                                if (TextUtils.isEmpty(error)) {
-                                    message?.let {
-                                        e_phone_email.visibility = View.VISIBLE
-                                        e_phone_email.text = ErrorUtils2.mainError(message)
                                     }
+                                    when (error) {
+                                        "phone_number" -> {
+                                            e_phone_email.visibility = View.VISIBLE
+                                            e_phone_email.text = ErrorUtils2.mainError(message)
+                                        }
 
-                                }
-
-                                when (error) {
-                                    "phone_number" -> {
-                                        e_phone_email.visibility = View.VISIBLE
-                                        e_phone_email.text = ErrorUtils2.mainError(message)
                                     }
-
                                 }
                             }
+                        } catch (e: Exception) {
+                            toast(this@ForgetPAssActivity, e.toString())
                         }
-                    } catch (e: Exception) {
-                        toast(this, e.toString())
+                    } else if (any is Throwable) {
+                        toast(this@ForgetPAssActivity, any.toString())
+                    } else {
+                        toast(this@ForgetPAssActivity, getString(R.string.failed))
                     }
-                } else if (any is Throwable) {
-                    toast(this, any.toString())
-                } else {
-                    toast(this, getString(R.string.failed))
                 }
-
-            })
-        //  }
+        }
     }
 
     fun toast(context: Context, massage: String) {

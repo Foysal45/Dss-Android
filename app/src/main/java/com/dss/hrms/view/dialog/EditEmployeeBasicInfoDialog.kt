@@ -113,8 +113,11 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         binding?.fTIN?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
         binding?.fPresentBasicSalary?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
         binding?.fPresentGrossSalary?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
+        binding?.fPunchId?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
+        binding?.fPhone?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
         binding?.llBasicInfo?.visibility = View.VISIBLE
         binding?.fProfileId?.llBody?.visibility = View.GONE
+
         employee?.profile_id?.let { binding?.fProfileId?.etText?.setText("" + it) }
         employee?.nid_no?.let { binding?.fNid?.etText?.setText("" + it) }
         employee?.tin_no?.let { binding?.fTIN?.etText?.setText("" + it) }
@@ -576,7 +579,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                     getMapData()
                 )?.observe(EmployeeInfoActivity.context!!, androidx.lifecycle.Observer { any ->
                     dialog?.dismiss()
-                    Log.e("yousuf", "error : " + Gson().toJson(any))
+                    Log.e("yousuf", "error : " + any)
                     showResponse(any)
                 })
             } else {

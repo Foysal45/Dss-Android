@@ -333,14 +333,14 @@
                                     app:title="@{@string/joning_date}" />
 
                                 <include
-                                    android:id="@+id/fJobJoiningPensionDate"
-                                    layout="@layout/personal_info_textview"
-                                    app:title="@{@string/pention_date}" />
-
-                                <include
                                     android:id="@+id/fJobJoiningPrlDate"
                                     layout="@layout/personal_info_textview"
                                     app:title="@{@string/prl_date}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningPensionDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/pention_date}" />
 
                                 <include
                                     android:id="@+id/jobjoiningUpdateButton"

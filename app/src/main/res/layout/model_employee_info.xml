@@ -244,12 +244,12 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
-                                android:id="@+id/fJobJoiningPensionDate"
+                                android:id="@+id/fJobJoiningPrlDate"
                                 layout="@layout/personel_information_view_field" />
 
 
                             <include
-                                android:id="@+id/fJobJoiningPrlDate"
+                                android:id="@+id/fJobJoiningPensionDate"
                                 layout="@layout/personel_information_view_field" />
                         </LinearLayout>
                     </LinearLayout>

@@ -2,8 +2,6 @@ package com.dss.hrms.repository
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import com.btbapp.alquranapp.retrofit.ApiService
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.model.login.ResetPassword
@@ -11,6 +9,7 @@ import com.dss.hrms.model.login.ResetPasswordReq
 import com.dss.hrms.model.login.VerifyOtp
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
@@ -29,6 +28,25 @@ class LoginRepo @Inject constructor() {
         var map = HashMap<Any, Any>()
         map.put("userid", email)
         map.put("password", password)
+//        withContext(Dispatchers.IO) {
+//            flowOf(apiService?.login(preparence?.getLanguage()!!, map)).catch { throwable ->
+//                return@catch
+//            }.map { response ->
+//                Log.e("apiresponse", "response ${response?.body()?.code}")
+//                if (response?.body()?.code == 200 || response?.body()?.code == 201)
+//                    return@map response?.body()?.data
+//                else
+//                    response?.let {
+//                        var apiError = ErrorUtils2.parseError(
+//                            it
+//                        )
+//                        apiError
+//                    }
+//                return@map null
+//            }.onCompletion {
+//                return@onCompletion
+//            }.collect()
+
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiService?.login(preparence?.getLanguage()!!, map)
