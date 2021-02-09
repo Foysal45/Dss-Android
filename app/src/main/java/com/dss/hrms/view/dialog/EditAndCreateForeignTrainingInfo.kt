@@ -25,6 +25,7 @@ import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
@@ -124,8 +125,16 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
         binding?.fLocalTrainingCourseTBn?.etText?.setText(foreigntraining?.course_title_bn)
         binding?.fLocalTrainingNOInst?.etText?.setText(foreigntraining?.name_of_institute)
         binding?.fLocalTrainingNOInstBn?.etText?.setText(foreigntraining?.name_of_institute_bn)
-        binding?.fLocalTrainingFromDate?.tvText?.setText(foreigntraining?.from_date)
-        binding?.fLocalTrainingToDate?.tvText?.setText(foreigntraining?.to_date)
+        binding?.fLocalTrainingFromDate?.tvText?.setText(foreigntraining?.from_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
+        binding?.fLocalTrainingToDate?.tvText?.setText(foreigntraining?.to_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
 
 
         binding?.tvTrainingCertificate?.setText(context.getString(R.string.certificate))
@@ -302,7 +311,8 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
     }
 
     fun getMapData(): HashMap<Any, Any?> {
-
+        var fromDate = DateConverter.changeDateFormateForSending( binding?.fLocalTrainingFromDate?.tvText?.text.toString())
+        var toDate = DateConverter.changeDateFormateForSending(binding?.fLocalTrainingToDate?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("course_title", binding?.fLocalTrainingCourseT?.etText?.text.toString())
@@ -310,8 +320,8 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
         map.put("name_of_institute", binding?.fLocalTrainingNOInst?.etText?.text.toString())
         map.put("name_of_institute_bn", binding?.fLocalTrainingNOInstBn?.etText?.text.toString())
         map.put("country_id", country?.id)
-        map.put("from_date", binding?.fLocalTrainingFromDate?.tvText?.text.toString())
-        map.put("to_date", binding?.fLocalTrainingToDate?.tvText?.text.toString())
+        map.put("from_date",fromDate)
+        map.put("to_date", toDate)
         imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
         map.put("status", foreigntraining?.status)
         return map

@@ -143,9 +143,9 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
     }
 
     fun init() {
-           lazy {loginViewModel= ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel::class.java) }
-//        loginViewModel =
-//            ViewModelProviders(this, viewModelProviderFactory).get(LoginViewModel::class.java)
+       //lazy {loginViewModel= ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel::class.java) }
+        loginViewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel::class.java)
         cbRemenber.isChecked = preparence?.isRemember()!!
         mNetworkReceiver = NetworkChangeReceiver(this)
         registerNetworkBroadcast()
@@ -175,8 +175,9 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
         loading_dialog.visibility = View.VISIBLE
         login.visibility = View.GONE
         //  var dialog = CustomLoadingDialog().createLoadingDialog(this)
+        Log.e("LoginActivity", "login  : ")
         lifecycleScope.launch {
-            async { loginViewModel?.login(email, password) }.await()
+            async { loginViewModel?.login(email,password) }.await()
                 ?.collect {
                     loading_dialog.visibility = View.GONE
                     login.visibility = View.VISIBLE

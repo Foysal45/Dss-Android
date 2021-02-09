@@ -8,13 +8,15 @@ import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelEmployeeInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.util.DateConverter
+import com.dss.hrms.view.dialog.EditAndCreateLanguageInfo
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.android.synthetic.main.fragment_basic_information.view.*
 import javax.inject.Inject
 
 
 class EmployeeInfoDataBinding @Inject constructor() {
-//
+    //
     @Inject
     lateinit var employeeProfileData: EmployeeProfileData
 
@@ -308,7 +310,13 @@ class EmployeeInfoDataBinding @Inject constructor() {
             spouses.occupation?.name_bn.let { binding.fSpouseOccupation.tvText.setText(it) }
             spouses.phone_no?.let { binding.fSpousePhoneNo.tvText.setText(it) }
             spouses.mobile_no?.let { binding.fSpouseMobileNo.tvText.setText(it) }
-            spouses.relation?.let { binding.fSpouseRelation.tvText.setText(it) }
+            spouses.relation?.let {
+                if (it.toLowerCase()
+                        .equals("wife")
+                ) binding.fSpouseRelation.tvText.setText("স্ত্রী") else binding.fSpouseRelation.tvText.setText(
+                    "স্বামী"
+                )
+            }
             spouses.division?.name_bn?.let { binding.fSpouseDivision.tvText.setText(it) }
             // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
         }
@@ -322,7 +330,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
     ) {
 
 
-       employee = employeeProfileData.employee
+        employee = employeeProfileData.employee
 
         binding.hJobJoiningInformation.tvTitle.setText(heading)
         binding.fJobJoiningOffice.tvTitle.setText(context.getString(R.string.office))
@@ -354,11 +362,25 @@ class EmployeeInfoDataBinding @Inject constructor() {
             jobjoinings.designation?.name?.let { binding.fJobJoiningDesignation.tvText.setText(it) }
             jobjoinings.department?.name?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
             jobjoinings.job_type?.name?.let { binding.fJobJoiningJobType.tvText.setText(it) }
-            jobjoinings.joining_date?.let { binding.fJobJoiningJoiningDate.tvText.setText(it) }
-            jobjoinings.pension_date?.let { binding.fJobJoiningPensionDate.tvText.setText(it) }
+            jobjoinings.joining_date?.let {
+                binding.fJobJoiningJoiningDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
+            jobjoinings.pension_date?.let {
+                binding.fJobJoiningPensionDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
             jobjoinings.employee_class?.name?.let { binding.fJobJoiningClass.tvText.setText(it) }
             jobjoinings.grade?.name?.let { binding.fJobJoiningGrade.tvText.setText(it) }
-            jobjoinings.prl_date?.let { binding.fJobJoiningPrlDate.tvText.setText(it) }
+            jobjoinings.prl_date?.let {
+                binding.fJobJoiningPrlDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(
+                        it
+                    )
+                )
+            }
 
             // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
         } else {
@@ -366,11 +388,25 @@ class EmployeeInfoDataBinding @Inject constructor() {
             jobjoinings.designation?.name_bn?.let { binding.fJobJoiningDesignation.tvText.setText(it) }
             jobjoinings.department?.name_bn?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
             jobjoinings.job_type?.name_bn?.let { binding.fJobJoiningJobType.tvText.setText(it) }
-            jobjoinings.joining_date?.let { binding.fJobJoiningJoiningDate.tvText.setText(it) }
-            jobjoinings.pension_date?.let { binding.fJobJoiningPensionDate.tvText.setText(it) }
+            jobjoinings.joining_date?.let {
+                binding.fJobJoiningJoiningDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
+            jobjoinings.pension_date?.let {
+                binding.fJobJoiningPensionDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
             jobjoinings.employee_class?.name_bn?.let { binding.fJobJoiningClass.tvText.setText(it) }
             jobjoinings.grade?.name_bn?.let { binding.fJobJoiningGrade.tvText.setText(it) }
-            jobjoinings.prl_date?.let { binding.fJobJoiningPrlDate.tvText.setText(it) }
+            jobjoinings.prl_date?.let {
+                binding.fJobJoiningPrlDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(
+                        it
+                    )
+                )
+            }
             // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
         }
     }
@@ -395,7 +431,13 @@ class EmployeeInfoDataBinding @Inject constructor() {
         ) {
             childs.name_of_children?.let { binding.fChildrenNameOChEn.tvText.setText(it) }
             childs.name_of_children_bn?.let { binding.fChildrenNameOChBn.tvText.setText(it) }
-            childs.date_of_birth?.let { binding.fChildrenDOB.tvText.setText(it) }
+            childs.date_of_birth?.let {
+                binding.fChildrenDOB.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(
+                        it
+                    )
+                )
+            }
             childs.gender?.name?.let { binding.fChildrenGenderOrSex.tvText.setText(it) }
             childs.birth_certificate?.let { binding.fChildrenBirthCertificateNo.tvText.setText(it) }
             childs.nid?.let { binding.fChildrenNidNo.tvText.setText(it) }
@@ -403,7 +445,13 @@ class EmployeeInfoDataBinding @Inject constructor() {
         } else {
             childs.name_of_children?.let { binding.fChildrenNameOChEn.tvText.setText(it) }
             childs.name_of_children_bn?.let { binding.fChildrenNameOChBn.tvText.setText(it) }
-            childs.date_of_birth?.let { binding.fChildrenDOB.tvText.setText(it) }
+            childs.date_of_birth?.let {
+                binding.fChildrenDOB.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(
+                        it
+                    )
+                )
+            }
             childs.gender?.name_bn?.let { binding.fChildrenGenderOrSex.tvText.setText(it) }
             childs.birth_certificate?.let { binding.fChildrenBirthCertificateNo.tvText.setText(it) }
             childs.nid?.let { binding.fChildrenNidNo.tvText.setText(it) }
@@ -447,15 +495,30 @@ class EmployeeInfoDataBinding @Inject constructor() {
             languages.name_of_institute?.let { binding.fLanguageNOInstitute.tvText.setText(it) }
             languages.name_of_institute_bn?.let { binding.fLanguageNOInstituteBn.tvText.setText(it) }
             languages.expertise_level?.let { binding.fLanguageExperienceLevel.tvText.setText(it) }
-            languages.certification_date?.let { binding.fLanguageCertificationDate.tvText.setText(it) }
+            languages.certification_date?.let {
+                binding.fLanguageCertificationDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
 
         } else {
             languages.name_of_language?.let { binding.fLanguageNOLanguage.tvText.setText(it) }
             languages.name_of_language_bn?.let { binding.fLanguageNOLanguageBn.tvText.setText(it) }
             languages.name_of_institute?.let { binding.fLanguageNOInstitute.tvText.setText(it) }
             languages.name_of_institute_bn?.let { binding.fLanguageNOInstituteBn.tvText.setText(it) }
-            languages.expertise_level?.let { binding.fLanguageExperienceLevel.tvText.setText(it) }
-            languages.certification_date?.let { binding.fLanguageCertificationDate.tvText.setText(it) }
+            languages.expertise_level?.let {
+                when (it.toLowerCase()) {
+                    "medium" -> binding.fLanguageExperienceLevel.tvText.setText("মধ্যম")
+                    "expert" -> binding.fLanguageExperienceLevel.tvText.setText("বিশেষজ্ঞ")
+                    "average" -> binding.fLanguageExperienceLevel.tvText.setText("গড়")
+                    else -> binding.fLanguageExperienceLevel.tvText.setText("কম")
+                }
+            }
+            languages.certification_date?.let {
+                binding.fLanguageCertificationDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
         }
     }
 
@@ -505,8 +568,18 @@ class EmployeeInfoDataBinding @Inject constructor() {
             localTrainings.location?.let { binding.fLocalTrainingLocation.tvText.setText(it) }
             localTrainings.location_bn?.let { binding.fLocalTrainingLocationBn.tvText.setText(it) }
 
-            localTrainings.from_date?.let { binding.fLocalTrainingFromDate.tvText.setText(it) }
-            localTrainings.to_date?.let { binding.fLocalTrainingToDate.tvText.setText(it) }
+            localTrainings.from_date?.let {
+                binding.fLocalTrainingFromDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
+            localTrainings.to_date?.let {
+                binding.fLocalTrainingToDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(
+                        it
+                    )
+                )
+            }
 
 
         } else {
@@ -521,8 +594,18 @@ class EmployeeInfoDataBinding @Inject constructor() {
             localTrainings.location?.let { binding.fLocalTrainingLocation.tvText.setText(it) }
             localTrainings.location_bn?.let { binding.fLocalTrainingLocationBn.tvText.setText(it) }
 
-            localTrainings.from_date?.let { binding.fLocalTrainingFromDate.tvText.setText(it) }
-            localTrainings.to_date?.let { binding.fLocalTrainingToDate.tvText.setText(it) }
+            localTrainings.from_date?.let {
+                binding.fLocalTrainingFromDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
+            localTrainings.to_date?.let {
+                binding.fLocalTrainingToDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(
+                        it
+                    )
+                )
+            }
 
         }
     }
@@ -572,8 +655,16 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     it
                 )
             }
-            foreigntrainings.from_date?.let { binding.fLocalTrainingFromDate.tvText.setText(it) }
-            foreigntrainings.to_date?.let { binding.fLocalTrainingToDate.tvText.setText(it) }
+            foreigntrainings.from_date?.let {
+                binding.fLocalTrainingFromDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
+            foreigntrainings.to_date?.let {
+                binding.fLocalTrainingToDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
 
 
             foreigntrainings.country?.name?.let {
@@ -596,11 +687,19 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     it
                 )
             }
-            foreigntrainings.from_date?.let { binding.fLocalTrainingFromDate.tvText.setText(it) }
-            foreigntrainings.to_date?.let { binding.fLocalTrainingToDate.tvText.setText(it) }
+            foreigntrainings.from_date?.let {
+                binding.fLocalTrainingFromDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
+            foreigntrainings.to_date?.let {
+                binding.fLocalTrainingToDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
 
 
-            foreigntrainings.country?.name?.let {
+            foreigntrainings.country?.name_bn?.let {
                 binding.fLocalTrainingCountry.tvText.setText(
                     it
                 )
@@ -616,6 +715,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         context: Context,
         heading: String
     ) {
+        binding.fORInfoDesignation.llBody.visibility = View.GONE
         binding.hOfficialResidentialInfo.tvTitle.setText(heading)
         binding.fORInfoMemoNo.tvTitle.setText(context.getString(R.string.memo_no))
         binding.fORInfoMemoNoBn.tvTitle.setText(context.getString(R.string.memo_no_bn))
@@ -635,7 +735,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
         ) {
             officialResidentials.memo_no?.let { binding.fORInfoMemoNo.tvText.setText(it) }
             officialResidentials.memo_no_bn?.let { binding.fORInfoMemoNoBn.tvText.setText(it) }
-            officialResidentials.memo_date?.let { binding.fORInfoMemoDate.tvText.setText(it) }
+            officialResidentials.memo_date?.let {
+                binding.fORInfoMemoDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
             officialResidentials.office_zone?.let { binding.fORInfoOfficeZone.tvText.setText(it) }
 
             officialResidentials.designation?.name?.let {
@@ -668,7 +772,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
         } else {
             officialResidentials.memo_no?.let { binding.fORInfoMemoNo.tvText.setText(it) }
             officialResidentials.memo_no_bn?.let { binding.fORInfoMemoNoBn.tvText.setText(it) }
-            officialResidentials.memo_date?.let { binding.fORInfoMemoDate.tvText.setText(it) }
+            officialResidentials.memo_date?.let {
+                binding.fORInfoMemoDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
             officialResidentials.office_zone?.let { binding.fORInfoOfficeZone.tvText.setText(it) }
 
             officialResidentials.designation?.name_bn?.let {
@@ -724,18 +832,38 @@ class EmployeeInfoDataBinding @Inject constructor() {
             foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
             foreignTravels.details?.let { binding.fForeignTravelDetailsEn.tvText.setText(it) }
             foreignTravels.details_bn?.let { binding.fForeignTravelDetailsBn.tvText.setText(it) }
-            foreignTravels.from_date?.let { binding.fForeignTravelFromDate.tvText.setText(it) }
-            foreignTravels.to_date?.let { binding.fForeignTravelToDate.tvText.setText(it) }
+            foreignTravels.from_date?.let {
+                binding.fForeignTravelFromDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
+            foreignTravels.to_date?.let {
+                binding.fForeignTravelToDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(
+                        it
+                    )
+                )
+            }
 
 
         } else {
             foreignTravels.country?.name_bn?.let { binding.fForeignTravelCountry.tvText.setText(it) }
-            foreignTravels.purpose_bn?.let { binding.fForeignTravelPurpose.tvText.setText(it) }
+            foreignTravels.purpose?.let { binding.fForeignTravelPurpose.tvText.setText(it) }
             foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
             foreignTravels.details?.let { binding.fForeignTravelDetailsEn.tvText.setText(it) }
             foreignTravels.details_bn?.let { binding.fForeignTravelDetailsBn.tvText.setText(it) }
-            foreignTravels.from_date?.let { binding.fForeignTravelFromDate.tvText.setText(it) }
-            foreignTravels.to_date?.let { binding.fForeignTravelToDate.tvText.setText(it) }
+            foreignTravels.from_date?.let {
+                binding.fForeignTravelFromDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
+            foreignTravels.to_date?.let {
+                binding.fForeignTravelToDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(
+                        it
+                    )
+                )
+            }
 
         }
     }
@@ -907,25 +1035,37 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
             honoursAwards.award_date?.let {
                 binding.fAwardDate.tvText.setText(
-                    it
+                    DateConverter.changeDateFormateForShowing(it)
                 )
             }
 
 
         } else {
-            honoursAwards.award_title_bn?.let {
+
+
+            honoursAwards.award_title?.let {
                 binding.fAwardTitle.tvText.setText(
                     it
                 )
             }
-            honoursAwards.award_details_bn?.let {
+            honoursAwards.award_title_bn?.let {
+                binding.fAwardTitleBn.tvText.setText(
+                    it
+                )
+            }
+            honoursAwards.award_details?.let {
                 binding.fAwardDetailsDetails.tvText.setText(
+                    it
+                )
+            }
+            honoursAwards.award_details_bn?.let {
+                binding.fAwardDetailsDetailsBn.tvText.setText(
                     it
                 )
             }
             honoursAwards.award_date?.let {
                 binding.fAwardDate.tvText.setText(
-                    it
+                    DateConverter.changeDateFormateForShowing(it)
                 )
             }
 
@@ -1004,61 +1144,57 @@ class EmployeeInfoDataBinding @Inject constructor() {
     ) {
         binding.hDiscipilinaryAction.tvEdit.visibility = View.GONE
         binding.hDiscipilinaryAction.tvTitle.setText(heading)
-        binding.fDACategory.tvTitle.setText(context.getString(R.string.catagory))
+        binding.fDACategory.tvTitle.setText(context.getString(R.string.disciplinary_action_category))
         binding.fDAPresentStatus.tvTitle.setText(context.getString(R.string.present_status))
-        binding.fDADescription.tvTitle.setText(context.getString(R.string.description))
-        binding.fDAJudgment.tvTitle.setText(context.getString(R.string.judgment))
+        binding.fDAJud.tvTitle.setText(context.getString(R.string.judgment))
+        binding.fDAJudBn.tvTitle.setText(context.getString(R.string.judgment_bn))
         binding.fDAFinalJud.tvTitle.setText(context.getString(R.string.final_judment))
+        binding.fDAFinalJudBn.tvTitle.setText(context.getString(R.string.final_judment_bn))
+        binding.fDADescription.tvTitle.setText(context.getString(R.string.disciplinary_action_details))
+        binding.fDADescriptionBn.tvTitle.setText(context.getString(R.string.disciplinary_action_details_bn))
         binding.fDARemarks.tvTitle.setText(context.getString(R.string.remakrs))
+        binding.fDARemarksBn.tvTitle.setText(context.getString(R.string.remakrs_bn))
         binding.fDADate.tvTitle.setText(context.getString(R.string.date))
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            disciplinaryAction.disciplinaryActionCategory?.name?.let {
-                binding.fDACategory.tvText.setText(
-                    it
-                )
-            }
-            disciplinaryAction.present_status?.let {
-                binding.fDAPresentStatus.tvText.setText(
-                    if (disciplinaryAction.present_status == 0) "" + context.getString(R.string.pending) else context.getText(
-                        R.string.dismiss
-                    )
-                )
-            }
-            disciplinaryAction.disciplinary_action_details?.let {
-                binding.fDADescription.tvText.setText(
-                    it
-                )
-            }
-            disciplinaryAction.judgment?.let { binding.fDAJudgment.tvText.setText(it) }
-            disciplinaryAction.final_judgment?.let { binding.fDAFinalJud.tvText.setText(it) }
-            disciplinaryAction.remarks?.let { binding.fDARemarks.tvText.setText(it) }
-            disciplinaryAction.date?.let { binding.fDADate.tvText.setText(it) }
-        } else {
-            disciplinaryAction.disciplinaryActionCategory?.name?.let {
-                binding.fDACategory.tvText.setText(
-                    it
-                )
-            }
-            disciplinaryAction.present_status?.let {
-                binding.fDAPresentStatus.tvText.setText(
-                    if (disciplinaryAction.present_status == 0) "" + context.getString(R.string.pending) else context.getText(
-                        R.string.dismiss
-                    )
-                )
-            }
-            disciplinaryAction.disciplinary_action_details_bn?.let {
-                binding.fDADescription.tvText.setText(
-                    it
-                )
-            }
-            disciplinaryAction.judgment_bn?.let { binding.fDAJudgment.tvText.setText(it) }
-            disciplinaryAction.final_judgment_bn?.let { binding.fDAFinalJud.tvText.setText(it) }
-            disciplinaryAction.remarks_bn?.let { binding.fDARemarks.tvText.setText(it) }
-            disciplinaryAction.date?.let { binding.fDADate.tvText.setText(it) }
+//        if (preparence.getLanguage()
+//                .equals("en")
+//        ) {
+        disciplinaryAction.disciplinaryActionCategory?.name?.let {
+            binding.fDACategory.tvText.setText(
+                it
+            )
         }
+        disciplinaryAction.present_status?.let {
+            binding.fDAPresentStatus.tvText.setText(
+                if (disciplinaryAction.present_status == 0) "" + context.getString(R.string.pending) else context.getText(
+                    R.string.dismiss
+                )
+            )
+        }
+        disciplinaryAction.disciplinary_action_details?.let {
+            binding.fDADescription.tvText.setText(
+                it
+            )
+        }
+        disciplinaryAction.disciplinary_action_details_bn?.let {
+            binding.fDADescriptionBn.tvText.setText(
+                it
+            )
+        }
+        disciplinaryAction.judgment?.let { binding.fDAJud.tvText.setText(it) }
+        disciplinaryAction.judgment_bn?.let { binding.fDAJudBn.tvText.setText(it) }
+        disciplinaryAction.final_judgment?.let { binding.fDAFinalJud.tvText.setText(it) }
+        disciplinaryAction.final_judgment_bn?.let { binding.fDAFinalJudBn.tvText.setText(it) }
+        disciplinaryAction.remarks?.let { binding.fDARemarks.tvText.setText(it) }
+        disciplinaryAction.remarks_bn?.let { binding.fDARemarksBn.tvText.setText(it) }
+        disciplinaryAction.date?.let {
+            binding.fDADate.tvText.setText(
+                DateConverter.changeDateFormateForShowing(
+                    it
+                )
+            )
+        }
+        //  }
     }
 
     fun bindReferencesData(

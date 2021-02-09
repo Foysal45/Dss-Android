@@ -46,7 +46,7 @@ class LoginRepo @Inject constructor() {
 //            }.onCompletion {
 //                return@onCompletion
 //            }.collect()
-
+        Log.e("LoginActivity", "repo  : ")
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiService?.login(preparence?.getLanguage()!!, map)

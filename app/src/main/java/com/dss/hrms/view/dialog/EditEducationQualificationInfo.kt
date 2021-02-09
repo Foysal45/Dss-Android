@@ -118,7 +118,9 @@ class EditEducationQualificationInfo @Inject constructor() {
                                     degreeName = any as SpinnerDataModel
                                     if (degreeName?.name?.toLowerCase()
                                             .equals("ssc") || degreeName?.name?.toLowerCase()
-                                            .equals("hsc")
+                                            .equals("hsc") || degreeName?.name?.toLowerCase()
+                                            .equals("jsc")|| degreeName?.name?.toLowerCase()
+                                            .equals("psc")
                                     ) {
                                         binding?.fEQBoardOrUniversity?.llBody?.visibility =
                                             View.VISIBLE

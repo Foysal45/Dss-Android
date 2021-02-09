@@ -108,7 +108,7 @@ interface ApiService {
         @Body map: HashMap<Any, Any?>?
     ): Observable<Response<Any>?>?
 
-    @Headers("Content-Type: application/json", "Accept: application/json")
+    @Headers("Content-Type: application/json", "Accept:  /json")
     @PUT("/api/auth/employee-quota/{Id}")
     fun updateQuotaInfo(
         @Header("X-Localization") language: String,

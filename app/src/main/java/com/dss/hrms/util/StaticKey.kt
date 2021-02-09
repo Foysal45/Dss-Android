@@ -2,10 +2,6 @@ package com.dss.hrms.util
 
 class StaticKey {
     companion object {
-        val BASE_URL = "http://dss.aws.simecsystem.com:10012"
-        val BASE_URL_PLACE_API = "https://maps.googleapis.com/maps/api"
-        val BASE_URL_FCM = "https://fcm.googleapis.com"
-
         val PersonalInformation = "personalinformation"
         val PERMANENT_ADDRESS = "permanentAddress"
         val PRESENT_ADDRESS = "presentAddress"

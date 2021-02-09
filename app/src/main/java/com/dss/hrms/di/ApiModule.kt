@@ -2,6 +2,7 @@ package com.dss.hrms.di
 
 import android.app.Application
 import com.btbapp.alquranapp.retrofit.ApiService
+import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.StaticKey
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
@@ -38,7 +39,7 @@ class ApiModule {
                 .connectTimeout(TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
                 .writeTimeout(TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
-               // .addNetworkInterceptor(logging)
+                // .addNetworkInterceptor(logging)
                 .cache(cache)
                 .build()
         }
@@ -62,7 +63,7 @@ class ApiModule {
         fun providesPlaceRetrofitInstance(
             okHttpClient: OkHttpClient
         ): Retrofit {
-            return Retrofit.Builder().baseUrl(StaticKey.BASE_URL_PLACE_API)
+            return Retrofit.Builder().baseUrl(RetrofitInstance.BASE_URL_PLACE_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient).build()
         }
@@ -73,7 +74,7 @@ class ApiModule {
         fun providesFcmRetrofitInstance(
             okHttpClient: OkHttpClient
         ): Retrofit {
-            return Retrofit.Builder().baseUrl(StaticKey.BASE_URL_FCM)
+            return Retrofit.Builder().baseUrl(RetrofitInstance.BASE_URL_FCM)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient).build()
         }

@@ -258,14 +258,14 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 16))
         })
 
-
-        menu_profile_promotion.setOnClickListener({ view ->
+//
+//        menu_profile_promotion.setOnClickListener({ view ->
+//            selectedPosition = 17
+//            startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 17))
+//        })
+        menu_profile_reference.setOnClickListener({ view ->
             selectedPosition = 17
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 17))
-        })
-        menu_profile_reference.setOnClickListener({ view ->
-            selectedPosition = 18
-            startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 18))
         })
 
         this.menu_dashboard_signout.setOnClickListener {

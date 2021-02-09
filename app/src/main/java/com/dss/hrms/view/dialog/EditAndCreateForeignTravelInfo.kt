@@ -21,6 +21,7 @@ import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
@@ -101,8 +102,16 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
         binding?.fForeignTravelPurposeBn?.etText?.setText(foreignTravels1?.purpose_bn)
         binding?.fForeignTravelDetailsEn?.etText?.setText(foreignTravels1?.details)
         binding?.fForeignTravelDetailsBn?.etText?.setText(foreignTravels1?.details_bn)
-        binding?.fForeignTravelToDate?.tvText?.setText(foreignTravels1?.to_date)
-        binding?.fForeignTravelFromDate?.tvText?.setText(foreignTravels1?.from_date)
+        binding?.fForeignTravelToDate?.tvText?.setText(foreignTravels1?.to_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
+        binding?.fForeignTravelFromDate?.tvText?.setText(foreignTravels1?.from_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
 
         binding?.fForeignTravelFromDate?.tvText?.setOnClickListener({
             DatePicker().showDatePicker(context, object : OnDateListener {
@@ -262,6 +271,10 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
     }
 
     fun getMapData(): HashMap<Any, Any?> {
+        var fromDate =
+            DateConverter.changeDateFormateForSending(binding?.fForeignTravelFromDate?.tvText?.text.toString())
+        var toDate =
+            DateConverter.changeDateFormateForSending(binding?.fForeignTravelToDate?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("country_id", country?.id)
@@ -269,8 +282,8 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
         map.put("purpose_bn", binding?.fForeignTravelPurposeBn?.etText?.text.toString())
         map.put("details", binding?.fForeignTravelDetailsEn?.etText?.text.toString())
         map.put("details_bn", binding?.fForeignTravelDetailsBn?.etText?.text.toString())
-        map.put("from_date", binding?.fForeignTravelFromDate?.tvText?.text.toString())
-        map.put("to_date", binding?.fForeignTravelToDate?.tvText?.text.toString())
+        map.put("from_date", fromDate)
+        map.put("to_date", toDate)
         map.put("status", foreignTravels1?.status)
         return map
     }

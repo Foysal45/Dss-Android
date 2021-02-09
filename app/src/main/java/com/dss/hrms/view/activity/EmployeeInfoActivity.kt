@@ -203,12 +203,12 @@ class EmployeeInfoActivity : BaseActivity() {
         adapter!!.addFragment(disciplinaryActionFrg, getString(R.string.disciplinary_action))
 
 //
-        var promotionBundle = Bundle()
-        promotionBundle.putString("key", StaticKey.Promotion)
-        promotionBundle.putBoolean("addWillAppear", false)
-        var promotionFrg = FragmentEmployeeInfo()
-        promotionFrg.arguments = promotionBundle
-        adapter!!.addFragment(promotionFrg, getString(R.string.promotion))
+//        var promotionBundle = Bundle()
+//        promotionBundle.putString("key", StaticKey.Promotion)
+//        promotionBundle.putBoolean("addWillAppear", false)
+//        var promotionFrg = FragmentEmployeeInfo()
+//        promotionFrg.arguments = promotionBundle
+//        adapter!!.addFragment(promotionFrg, getString(R.string.promotion))
 
 //
         var referenceBundle = Bundle()

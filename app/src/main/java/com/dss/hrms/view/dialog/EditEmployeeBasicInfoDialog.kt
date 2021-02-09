@@ -26,6 +26,7 @@ import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
@@ -131,7 +132,13 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         employee?.mothers_name?.let { binding?.fMotherNameEng?.etText?.setText("" + it) }
         employee?.mothers_name_bn?.let { binding?.fMotherNameBangla?.etText?.setText("" + it) }
         employee?.user?.email?.let { binding?.fEmail?.etText?.setText("" + it) }
-        employee?.date_of_birth?.let { binding?.fDOB?.tvText?.setText("" + it) }
+        employee?.date_of_birth?.let {
+            binding?.fDOB?.tvText?.setText(
+                "" + DateConverter.changeDateFormateForShowing(
+                    it
+                )
+            )
+        }
         employee?.user?.phone_number?.let { binding?.fPhone?.etText?.setText("" + it) }
         employee?.disabled_person_id?.let { binding?.fDisabledPersonId?.etText?.setText("" + it) }
         employee?.user?.username?.let { binding?.fUserName?.etText?.setText("" + it) }
@@ -345,6 +352,9 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
             EmployeeInfoActivity.refreshEmployeeInfo()
             dialogCustome?.dismiss()
         } else if (any is ApiError) {
+            //  Log.e("editcreatebasicinfo","edit create : error ${Gson().toJson(any.getError())}")
+            // Log.e("editcreatebasicinfo","edit create : error "+any?.getError())
+
             try {
                 if (any.getError().isEmpty()) {
                     toast(EmployeeInfoActivity?.context, any.getMessage())
@@ -362,6 +372,8 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                             }
 
                         }
+
+
                         when (error) {
                             "profile_id" -> {
                                 binding?.fProfileId?.tvError?.visibility =
@@ -533,12 +545,15 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
     }
 
     fun getMapData(): HashMap<Any, Any?> {
+        var date = DateConverter.changeDateFormateForSending(binding?.fDOB?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("profile_id", binding?.fProfileId?.etText?.text.toString())
         map.put("name", binding?.fNameEng?.etText?.text.toString())
         map.put("name_bn", binding?.fNameBangla?.etText?.text.toString())
-        map.put("date_of_birth", binding?.fDOB?.tvText?.text.toString())
+        Log.e("dob", "dob : ${date}")
+
+        map.put("date_of_birth", date)
         map.put("fathers_name", binding?.fFatherNameEng?.etText?.text.toString())
         map.put("fathers_name_bn", binding?.fFatherNameBangla?.etText?.text.toString())
         map.put("mothers_name", binding?.fMotherNameEng?.etText?.text.toString())

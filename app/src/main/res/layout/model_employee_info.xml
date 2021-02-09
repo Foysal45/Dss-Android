@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -1164,11 +1165,11 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
-                                android:id="@+id/fDADescription"
+                                android:id="@+id/fDAJud"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
-                                android:id="@+id/fDAJudgment"
+                                android:id="@+id/fDAJudBn"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
@@ -1176,14 +1177,31 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
+                                android:id="@+id/fDAFinalJudBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fDADescription"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fDADescriptionBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
                                 android:id="@+id/fDARemarks"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fDARemarksBn"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
                                 android:id="@+id/fDADate"
                                 layout="@layout/personel_information_view_field" />
-
-
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

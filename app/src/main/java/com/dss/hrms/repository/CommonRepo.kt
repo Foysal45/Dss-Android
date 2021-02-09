@@ -18,6 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.reflect.Type
+import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 
@@ -337,6 +338,71 @@ class CommonRepo @Inject constructor() {
             override fun onFailure(call: Call<Any?>, t: Throwable) {
                 liveData.postValue(null)
                 officeDataValueListener.valueChange(null)
+            }
+
+        })
+        return liveData
+    }
+
+
+    fun getDesignationData(
+        identity: String,
+        commonDataValueListener: CommonDataValueListener
+    ): MutableLiveData<List<SpinnerDataModel>>? {
+        val liveData: MutableLiveData<List<SpinnerDataModel>> =
+            MutableLiveData<List<SpinnerDataModel>>()
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getCommonData(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}",
+                identity
+            )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+
+                        if (code == 200 || code == 201) {
+                            val jsonObj = jsonObjectParent.getJSONObject("data")
+                            val dataJA = jsonObj.getJSONArray("officehasdesgnations")
+                            var list = arrayListOf<SpinnerDataModel>()
+                            var i = 0
+                            while (i < dataJA.length()) {
+                                var dataObj = dataJA.getJSONObject(i).getJSONObject("designation")
+                                var spinnerDataModel = Gson().fromJson(
+                                    dataObj.toString(),
+                                    SpinnerDataModel::class.java
+                                )
+                                list.add(spinnerDataModel)
+                                i++
+                            }
+                            var dataList = listOf<SpinnerDataModel>()
+                            dataList = dataList + list
+                            liveData.postValue(dataList)
+                            commonDataValueListener.valueChange(dataList)
+                        } else {
+                            liveData.postValue(null)
+                            commonDataValueListener.valueChange(null)
+                        }
+                    } catch (e: JSONException) {
+                        liveData.postValue(null)
+                        commonDataValueListener.valueChange(null)
+                    }
+                } else {
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    liveData.postValue(null)
+                    commonDataValueListener.valueChange(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
+                commonDataValueListener.valueChange(null)
             }
 
         })

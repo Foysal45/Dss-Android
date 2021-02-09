@@ -25,6 +25,7 @@ import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
@@ -118,7 +119,11 @@ class EditAndCreateLanguageInfo @Inject constructor() {
         binding?.fLanguageNOLanguageBn?.etText?.setText(language?.name_of_language_bn)
         binding?.fLanguageNOInstitute?.etText?.setText(language?.name_of_institute)
         binding?.fLanguageNOInstituteBn?.etText?.setText(language?.name_of_institute_bn)
-        binding?.fLanguageCertificationDate?.tvText?.setText(language?.certification_date)
+        binding?.fLanguageCertificationDate?.tvText?.setText(language?.certification_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
 
         binding?.tvLanguageCertificate?.setText(context.getString(R.string.certificate))
 
@@ -267,19 +272,22 @@ class EditAndCreateLanguageInfo @Inject constructor() {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
+        var date =
+            DateConverter.changeDateFormateForSending(binding?.fLanguageCertificationDate?.tvText?.text.toString())
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("name_of_language", binding?.fLanguageNOLanguage?.etText?.text.toString())
         map.put("name_of_language_bn", binding?.fLanguageNOLanguageBn?.etText?.text.toString())
         map.put("name_of_institute", binding?.fLanguageNOInstitute?.etText?.text.toString())
         map.put("name_of_institute_bn", binding?.fLanguageNOInstituteBn?.etText?.text.toString())
-        map.put(
-            "expertise_level",
-            if (context?.let {
-                    MySharedPreparence(it).getLanguage().equals("en")
-                }!!) expertLevel?.name else expertLevel?.name_bn
-        )
-        imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
-        map.put("certification_date", binding?.fLanguageCertificationDate?.tvText?.text.toString())
+//        map.put(
+//            "expertise_level",
+//            if (context?.let {
+//                    MySharedPreparence(it).getLanguage().equals("en")
+//                }!!) expertLevel?.name else expertLevel?.name_bn
+//        )
+        map.put("expertise_level", expertLevel?.name?.toLowerCase())
+        // imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
+        map.put("certification_date", date)
         map.put("status", language?.status)
         return map
     }
@@ -372,7 +380,7 @@ class EditAndCreateLanguageInfo @Inject constructor() {
         var rel = SpinnerDataModel()
         rel.apply {
             name = "Expert"
-            name_bn = "দক্ষ"
+            name_bn = "বিশেষজ্ঞ"
 
         }
         var rel1 = SpinnerDataModel()

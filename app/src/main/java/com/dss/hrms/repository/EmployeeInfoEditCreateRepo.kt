@@ -35,6 +35,7 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
     lateinit var preparence: MySharedPreparence
 
     fun editJobjoiningInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any> {
+
         val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
         apiService?.updateJobjoiningInfo(
             preparence?.getLanguage()!!,
@@ -58,6 +59,8 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
                 }
 
                 override fun onNext(response: Response<Any>) {
+                    Log.e("response", "response : ${response.headers()} and ${response.raw()}")
+
                     if (response.isSuccessful) {
                         try {
                             val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
@@ -215,7 +218,9 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
                                 Log.e("response", "JSONException : " + e.message)
                             }
                         } else {
-                            liveData?.postValue(ErrorUtils2.parseError(response))
+                            var value = ErrorUtils2.parseError(response)
+                            Log.e("response", "response : " + Gson().toJson(value.getError()))
+                            liveData?.postValue(value)
                         }
                     }
             }

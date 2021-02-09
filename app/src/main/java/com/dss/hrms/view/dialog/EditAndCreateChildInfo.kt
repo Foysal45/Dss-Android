@@ -22,6 +22,7 @@ import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
@@ -34,7 +35,9 @@ import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 class EditAndCreateChildInfo @Inject constructor() {
     @Inject
@@ -93,7 +96,7 @@ class EditAndCreateChildInfo @Inject constructor() {
 
     ) {
         binding?.fChildrenNidNo?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
-        binding?.fChildrenNidNo?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
+        binding?.fChildrenBirthCertificateNo?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
         binding?.llChildrenInfo?.visibility = View.VISIBLE
         binding?.hChildren?.tvClose?.setOnClickListener({
             dialogCustome?.dismiss()
@@ -110,7 +113,13 @@ class EditAndCreateChildInfo @Inject constructor() {
         binding?.fChildrenBirthCertificateNo?.etText?.setText(child?.birth_certificate)
         binding?.fChildrenNidNo?.etText?.setText(child?.nid)
         binding?.fChildrenPassportNo?.etText?.setText(child?.passport)
-        binding?.fChildrenDOB?.tvText?.setText(child?.date_of_birth)
+        binding?.fChildrenDOB?.tvText?.setText(
+            child?.date_of_birth?.let {
+                DateConverter.changeDateFormateForShowing(
+                    it
+                )
+            }
+        )
 
         binding?.fChildrenDOB?.tvText?.setOnClickListener({
             DatePicker().showDatePicker(context, object : OnDateListener {
@@ -265,10 +274,11 @@ class EditAndCreateChildInfo @Inject constructor() {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
+        var date = DateConverter.changeDateFormateForSending(binding?.fChildrenDOB?.tvText?.text.toString())
         map.put("employee_id", employeeProfileData.employee?.user?.employee_id)
         map.put("name_of_children", binding?.fChildrenNameOChEn?.etText?.text.toString())
         map.put("name_of_children_bn", binding?.fChildrenNameOChBn?.etText?.text.toString())
-        map.put("date_of_birth", binding?.fChildrenDOB?.tvText?.text.toString())
+        map.put("date_of_birth",date )
         map.put("gender_id", gender?.id)
         map.put("birth_certificate", binding?.fChildrenBirthCertificateNo?.etText?.text.toString())
         map.put("nid", binding?.fChildrenNidNo?.etText?.text.toString())

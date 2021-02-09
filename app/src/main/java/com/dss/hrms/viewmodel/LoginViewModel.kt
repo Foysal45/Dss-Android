@@ -19,9 +19,10 @@ class LoginViewModel @Inject constructor(application: Application) : AndroidView
     @Inject
     lateinit var preparence: MySharedPreparence
 
-    suspend fun login(email: String, password: String): Flow<Any?>? = flow {
+    fun login(email: String, password: String): Flow<Any?>? = flow {
         // viewModelScope.launch() {
         // var value = async { loginRepo.login(email, password) }.await()
+        Log.e("LoginActivity", "viewmodel  : ")
         emit(loginRepo.login(email, password))
         // }
     }

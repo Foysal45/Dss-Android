@@ -30,6 +30,7 @@ import com.dss.hrms.R
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.retrofit.RetrofitInstance
+import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.FilePath
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.allInterface.FileClickListener
@@ -154,7 +155,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         v.fEmployeeId.tvText.setText("" + employee?.profile_id)
         employee?.name?.let { v.fNameEng.tvText.setText(it) }
         employee?.name_bn?.let { v.fNameBangla.tvText.setText(it) }
-        employee?.date_of_birth?.let { v.fDOB.tvText.setText(it) }
+        employee?.date_of_birth?.let { v.fDOB.tvText.setText(( DateConverter.changeDateFormateForShowing(it))) }
         employee?.fathers_name?.let { v.fFatherNameEng.tvText.setText(it) }
         employee?.fathers_name_bn?.let { v.fFatherNameBangla.tvText.setText(it) }
         employee?.mothers_name?.let { v.fMotherNameEng.tvText.setText(it) }

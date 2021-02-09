@@ -232,10 +232,10 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             StaticKey.Spouse -> {
                 dataList = employee?.spouses
                 this.title = getString(R.string.spouse)
-                if (dataList == null || dataList?.size == 0)
-                    v.fab.visibility = View.VISIBLE
-                else
-                    v.fab.visibility = View.GONE
+             //   if (dataList == null || dataList?.size == 0)
+                //    v.fab.visibility = View.VISIBLE
+            //    else
+               //     v.fab.visibility = View.GONE
             }
             StaticKey.Children -> {
                 dataList = employee?.childs

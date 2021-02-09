@@ -6,11 +6,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitInstance {
-  //  var BASE_URL = "https://api.alquran.cloud/"
+    //  var BASE_URL = "https://api.alquran.cloud/"
     //var BASE_URL = "http://192.168.10.125:8000"
-    var BASE_URL = "http://dss.aws.simecsystem.com:10012"
-    private const val BASE_URL_PLACE_API = "https://maps.googleapis.com/maps/api"
-    private const val BASE_URL_FCM = "https://fcm.googleapis.com"
+    var BASE_URL = "http://dss.aws.simecsystem.com:10014"
+    const val BASE_URL_PLACE_API = "https://maps.googleapis.com/maps/api"
+    const val BASE_URL_FCM = "https://fcm.googleapis.com"
     private var retrofit: Retrofit? = null
 
 

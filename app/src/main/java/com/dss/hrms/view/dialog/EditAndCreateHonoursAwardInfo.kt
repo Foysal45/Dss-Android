@@ -20,6 +20,7 @@ import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
@@ -97,7 +98,11 @@ class EditAndCreateHonoursAwardInfo @Inject constructor() {
         binding?.fAwardTitleBn?.etText?.setText(honoursAward?.award_title_bn)
         binding?.fAwardDetailsDetails?.etText?.setText(honoursAward?.award_details)
         binding?.fAwardDetailsDetailsBn?.etText?.setText(honoursAward?.award_details_bn)
-        binding?.fAwardDate?.tvText?.setText(honoursAward?.award_date)
+        binding?.fAwardDate?.tvText?.setText(honoursAward?.award_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
 
         binding?.fAwardDate?.tvText?.setOnClickListener({
             DatePicker().showDatePicker(context, object : OnDateListener {
@@ -218,13 +223,15 @@ class EditAndCreateHonoursAwardInfo @Inject constructor() {
     }
 
     fun getMapData(): HashMap<Any, Any?> {
+        var award_date =
+            DateConverter.changeDateFormateForSending(binding?.fAwardDate?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("award_title", binding?.fAwardTitle?.etText?.text.toString())
         map.put("award_title_bn", binding?.fAwardTitleBn?.etText?.text.toString())
         map.put("award_details", binding?.fAwardDetailsDetails?.etText?.text.toString())
         map.put("award_details_bn", binding?.fAwardDetailsDetailsBn?.etText?.text.toString())
-        map.put("award_date", binding?.fAwardDate?.tvText?.text.toString())
+        map.put("award_date", award_date)
         map.put("status", honoursAward?.status)
         return map
     }

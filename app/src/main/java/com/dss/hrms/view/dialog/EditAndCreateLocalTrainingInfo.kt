@@ -25,6 +25,7 @@ import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
@@ -63,7 +64,6 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
     var imageFile: File? = null
     var imageUrl: String? = null
     var dialog: Dialog? = null
-
 
 
     fun showDialog(
@@ -122,8 +122,16 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         binding?.fLocalTrainingNOInstBn?.etText?.setText(localTraining?.name_of_institute_bn)
         binding?.fLocalTrainingLocation?.etText?.setText(localTraining?.location)
         binding?.fLocalTrainingLocationBn?.etText?.setText(localTraining?.location_bn)
-        binding?.fLocalTrainingFromDate?.tvText?.setText(localTraining?.from_date)
-        binding?.fLocalTrainingToDate?.tvText?.setText(localTraining?.to_date)
+        binding?.fLocalTrainingFromDate?.tvText?.setText(localTraining?.from_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
+        binding?.fLocalTrainingToDate?.tvText?.setText(localTraining?.to_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
 
         binding?.tvTrainingCertificate?.setText(context.getString(R.string.certificate))
         context?.let {
@@ -274,6 +282,8 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
 
     fun getMapData(): HashMap<Any, Any?> {
 
+        var fromDate = DateConverter.changeDateFormateForSending( binding?.fLocalTrainingFromDate?.tvText?.text.toString())
+        var toDate = DateConverter.changeDateFormateForSending(binding?.fLocalTrainingToDate?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("course_title", binding?.fLocalTrainingCourseT?.etText?.text.toString())
@@ -282,8 +292,8 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         map.put("name_of_institute_bn", binding?.fLocalTrainingNOInstBn?.etText?.text.toString())
         map.put("location", binding?.fLocalTrainingLocation?.etText?.text.toString())
         map.put("location_bn", binding?.fLocalTrainingLocationBn?.etText?.text.toString())
-        map.put("from_date", binding?.fLocalTrainingFromDate?.tvText?.text.toString())
-        map.put("to_date", binding?.fLocalTrainingToDate?.tvText?.text.toString())
+        map.put("from_date", fromDate)
+        map.put("to_date", toDate)
         imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
         map.put("status", localTraining?.status)
         return map

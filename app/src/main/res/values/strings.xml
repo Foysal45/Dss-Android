@@ -176,11 +176,19 @@
     <string name="present_status">Present Status(English)</string>
     <string name="description_bn">Description (Bangla)</string>
     <string name="description">Description</string>
-    <string name="judgment">Judgement</string>
-    <string name="final_judment">Final Judgement</string>
+    <string name="judgment">Judgment(English)</string>
+    <string name="final_judment">Final Judgment(English)</string>
+    <string name="judgment_bn">Judgment(Bangla)</string>
+    <string name="disciplinary_action_category">Disciplinary Action Category</string>
+    <string name="final_judment_bn">Final Judgment(Bangla)</string>
+    <string name="disciplinary_action_details">Disciplinary Action Details (English)</string>
+    <string name="disciplinary_action_details_bn">Disciplinary Action Details (Bangla)</string>
+    <string name="remakrs_bn">Remarks (Bangla)</string>
+    <string name="remakrs">Remarks(English)</string>
+
+
     <string name="pending">Pending</string>
     <string name="dismiss">Dismiss</string>
-    <string name="remakrs">Remarks</string>
     <string name="date">Date</string>
     <string name="certification_date">Certification Date</string>
     <string name="qualification_name">Qualification Name(English)</string>

@@ -2,6 +2,7 @@ package com.dss.hrms.view.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -92,6 +93,8 @@ class EditAndCreateSpouseInfo @Inject constructor() {
     ) {
 
         binding?.llSpouse?.visibility = View.VISIBLE
+
+        binding?.fSpouseMobileNo?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
         binding?.hSpouse?.tvClose?.setOnClickListener({
             dialogCustome?.dismiss()
         })

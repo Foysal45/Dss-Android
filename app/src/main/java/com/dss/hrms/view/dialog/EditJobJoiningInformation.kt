@@ -23,6 +23,7 @@ import com.dss.hrms.model.Paysacle
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.allInterface.CommonDataValueListener
@@ -52,6 +53,15 @@ class EditJobJoiningInformation @Inject constructor() {
     var dialogCustome: Dialog? = null
     var payScale: Paysacle? = null
     var jobjoining: Employee.Jobjoinings? = null
+
+
+    var office: Office? = null
+    var desingNation: SpinnerDataModel? = null;
+    var department: SpinnerDataModel? = null;
+    var jobType: SpinnerDataModel? = null
+    var _class: SpinnerDataModel? = null
+    var grade: SpinnerDataModel? = null
+
 
     fun showDialog(
         context: Context,
@@ -91,43 +101,29 @@ class EditJobJoiningInformation @Inject constructor() {
         })
 
 
-        var office: Office? = null
-        var desingNation: SpinnerDataModel? = null;
-        var department: SpinnerDataModel? = null;
-        var jobType: SpinnerDataModel? = null
-        var _class: SpinnerDataModel? = null
-        var grade: SpinnerDataModel? = null
 
         binding.fJobJoiningPensionDate.llBody.visibility = View.GONE
         binding.fJobJoiningPrlDate.llBody.visibility = View.GONE
 
-        binding.fJobJoiningJoiningDate.tvText.setText(jobjoining?.joining_date)
-        binding.fJobJoiningPensionDate.tvText.setText(jobjoining?.pension_date)
-        binding.fJobJoiningPrlDate.tvText.setText(jobjoining?.prl_date)
+        binding.fJobJoiningJoiningDate.tvText.setText(jobjoining?.joining_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
+        binding.fJobJoiningPensionDate.tvText.setText(jobjoining?.pension_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
+        binding.fJobJoiningPrlDate.tvText.setText(jobjoining?.prl_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
 
-        commonRepo.getCommonData("/api/auth/designation/list",
-            object : CommonDataValueListener {
-                override fun valueChange(list: List<SpinnerDataModel>?) {
-                    //   Log.e("gender", "gender message " + Gson().toJson(list))
-                    list?.let {
-                        SpinnerAdapter().setSpinner(
-                            binding.fJobJoiningDesignation.spinner,
-                            context,
-                            list,
-                            jobjoining?.designation_id,
-                            object : CommonSpinnerSelectedItemListener {
-                                override fun selectedItem(any: Any?) {
-                                    desingNation = any as SpinnerDataModel
-                                }
-
-                            }
-                        )
-                    }
-                }
-            })
 
         Log.e("officeid", "office id : " + jobjoining?.office_id)
-        commonRepo.getOffice("/api/auth/office/list",
+        commonRepo.getOffice("/api/auth/office/list/basic",
             object : OfficeDataValueListener {
                 override fun valueChange(list: List<Office>?) {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
@@ -140,6 +136,7 @@ class EditJobJoiningInformation @Inject constructor() {
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     office = any as Office
+                                    loadDesignation(office?.id, context, binding)
                                     Log.e("selected item", " item : " + office?.name)
                                 }
 
@@ -268,8 +265,19 @@ class EditJobJoiningInformation @Inject constructor() {
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
 
+            var joininfDate =
+                DateConverter.changeDateFormateForSending(binding.fJobJoiningJoiningDate.tvText.text.toString())
+            var pension_date =
+                DateConverter.changeDateFormateForSending(binding.fJobJoiningPensionDate.tvText.text.toString())
+            var prl_date =
+                DateConverter.changeDateFormateForSending(binding.fJobJoiningPrlDate.tvText.text.toString())
+
             var map = HashMap<Any, Any?>()
-            map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
+            Log.e(
+                "employeeid",
+                "employee id ${employeeProfileData?.employee?.id} jobjoining?.id  ${jobjoining?.id}"
+            )
+            map.put("employee_id", employeeProfileData?.employee?.id)
             map.put("office_id", office?.id)
             map.put("designation_id", desingNation?.id)
             map.put("department_id", department?.id)
@@ -277,10 +285,11 @@ class EditJobJoiningInformation @Inject constructor() {
             map.put("employee_class_id", _class?.id)
             map.put("grade_id", grade?.id)
             map.put("pay_scale", payScale?.amount)
-            map.put("joining_date", binding.fJobJoiningJoiningDate.tvText.text.toString())
-            map.put("pension_date", binding.fJobJoiningPensionDate.tvText.text.toString())
-            map.put("prl_date", binding.fJobJoiningPrlDate.tvText.text.toString())
+            map.put("joining_date", joininfDate)
+            map.put("pension_date", pension_date)
+            map.put("prl_date", prl_date)
             map.put("status", jobjoining?.status)
+
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             employeeInfoEditCreateRepo?.updateJobJoiningInfo(jobjoining?.id, map)
@@ -418,6 +427,31 @@ class EditJobJoiningInformation @Inject constructor() {
                 }
             )
         }
+    }
+
+
+    fun loadDesignation(officeId: Int?, context: Context, binding: DialogPersonalInfoBinding) {
+        commonRepo.getDesignationData("/api/auth/office/${officeId}",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    //   Log.e("gender", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding.fJobJoiningDesignation.spinner,
+                            context,
+                            list,
+                            jobjoining?.designation_id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    desingNation = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
     }
 
 

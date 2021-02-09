@@ -131,7 +131,7 @@ class EditReferenceInfo @Inject constructor() {
     fun showResponse(any: Any) {
         if (any is String) {
             toast(EmployeeInfoActivity.context, any)
-            MainActivity.selectedPosition = 19
+            MainActivity.selectedPosition = 17
             EmployeeInfoActivity.refreshEmployeeInfo()
             dialogCustome?.dismiss()
         } else if (any is ApiError) {

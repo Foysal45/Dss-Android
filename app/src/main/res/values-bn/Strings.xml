@@ -32,7 +32,7 @@
     <string name="coming">আসছে...</string>
     <string name="profile">ব্যক্তিগত তথ্য</string>
     <string name="title">শিরোনাম</string>
-    <string name="no_data_found">কোনও ডেটা পাওয়া যায় নি</string>
+    <string name="no_data_found">কোনও তথ্য পাওয়া যায় নি</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -190,11 +190,19 @@
     <string name="catagory">বিভাগ</string>
     <string name="present_status">বর্তমান অবস্থা</string>
     <string name="description">বর্ণনা(ইংরেজি)</string>
-    <string name="judgment">বিচার</string>
-    <string name="final_judment">চূড়ান্ত রায়</string>
+    <string name="judgment">রায় (ইংরেজি)</string>
+    <string name="final_judment">চূড়ান্ত রায় (ইংরেজি)</string>
+    <string name="judgment_bn">রায় (বাংলা)</string>
+    <string name="final_judment_bn">চূড়ান্ত রায় (বাংলা)</string>
+
+    <string name="disciplinary_action_category">শাস্তিমূলক ব্যবস্থার ধরণ</string>
+    <string name="disciplinary_action_details">ডিসিপ্লিনারি অ্যাকশন বিবরণ (ইংরেজি)</string>
+    <string name="disciplinary_action_details_bn">ডিসিপ্লিনারি অ্যাকশন বিবরণ (বাংলা)</string>
+    <string name="remakrs_bn">মন্তব্য (বাংলা)</string>
+    <string name="remakrs">মন্তব্য (ইংরেজি)</string>
     <string name="pending">বিচারাধীন</string>
     <string name="dismiss">খারিজ</string>
-    <string name="remakrs">মন্তব্য</string>
+
     <string name="date">তারিখ</string>
     <string name="certification_date">সার্টিফিকেশনের তারিখ</string>
 

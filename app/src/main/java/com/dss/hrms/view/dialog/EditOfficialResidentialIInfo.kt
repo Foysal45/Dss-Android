@@ -21,6 +21,7 @@ import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
@@ -91,7 +92,7 @@ class EditOfficialResidentialIInfo @Inject constructor() {
     fun updateOfficialResidentialInfo(
         context: Context
     ) {
-
+        binding?.fORInfoDesignation?.llBody?.visibility=View.GONE
         binding?.llOfficialResidentialInfo?.visibility = View.VISIBLE
         binding?.hOfficialResidentialInfo?.tvClose?.setOnClickListener({
             dialogCustome?.dismiss()
@@ -109,7 +110,11 @@ class EditOfficialResidentialIInfo @Inject constructor() {
         binding?.fORInfoAddress?.etText?.setText(officialResidential?.location)
         binding?.fORInfoQuarterName?.etText?.setText(officialResidential?.quarter_name)
         binding?.fORInfoFlatNo?.etText?.setText(officialResidential?.flat_no_flat_type)
-        binding?.fORInfoMemoDate?.tvText?.setText(officialResidential?.memo_date)
+        binding?.fORInfoMemoDate?.tvText?.setText(officialResidential?.memo_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
 
 
 
@@ -338,16 +343,18 @@ class EditOfficialResidentialIInfo @Inject constructor() {
     }
 
     fun getMapData(): HashMap<Any, Any?> {
+        var memo_date =
+            DateConverter.changeDateFormateForSending(binding?.fORInfoMemoDate?.tvText?.text.toString())
         Log.e("designation ", "id : " + designation?.id)
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
-        map.put("designation_id", designation?.id)
+       map.put("designation_id", officialResidential?.designation_id)
         map.put("division_id", division?.id)
         map.put("district_id", district?.id)
         map.put("upazila_id", upazila?.id)
         map.put("memo_no", binding?.fORInfoMemoNo?.etText?.text.toString())
         map.put("memo_no_bn", binding?.fORInfoMemoNoBn?.etText?.text.toString())
-        map.put("memo_date", binding?.fORInfoMemoDate?.tvText?.text.toString())
+        map.put("memo_date", memo_date)
         map.put("office_zone", binding?.fORInfoOfficeZone?.etText?.text.toString())
         map.put("location", binding?.fORInfoAddress?.etText?.text.toString())
         map.put("quarter_name", binding?.fORInfoQuarterName?.etText?.text.toString())
