@@ -12,6 +12,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -30,6 +31,7 @@ import com.dss.hrms.view.activity.LoginActivity
 import com.dss.hrms.view.activity.SettingsActivity
 import com.dss.hrms.view.allInterface.OnNetworkStateChangeListener
 import com.dss.hrms.view.receiver.NetworkChangeReceiver
+import com.dss.hrms.view.training.TrainingActivity
 import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
@@ -82,9 +84,15 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             selectedPosition = 0
         })
         btnSettings.setOnClickListener({
-            startActivity(
-                Intent(this, SettingsActivity::class.java)
-            )
+            Intent(this, SettingsActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        })
+        btnTraining.setOnClickListener({
+            Intent(this, TrainingActivity::class.java).apply {
+                startActivity(this)
+            }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         })
     }
@@ -103,8 +111,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
     }
 
     fun init() {
-        employeeViewModel =
-            ViewModelProviders.of(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
+        employeeViewModel = ViewModelProvider(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
         mNetworkReceiver = NetworkChangeReceiver(this)
         registerNetworkBroadcast()
     }
@@ -117,7 +124,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
                     dialog?.dismiss()
                     if (it is Employee) {
                         employee = employeeProfileData.employee
-                         drawerMenu()
+                        drawerMenu()
                         Log.e(
                             "mainactivity",
                             "inject employee data name : " + employeeProfileData?.employee?.name_bn

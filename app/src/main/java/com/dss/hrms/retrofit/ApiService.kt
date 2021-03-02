@@ -15,7 +15,7 @@ import kotlin.collections.HashMap
 
 
 interface ApiService {
-    @Headers("Accept: application/json")
+    @Headers("Content-Type: application/json","Accept: application/json")
     @POST("/api/auth/login")
     suspend fun login(
         @Header("X-Localization") language: String,
@@ -386,6 +386,5 @@ interface ApiService {
         @Part("type ") type: RequestBody?,
         @Part file: MultipartBody.Part?
     ): Call<Any?>?
-
 
 }

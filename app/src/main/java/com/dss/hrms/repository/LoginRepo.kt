@@ -28,24 +28,6 @@ class LoginRepo @Inject constructor() {
         var map = HashMap<Any, Any>()
         map.put("userid", email)
         map.put("password", password)
-//        withContext(Dispatchers.IO) {
-//            flowOf(apiService?.login(preparence?.getLanguage()!!, map)).catch { throwable ->
-//                return@catch
-//            }.map { response ->
-//                Log.e("apiresponse", "response ${response?.body()?.code}")
-//                if (response?.body()?.code == 200 || response?.body()?.code == 201)
-//                    return@map response?.body()?.data
-//                else
-//                    response?.let {
-//                        var apiError = ErrorUtils2.parseError(
-//                            it
-//                        )
-//                        apiError
-//                    }
-//                return@map null
-//            }.onCompletion {
-//                return@onCompletion
-//            }.collect()
         Log.e("LoginActivity", "repo  : ")
         return withContext(Dispatchers.IO) {
             try {
@@ -59,6 +41,7 @@ class LoginRepo @Inject constructor() {
                     apiError
                 }
             } catch (e: Exception) {
+                Log.e("LoginActivity", "repo message : ${e.message}")
                 null
             }
         }

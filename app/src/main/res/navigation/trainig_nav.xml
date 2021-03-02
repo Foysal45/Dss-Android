@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/trainig_nav"
+    app:startDestination="@id/trainingFragment">
+
+    <fragment
+        android:id="@+id/contentCategoryFragment"
+        android:name="com.dss.hrms.view.training.fragment.ContentCategoryFragment"
+        android:label="@string/category"
+        tools:layout="@layout/fragment_content_category" />
+    <fragment
+        android:id="@+id/contentsContentFragment"
+        android:name="com.dss.hrms.view.training.fragment.ContentsContentFragment"
+        android:label="@string/content"
+        tools:layout="@layout/fragment_contents_content" />
+    <fragment
+        android:id="@+id/contentFaqFragment"
+        android:name="com.dss.hrms.view.training.fragment.ContentFaqFragment"
+        android:label="@string/faq"
+        tools:layout="@layout/fragment_content_faq">
+        <action
+            android:id="@+id/action_contentFaqFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trainingFragment"
+        android:name="com.dss.hrms.view.training.TrainingFragment"
+        android:label="Training"
+        tools:layout="@layout/fragment_training">
+        <action
+            android:id="@+id/action_trainingFragment_to_contentCategoryFragment"
+            app:destination="@id/contentCategoryFragment" />
+        <action
+            android:id="@+id/action_trainingFragment_to_contentFaqFragment"
+            app:destination="@id/contentFaqFragment"
+            app:enterAnim="@anim/from_left" />
+        <action
+            android:id="@+id/action_trainingFragment_to_contentsContentFragment"
+            app:destination="@id/contentsContentFragment" />
+        <action
+            android:id="@+id/action_trainingFragment_to_resourcePersonFragment"
+            app:destination="@id/resourcePersonFragment" />
+        <action
+            android:id="@+id/action_trainingFragment_to_batchScheduleFragment"
+            app:destination="@id/batchScheduleFragment" />
+        <action
+            android:id="@+id/action_trainingFragment_to_courseScheduleFragment"
+            app:destination="@id/courseScheduleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resourcePersonFragment"
+        android:name="com.dss.hrms.view.training.fragment.ResourcePersonFragment"
+        android:label="@string/resource_person"
+        tools:layout="@layout/fragment_resource_person">
+        <action
+            android:id="@+id/action_resourcePersonFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseScheduleFragment"
+        android:name="com.dss.hrms.view.training.fragment.CourseScheduleFragment"
+        android:label="@string/course_schedule"
+        tools:layout="@layout/fragment_course_schedule" >
+        <action
+            android:id="@+id/action_courseScheduleFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/batchScheduleFragment"
+        android:name="com.dss.hrms.view.training.fragment.BatchScheduleFragment"
+        android:label="@string/batch_schedule"
+        tools:layout="@layout/fragment_batch_schedule" >
+        <action
+            android:id="@+id/action_batchScheduleFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
+</navigation>

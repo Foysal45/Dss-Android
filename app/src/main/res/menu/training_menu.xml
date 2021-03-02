@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--    <group android:checkableBehavior="single">-->
+    <!--        <item-->
+    <!--            android:id="@+id/trainingFragment"-->
+    <!--            android:icon="@drawable/ic_baseline_home_24"-->
+    <!--            android:title="Home" />-->
+
+    <!--    </group>-->
+
+    <item
+        android:id="@+id/content_management"
+        android:icon="@drawable/training_management_icon"
+        android:title="@string/content_management">
+        <menu>
+            <group
+                android:id="@+id/group_content_management"
+                android:checkableBehavior="single"
+                android:visible="true">
+                <item
+                    android:id="@+id/contentCategoryFragment"
+                    android:icon="@drawable/ic_payroll"
+                    android:title="@string/category" />
+                <item
+                    android:id="@+id/contentsContentFragment"
+                    android:icon="@drawable/ic_payroll"
+                    android:title="@string/content" />
+                <item
+                    android:id="@+id/contentFaqFragment"
+                    android:icon="@drawable/ic_payroll"
+                    android:title="@string/faq" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/training_management"
+        android:title="@string/training_management">
+        <menu>
+            <group
+                android:id="@+id/group_training_management"
+                android:checkableBehavior="single"
+                android:visible="true">
+
+                <item
+                    android:id="@+id/resourcePersonFragment"
+                    android:icon="@drawable/ic_payroll"
+                    android:title="@string/resource_person" />
+            </group>
+
+        </menu>
+    </item>
+    <item
+        android:id="@+id/budget_schedule"
+        android:title="@string/budget_and_schedule">
+        <menu>
+            <group
+                android:checkableBehavior="single"
+                android:visible="true">
+                <item
+                    android:id="@+id/courseScheduleFragment"
+                    android:icon="@drawable/ic_payroll"
+                    android:title="@string/course_schedule" />
+                <item
+                    android:id="@+id/batchScheduleFragment"
+                    android:icon="@drawable/ic_payroll"
+                    android:title="@string/batch_schedule" />
+            </group>
+        </menu>
+    </item>
+</menu>

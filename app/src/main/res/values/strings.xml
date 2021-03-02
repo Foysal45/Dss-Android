@@ -33,6 +33,7 @@
     <string name="profile">Employee Personal Information</string>
     <string name="title_activity_main2">MainActivity</string>
     <string name="title">Title</string>
+
     <string name="no_data_found">No data found</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -237,4 +238,41 @@
     <string name="dashboard">Dashboard</string>
     <string name="copyright"><![CDATA[©DSS , Design & Developed by SIMEC System Ltd.]]></string>
     <string name="edit">Edit</string>
+
+
+    //...........................................training..........................................
+    <string name="content_management">Content Management</string>
+    <string name="category">Category</string>
+    <string name="add_category">Add Category</string>
+    <string name="update_category">Update Category</string>
+    <string name="update_resource_perosn">Update Resource Person</string>
+    <string name="category_name">Category Name</string>
+    <string name="category_name_bn">Category Name (Bangla)</string>
+    <string name="content">Content</string>
+    <string name="banner">Banner</string>
+    <string name="faq">FAQ</string>
+    <string name="title_bn">Title(Bangla)</string>
+    <string name="is_published">Is Published</string>
+
+    <string name="training_management">Training Management</string>
+    <string name="resource_person">Resource Person</string>
+    <string name="resource_person_name">Resource Person Name</string>
+    <string name="short_name">Short Name</string>
+    <string name="first_email">First Email</string>
+    <string name="first_mobile">First Mobile</string>
+    <string name="honorarium_head">Honorarium Head</string>
+    <string name="field_of_expertise">Field Of Expertise</string>
+    <string name="optional_email">Optional Email</string>
+    <string name="optional_mobile">Optional Mobile</string>
+    <string name="office_address">Office Address</string>
+
+    <string name="budget_and_schedule">Budget And Schedule</string>
+    <string name="course_schedule">Course Schedule</string>
+    <string name="batch_schedule">Batch Schedule</string>
+    <string name="batch">Batch</string>
+    <string name="course">Course</string>
+    <string name="name_only">Name</string>
+    <string name="coordinator">Coordinator</string>
+
+
 </resources>

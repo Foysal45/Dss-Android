@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:background="@drawable/round_corner_shape_bg_white"
+        android:paddingHorizontal="10dp"
+        app:layoutDescription="@xml/model_contents_content_xml_mainlayout_scene">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conItemLeft"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toTopOf="@id/constraintBottom"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/imgEdit"
+            app:layout_constraintTop_toTopOf="parent"></androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/tvContentName"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:ellipsize="end"
+            android:gravity="center|left"
+            android:singleLine="true"
+            android:text="@string/title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tvContentNameBn"
+            app:layout_constraintLeft_toLeftOf="@id/conItemLeft"
+            app:layout_constraintRight_toRightOf="@id/conItemLeft"
+            app:layout_constraintTop_toTopOf="@id/conItemLeft"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/tvContentNameBn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:ellipsize="end"
+            android:gravity="center|left"
+            android:singleLine="true"
+            android:text="@string/title_bn"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@id/tvCategory"
+            app:layout_constraintLeft_toLeftOf="@id/conItemLeft"
+            app:layout_constraintRight_toRightOf="@id/conItemLeft"
+            app:layout_constraintTop_toBottomOf="@id/tvContentName"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintBottom"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/conItemLeft"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvContentNameBn"></androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:ellipsize="end"
+            android:gravity="center|left"
+            android:singleLine="true"
+            android:text="@string/category"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="@id/constraintBottom"
+            app:layout_constraintLeft_toLeftOf="@id/constraintBottom"
+            app:layout_constraintLeft_toRightOf="@id/tvIsPublished"
+            app:layout_constraintRight_toLeftOf="@id/tvIsPublished"
+            app:layout_constraintTop_toTopOf="@id/constraintBottom"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/tvIsPublished"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:ellipsize="end"
+            android:gravity="center|left"
+            android:singleLine="true"
+            android:text="@string/is_published"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="@id/constraintBottom"
+            app:layout_constraintLeft_toRightOf="@id/tvCategory"
+            app:layout_constraintRight_toRightOf="@id/constraintBottom"
+            app:layout_constraintTop_toTopOf="@id/constraintBottom"
+            app:layout_constraintVertical_bias="0.5" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conItemRight"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/constraintBottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/conItemLeft"
+            app:layout_constraintTop_toTopOf="@+id/conItemLeft"></androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/imgEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:paddingHorizontal="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/conItemRight"
+            app:layout_constraintEnd_toStartOf="@id/imgDelete"
+            app:layout_constraintLeft_toLeftOf="@id/conItemRight"
+            app:layout_constraintTop_toTopOf="@id/conItemRight"
+            app:srcCompat="@drawable/edit_icon_24"
+            app:tint="@color/green" />
+
+
+        <ImageView
+            android:id="@+id/imgDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="1.0"
+            android:gravity="center|left"
+            android:paddingHorizontal="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/imgEdit"
+            app:layout_constraintTop_toTopOf="@id/imgEdit"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            app:tint="@color/gray" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintDes"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constraintBottom">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvDes"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintDes"
+            app:layout_constraintEnd_toEndOf="@+id/constraintDes"
+            app:layout_constraintStart_toStartOf="@id/constraintDes"
+            app:layout_constraintTop_toTopOf="@+id/constraintDes"
+            app:layout_constraintVertical_bias="0.5"/>
+
+<!--        <WebView-->
+<!--            android:id="@+id/tvDes"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginVertical="0dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/constraintDes"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/constraintDes"-->
+<!--            app:layout_constraintStart_toStartOf="@id/constraintDes"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/constraintDes"-->
+<!--            app:layout_constraintVertical_bias="0.5"-->
+<!--            tools:ignore="WebViewLayout" />-->
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>

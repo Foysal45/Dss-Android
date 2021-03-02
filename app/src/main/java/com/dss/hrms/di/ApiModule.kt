@@ -3,7 +3,9 @@ package com.dss.hrms.di
 import android.app.Application
 import com.btbapp.alquranapp.retrofit.ApiService
 import com.dss.hrms.retrofit.RetrofitInstance
-import com.dss.hrms.util.StaticKey
+import com.dss.hrms.retrofit.TrainingApiService
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -32,6 +34,13 @@ class ApiModule {
 
         @Provides
         @Singleton
+        fun provideGson(): Gson {
+            var gson: Gson = GsonBuilder().setLenient().create()
+            return gson
+        }
+
+        @Provides
+        @Singleton
         fun providesOkHttpClient(cache: Cache): OkHttpClient {
             val logging = HttpLoggingInterceptor()
             logging.level = HttpLoggingInterceptor.Level.BODY
@@ -48,10 +57,11 @@ class ApiModule {
         @Singleton
         fun providesRetrofit(
             @Named("baseUrl") baseUrl: String,
-            okHttpClient: OkHttpClient
+            okHttpClient: OkHttpClient,
+            gson: Gson
         ): Retrofit {
             return Retrofit.Builder().baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient).build()
 
@@ -72,10 +82,11 @@ class ApiModule {
         @Singleton
         @Named("retrofit-fcm")
         fun providesFcmRetrofitInstance(
-            okHttpClient: OkHttpClient
+            okHttpClient: OkHttpClient,
+            gson: Gson
         ): Retrofit {
             return Retrofit.Builder().baseUrl(RetrofitInstance.BASE_URL_FCM)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient).build()
         }
 
@@ -98,5 +109,12 @@ class ApiModule {
         fun provideApiServiceForFcm(@Named("retrofit-fcm") retrofit: Retrofit): ApiService {
             return retrofit.create(ApiService::class.java)
         }
+
+        @Singleton
+        @Provides
+        fun provideTrainingApiService(retrofit: Retrofit): TrainingApiService {
+            return retrofit.create(TrainingApiService::class.java)
+        }
+
     }
 }

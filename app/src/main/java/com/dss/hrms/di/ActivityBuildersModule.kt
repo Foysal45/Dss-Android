@@ -5,9 +5,11 @@ import com.dss.hrms.di.mainScope.MainModule
 import com.dss.hrms.di.mainScope.MainScope
 import com.dss.hrms.di.profileScope.ProfileModule
 import com.dss.hrms.di.profileScope.ProfileScope
+import com.dss.hrms.di.training.TrainingFragmentBuildersModule
 import com.dss.hrms.di.viewmodel.ViewModelModule
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.activity.*
+import com.dss.hrms.view.training.TrainingActivity
 import com.example.dagger_android_practical.di.auth.LoginModule
 import com.example.dagger_android_practical.di.auth.LoginScope
 import dagger.Module
@@ -46,4 +48,8 @@ abstract class ActivityBuildersModule {
     @MainScope
     @ContributesAndroidInjector(modules = [MainModule::class, ViewModelModule::class])
     abstract fun contributeSettingsActivity(): SettingsActivity
+
+    @MainScope
+    @ContributesAndroidInjector(modules = [TrainingFragmentBuildersModule::class, ViewModelModule::class])
+    abstract fun contributeTrainingActivity(): TrainingActivity
 }
