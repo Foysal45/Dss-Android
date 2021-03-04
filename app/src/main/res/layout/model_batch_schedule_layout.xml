@@ -52,7 +52,7 @@
             android:layout_marginVertical="4dp"
             android:ellipsize="end"
             android:paddingHorizontal="4dp"
-            android:text="@{((language.equals(`en`))?(@string/course)+`:`+batchSchedule.course_schedule.course_title:(@string/course)+`:`+batchSchedule.course_schedule.course_title_bn)}"
+            android:text="@{((language.equals(`en`))?(@string/course)+`:`+batchSchedule.course_schedule.course_schedule_title:(@string/course)+`:`+batchSchedule.course_schedule.course_schedule_title_bn)}"
             android:textColor="@color/gray"
             android:textSize="@dimen/text_size_large"
             android:textStyle="bold"

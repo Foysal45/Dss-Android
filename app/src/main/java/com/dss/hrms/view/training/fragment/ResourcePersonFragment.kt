@@ -119,6 +119,11 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
 
             })
         }
+
+
+        binding.fab.setOnClickListener {
+            showEditCreateDialog(Operation.CREATE, null)
+        }
         activity?.let { verifyStoragePermissions(it) }
         return binding.root
     }
@@ -194,8 +199,6 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
         dialogTrainingLoyeoutBinding.resourcePersonUpdateButton.btnUpdate.setOnClickListener {
             invisiableAllError()
             loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
-
-
             if (imageFile != null) {
                 imageFile?.let { it1 -> uploadImage(it1, operation, resourcePerson) }
             } else {
@@ -209,18 +212,23 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
     fun uploadData(key: Operation, resourcePerson: TrainingResponse.ResourcePerson?) {
         key?.let {
             if (it.equals(Operation.EDIT)) {
-                activity?.let { it1 ->
-                    trainingManagementViewModel?.updateResourcePerson(
-                        getMapData(resourcePerson),
-                        resourcePerson?.id!!
-                    )?.observe(it1, androidx.lifecycle.Observer { any ->
-                        dialogCustome?.dismiss()
-                        loadingDialog?.dismiss()
-                        Log.e("yousuf", "error : " + any)
-                        showResponse(any)
-                    })
-                }
-            } else {
+                trainingManagementViewModel?.updateResourcePerson(
+                    getMapData(resourcePerson),
+                    resourcePerson?.id!!
+                )?.observe(viewLifecycleOwner, androidx.lifecycle.Observer { any ->
+
+                    loadingDialog?.dismiss()
+                    Log.e("yousuf", "error : " + any)
+                    showResponse(any)
+                })
+            } else if (it.equals(Operation.CREATE)) {
+                trainingManagementViewModel?.addResourcePerson(
+                    getMapData(resourcePerson)
+                )?.observe(viewLifecycleOwner, androidx.lifecycle.Observer { any ->
+                    loadingDialog?.dismiss()
+                    Log.e("yousuf", "error : " + any)
+                    showResponse(any)
+                })
             }
         }
     }
@@ -229,7 +237,7 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
         var map = HashMap<Any, Any?>()
         map.put(
             "person_name",
-            dialogTrainingLoyeoutBinding.categoryNameEn.etText.text.trim().toString()
+            dialogTrainingLoyeoutBinding.resourcePersonName.etText.text.trim().toString()
         )
         map.put(
             "short_name",
@@ -266,9 +274,9 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
         map.put("mailing_address", resourcePerson?.mailing_address)
         map.put(
             "resource_person_image_path",
-            imageUrl
+            if (imageUrl != null) imageUrl else resourcePerson?.resource_person_image_path
         )
-      //  if (imageUrl != null) else resourcePerson?.resource_person_image_path
+
         map.put("cv_upload_path", resourcePerson?.cv_upload_path)
         map.put("youtube_url", resourcePerson?.youtube_url)
         map.put("is_youtube_public", resourcePerson?.is_youtube_public)
@@ -284,14 +292,15 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
 
 
     fun showResponse(any: Any) {
+        Log.d("Any", "Any $any")
         if (any is String) {
-            toast(EmployeeInfoActivity.context, any)
-            EmployeeInfoActivity.refreshEmployeeInfo()
+            toast(activity, any)
+            trainingManagementViewModel.getResourcePerson()
             dialogCustome?.dismiss()
         } else if (any is ApiError) {
             try {
                 if (any.getError().isEmpty()) {
-                    toast(EmployeeInfoActivity?.context, any.getMessage())
+                    toast(activity, any.getMessage())
                     Log.d("ok", "error")
                 } else {
                     for (n in any.getError().indices) {
@@ -299,13 +308,13 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
                         val message = any.getError()[n].getMessage()
                         if (TextUtils.isEmpty(error)) {
                             message?.let {
-                                dialogTrainingLoyeoutBinding?.categoryNameBn?.tvError?.visibility =
+                                dialogTrainingLoyeoutBinding?.resourcePersonName?.tvError?.visibility =
                                     View.VISIBLE
-                                dialogTrainingLoyeoutBinding?.categoryNameBn?.tvError?.text =
+                                dialogTrainingLoyeoutBinding?.resourcePersonName?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
                         }
-                        Log.d("ok", "error ${ErrorUtils2.mainError(message)}")
+                        Log.e("ok", "error ${error}")
                         when (error) {
                             "person_name" -> {
                                 dialogTrainingLoyeoutBinding?.resourcePersonName?.tvError?.visibility =
@@ -320,10 +329,16 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
                                     ErrorUtils2.mainError(message)
                             }
                             "designation_id" -> {
-//                                dialogTrainingLoyeoutBinding?.d?.tvError?.visibility =
-//                                    View.VISIBLE
-//                                dialogTrainingLoyeoutBinding?.categoryNameBn?.tvError?.text =
-//                                    ErrorUtils2.mainError(message)
+                                dialogTrainingLoyeoutBinding?.resourceDesignation?.tvError?.visibility =
+                                    View.VISIBLE
+                                dialogTrainingLoyeoutBinding?.resourceDesignation?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "field_of_expertise_id" -> {
+                                dialogTrainingLoyeoutBinding?.resourcePersonFieldOfExpertise?.tvError?.visibility =
+                                    View.VISIBLE
+                                dialogTrainingLoyeoutBinding?.resourcePersonFieldOfExpertise?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
                             }
                             "first_email" -> {
                                 dialogTrainingLoyeoutBinding?.resourcePersonEmail?.tvError?.visibility =
@@ -341,12 +356,6 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
                                 dialogTrainingLoyeoutBinding?.resourceHonorariumHead?.tvError?.visibility =
                                     View.VISIBLE
                                 dialogTrainingLoyeoutBinding?.resourceHonorariumHead?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "field_of_expertise_id" -> {
-                                dialogTrainingLoyeoutBinding?.resourcePersonFieldOfExpertise?.tvError?.visibility =
-                                    View.VISIBLE
-                                dialogTrainingLoyeoutBinding?.resourcePersonFieldOfExpertise?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
                             "tin_no" -> {
@@ -415,21 +424,13 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
             View.GONE
         dialogTrainingLoyeoutBinding.resourcePersonFieldOfExpertise?.tvError?.visibility =
             View.GONE
+        dialogTrainingLoyeoutBinding.resourceDesignation?.tvError?.visibility =
+            View.GONE
         dialogTrainingLoyeoutBinding.resourcePersonNidNo?.tvError?.visibility =
             View.GONE
         dialogTrainingLoyeoutBinding.resourcePersonOptionalEmail?.tvError?.visibility =
             View.GONE
         dialogTrainingLoyeoutBinding.resourcePersonOptionalMobile?.tvError?.visibility =
-            View.GONE
-        dialogTrainingLoyeoutBinding.categoryNameBn?.tvError?.visibility =
-            View.GONE
-        dialogTrainingLoyeoutBinding.categoryNameBn?.tvError?.visibility =
-            View.GONE
-        dialogTrainingLoyeoutBinding.categoryNameBn?.tvError?.visibility =
-            View.GONE
-        dialogTrainingLoyeoutBinding.categoryNameBn?.tvError?.visibility =
-            View.GONE
-        dialogTrainingLoyeoutBinding.categoryNameBn?.tvError?.visibility =
             View.GONE
         dialogTrainingLoyeoutBinding.imageValidation?.visibility =
             View.GONE

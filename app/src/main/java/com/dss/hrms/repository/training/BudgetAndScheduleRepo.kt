@@ -41,6 +41,33 @@ class BudgetAndScheduleRepo @Inject constructor() {
 
     }
 
+    suspend fun addBatchSchedule(
+        map: HashMap<Any, Any?>,
+        liveData: MutableLiveData<Any>
+    ): MutableLiveData<Any> {
+        withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.addBatchSchedule(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}",
+                    map
+                )
+                Log.e("repo", "response: ${response} header ${response.body()}")
+                if (response.isSuccessful)
+                    if (response.body()?.code == 200 || response.body()?.code == 201) {
+                        liveData.postValue("Added")
+                    } else {
+                        liveData.postValue("Error");
+                    }
+                else response?.let { liveData.postValue(ErrorUtils2.parseError(response)) }
+
+            } catch (e: Exception) {
+                liveData.postValue(null)
+            }
+        }
+        return liveData
+    }
+
     suspend fun updateBatchSchedule(
         map: HashMap<Any, Any?>,
         liveData: MutableLiveData<Any>,
@@ -54,7 +81,7 @@ class BudgetAndScheduleRepo @Inject constructor() {
                     batchId,
                     map
                 )
-                Log.e("repo", "response: ${response} header ${response.headers()}")
+                Log.e("repo", "response: ${response} header ${response.body()}")
                 if (response.isSuccessful)
                     if (response.body()?.code == 200 || response.body()?.code == 201) {
                         liveData.postValue("Updated")
@@ -77,6 +104,7 @@ class BudgetAndScheduleRepo @Inject constructor() {
                     preparence.getLanguage()!!,
                     "Bearer ${preparence.getToken()!!}"
                 )
+                Log.e("repo", "response: " + response.body())
                 if (response.body()?.code == 200 || response.body()?.code == 201)
                     response.body()
                 else
@@ -89,6 +117,32 @@ class BudgetAndScheduleRepo @Inject constructor() {
 
     }
 
+    suspend fun addCourseSchedule(
+        map: HashMap<Any, Any?>,
+        liveData: MutableLiveData<Any>
+    ): MutableLiveData<Any> {
+        withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.addCourseSchedule(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}",
+                    map
+                )
+                Log.e("repo", "response: ${response} header ${response.headers()}")
+                if (response.isSuccessful)
+                    if (response.body()?.code == 200 || response.body()?.code == 201) {
+                        liveData.postValue("Added")
+                    } else {
+                        liveData.postValue("Error");
+                    }
+                else response?.let { liveData.postValue(ErrorUtils2.parseError(response)) }
+
+            } catch (e: Exception) {
+                liveData.postValue(null)
+            }
+        }
+        return liveData
+    }
     suspend fun updateCourseSchedule(
         map: HashMap<Any, Any?>,
         liveData: MutableLiveData<Any>,

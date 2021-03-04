@@ -41,6 +41,13 @@ class ContentManagementViewModel @Inject constructor(application: Application) :
         }
     }
 
+    fun addCategory(map: HashMap<Any, Any>): MutableLiveData<Any> {
+        var liveData = MutableLiveData<Any>()
+        viewModelScope.launch {
+            liveData = contentRepo.addCategory(map, liveData)
+        }
+        return liveData
+    }
     fun updateCategory(map: HashMap<Any, Any>, categoryId: Int): MutableLiveData<Any> {
         var liveData = MutableLiveData<Any>()
 

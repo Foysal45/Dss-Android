@@ -15,6 +15,14 @@ interface TrainingApiService {
     ): Response<TrainingResponse.ContentCategory>
 
     @Headers("Accept: application/json")
+    @PUT("/api/auth/category")
+    suspend fun addCategory(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String,
+        @Body map: HashMap<Any, Any>?
+    ): Response<Any>
+
+    @Headers("Accept: application/json")
     @PUT("/api/auth/category/{categoryId}")
     suspend fun updateCategory(
         @Header("X-Localization") language: String?,
@@ -53,12 +61,28 @@ interface TrainingApiService {
         @Body map: HashMap<Any, Any?>?
     ): Response<CustomeResponse>
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("/api/auth/resource-person")
+    suspend fun addResourcePerson(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String,
+        @Body map: HashMap<Any, Any?>?
+    ): Response<CustomeResponse>
+
     @Headers("Accept: application/json")
     @GET("/api/auth/batch-schedule")
     suspend fun batchSchedule(
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String
     ): Response<BudgetAndSchedule.BatchScheduleResponse>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("/api/auth/batch-schedule")
+    suspend fun addBatchSchedule(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String,
+        @Body map: HashMap<Any, Any?>?
+    ): Response<CustomeResponse>
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/batch-schedule/{ID}")
@@ -75,6 +99,14 @@ interface TrainingApiService {
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String
     ): Response<BudgetAndSchedule.CourseScheduleResponse>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @PUT("/api/auth/course-schedule")
+    suspend fun addCourseSchedule(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String,
+        @Body map: HashMap<Any, Any?>?
+    ): Response<CustomeResponse>
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/course-schedule/{ID}")

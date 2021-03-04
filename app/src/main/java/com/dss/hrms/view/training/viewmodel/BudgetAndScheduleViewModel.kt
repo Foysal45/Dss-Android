@@ -36,6 +36,14 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
 
     }
 
+    fun addCourseSchedule(map: HashMap<Any, Any?>): MutableLiveData<Any> {
+        var liveData = MutableLiveData<Any>()
+        viewModelScope.launch {
+            liveData = budgetAndScheduleRepo.addCourseSchedule(map, liveData)
+        }
+        return liveData
+    }
+
     fun updateCourseSchedule(map: HashMap<Any, Any?>, id: Int): MutableLiveData<Any> {
         var liveData = MutableLiveData<Any>()
         viewModelScope.launch {
@@ -56,10 +64,18 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
 
     }
 
-    fun updateResourcePerson(map: HashMap<Any, Any?>, id: Int): MutableLiveData<Any> {
+    fun updateBatchSchedule(map: HashMap<Any, Any?>, id: Int): MutableLiveData<Any> {
         var liveData = MutableLiveData<Any>()
         viewModelScope.launch {
             liveData = budgetAndScheduleRepo.updateBatchSchedule(map, liveData, id)
+        }
+        return liveData
+    }
+
+    fun addBatchSchedule(map: HashMap<Any, Any?>): MutableLiveData<Any> {
+        var liveData = MutableLiveData<Any>()
+        viewModelScope.launch {
+            liveData = budgetAndScheduleRepo.addBatchSchedule(map, liveData)
         }
         return liveData
     }

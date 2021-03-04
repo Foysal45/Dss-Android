@@ -1,5 +1,7 @@
 package com.dss.hrms.view.training.model
 
+import com.dss.hrms.model.SpinnerDataModel
+
 class BudgetAndSchedule {
 
     data class BatchScheduleResponse(
@@ -12,6 +14,7 @@ class BudgetAndSchedule {
     data class BatchSchedule(
         val id: Int?,
         val course_schedule_id: Int?,
+        val total_seat: String?,
         val batch_name: String?,
         val batch_name_bn: String?,
         val start_date: String?,
@@ -19,6 +22,7 @@ class BudgetAndSchedule {
         val reg_start_date: String,
         val reg_end_date: String?,
         val course_coordinator: Int?,
+        val course_co_coordinator: Int?,
         val staff1: Int?,
         val staff2: Int?,
         val staff3: Int?,
@@ -28,8 +32,8 @@ class BudgetAndSchedule {
 
     data class CourseScheduleBatch(
         val id: Int?,
-        val course_title: String?,
-        val course_title_bn: String?,
+        val course_schedule_title: String?,
+        val course_schedule_title_bn: String?,
         val course_id: Int?,
         val total_seat: Int?,
         val coordinator: Int?,
@@ -52,8 +56,8 @@ class BudgetAndSchedule {
 
     data class CourseSchedule(
         val id: Int?,
-        val course_title: String?,
-        val course_title_bn: String?,
+        val course_schedule_title: String?,
+        val course_schedule_title_bn: String?,
         val course_id: Int?,
         val total_seat: Int?,
         val status: Int?,
@@ -61,7 +65,8 @@ class BudgetAndSchedule {
         val co_coordinator: CommonClass?,
         val staff1: CommonClass?,
         val staff2: CommonClass?,
-        val staff3: CommonClass?
+        val staff3: CommonClass?,
+        val designations: List<Designations>?
     )
 
     data class CommonClass(
@@ -95,4 +100,20 @@ class BudgetAndSchedule {
         val present_basic_salary: String?,
         val present_gross_salary: String?
     )
+
+    data class Designations(
+        val id: Int?,
+        val course_schedule_id: String?,
+        val designation_id: Int?,
+        val designation: SpinnerDataModel?
+    )
+
+    data class Designation(
+        val id: Int?,
+        val name: String?,
+        val name_bn: String?,
+        val priority_order: Int?,
+        val status: Int?
+    )
+
 }

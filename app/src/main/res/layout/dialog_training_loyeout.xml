@@ -126,6 +126,10 @@
                                     app:title="@{@string/short_name}" />
 
                                 <include
+                                    android:id="@+id/resourceDesignation"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/designation}" />
+                                <include
                                     android:id="@+id/resourcePersonEmail"
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/first_email}"
@@ -148,16 +152,17 @@
                                     app:hint="@{@string/tin_no}"
                                     app:title="@{@string/tin_no}" />
 
-                                <include
-                                    android:id="@+id/resourcePersonFieldOfExpertise"
-                                    layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/field_of_expertise}" />
 
                                 <include
                                     android:id="@+id/resourcePersonNidNo"
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/nid_no}"
                                     app:title="@{@string/nid_no}" />
+
+                                <include
+                                    android:id="@+id/resourcePersonFieldOfExpertise"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/field_of_expertise}" />
 
                                 <include
                                     android:id="@+id/resourcePersonOptionalEmail"
@@ -226,6 +231,231 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
+
+                <!-- ...........................Course Schedule ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llCourseSchedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="5dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/courseScheduleHeader"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/course_schedule}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+
+                                <include
+                                    android:id="@+id/courseTitle"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/course_title}"
+                                    app:title="@{@string/course_title}" />
+
+                                <include
+                                    android:id="@+id/courseTitleBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/course_title_bn}"
+                                    app:title="@{@string/course_title_bn}" />
+
+                                <include
+                                    android:id="@+id/courseCourseId"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/course_id}"
+                                    app:title="@{@string/course_id}" />
+
+                                <include
+                                    android:id="@+id/courseTotalSeat"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/total_seats}"
+                                    app:title="@{@string/total_seats}" />
+
+                                <include
+                                    android:id="@+id/courseDesignation"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/designation}" />
+
+                                <TextView
+                                    android:id="@+id/tvDesignation"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textColor="@color/gray"
+                                    android:textSize="12sp" />
+
+                                <include
+                                    android:id="@+id/courseCoOrdinator"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/co_ordinator}" />
+
+                                <include
+                                    android:id="@+id/courseCoCoOrdinator"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/co_co_ordinator}" />
+
+                                <include
+                                    android:id="@+id/courseStaff1"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/staff_1}" />
+
+                                <include
+                                    android:id="@+id/courseStaff2"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/staff_2}" />
+
+                                <include
+                                    android:id="@+id/courseStaff3"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/staff_3}" />
+
+
+                                <include
+                                    android:id="@+id/courseScheduleUpdateButton"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <!-- ...........................Batch Schedule ........................................ -->
+
+                <LinearLayout
+                    android:id="@+id/llBatchSchedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="5dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/batchScheduleHeader"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/batch_schedule}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+
+                                <include
+                                    android:id="@+id/batchCourseSchedule"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/course_schedule}" />
+
+                                <include
+                                    android:id="@+id/batchBatchName"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/batch_name}"
+                                    app:title="@{@string/batch_name}" />
+
+                                <include
+                                    android:id="@+id/batchBatchNameBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/batch_name_bn}"
+                                    app:title="@{@string/batch_name_bn}" />
+
+                                <include
+                                    android:id="@+id/batchTotalSeatts"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/total_seats}"
+                                    app:title="@{@string/total_seats}" />
+
+                                <include
+                                    android:id="@+id/batchStartDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/start_date}" />
+
+                                <include
+                                    android:id="@+id/batchEndDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/end_date}" />
+
+                                <include
+                                    android:id="@+id/batchRegistrationStartDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/registration_start_date}" />
+
+                                <include
+                                    android:id="@+id/batchRegistrationEndDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/registration_end_date}" />
+
+                                <include
+                                    android:id="@+id/batchCoOrdinator"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/co_ordinator}" />
+
+                                <include
+                                    android:id="@+id/batchCoCoOrdinator"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/co_co_ordinator}" />
+
+                                <include
+                                    android:id="@+id/batchStaff1"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/staff_1}" />
+
+                                <include
+                                    android:id="@+id/batchStaff2"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/staff_2}" />
+
+                                <include
+                                    android:id="@+id/batchStaff3"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/staff_3}" />
+
+
+                                <include
+                                    android:id="@+id/batchScheduleUpdateButton"
+                                    layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

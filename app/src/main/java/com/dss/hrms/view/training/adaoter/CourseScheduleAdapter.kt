@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dss.hrms.R
-import com.dss.hrms.databinding.ModelBatchScheduleLayoutBinding
 import com.dss.hrms.databinding.ModelCourseScheduleLayoutBinding
 import com.dss.hrms.util.Operation
 import com.dss.hrms.view.training.`interface`.OnCourseScheduleClickListener

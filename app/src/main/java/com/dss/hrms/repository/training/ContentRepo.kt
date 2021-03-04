@@ -68,7 +68,7 @@ class ContentRepo @Inject constructor() {
                     categoryId,
                     map
                 )
-                Log.e("repo", "response: ${response}" )
+                Log.e("repo", "response: ${response}")
                 if (response == null) {
                     liveData.postValue(null)
                 } else {
@@ -85,7 +85,7 @@ class ContentRepo @Inject constructor() {
                                 liveData?.postValue(null)
                             }
                         } catch (e: JSONException) {
-                            Log.e("repo","excep "+e.message)
+                            Log.e("repo", "excep " + e.message)
                             liveData?.postValue(null)
                         }
                     } else {
@@ -94,7 +94,51 @@ class ContentRepo @Inject constructor() {
                     }
                 }
             } catch (e: Exception) {
-                Log.e("repo","excep "+e.message)
+                Log.e("repo", "excep " + e.message)
+                liveData.postValue(null)
+            }
+        }
+        return liveData
+    }
+
+    suspend fun addCategory(
+        map: HashMap<Any, Any>,
+        liveData: MutableLiveData<Any>
+    ): MutableLiveData<Any> {
+        withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.addCategory(
+                    preparence.getLanguage(),
+                    "Bearer ${preparence?.getToken()}",
+                    map
+                )
+                Log.e("repo", "response: ${response}")
+                if (response == null) {
+                    liveData.postValue(null)
+                } else {
+                    if (response.isSuccessful) {
+                        try {
+                            val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                            val code: Int = jsonObjectParent.getInt("code")
+                            Log.e("response", "response : " + jsonObjectParent)
+                            if (code == 200 || code == 201
+                            ) {
+                                Log.e("response", "response : " + jsonObjectParent)
+                                liveData?.postValue("Added")
+                            } else {
+                                liveData?.postValue(null)
+                            }
+                        } catch (e: JSONException) {
+                            Log.e("repo", "excep " + e.message)
+                            liveData?.postValue(null)
+                        }
+                    } else {
+                        liveData.postValue(ErrorUtils2.parseError(response))
+
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("repo", "excep " + e.message)
                 liveData.postValue(null)
             }
         }

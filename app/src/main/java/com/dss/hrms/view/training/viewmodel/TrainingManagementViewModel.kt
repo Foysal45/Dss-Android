@@ -33,7 +33,13 @@ class TrainingManagementViewModel @Inject constructor(application: Application) 
         }
 
     }
-
+    fun addResourcePerson(map: HashMap<Any, Any?>): MutableLiveData<Any> {
+        var liveData = MutableLiveData<Any>()
+        viewModelScope.launch {
+            liveData = trainingRepo.addResourcePerson(map, liveData)
+        }
+        return liveData
+    }
     fun updateResourcePerson(map: HashMap<Any, Any?>, id: Int): MutableLiveData<Any> {
         var liveData = MutableLiveData<Any>()
         viewModelScope.launch {

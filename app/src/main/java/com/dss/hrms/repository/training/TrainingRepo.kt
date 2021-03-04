@@ -43,6 +43,47 @@ class TrainingRepo @Inject constructor() {
     }
 
 
+    suspend fun addResourcePerson(
+        map: HashMap<Any, Any?>,
+        liveData: MutableLiveData<Any>
+    ): MutableLiveData<Any> {
+        withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.addResourcePerson(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}",
+                    map
+                )
+                Log.e(
+                    "repo",
+                    "response: ${response} response: ${response.raw()} header ${response.body()}"
+                )
+                if (response.isSuccessful) {
+                    if (response.body()?.code == 200 || response.body()?.code == 201) {
+                        liveData.postValue("Added")
+                    } else {
+                        liveData.postValue("Error");
+                    }
+                } else {
+                    response?.let {
+
+                        var apiError = ErrorUtils2.parseError(response)
+                        Log.e(
+                            "repo",
+                            "apiError apiError : ${apiError.getError().get(0).getField()}}"
+                        )
+                        liveData.postValue(apiError)
+                    }
+
+                }
+
+            } catch (e: Exception) {
+                liveData.postValue(null)
+            }
+        }
+        return liveData
+    }
+
     suspend fun updateResourcePerson(
         map: HashMap<Any, Any?>,
         liveData: MutableLiveData<Any>,
@@ -56,62 +97,28 @@ class TrainingRepo @Inject constructor() {
                     resourcePersonId,
                     map
                 )
-                Log.e("repo", "response: ${response} header ${response.headers()}")
-                if (response.isSuccessful)
+                Log.e(
+                    "repo",
+                    "response: ${response} response: ${response.raw()} header ${response.body()}"
+                )
+                if (response.isSuccessful) {
                     if (response.body()?.code == 200 || response.body()?.code == 201) {
                         liveData.postValue("Updated")
                     } else {
                         liveData.postValue("Error");
                     }
-                else response?.let { liveData.postValue(ErrorUtils2.parseError(response)) }
+                } else {
+                    response?.let {
 
-            } catch (e: Exception) {
-                liveData.postValue(null)
-            }
-        }
-        return liveData
-    }
-
-    suspend fun getBatchScheduleList(): Any? {
-        return withContext(Dispatchers.IO) {
-            try {
-                var response = trainingApiService.batchSchedule(
-                    preparence.getLanguage()!!,
-                    "Bearer ${preparence.getToken()!!}"
-                )
-                if (response.body()?.code == 200 || response.body()?.code == 201)
-                    response.body()
-                else
-                    null
-            } catch (e: Exception) {
-                null
-            }
-
-        }
-
-    }
-
-    suspend fun updateBatchSchedule(
-        map: HashMap<Any, Any?>,
-        liveData: MutableLiveData<Any>,
-        batchId: Int
-    ): MutableLiveData<Any> {
-        withContext(Dispatchers.IO) {
-            try {
-                var response = trainingApiService.updateBatchSchedule(
-                    preparence.getLanguage()!!,
-                    "Bearer ${preparence.getToken()!!}",
-                    batchId,
-                    map
-                )
-                Log.e("repo", "response: ${response} header ${response.headers()}")
-                if (response.isSuccessful)
-                    if (response.body()?.code == 200 || response.body()?.code == 201) {
-                        liveData.postValue("Updated")
-                    } else {
-                        liveData.postValue("Error");
+                        var apiError = ErrorUtils2.parseError(response)
+                        Log.e(
+                            "repo",
+                            "apiError apiError : ${apiError.getError().get(0).getField()}}"
+                        )
+                        liveData.postValue(apiError)
                     }
-                else response?.let { liveData.postValue(ErrorUtils2.parseError(response)) }
+
+                }
 
             } catch (e: Exception) {
                 liveData.postValue(null)

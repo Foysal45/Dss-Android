@@ -70,11 +70,14 @@ class ContentCategoryFragment : DaggerFragment() {
         // Inflate the layout for this fragment
         binding = FragmentContentCategoryBinding.inflate(inflater, container, false)
         init()
-        var dialog = CustomLoadingDialog().createLoadingDialog(activity)
-        contentManagementViewModel.getCategory()
+
+
         contentManagementViewModel.apply {
-            dialog?.dismiss()
+            getCategory()
+            var dialog = CustomLoadingDialog().createLoadingDialog(activity)
+
             category.observe(viewLifecycleOwner, Observer {
+                dialog?.dismiss()
                 it?.let {
                     Log.e("category", "category ${(it).get(0).category_name}")
                     list = it
@@ -88,7 +91,9 @@ class ContentCategoryFragment : DaggerFragment() {
             })
         }
 
-
+        binding.fab.setOnClickListener {
+            showEditCreateDialog(Operation.CREATE, null)
+        }
         return binding.root
     }
 
@@ -109,11 +114,10 @@ class ContentCategoryFragment : DaggerFragment() {
                     ) {
                         when (operation) {
                             Operation.EDIT ->
-                                showEditCreateDialog(category)
+                                showEditCreateDialog(operation, category)
 
-                            Operation.CREATE ->
-                                showEditCreateDialog(category)
-
+                            Operation.DELETE -> {
+                            }
                         }
                         //   Toast.makeText(activity, "" + operation, Toast.LENGTH_LONG).show()
                     }
@@ -133,7 +137,7 @@ class ContentCategoryFragment : DaggerFragment() {
     }
 
 
-    fun showEditCreateDialog(category: TrainingResponse.Category?) {
+    fun showEditCreateDialog(operation: Operation, category: TrainingResponse.Category?) {
         dialogCustome = activity?.let { Dialog(it) }
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogTrainingLoyeoutBinding = DataBindingUtil.inflate(
@@ -159,13 +163,21 @@ class ContentCategoryFragment : DaggerFragment() {
         dialogTrainingLoyeoutBinding.categoryUpdateButton.btnUpdate.setOnClickListener {
             invisiableAllError()
             var dialog = CustomLoadingDialog().createLoadingDialog(activity)
-
-            contentManagementViewModel.updateCategory(getMapData(category), category?.id!!)
-                .observe(viewLifecycleOwner,
-                    Observer {
-                        dialog?.dismiss()
-                        showResponse(it)
-                    })
+            if (operation == Operation.CREATE) {
+                contentManagementViewModel.addCategory(getMapData(category))
+                    .observe(viewLifecycleOwner,
+                        Observer {
+                            dialog?.dismiss()
+                            showResponse(it)
+                        })
+            } else if (operation == Operation.EDIT) {
+                contentManagementViewModel.updateCategory(getMapData(category), category?.id!!)
+                    .observe(viewLifecycleOwner,
+                        Observer {
+                            dialog?.dismiss()
+                            showResponse(it)
+                        })
+            }
         }
 
         dialogCustome?.show()
@@ -190,13 +202,13 @@ class ContentCategoryFragment : DaggerFragment() {
 
     fun showResponse(any: Any) {
         if (any is String) {
-            toast(EmployeeInfoActivity.context, any)
-            EmployeeInfoActivity.refreshEmployeeInfo()
+            toast(activity, any)
+            contentManagementViewModel.getCategory()
             dialogCustome?.dismiss()
         } else if (any is ApiError) {
             try {
                 if (any.getError().isEmpty()) {
-                    toast(EmployeeInfoActivity?.context, any.getMessage())
+                    toast(activity, any.getMessage())
                     Log.d("ok", "error")
                 } else {
                     for (n in any.getError().indices) {
