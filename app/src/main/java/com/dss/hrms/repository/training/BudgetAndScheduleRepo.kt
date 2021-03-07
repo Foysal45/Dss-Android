@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.retrofit.TrainingApiService
+import com.dss.hrms.view.training.model.BudgetAndSchedule
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -82,22 +83,27 @@ class BudgetAndScheduleRepo @Inject constructor() {
                     map
                 )
                 Log.e("repo", "response: ${response} header ${response.body()}")
-                if (response.isSuccessful)
+                if (response.isSuccessful) {
                     if (response.body()?.code == 200 || response.body()?.code == 201) {
                         liveData.postValue("Updated")
                     } else {
                         liveData.postValue("Error");
                     }
-                else response?.let { liveData.postValue(ErrorUtils2.parseError(response)) }
+                } else {
+                    var error =ErrorUtils2.parseError(response)
+                    Log.e("response", "Error response ${error.getError().size}")
+                    response?.let { liveData.postValue(error) }
+                }
 
             } catch (e: Exception) {
+                Log.e("response", "batchschedule response ${e.message}")
                 liveData.postValue(null)
             }
         }
         return liveData
     }
 
-    suspend fun getCourseScheduleList(): Any? {
+    suspend fun getCourseSchedule(): Any? {
         return withContext(Dispatchers.IO) {
             try {
                 var response = trainingApiService.courseSchedule(
@@ -116,6 +122,29 @@ class BudgetAndScheduleRepo @Inject constructor() {
         }
 
     }
+
+
+    suspend fun getCourseScheduleList(): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.courseScheduleList(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}"
+                )
+                Log.e("repo", "response:getCourseScheduleList " + response?.body())
+                if (response?.body()?.code == 200 || response?.body()?.code == 201)
+                    response?.body()
+                else
+                    null
+            } catch (e: Exception) {
+                Log.e("exception", "Exception ; " + e.message)
+                null
+            }
+
+        }
+
+    }
+
 
     suspend fun addCourseSchedule(
         map: HashMap<Any, Any?>,
@@ -143,6 +172,7 @@ class BudgetAndScheduleRepo @Inject constructor() {
         }
         return liveData
     }
+
     suspend fun updateCourseSchedule(
         map: HashMap<Any, Any?>,
         liveData: MutableLiveData<Any>,

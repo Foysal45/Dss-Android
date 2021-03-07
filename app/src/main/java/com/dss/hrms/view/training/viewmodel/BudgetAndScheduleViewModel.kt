@@ -26,7 +26,7 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
 
     fun getCourseSchedule() {
         viewModelScope.launch {
-            var response = budgetAndScheduleRepo.getCourseScheduleList()
+            var response = budgetAndScheduleRepo.getCourseSchedule()
             if (response is BudgetAndSchedule.CourseScheduleResponse) {
                 _courseSchedule.postValue(response.data?.data)
             } else {
@@ -34,6 +34,19 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
             }
         }
 
+    }
+
+    fun getCourseScheduleList(): MutableLiveData<List<BudgetAndSchedule.CourseScheduleList>?> {
+        var liveData = MutableLiveData<List<BudgetAndSchedule.CourseScheduleList>?>()
+        viewModelScope.launch {
+            var response = budgetAndScheduleRepo.getCourseScheduleList()
+            if (response is BudgetAndSchedule.CourseScheduleListResponse) {
+                liveData.postValue(response?.data)
+            } else {
+                liveData.postValue(null)
+            }
+        }
+        return liveData
     }
 
     fun addCourseSchedule(map: HashMap<Any, Any?>): MutableLiveData<Any> {

@@ -81,16 +81,4 @@ class ContentManagementViewModel @Inject constructor(application: Application) :
             }
         }
     }
-
-    fun getResourcePerson() {
-        viewModelScope.launch {
-            var response = contentRepo.getResourcePersonList()
-            if (response is TrainingResponse.ResourcePersonResponse) {
-                _resourcePerson.postValue(response.data)
-            } else {
-                _resourcePerson.postValue(null)
-                // _resourcePerson.value = null
-            }
-        }
-    }
 }

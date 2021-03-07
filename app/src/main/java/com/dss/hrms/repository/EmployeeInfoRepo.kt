@@ -1,6 +1,7 @@
 package com.dss.hrms.repository
 
 import android.app.Application
+import android.util.Log
 import com.btbapp.alquranapp.retrofit.ApiService
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.di.mainScope.EmployeeProfileData
@@ -8,7 +9,6 @@ import com.dss.hrms.model.employeeProfile.Employee
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -44,5 +44,29 @@ class EmployeeInfoRepo @Inject constructor() {
                 null
             }
         }
+    }
+
+    suspend fun getRoleWiseEmployeeInfo(role: String?): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                Log.e("response", "response : ${role}")
+                var response = apiService.getRoleWiseEmployeeInfo(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}",
+                    "coordinator"
+                )
+                Log.e("response", "response : ")
+                if (response?.body()?.code == 200 || response?.body()?.code == 201)
+                    response?.body()
+                else
+                    null
+
+            } catch (e: Exception) {
+                Log.e("response", "response : exceotion: ${e.message}")
+                null
+            }
+
+        }
+
     }
 }

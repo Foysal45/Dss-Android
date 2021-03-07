@@ -24,6 +24,5 @@ class StaticKey {
         val References = "references"
         val CREATE = "create"
         val EDIT = "edit"
-
     }
 }

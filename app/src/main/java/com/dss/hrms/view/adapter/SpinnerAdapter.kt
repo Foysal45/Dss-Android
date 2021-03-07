@@ -159,10 +159,6 @@ class SpinnerAdapter {
             adapter?.let { spinner.setAdapter(it) }
             spinner.setSelection(selectedPosition)
         }
-
-//        if (districtListStr.size() > 1 && selectedPosition >= 0) binding.spDistrict.setSelection(
-//            selectedPosition + 1
-//        )
         spinner.setOnItemSelectedListener(object : OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -324,10 +320,6 @@ class SpinnerAdapter {
             adapter?.let { spinner.setAdapter(it) }
             spinner.setSelection(selectedPosition)
         }
-
-//        if (districtListStr.size() > 1 && selectedPosition >= 0) binding.spDistrict.setSelection(
-//            selectedPosition + 1
-//        )
         spinner.setOnItemSelectedListener(object : OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -349,5 +341,6 @@ class SpinnerAdapter {
         })
 
     }
+
 
 }

@@ -59,14 +59,23 @@ class BudgetAndSchedule {
         val course_schedule_title: String?,
         val course_schedule_title_bn: String?,
         val course_id: Int?,
-        val total_seat: Int?,
+        val total_seat: String?,
         val status: Int?,
         val coordinator: CommonClass?,
         val co_coordinator: CommonClass?,
         val staff1: CommonClass?,
         val staff2: CommonClass?,
         val staff3: CommonClass?,
-        val designations: List<Designations>?
+        val designations: List<Designations>?,
+        val course: Course?
+    )
+
+    data class Course(
+        val id: Int?,
+        val course_name: String?,
+        val course_name_bn: String?,
+        val course_category_id: Int?,
+        val course_image_path: String?
     )
 
     data class CommonClass(
@@ -116,4 +125,18 @@ class BudgetAndSchedule {
         val status: Int?
     )
 
+    data class CourseScheduleListResponse(val code: Int?, val data: List<CourseScheduleList>?)
+    data class CourseScheduleList(
+        val id: Int?,
+        val course_schedule_title: String?,
+        val course_schedule_title_bn: String?,
+        val course_id: Int?,
+        val total_seat: String?,
+        val status: Int?,
+        val coordinator: Int?,
+        val co_coordinator: Int?,
+        val staff1: Int?,
+        val staff2: Int?,
+        val staff3: Int?
+    )
 }

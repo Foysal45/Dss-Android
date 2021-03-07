@@ -241,6 +241,7 @@
 
 
     //...........................................training..........................................
+    <string name="create">Create</string>
     <string name="content_management">Content Management</string>
     <string name="category">Category</string>
     <string name="add_category">Add Category</string>
@@ -270,7 +271,7 @@
     <string name="course_schedule">Course Schedule</string>
     <string name="batch_schedule">Batch Schedule</string>
     <string name="batch">Batch</string>
-    <string name="course">Course*</string>
+    <string name="course">Course</string>
     <string name="name_only">Name</string>
     <string name="batch_name">Batch Name</string>
     <string name="batch_name_bn">Batch Name(Bangla)</string>
@@ -279,12 +280,12 @@
     <string name="end_date">End Date</string>
     <string name="registration_start_date">Registration  Start Date</string>
     <string name="registration_end_date">Registration  End Date</string>
-    <string name="co_ordinator">Co-ordinator*</string>
+    <string name="co_ordinator">Co-ordinator</string>
     <string name="co_co_ordinator">Co-co-ordinator*</string>
     <string name="total_seats">Total seats*</string>
     <string name="staff_1">Staff 01</string>
-    <string name="staff_2">Staff 01</string>
-    <string name="staff_3">Staff 01</string>
+    <string name="staff_2">Staff 02</string>
+    <string name="staff_3">Staff 03</string>
     <string name="course_id">Course ID</string>
     <string name="eligible">Eligible*</string>
 

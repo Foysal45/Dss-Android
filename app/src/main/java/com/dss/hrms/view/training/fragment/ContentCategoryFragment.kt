@@ -81,11 +81,6 @@ class ContentCategoryFragment : DaggerFragment() {
                 it?.let {
                     Log.e("category", "category ${(it).get(0).category_name}")
                     list = it
-                    list += it
-                    list += it
-                    list += it
-                    list += it
-                    list += it
                     prepareRecycleView()
                 }
             })
@@ -158,8 +153,9 @@ class ContentCategoryFragment : DaggerFragment() {
         dialogTrainingLoyeoutBinding.categoryHeader.tvClose.setOnClickListener { dialogCustome?.dismiss() }
         dialogTrainingLoyeoutBinding.categoryHeader.tvTitle.setText(getString(R.string.update_category))
 
-
-        dialogTrainingLoyeoutBinding.categoryUpdateButton.btnUpdate.setText(getString(R.string.update))
+        if (operation == Operation.EDIT) dialogTrainingLoyeoutBinding.categoryUpdateButton.btnUpdate.setText(
+            getString(R.string.update)
+        ) else dialogTrainingLoyeoutBinding.categoryUpdateButton.btnUpdate.setText(getString(R.string.create))
         dialogTrainingLoyeoutBinding.categoryUpdateButton.btnUpdate.setOnClickListener {
             invisiableAllError()
             var dialog = CustomLoadingDialog().createLoadingDialog(activity)

@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,23 +29,37 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.request.RequestOptions
 import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentResourcePersonBinding
+import com.dss.hrms.model.RoleWiseEmployeeResponseClass
+import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.TrainingResponse
+import com.dss.hrms.repository.CommonRepo
+import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.FilePath
 import com.dss.hrms.util.Operation
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.activity.EmployeeInfoActivity
+import com.dss.hrms.view.adapter.SpinnerAdapter
+import com.dss.hrms.view.allInterface.CommonDataValueListener
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.bottomsheet.SelectImageBottomSheet
 import com.dss.hrms.view.training.`interface`.OnResourcePersonClickListener
 import com.dss.hrms.view.training.adaoter.ResourceAdapter
+import com.dss.hrms.view.training.adaoter.spinner.ExpertiseFieldAdapter
+import com.dss.hrms.view.training.adaoter.spinner.HonorariumHeadAdapter
+import com.dss.hrms.view.training.model.ExpertiseField
+import com.dss.hrms.view.training.model.HonorariumHead
 import com.dss.hrms.view.training.viewmodel.ContentManagementViewModel
 import com.dss.hrms.view.training.viewmodel.TrainingManagementViewModel
+import com.dss.hrms.view.training.viewmodel.TrainingSimpleViewModel
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.theartofdev.edmodo.cropper.CropImage
@@ -74,9 +89,16 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
     private var imageFile: File? = null
     private var currentPhotoPath: String? = null
 
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
+    @Inject
+    lateinit var requestOption: RequestManager
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    lateinit var trainingSimpleViewModel: TrainingSimpleViewModel
 
     lateinit var trainingManagementViewModel: TrainingManagementViewModel
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -84,6 +106,11 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
     lateinit var binding: FragmentResourcePersonBinding
     lateinit var dataLIst: List<TrainingResponse.ResourcePerson>
     lateinit var dialogTrainingLoyeoutBinding: DialogTrainingLoyeoutBinding
+
+
+    var designation: SpinnerDataModel? = null
+    var honorariumHead: HonorariumHead? = null
+    var expertiseField: ExpertiseField? = null
 
     var imageUrl: String? = null
     var loadingDialog: Dialog? = null
@@ -134,6 +161,11 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
             this,
             viewModelProviderFactory
         ).get(TrainingManagementViewModel::class.java)
+
+        trainingSimpleViewModel = ViewModelProvider(
+            this,
+            viewModelProviderFactory
+        ).get(TrainingSimpleViewModel::class.java)
     }
 
     fun prepareRecycleView() {
@@ -180,6 +212,14 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialogTrainingLoyeoutBinding.llAddResourcePerson.visibility = View.VISIBLE
+        dialogTrainingLoyeoutBinding.resourcePersonOptionalMobile.etText.inputType =
+            InputType.TYPE_CLASS_PHONE
+        dialogTrainingLoyeoutBinding.resourcePersonMobile.etText.inputType =
+            InputType.TYPE_CLASS_PHONE
+        dialogTrainingLoyeoutBinding.resourcePersonTinNo.etText.inputType =
+            InputType.TYPE_CLASS_NUMBER
+        dialogTrainingLoyeoutBinding.resourcePersonNidNo.etText.inputType =
+            InputType.TYPE_CLASS_NUMBER
         dialogTrainingLoyeoutBinding.resourcePersonName.etText.setText(resourcePerson?.person_name)
         dialogTrainingLoyeoutBinding.resourcePersonShortName.etText.setText(resourcePerson?.short_name)
         dialogTrainingLoyeoutBinding.resourcePersonEmail.etText.setText(resourcePerson?.first_email)
@@ -191,11 +231,74 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
         dialogTrainingLoyeoutBinding.resourcePersonHeader.tvClose.setOnClickListener { dialogCustome?.dismiss() }
         dialogTrainingLoyeoutBinding.resourcePersonHeader.tvTitle.setText(getString(R.string.update_resource_perosn))
 
+
+        requestOption?.applyDefaultRequestOptions(
+            RequestOptions()
+                .placeholder(R.drawable.ic_baseline_image_24)
+        ).load(RetrofitInstance.BASE_URL + resourcePerson?.resource_person_image_path)
+            .into(dialogTrainingLoyeoutBinding?.ivResourcePerson)
+
+        commonRepo?.getCommonData("/api/auth/designation/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            dialogTrainingLoyeoutBinding?.resourceDesignation?.spinner!!,
+                            context,
+                            list,
+                            resourcePerson?.designation_id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    any?.let { designation = any as SpinnerDataModel }
+                                }
+                            }
+                        )
+                    }
+                }
+            })
+
+
+        trainingSimpleViewModel.getHonorariumHeadList()
+            .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                it?.let {
+                    HonorariumHeadAdapter().setHonorariumHeadAdapter(
+                        dialogTrainingLoyeoutBinding?.resourceHonorariumHead?.spinner!!,
+                        context,
+                        it,
+                        resourcePerson?.honorarium_head_id,
+                        object : CommonSpinnerSelectedItemListener {
+                            override fun selectedItem(any: Any?) {
+                                any?.let { honorariumHead = any as HonorariumHead }
+                            }
+                        }
+                    )
+                }
+            })
+
+        trainingSimpleViewModel.getExpertiseList()
+            .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                it?.let {
+                    ExpertiseFieldAdapter().setExpertiseFieldSpinner(
+                        dialogTrainingLoyeoutBinding?.resourcePersonFieldOfExpertise?.spinner!!,
+                        context,
+                        it,
+                        resourcePerson?.field_of_expertise_id,
+                        object : CommonSpinnerSelectedItemListener {
+                            override fun selectedItem(any: Any?) {
+                                any?.let { expertiseField = any as ExpertiseField }
+                            }
+                        }
+                    )
+                }
+            })
+
         dialogTrainingLoyeoutBinding.ivResourcePerson.setOnClickListener {
             openSelectImageBottomSheet()
         }
+        if (operation == Operation.EDIT) dialogTrainingLoyeoutBinding.resourcePersonUpdateButton.btnUpdate.setText(
+            getString(R.string.update)
+        ) else dialogTrainingLoyeoutBinding.resourcePersonUpdateButton.btnUpdate.setText(getString(R.string.create))
 
-        dialogTrainingLoyeoutBinding.resourcePersonUpdateButton.btnUpdate.setText(getString(R.string.update))
         dialogTrainingLoyeoutBinding.resourcePersonUpdateButton.btnUpdate.setOnClickListener {
             invisiableAllError()
             loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
@@ -251,9 +354,9 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
             "first_mobile",
             dialogTrainingLoyeoutBinding.resourcePersonMobile.etText.text.trim().toString()
         )
-        map.put("honorarium_head_id", resourcePerson?.honorarium_head_id)
-        map.put("designation_id", resourcePerson?.designation_id)
-        map.put("field_of_expertise_id", resourcePerson?.field_of_expertise_id)
+        map.put("honorarium_head_id", honorariumHead?.id)
+        map.put("designation_id", designation?.id)
+        map.put("field_of_expertise_id", expertiseField?.id)
         map.put(
             "tin_no",
             dialogTrainingLoyeoutBinding.resourcePersonTinNo.etText.text.trim().toString()

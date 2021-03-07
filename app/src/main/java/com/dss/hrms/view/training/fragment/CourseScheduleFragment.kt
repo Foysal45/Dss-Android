@@ -19,18 +19,23 @@ import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentCourseScheduleBinding
+import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.Operation
+import com.dss.hrms.util.Role
 import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.training.`interface`.OnCourseScheduleClickListener
 import com.dss.hrms.view.training.adaoter.CourseScheduleAdapter
+import com.dss.hrms.view.training.adaoter.spinner.CourseScheduleSpinnerAdapter
+import com.dss.hrms.view.training.adaoter.spinner.RoleWiseEmployeeAdapter
 import com.dss.hrms.view.training.model.BudgetAndSchedule
 import com.dss.hrms.view.training.viewmodel.BudgetAndScheduleViewModel
+import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import dagger.android.support.DaggerFragment
@@ -49,6 +54,7 @@ class CourseScheduleFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
     lateinit var budgetAndScheduleViewModel: BudgetAndScheduleViewModel
+    lateinit var employeeViewModel: EmployeeViewModel
 
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var dataList: List<BudgetAndSchedule.CourseSchedule?>
@@ -61,6 +67,14 @@ class CourseScheduleFragment : DaggerFragment() {
     var dialogCustome: Dialog? = null
     lateinit var dialogTrainingLoyeoutBinding: DialogTrainingLoyeoutBinding
     var isDesignationFirstSelection: Boolean = true
+
+    var coordinator: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var cocoordinator: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var staff1: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var staff2: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var staff3: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var courseScheduleListData: BudgetAndSchedule.CourseScheduleList? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,10 +89,6 @@ class CourseScheduleFragment : DaggerFragment() {
             courseSchedule.observe(viewLifecycleOwner, Observer {
                 dialog?.dismiss()
                 dataList = it
-                dataList += it
-                dataList += it
-                dataList += it
-                dataList += it
                 prepareRecycleView()
 
             })
@@ -95,6 +105,8 @@ class CourseScheduleFragment : DaggerFragment() {
             this,
             viewModelProviderFactory
         ).get(BudgetAndScheduleViewModel::class.java)
+        employeeViewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
     }
 
     fun prepareRecycleView() {
@@ -148,8 +160,7 @@ class CourseScheduleFragment : DaggerFragment() {
         dialogTrainingLoyeoutBinding.llCourseSchedule.visibility = View.VISIBLE
         dialogTrainingLoyeoutBinding.courseTitle.etText.setText(courseSchedule?.course_schedule_title)
         dialogTrainingLoyeoutBinding.courseTitleBn.etText.setText(courseSchedule?.course_schedule_title_bn)
-        dialogTrainingLoyeoutBinding.courseCourseId.etText.setText("${courseSchedule?.course_id}")
-        dialogTrainingLoyeoutBinding.courseTotalSeat.etText.setText("${courseSchedule?.total_seat}")
+        dialogTrainingLoyeoutBinding.courseTotalSeat.etText.setText(courseSchedule?.total_seat)
 
 
         courseSchedule?.designations?.let {
@@ -174,7 +185,7 @@ class CourseScheduleFragment : DaggerFragment() {
                             dialogTrainingLoyeoutBinding?.courseDesignation?.spinner!!,
                             context,
                             list,
-                            designationList?.get(designationList?.size - 1).id,
+                            if (designationList?.size >= 1) designationList?.get(designationList?.size - 1)?.id else 0,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     var spinnerDataModel = any as SpinnerDataModel
@@ -198,11 +209,137 @@ class CourseScheduleFragment : DaggerFragment() {
 
 
 
+
+        budgetAndScheduleViewModel?.apply {
+            getCourseScheduleList().observe(viewLifecycleOwner, Observer {
+                Log.e("course", "course schedule ; " + it?.size)
+
+                CourseScheduleSpinnerAdapter().setCourseScheduleSpinner(
+                    dialogTrainingLoyeoutBinding?.courseCourseId?.spinner!!,
+                    context,
+                    it,
+                    courseSchedule?.course?.id,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                courseScheduleListData =
+                                    any as BudgetAndSchedule.CourseScheduleList
+                            }
+
+                        }
+                    }
+                )
+            })
+
+
+        }
+
+
+        employeeViewModel?.apply {
+            getRoleWiseEmployeeInfo(Role.COORDINATOR).observe(viewLifecycleOwner, Observer {
+                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
+                    dialogTrainingLoyeoutBinding?.courseCoOrdinator?.spinner!!,
+                    context,
+                    it,
+                    courseSchedule?.coordinator?.id,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                coordinator =
+                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
+                            }
+
+                        }
+                    }
+                )
+            })
+            getRoleWiseEmployeeInfo(Role.CO_COORDINATOR).observe(viewLifecycleOwner, Observer {
+                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
+                    dialogTrainingLoyeoutBinding?.courseCoCoOrdinator?.spinner!!,
+                    context,
+                    it,
+                    courseSchedule?.co_coordinator?.id,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                cocoordinator =
+                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
+                            }
+
+                        }
+                    }
+                )
+            })
+            getRoleWiseEmployeeInfo(Role.STAFF1).observe(viewLifecycleOwner, Observer {
+                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
+                    dialogTrainingLoyeoutBinding?.courseStaff1?.spinner!!,
+                    context,
+                    it,
+                    courseSchedule?.staff1?.id,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                staff1 =
+                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
+                            }
+
+                        }
+                    }
+                )
+            })
+            getRoleWiseEmployeeInfo(Role.STAFF2).observe(viewLifecycleOwner, Observer {
+                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
+                    dialogTrainingLoyeoutBinding?.courseStaff2?.spinner!!,
+                    context,
+                    it,
+                    courseSchedule?.staff2?.id,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                staff2 =
+                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
+                            }
+
+                        }
+                    }
+                )
+            })
+            getRoleWiseEmployeeInfo(Role.STAFF3).observe(viewLifecycleOwner, Observer {
+                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
+                    dialogTrainingLoyeoutBinding?.courseStaff3?.spinner!!,
+                    context,
+                    it,
+                    courseSchedule?.staff3?.id,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                staff3 =
+                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
+                            }
+
+                        }
+                    }
+                )
+            })
+
+
+        }
+
+
+
         dialogTrainingLoyeoutBinding.courseScheduleHeader.tvClose.setOnClickListener {
             dialogCustome?.dismiss()
         }
 
-        dialogTrainingLoyeoutBinding.courseScheduleUpdateButton.btnUpdate.setText(getString(R.string.update))
+        if (operation == Operation.EDIT) dialogTrainingLoyeoutBinding.courseScheduleUpdateButton.btnUpdate.setText(
+            getString(R.string.update)
+        ) else dialogTrainingLoyeoutBinding.courseScheduleUpdateButton.btnUpdate.setText(getString(R.string.create))
         dialogTrainingLoyeoutBinding.courseScheduleUpdateButton.btnUpdate.setOnClickListener {
             invisiableAllError()
             loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
@@ -218,6 +355,12 @@ class CourseScheduleFragment : DaggerFragment() {
                         })
                     }
                 Operation.CREATE -> {
+                    budgetAndScheduleViewModel.addCourseSchedule(
+                        getMapData(courseSchedule)
+                    ).observe(viewLifecycleOwner, Observer {
+                        loadingDialog?.dismiss()
+                        showResponse(it)
+                    })
                 }
             }
         }
@@ -312,15 +455,15 @@ class CourseScheduleFragment : DaggerFragment() {
                     }
                 }
             } catch (e: Exception) {
-                toast(EmployeeInfoActivity.context, e.toString())
+                toast(activity, e.toString())
             }
 
         } else if (any is Throwable) {
-            toast(EmployeeInfoActivity.context, any.toString())
+            toast(activity, any.toString())
         } else {
             EmployeeInfoActivity?.context?.getString(R.string.failed)?.let {
                 toast(
-                    EmployeeInfoActivity.context,
+                    activity,
                     it
                 )
             }
@@ -335,26 +478,24 @@ class CourseScheduleFragment : DaggerFragment() {
         var map = HashMap<Any, Any?>()
         map.put(
             "course_schedule_title",
-            dialogTrainingLoyeoutBinding.courseTitle.etText.text.trim().toString()
+            dialogTrainingLoyeoutBinding.courseTitle?.etText?.text?.trim().toString()
         )
         map.put(
             "course_schedule_title_bn",
-            dialogTrainingLoyeoutBinding.courseTitleBn.etText.text.trim().toString()
+            dialogTrainingLoyeoutBinding.courseTitleBn?.etText?.text?.trim().toString()
         )
         map.put(
             "total_seat",
-            dialogTrainingLoyeoutBinding.courseTotalSeat.etText.text.trim().toString()
+            dialogTrainingLoyeoutBinding.courseTotalSeat?.etText?.text?.trim().toString()
         )
-        map.put(
-            "course_id",
-            dialogTrainingLoyeoutBinding.courseCourseId.etText.text.trim().toString()
-        )
-        map.put("coordinator", courseSchedule?.coordinator?.id)
-        map.put("co_coordinator", courseSchedule?.co_coordinator?.id)
+        map.put("course_id", courseScheduleListData?.id)
         map.put("designations", designationIdList)
-        map.put("staff1", courseSchedule?.staff1?.id)
-        map.put("staff2", courseSchedule?.staff2?.id)
-        map.put("staff3", courseSchedule?.staff3?.id)
+        map.put("coordinator", coordinator?.id)
+        map.put("co_coordinator", cocoordinator?.id)
+        // map.put("designation_id", courseSchedule?.de)
+        map.put("staff1", staff1?.id)
+        map.put("staff2", staff2?.id)
+        map.put("staff3", staff3?.id)
         return map
     }
 

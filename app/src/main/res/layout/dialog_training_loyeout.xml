@@ -284,9 +284,8 @@
 
                                 <include
                                     android:id="@+id/courseCourseId"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/course_id}"
-                                    app:title="@{@string/course_id}" />
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/course}" />
 
                                 <include
                                     android:id="@+id/courseTotalSeat"

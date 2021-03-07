@@ -1,6 +1,7 @@
 package com.btbapp.alquranapp.retrofit
 
 
+import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.employeeProfile.EmployeeResponse
 import com.dss.hrms.model.login.*
 import io.reactivex.Observable
@@ -15,7 +16,7 @@ import kotlin.collections.HashMap
 
 
 interface ApiService {
-    @Headers("Content-Type: application/json","Accept: application/json")
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/login")
     suspend fun login(
         @Header("X-Localization") language: String,
@@ -29,6 +30,15 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("Id") employee_id: Int?
     ): Response<EmployeeResponse?>?
+
+
+    @Headers("Accept: application/json")
+    @GET("/api/auth/role-wise-employee")
+    suspend fun getRoleWiseEmployeeInfo(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String?,
+        @Query("role") role: String?
+    ): Response<RoleWiseEmployeeResponseClass.RoleWiseEmployeeRes>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")

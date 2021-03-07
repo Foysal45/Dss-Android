@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.dss.hrms.view.training.viewmodel.BudgetAndScheduleViewModel
 import com.dss.hrms.view.training.viewmodel.ContentManagementViewModel
 import com.dss.hrms.view.training.viewmodel.TrainingManagementViewModel
+import com.dss.hrms.view.training.viewmodel.TrainingSimpleViewModel
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.LoginViewModel
@@ -54,5 +55,9 @@ abstract class ViewModelModule {
     @ViewModelKey(BudgetAndScheduleViewModel::class)
     abstract fun bindBudgetAndScheduleViewModel(budgetAndScheduleViewModel: BudgetAndScheduleViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(TrainingSimpleViewModel::class)
+    abstract fun bindTrainingSimpleViewModel(trainingSimpleViewModel: TrainingSimpleViewModel): ViewModel
 
 }

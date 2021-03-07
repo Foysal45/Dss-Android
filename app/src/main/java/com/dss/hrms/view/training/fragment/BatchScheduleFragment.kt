@@ -19,16 +19,18 @@ import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentBatchScheduleBinding
-import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.DateConverter
-import com.dss.hrms.util.DatePicker
-import com.dss.hrms.util.Operation
+import com.dss.hrms.model.RoleWiseEmployeeResponseClass
+import com.dss.hrms.util.*
 import com.dss.hrms.view.activity.EmployeeInfoActivity
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OnDateListener
 import com.dss.hrms.view.training.`interface`.OnBatchScheduleClickListener
 import com.dss.hrms.view.training.adaoter.BatchScheduleAdapter
+import com.dss.hrms.view.training.adaoter.spinner.CourseScheduleSpinnerAdapter
+import com.dss.hrms.view.training.adaoter.spinner.RoleWiseEmployeeAdapter
 import com.dss.hrms.view.training.model.BudgetAndSchedule
 import com.dss.hrms.view.training.viewmodel.BudgetAndScheduleViewModel
+import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
@@ -41,6 +43,7 @@ class BatchScheduleFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
     lateinit var budgetAndScheduleViewModel: BudgetAndScheduleViewModel
+    lateinit var employeeViewModel: EmployeeViewModel
 
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var dataList: List<BudgetAndSchedule.BatchSchedule?>
@@ -52,6 +55,13 @@ class BatchScheduleFragment : DaggerFragment() {
     var loadingDialog: Dialog? = null
     var dialogCustome: Dialog? = null
     lateinit var dialogTrainingLoyeoutBinding: DialogTrainingLoyeoutBinding
+    var coordinator: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var cocoordinator: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var staff1: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var staff2: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var staff3: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var courseScheduleListData: BudgetAndSchedule.CourseScheduleList? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,6 +98,9 @@ class BatchScheduleFragment : DaggerFragment() {
             this,
             viewModelProviderFactory
         ).get(BudgetAndScheduleViewModel::class.java)
+
+        employeeViewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
     }
 
     fun prepareRecycleView() {
@@ -201,10 +214,135 @@ class BatchScheduleFragment : DaggerFragment() {
             })
         }
 
+
+        budgetAndScheduleViewModel?.apply {
+            getCourseScheduleList().observe(viewLifecycleOwner, Observer {
+                Log.e("course", "course schedule ; " + it?.size)
+
+                CourseScheduleSpinnerAdapter().setCourseScheduleSpinner(
+                    dialogTrainingLoyeoutBinding?.batchCourseSchedule?.spinner!!,
+                    context,
+                    it,
+                    batchSchedule?.course_schedule_id,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                courseScheduleListData =
+                                    any as BudgetAndSchedule.CourseScheduleList
+                            }
+
+                        }
+                    }
+                )
+            })
+
+
+        }
+
+
+        employeeViewModel?.apply {
+            getRoleWiseEmployeeInfo(Role.COORDINATOR).observe(viewLifecycleOwner, Observer {
+                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
+                    dialogTrainingLoyeoutBinding?.batchCoOrdinator?.spinner!!,
+                    context,
+                    it,
+                    batchSchedule?.course_coordinator,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                coordinator =
+                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
+                            }
+
+                        }
+                    }
+                )
+            })
+            getRoleWiseEmployeeInfo(Role.CO_COORDINATOR).observe(viewLifecycleOwner, Observer {
+                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
+                    dialogTrainingLoyeoutBinding?.batchCoCoOrdinator?.spinner!!,
+                    context,
+                    it,
+                    batchSchedule?.course_co_coordinator,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                cocoordinator =
+                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
+                            }
+
+                        }
+                    }
+                )
+            })
+            getRoleWiseEmployeeInfo(Role.STAFF1).observe(viewLifecycleOwner, Observer {
+                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
+                    dialogTrainingLoyeoutBinding?.batchStaff1?.spinner!!,
+                    context,
+                    it,
+                    batchSchedule?.staff1,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                staff1 =
+                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
+                            }
+
+                        }
+                    }
+                )
+            })
+            getRoleWiseEmployeeInfo(Role.STAFF2).observe(viewLifecycleOwner, Observer {
+                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
+                    dialogTrainingLoyeoutBinding?.batchStaff2?.spinner!!,
+                    context,
+                    it,
+                    batchSchedule?.staff2,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                staff2 =
+                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
+                            }
+
+                        }
+                    }
+                )
+            })
+            getRoleWiseEmployeeInfo(Role.STAFF3).observe(viewLifecycleOwner, Observer {
+                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
+                    dialogTrainingLoyeoutBinding?.batchStaff3?.spinner!!,
+                    context,
+                    it,
+                    batchSchedule?.staff3,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+
+                            any?.let {
+                                staff3 =
+                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
+                            }
+
+                        }
+                    }
+                )
+            })
+
+
+        }
+
+
         dialogTrainingLoyeoutBinding.batchScheduleHeader.tvClose.setOnClickListener {
             dialogCustome?.dismiss()
         }
-        dialogTrainingLoyeoutBinding.batchScheduleUpdateButton.btnUpdate.setText(getString(R.string.update))
+        if (operation == Operation.EDIT) dialogTrainingLoyeoutBinding.batchScheduleUpdateButton.btnUpdate.setText(
+            getString(R.string.update)
+        ) else dialogTrainingLoyeoutBinding.batchScheduleUpdateButton.btnUpdate.setText(getString(R.string.create))
         dialogTrainingLoyeoutBinding.batchScheduleUpdateButton.btnUpdate.setOnClickListener {
             invisiableAllError()
             loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
@@ -217,18 +355,15 @@ class BatchScheduleFragment : DaggerFragment() {
                         ).observe(viewLifecycleOwner, Observer {
                             loadingDialog?.dismiss()
                             showResponse(it)
-//                            if (it != null)
-//                                showResponse(it)
-//                            else {
-//                                Toast.makeText(
-//                                    activity,
-//                                    getString(R.string.failed),
-//                                    Toast.LENGTH_LONG
-//                                ).show()
-//                            }
                         })
                     }
                 Operation.CREATE -> {
+                    budgetAndScheduleViewModel.addBatchSchedule(
+                        getMapData(batchSchedule)
+                    ).observe(viewLifecycleOwner, Observer {
+                        loadingDialog?.dismiss()
+                        showResponse(it)
+                    })
                 }
             }
         }
@@ -258,7 +393,7 @@ class BatchScheduleFragment : DaggerFragment() {
                                     ErrorUtils2.mainError(message)
                             }
                         }
-                        Log.d("ok", "error ${ErrorUtils2.mainError(message)}")
+                        Log.e("ok", "error ${message}")
                         when (error) {
                             "course_schedule_id" -> {
                                 dialogTrainingLoyeoutBinding?.batchCourseSchedule?.tvError?.visibility =
@@ -309,9 +444,9 @@ class BatchScheduleFragment : DaggerFragment() {
                                     ErrorUtils2.mainError(message)
                             }
                             "course_coordinator" -> {
-                                dialogTrainingLoyeoutBinding?.courseCoOrdinator?.tvError?.visibility =
+                                dialogTrainingLoyeoutBinding?.batchCoOrdinator?.tvError?.visibility =
                                     View.VISIBLE
-                                dialogTrainingLoyeoutBinding?.courseCoOrdinator?.tvError?.text =
+                                dialogTrainingLoyeoutBinding?.batchCoOrdinator?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
                             "course_co_coordinator" -> {
@@ -342,7 +477,7 @@ class BatchScheduleFragment : DaggerFragment() {
                     }
                 }
             } catch (e: Exception) {
-                toast(EmployeeInfoActivity.context, e.toString())
+                toast(activity, e.toString())
             }
 
         } else if (any is Throwable) {
@@ -359,42 +494,52 @@ class BatchScheduleFragment : DaggerFragment() {
 
     fun getMapData(batchSchedule: BudgetAndSchedule.BatchSchedule?): HashMap<Any, Any?> {
         var batchStartDate =
-            DateConverter.changeDateFormateForSending(dialogTrainingLoyeoutBinding.batchStartDate.tvText.text.toString())
+            DateConverter.changeDateFormateForSending(
+                dialogTrainingLoyeoutBinding.batchStartDate?.tvText?.text?.trim().toString()
+            )
 
         var batchEndDate =
-            DateConverter.changeDateFormateForSending(dialogTrainingLoyeoutBinding.batchEndDate.tvText.text.toString())
+            DateConverter.changeDateFormateForSending(
+                dialogTrainingLoyeoutBinding.batchEndDate?.tvText?.text?.trim().toString()
+            )
         var batchRegistrationStartDate =
-            DateConverter.changeDateFormateForSending(dialogTrainingLoyeoutBinding.batchRegistrationStartDate.tvText.text.toString())
+            DateConverter.changeDateFormateForSending(
+                dialogTrainingLoyeoutBinding.batchRegistrationStartDate?.tvText?.text?.trim()
+                    .toString()
+            )
         var batchRegistrationEndDate =
-            DateConverter.changeDateFormateForSending(dialogTrainingLoyeoutBinding.batchRegistrationEndDate.tvText.text.toString())
+            DateConverter.changeDateFormateForSending(
+                dialogTrainingLoyeoutBinding.batchRegistrationEndDate?.tvText?.text?.trim()
+                    .toString()
+            )
 
         var map = HashMap<Any, Any?>()
         map.put(
             "course_schedule_id",
-            batchSchedule?.course_schedule_id
+            courseScheduleListData?.id
         )
         map.put(
             "batch_name",
-            dialogTrainingLoyeoutBinding.batchBatchName.etText.text.trim().toString()
+            dialogTrainingLoyeoutBinding.batchBatchName.etText?.text.trim().toString()
         )
         map.put(
             "batch_name_bn",
-            dialogTrainingLoyeoutBinding.batchBatchNameBn.etText.text.trim().toString()
+            dialogTrainingLoyeoutBinding.batchBatchNameBn.etText?.text.trim().toString()
         )
         map.put(
             "total_seat",
-            dialogTrainingLoyeoutBinding.batchTotalSeatts.etText.text.trim().toString()
+            dialogTrainingLoyeoutBinding.batchTotalSeatts.etText?.text.trim().toString()
         )
         map.put("start_date", batchStartDate)
         map.put("end_date", batchEndDate)
         map.put("reg_start_date", batchRegistrationStartDate)
         map.put("reg_end_date", batchRegistrationEndDate)
-        map.put("course_coordinator", batchSchedule?.course_coordinator.toString())
-        map.put("course_co_coordinator", batchSchedule?.course_co_coordinator.toString())
+        map.put("course_coordinator", coordinator?.id)
+        map.put("course_co_coordinator", cocoordinator?.id)
         // map.put("designation_id", courseSchedule?.de)
-        map.put("staff1", batchSchedule?.staff1.toString())
-        map.put("staff2", batchSchedule?.staff2.toString())
-        map.put("staff3", batchSchedule?.staff3.toString())
+        map.put("staff1", staff1?.id)
+        map.put("staff2", staff2?.id)
+        map.put("staff3", staff3?.id)
         return map
     }
 
