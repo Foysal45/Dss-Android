@@ -53,16 +53,45 @@ class EmployeeInfoRepo @Inject constructor() {
                 var response = apiService.getRoleWiseEmployeeInfo(
                     preparence.getLanguage()!!,
                     "Bearer ${preparence.getToken()!!}",
-                    "coordinator"
+                    role
                 )
                 Log.e("response", "response : ")
                 if (response?.body()?.code == 200 || response?.body()?.code == 201)
                     response?.body()
                 else
                     null
-
             } catch (e: Exception) {
-                Log.e("response", "response : exceotion: ${e.message}")
+                Log.e("responseexceotion", "response : exceotion: ${e.message}")
+                null
+            }
+
+        }
+
+    }
+
+    suspend fun getEmployeeList(
+        office_id: String?,
+        division_id: String?,
+        district_id: String?,
+        sixteen_category_id: String?,
+        designation_id: String?,
+        term: String?
+    ): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = apiService.getEmployeeListAccordingToQuery(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}",
+                    division_id, district_id, sixteen_category_id, designation_id, office_id, term
+                )
+
+                if (response?.body()?.code == 200 || response?.body()?.code == 201) {
+                    Log.e("response", "response : ${response.body()?.data}")
+                    response?.body()
+                } else
+                    null
+            } catch (e: Exception) {
+                Log.e("responseexceotion", "response : exceotion: ${e.message}")
                 null
             }
 

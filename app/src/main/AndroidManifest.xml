@@ -19,9 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".view.messaging.MessagingActivity"
+            android:theme="@style/AppThemeActionBar"
+            ></activity>
         <activity
             android:name=".view.training.TrainingActivity"
-            android:theme="@style/AppThemeActionBar"></activity>
+            android:theme="@style/AppThemeActionBar" />
         <activity android:name=".view.activity.SettingsActivity" />
         <activity
             android:name=".view.activity.EmployeeInfoActivity"

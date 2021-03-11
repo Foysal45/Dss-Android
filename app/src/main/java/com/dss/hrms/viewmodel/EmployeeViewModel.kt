@@ -33,9 +33,6 @@ class EmployeeViewModel @Inject constructor(application: Application) :
 
     fun getRoleWiseEmployeeInfo(role: String?): MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>> {
         var liveData = MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>>()
-        var map = HashMap<Any, Any?>()
-        Log.e("viewmodel","role ; ${role}")
-        map.put("role", "coordinator")
         viewModelScope.launch {
             var resonse = employeeInfoRepo.getRoleWiseEmployeeInfo(role)
             if (resonse != null)
@@ -45,7 +42,33 @@ class EmployeeViewModel @Inject constructor(application: Application) :
                     liveData.postValue(null)
                 }
         }
+        return liveData
+    }
 
+    fun getEmployeeList(
+        office_id: String?,
+        division_id: String?,
+        district_id: String?,
+        sixteen_category_id: String?,
+        designation_id: String?,
+        term: String?
+    ): MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>> {
+        var liveData = MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>>()
+        viewModelScope.launch {
+            var resonse = employeeInfoRepo.getEmployeeList(
+                office_id,
+                division_id,
+                district_id,
+                sixteen_category_id,
+                designation_id,
+                term
+            )
+                if (resonse is RoleWiseEmployeeResponseClass.EmployeeListResponse) {
+                    liveData.postValue(resonse.data?.data)
+                } else {
+                    liveData.postValue(null)
+                }
+        }
         return liveData
     }
 }

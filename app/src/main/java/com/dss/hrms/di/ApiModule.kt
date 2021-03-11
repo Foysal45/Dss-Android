@@ -2,6 +2,7 @@ package com.dss.hrms.di
 
 import android.app.Application
 import com.btbapp.alquranapp.retrofit.ApiService
+import com.dss.hrms.retrofit.MessagingApiService
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.retrofit.TrainingApiService
 import com.google.gson.Gson
@@ -50,6 +51,7 @@ class ApiModule {
                 .writeTimeout(TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
                 // .addNetworkInterceptor(logging)
                 .cache(cache)
+                // .cache(null)
                 .build()
         }
 
@@ -114,6 +116,12 @@ class ApiModule {
         @Provides
         fun provideTrainingApiService(retrofit: Retrofit): TrainingApiService {
             return retrofit.create(TrainingApiService::class.java)
+        }
+
+        @Singleton
+        @Provides
+        fun provideMessagingApiService(retrofit: Retrofit): MessagingApiService {
+            return retrofit.create(MessagingApiService::class.java)
         }
 
     }

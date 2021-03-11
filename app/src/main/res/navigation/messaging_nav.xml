@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/messaging_nav"
+    app:startDestination="@id/topMessagingFragment">
+
+    <fragment
+        android:id="@+id/topMessagingFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.TopMessagingFragment"
+        android:label="@string/messaging"
+        tools:layout="@layout/fragment_top_messaging">
+        <action
+            android:id="@+id/action_topMessagingFragment_to_messageFragment"
+            app:destination="@id/messageFragment" />
+        <action
+            android:id="@+id/action_topMessagingFragment_to_emailFragment"
+            app:destination="@id/emailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/emailFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.EmailFragment"
+        android:label="@string/email_text"
+        tools:layout="@layout/fragment_email">
+        <action
+            android:id="@+id/action_emailFragment_to_topMessagingFragment"
+            app:destination="@id/topMessagingFragment" />
+        <action
+            android:id="@+id/action_emailFragment_to_searchEmployeeFragment"
+            app:destination="@id/searchEmployeeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.MessagingFragment"
+        android:label="@string/messaging"
+        tools:layout="@layout/fragment_message">
+        <action
+            android:id="@+id/action_messageFragment_to_topMessagingFragment"
+            app:destination="@id/topMessagingFragment" />
+        <action
+            android:id="@+id/action_messageFragment_to_searchEmployeeFragment"
+            app:destination="@id/searchEmployeeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchEmployeeFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.SearchEmployeeFragment"
+        android:label="@string/search_employee"
+        tools:layout="@layout/fragment_search_employee">
+        <action
+            android:id="@+id/action_searchEmployeeFragment_to_messageFragment"
+            app:destination="@id/messageFragment" />
+        <action
+            android:id="@+id/action_searchEmployeeFragment_to_emailFragment"
+            app:destination="@id/emailFragment" />
+    </fragment>
+</navigation>

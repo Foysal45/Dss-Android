@@ -31,7 +31,7 @@ class RoleWiseEmployeeResponseClass {
         val has_freedom_fighter_quota: Int?,
         val disability_type_id: Int?,
         val disability_degree_id: Int?,
-        val disabled_person_id: Int?,
+        val disabled_person_id: String?,
         val office_id: Int?,
         val designation_id: Int?,
         val job_joining_date: String?,
@@ -39,5 +39,16 @@ class RoleWiseEmployeeResponseClass {
         val status: Int?,
         val office: Office?,
         val designation: BudgetAndSchedule.Designation?
+    )
+
+
+    data class EmployeeListResponse(
+        val status: String?,
+        val code: Int?,
+        val data: EmployeeListData?
+    )
+
+    data class EmployeeListData(
+        val data: List<RoleWiseEmployee>?
     )
 }

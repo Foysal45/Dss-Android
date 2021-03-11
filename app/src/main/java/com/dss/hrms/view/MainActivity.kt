@@ -30,6 +30,7 @@ import com.dss.hrms.view.activity.EmployeeInfoActivity
 import com.dss.hrms.view.activity.LoginActivity
 import com.dss.hrms.view.activity.SettingsActivity
 import com.dss.hrms.view.allInterface.OnNetworkStateChangeListener
+import com.dss.hrms.view.messaging.MessagingActivity
 import com.dss.hrms.view.receiver.NetworkChangeReceiver
 import com.dss.hrms.view.training.TrainingActivity
 import com.dss.hrms.viewmodel.EmployeeViewModel
@@ -91,6 +92,12 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         })
         btnTraining.setOnClickListener({
             Intent(this, TrainingActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        })
+        btnMessaging.setOnClickListener({
+            Intent(this, MessagingActivity::class.java).apply {
                 startActivity(this)
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)

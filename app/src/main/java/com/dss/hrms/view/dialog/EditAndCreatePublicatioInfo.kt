@@ -62,6 +62,7 @@ class EditAndCreatePublicatioInfo @Inject constructor() {
         this.context = context
         this.key = key
         dialogCustome = Dialog(context)
+        publications= position?.let { employeeProfileData.employee?.publications?.get(it) }
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
@@ -240,7 +241,8 @@ class EditAndCreatePublicatioInfo @Inject constructor() {
         map.put("publication_name_bn", binding?.fPublicationNameBn?.etText?.text.toString())
         map.put("publication_details", binding?.fPublicationDetails?.etText?.text.toString())
         map.put("publication_details_bn", binding?.fPublicationDetailsBn?.etText?.text.toString())
-        map.put("status", publications?.status)
+        if (publications?.status !=null) map.put("status", publications?.status)else  map.put("status", 1)
+
         return map
     }
 

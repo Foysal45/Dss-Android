@@ -1,6 +1,7 @@
 package com.dss.hrms.di.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.dss.hrms.view.messaging.viewmodel.MessagingViewModel
 import com.dss.hrms.view.training.viewmodel.BudgetAndScheduleViewModel
 import com.dss.hrms.view.training.viewmodel.ContentManagementViewModel
 import com.dss.hrms.view.training.viewmodel.TrainingManagementViewModel
@@ -59,5 +60,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TrainingSimpleViewModel::class)
     abstract fun bindTrainingSimpleViewModel(trainingSimpleViewModel: TrainingSimpleViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MessagingViewModel::class)
+    abstract fun bindMessagingViewModel(messagingViewModel: MessagingViewModel): ViewModel
 
 }

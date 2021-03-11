@@ -282,8 +282,10 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
 
     fun getMapData(): HashMap<Any, Any?> {
 
-        var fromDate = DateConverter.changeDateFormateForSending( binding?.fLocalTrainingFromDate?.tvText?.text.toString())
-        var toDate = DateConverter.changeDateFormateForSending(binding?.fLocalTrainingToDate?.tvText?.text.toString())
+        var fromDate =
+            DateConverter.changeDateFormateForSending(binding?.fLocalTrainingFromDate?.tvText?.text.toString())
+        var toDate =
+            DateConverter.changeDateFormateForSending(binding?.fLocalTrainingToDate?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("course_title", binding?.fLocalTrainingCourseT?.etText?.text.toString())
@@ -295,7 +297,10 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         map.put("from_date", fromDate)
         map.put("to_date", toDate)
         imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
-        map.put("status", localTraining?.status)
+        if (localTraining?.status != null) map.put(
+            "status",
+            localTraining?.status
+        ) else map.put("status", 1)
         return map
     }
 

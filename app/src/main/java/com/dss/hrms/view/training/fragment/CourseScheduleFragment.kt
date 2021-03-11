@@ -218,13 +218,13 @@ class CourseScheduleFragment : DaggerFragment() {
                     dialogTrainingLoyeoutBinding?.courseCourseId?.spinner!!,
                     context,
                     it,
-                    courseSchedule?.course?.id,
+                    courseSchedule?.course_id,
                     object : CommonSpinnerSelectedItemListener {
                         override fun selectedItem(any: Any?) {
 
                             any?.let {
-                                courseScheduleListData =
-                                    any as BudgetAndSchedule.CourseScheduleList
+                               // Log.e("courseschedule","course schedule : ${(any as BudgetAndSchedule.CourseScheduleList).id}")
+                                courseScheduleListData = (any as BudgetAndSchedule.CourseScheduleList)
                             }
 
                         }
@@ -273,24 +273,7 @@ class CourseScheduleFragment : DaggerFragment() {
                     }
                 )
             })
-            getRoleWiseEmployeeInfo(Role.STAFF1).observe(viewLifecycleOwner, Observer {
-                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
-                    dialogTrainingLoyeoutBinding?.courseStaff1?.spinner!!,
-                    context,
-                    it,
-                    courseSchedule?.staff1?.id,
-                    object : CommonSpinnerSelectedItemListener {
-                        override fun selectedItem(any: Any?) {
 
-                            any?.let {
-                                staff1 =
-                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
-                            }
-
-                        }
-                    }
-                )
-            })
             getRoleWiseEmployeeInfo(Role.STAFF2).observe(viewLifecycleOwner, Observer {
                 RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
                     dialogTrainingLoyeoutBinding?.courseStaff2?.spinner!!,
@@ -327,7 +310,25 @@ class CourseScheduleFragment : DaggerFragment() {
                     }
                 )
             })
+            getRoleWiseEmployeeInfo(Role.STAFF1).observe(viewLifecycleOwner, Observer {
+                Log.e("staff1tag","staff 1 ${it.size}")
+                RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
+                    dialogTrainingLoyeoutBinding?.courseStaff1?.spinner!!,
+                    context,
+                    it,
+                    courseSchedule?.staff1?.id,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
 
+                            any?.let {
+                                staff1 =
+                                    any as RoleWiseEmployeeResponseClass.RoleWiseEmployee
+                            }
+
+                        }
+                    }
+                )
+            })
 
         }
 

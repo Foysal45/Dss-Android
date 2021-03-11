@@ -41,6 +41,20 @@ interface ApiService {
     ): Response<RoleWiseEmployeeResponseClass.RoleWiseEmployeeRes>?
 
 
+    @Headers("Accept: application/json")
+    @GET("/api/auth/employee")
+    suspend fun getEmployeeListAccordingToQuery(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String?,
+        @Query("division_id") division_id: String?,
+        @Query("district_id") district_id: String?,
+        @Query("sixteen_category_id") sixteen_category_id: String?,
+        @Query("designation_id") designation_id: String?,
+        @Query("office_id") office_id: String?,
+        @Query("term") term: String?
+    ): Response<RoleWiseEmployeeResponseClass.EmployeeListResponse>?
+
+
     @Headers("Content-Type: application/json", "Accept: application/json")
     @GET("/api/auth/logout")
     fun logout(@Header("Authorization") token: String): Call<Any?>?

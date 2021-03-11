@@ -220,7 +220,10 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
         map.put("qualification_name_bn", binding?.fAQNameBn?.etText?.text.toString())
         map.put("qualification_details", binding?.fAQDetails?.etText?.text.toString())
         map.put("qualification_details_bn", binding?.fAQDetailsBn?.etText?.text.toString())
-        map.put("status", additionalQualifications?.status)
+        if (additionalQualifications?.status != null) map.put(
+            "status",
+            additionalQualifications?.status
+        ) else map.put("status", 1)
         return map
     }
 
