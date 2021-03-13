@@ -1,7 +1,10 @@
 package com.dss.hrms.model
 
+import android.os.Parcelable
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.view.training.model.BudgetAndSchedule
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 class RoleWiseEmployeeResponseClass {
     data class RoleWiseEmployeeRes(
@@ -10,6 +13,7 @@ class RoleWiseEmployeeResponseClass {
         val data: List<RoleWiseEmployee>?
     )
 
+    @Parcelize
     data class RoleWiseEmployee(
         val id: Int?,
         val profile_id: String?,
@@ -38,9 +42,44 @@ class RoleWiseEmployeeResponseClass {
         val employee_type_id: Int?,
         val status: Int?,
         val office: Office?,
-        val designation: BudgetAndSchedule.Designation?
-    )
+        val designation: Designation?
+    ) : Parcelable
 
+    @Parcelize
+    class Office : Parcelable {
+        @SerializedName("id")
+        val id: Int? = null
+
+        @SerializedName("office_type_id")
+        val office_type_id: Int? = 0
+
+        @SerializedName("office_name")
+        val name: String? = null
+
+        @SerializedName("office_name_bn")
+        val name_bn: String? = null
+
+        @SerializedName("status")
+        val status: Int = 0
+
+        @SerializedName("deleted_at")
+        val deleted_at: String? = null
+
+        @SerializedName("created_at")
+        val created_at: String? = null
+
+        @SerializedName("updated_at")
+        val updated_at: String? = null
+    }
+
+    @Parcelize
+    data class Designation(
+        val id: Int?,
+        val name: String?,
+        val name_bn: String?,
+        val priority_order: Int?,
+        val status: Int?
+    ) : Parcelable
 
     data class EmployeeListResponse(
         val status: String?,

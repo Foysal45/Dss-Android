@@ -52,8 +52,8 @@ class EmployeeViewModel @Inject constructor(application: Application) :
         sixteen_category_id: String?,
         designation_id: String?,
         term: String?
-    ): MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>> {
-        var liveData = MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>>()
+    ): MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee>> {
+        var liveData = MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee>>()
         viewModelScope.launch {
             var resonse = employeeInfoRepo.getEmployeeList(
                 office_id,

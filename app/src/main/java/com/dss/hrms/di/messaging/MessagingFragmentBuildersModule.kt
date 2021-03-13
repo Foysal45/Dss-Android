@@ -2,10 +2,7 @@ package com.dss.hrms.di.messaging
 
 import com.dss.hrms.view.fragment.BasicInformationFragment
 import com.dss.hrms.view.fragment.FragmentEmployeeInfo
-import com.dss.hrms.view.messaging.fragment.EmailFragment
-import com.dss.hrms.view.messaging.fragment.MessagingFragment
-import com.dss.hrms.view.messaging.fragment.SearchEmployeeFragment
-import com.dss.hrms.view.messaging.fragment.TopMessagingFragment
+import com.dss.hrms.view.messaging.fragment.*
 import com.dss.hrms.view.training.fragment.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -24,4 +21,7 @@ abstract class MessagingFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSearchEmployeeFragment(): SearchEmployeeFragment
+//
+//    @ContributesAndroidInjector
+//    abstract fun contributeEmployeeBottomSheetFragment(): EmployeeBottomSheetFragment
 }

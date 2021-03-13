@@ -45,11 +45,13 @@ class EmployeeAdapter @Inject constructor() :
         holder.binding.employee = employee
         holder.binding.language = preparence.getLanguage()
         holder.binding.checkBox.setOnClickListener {
-            onEmployeeClickListener.onClick(
-                employee,
-                position,
-                holder.binding.checkBox.isChecked
-            )
+            employee?.let { it1 ->
+                onEmployeeClickListener.onClick(
+                    it1,
+                    position,
+                    holder.binding.checkBox.isChecked
+                )
+            }
         }
     }
 

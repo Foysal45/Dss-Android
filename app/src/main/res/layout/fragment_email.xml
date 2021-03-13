@@ -10,6 +10,47 @@
         tools:context=".view.messaging.fragment.EmailFragment">
 
         <LinearLayout
+            android:id="@+id/llOffice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_4sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvOfficeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:text="@string/office"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height_large"
+                android:background="@drawable/edittext_bg" />
+
+            <TextView
+                android:id="@+id/tvOfficeError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:gravity="center|left"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:text="error"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/llSubject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -156,44 +197,43 @@
             <!--            </androidx.cardview.widget.CardView>-->
         </LinearLayout>
 
+
         <LinearLayout
-            android:id="@+id/llOffice"
+            android:id="@+id/llAttachment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingVertical="@dimen/_4sdp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/send"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/llBody">
 
             <TextView
-                android:id="@+id/tvOfficeTitle"
+                android:id="@+id/tvAttachment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_5sdp"
-                android:text="@string/office"
-                android:textColor="@color/light_black"
+                android:drawableLeft="@drawable/ic_baseline_attachment_24"
+                android:drawablePadding="20dp"
+                android:text="@string/attachment"
+                android:textColor="@color/black"
                 android:textSize="@dimen/text_size_large"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edittext_height_large"
-                android:background="@drawable/edittext_bg" />
 
             <TextView
-                android:id="@+id/tvOfficeError"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvFileName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|left"
-                android:gravity="center|left"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:text="error"
-                android:textColor="@color/red"
-                android:textSize="@dimen/text_size_small"
-                android:visibility="gone" />
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:ellipsize="end"
+                android:paddingHorizontal="5dp"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
+
 
         </LinearLayout>
 
@@ -210,7 +250,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llBody" />
+            app:layout_constraintTop_toBottomOf="@id/llAttachment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

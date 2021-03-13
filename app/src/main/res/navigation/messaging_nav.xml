@@ -52,5 +52,25 @@
         <action
             android:id="@+id/action_searchEmployeeFragment_to_emailFragment"
             app:destination="@id/emailFragment" />
+        <action
+            android:id="@+id/action_searchEmployeeFragment_to_employeeBottomSheetFragment"
+            app:destination="@id/employeeBottomSheetFragment" />
+        <argument
+            android:name="employee"
+            app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
+    <dialog
+        android:id="@+id/employeeBottomSheetFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.EmployeeBottomSheetFragment"
+        android:label="fragment_employee_bottom_sheet"
+        tools:layout="@layout/fragment_employee_bottom_sheet" >
+        <action
+            android:id="@+id/action_employeeBottomSheetFragment_to_searchEmployeeFragment"
+            app:destination="@id/searchEmployeeFragment" />
+        <argument
+            android:name="employee"
+            app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]" />
+    </dialog>
 </navigation>

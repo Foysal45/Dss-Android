@@ -7,7 +7,7 @@ import com.dss.hrms.view.training.model.BudgetAndSchedule
 
 interface OnEmployeeClickListener {
     fun onClick(
-        roleWiseEmployee: RoleWiseEmployeeResponseClass.RoleWiseEmployee?,
+        roleWiseEmployee: RoleWiseEmployeeResponseClass.RoleWiseEmployee,
         position: Int,
         isChecked: Boolean
     )

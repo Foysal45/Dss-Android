@@ -1,6 +1,7 @@
 package com.dss.hrms.view.messaging.fragment
 
 import android.content.Context
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
@@ -38,6 +42,8 @@ import javax.inject.Inject
 
 
 class SearchEmployeeFragment : DaggerFragment() {
+    private val args by navArgs<SearchEmployeeFragmentArgs>()
+
     @Inject
     lateinit var commonRepo: CommonRepo
 
@@ -51,7 +57,8 @@ class SearchEmployeeFragment : DaggerFragment() {
     lateinit var binding: FragmentSearchEmployeeBinding
 
     lateinit var linearLayoutManager: LinearLayoutManager
-    lateinit var dataList: List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>
+    lateinit var dataList: List<RoleWiseEmployeeResponseClass.RoleWiseEmployee>
+    lateinit var selectedDataList: List<RoleWiseEmployeeResponseClass.RoleWiseEmployee>
     lateinit var adapter: EmployeeAdapter
 
     var division: SpinnerDataModel? = null
@@ -71,8 +78,17 @@ class SearchEmployeeFragment : DaggerFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSearchEmployeeBinding.inflate(inflater, container, false)
-
+        selectedDataList = arrayListOf()
         init()
+        val navController = findNavController();
+// We use a String here, but any type that can be put in a Bundle is supported
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData(
+            "key", selectedDataList
+        )?.observe(viewLifecycleOwner,
+            Observer { result ->
+                // Do something with the result.
+                Log.e("searchlist", "search lsit : ${result.size}")
+            })
 
         commonRepo.getCommonData("/api/auth/sixteen-category/list",
             object : CommonDataValueListener {
@@ -153,18 +169,41 @@ class SearchEmployeeFragment : DaggerFragment() {
                     "1", "1", "1", "1", "1", "Raju"
                 ).observe(viewLifecycleOwner, Observer {
                     dialog?.dismiss()
-                    dataList = it
-                    dataList += it
-                    dataList += it
-                    dataList += it
-                    dataList += it
-                    dataList += it
-                    dataList += it
-                    dataList += it
-                    dataList += it
-                    if (dataList != null)
+                    it?.let {
+                        dataList = it
+                        dataList += it
+                        dataList += it
+                        dataList += it
+                        dataList += it
+                        dataList += it
+                        dataList += it
+                        dataList += it
+                        dataList += it
+                        dataList += it
+                        dataList += it
+                        dataList += it
+                        dataList += it
+                        dataList += it
+                    }
+
+                    dataList?.let {
+
+                        val action =
+                            SearchEmployeeFragmentDirections.actionSearchEmployeeFragmentToEmployeeBottomSheetFragment(
+                                dataList?.toTypedArray()
+                            )
+                        findNavController().navigate(action)
+//                        Navigation.findNavController(binding.root)
+//                            .navigate(R.id.action_searchEmployeeFragment_to_employeeBottomSheetFragment)
                         prepareRecycleView()
+                    }
                 })
+            }
+        }
+        args.employee?.let {
+            if (it.size >= 1) {
+                selectedDataList = it.toList()
+                Log.e("searchlist", "search lsit : ${selectedDataList.size}")
             }
         }
         return binding.root
@@ -186,7 +225,7 @@ class SearchEmployeeFragment : DaggerFragment() {
                 it,
                 object : OnEmployeeClickListener {
                     override fun onClick(
-                        roleWiseEmployee: RoleWiseEmployeeResponseClass.RoleWiseEmployee?,
+                        roleWiseEmployee: RoleWiseEmployeeResponseClass.RoleWiseEmployee,
                         position: Int,
                         isChecked: Boolean
                     ) {
