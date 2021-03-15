@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.dss.hrms.repository.message.MessageRepo
 import com.dss.hrms.repository.training.TrainingSimpleRepo
 import com.dss.hrms.view.training.model.ExpertiseField
 import com.dss.hrms.view.training.model.ExpertiseResponse
@@ -17,33 +18,20 @@ class MessagingViewModel @Inject constructor(application: Application) :
     AndroidViewModel(application) {
 
     @Inject
-    lateinit var trainingSimpleRepo: TrainingSimpleRepo
+    lateinit var messageRepo: MessageRepo
 
-
-    fun getHonorariumHeadList(): MutableLiveData<List<HonorariumHead>> {
-        var liveData = MutableLiveData<List<HonorariumHead>>()
+    fun sendEmail(map: HashMap<Any, Any?>): MutableLiveData<Any> {
+        var liveData = MutableLiveData<Any>()
         viewModelScope.launch {
-            var response = trainingSimpleRepo.getHonorariumHeadList()
-            if (response is HonorariumHeadResponse) {
-                liveData.postValue(response.data)
-            } else {
-                liveData.postValue(null)
-            }
+            liveData = messageRepo.sendEmail(map, liveData)
         }
         return liveData
     }
 
-    fun getExpertiseList(): MutableLiveData<List<ExpertiseField>> {
-        var liveData = MutableLiveData<List<ExpertiseField>>()
+    fun sendSms(map: HashMap<Any, Any?>): MutableLiveData<Any> {
+        var liveData = MutableLiveData<Any>()
         viewModelScope.launch {
-            var response = trainingSimpleRepo.getExpertiseList()
-           // var res = (response as ExpertiseResponse)
-            Log.e("viewmodel"," expertise ${response}")
-            if (response is ExpertiseResponse) {
-                liveData.postValue(response.data)
-            } else {
-                liveData.postValue(null)
-            }
+            liveData = messageRepo.sendSms(map, liveData)
         }
         return liveData
     }

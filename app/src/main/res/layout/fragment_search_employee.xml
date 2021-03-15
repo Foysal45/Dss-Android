@@ -34,9 +34,9 @@
                     android:id="@+id/recycleView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_marginVertical="10dp"
-                    android:layout_marginBottom="20dp" />
+                    android:layout_marginBottom="20dp"
+                    android:visibility="gone" />
 
                 <include
                     android:id="@+id/officeLeadCategory"
@@ -71,20 +71,39 @@
                     app:hint="@{@string/employee_name_or_id}"
                     app:title="@{@string/employee_name_or_id}" />
 
-                <soup.neumorphism.NeumorphButton
-                    android:id="@+id/search"
-                    style="@style/Widget.Neumorph.Button"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_60sdp"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="20dp"
-                    android:text="@string/search_employee"
-                    android:textAlignment="center"
-                    android:textColor="@color/green"
-                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/llBody" />
+                    app:layout_constraintTop_toBottomOf="@id/llBody">
+
+                    <soup.neumorphism.NeumorphButton
+                        android:id="@+id/back"
+                        style="@style/Widget.Neumorph.Button"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/done"
+                        android:textAlignment="center"
+                        android:textColor="@color/green"
+                        android:textStyle="bold" />
+
+                    <soup.neumorphism.NeumorphButton
+                        android:id="@+id/search"
+                        style="@style/Widget.Neumorph.Button"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/search"
+                        android:textAlignment="center"
+                        android:textColor="@color/green"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

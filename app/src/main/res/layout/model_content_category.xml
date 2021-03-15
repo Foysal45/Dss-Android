@@ -48,6 +48,7 @@
             android:alpha="1.0"
             android:gravity="center|left"
             android:paddingHorizontal="5dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/tvCategoryName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintRight_toRightOf="@id/imgEdit"

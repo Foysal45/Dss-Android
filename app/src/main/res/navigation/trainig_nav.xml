@@ -27,7 +27,7 @@
     <fragment
         android:id="@+id/trainingFragment"
         android:name="com.dss.hrms.view.training.TrainingFragment"
-        android:label="Training"
+        android:label="@string/training"
         tools:layout="@layout/fragment_training">
         <action
             android:id="@+id/action_trainingFragment_to_contentCategoryFragment"

@@ -28,6 +28,10 @@
         <action
             android:id="@+id/action_emailFragment_to_searchEmployeeFragment"
             app:destination="@id/searchEmployeeFragment" />
+        <argument
+            android:name="messageRoleWiseemployee"
+            app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/messageFragment"
@@ -39,6 +43,13 @@
             app:destination="@id/topMessagingFragment" />
         <action
             android:id="@+id/action_messageFragment_to_searchEmployeeFragment"
+            app:destination="@id/searchEmployeeFragment" />
+        <argument
+            android:name="emailRoleWiseemployee"
+            app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_messageFragment_to_searchEmployeeFragment2"
             app:destination="@id/searchEmployeeFragment" />
     </fragment>
     <fragment

@@ -42,7 +42,8 @@ class RoleWiseEmployeeResponseClass {
         val employee_type_id: Int?,
         val status: Int?,
         val office: Office?,
-        val designation: Designation?
+        val designation: Designation?,
+        var isSelected: Boolean
     ) : Parcelable
 
     @Parcelize

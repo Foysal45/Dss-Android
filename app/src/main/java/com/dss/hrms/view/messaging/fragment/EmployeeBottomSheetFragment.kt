@@ -40,18 +40,12 @@ class EmployeeBottomSheetFragment : BottomSheetDialogFragment() {
         }
         Log.e("EmployeeBottomSheet", "EmployeeBottomSheetFragment : ${args.employee.size}")
         binding.tvOk.setOnClickListener {
-//            val action =
-//                EmployeeBottomSheetFragmentDirections.actionEmployeeBottomSheetFragmentToSearchEmployeeFragment(
-//                    selectedDataList?.toTypedArray()
-//                )
-//            NavHostFragment.findNavController(this).navigate(action)
-//            //  NavHostFragment.findNavController(this).popBackStack()
-
-            findNavController().previousBackStackEntry?.savedStateHandle?.set("key", selectedDataList)
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                "key",
+                selectedDataList
+            )
             findNavController().popBackStack()
-
         }
-
         return binding?.root
     }
 
@@ -70,8 +64,10 @@ class EmployeeBottomSheetFragment : BottomSheetDialogFragment() {
                         isChecked: Boolean
                     ) {
                         if (isChecked) {
+                            roleWiseEmployee.isSelected = true
                             selectedDataList.add(roleWiseEmployee)
                         } else {
+                            roleWiseEmployee.isSelected = false
                             selectedDataList.remove(roleWiseEmployee)
                         }
                         Toast.makeText(activity, "isChecked ${isChecked}", Toast.LENGTH_LONG).show()

@@ -481,9 +481,9 @@ class BatchScheduleFragment : DaggerFragment() {
             }
 
         } else if (any is Throwable) {
-            toast(EmployeeInfoActivity.context, any.toString())
+            toast(activity, any.toString())
         } else {
-            EmployeeInfoActivity?.context?.getString(R.string.failed)?.let {
+            activity?.getString(R.string.failed)?.let {
                 toast(
                     activity,
                     it

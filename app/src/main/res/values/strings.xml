@@ -293,11 +293,13 @@
     <string name="message_body">Message Body</string>
     <string name="select_employee">Select Employee</string>
     <string name="search_employee">Search Employee</string>
+    <string name="search">Search</string>
     <string name="office_lead_category">Office Lead Category</string>
     <string name="employee_name_or_id">Employee Name / ID</string>
     <string name="attachment">attachment</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
+    <string name="done">done</string>
 
 
 </resources>

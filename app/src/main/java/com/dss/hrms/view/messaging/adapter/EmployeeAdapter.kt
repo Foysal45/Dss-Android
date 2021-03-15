@@ -44,6 +44,7 @@ class EmployeeAdapter @Inject constructor() :
         var employee = dataList.get(position)
         holder.binding.employee = employee
         holder.binding.language = preparence.getLanguage()
+
         holder.binding.checkBox.setOnClickListener {
             employee?.let { it1 ->
                 onEmployeeClickListener.onClick(

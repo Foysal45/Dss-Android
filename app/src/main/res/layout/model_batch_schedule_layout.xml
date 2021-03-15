@@ -95,6 +95,7 @@
             android:alpha="1.0"
             android:gravity="center|right"
             android:paddingHorizontal="5dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/imgEdit"
             app:layout_constraintTop_toTopOf="@id/imgEdit"

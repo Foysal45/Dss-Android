@@ -14,26 +14,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.dss.hrms.R
-import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.databinding.FragmentSearchEmployeeBinding
 import com.dss.hrms.model.Office
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.Operation
 import com.dss.hrms.view.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OfficeDataValueListener
-import com.dss.hrms.view.messaging.`interface`.OnEmployeeClickListener
-import com.dss.hrms.view.messaging.adapter.EmployeeAdapter
-import com.dss.hrms.view.training.`interface`.OnCourseScheduleClickListener
-import com.dss.hrms.view.training.adaoter.CourseScheduleAdapter
-import com.dss.hrms.view.training.model.BudgetAndSchedule
-import com.dss.hrms.view.training.viewmodel.BudgetAndScheduleViewModel
 import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
@@ -42,8 +33,6 @@ import javax.inject.Inject
 
 
 class SearchEmployeeFragment : DaggerFragment() {
-    private val args by navArgs<SearchEmployeeFragmentArgs>()
-
     @Inject
     lateinit var commonRepo: CommonRepo
 
@@ -56,16 +45,16 @@ class SearchEmployeeFragment : DaggerFragment() {
 
     lateinit var binding: FragmentSearchEmployeeBinding
 
-    lateinit var linearLayoutManager: LinearLayoutManager
+
     lateinit var dataList: List<RoleWiseEmployeeResponseClass.RoleWiseEmployee>
-    lateinit var selectedDataList: List<RoleWiseEmployeeResponseClass.RoleWiseEmployee>
-    lateinit var adapter: EmployeeAdapter
+    var selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
 
     var division: SpinnerDataModel? = null
     var district: SpinnerDataModel? = null
     var officeLeadCategory: SpinnerDataModel? = null
     var office: Office? = null
     var designation: SpinnerDataModel? = null
+    var isAlreadyBacked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +68,7 @@ class SearchEmployeeFragment : DaggerFragment() {
         // Inflate the layout for this fragment
         binding = FragmentSearchEmployeeBinding.inflate(inflater, container, false)
         selectedDataList = arrayListOf()
+        dataList = arrayListOf()
         init()
         val navController = findNavController();
 // We use a String here, but any type that can be put in a Bundle is supported
@@ -87,9 +77,30 @@ class SearchEmployeeFragment : DaggerFragment() {
         )?.observe(viewLifecycleOwner,
             Observer { result ->
                 // Do something with the result.
-                Log.e("searchlist", "search lsit : ${result.size}")
+                result?.let {
+                    if (it.size > 0) {
+
+                        if (!isAlreadyBacked) {
+                            selectedDataList.addAll(it)
+                            isAlreadyBacked = true
+                            Log.e("searchlist", "search lsit : ${selectedDataList.size}")
+                            navController.previousBackStackEntry?.savedStateHandle?.set(
+                                "key",
+                                result
+                            )
+                            // navController.popBackStack()
+                        }
+                    }
+                }
             })
 
+        binding.back.setOnClickListener {
+            navController.previousBackStackEntry?.savedStateHandle?.set(
+                "key",
+                selectedDataList
+            )
+            navController.popBackStack()
+        }
         commonRepo.getCommonData("/api/auth/sixteen-category/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
@@ -157,6 +168,7 @@ class SearchEmployeeFragment : DaggerFragment() {
             })
 
         binding.search.setOnClickListener {
+            isAlreadyBacked = false
             var dialog = CustomLoadingDialog().createLoadingDialog(activity)
             employeeViewModel?.apply {
                 getEmployeeList(
@@ -187,23 +199,17 @@ class SearchEmployeeFragment : DaggerFragment() {
                     }
 
                     dataList?.let {
-
-                        val action =
-                            SearchEmployeeFragmentDirections.actionSearchEmployeeFragmentToEmployeeBottomSheetFragment(
-                                dataList?.toTypedArray()
-                            )
-                        findNavController().navigate(action)
+                        if (it.size > 0) {
+                            val action =
+                                SearchEmployeeFragmentDirections.actionSearchEmployeeFragmentToEmployeeBottomSheetFragment(
+                                    dataList?.toTypedArray()
+                                )
+                            findNavController().navigate(action)
 //                        Navigation.findNavController(binding.root)
 //                            .navigate(R.id.action_searchEmployeeFragment_to_employeeBottomSheetFragment)
-                        prepareRecycleView()
+                        }
                     }
                 })
-            }
-        }
-        args.employee?.let {
-            if (it.size >= 1) {
-                selectedDataList = it.toList()
-                Log.e("searchlist", "search lsit : ${selectedDataList.size}")
             }
         }
         return binding.root
@@ -213,28 +219,6 @@ class SearchEmployeeFragment : DaggerFragment() {
     fun init() {
         employeeViewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
-    }
-
-    fun prepareRecycleView() {
-        linearLayoutManager = LinearLayoutManager(activity)
-        binding.recycleView.layoutManager = linearLayoutManager
-        adapter = EmployeeAdapter()
-        activity?.let {
-            adapter.setInitialData(
-                dataList,
-                it,
-                object : OnEmployeeClickListener {
-                    override fun onClick(
-                        roleWiseEmployee: RoleWiseEmployeeResponseClass.RoleWiseEmployee,
-                        position: Int,
-                        isChecked: Boolean
-                    ) {
-                        Toast.makeText(activity, "isChecked ${isChecked}", Toast.LENGTH_LONG).show()
-                    }
-
-                })
-        }
-        binding.recycleView.adapter = adapter
     }
 
 

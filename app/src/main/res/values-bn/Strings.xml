@@ -243,4 +243,65 @@
     <string name="edit">পরিবর্তন করুন</string>
 
 
+    <string name="create">তৈরি করা</string>
+    <string name="content_management">বিষয়বস্তু ব্যবস্থাপনা</string>
+    <string name="category">বিভাগ</string>
+    <string name="add_category">বিভাগ যুক্ত করুন</string>
+    <string name="update_category">বিভাগ আপডেট করুন</string>
+    <string name="update_resource_perosn">আপডেট রিসোর্স পার্সন</string>
+    <string name="category_name">বিভাগ নাম</string>
+    <string name="category_name_bn">বিভাগ নাম (বাংলা)</string>
+    <string name="content">বিষয়বস্তু</string>
+    <string name="banner">ব্যানার</string>
+    <string name="faq">সচরাচর জিজ্ঞাসিত প্রশ্ন</string>
+    <string name="title_bn">শিরোনাম(বাংলা)</string>
+    <string name="is_published">প্রকাশিত ?</string>
+
+    <string name="training_management">প্রশিক্ষণ ব্যবস্থাপনা</string>
+    <string name="resource_person">রিসৌর্স পারসন</string>
+    <string name="resource_person_name">রিসৌর্স পারসন নাম</string>
+    <string name="short_name">সংক্ষিপ্ত নাম</string>
+    <string name="first_email">প্রথম ইমেইল</string>
+    <string name="first_mobile">প্রথম মোবাইল</string>
+    <string name="honorarium_head">অনারিয়াম হেড</string>
+    <string name="field_of_expertise">বিশেষজ্ঞের ক্ষেত্র</string>
+    <string name="optional_email">বিকল্প ইমেইল</string>
+    <string name="optional_mobile">বিকল্প মোবাইল</string>
+    <string name="office_address">দপ্তর ঠিকানা</string>
+
+    <string name="budget_and_schedule">বাজেট এবং সময়সূচী</string>
+    <string name="course_schedule">কোর্স সময়সূচী</string>
+    <string name="batch_schedule">ব্যাচ সময়সূচী</string>
+    <string name="batch">ব্যাচ</string>
+    <string name="course">কোর্স</string>
+    <string name="name_only">নাম</string>
+    <string name="batch_name">ব্যাচ নাম</string>
+    <string name="batch_name_bn">ব্যাচ নাম(বাংলা)</string>
+    <string name="coordinator">কো-অর্ডিনেটর</string>
+    <string name="start_date">শুরুর তারিখ</string>
+    <string name="end_date">শেষ তারিখ</string>
+    <string name="registration_start_date">নিবন্ধন শুরুর তারিখ</string>
+    <string name="registration_end_date">নিবন্ধন শেষ তারিখ</string>
+    <string name="co_ordinator">কো-অর্ডিনেটর</string>
+    <string name="co_co_ordinator">কো-কো-অর্ডিনেটর</string>
+    <string name="total_seats">মোট আসন</string>
+    <string name="staff_1">স্টাফ-১</string>
+    <string name="staff_2">স্টাফ-২</string>
+    <string name="staff_3">স্টাফ-৩</string>
+    <string name="course_id">কোর্স আইডি</string>
+    <string name="eligible">যোগ্য</string>
+    <string name="email_text">ই-মেইল</string>
+    <string name="message_subject">বার্তা বিষয়</string>
+    <string name="message_body">বার্তাংশ</string>
+    <string name="select_employee">কর্মচারী নির্বাচন করুন</string>
+    <string name="search_employee">কর্মচারী অনুসন্ধান করুন</string>
+    <string name="search">অনুসন্ধান করুন</string>
+    <string name="office_lead_category">অফিস নেতৃত্ব বিভাগ</string>
+    <string name="employee_name_or_id">কর্মচারীর নাম / আইডি</string>
+    <string name="attachment">সংযুক্তি</string>
+    <string name="ok">ঠিক আছে</string>
+    <string name="cancel">বাতিল</string>
+    <string name="done">সম্পন্ন</string>
+
+
 </resources>
