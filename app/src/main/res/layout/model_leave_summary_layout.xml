@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="leaveSummaray"
+            type="com.dss.hrms.view.leave.model.LeaveSummaryApiResponse.LeaveSummaryModifiedModel" />
+
+        <variable
+            name="language"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/llHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.2dp"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="10dp"
+                    android:weightSum="4">
+
+                    <View
+                        android:layout_width="0.2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:id="@+id/tvLeaveType"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.2"
+                        android:gravity="center"
+                        android:paddingHorizontal="3dp"
+                        android:text="@string/type"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0.2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:id="@+id/tvApplied"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:paddingHorizontal="3dp"
+                        android:text="@string/applied"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0.2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:id="@+id/tvEnjoyed"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingHorizontal="3dp"
+                        android:text="@string/enjoyed"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0.2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:id="@+id/tvRemainingBalance"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingHorizontal="3dp"
+                        android:text="@string/balance"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0.2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="10dp"
+                android:weightSum="4">
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/tvCasual"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.2"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dp"
+                    android:text="@{(((language.equals(`en`))?leaveSummaray.name :leaveSummaray.name_bn)+`(`+leaveSummaray.total.toString()+`)`)}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/tvCasualApplied"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.8"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dp"
+                    android:text="@{leaveSummaray.applied.toString()}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/tvCasualEnjoyed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dp"
+                    android:text="@{leaveSummaray.enjoyed.toString()}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/tvCasualRemainingBalance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dp"
+                    android:text="@{leaveSummaray.remaining_balance.toString()}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+            </LinearLayout>
+
+            <!--            <View-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="0.2dp"-->
+            <!--                android:background="@color/gray" />-->
+
+            <View
+                android:id="@+id/horizontalView"
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/gray" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -25,8 +25,8 @@ import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.Operation
 import com.dss.hrms.util.Role
-import com.dss.hrms.view.activity.EmployeeInfoActivity
-import com.dss.hrms.view.adapter.SpinnerAdapter
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
+import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.training.`interface`.OnCourseScheduleClickListener

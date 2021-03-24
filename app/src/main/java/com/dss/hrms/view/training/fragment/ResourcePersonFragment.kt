@@ -26,8 +26,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
@@ -36,7 +34,6 @@ import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentResourcePersonBinding
-import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.TrainingResponse
 import com.dss.hrms.repository.CommonRepo
@@ -44,10 +41,8 @@ import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.FilePath
 import com.dss.hrms.util.Operation
-import com.dss.hrms.util.StaticKey
-import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.activity.EmployeeInfoActivity
-import com.dss.hrms.view.adapter.SpinnerAdapter
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
+import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.bottomsheet.SelectImageBottomSheet
@@ -57,14 +52,12 @@ import com.dss.hrms.view.training.adaoter.spinner.ExpertiseFieldAdapter
 import com.dss.hrms.view.training.adaoter.spinner.HonorariumHeadAdapter
 import com.dss.hrms.view.training.model.ExpertiseField
 import com.dss.hrms.view.training.model.HonorariumHead
-import com.dss.hrms.view.training.viewmodel.ContentManagementViewModel
 import com.dss.hrms.view.training.viewmodel.TrainingManagementViewModel
 import com.dss.hrms.view.training.viewmodel.TrainingSimpleViewModel
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_resource_person.*
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody

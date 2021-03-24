@@ -1,7 +1,11 @@
 package com.dss.hrms.di.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.dss.hrms.view.leave.viewmodel.LeaveApplicationViewmodel
+import com.dss.hrms.view.leave.viewmodel.LeaveSummaryViewModel
 import com.dss.hrms.view.messaging.viewmodel.MessagingViewModel
+import com.dss.hrms.view.payroll.viewmodel.PayRollBankInformationViewModel
+import com.dss.hrms.view.payroll.viewmodel.SalaryGenerateViewModel
 import com.dss.hrms.view.training.viewmodel.BudgetAndScheduleViewModel
 import com.dss.hrms.view.training.viewmodel.ContentManagementViewModel
 import com.dss.hrms.view.training.viewmodel.TrainingManagementViewModel
@@ -65,5 +69,25 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MessagingViewModel::class)
     abstract fun bindMessagingViewModel(messagingViewModel: MessagingViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PayRollBankInformationViewModel::class)
+    abstract fun bindPayRollBankInformationViewModel(payRollBankInformationViewModel: PayRollBankInformationViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SalaryGenerateViewModel::class)
+    abstract fun bindPayRollSalaryGenerateViewModel(payRollSalaryGenerateViewModel: SalaryGenerateViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LeaveApplicationViewmodel::class)
+    abstract fun bindLeaveApplicationViewmodel(leaveApplicationViewmodel: LeaveApplicationViewmodel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LeaveSummaryViewModel::class)
+    abstract fun bindLeaveSummaryViewModel(leaveSummaryViewModel: LeaveSummaryViewModel): ViewModel
 
 }

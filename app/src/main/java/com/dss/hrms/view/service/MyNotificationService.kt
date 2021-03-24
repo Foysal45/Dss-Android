@@ -17,7 +17,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_MAX
 import com.dss.hrms.BuildConfig
 import com.dss.hrms.R
-import com.dss.hrms.view.activity.LoginActivity
+import com.dss.hrms.view.login.LoginActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 

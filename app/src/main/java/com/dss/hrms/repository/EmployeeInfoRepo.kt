@@ -84,7 +84,7 @@ class EmployeeInfoRepo @Inject constructor() {
                     "Bearer ${preparence.getToken()!!}",
                     division_id, district_id, sixteen_category_id, designation_id, office_id, term
                 )
-
+                Log.e("response", "response : ${response?.raw()}")
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) {
                     Log.e("response", "response : ${response.body()?.data}")
                     response?.body()

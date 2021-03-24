@@ -14,7 +14,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.chaadride.network.error.ApiError
@@ -25,14 +24,11 @@ import com.dss.hrms.model.Office
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.FilePath
-import com.dss.hrms.view.activity.EmployeeInfoActivity
-import com.dss.hrms.view.adapter.SpinnerAdapter
+import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OfficeDataValueListener
 import com.dss.hrms.view.messaging.viewmodel.MessagingViewModel
-import com.dss.hrms.view.training.model.BudgetAndSchedule
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence

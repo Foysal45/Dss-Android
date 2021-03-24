@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dss.hrms.repository.EmployeeInfoEditCreateRepo
 import com.dss.hrms.repository.LoginRepo
-import com.dss.hrms.view.activity.EmployeeInfoActivity
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch

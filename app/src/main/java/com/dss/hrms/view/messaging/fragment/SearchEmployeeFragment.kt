@@ -1,27 +1,20 @@
 package com.dss.hrms.view.messaging.fragment
 
-import android.content.Context
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.dss.hrms.R
 import com.dss.hrms.databinding.FragmentSearchEmployeeBinding
 import com.dss.hrms.model.Office
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.view.adapter.SpinnerAdapter
+import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OfficeDataValueListener
@@ -172,30 +165,18 @@ class SearchEmployeeFragment : DaggerFragment() {
             var dialog = CustomLoadingDialog().createLoadingDialog(activity)
             employeeViewModel?.apply {
                 getEmployeeList(
-//                    office?.id.toString(),
-//                    division?.id?.toString(),
-//                    district?.id?.toString(),
-//                    officeLeadCategory?.id?.toString(),
-//                    designation?.id?.toString(),
-//                    binding?.employeeNameOrId?.etText?.text?.trim().toString()
-                    "1", "1", "1", "1", "1", "Raju"
+                    office?.id?.let { it.toString() },
+                    division?.id?.let { it.toString() },
+                    district?.id?.let { it.toString() },
+                    officeLeadCategory?.id?.let { it.toString() },
+                    designation?.id?.let { it.toString() },
+                    binding?.employeeNameOrId?.etText?.text?.trim()?.let { it.toString() }
+                    //    "1", "1", "1", "1", "1", "Raju"
                 ).observe(viewLifecycleOwner, Observer {
                     dialog?.dismiss()
+                    Log.e("data", "datalist : ${it.size}")
                     it?.let {
                         dataList = it
-                        dataList += it
-                        dataList += it
-                        dataList += it
-                        dataList += it
-                        dataList += it
-                        dataList += it
-                        dataList += it
-                        dataList += it
-                        dataList += it
-                        dataList += it
-                        dataList += it
-                        dataList += it
-                        dataList += it
                     }
 
                     dataList?.let {

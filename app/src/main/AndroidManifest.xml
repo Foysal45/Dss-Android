@@ -19,28 +19,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.messaging.MessagingActivity"
-            android:theme="@style/AppThemeActionBar"
-            ></activity>
+        <activity
+            android:name=".view.payroll.PayrollActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".view.leave.LeaveActivity"
+            android:theme="@style/AppThemeActionBar" />
+        <activity
+            android:name=".view.messaging.MessagingActivity"
+            android:theme="@style/AppThemeActionBar" />
         <activity
             android:name=".view.training.TrainingActivity"
             android:theme="@style/AppThemeActionBar" />
-        <activity android:name=".view.activity.SettingsActivity" />
+        <activity android:name=".view.settings.SettingsActivity" />
         <activity
-            android:name=".view.activity.EmployeeInfoActivity"
+            android:name=".view.personalinfo.EmployeeInfoActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".view.activity.ForgetPAssActivity"
+            android:name=".view.login.ForgetPAssActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".view.activity.ChangePassActivity"
+            android:name=".view.login.ChangePassActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".view.activity.OTPActivity"
+            android:name=".view.login.OTPActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".view.MainActivity" />
         <activity
-            android:name=".view.activity.LoginActivity"
+            android:name=".view.login.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

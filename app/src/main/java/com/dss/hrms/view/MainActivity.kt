@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -26,11 +25,13 @@ import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.CustomVisibility
 import com.dss.hrms.view.activity.BaseActivity
-import com.dss.hrms.view.activity.EmployeeInfoActivity
-import com.dss.hrms.view.activity.LoginActivity
-import com.dss.hrms.view.activity.SettingsActivity
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
+import com.dss.hrms.view.login.LoginActivity
+import com.dss.hrms.view.settings.SettingsActivity
 import com.dss.hrms.view.allInterface.OnNetworkStateChangeListener
+import com.dss.hrms.view.leave.LeaveActivity
 import com.dss.hrms.view.messaging.MessagingActivity
+import com.dss.hrms.view.payroll.PayrollActivity
 import com.dss.hrms.view.receiver.NetworkChangeReceiver
 import com.dss.hrms.view.training.TrainingActivity
 import com.dss.hrms.viewmodel.EmployeeViewModel
@@ -102,6 +103,18 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         })
+        btnPayroll.setOnClickListener({
+            Intent(this, PayrollActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        })
+        btnLeave.setOnClickListener({
+            Intent(this, LeaveActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        })
     }
 
     override fun onRestart() {
@@ -118,7 +131,8 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
     }
 
     fun init() {
-        employeeViewModel = ViewModelProvider(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
+        employeeViewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
         mNetworkReceiver = NetworkChangeReceiver(this)
         registerNetworkBroadcast()
     }

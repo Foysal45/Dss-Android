@@ -1,7 +1,5 @@
 package com.dss.hrms.di.training
 
-import com.dss.hrms.view.fragment.BasicInformationFragment
-import com.dss.hrms.view.fragment.FragmentEmployeeInfo
 import com.dss.hrms.view.training.fragment.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/leave_nav"
+    app:startDestination="@id/leaveTopFragment">
+
+    <fragment
+        android:id="@+id/leaveTopFragment"
+        android:name="com.dss.hrms.view.leave.fragment.LeaveTopFragment"
+        android:label="@string/leave_management"
+        tools:layout="@layout/fragment_leave_top" >
+        <action
+            android:id="@+id/action_leaveTopFragment_to_leaveSummaryFragment"
+            app:destination="@id/leaveSummaryFragment" />
+        <action
+            android:id="@+id/action_leaveTopFragment_to_leaveApplicationFragment"
+            app:destination="@id/leaveApplicationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/leaveApplicationFragment"
+        android:name="com.dss.hrms.view.leave.fragment.LeaveApplicationFragment"
+        android:label="@string/leave_application"
+        tools:layout="@layout/fragment_leave_application" >
+        <action
+            android:id="@+id/action_leaveApplicationFragment_to_leaveTopFragment"
+            app:destination="@id/leaveTopFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/leaveSummaryFragment"
+        android:name="com.dss.hrms.view.leave.fragment.LeaveSummaryFragment"
+        android:label="@string/leave_summary_dashboard"
+        tools:layout="@layout/fragment_leave_summary" >
+        <action
+            android:id="@+id/action_leaveSummaryFragment_to_leaveTopFragment"
+            app:destination="@id/leaveTopFragment" />
+    </fragment>
+</navigation>

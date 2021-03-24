@@ -1,15 +1,12 @@
 package com.dss.hrms.view.messaging
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ActivityMessagingBinding
 import com.dss.hrms.view.activity.BaseActivity

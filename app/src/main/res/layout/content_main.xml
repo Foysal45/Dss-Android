@@ -106,6 +106,7 @@
             android:gravity="center">
 
             <soup.neumorphism.NeumorphFloatingActionButton
+                android:id="@+id/btnLeave"
                 style="@style/Widget.Neumorph.FloatingActionButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -156,6 +157,7 @@
             android:gravity="center">
 
             <soup.neumorphism.NeumorphFloatingActionButton
+                android:id="@+id/btnPayroll"
                 style="@style/Widget.Neumorph.FloatingActionButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

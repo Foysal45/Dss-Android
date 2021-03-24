@@ -2,9 +2,7 @@ package com.dss.hrms.di
 
 import android.app.Application
 import com.btbapp.alquranapp.retrofit.ApiService
-import com.dss.hrms.retrofit.MessagingApiService
-import com.dss.hrms.retrofit.RetrofitInstance
-import com.dss.hrms.retrofit.TrainingApiService
+import com.dss.hrms.retrofit.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -122,6 +120,18 @@ class ApiModule {
         @Provides
         fun provideMessagingApiService(retrofit: Retrofit): MessagingApiService {
             return retrofit.create(MessagingApiService::class.java)
+        }
+
+        @Singleton
+        @Provides
+        fun provideLeaveApiService(retrofit: Retrofit): LeaveApiService {
+            return retrofit.create(LeaveApiService::class.java)
+        }
+
+        @Singleton
+        @Provides
+        fun providePayrollApiService(retrofit: Retrofit): PayrollApiService {
+            return retrofit.create(PayrollApiService::class.java)
         }
 
     }

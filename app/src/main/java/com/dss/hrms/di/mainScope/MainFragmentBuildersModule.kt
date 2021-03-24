@@ -1,7 +1,7 @@
 package com.dss.hrms.di.mainScope
 
-import com.dss.hrms.view.fragment.BasicInformationFragment
-import com.dss.hrms.view.fragment.FragmentEmployeeInfo
+import com.dss.hrms.view.personalinfo.fragment.BasicInformationFragment
+import com.dss.hrms.view.personalinfo.fragment.FragmentEmployeeInfo
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

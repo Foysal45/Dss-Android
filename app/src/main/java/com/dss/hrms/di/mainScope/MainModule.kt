@@ -1,7 +1,7 @@
 package com.dss.hrms.di.mainScope
 
 import androidx.fragment.app.FragmentManager
-import com.dss.hrms.view.activity.EmployeeInfoActivity
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import dagger.Module
 import dagger.Provides
 import kotlin.reflect.KClass

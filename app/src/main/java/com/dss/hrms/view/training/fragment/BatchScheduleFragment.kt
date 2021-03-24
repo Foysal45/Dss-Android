@@ -21,7 +21,7 @@ import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentBatchScheduleBinding
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.util.*
-import com.dss.hrms.view.activity.EmployeeInfoActivity
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OnDateListener
 import com.dss.hrms.view.training.`interface`.OnBatchScheduleClickListener

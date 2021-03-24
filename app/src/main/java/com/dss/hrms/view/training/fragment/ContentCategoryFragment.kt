@@ -27,7 +27,7 @@ import com.dss.hrms.model.TrainingResponse
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.Operation
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.activity.EmployeeInfoActivity
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.receiver.NetworkChangeReceiver
 import com.dss.hrms.view.training.`interface`.OnContentCategoryClickListener
 import com.dss.hrms.view.training.adaoter.ContentCategoryAdapter
