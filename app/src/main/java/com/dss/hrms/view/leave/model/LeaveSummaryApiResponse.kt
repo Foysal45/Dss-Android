@@ -2,6 +2,8 @@ package com.dss.hrms.view.leave.model
 
 class LeaveSummaryApiResponse {
 
+
+
     data class LeaveSummaryResponse(
         val status: String?,
         val message: String?,

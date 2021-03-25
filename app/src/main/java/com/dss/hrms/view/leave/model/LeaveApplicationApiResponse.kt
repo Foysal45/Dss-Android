@@ -40,6 +40,12 @@ class LeaveApplicationApiResponse {
         val comments: String?
     )
 
+    data class LeavePolicyResponse(
+        val status: String?,
+        val message: String?,
+        val code: Int?,
+        val data:  List<LeaveApplicationApiResponse.LeavePolicy>?
+    )
     data class LeavePolicy(
         val id: Int?,
         val leave_name: String?,

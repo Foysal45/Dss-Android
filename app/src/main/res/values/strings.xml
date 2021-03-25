@@ -307,7 +307,7 @@
     <string name="payroll_management">Payroll Management</string>
     <string name="bank_information">Bank Information</string>
     <string name="salary_process">Salary Process</string>
-    <string name="leave_type">Leave Type</string>
+
     <string name="type">Type</string>
     <string name="casual_leave">Casual Leave</string>
     <string name="sick_leave">Sick Leave</string>
@@ -326,7 +326,13 @@
     <string name="branch_district_name">Branch District Name</string>
     <string name="branch_routing_no">Branch Routing No</string>
     <string name="year_and_month">Year and Month</string>
-
+    <string name="select_notify">Select Notify</string>
+    <string name="select_responsible">Select Responsible</string>
+    <string name="leave_date">Leave Date</string>
+    <string name="leave_type">Leave Type</string>
+    <string name="leave_request_reference">Leave Request Reference</string>
+    <string name="emergency_contact_no">Emergency contact no</string>
+    <string name="reason_details">Reason Details</string>
 
     <string name="full_name">Full Name</string>
     <string name="basic_salary">Basic Salary</string>

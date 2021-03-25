@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dss.hrms.repository.leave.LeaveApplicationRepo
 import com.dss.hrms.view.leave.model.LeaveApplicationApiResponse
+import com.dss.hrms.view.training.model.HonorariumHead
+import com.dss.hrms.view.training.model.HonorariumHeadResponse
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,4 +36,34 @@ class LeaveApplicationViewmodel @Inject constructor(application: Application) :
             }
         }
     }
+
+    fun createLeaveApplication(map: HashMap<Any, Any?>): MutableLiveData<Any> {
+        var liveData = MutableLiveData<Any>()
+        viewModelScope.launch {
+            liveData = leaveApplicationRepo.createLeaveApplication(map, liveData)
+        }
+        return liveData
+    }
+
+    fun updateLeaveApplication(applicationId: Int?, map: HashMap<Any, Any?>): MutableLiveData<Any> {
+        var liveData = MutableLiveData<Any>()
+        viewModelScope.launch {
+            liveData = leaveApplicationRepo.updateLeaveApplication(map, liveData, applicationId)
+        }
+        return liveData
+    }
+
+    fun getLeavePolicyList(): MutableLiveData<List<LeaveApplicationApiResponse.LeavePolicy>> {
+        var liveData = MutableLiveData<List<LeaveApplicationApiResponse.LeavePolicy>>()
+        viewModelScope.launch {
+            var response = leaveApplicationRepo.getLeavePolicyList()
+            if (response is LeaveApplicationApiResponse.LeavePolicyResponse) {
+                liveData.postValue(response.data)
+            } else {
+                liveData.postValue(null)
+            }
+        }
+        return liveData
+    }
+
 }
