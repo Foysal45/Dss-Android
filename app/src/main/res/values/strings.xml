@@ -300,6 +300,9 @@
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="done">done</string>
+    <string name="head_office_branches">Head Office Branches</string>
+    <string name="branches_wise_section">Branches Wise Section</string>
+    <string name="section_wise_subsection">Section wise Sub-Section</string>
 
     <string name="leave_management">Leave Management</string>
     <string name="leave_application">Leave Application</string>

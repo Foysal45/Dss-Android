@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.RequestManager
 import com.dss.hrms.R
 import com.dss.hrms.databinding.FragmentEmployeeBottomSheetBinding
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
@@ -18,10 +19,13 @@ import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.view.messaging.`interface`.OnEmployeeClickListener
 import com.dss.hrms.view.messaging.adapter.EmployeeAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import javax.inject.Inject
 
 
 class EmployeeBottomSheetFragment : BottomSheetDialogFragment() {
     private val args by navArgs<EmployeeBottomSheetFragmentArgs>()
+
+
     var selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
     lateinit var binding: FragmentEmployeeBottomSheetBinding
     lateinit var linearLayoutManager: LinearLayoutManager

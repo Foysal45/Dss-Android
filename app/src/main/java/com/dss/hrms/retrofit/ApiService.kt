@@ -1,6 +1,7 @@
 package com.btbapp.alquranapp.retrofit
 
 
+import com.dss.hrms.model.HeadOfficeDepartmentApiResponse
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.employeeProfile.EmployeeResponse
 import com.dss.hrms.model.login.*
@@ -42,10 +43,19 @@ interface ApiService {
 
 
     @Headers("Accept: application/json")
+    @GET("/api/auth/head-office-departments/list")
+    suspend fun headOfficeDepartmentList(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String?
+    ): Response<HeadOfficeDepartmentApiResponse.HeadOfficeDepartmentResponse>?
+    @Headers("Accept: application/json")
     @GET("/api/auth/employee")
     suspend fun getEmployeeListAccordingToQuery(
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String?,
+        @Query("head_office_department_id") head_office_department_id: String?,
+        @Query("head_office_section_id") head_office_section_id: String?,
+        @Query("head_office_sub_section_id") head_office_sub_section_id: String?,
         @Query("division_id") division_id: String?,
         @Query("district_id") district_id: String?,
         @Query("sixteen_category_id") sixteen_category_id: String?,

@@ -45,6 +45,21 @@
 
 
                 <include
+                    android:id="@+id/headOfficesBranches"
+                    layout="@layout/personal_info_spinner"
+                    app:title="@{@string/head_office_branches}" />
+
+                <include
+                    android:id="@+id/branches_wise_section"
+                    layout="@layout/personal_info_spinner"
+                    app:title="@{@string/branches_wise_section}" />
+
+                <include
+                    android:id="@+id/section_wise_subsection"
+                    layout="@layout/personal_info_spinner"
+                    app:title="@{@string/section_wise_subsection}" />
+
+                <include
                     android:id="@+id/division"
                     layout="@layout/personal_info_spinner"
                     app:title="@{@string/division}" />

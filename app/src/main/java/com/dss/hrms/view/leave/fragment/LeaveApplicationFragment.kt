@@ -15,6 +15,9 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
@@ -22,6 +25,7 @@ import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogLeaveManagementLayoutBinding
 import com.dss.hrms.databinding.FragmentLeaveApplicationBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.util.*
@@ -33,6 +37,7 @@ import com.dss.hrms.view.leave.adapter.LeaveApplicationAdapter
 import com.dss.hrms.view.leave.adapter.spinner.LeavePolicySpinnerAdapter
 import com.dss.hrms.view.leave.model.LeaveApplicationApiResponse
 import com.dss.hrms.view.leave.viewmodel.LeaveApplicationViewmodel
+import com.dss.hrms.view.messaging.fragment.SearchEmployeeFragmentDirections
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.training.adaoter.spinner.HonorariumHeadAdapter
@@ -81,11 +86,22 @@ class LeaveApplicationFragment : DaggerFragment() {
         binding = FragmentLeaveApplicationBinding.inflate(inflater, container, false)
         employee = employeeProfile?.employee
 
+        //  navController = Navigation.findNavController(binding.root)
         init()
 
         binding.fab.setOnClickListener {
-            showEditCreateDialog(Operation.CREATE, null)
+            var leave: LeaveApplicationApiResponse.LeaveApplication? = dataList?.get(0)
+            val action =
+                LeaveApplicationFragmentDirections.actionLeaveApplicationFragmentToCreateEditLeaveApplicationFragment(
+                    leaveRoleWiseemployee = null,
+                    leaveApplication = leave
+                )
+            findNavController().navigate(action)
+
+          //  showEditCreateDialog(Operation.CREATE, null)
         }
+
+
 
         leaveApplicationViewModel.apply {
             var loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
@@ -153,6 +169,8 @@ class LeaveApplicationFragment : DaggerFragment() {
         if (operation == Operation.CREATE) applyDate = currentDate else applyDate =
             leaveApplication?.apply_date
 
+
+
         leaveApplicationBinding.lLeaveRequestReference.etText.setText(leaveApplication?.leave_request_ref)
         leaveApplicationBinding.lEmergencyContantNo.etText.setText(
             leaveApplication?.leave_application_details?.get(
@@ -219,6 +237,18 @@ class LeaveApplicationFragment : DaggerFragment() {
                     )
                 }
             })
+
+
+        leaveApplicationBinding.lSelectNotify.llBody.setOnClickListener {
+
+
+            Log.e(
+                "leaveapplication",
+                "notify person :........................................................"
+            )
+            // Navigation.findNavController(binding.root).navigate(R.id.action_leaveApplicationFragment_to_searchEmployeeFragment3)
+        }
+
 
 
         leaveApplicationBinding.leaveApplicatoinBtnUpdate.setOnClickListener {

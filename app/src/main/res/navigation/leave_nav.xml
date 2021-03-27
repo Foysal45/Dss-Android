@@ -9,7 +9,7 @@
         android:id="@+id/leaveTopFragment"
         android:name="com.dss.hrms.view.leave.fragment.LeaveTopFragment"
         android:label="@string/leave_management"
-        tools:layout="@layout/fragment_leave_top" >
+        tools:layout="@layout/fragment_leave_top">
         <action
             android:id="@+id/action_leaveTopFragment_to_leaveSummaryFragment"
             app:destination="@id/leaveSummaryFragment" />
@@ -21,18 +21,80 @@
         android:id="@+id/leaveApplicationFragment"
         android:name="com.dss.hrms.view.leave.fragment.LeaveApplicationFragment"
         android:label="@string/leave_application"
-        tools:layout="@layout/fragment_leave_application" >
+        tools:layout="@layout/fragment_leave_application">
         <action
             android:id="@+id/action_leaveApplicationFragment_to_leaveTopFragment"
             app:destination="@id/leaveTopFragment" />
+        <action
+            android:id="@+id/action_leaveApplicationFragment_to_searchEmployeeFragment"
+            app:destination="@id/searchEmployeeFragment" />
+
+        <action
+            android:id="@+id/action_leaveApplicationFragment_to_createEditLeaveApplicationFragment"
+            app:destination="@id/createEditLeaveApplicationFragment" />
+        <argument
+            android:name="leaveApplication"
+            app:argType="com.dss.hrms.view.leave.model.LeaveApplicationApiResponse$LeaveApplication"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/leaveSummaryFragment"
         android:name="com.dss.hrms.view.leave.fragment.LeaveSummaryFragment"
         android:label="@string/leave_summary_dashboard"
-        tools:layout="@layout/fragment_leave_summary" >
+        tools:layout="@layout/fragment_leave_summary">
         <action
             android:id="@+id/action_leaveSummaryFragment_to_leaveTopFragment"
             app:destination="@id/leaveTopFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchEmployeeFragment3"
+        android:name="com.dss.hrms.view.messaging.fragment.SearchEmployeeFragment"
+        android:label="SearchEmployeeFragment">
+        <action
+            android:id="@+id/action_searchEmployeeFragment_to_employeeBottomSheetFragment"
+            app:destination="@id/employeeBottomSheetFragment" />
+        <argument
+            android:name="employee"
+            android:defaultValue="@null"
+            app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_searchEmployeeFragment3_to_createEditLeaveApplicationFragment"
+            app:destination="@id/createEditLeaveApplicationFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/employeeBottomSheetFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.EmployeeBottomSheetFragment"
+        android:label="fragment_employee_bottom_sheet"
+        tools:layout="@layout/fragment_employee_bottom_sheet">
+        <action
+            android:id="@+id/action_employeeBottomSheetFragment_to_searchEmployeeFragment"
+            app:destination="@id/searchEmployeeFragment" />
+        <argument
+            android:name="employee"
+            app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]" />
+    </dialog>
+    <fragment
+        android:id="@+id/createEditLeaveApplicationFragment"
+        android:name="com.dss.hrms.view.leave.fragment.CreateEditLeaveApplicationFragment"
+        android:label="CreateEditLeaveApplicationFragment">
+        <action
+            android:id="@+id/action_createEditLeaveApplicationFragment_to_leaveApplicationFragment"
+            app:destination="@id/leaveApplicationFragment" />
+        <argument
+            android:name="leaveRoleWiseemployee"
+            android:defaultValue="@null"
+            app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_createEditLeaveApplicationFragment_to_searchEmployeeFragment3"
+            app:destination="@id/searchEmployeeFragment3" />
+        <argument
+            android:name="leaveApplication"
+            android:defaultValue="@null"
+            app:argType="com.dss.hrms.view.leave.model.LeaveApplicationApiResponse$LeaveApplication"
+            app:nullable="true" />
     </fragment>
 </navigation>

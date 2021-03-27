@@ -54,7 +54,7 @@
 
                                 <include
                                     android:id="@+id/lSelectNotify"
-                                    layout="@layout/personal_info_spinner"
+                                    layout="@layout/personal_info_textview"
                                     app:title="@{@string/select_notify}" />
 
                                 <include

@@ -19,6 +19,9 @@ class SpinnerDataModel {
     @SerializedName("disability_type_bn")
     var disability_type_bn: String? = null
 
+    @SerializedName("head_office_section_id")
+    var head_office_section_id: Int? = null
+
     @SerializedName("disability_degree")
     var disability_degree: String? = null
 

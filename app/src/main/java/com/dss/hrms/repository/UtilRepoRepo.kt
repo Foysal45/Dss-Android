@@ -10,6 +10,8 @@ import com.dss.hrms.retrofit.RetrofitInstance.retrofitInstance
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.namaztime.namaztime.database.MySharedPreparence
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -28,6 +30,27 @@ class UtilRepoRepo @Inject constructor() {
 
     @Inject
     lateinit var preparence: MySharedPreparence
+
+
+    suspend fun getHeadOfficeDepartMent(): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = apiService.headOfficeDepartmentList(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}"
+                )
+                Log.e("response", "response : ")
+                if (response?.body()?.code == 200 || response?.body()?.code == 201)
+                    response?.body()
+                else
+                    null
+            } catch (e: Exception) {
+                Log.e("responseexceotion", "response : exceotion: ${e.message}")
+                null
+            }
+
+        }
+    }
 
 
     fun getDivision(): MutableLiveData<List<SpinnerDataModel>>? {

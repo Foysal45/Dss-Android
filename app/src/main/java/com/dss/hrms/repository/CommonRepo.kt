@@ -12,6 +12,8 @@ import com.dss.hrms.view.allInterface.OfficeDataValueListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.namaztime.namaztime.database.MySharedPreparence
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -31,6 +33,7 @@ class CommonRepo @Inject constructor() {
 
     @Inject
     lateinit var preparence: MySharedPreparence
+
 
     fun getDivision(): MutableLiveData<List<SpinnerDataModel>>? {
         val liveData: MutableLiveData<List<SpinnerDataModel>> =
@@ -130,6 +133,55 @@ class CommonRepo @Inject constructor() {
         return liveData
     }
 
+    fun getDistrict(
+        divisionId: Int?
+    ): MutableLiveData<List<SpinnerDataModel>>? {
+        val liveData: MutableLiveData<List<SpinnerDataModel>> =
+            MutableLiveData<List<SpinnerDataModel>>()
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getDistrict(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}",
+                divisionId
+            )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+
+                        if (code == 200 || code == 201) {
+                            val dataJO = jsonObjectParent.getJSONObject("data")
+                            val dataJA = dataJO.getJSONArray("districts")
+                            val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
+                            val district: List<SpinnerDataModel> =
+                                Gson().fromJson(dataJA.toString(), type)
+                            liveData.postValue(district)
+
+                        } else {
+                            liveData.postValue(null)
+                        }
+                    } catch (e: JSONException) {
+                        liveData.postValue(null)
+                    }
+                } else {
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    liveData.postValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
+            }
+
+        })
+        return liveData
+    }
+
     fun getUpazila(
         districtId: Int?,
         commonDataValueListener: CommonDataValueListener
@@ -184,6 +236,54 @@ class CommonRepo @Inject constructor() {
         return liveData
     }
 
+    fun getUpazila(
+        districtId: Int?
+    ): MutableLiveData<List<SpinnerDataModel>>? {
+        val liveData: MutableLiveData<List<SpinnerDataModel>> =
+            MutableLiveData<List<SpinnerDataModel>>()
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getUpazila(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}",
+                districtId
+            )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+
+                        if (code == 200 || code == 201) {
+                            val dataJO = jsonObjectParent.getJSONObject("data")
+                            val dataJA = dataJO.getJSONArray("upazilas")
+                            val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
+                            val upazila: List<SpinnerDataModel> =
+                                Gson().fromJson(dataJA.toString(), type)
+                            liveData.postValue(upazila)
+                        } else {
+                            liveData.postValue(null)
+                        }
+                    } catch (e: JSONException) {
+                        liveData.postValue(null)
+                    }
+                } else {
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    liveData.postValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
+            }
+
+        })
+        return liveData
+    }
+
     fun getCommonData(
         identity: String,
         commonDataValueListener: CommonDataValueListener
@@ -231,6 +331,56 @@ class CommonRepo @Inject constructor() {
             override fun onFailure(call: Call<Any?>, t: Throwable) {
                 liveData.postValue(null)
                 commonDataValueListener.valueChange(null)
+            }
+
+        })
+        return liveData
+    }
+
+    fun getCommonData(
+        identity: String
+    ): MutableLiveData<List<SpinnerDataModel>>? {
+        val liveData: MutableLiveData<List<SpinnerDataModel>> =
+            MutableLiveData<List<SpinnerDataModel>>()
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getCommonData(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}",
+                identity
+            )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+
+                        if (code == 200 || code == 201) {
+                            val dataJA = jsonObjectParent.getJSONArray("data")
+                            val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
+                            val dataList: List<SpinnerDataModel> =
+                                Gson().fromJson(dataJA.toString(), type)
+                            liveData.postValue(dataList)
+
+                        } else {
+                            liveData.postValue(null)
+
+                        }
+                    } catch (e: JSONException) {
+                        liveData.postValue(null)
+
+                    }
+                } else {
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    liveData.postValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
             }
 
         })
@@ -345,6 +495,55 @@ class CommonRepo @Inject constructor() {
     }
 
 
+    fun getOffice(
+        identity: String
+    ): MutableLiveData<List<Office>>? {
+        val liveData: MutableLiveData<List<Office>> =
+            MutableLiveData<List<Office>>()
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getCommonData(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}",
+                identity
+            )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+
+                        if (code == 200 || code == 201) {
+                            val dataJA = jsonObjectParent.getJSONArray("data")
+                            val type: Type = object : TypeToken<List<Office?>?>() {}.type
+                            val dataList: List<Office> =
+                                Gson().fromJson(dataJA.toString(), type)
+                            liveData.postValue(dataList)
+
+                        } else {
+                            liveData.postValue(null)
+                        }
+                    } catch (e: JSONException) {
+                        liveData.postValue(null)
+                    }
+                } else {
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    liveData.postValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
+            }
+
+        })
+        return liveData
+    }
+
+
     fun getDesignationData(
         identity: String,
         commonDataValueListener: CommonDataValueListener
@@ -403,6 +602,65 @@ class CommonRepo @Inject constructor() {
             override fun onFailure(call: Call<Any?>, t: Throwable) {
                 liveData.postValue(null)
                 commonDataValueListener.valueChange(null)
+            }
+
+        })
+        return liveData
+    }
+
+
+    fun getDesignationData(
+        identity: String
+    ): MutableLiveData<List<SpinnerDataModel>>? {
+        val liveData: MutableLiveData<List<SpinnerDataModel>> =
+            MutableLiveData<List<SpinnerDataModel>>()
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getCommonData(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}",
+                identity
+            )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+
+                        if (code == 200 || code == 201) {
+                            val jsonObj = jsonObjectParent.getJSONObject("data")
+                            val dataJA = jsonObj.getJSONArray("officehasdesgnations")
+                            var list = arrayListOf<SpinnerDataModel>()
+                            var i = 0
+                            while (i < dataJA.length()) {
+                                var dataObj = dataJA.getJSONObject(i).getJSONObject("designation")
+                                var spinnerDataModel = Gson().fromJson(
+                                    dataObj.toString(),
+                                    SpinnerDataModel::class.java
+                                )
+                                list.add(spinnerDataModel)
+                                i++
+                            }
+                            var dataList = listOf<SpinnerDataModel>()
+                            dataList = dataList + list
+                            liveData.postValue(dataList)
+                        } else {
+                            liveData.postValue(null)
+                        }
+                    } catch (e: JSONException) {
+                        liveData.postValue(null)
+                    }
+                } else {
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    liveData.postValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
             }
 
         })

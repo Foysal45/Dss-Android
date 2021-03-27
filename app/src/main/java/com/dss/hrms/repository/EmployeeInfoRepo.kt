@@ -71,6 +71,9 @@ class EmployeeInfoRepo @Inject constructor() {
 
     suspend fun getEmployeeList(
         office_id: String?,
+        head_office_department_id: String?,
+        head_office_section_id: String?,
+        head_office_sub_section_id: String?,
         division_id: String?,
         district_id: String?,
         sixteen_category_id: String?,
@@ -82,6 +85,7 @@ class EmployeeInfoRepo @Inject constructor() {
                 var response = apiService.getEmployeeListAccordingToQuery(
                     preparence.getLanguage()!!,
                     "Bearer ${preparence.getToken()!!}",
+                    head_office_department_id, head_office_section_id, head_office_sub_section_id,
                     division_id, district_id, sixteen_category_id, designation_id, office_id, term
                 )
                 Log.e("response", "response : ${response?.raw()}")

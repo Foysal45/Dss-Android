@@ -47,6 +47,9 @@ class EmployeeViewModel @Inject constructor(application: Application) :
 
     fun getEmployeeList(
         office_id: String?,
+        head_office_department_id: String?,
+        head_office_section_id: String?,
+        head_office_sub_section_id: String?,
         division_id: String?,
         district_id: String?,
         sixteen_category_id: String?,
@@ -57,17 +60,20 @@ class EmployeeViewModel @Inject constructor(application: Application) :
         viewModelScope.launch {
             var resonse = employeeInfoRepo.getEmployeeList(
                 office_id,
+                head_office_department_id,
+                head_office_section_id,
+                head_office_sub_section_id,
                 division_id,
                 district_id,
                 sixteen_category_id,
                 designation_id,
                 term
             )
-                if (resonse is RoleWiseEmployeeResponseClass.EmployeeListResponse) {
-                    liveData.postValue(resonse.data?.data)
-                } else {
-                    liveData.postValue(null)
-                }
+            if (resonse is RoleWiseEmployeeResponseClass.EmployeeListResponse) {
+                liveData.postValue(resonse.data?.data)
+            } else {
+                liveData.postValue(null)
+            }
         }
         return liveData
     }

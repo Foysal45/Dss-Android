@@ -9,6 +9,7 @@ object RetrofitInstance {
     //  var BASE_URL = "https://api.alquran.cloud/"
   //  var BASE_URL = "http://192.168.10.180:8000"
    // var BASE_URL = "http://dss.aws.simecsystem.com:10014"
+    //var BASE_URL = "http://dss.aws.simecsystem.com:10014"
     var BASE_URL = "http://dss.staging.simecsystem.com:10014"
     const val BASE_URL_PLACE_API = "https://maps.googleapis.com/maps/api"
     const val BASE_URL_FCM = "https://fcm.googleapis.com"

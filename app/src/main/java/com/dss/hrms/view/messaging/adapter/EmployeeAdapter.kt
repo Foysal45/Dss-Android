@@ -5,12 +5,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelEmployeeListLayoutBinding
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
+import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.Operation
 import com.dss.hrms.view.messaging.`interface`.OnEmployeeClickListener
 import com.namaztime.namaztime.database.MySharedPreparence
+import kotlinx.android.synthetic.main.fragment_basic_information.view.*
 import javax.inject.Inject
 
 class EmployeeAdapter @Inject constructor() :
@@ -20,6 +25,8 @@ class EmployeeAdapter @Inject constructor() :
     lateinit var onEmployeeClickListener: OnEmployeeClickListener
     lateinit var preparence: MySharedPreparence
 
+    @Inject
+    lateinit var requestManager: RequestManager
 
     fun setInitialData(
         dataList: List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>,
@@ -44,6 +51,13 @@ class EmployeeAdapter @Inject constructor() :
         var employee = dataList.get(position)
         holder.binding.employee = employee
         holder.binding.language = preparence.getLanguage()
+
+        Glide.with(context).applyDefaultRequestOptions(
+            RequestOptions()
+                .placeholder(R.drawable.ic_baseline_image_24)
+        ).load(RetrofitInstance.BASE_URL + employee?.photo)
+            .into(holder.binding.imageView)
+
 
         holder.binding.checkBox.setOnClickListener {
             employee?.let { it1 ->

@@ -1,5 +1,8 @@
 package com.dss.hrms.view.leave.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 class LeaveApplicationApiResponse {
 
     data class LeaveApplicationResponse(
@@ -10,6 +13,7 @@ class LeaveApplicationApiResponse {
     )
 
 
+    @Parcelize
     data class LeaveApplication(
         val id: Int?,
         val office_id: Int?,
@@ -21,8 +25,9 @@ class LeaveApplicationApiResponse {
         val status: Int?,
         val leave_policy: LeavePolicy?,
         val leave_application_details: List<LeaveApplicationDetails>?
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class LeaveApplicationDetails(
         val id: Int?,
         val leave_application_id: Int?,
@@ -38,14 +43,17 @@ class LeaveApplicationApiResponse {
         val emergency_contact_no: String?,
         val requested_money: String?,
         val comments: String?
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class LeavePolicyResponse(
         val status: String?,
         val message: String?,
         val code: Int?,
-        val data:  List<LeaveApplicationApiResponse.LeavePolicy>?
-    )
+        val data: List<LeaveApplicationApiResponse.LeavePolicy>?
+    ) : Parcelable
+
+    @Parcelize
     data class LeavePolicy(
         val id: Int?,
         val leave_name: String?,
@@ -53,5 +61,5 @@ class LeaveApplicationApiResponse {
         val leave_balance: Int?,
         val leave_category: Int?,
         val status: Int?
-    )
+    ) : Parcelable
 }
