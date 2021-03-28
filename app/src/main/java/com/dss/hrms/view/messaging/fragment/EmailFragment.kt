@@ -52,6 +52,8 @@ class EmailFragment : DaggerFragment() {
     private val REQUEST_SELECT_PHOTO = 2
     private var imageFile: File? = null
 
+    var uploadImageUrl: String? = null
+
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
 
@@ -62,10 +64,8 @@ class EmailFragment : DaggerFragment() {
     lateinit var commonRepo: CommonRepo
 
     lateinit var messageViewModel: MessagingViewModel
-
     var office: Office? = null
     lateinit var binding: FragmentEmailBinding
-    var uploadImageUrl: String? = null;
     var selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
 
     var officeList = arrayListOf<Office>()

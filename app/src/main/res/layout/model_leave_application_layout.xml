@@ -39,10 +39,19 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_extra_large"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/constraintTop"
+            app:layout_constraintEnd_toStartOf="@id/imgEdit"
             app:layout_constraintStart_toStartOf="@+id/constraintTop"
             app:layout_constraintTop_toTopOf="@+id/constraintTop" />
 
+        <ImageView
+            android:id="@+id/imgEdit"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/edit_icon_24"
+            android:layout_marginHorizontal="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/green" />
 
         <TextView
             android:id="@+id/tvLeaveRequestRef"
@@ -51,8 +60,8 @@
             android:paddingVertical="2dp"
             android:text="@{leaveApplication.leave_request_ref}"
             android:textColor="@color/gray"
-            android:textStyle="bold"
             android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/constraintTop"
             app:layout_constraintStart_toStartOf="@+id/constraintTop"
             app:layout_constraintTop_toBottomOf="@+id/tvLeaveType" />
@@ -76,8 +85,8 @@
                 android:paddingVertical="2dp"
                 android:text="@{(@string/date+` : `+leaveApplication.apply_date)}"
                 android:textColor="@color/gray"
-                android:textStyle="bold"
                 android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/constraintTop"
                 app:layout_constraintStart_toStartOf="@+id/constraintTop"
                 app:layout_constraintTop_toBottomOf="@+id/tvLeaveType" />
@@ -88,10 +97,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingVertical="2dp"
-                android:textStyle="bold"
                 android:text="@{@string/status+` : `+leaveApplication.approval_status}"
                 android:textColor="@{((leaveApplication.approval_status.toLowerCase().equals(`approved`))?@color/green:@color/red)}"
                 android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/constraintTop"
                 app:layout_constraintStart_toStartOf="@+id/constraintTop"
                 app:layout_constraintTop_toBottomOf="@+id/tvLeaveType" />
@@ -113,10 +122,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingVertical="2dp"
-                android:textStyle="bold"
                 android:text="@{@string/from_date+` : `+(leaveApplication.leave_application_details.get(0).date_form )}"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/constraintTop"
                 app:layout_constraintStart_toStartOf="@+id/constraintTop"
                 app:layout_constraintTop_toBottomOf="@+id/tvLeaveType" />
@@ -130,8 +139,8 @@
 
                 android:text="@{@string/to_date+` : `+(leaveApplication.leave_application_details.get(0).date_to)}"
                 android:textColor="@color/gray"
-                android:textStyle="bold"
                 android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/constraintTop"
                 app:layout_constraintStart_toStartOf="@+id/constraintTop"
                 app:layout_constraintTop_toBottomOf="@+id/tvLeaveType" />

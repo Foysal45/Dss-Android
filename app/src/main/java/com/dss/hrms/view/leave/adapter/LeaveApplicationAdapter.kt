@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelLeaveApplicationLayoutBinding
+import com.dss.hrms.util.Operation
 import com.dss.hrms.view.leave.`interface`.OnLeaveApplicationClickListener
 import com.dss.hrms.view.leave.model.LeaveApplicationApiResponse
 import com.namaztime.namaztime.database.MySharedPreparence
@@ -49,6 +50,10 @@ class LeaveApplicationAdapter @Inject constructor() :
 
         holder.binding.leaveApplication = leaveApplication
         holder.binding.language = preparensce.getLanguage()
+        holder.binding.imgEdit.setOnClickListener {
+            onLeaveApplicationClickListener.onClick(leaveApplication, position, Operation.EDIT)
+        }
+
 
     }
 

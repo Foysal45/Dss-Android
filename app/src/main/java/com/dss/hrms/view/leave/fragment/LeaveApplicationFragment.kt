@@ -44,6 +44,7 @@ import com.dss.hrms.view.training.adaoter.spinner.HonorariumHeadAdapter
 import com.dss.hrms.view.training.model.BudgetAndSchedule
 import com.dss.hrms.view.training.model.HonorariumHead
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
+import com.namaztime.namaztime.database.MySharedPreparence
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.dialog_leave_management_layout.view.*
 import java.text.SimpleDateFormat
@@ -94,11 +95,12 @@ class LeaveApplicationFragment : DaggerFragment() {
             val action =
                 LeaveApplicationFragmentDirections.actionLeaveApplicationFragmentToCreateEditLeaveApplicationFragment(
                     leaveRoleWiseemployee = null,
-                    leaveApplication = leave
+                    leaveApplication = null,
+                    operation = "create"
                 )
             findNavController().navigate(action)
 
-          //  showEditCreateDialog(Operation.CREATE, null)
+            //  showEditCreateDialog(Operation.CREATE, null)
         }
 
 
@@ -133,6 +135,13 @@ class LeaveApplicationFragment : DaggerFragment() {
             adapter.setInitialData(
                 dataList, it, object : OnLeaveApplicationClickListener {
                     override fun onClick(any: Any?, position: Int, operation: Operation) {
+                        val action =
+                            LeaveApplicationFragmentDirections.actionLeaveApplicationFragmentToCreateEditLeaveApplicationFragment(
+                                leaveRoleWiseemployee = null,
+                                leaveApplication = any as (LeaveApplicationApiResponse.LeaveApplication),
+                                operation = "edit"
+                            )
+                        findNavController().navigate(action)
 
                     }
                 }

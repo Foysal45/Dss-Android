@@ -1,28 +1,72 @@
 package com.dss.hrms.view.leave.fragment
 
+import android.Manifest
+import android.app.Activity
+import android.app.Dialog
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.text.InputType
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.annotation.Nullable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.chaadride.network.error.ApiError
+import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.FragmentCreateEditLeaveApplicationBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.employeeProfile.Employee
-import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.*
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.allInterface.OnDateListener
+import com.dss.hrms.view.leave.adapter.spinner.LeavePolicySpinnerAdapter
 import com.dss.hrms.view.leave.model.LeaveApplicationApiResponse
 import com.dss.hrms.view.leave.viewmodel.LeaveApplicationViewmodel
 import com.dss.hrms.view.messaging.fragment.EmployeeBottomSheetFragmentArgs
+import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
+import com.namaztime.namaztime.database.MySharedPreparence
+import com.theartofdev.edmodo.cropper.CropImage
 import dagger.android.support.DaggerFragment
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class CreateEditLeaveApplicationFragment : DaggerFragment() {
     private val args by navArgs<CreateEditLeaveApplicationFragmentArgs>()
+
+
+    // Storage Permissions
+    private val REQUEST_EXTERNAL_STORAGE = 1
+    private val PERMISSIONS_STORAGE = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+    private val REQUEST_SELECT_PHOTO = 2
+    private var imageFile: File? = null
+
+    var uploadImageUrl: String? = null
+
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
@@ -30,13 +74,28 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
     @Inject
     lateinit var employeeProfile: EmployeeProfileData
 
+
+    @Inject
+    lateinit var preparence: MySharedPreparence
+
+
     var employee: Employee? = null
     lateinit var binding: FragmentCreateEditLeaveApplicationBinding
 
     lateinit var leaveApplicationViewModel: LeaveApplicationViewmodel
+    lateinit var operation: Operation
+    var isAlreadyViewCreated = false
 
+    var selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
 
     var leaveApplication: LeaveApplicationApiResponse.LeaveApplication? = null
+
+    var leaveType: LeaveApplicationApiResponse.LeavePolicy? = null
+    var applyDate: String? = null
+    var loadingDialog: Dialog? = null
+    var isFromNotify = true
+    var notifyPerson: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var responsiblePerson: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,36 +107,470 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentCreateEditLeaveApplicationBinding.inflate(inflater, container, false)
-        init()
-        leaveApplication = args.leaveApplication
+        if (!isAlreadyViewCreated) {
+            binding = FragmentCreateEditLeaveApplicationBinding.inflate(inflater, container, false)
+            employee = employeeProfile?.employee
+            isAlreadyViewCreated = true
+            init()
+            leaveApplication = args.leaveApplication
+            if (args.operation.equals("create")) {
+                operation = Operation.CREATE
+            } else {
+                operation = Operation.EDIT
+            }
+            setData()
+        }
 
-        Log.e("createedit", "createedit : ........${leaveApplication?.apply_date}")
-//
-//
-//        leaveApplicationViewModel.apply {
-//            var loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
-//            getLeaveApplication(employee?.user?.employee_id.toString())
-//
-//            leaveApplication.observe(viewLifecycleOwner, Observer { leaaveAppList ->
-//                loadingDialog?.dismiss()
-//                leaaveAppList?.let {
-//                    dataList = leaaveAppList
-//                    prepareRecyleView()
-//                }
-//            })
-//        }
-//
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
+            "key",
+            selectedDataList
+        )?.observe(viewLifecycleOwner,
+            androidx.lifecycle.Observer { result ->
+                result?.let {
+                    if (it.size > 0) {
+                        selectedDataList.addAll(it)
+                        Log.e("editcreateApplication", "employee lsit : ${selectedDataList.size}")
+                        selectedDataList?.forEach { element ->
+                            Log.e("editcreateApplication", "employee lsit : ${element.name}")
+                            if (isFromNotify) {
+                                notifyPerson = element
+                            } else {
+                                responsiblePerson = element
+                            }
+                        }
+                    }
+                }
+                if (isFromNotify) {
+                    binding.tvNotifyText.text = ""
+                    notifyPerson?.name?.let {
+                        binding.tvNotifyText.append(
+                            if (preparence.getLanguage().equals("en")) {
+                                "${notifyPerson?.name}"
+                            } else "${notifyPerson?.name_bn}"
+                        )
+                    }
+                } else {
+                    binding.tvResponsibleText.text = ""
+                    responsiblePerson?.name?.let {
+                        binding.tvResponsibleText.append(
+                            if (preparence.getLanguage().equals("en")) {
+                                "${responsiblePerson?.name}"
+                            } else "${responsiblePerson?.name_bn}"
+                        )
+                    }
+
+                }
+
+            })
+
 
         return binding.root
     }
 
+
+    fun setData() {
+        binding.lEmergencyContantNo.etText.inputType = InputType.TYPE_CLASS_PHONE
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
+        val currentDate = sdf.format(Date())
+        if (operation == Operation.CREATE) applyDate = currentDate else applyDate =
+            leaveApplication?.apply_date
+
+
+
+        binding.lLeaveRequestReference.etText.setText(leaveApplication?.leave_request_ref)
+        binding.lEmergencyContantNo.etText.setText(
+            leaveApplication?.leave_application_details?.get(
+                0
+            )?.emergency_contact_no
+        )
+
+
+        binding.lFromDate.tvText?.setText(
+            leaveApplication?.leave_application_details?.get(
+                0
+            )?.date_form?.let {
+                DateConverter.changeDateFormateForShowing(
+                    it
+                )
+            }
+        )
+        binding.lToDate.tvText?.setText(
+            leaveApplication?.leave_application_details?.get(
+                0
+            )?.date_to?.let {
+                DateConverter.changeDateFormateForShowing(
+                    it
+                )
+            }
+        )
+
+        binding.hLeaveApplication.tvClose.setOnClickListener {
+            //  dialogCustome.dismiss()
+        }
+
+
+        binding?.lFromDate?.tvText?.setOnClickListener({
+            DatePicker().showDatePicker(context, object : OnDateListener {
+                override fun onDate(date: String) {
+                    date?.let { binding?.lFromDate?.tvText?.setText("" + it) }
+                }
+            })
+        })
+
+        binding?.lToDate?.tvText?.setOnClickListener({
+            DatePicker().showDatePicker(context, object : OnDateListener {
+                override fun onDate(date: String) {
+                    date?.let { binding?.lToDate?.tvText?.setText("" + it) }
+                }
+            })
+        })
+
+        leaveApplicationViewModel.getLeavePolicyList()
+            .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                it?.let {
+                    LeavePolicySpinnerAdapter().setLeavePolicySpinner(
+                        binding?.lLeaveType?.spinner!!,
+                        context,
+                        it,
+                        leaveApplication?.leave_policy_id,
+                        object : CommonSpinnerSelectedItemListener {
+                            override fun selectedItem(any: Any?) {
+                                any?.let {
+                                    leaveType = any as LeaveApplicationApiResponse.LeavePolicy
+                                }
+                            }
+                        }
+                    )
+                }
+            })
+
+
+        binding.llNotifyEmployee.setOnClickListener {
+            Log.e(
+                "leaveapplication",
+                "notify person :........................................................"
+            )
+            isFromNotify = true
+            selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_createEditLeaveApplicationFragment_to_searchEmployeeFragment3)
+        }
+
+
+        binding.llResponsibleEmployee.setOnClickListener {
+            Log.e(
+                "leaveapplication",
+                "notify person :........................................................"
+            )
+            isFromNotify = false
+            selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_createEditLeaveApplicationFragment_to_searchEmployeeFragment3)
+        }
+
+        binding.llNotifyEmployee.setOnClickListener {
+            Log.e(
+                "leaveapplication",
+                "notify person :........................................................"
+            )
+            selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_createEditLeaveApplicationFragment_to_searchEmployeeFragment3)
+        }
+        binding.leaveApplicatoinBtnUpdate.setOnClickListener {
+            invisiableAllError()
+            loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
+            if (operation == Operation.CREATE) {
+
+            } else {
+
+            }
+        }
+
+    }
+
+
+    fun uploadData() {
+        leaveApplicationViewModel.createLeaveApplication(getMapData(leaveApplication))
+            .observe(viewLifecycleOwner,
+                Observer {
+                    loadingDialog?.dismiss()
+                    showResponse(it)
+                })
+    }
+
+    fun showResponse(any: Any?) {
+        if (any is String) {
+            toast(activity, any)
+            leaveApplicationViewModel.getLeaveApplication(employee?.user?.employee_id.toString())
+
+        } else if (any is ApiError) {
+            try {
+                if (any.getError().isEmpty()) {
+                    toast(activity, any.getMessage())
+                    Log.d("ok", "error")
+                } else {
+                    for (n in any.getError().indices) {
+                        val error = any.getError()[n].getField()
+                        val message = any.getError()[n].getMessage()
+                        if (TextUtils.isEmpty(error)) {
+                            message?.let {
+                                binding?.tvAttachmentError?.visibility =
+                                    View.VISIBLE
+                                binding?.tvAttachmentError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                        }
+                        Log.e("ok", "error ${ErrorUtils2.mainError(message)}")
+                        when (error) {
+                            "leave_request_ref" -> {
+                                binding?.lLeaveRequestReference?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.lLeaveRequestReference?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "leave_policy_id" -> {
+                                binding?.lLeaveType?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.lLeaveType?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "approval_status" -> {
+//                                leaveApplicationBinding?.lLeaveType?.tvError?.visibility =
+//                                    View.VISIBLE
+//                                leaveApplicationBinding?.lLeaveType?.tvError?.text =
+//                                    ErrorUtils2.mainError(message)
+                            }
+                            "apply_date" -> {
+//                                dialogTrainingLoyeoutBinding?.courseCourseId?.tvError?.visibility =
+//                                    View.VISIBLE
+//                                dialogTrainingLoyeoutBinding?.courseCourseId?.tvError?.text =
+//                                    ErrorUtils2.mainError(message)
+                            }
+                            "forword_to_employee_id" -> {
+                                binding?.tvNotifyEmployeeError?.visibility =
+                                    View.VISIBLE
+                                binding?.tvNotifyEmployeeError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "leave_application_details" -> {
+                                binding?.lFromDate?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.lFromDate?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "leave_application_details.0.date_form" -> {
+                                binding?.lFromDate?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.lFromDate?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "leave_application_details.0.date_to" -> {
+                                binding?.lToDate?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.lToDate?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                toast(activity, e.toString())
+            }
+
+        } else if (any is Throwable) {
+            toast(activity, any.toString())
+        } else {
+            activity?.getString(R.string.failed)?.let {
+                toast(
+                    activity,
+                    it
+                )
+            }!!
+        }
+    }
+
+    fun getMapData(leaveApplication: LeaveApplicationApiResponse.LeaveApplication?): HashMap<Any, Any?> {
+        var map = HashMap<Any, Any?>()
+        map.put("office_id", employee?.office_id.toString())
+        map.put(
+            "leave_request_ref",
+            binding.lLeaveRequestReference?.etText?.text?.trim().toString()
+        )
+        map.put("leave_policy_id", leaveType?.id.toString())
+        map.put(
+            "approval_status",
+            if (leaveApplication?.approval_status != null) leaveApplication?.approval_status else StaticKey.PENDING
+        )
+        map.put("forword_to_employee_id", notifyPerson?.id)
+        map.put("apply_date", applyDate)
+
+        //  map.put("document_path", coordinator?.id)
+        // map.put("note_leave", leaveApplication?.leave_application_details.note)
+        map.put("note_date", applyDate)
+        map.put(
+            "leave_application_details",
+            arrayListOf<HashMap<Any, Any?>>(leaveDeatails(leaveApplication))
+        )
+        return map
+    }
+
+    fun leaveDeatails(leaveApplication: LeaveApplicationApiResponse.LeaveApplication?): HashMap<Any, Any?> {
+        var fromDate =
+            DateConverter.changeDateFormateForSending(binding.lFromDate?.tvText?.text.toString())
+        var toDate =
+            DateConverter.changeDateFormateForSending(binding.lToDate?.tvText?.text.toString())
+        var map = HashMap<Any, Any?>()
+        map.put("date_form", fromDate)
+        map.put("date_to", toDate)
+        map.put("designation_id", employee?.designation_id)
+        map.put("employee_id", employee?.user?.employee_id)
+        map.put("reason", binding.etBody.text.trim().toString())
+        map.put(
+            "emergency_contact_no",
+            binding.lEmergencyContantNo.etText.text.trim().toString()
+        )
+        map.put("leave_application_id", leaveApplication?.id)
+        return map
+    }
+
+
+    fun invisiableAllError() {
+        binding?.tvNotifyEmployeeError?.visibility =
+            View.GONE
+        binding?.tvNotifyEmployeeError?.visibility =
+            View.GONE
+        binding.lLeaveType?.tvError?.visibility =
+            View.GONE
+        binding.lFromDate?.tvError?.visibility =
+            View.GONE
+        binding.lToDate?.tvError?.visibility =
+            View.GONE
+        binding.lLeaveRequestReference?.tvError?.visibility =
+            View.GONE
+        binding.lEmergencyContantNo?.tvError?.visibility =
+            View.GONE
+        binding?.tvReasonDetailsError?.visibility =
+            View.GONE
+        binding.tvAttachmentError?.visibility =
+            View.GONE
+    }
+
+    fun toast(context: Context?, massage: String) {
+        Toast.makeText(context, massage, Toast.LENGTH_SHORT).show()
+    }
 
     private fun init() {
         leaveApplicationViewModel = ViewModelProvider(
             this,
             viewModelProviderFactory
         ).get(LeaveApplicationViewmodel::class.java)
+    }
+
+
+    fun uploadImage(imageFile: File) {
+        var profilePic: MultipartBody.Part?
+        if (imageFile != null) {
+
+            val requestFile: RequestBody =
+                RequestBody.create(MediaType.parse("multipart/form-data"), imageFile)
+            profilePic =
+                MultipartBody.Part.createFormData("filenames[]", "filenames[]", requestFile)
+
+            val profile_photo: RequestBody =
+                RequestBody.create(MediaType.parse("text/plain"), "profile_photo")
+
+            var employeeInfoEditCreateRepo =
+                activity?.let {
+                    ViewModelProvider(
+                        it,
+                        viewModelProviderFactory
+                    ).get(EmployeeInfoEditCreateViewModel::class.java)
+                }
+            activity?.let {
+                employeeInfoEditCreateRepo?.uploadProfilePic(
+                    profilePic,
+                    imageFile.name,
+                    profile_photo
+                )
+                    ?.observe(
+                        it,
+                        androidx.lifecycle.Observer { any ->
+                            Log.e("yousuf", "profile pic : " + any)
+                            //  showResponse(any)
+                            if (any != null) {
+                                uploadImageUrl = any as String
+                                uploadData()
+                            } else {
+                                loadingDialog?.dismiss()
+                                //  dialog?.dismiss()
+                            }
+
+                        })
+            }
+        }
+    }
+
+
+    fun galleryButtonClicked() {
+        val galleryIntent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+        galleryIntent.setType("*/*");
+        startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        @Nullable data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_SELECT_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
+            val resultUri: Uri? = data.data
+            try {
+                activity?.let {
+                    resultUri?.let { it1 ->
+                        FilePath().getPath(
+                            it,
+                            it1
+                        )?.let { getImageFile(it) }
+                    }
+                };
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            val bitmap =
+                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
+            Log.e("imagefile", "imagefile : $imageFile")
+            var fileName: List<String>? = imageFile?.toString()?.split("/")
+
+            fileName?.let {
+                binding?.tvFileName?.setText(it.get(it.size - 1))
+            }
+
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+        }
+    }
+
+
+    private fun getImageFile(photoPath: String) {
+        imageFile = File(photoPath)
+
     }
 
 

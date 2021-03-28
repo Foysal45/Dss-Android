@@ -50,7 +50,7 @@
     <fragment
         android:id="@+id/searchEmployeeFragment3"
         android:name="com.dss.hrms.view.messaging.fragment.SearchEmployeeFragment"
-        android:label="SearchEmployeeFragment">
+        android:label="@string/search_employee">
         <action
             android:id="@+id/action_searchEmployeeFragment_to_employeeBottomSheetFragment"
             app:destination="@id/employeeBottomSheetFragment" />
@@ -79,7 +79,7 @@
     <fragment
         android:id="@+id/createEditLeaveApplicationFragment"
         android:name="com.dss.hrms.view.leave.fragment.CreateEditLeaveApplicationFragment"
-        android:label="CreateEditLeaveApplicationFragment">
+        android:label="@string/leave_application">
         <action
             android:id="@+id/action_createEditLeaveApplicationFragment_to_leaveApplicationFragment"
             app:destination="@id/leaveApplicationFragment" />
@@ -96,5 +96,10 @@
             android:defaultValue="@null"
             app:argType="com.dss.hrms.view.leave.model.LeaveApplicationApiResponse$LeaveApplication"
             app:nullable="true" />
+        <argument
+            android:name="operation"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="create" />
     </fragment>
 </navigation>

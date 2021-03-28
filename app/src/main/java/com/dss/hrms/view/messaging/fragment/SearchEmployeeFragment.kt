@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.dss.hrms.R
 import com.dss.hrms.databinding.FragmentSearchEmployeeBinding
 import com.dss.hrms.model.HeadOfficeDepartmentApiResponse
 import com.dss.hrms.model.Office
@@ -101,6 +102,7 @@ class SearchEmployeeFragment : DaggerFragment() {
                 "key",
                 selectedDataList
             )
+           // findNavController().popBackStack(R.id.action_searchEmployeeFragment3_to_createEditLeaveApplicationFragment, true)
             navController.popBackStack()
         }
 
