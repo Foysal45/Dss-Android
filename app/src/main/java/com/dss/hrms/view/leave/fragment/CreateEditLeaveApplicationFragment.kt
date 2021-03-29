@@ -20,10 +20,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.Nullable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.chaadride.network.error.ApiError
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
@@ -31,6 +34,7 @@ import com.dss.hrms.databinding.FragmentCreateEditLeaveApplicationBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.*
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OnDateListener
@@ -114,8 +118,10 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
             init()
             leaveApplication = args.leaveApplication
             if (args.operation.equals("create")) {
+                binding.leaveApplicatoinBtnUpdate.setText(getString(R.string.create))
                 operation = Operation.CREATE
             } else {
+                binding.leaveApplicatoinBtnUpdate.setText(getString(R.string.update))
                 operation = Operation.EDIT
             }
             setData()
@@ -134,39 +140,41 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
                             Log.e("editcreateApplication", "employee lsit : ${element.name}")
                             if (isFromNotify) {
                                 notifyPerson = element
+                                setNotifyPersonData()
                             } else {
                                 responsiblePerson = element
+                                setResponsiblePersonData()
                             }
                         }
                     }
                 }
-                if (isFromNotify) {
-                    binding.tvNotifyText.text = ""
-                    notifyPerson?.name?.let {
-                        binding.tvNotifyText.append(
-                            if (preparence.getLanguage().equals("en")) {
-                                "${notifyPerson?.name}"
-                            } else "${notifyPerson?.name_bn}"
-                        )
-                    }
-                } else {
-                    binding.tvResponsibleText.text = ""
-                    responsiblePerson?.name?.let {
-                        binding.tvResponsibleText.append(
-                            if (preparence.getLanguage().equals("en")) {
-                                "${responsiblePerson?.name}"
-                            } else "${responsiblePerson?.name_bn}"
-                        )
-                    }
-
-                }
-
             })
 
 
         return binding.root
     }
 
+    fun setNotifyPersonData() {
+        binding.tvNotifyText.text = ""
+        notifyPerson?.name?.let {
+            binding.tvNotifyText.append(
+                if (preparence.getLanguage().equals("en")) {
+                    "${notifyPerson?.name}"
+                } else "${notifyPerson?.name_bn}"
+            )
+        }
+    }
+
+    fun setResponsiblePersonData() {
+        binding.tvResponsibleText.text = ""
+        responsiblePerson?.name?.let {
+            binding.tvResponsibleText.append(
+                if (preparence.getLanguage().equals("en")) {
+                    "${responsiblePerson?.name}"
+                } else "${responsiblePerson?.name_bn}"
+            )
+        }
+    }
 
     fun setData() {
         binding.lEmergencyContantNo.etText.inputType = InputType.TYPE_CLASS_PHONE
@@ -184,7 +192,20 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
             )?.emergency_contact_no
         )
 
+        leaveApplication?.leave_application_note?.let {
+            if (it?.size!! > 0) {
+                notifyPerson = it.get(0).forword_to_employee
+                setNotifyPersonData()
+            }
+            //
+        }
 
+        leaveApplication?.leave_application_details?.let {
+            if (it.size > 0) {
+                responsiblePerson = it.get(0).responsible_person
+                setResponsiblePersonData()
+            }
+        }
         binding.lFromDate.tvText?.setText(
             leaveApplication?.leave_application_details?.get(
                 0
@@ -204,8 +225,20 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
             }
         )
 
+
+        activity?.let {
+            Glide.with(it).applyDefaultRequestOptions(
+                RequestOptions()
+                    .placeholder(R.drawable.ic_baseline_image_24)
+            ).load(RetrofitInstance.BASE_URL + leaveApplication?.document_path)
+                .into(binding.ivAttachement)
+        }
+
+
+
         binding.hLeaveApplication.tvClose.setOnClickListener {
             //  dialogCustome.dismiss()
+            findNavController().popBackStack()
         }
 
 
@@ -216,6 +249,7 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
                 }
             })
         })
+
 
         binding?.lToDate?.tvText?.setOnClickListener({
             DatePicker().showDatePicker(context, object : OnDateListener {
@@ -243,7 +277,6 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
                     )
                 }
             })
-
 
         binding.llNotifyEmployee.setOnClickListener {
             Log.e(
@@ -273,36 +306,54 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
                 "leaveapplication",
                 "notify person :........................................................"
             )
+            isFromNotify = true
             selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
             Navigation.findNavController(binding.root)
                 .navigate(R.id.action_createEditLeaveApplicationFragment_to_searchEmployeeFragment3)
         }
+
+        binding.tvAttachment.setOnClickListener {
+            galleryButtonClicked()
+        }
+
         binding.leaveApplicatoinBtnUpdate.setOnClickListener {
             invisiableAllError()
             loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
-            if (operation == Operation.CREATE) {
-
+            if (imageFile != null) {
+                imageFile?.let { uploadImage(it) }
             } else {
-
+                uploadData()
             }
-        }
 
+        }
     }
 
-
     fun uploadData() {
-        leaveApplicationViewModel.createLeaveApplication(getMapData(leaveApplication))
-            .observe(viewLifecycleOwner,
-                Observer {
-                    loadingDialog?.dismiss()
-                    showResponse(it)
-                })
+        if (operation == Operation.CREATE) {
+            leaveApplicationViewModel.createLeaveApplication(getMapData(leaveApplication))
+                .observe(viewLifecycleOwner,
+                    Observer {
+                        loadingDialog?.dismiss()
+                        showResponse(it)
+                    })
+        } else {
+            leaveApplicationViewModel.updateLeaveApplication(
+                leaveApplication?.id,
+                getMapData(leaveApplication)
+            )
+                .observe(viewLifecycleOwner,
+                    Observer {
+                        loadingDialog?.dismiss()
+                        showResponse(it)
+                    })
+        }
     }
 
     fun showResponse(any: Any?) {
         if (any is String) {
             toast(activity, any)
-            leaveApplicationViewModel.getLeaveApplication(employee?.user?.employee_id.toString())
+            // leaveApplicationViewModel.getLeaveApplication(employee?.user?.employee_id.toString())
+            findNavController().popBackStack()
 
         } else if (any is ApiError) {
             try {
@@ -472,7 +523,6 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
     fun uploadImage(imageFile: File) {
         var profilePic: MultipartBody.Part?
         if (imageFile != null) {
-
             val requestFile: RequestBody =
                 RequestBody.create(MediaType.parse("multipart/form-data"), imageFile)
             profilePic =
@@ -560,8 +610,19 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
 
             fileName?.let {
                 binding?.tvFileName?.setText(it.get(it.size - 1))
-            }
 
+                activity?.let {
+                    Glide.with(it).applyDefaultRequestOptions(
+                        RequestOptions()
+                            .placeholder(R.drawable.ic_baseline_image_24)
+                    ).load(imageFile)
+                        .into(binding.ivAttachement)
+                }
+
+
+
+                binding.ivAttachement.setImageBitmap(bitmap)
+            }
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 
         }

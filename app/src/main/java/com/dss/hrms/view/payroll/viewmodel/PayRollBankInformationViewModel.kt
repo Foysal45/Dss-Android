@@ -34,4 +34,22 @@ class PayRollBankInformationViewModel @Inject constructor(application: Applicati
         }
     }
 
+
+    fun createBankinformation(map: HashMap<Any, Any?>): MutableLiveData<Any> {
+        var liveData = MutableLiveData<Any>()
+        viewModelScope.launch {
+            liveData = payRollBankInfoRepo.createBankInfo(map, liveData)
+        }
+        return liveData
+    }
+
+
+    fun updateBankinformation(map: HashMap<Any, Any?>, id: Int?): MutableLiveData<Any> {
+        var liveData = MutableLiveData<Any>()
+        viewModelScope.launch {
+            liveData = payRollBankInfoRepo.updateBankInfo(map, liveData, id)
+        }
+        return liveData
+    }
+
 }

@@ -99,6 +99,15 @@ interface ApiService {
     ): Call<Any?>?
 
 
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @GET("/api/auth/district/list")
+    fun getAllDistrict(
+        @Header("X-Localization") language: String,
+        @Header("Authorization") token: String
+    ): Call<Any?>?
+
+
     @Headers("Content-Type: application/json", "Accept: application/json")
     @GET("/api/auth/division/{Id}")
     fun getDistrict(

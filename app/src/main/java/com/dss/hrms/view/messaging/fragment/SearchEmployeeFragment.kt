@@ -45,7 +45,7 @@ class SearchEmployeeFragment : DaggerFragment() {
 
     lateinit var binding: FragmentSearchEmployeeBinding
 
-
+    var isAlreadyViewCreated = false
     lateinit var dataList: List<RoleWiseEmployeeResponseClass.RoleWiseEmployee>
     var selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
 
@@ -69,165 +69,170 @@ class SearchEmployeeFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSearchEmployeeBinding.inflate(inflater, container, false)
-        selectedDataList = arrayListOf()
-        dataList = arrayListOf()
-        init()
-        val navController = findNavController();
+        if (!isAlreadyViewCreated) {
+            isAlreadyViewCreated = true
+            binding = FragmentSearchEmployeeBinding.inflate(inflater, container, false)
+            selectedDataList = arrayListOf()
+            dataList = arrayListOf()
+            init()
+            val navController = findNavController();
 // We use a String here, but any type that can be put in a Bundle is supported
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData(
-            "key", selectedDataList
-        )?.observe(viewLifecycleOwner,
-            Observer { result ->
-                // Do something with the result.
-                result?.let {
-                    if (it.size > 0) {
+            navController.currentBackStackEntry?.savedStateHandle?.getLiveData(
+                "key", selectedDataList
+            )?.observe(viewLifecycleOwner,
+                Observer { result ->
+                    // Do something with the result.
+                    result?.let {
+                        if (it.size > 0) {
 
-                        if (!isAlreadyBacked) {
-                            selectedDataList.addAll(it)
-                            isAlreadyBacked = true
-                            Log.e("searchlist", "search lsit : ${selectedDataList.size}")
-                            navController.previousBackStackEntry?.savedStateHandle?.set(
-                                "key",
-                                result
-                            )
-                            // navController.popBackStack()
+                            if (!isAlreadyBacked) {
+                                selectedDataList.addAll(it)
+                                isAlreadyBacked = true
+                                Log.e("searchlist", "search lsit : ${selectedDataList.size}")
+                                navController.previousBackStackEntry?.savedStateHandle?.set(
+                                    "key",
+                                    result
+                                )
+                                // navController.popBackStack()
+                            }
                         }
                     }
-                }
-            })
+                })
 
-        binding.back.setOnClickListener {
-            navController.previousBackStackEntry?.savedStateHandle?.set(
-                "key",
-                selectedDataList
-            )
-           // findNavController().popBackStack(R.id.action_searchEmployeeFragment3_to_createEditLeaveApplicationFragment, true)
-            navController.popBackStack()
-        }
+            binding.back.setOnClickListener {
+                navController.previousBackStackEntry?.savedStateHandle?.set(
+                    "key",
+                    selectedDataList
+                )
+                // findNavController().popBackStack(R.id.action_searchEmployeeFragment3_to_createEditLeaveApplicationFragment, true)
+                navController.popBackStack()
+            }
 
-        binding.headOfficesBranches.llBody.visibility =
-            View.GONE
-        binding.branchesWiseSection.llBody.visibility =
-            View.GONE
-        binding.sectionWiseSubsection.llBody.visibility =
-            View.GONE
-        headOfficeBranches()
-        commonViewModel.getCommonData("/api/auth/sixteen-category/list")
-            ?.observe(viewLifecycleOwner,
+            binding.headOfficesBranches.llBody.visibility =
+                View.GONE
+            binding.branchesWiseSection.llBody.visibility =
+                View.GONE
+            binding.sectionWiseSubsection.llBody.visibility =
+                View.GONE
+            headOfficeBranches()
+            commonViewModel.getCommonData("/api/auth/sixteen-category/list")
+                ?.observe(viewLifecycleOwner,
+                    Observer { list ->
+                        list?.let {
+                            SpinnerAdapter().setSpinner(
+                                binding?.officeLeadCategory?.spinner!!,
+                                context,
+                                list,
+                                null,
+                                object : CommonSpinnerSelectedItemListener {
+                                    override fun selectedItem(any: Any?) {
+                                        officeLeadCategory = any as SpinnerDataModel
+                                        officeLeadCategory?.let { oflC ->
+                                            oflC?.id?.let {
+                                                if (it == 1) {
+                                                    binding.headOfficesBranches.llBody.visibility =
+                                                        View.VISIBLE
+                                                    binding.branchesWiseSection.llBody.visibility =
+                                                        View.VISIBLE
+                                                    binding.sectionWiseSubsection.llBody.visibility =
+                                                        View.VISIBLE
+                                                    binding.division.llBody.visibility = View.GONE
+                                                    binding.district.llBody.visibility = View.GONE
+                                                } else {
+                                                    binding.headOfficesBranches.llBody.visibility =
+                                                        View.GONE
+                                                    binding.branchesWiseSection.llBody.visibility =
+                                                        View.GONE
+                                                    binding.sectionWiseSubsection.llBody.visibility =
+                                                        View.GONE
+                                                    binding.division.llBody.visibility =
+                                                        View.VISIBLE
+                                                    binding.district.llBody.visibility =
+                                                        View.VISIBLE
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            )
+                        }
+
+                    })
+            commonViewModel.getCommonData("/api/auth/division/list")?.observe(viewLifecycleOwner,
                 Observer { list ->
                     list?.let {
                         SpinnerAdapter().setSpinner(
-                            binding?.officeLeadCategory?.spinner!!,
+                            binding?.division?.spinner!!,
                             context,
                             list,
                             null,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
-                                    officeLeadCategory = any as SpinnerDataModel
-                                    officeLeadCategory?.let { oflC ->
-                                        oflC?.id?.let {
-                                            if (it == 1) {
-                                                binding.headOfficesBranches.llBody.visibility =
-                                                    View.VISIBLE
-                                                binding.branchesWiseSection.llBody.visibility =
-                                                    View.VISIBLE
-                                                binding.sectionWiseSubsection.llBody.visibility =
-                                                    View.VISIBLE
-                                                binding.division.llBody.visibility = View.GONE
-                                                binding.district.llBody.visibility = View.GONE
-                                            } else {
-                                                binding.headOfficesBranches.llBody.visibility =
-                                                    View.GONE
-                                                binding.branchesWiseSection.llBody.visibility =
-                                                    View.GONE
-                                                binding.sectionWiseSubsection.llBody.visibility =
-                                                    View.GONE
-                                                binding.division.llBody.visibility = View.VISIBLE
-                                                binding.district.llBody.visibility = View.VISIBLE
-                                            }
-                                        }
-                                    }
+                                    division = any as SpinnerDataModel
+                                    getDistrict(if (division?.id == null) 1 else division?.id, null)
                                 }
+
                             }
                         )
                     }
-
                 })
-        commonViewModel.getCommonData("/api/auth/division/list")?.observe(viewLifecycleOwner,
-            Observer { list ->
-                list?.let {
-                    SpinnerAdapter().setSpinner(
-                        binding?.division?.spinner!!,
-                        context,
-                        list,
-                        null,
-                        object : CommonSpinnerSelectedItemListener {
-                            override fun selectedItem(any: Any?) {
-                                division = any as SpinnerDataModel
-                                getDistrict(if (division?.id == null) 1 else division?.id, null)
+
+            commonViewModel.getOffice("/api/auth/office/list/basic")?.observe(viewLifecycleOwner,
+                Observer { list ->
+                    list?.let {
+                        SpinnerAdapter().setOfficeSpinner(
+                            binding?.office?.spinner!!,
+                            context,
+                            list,
+                            0,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    office = any as Office
+                                    loadDesignation(office?.id)
+                                    Log.e("selected item", " item : " + office?.name)
+                                }
+
                             }
-
-                        }
-                    )
-                }
-            })
-
-        commonViewModel.getOffice("/api/auth/office/list/basic")?.observe(viewLifecycleOwner,
-            Observer { list ->
-                list?.let {
-                    SpinnerAdapter().setOfficeSpinner(
-                        binding?.office?.spinner!!,
-                        context,
-                        list,
-                        0,
-                        object : CommonSpinnerSelectedItemListener {
-                            override fun selectedItem(any: Any?) {
-                                office = any as Office
-                                loadDesignation(office?.id)
-                                Log.e("selected item", " item : " + office?.name)
-                            }
-
-                        }
-                    )
-                }
-            })
-
-
-        binding.search.setOnClickListener {
-            isAlreadyBacked = false
-            var dialog = CustomLoadingDialog().createLoadingDialog(activity)
-            employeeViewModel?.apply {
-                getEmployeeList(
-                    office?.id?.let { it.toString() },
-                    headOfficeBranches?.id?.let { it.toString() },
-                    section?.id?.let { it.toString() },
-                    subSection?.id?.let { it.toString() },
-                    division?.id?.let { it.toString() },
-                    district?.id?.let { it.toString() },
-                    officeLeadCategory?.id?.let { it.toString() },
-                    designation?.id?.let { it.toString() },
-                    binding?.employeeNameOrId?.etText?.text?.trim()?.let { it.toString() }
-                    //    "1", "1", "1", "1", "1", "Raju"
-                ).observe(viewLifecycleOwner, Observer {
-                    dialog?.dismiss()
-                    Log.e("data", "datalist : ${it.size}")
-                    it?.let {
-                        dataList = it
+                        )
                     }
+                })
 
-                    dataList?.let {
-                        if (it.size > 0) {
-                            val action =
-                                SearchEmployeeFragmentDirections.actionSearchEmployeeFragmentToEmployeeBottomSheetFragment(
-                                    dataList?.toTypedArray()
-                                )
-                            findNavController().navigate(action)
+
+            binding.search.setOnClickListener {
+                isAlreadyBacked = false
+                var dialog = CustomLoadingDialog().createLoadingDialog(activity)
+                employeeViewModel?.apply {
+                    getEmployeeList(
+                        office?.id?.let { it.toString() },
+                        headOfficeBranches?.id?.let { it.toString() },
+                        section?.id?.let { it.toString() },
+                        subSection?.id?.let { it.toString() },
+                        division?.id?.let { it.toString() },
+                        district?.id?.let { it.toString() },
+                        officeLeadCategory?.id?.let { it.toString() },
+                        designation?.id?.let { it.toString() },
+                        binding?.employeeNameOrId?.etText?.text?.trim()?.let { it.toString() }
+                        //    "1", "1", "1", "1", "1", "Raju"
+                    ).observe(viewLifecycleOwner, Observer {
+                        dialog?.dismiss()
+                        Log.e("data", "datalist : ${it.size}")
+                        it?.let {
+                            dataList = it
+                        }
+
+                        dataList?.let {
+                            if (it.size > 0) {
+                                val action =
+                                    SearchEmployeeFragmentDirections.actionSearchEmployeeFragmentToEmployeeBottomSheetFragment(
+                                        dataList?.toTypedArray()
+                                    )
+                                findNavController().navigate(action)
 //                        Navigation.findNavController(binding.root)
 //                            .navigate(R.id.action_searchEmployeeFragment_to_employeeBottomSheetFragment)
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
         }
         return binding.root

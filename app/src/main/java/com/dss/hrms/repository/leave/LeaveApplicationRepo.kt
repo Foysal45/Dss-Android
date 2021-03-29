@@ -116,7 +116,7 @@ class LeaveApplicationRepo @Inject constructor() {
                 )
                 Log.e(
                     "createLeaveApplication",
-                    "createLeaveApplication : ${response?.body()?.code} status : ${response?.body()?.status} "
+                    "createLeaveApplication : ${response?.raw()} status : ${response?.headers()} "
                 )
                 if (response == null) {
                     liveData.postValue(null)
@@ -166,7 +166,7 @@ class LeaveApplicationRepo @Inject constructor() {
                 )
                 Log.e(
                     "createLeaveApplication",
-                    "createLeaveApplication : ${response?.body()?.code} status : ${response?.body()?.status} "
+                    "cupdateLeaveApplication : ${response?.raw()} status : ${response?.headers()} "
                 )
                 if (response == null) {
                     liveData.postValue(null)

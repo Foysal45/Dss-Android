@@ -323,6 +323,7 @@
     <string name="balance">Balance</string>
     <string name="account_type">Account Type</string>
     <string name="bank_name">Bank Name</string>
+    <string name="bank_routing_number">Bank Routing Number</string>
     <string name="branch_name">Branch Name</string>
     <string name="account_no">Account No</string>
     <string name="account_name">Account Name</string>

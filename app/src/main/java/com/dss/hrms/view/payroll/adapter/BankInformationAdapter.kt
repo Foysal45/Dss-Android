@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelBankInformationLayoutBinding
+import com.dss.hrms.util.Operation
 import com.dss.hrms.view.payroll.`interface`.OnPayRollInfoClickListener
 import com.dss.hrms.view.payroll.model.PayRollBankInfo
 import com.namaztime.namaztime.database.MySharedPreparence
@@ -47,6 +48,10 @@ class BankInformationAdapter @Inject constructor() :
         var bankInfo = dataList?.get(position)
         holder.binding.bankInfo = bankInfo
         holder.binding.language = preparence.getLanguage()
+
+        holder.binding.imgEdit.setOnClickListener {
+            onPayrollInfoClickListener.onClick(bankInfo,position,Operation.EDIT)
+        }
 
 
     }

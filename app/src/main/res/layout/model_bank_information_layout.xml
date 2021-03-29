@@ -33,17 +33,27 @@
 
         <TextView
             android:id="@+id/tvBankName"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:paddingVertical="5dp"
             android:text="@{@string/bank_name+`: `+((language.equals(`en`))? bankInfo.bank_name : bankInfo.bank_name)}"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_extra_large"
             android:textStyle="bold"
+            android:layout_marginRight="5dp"
             app:layout_constraintLeft_toLeftOf="@id/topConst"
-            app:layout_constraintRight_toRightOf="@id/topConst"
+            app:layout_constraintRight_toLeftOf="@id/imgEdit"
             app:layout_constraintTop_toTopOf="@id/topConst" />
 
+        <ImageView
+            android:id="@+id/imgEdit"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/edit_icon_24"
+            android:layout_marginHorizontal="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/green" />
 
         <LinearLayout
             android:id="@+id/llTop"

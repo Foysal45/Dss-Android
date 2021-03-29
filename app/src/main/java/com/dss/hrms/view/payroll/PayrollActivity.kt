@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ActivityPayrollBinding
 import com.dss.hrms.view.activity.BaseActivity
@@ -21,10 +22,26 @@ class PayrollActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_payroll)
 
-        navController = findNavController(R.id.payrollFragment)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+       navController = findNavController(R.id.payrollFragment)
+//        appBarConfiguration = AppBarConfiguration(navController.graph)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+        setupToolbar()
+    }
 
+    private fun setupToolbar() {
+        val appBarConfiguration =
+            AppBarConfiguration.Builder()
+                .setFallbackOnNavigateUpListener { onNavigateUp() }
+                .build()
+
+        binding.toolBar.apply {
+            setupWithNavController(navController, appBarConfiguration)
+        }
+    }
+
+    override fun onNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
 

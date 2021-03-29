@@ -7,6 +7,9 @@ class SpinnerDataModel {
     @SerializedName("id")
     var id: Int? = null
 
+    @SerializedName("division_id")
+    var division_id: Int? = null
+
     @SerializedName("name")
     var name: String? = null
 

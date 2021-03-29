@@ -20,14 +20,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".view.payroll.PayrollActivity"
-            android:theme="@style/AppThemeActionBar" />
+            android:name=".view.payroll.PayrollActivity" />
         <activity
-            android:name=".view.leave.LeaveActivity"
-            android:theme="@style/AppThemeActionBar" />
+            android:name=".view.leave.LeaveActivity" />
+<!--        android:theme="@style/AppThemeActionBar"-->
         <activity
-            android:name=".view.messaging.MessagingActivity"
-            android:theme="@style/AppThemeActionBar" />
+            android:name=".view.messaging.MessagingActivity" />
         <activity
             android:name=".view.training.TrainingActivity"
             android:theme="@style/AppThemeActionBar" />
