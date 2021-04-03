@@ -44,7 +44,6 @@ class ContentFaqFragment : DaggerFragment() {
                 dialog?.dismiss()
                 it?.let {
                     dataList = it
-                    dataList += it
                     if (dataList != null)
                         prepareRecycleView()
                 }

@@ -42,7 +42,7 @@ interface LeaveApiService {
 
 
     @Headers("Accept: application/json")
-    @PUT ("/api/auth/leave-application/{ID}")
+    @PUT("/api/auth/leave-application/{ID}")
     suspend fun updateLeaveApplication(
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String,

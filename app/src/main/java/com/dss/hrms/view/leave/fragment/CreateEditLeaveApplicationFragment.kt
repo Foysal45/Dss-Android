@@ -11,18 +11,14 @@ import android.provider.MediaStore
 import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.annotation.Nullable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -41,7 +37,6 @@ import com.dss.hrms.view.allInterface.OnDateListener
 import com.dss.hrms.view.leave.adapter.spinner.LeavePolicySpinnerAdapter
 import com.dss.hrms.view.leave.model.LeaveApplicationApiResponse
 import com.dss.hrms.view.leave.viewmodel.LeaveApplicationViewmodel
-import com.dss.hrms.view.messaging.fragment.EmployeeBottomSheetFragmentArgs
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
@@ -100,6 +95,7 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
     var isFromNotify = true
     var notifyPerson: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
     var responsiblePerson: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var buttonClicked: String = StaticKey.CREATE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,9 +115,11 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
             leaveApplication = args.leaveApplication
             if (args.operation.equals("create")) {
                 binding.leaveApplicatoinBtnUpdate.setText(getString(R.string.create))
+                binding.leaveApplicatoinBtnDraft.visibility = View.VISIBLE
                 operation = Operation.CREATE
             } else {
-                binding.leaveApplicatoinBtnUpdate.setText(getString(R.string.update))
+                binding.leaveApplicatoinBtnUpdate.setText(getString(R.string.create))
+                binding.leaveApplicatoinBtnDraft.visibility = View.VISIBLE
                 operation = Operation.EDIT
             }
             setData()
@@ -149,8 +147,6 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
                     }
                 }
             })
-
-
         return binding.root
     }
 
@@ -184,6 +180,10 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
             leaveApplication?.apply_date
 
 
+        uploadImageUrl = leaveApplication?.document_path
+        uploadImageUrl?.let {
+            binding?.tvFileName?.setText(it)
+        }
 
         binding.lLeaveRequestReference.etText.setText(leaveApplication?.leave_request_ref)
         binding.lEmergencyContantNo.etText.setText(
@@ -289,6 +289,10 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
                 .navigate(R.id.action_createEditLeaveApplicationFragment_to_searchEmployeeFragment3)
         }
 
+        leaveApplication?.leave_application_details?.let {
+            if (it.size > 0)
+                binding.etBody.setText(it.get(0)?.reason)
+        }
 
         binding.llResponsibleEmployee.setOnClickListener {
             Log.e(
@@ -326,6 +330,29 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
             }
 
         }
+        binding.leaveApplicatoinBtnDraft.setOnClickListener {
+            buttonClicked = StaticKey.DRAFT
+            invisiableAllError()
+            loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
+            if (imageFile != null) {
+                imageFile?.let { uploadImage(it) }
+            } else {
+                uploadData()
+            }
+
+        }
+
+        binding.leaveApplicatoinBtnUpdate.setOnClickListener {
+            buttonClicked = StaticKey.CREATE
+            invisiableAllError()
+            loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
+            if (imageFile != null) {
+                imageFile?.let { uploadImage(it) }
+            } else {
+                uploadData()
+            }
+
+        }
     }
 
     fun uploadData() {
@@ -337,6 +364,8 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
                         showResponse(it)
                     })
         } else {
+            Log.e("leaveapplication", "leave application ; ${getMapData(leaveApplication)}")
+
             leaveApplicationViewModel.updateLeaveApplication(
                 leaveApplication?.id,
                 getMapData(leaveApplication)
@@ -452,18 +481,22 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
         map.put("leave_policy_id", leaveType?.id.toString())
         map.put(
             "approval_status",
-            if (leaveApplication?.approval_status != null) leaveApplication?.approval_status else StaticKey.PENDING
+         //   if (operation == Operation.CREATE) {
+                if (buttonClicked.equals(StaticKey.DRAFT)) StaticKey.DRAFT else StaticKey.PENDING
+          //  } else StaticKey.PENDING
         )
         map.put("forword_to_employee_id", notifyPerson?.id)
         map.put("apply_date", applyDate)
 
-        //  map.put("document_path", coordinator?.id)
+        uploadImageUrl?.let { map.put("document_path", it) }
         // map.put("note_leave", leaveApplication?.leave_application_details.note)
         map.put("note_date", applyDate)
         map.put(
             "leave_application_details",
             arrayListOf<HashMap<Any, Any?>>(leaveDeatails(leaveApplication))
         )
+       if (operation != Operation.CREATE)
+            map.put("status", leaveApplication?.status)
         return map
     }
 
@@ -483,6 +516,7 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
             binding.lEmergencyContantNo.etText.text.trim().toString()
         )
         map.put("leave_application_id", leaveApplication?.id)
+
         return map
     }
 

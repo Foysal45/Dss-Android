@@ -145,6 +145,7 @@ class LeaveApplicationRepo @Inject constructor() {
                     }
                 }
             } catch (e: Exception) {
+
                 liveData?.postValue(null)
             }
         }
@@ -166,7 +167,7 @@ class LeaveApplicationRepo @Inject constructor() {
                 )
                 Log.e(
                     "createLeaveApplication",
-                    "cupdateLeaveApplication : ${response?.raw()} status : ${response?.headers()} "
+                    "cupdateLeaveApplication : ${response?.raw()} status : ${response?.body()} "
                 )
                 if (response == null) {
                     liveData.postValue(null)
@@ -195,6 +196,10 @@ class LeaveApplicationRepo @Inject constructor() {
                     }
                 }
             } catch (e: Exception) {
+                Log.e(
+                    "repo",
+                    "apiError apiError : ${e.message}"
+                )
                 liveData?.postValue(null)
             }
         }

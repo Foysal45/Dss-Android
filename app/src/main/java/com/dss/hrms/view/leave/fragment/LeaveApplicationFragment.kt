@@ -108,7 +108,6 @@ class LeaveApplicationFragment : DaggerFragment() {
         leaveApplicationViewModel.apply {
             var loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
             getLeaveApplication(employee?.user?.employee_id.toString())
-
             leaveApplication.observe(viewLifecycleOwner, Observer { leaaveAppList ->
                 loadingDialog?.dismiss()
                 leaaveAppList?.let {

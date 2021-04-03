@@ -70,7 +70,7 @@ class EmailFragment : DaggerFragment() {
 
     var officeList = arrayListOf<Office>()
     var loadingDialog: Dialog? = null
-
+    var isAlreadyViewCreated = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -82,87 +82,94 @@ class EmailFragment : DaggerFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentEmailBinding.inflate(inflater, container, false)
-        Log.e("onCreateView", "onCreateView")
-        init()
 
-        binding?.llAttachment.setOnClickListener {
-            galleryButtonClicked()
-        }
+        if (!isAlreadyViewCreated) {
+            isAlreadyViewCreated = true
+            // Inflate the layout for this fragment
+            binding = FragmentEmailBinding.inflate(inflater, container, false)
+            Log.e("onCreateView", "onCreateView")
+            init()
 
-        binding.llEmployee.setOnClickListener {
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_emailFragment_to_searchEmployeeFragment)
-        }
+            binding?.llAttachment.setOnClickListener {
+                galleryButtonClicked()
+            }
+
+            binding.llEmployee.setOnClickListener {
+                Navigation.findNavController(binding.root)
+                    .navigate(R.id.action_emailFragment_to_searchEmployeeFragment)
+            }
 
 
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
-            "key",
-            selectedDataList
-        )?.observe(viewLifecycleOwner,
-            androidx.lifecycle.Observer { result ->
+            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
+                "key",
+                selectedDataList
+            )?.observe(viewLifecycleOwner,
+                androidx.lifecycle.Observer { result ->
+                    Log.e("emailfragment", "employee lsit : ${result?.size}")
+                    result?.let {
 
-                result?.let {
-                    if (it.size > 0) {
-                        selectedDataList.addAll(it)
-                        Log.e("emailfragment", "employee lsit : ${selectedDataList.size}")
-                        binding.tvOffice.text = ""
+                        if (it.size > 0) {
+                            selectedDataList.addAll(it)
+                            Log.e("emailfragment", "employee lsit : ${selectedDataList.size}")
+                            binding.tvOffice.text = ""
 
-                        selectedDataList?.forEach { element ->
-                            binding.tvEmployee.append(
-                                if (preparence.getLanguage().equals("en")) {
-                                    "${element?.name},"
-                                } else "${element?.name_bn},"
-                            )
+                            selectedDataList?.forEach { element ->
+                                binding.tvEmployee.append(
+                                    if (preparence.getLanguage().equals("en")) {
+                                        "${element?.name},"
+                                    } else "${element?.name_bn},"
+                                )
+                            }
+
+
+                            //selectedEmployeeList = it
                         }
-
-
-                        //selectedEmployeeList = it
                     }
-                }
-            })
+                })
 
 
-        commonRepo.getOffice("/api/auth/office/list/basic",
-            object : OfficeDataValueListener {
-                override fun valueChange(list: List<Office>?) {
-                    //   Log.e("gender", "gender message " + Gson().toJson(list))
-                    list?.let {
-                        SpinnerAdapter().setOfficeSpinner(
-                            binding?.spinner!!,
-                            context,
-                            list,
-                            0,
-                            object : CommonSpinnerSelectedItemListener {
-                                override fun selectedItem(any: Any?) {
-                                    office = any as Office
-                                    office?.name?.let {
-                                        officeList?.add(office!!)
-                                        binding.tvOffice.append(
-                                            if (preparence.getLanguage().equals("en")) {
-                                                "${office?.name},"
-                                            } else "${office?.name_bn},"
-                                        )
+            commonRepo.getOffice("/api/auth/office/list/basic",
+                object : OfficeDataValueListener {
+                    override fun valueChange(list: List<Office>?) {
+                        //   Log.e("gender", "gender message " + Gson().toJson(list))
+                        list?.let {
+                            SpinnerAdapter().setOfficeSpinner(
+                                binding?.spinner!!,
+                                context,
+                                list,
+                                0,
+                                object : CommonSpinnerSelectedItemListener {
+                                    override fun selectedItem(any: Any?) {
+                                        office = any as Office
+                                        office?.name?.let {
+                                            officeList?.add(office!!)
+                                            binding.tvOffice.append(
+                                                if (preparence.getLanguage().equals("en")) {
+                                                    "${office?.name},"
+                                                } else "${office?.name_bn},"
+                                            )
+                                        }
+
+                                        Log.e("selected item", " item : " + office)
                                     }
 
-                                    Log.e("selected item", " item : " + office)
                                 }
-
-                            }
-                        )
+                            )
+                        }
                     }
+                })
+
+
+            binding.send.setOnClickListener {
+                loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
+                if (imageFile != null) {
+                    uploadImage(imageFile!!)
+                } else {
+                    uploadData()
                 }
-            })
-
-
-        binding.send.setOnClickListener {
-            loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
-            if (imageFile != null) {
-                uploadImage(imageFile!!)
-            } else {
-                uploadData()
             }
+
+
         }
 
         return binding.root

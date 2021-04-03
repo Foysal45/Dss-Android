@@ -103,12 +103,21 @@ interface TrainingApiService {
         @Header("Authorization") token: String
     ): Response<BudgetAndSchedule.CourseScheduleResponse>
 
+
+    @Headers("Accept: application/json")
+    @GET("/api/auth/course/list")
+    suspend fun courseList(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String
+    ): Response<BudgetAndSchedule.CourseListResponse>?
+
     @Headers("Accept: application/json")
     @GET("/api/auth/course-schedule/list")
     suspend fun courseScheduleList(
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String
     ): Response<BudgetAndSchedule.CourseScheduleListResponse>?
+
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/course-schedule")

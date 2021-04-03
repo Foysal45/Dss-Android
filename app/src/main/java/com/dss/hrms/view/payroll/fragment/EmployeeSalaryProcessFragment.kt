@@ -86,7 +86,6 @@ class EmployeeSalaryProcessFragment : DaggerFragment() {
                 val date =
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                         LocalDate.parse(string, DateTimeFormatter.ISO_DATE)
-
                     } else {
                         null
                     }
@@ -127,7 +126,7 @@ class EmployeeSalaryProcessFragment : DaggerFragment() {
         binding.ivSearch.setOnClickListener {
             loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
             salaryGenerateViewModel.getSalaryData(
-                (153).toString(),
+                (employee?.user?.employee_id).toString(),
                 employee?.office_id.toString(),
                 year,
                 month
@@ -150,8 +149,10 @@ class EmployeeSalaryProcessFragment : DaggerFragment() {
             salaryRow.observe(viewLifecycleOwner, Observer { salaryRow ->
                 loadingDialog?.dismiss()
                 salaryRowDataList = salaryRow
+
                 if (salaryRowDataList == null)
                     salaryRowDataList = arrayListOf()
+                Log.e("salaryprocessresponse", "salary process header : ${salaryRowDataList?.size}")
                 prepareRecyleView()
                 salaryRow?.let {
                     //     salaryRowDataList = it

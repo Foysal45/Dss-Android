@@ -73,7 +73,7 @@ class CourseScheduleFragment : DaggerFragment() {
     var staff1: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
     var staff2: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
     var staff3: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
-    var courseScheduleListData: BudgetAndSchedule.CourseScheduleList? = null
+    var course: BudgetAndSchedule.Course? = null
 
 
     override fun onCreateView(
@@ -211,10 +211,10 @@ class CourseScheduleFragment : DaggerFragment() {
 
 
         budgetAndScheduleViewModel?.apply {
-            getCourseScheduleList().observe(viewLifecycleOwner, Observer {
+            getCourseList().observe(viewLifecycleOwner, Observer {
                 Log.e("course", "course schedule ; " + it?.size)
 
-                CourseScheduleSpinnerAdapter().setCourseScheduleSpinner(
+                CourseScheduleSpinnerAdapter().setCourseSpinner(
                     dialogTrainingLoyeoutBinding?.courseCourseId?.spinner!!,
                     context,
                     it,
@@ -224,7 +224,7 @@ class CourseScheduleFragment : DaggerFragment() {
 
                             any?.let {
                                // Log.e("courseschedule","course schedule : ${(any as BudgetAndSchedule.CourseScheduleList).id}")
-                                courseScheduleListData = (any as BudgetAndSchedule.CourseScheduleList)
+                                course = (any as BudgetAndSchedule.Course)
                             }
 
                         }
@@ -489,7 +489,7 @@ class CourseScheduleFragment : DaggerFragment() {
             "total_seat",
             dialogTrainingLoyeoutBinding.courseTotalSeat?.etText?.text?.trim().toString()
         )
-        map.put("course_id", courseScheduleListData?.id)
+        map.put("course_id", course?.id)
         map.put("designations", designationIdList)
         map.put("coordinator", coordinator?.id)
         map.put("co_coordinator", cocoordinator?.id)

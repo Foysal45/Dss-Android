@@ -226,6 +226,55 @@ class CommonRepo @Inject constructor() {
         return liveData
     }
 
+    fun getAllDistrict(
+        commonDataValueListener: CommonDataValueListener
+    ): MutableLiveData<List<SpinnerDataModel>>? {
+        val liveData: MutableLiveData<List<SpinnerDataModel>> =
+            MutableLiveData<List<SpinnerDataModel>>()
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getAllDistrict(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}"
+            )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+
+                        if (code == 200 || code == 201) {
+                            val dataJA = jsonObjectParent.getJSONArray("data")
+                            val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
+                            val district: List<SpinnerDataModel> =
+                                Gson().fromJson(dataJA.toString(), type)
+                            commonDataValueListener.valueChange(district)
+                            liveData.postValue(district)
+                        } else {
+                            commonDataValueListener.valueChange(null)
+                            liveData.postValue(null)
+                        }
+                    } catch (e: JSONException) {
+                        commonDataValueListener.valueChange(null)
+                        liveData.postValue(null)
+                    }
+                } else {
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    commonDataValueListener.valueChange(null)
+                    liveData.postValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
+            }
+
+        })
+        return liveData
+    }
+
     fun getUpazila(
         districtId: Int?,
         commonDataValueListener: CommonDataValueListener

@@ -74,7 +74,7 @@ class EmployeeBottomSheetFragment : BottomSheetDialogFragment() {
                             roleWiseEmployee.isSelected = false
                             selectedDataList.remove(roleWiseEmployee)
                         }
-                        Toast.makeText(activity, "isChecked ${isChecked}", Toast.LENGTH_LONG).show()
+                      //  Toast.makeText(activity, "isChecked ${isChecked}", Toast.LENGTH_LONG).show()
                     }
 
                 })

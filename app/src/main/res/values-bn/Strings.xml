@@ -67,7 +67,8 @@
     <!-- menu-->
     <string name="personal_info_for_home">মৌলিক তথ্য</string>
     <string name="training">প্রশিক্ষণ</string>
-    <string name="messaging">প্রেরণ করা</string>
+    <string name="messaging">মেসেজিং </string>
+    <string name="message">মেসেজ </string>
     <string name="payroll">বেতন</string>
     <string name="personal_information">মৌলিক তথ্য</string>
     <string name="leave">ছুটি </string>
@@ -258,8 +259,8 @@
     <string name="is_published">প্রকাশিত ?</string>
 
     <string name="training_management">প্রশিক্ষণ ব্যবস্থাপনা</string>
-    <string name="resource_person">রিসৌর্স পারসন</string>
-    <string name="resource_person_name">রিসৌর্স পারসন নাম</string>
+    <string name="resource_person">রিসোস পারসন</string>
+    <string name="resource_person_name">রিসোস পারসন নাম</string>
     <string name="short_name">সংক্ষিপ্ত নাম</string>
     <string name="first_email">প্রথম ইমেইল</string>
     <string name="first_mobile">প্রথম মোবাইল</string>
@@ -302,6 +303,48 @@
     <string name="ok">ঠিক আছে</string>
     <string name="cancel">বাতিল</string>
     <string name="done">সম্পন্ন</string>
+
+
+
+    <string name="draft">ড্রাফট</string>
+    <string name="head_office_branches">প্রধান অফিসের শাখা সূমুহ</string>
+    <string name="branches_wise_section">শাখা অনুযায়ী উপশাখা</string>
+    <string name="section_wise_subsection">শাখা অনুযায়ী উপ-উপ-শাখা</string>
+
+    <string name="leave_management">ছুটির ব্যাবস্থাপনা</string>
+    <string name="leave_application">ছুটির দরখাস্ত</string>
+    <string name="leave_summary_dashboard">ছুটির ড্যাশবোর্ড সামারি</string>
+    <string name="payroll_management">বেতন ব্যাবস্থাপনা</string>
+    <string name="bank_information">ব্যাংক তথ্য</string>
+    <string name="salary_process">বেতন ভাতার পলিসি</string>
+
+    <string name="type">টাইপ</string>
+    <string name="casual_leave">নৈমিত্তিক ছুটি</string>
+    <string name="sick_leave">অসুস্থতাজনিত ছুটি</string>
+    <string name="ex_bangladesh_leave">	বহিঃ বাংলাদেশ ছুটি</string>
+    <string name="applied">Applied</string>
+    <string name="leave_balance">Leave Balance</string>
+    <string name="enjoyed">Enjoyed</string>
+    <string name="total">Total</string>
+    <string name="remaining_balance">Remaining Balance</string>
+    <string name="balance">Balance</string>
+    <string name="account_type">Account Type</string>
+    <string name="bank_name">Bank Name</string>
+    <string name="bank_routing_number">Bank Routing Number</string>
+    <string name="branch_name">Branch Name</string>
+    <string name="account_no">Account No</string>
+    <string name="account_name">Account Name</string>
+    <string name="branch_district_name">Branch District Name</string>
+    <string name="branch_routing_no">Branch Routing No</string>
+    <string name="year_and_month">Year and Month</string>
+    <string name="select_notify">Select Notify</string>
+    <string name="select_responsible">Select Responsible</string>
+    <string name="leave_date">Leave Date</string>
+    <string name="leave_type">Leave Type</string>
+    <string name="leave_request_reference">Leave Request Reference</string>
+    <string name="emergency_contact_no">Emergency contact no</string>
+    <string name="reason_details">Reason Details</string>
+    <string name="please_select_month_and_year">Please Select Month And Year</string>
 
 
 </resources>

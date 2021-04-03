@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogMonthYearPickerBinding
 import com.dss.hrms.view.allInterface.OnDateListener
 import com.dss.hrms.view.allInterface.OnYearMonthListener
@@ -49,7 +50,7 @@ class MonthYearPickerDialog(val date: Date = Date(), val onYearMonthListener: On
         }
 
         return AlertDialog.Builder(requireContext())
-            .setTitle("Please Select View Month")
+            .setTitle(context?.getString(R.string.please_select_month_and_year))
             .setView(binding.root)
             .setPositiveButton("Ok") { _, _ ->
                 listener?.onDateSet(

@@ -49,7 +49,7 @@ class MessagingFragment : DaggerFragment() {
 
     lateinit var binding: FragmentMessageBinding
 
-
+    var isAlreadyViewCreated = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -58,82 +58,90 @@ class MessagingFragment : DaggerFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMessageBinding.inflate(inflater, container, false)
+        if (!isAlreadyViewCreated) {
+            isAlreadyViewCreated = true
+            binding = FragmentMessageBinding.inflate(inflater, container, false)
+            init()
 
-        init()
+            binding.llOffice.setOnClickListener {
 
-        commonRepo.getOffice("/api/auth/office/list/basic",
-            object : OfficeDataValueListener {
-                override fun valueChange(list: List<Office>?) {
-                    //   Log.e("gender", "gender message " + Gson().toJson(list))
-                    list?.let {
-                        SpinnerAdapter().setOfficeSpinner(
-                            binding?.spinner!!,
-                            context,
-                            list,
-                            0,
-                            object : CommonSpinnerSelectedItemListener {
-                                override fun selectedItem(any: Any?) {
-                                    office = any as Office
-                                    office?.name?.let {
-                                        officeList?.add(office!!)
-                                        binding.tvOffice.append(
-                                            if (preparence.getLanguage().equals("en")) {
-                                                "${office?.name},"
-                                            } else "${office?.name_bn},"
-                                        )
+            }
+
+            commonRepo.getOffice("/api/auth/office/list/basic",
+                object : OfficeDataValueListener {
+                    override fun valueChange(list: List<Office>?) {
+                        //   Log.e("gender", "gender message " + Gson().toJson(list))
+                        list?.let {
+                            SpinnerAdapter().setOfficeSpinner(
+                                binding?.spinner!!,
+                                context,
+                                list,
+                                0,
+                                object : CommonSpinnerSelectedItemListener {
+                                    override fun selectedItem(any: Any?) {
+                                        office = any as Office
+                                        office?.name?.let {
+                                            officeList?.add(office!!)
+                                            binding.tvOffice.append(
+                                                if (preparence.getLanguage().equals("en")) {
+                                                    "${office?.name},"
+                                                } else "${office?.name_bn},"
+                                            )
+                                        }
+
+                                        Log.e("selected item", " item : " + office)
                                     }
 
-                                    Log.e("selected item", " item : " + office)
                                 }
-
-                            }
-                        )
-                    }
-                }
-            })
-
-
-
-        binding.llEmployee.setOnClickListener {
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_messageFragment_to_searchEmployeeFragment)
-        }
-
-
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
-            "key",
-            selectedDataList
-        )?.observe(viewLifecycleOwner,
-            androidx.lifecycle.Observer { result ->
-
-                result?.let {
-                    if (it.size > 0) {
-                        selectedDataList.addAll(it)
-                        Log.e("emailfragment", "employee lsit : ${selectedDataList.size}")
-                        binding.tvOffice.text = ""
-
-                        selectedDataList?.forEach { element ->
-                            binding.tvEmployee.append(
-                                if (preparence.getLanguage().equals("en")) {
-                                    "${element?.name},"
-                                } else "${element?.name_bn},"
                             )
                         }
-
-
-                        //selectedEmployeeList = it
                     }
-                }
-            })
-        binding.llEmployee.setOnClickListener {
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_messageFragment_to_searchEmployeeFragment)
-        }
+                })
 
 
-        binding.send.setOnClickListener {
-            uploadData()
+
+            binding.llEmployee.setOnClickListener {
+                Navigation.findNavController(binding.root)
+                    .navigate(R.id.action_messageFragment_to_searchEmployeeFragment)
+            }
+
+
+            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
+                "key",
+                selectedDataList
+            )?.observe(viewLifecycleOwner,
+                androidx.lifecycle.Observer { result ->
+
+                    result?.let {
+                        if (it.size > 0) {
+                            selectedDataList.addAll(it)
+                            Log.e("emailfragment", "employee lsit : ${selectedDataList.size}")
+                            binding.tvOffice.text = ""
+
+                            selectedDataList?.forEach { element ->
+                                binding.tvEmployee.append(
+                                    if (preparence.getLanguage().equals("en")) {
+                                        "${element?.name},"
+                                    } else "${element?.name_bn},"
+                                )
+                            }
+
+
+                            //selectedEmployeeList = it
+                        }
+                    }
+                })
+            binding.llEmployee.setOnClickListener {
+                Navigation.findNavController(binding.root)
+                    .navigate(R.id.action_messageFragment_to_searchEmployeeFragment)
+            }
+
+
+            binding.send.setOnClickListener {
+                uploadData()
+            }
+
+
         }
 
 

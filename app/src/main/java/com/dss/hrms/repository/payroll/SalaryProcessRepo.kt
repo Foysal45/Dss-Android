@@ -34,9 +34,12 @@ class SalaryProcessRepo @Inject constructor() {
             try {
                 var response = payrollApiService.salaryGenerate(
                     preparence.getLanguage(), "Bearer ${preparence.getToken()}",
-                    salary_year, employeeId, salary_month, office_id
+                    salary_year, employeeId, salary_month
                 )
+                Log.e("salaryprocessresponse", "salary process header : ${response?.body()?.data?.row}")
+                Log.e("salaryprocessresponse", "salary process row : ${response?.body()?.data?.row}")
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) {
+               // if (response?.body() == 200 || response?.body() == 201) {
                     response.body()
                 } else {
                     response?.let {
@@ -48,7 +51,7 @@ class SalaryProcessRepo @Inject constructor() {
                 }
             } catch (e: Exception) {
                 e.message
-                Log.e("salaryprocessresponse", "salary process response : ${e.message}")
+                Log.e("salaryprocessresponse", "salary process erro : ${e}")
             }
 
         }

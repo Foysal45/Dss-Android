@@ -23,8 +23,8 @@ interface PayrollApiService {
         @Header("Authorization") token: String,
         @Query("salary_year") salary_year: String?,
         @Query("employee_id") employee_id: String?,
-        @Query("salary_month") salary_month: String?,
-        @Query("office_id") office_id: String?
+        @Query("salary_month") salary_month: String?
+     //   @Query("office_id") office_id: String?
     ): Response<SalaryGenerateResponse>
 
 

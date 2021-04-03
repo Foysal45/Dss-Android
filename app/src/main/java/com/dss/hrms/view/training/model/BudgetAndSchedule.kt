@@ -75,7 +75,8 @@ class BudgetAndSchedule {
         val course_name: String?,
         val course_name_bn: String?,
         val course_category_id: Int?,
-        val course_image_path: String?
+        val course_image_path: String?,
+        val course_description: String?
     )
 
     data class CommonClass(
@@ -126,6 +127,7 @@ class BudgetAndSchedule {
     )
 
     data class CourseScheduleListResponse(val code: Int?, val data: List<CourseScheduleList>?)
+    data class CourseListResponse(val code: Int?, val data: List<Course>?)
     data class CourseScheduleList(
         val id: Int?,
         val course_schedule_title: String?,

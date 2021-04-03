@@ -25,6 +25,9 @@ class StaticKey {
         val CREATE = "create"
         val EDIT = "edit"
         val PENDING = "Pending"
+        val FORWARDED = "Forwarded"
+        val REJECTED = "Rejected"
         val APPROVED = "Approved"
+        val DRAFT = "Draft"
     }
 }

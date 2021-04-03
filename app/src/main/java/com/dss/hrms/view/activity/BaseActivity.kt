@@ -53,4 +53,6 @@ open class BaseActivity : DaggerAppCompatActivity() {
         window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         dialogConfirmation!!.show()
     }
+
+
 }

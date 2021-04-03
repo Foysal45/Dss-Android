@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.retrofit.TrainingApiService
-import com.dss.hrms.view.training.model.BudgetAndSchedule
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -124,6 +123,28 @@ class BudgetAndScheduleRepo @Inject constructor() {
     }
 
 
+    suspend fun getCourseList(): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.courseList(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}"
+                )
+                Log.e("repo", "response:getCourseScheduleList " + response?.body())
+                if (response?.body()?.code == 200 || response?.body()?.code == 201)
+                    response?.body()
+                else
+                    null
+            } catch (e: Exception) {
+                Log.e("exception", "Exception ; " + e.message)
+                null
+            }
+
+        }
+
+    }
+
+
     suspend fun getCourseScheduleList(): Any? {
         return withContext(Dispatchers.IO) {
             try {
@@ -144,7 +165,6 @@ class BudgetAndScheduleRepo @Inject constructor() {
         }
 
     }
-
 
     suspend fun addCourseSchedule(
         map: HashMap<Any, Any?>,

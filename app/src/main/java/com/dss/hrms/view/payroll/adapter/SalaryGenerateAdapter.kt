@@ -1,6 +1,7 @@
 package com.dss.hrms.view.payroll.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -41,6 +42,7 @@ class SalaryGenerateAdapter @Inject constructor() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var rowData = dataList?.get(position)
         holder.binding.language = preparence.getLanguage()
+        Log.e("salaryprocessresponse", "salary process header : ${rowData}")
         holder.binding.salaryInfoRow = rowData
     }
 

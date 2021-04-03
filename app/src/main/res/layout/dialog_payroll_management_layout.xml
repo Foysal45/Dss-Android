@@ -41,7 +41,7 @@
                             <include
                                 android:id="@+id/hBankInformation"
                                 layout="@layout/personal_information_create_field_header"
-                                app:title="@{@string/leave_application}" />
+                                app:title="@{@string/bank_information}" />
 
 
                             <LinearLayout

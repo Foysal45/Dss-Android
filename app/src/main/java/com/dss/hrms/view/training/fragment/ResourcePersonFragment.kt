@@ -129,10 +129,6 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
                 dialog?.dismiss()
                 it?.let {
                     dataLIst = it
-                    dataLIst += it
-                    dataLIst += it
-                    dataLIst += it
-                    dataLIst += it
                     Log.e("resourceperson", "hello ${dataLIst.size}")
                     prepareRecycleView()
                 }

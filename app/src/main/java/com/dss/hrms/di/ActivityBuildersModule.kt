@@ -80,4 +80,8 @@ abstract class ActivityBuildersModule {
     @ContributesAndroidInjector(modules = [PayrollFragmentBuilderModule::class, ViewModelModule::class])
     abstract fun contributePayrollActivity(): PayrollActivity
 
+    @TrainingScope
+    @ContributesAndroidInjector(modules = [TrainingFragmentBuildersModule::class, ViewModelModule::class])
+    abstract fun contributeWebviewActivity(): WebViewActivity
+
 }

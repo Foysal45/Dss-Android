@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.dss.hrms.model.TrainingResponse
 import com.dss.hrms.repository.training.BudgetAndScheduleRepo
 import com.dss.hrms.view.training.model.BudgetAndSchedule
 import kotlinx.coroutines.launch
@@ -41,6 +40,19 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
         viewModelScope.launch {
             var response = budgetAndScheduleRepo.getCourseScheduleList()
             if (response is BudgetAndSchedule.CourseScheduleListResponse) {
+                liveData.postValue(response?.data)
+            } else {
+                liveData.postValue(null)
+            }
+        }
+        return liveData
+    }
+
+    fun getCourseList(): MutableLiveData<List<BudgetAndSchedule.Course>?> {
+        var liveData = MutableLiveData<List<BudgetAndSchedule.Course>?>()
+        viewModelScope.launch {
+            var response = budgetAndScheduleRepo.getCourseList()
+            if (response is BudgetAndSchedule.CourseListResponse) {
                 liveData.postValue(response?.data)
             } else {
                 liveData.postValue(null)
