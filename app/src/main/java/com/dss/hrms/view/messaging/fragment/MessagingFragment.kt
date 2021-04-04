@@ -106,31 +106,7 @@ class MessagingFragment : DaggerFragment() {
             }
 
 
-            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
-                "key",
-                selectedDataList
-            )?.observe(viewLifecycleOwner,
-                androidx.lifecycle.Observer { result ->
 
-                    result?.let {
-                        if (it.size > 0) {
-                            selectedDataList.addAll(it)
-                            Log.e("emailfragment", "employee lsit : ${selectedDataList.size}")
-                            binding.tvOffice.text = ""
-
-                            selectedDataList?.forEach { element ->
-                                binding.tvEmployee.append(
-                                    if (preparence.getLanguage().equals("en")) {
-                                        "${element?.name},"
-                                    } else "${element?.name_bn},"
-                                )
-                            }
-
-
-                            //selectedEmployeeList = it
-                        }
-                    }
-                })
             binding.llEmployee.setOnClickListener {
                 Navigation.findNavController(binding.root)
                     .navigate(R.id.action_messageFragment_to_searchEmployeeFragment)
@@ -140,10 +116,33 @@ class MessagingFragment : DaggerFragment() {
             binding.send.setOnClickListener {
                 uploadData()
             }
-
-
         }
 
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
+            "key",
+            selectedDataList
+        )?.observe(viewLifecycleOwner,
+            androidx.lifecycle.Observer { result ->
+
+                result?.let {
+                    if (it.size > 0) {
+                        selectedDataList.addAll(it)
+                        Log.e("emailfragment", "employee lsit : ${selectedDataList.size}")
+                        binding.tvOffice.text = ""
+
+                        selectedDataList?.forEach { element ->
+                            binding.tvEmployee.append(
+                                if (preparence.getLanguage().equals("en")) {
+                                    "${element?.name},"
+                                } else "${element?.name_bn},"
+                            )
+                        }
+
+
+                        //selectedEmployeeList = it
+                    }
+                }
+            })
 
         return binding.root
     }

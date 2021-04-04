@@ -100,34 +100,6 @@ class EmailFragment : DaggerFragment() {
             }
 
 
-            findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
-                "key",
-                selectedDataList
-            )?.observe(viewLifecycleOwner,
-                androidx.lifecycle.Observer { result ->
-                    Log.e("emailfragment", "employee lsit : ${result?.size}")
-                    result?.let {
-
-                        if (it.size > 0) {
-                            selectedDataList.addAll(it)
-                            Log.e("emailfragment", "employee lsit : ${selectedDataList.size}")
-                            binding.tvOffice.text = ""
-
-                            selectedDataList?.forEach { element ->
-                                binding.tvEmployee.append(
-                                    if (preparence.getLanguage().equals("en")) {
-                                        "${element?.name},"
-                                    } else "${element?.name_bn},"
-                                )
-                            }
-
-
-                            //selectedEmployeeList = it
-                        }
-                    }
-                })
-
-
             commonRepo.getOffice("/api/auth/office/list/basic",
                 object : OfficeDataValueListener {
                     override fun valueChange(list: List<Office>?) {
@@ -171,6 +143,38 @@ class EmailFragment : DaggerFragment() {
 
 
         }
+
+
+
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
+            "key",
+            selectedDataList
+        )?.observe(viewLifecycleOwner,
+            androidx.lifecycle.Observer { result ->
+                Log.e("emailfragment", "employee lsit : ${result?.size}")
+                result?.let {
+
+                    if (it.size > 0) {
+                        selectedDataList.addAll(it)
+                        Log.e("emailfragment", "employee lsit : ${selectedDataList.size}")
+                        binding.tvOffice.text = ""
+
+                        selectedDataList?.forEach { element ->
+                            binding.tvEmployee.append(
+                                if (preparence.getLanguage().equals("en")) {
+                                    "${element?.name},"
+                                } else "${element?.name_bn},"
+                            )
+                        }
+
+
+                        //selectedEmployeeList = it
+                    }
+                }
+            })
+
+
 
         return binding.root
     }
