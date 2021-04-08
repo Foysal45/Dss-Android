@@ -8,6 +8,7 @@ import com.dss.hrms.model.HeadOfficeDepartmentApiResponse
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.UtilRepoRepo
+import com.dss.hrms.view.allInterface.HeadOfficeDepartmentDataValueListener
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -50,5 +51,17 @@ class UtilViewModel @Inject constructor(application: Application) : AndroidViewM
                 }
         }
         return liveData
+    }
+
+    fun getHeadOfficeDepartment(onHeadOfficeDepartmentDataValueListener: HeadOfficeDepartmentDataValueListener) {
+        viewModelScope.launch {
+            var resonse = utilRepoRepo.getHeadOfficeDepartMent()
+            if (resonse != null)
+                if (resonse is HeadOfficeDepartmentApiResponse.HeadOfficeDepartmentResponse) {
+                    onHeadOfficeDepartmentDataValueListener.valueChange(resonse.data)
+                } else {
+                    onHeadOfficeDepartmentDataValueListener.valueChange(null)
+                }
+        }
     }
 }

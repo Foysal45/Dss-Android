@@ -6,21 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import com.btbapp.alquranapp.retrofit.ApiService
 import com.dss.hrms.model.Office
 import com.dss.hrms.model.SpinnerDataModel
-import com.dss.hrms.retrofit.RetrofitInstance.retrofitInstance
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.OfficeDataValueListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.namaztime.namaztime.database.MySharedPreparence
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.reflect.Type
-import java.text.SimpleDateFormat
+import java.util.HashMap
 import javax.inject.Inject
 
 
@@ -579,6 +576,72 @@ class CommonRepo @Inject constructor() {
             }
 
             override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
+                officeDataValueListener.valueChange(null)
+            }
+
+        })
+        return liveData
+    }
+
+
+    fun getOfficeWithWhereClause(
+        map: HashMap<Any, Any?>,
+        officeDataValueListener: OfficeDataValueListener
+    ): MutableLiveData<List<Office>>? {
+        val liveData: MutableLiveData<List<Office>> =
+            MutableLiveData<List<Office>>()
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getOfficeDataWithWhereClause(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}",
+                map.get("division_id")?.let { it as Int },
+                map.get("district_id")?.let { it as Int },
+                map.get("sixteen_category_id")?.let { it as Int },
+                map.get("head_office_department_id")?.let { it as Int },
+                map.get("head_office_section_id")?.let { it as Int },
+                map.get("head_office_sub_section_id")?.let { it as Int },
+                map.get("designation_id")?.let { it as Int }
+            )
+        Log.e("repo", "repos whereClause ${map}")
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+                        Log.e("repo", "repos ${jsonObjectParent}")
+
+                        if (code == 200 || code == 201) {
+                            val dataJA = jsonObjectParent.getJSONArray("data")
+                            val type: Type = object : TypeToken<List<Office?>?>() {}.type
+                            val dataList: List<Office> =
+                                Gson().fromJson(dataJA.toString(), type)
+                            liveData.postValue(dataList)
+                            officeDataValueListener.valueChange(dataList)
+                        } else {
+
+                            liveData.postValue(null)
+                            officeDataValueListener.valueChange(null)
+                        }
+                    } catch (e: JSONException) {
+                        Log.e("repo", "repos ${e.message}")
+                        liveData.postValue(null)
+                        officeDataValueListener.valueChange(null)
+                    }
+                } else {
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    Log.e("repo", "repos ${response}")
+                    liveData.postValue(null)
+                    officeDataValueListener.valueChange(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                Log.e("repo", "onFailure ${t.message}")
                 liveData.postValue(null)
                 officeDataValueListener.valueChange(null)
             }

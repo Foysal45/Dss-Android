@@ -119,6 +119,7 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
                 if (it.equals(StaticKey.EDIT)) {
+
                     employeeInfoEditCreateRepo?.updateAdditionalQualificationInfo(
                         additionalQualifications?.id,
                         getMapData()

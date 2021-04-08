@@ -345,6 +345,5 @@
     <string name="emergency_contact_no">Emergency contact no</string>
     <string name="reason_details">Reason Details</string>
     <string name="please_select_month_and_year">Please Select Month And Year</string>
-
-
+    <string name="office_search">অফিস অনুসন্ধান</string>
 </resources>

@@ -22,7 +22,9 @@ import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OfficeDataValueListener
+import com.dss.hrms.view.dialog.OfficeSearchingDialog
 import com.dss.hrms.view.messaging.viewmodel.MessagingViewModel
+import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import dagger.android.support.DaggerFragment
@@ -40,12 +42,19 @@ class MessagingFragment : DaggerFragment() {
     @Inject
     lateinit var commonRepo: CommonRepo
 
+    @Inject
+    lateinit var officeSearchingDialog: OfficeSearchingDialog
+
+    lateinit var utilViewmodel: UtilViewModel
+
     lateinit var messageViewModel: MessagingViewModel
     var office: Office? = null
+
 
     var selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
 
     var officeList = arrayListOf<Office>()
+    var mainOfficeList: List<Office>? = null
 
     lateinit var binding: FragmentMessageBinding
 
@@ -64,36 +73,23 @@ class MessagingFragment : DaggerFragment() {
             init()
 
             binding.llOffice.setOnClickListener {
-
+                officeSearchingDialog.showOfficeSearchDialog(
+                    activity,
+                    utilViewmodel,
+                    object : OfficeDataValueListener {
+                        override fun valueChange(officeList: List<Office>?) {
+                            mainOfficeList = officeList
+                            setOffice()
+                        }
+                    })
             }
 
             commonRepo.getOffice("/api/auth/office/list/basic",
                 object : OfficeDataValueListener {
                     override fun valueChange(list: List<Office>?) {
                         //   Log.e("gender", "gender message " + Gson().toJson(list))
-                        list?.let {
-                            SpinnerAdapter().setOfficeSpinner(
-                                binding?.spinner!!,
-                                context,
-                                list,
-                                0,
-                                object : CommonSpinnerSelectedItemListener {
-                                    override fun selectedItem(any: Any?) {
-                                        office = any as Office
-                                        office?.name?.let {
-                                            officeList?.add(office!!)
-                                            binding.tvOffice.append(
-                                                if (preparence.getLanguage().equals("en")) {
-                                                    "${office?.name},"
-                                                } else "${office?.name_bn},"
-                                            )
-                                        }
-
-                                        Log.e("selected item", " item : " + office)
-                                    }
-
-                                }
-                            )
+                        mainOfficeList?.let {
+                            setOffice()
                         }
                     }
                 })
@@ -147,6 +143,32 @@ class MessagingFragment : DaggerFragment() {
         return binding.root
     }
 
+    fun setOffice() {
+        mainOfficeList?.let {
+            SpinnerAdapter().setOfficeSpinner(
+                binding?.spinner!!,
+                context,
+                it,
+                0,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        office = any as Office
+                        office?.name?.let {
+                            officeList?.add(office!!)
+                            binding.tvOffice.append(
+                                if (preparence.getLanguage().equals("en")) {
+                                    "${office?.name},"
+                                } else "${office?.name_bn},"
+                            )
+                        }
+
+                        Log.e("selected item", " item : " + office)
+                    }
+
+                }
+            )
+        }
+    }
 
     fun getMapData(): HashMap<Any, Any?> {
         var localOfficeList = arrayListOf<Int>()
@@ -181,6 +203,10 @@ class MessagingFragment : DaggerFragment() {
             this,
             viewModelProviderFactory
         ).get(MessagingViewModel::class.java)
+        utilViewmodel = ViewModelProvider(
+            this,
+            viewModelProviderFactory
+        ).get(UtilViewModel::class.java)
 
     }
 

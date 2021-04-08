@@ -45,6 +45,7 @@ import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.android.synthetic.main.nav_menu_layout.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.HashMap
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
@@ -76,6 +77,29 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         appContext = application
         context = this
         init()
+
+        var divisionArray = arrayListOf<String>()
+        var districtArray = arrayListOf<HashMap<Any, Any?>>()
+        var officeLeadCategoryArray = arrayListOf<String>()
+
+        var map = HashMap<Any, Any?>()
+        map.put(
+            "office_id",
+            "localOfficeList"
+        )
+        map.put(
+            "employee_id",
+            "localEmployeeList"
+        )
+        map.put(
+            "message_body",
+            12
+        )
+        districtArray.add(map)
+        districtArray.add(map)
+        districtArray.add(map)
+        districtArray.add(map)
+        Log.e("mapdata", "mapdata : " + districtArray)
 
         Log.e("mainactivity", "inject login data " + loginInfo?.email)
         Log.e("mainactivity", "inject employee data " + employeeProfileData?.employee?.profile_id)
