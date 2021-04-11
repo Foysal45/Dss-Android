@@ -9,6 +9,7 @@ import com.dss.hrms.databinding.ModelEmployeeInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.util.DateConverter
+import com.dss.hrms.view.personalinfo.dialog.EditOfficialResidentialIInfo
 import com.namaztime.namaztime.database.MySharedPreparence
 import javax.inject.Inject
 
@@ -336,6 +337,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fJobJoiningDepartment.tvTitle.setText(context.getString(R.string.depertment))
         binding.fJobJoiningJobType.tvTitle.setText(context.getString(R.string.job_type))
         binding.fJobJoiningJoiningDate.tvTitle.setText(context.getString(R.string.joning_date))
+        binding.fJobJoiningConfirmationDate.tvTitle.setText(context.getString(R.string.confirmation_date))
         binding.fJobJoiningPensionDate.tvTitle.setText(context.getString(R.string.pension))
         binding.fJobJoiningClass.tvTitle.setText(context.getString(R.string._class))
         binding.fJobJoiningGrade.tvTitle.setText(context.getString(R.string.grade))
@@ -365,6 +367,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     DateConverter.changeDateFormateForShowing(it)
                 )
             }
+            jobjoinings.confirmation_date?.let {
+                binding.fJobJoiningConfirmationDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
             jobjoinings.pension_date?.let {
                 binding.fJobJoiningPensionDate.tvText.setText(
                     DateConverter.changeDateFormateForShowing(it)
@@ -391,6 +398,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     DateConverter.changeDateFormateForShowing(it)
                 )
             }
+            jobjoinings.confirmation_date?.let {
+                binding.fJobJoiningConfirmationDate.tvText.setText(
+                    DateConverter.changeDateFormateForShowing(it)
+                )
+            }
+
             jobjoinings.pension_date?.let {
                 binding.fJobJoiningPensionDate.tvText.setText(
                     DateConverter.changeDateFormateForShowing(it)
@@ -724,9 +737,10 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fORInfoDistrict.tvTitle.setText(context.getString(R.string.district))
         binding.fORInfoUpazila.tvTitle.setText(context.getString(R.string.upazila))
         binding.fORInfoOfficeZone.tvTitle.setText(context.getString(R.string.office_zoon))
-        binding.fORInfoLocation.tvTitle.setText(context.getString(R.string.location))
+        binding.fORInfoLocation.tvTitle.setText(context.getString(R.string.address))
         binding.fORInfoQuarterName.tvTitle.setText(context.getString(R.string.quarter_name))
         binding.fORInfoFlatNo.tvTitle.setText(context.getString(R.string.flat_no))
+        binding.fORInfoStatus.tvTitle.setText(context.getString(R.string.status))
 
         if (preparence.getLanguage()
                 .equals("en")
@@ -766,6 +780,19 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 )
             }
 
+            officialResidentials.status?.let {
+                if (it == 1) {
+                    binding.fORInfoStatus.tvText.setText(
+                        EditOfficialResidentialIInfo().getStatusList().get(0).name
+                    )
+                } else {
+                    binding.fORInfoStatus.tvText.setText(
+                        EditOfficialResidentialIInfo().getStatusList().get(1).name
+                    )
+                }
+
+            }
+
 
         } else {
             officialResidentials.memo_no?.let { binding.fORInfoMemoNo.tvText.setText(it) }
@@ -801,6 +828,19 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 binding.fORInfoFlatNo.tvText.setText(
                     it
                 )
+            }
+
+            officialResidentials.status?.let {
+                if (it == 1) {
+                    binding.fORInfoStatus.tvText.setText(
+                        EditOfficialResidentialIInfo().getStatusList().get(0).name_bn
+                    )
+                } else {
+                    binding.fORInfoStatus.tvText.setText(
+                        EditOfficialResidentialIInfo().getStatusList().get(1).name_bn
+                    )
+                }
+
             }
 
         }

@@ -30,9 +30,11 @@ import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OfficeDataValueListener
 import com.dss.hrms.view.allInterface.OnDateListener
+import com.dss.hrms.view.dialog.OfficeSearchingDialog
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
@@ -47,6 +49,14 @@ class EditJobJoiningInformation @Inject constructor() {
 
     @Inject
     lateinit var employeeProfileData: EmployeeProfileData
+
+
+    @Inject
+    lateinit var officeSearchingDialog: OfficeSearchingDialog
+
+    lateinit var utilViewmodel: UtilViewModel
+
+    var mainOfficeList: List<Office>? = null
 
     var position: Int? = 0
 
@@ -65,12 +75,13 @@ class EditJobJoiningInformation @Inject constructor() {
 
     fun showDialog(
         context: Context,
-        position: Int?
+        position: Int?,
+        utilViewmodel: UtilViewModel
     ) {
 
         this.position = position
         this.jobjoining = position?.let { employeeProfileData?.employee?.jobjoinings?.get(it) }
-
+        this.utilViewmodel = utilViewmodel
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         var dialogCustomeBinding: DialogPersonalInfoBinding = DataBindingUtil.inflate(
@@ -110,6 +121,11 @@ class EditJobJoiningInformation @Inject constructor() {
                 it
             )
         })
+        binding.fJobJoiningConfirmationDate.tvText.setText(jobjoining?.confirmation_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        })
         binding.fJobJoiningPensionDate.tvText.setText(jobjoining?.pension_date?.let {
             DateConverter.changeDateFormateForShowing(
                 it
@@ -122,27 +138,44 @@ class EditJobJoiningInformation @Inject constructor() {
         })
 
 
+        binding.JobJoiningIvSearch.setOnClickListener {
+            officeSearchingDialog.showOfficeSearchDialog(
+                context,
+                utilViewmodel,
+                object : OfficeDataValueListener {
+                    override fun valueChange(officeList: List<Office>?) {
+                        mainOfficeList = officeList
+                        setOffice(context, binding)
+                    }
+                })
+        }
+
+
         Log.e("officeid", "office id : " + jobjoining?.office_id)
         commonRepo.getOffice("/api/auth/office/list/basic",
             object : OfficeDataValueListener {
-                override fun valueChange(list: List<Office>?) {
+                override fun valueChange(officeList: List<Office>?) {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
-                    list?.let {
-                        SpinnerAdapter().setOfficeSpinner(
-                            binding.fJobJoiningOffice.spinner,
-                            context,
-                            list,
-                            jobjoining?.office_id,
-                            object : CommonSpinnerSelectedItemListener {
-                                override fun selectedItem(any: Any?) {
-                                    office = any as Office
-                                    loadDesignation(office?.id, context, binding)
-                                    Log.e("selected item", " item : " + office?.name)
-                                }
-
-                            }
-                        )
+                    if (mainOfficeList == null) {
+                        mainOfficeList = officeList
+                        setOffice(context, binding)
                     }
+//                    list?.let {
+//                        SpinnerAdapter().setOfficeSpinner(
+//                            binding.fJobJoiningOffice.spinner,
+//                            context,
+//                            list,
+//                            jobjoining?.office_id,
+//                            object : CommonSpinnerSelectedItemListener {
+//                                override fun selectedItem(any: Any?) {
+//                                    office = any as Office
+//                                    loadDesignation(office?.id, context, binding)
+//                                    Log.e("selected item", " item : " + office?.name)
+//                                }
+//
+//                            }
+//                        )
+//                    }
                 }
             })
         commonRepo.getCommonData("/api/auth/department/list",
@@ -245,6 +278,13 @@ class EditJobJoiningInformation @Inject constructor() {
                 }
             })
         })
+        binding.fJobJoiningConfirmationDate.tvText.setOnClickListener({
+            DatePicker().showDatePicker(context, object : OnDateListener {
+                override fun onDate(date: String) {
+                    date?.let { binding.fJobJoiningConfirmationDate.tvText.setText("" + it) }
+                }
+            })
+        })
         binding.fJobJoiningPensionDate.tvText.setOnClickListener({
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
@@ -267,6 +307,8 @@ class EditJobJoiningInformation @Inject constructor() {
 
             var joininfDate =
                 DateConverter.changeDateFormateForSending(binding.fJobJoiningJoiningDate.tvText.text.toString())
+            var confirmation_date =
+                DateConverter.changeDateFormateForSending(binding.fJobJoiningConfirmationDate.tvText.text.toString())
             var pension_date =
                 DateConverter.changeDateFormateForSending(binding.fJobJoiningPensionDate.tvText.text.toString())
             var prl_date =
@@ -286,6 +328,7 @@ class EditJobJoiningInformation @Inject constructor() {
             map.put("grade_id", grade?.id)
             map.put("pay_scale", payScale?.amount)
             map.put("joining_date", joininfDate)
+            map.put("confirmation_date", confirmation_date)
             map.put("pension_date", pension_date)
             map.put("prl_date", prl_date)
             map.put("status", jobjoining?.status)
@@ -373,6 +416,12 @@ class EditJobJoiningInformation @Inject constructor() {
                                                 binding.fJobJoiningJoiningDate.tvError.text =
                                                     ErrorUtils2.mainError(message)
                                             }
+                                            "confirmation_date" -> {
+                                                binding.fJobJoiningConfirmationDate.tvError.visibility =
+                                                    View.VISIBLE
+                                                binding.fJobJoiningConfirmationDate.tvError.text =
+                                                    ErrorUtils2.mainError(message)
+                                            }
                                             "pension_date" -> {
                                                 binding.fJobJoiningPensionDate.tvError.visibility =
                                                     View.VISIBLE
@@ -430,6 +479,27 @@ class EditJobJoiningInformation @Inject constructor() {
         }
     }
 
+    fun setOffice(
+        context: Context,
+        binding: DialogPersonalInfoBinding
+    ) {
+        mainOfficeList?.let {
+            SpinnerAdapter().setOfficeSpinner(
+                binding.fJobJoiningOffice.spinner,
+                context,
+                it,
+                0,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        office = any as Office
+                        loadDesignation(office?.id, context, binding)
+                        Log.e("selected item", " item : " + office?.name)
+                    }
+
+                }
+            )
+        }
+    }
 
     fun loadDesignation(officeId: Int?, context: Context, binding: DialogPersonalInfoBinding) {
         commonRepo.getDesignationData("/api/auth/office/${officeId}",
@@ -479,6 +549,9 @@ class EditJobJoiningInformation @Inject constructor() {
             View.GONE
 
         binding.fJobJoiningJoiningDate.tvError.visibility =
+            View.GONE
+
+        binding.fJobJoiningConfirmationDate.tvError.visibility =
             View.GONE
 
         binding.fJobJoiningPensionDate.tvError.visibility =

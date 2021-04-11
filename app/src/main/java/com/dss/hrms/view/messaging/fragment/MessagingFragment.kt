@@ -72,7 +72,7 @@ class MessagingFragment : DaggerFragment() {
             binding = FragmentMessageBinding.inflate(inflater, container, false)
             init()
 
-            binding.llOffice.setOnClickListener {
+            binding.ivSearch.setOnClickListener {
                 officeSearchingDialog.showOfficeSearchDialog(
                     activity,
                     utilViewmodel,
@@ -88,9 +88,11 @@ class MessagingFragment : DaggerFragment() {
                 object : OfficeDataValueListener {
                     override fun valueChange(list: List<Office>?) {
                         //   Log.e("gender", "gender message " + Gson().toJson(list))
-                        mainOfficeList?.let {
-                            setOffice()
-                        }
+
+                       if (mainOfficeList==null){
+                           mainOfficeList = officeList
+                           setOffice()
+                       }
                     }
                 })
 

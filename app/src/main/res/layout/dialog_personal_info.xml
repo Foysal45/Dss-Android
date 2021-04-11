@@ -277,10 +277,8 @@
 
                             <include
                                 android:id="@+id/hJobJoiningInformation"
-
                                 layout="@layout/personal_information_create_field_header"
                                 app:title="@{@string/job_joining_information}" />
-
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -291,10 +289,33 @@
                                 android:paddingVertical="@dimen/personal_information_body_padding_vertical">
 
 
-                                <include
-                                    android:id="@+id/fJobJoiningOffice"
-                                    layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/office}" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1">
+
+                                        <include
+                                            android:id="@+id/fJobJoiningOffice"
+                                            layout="@layout/personal_info_spinner"
+                                            app:title="@{@string/office}" />
+                                    </LinearLayout>
+
+                                    <ImageView
+                                        android:layout_marginTop="20dp"
+                                        android:id="@+id/JobJoiningIvSearch"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:paddingHorizontal="10dp"
+                                        android:src="@drawable/ic_baseline_search_24" />
+                                </LinearLayout>
+
 
                                 <include
                                     android:id="@+id/fJobJoiningDesignation"
@@ -326,6 +347,11 @@
                                     android:id="@+id/fJobJoiningPayScale"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/pay_scale}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningConfirmationDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/confirmation_date}" />
 
                                 <include
                                     android:id="@+id/fJobJoiningJoiningDate"

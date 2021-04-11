@@ -28,8 +28,10 @@ import com.dss.hrms.util.FilePath
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OfficeDataValueListener
+import com.dss.hrms.view.dialog.OfficeSearchingDialog
 import com.dss.hrms.view.messaging.viewmodel.MessagingViewModel
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import com.theartofdev.edmodo.cropper.CropImage
@@ -54,6 +56,9 @@ class EmailFragment : DaggerFragment() {
 
     var uploadImageUrl: String? = null
 
+    lateinit var utilViewmodel: UtilViewModel
+
+
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
 
@@ -63,12 +68,17 @@ class EmailFragment : DaggerFragment() {
     @Inject
     lateinit var commonRepo: CommonRepo
 
+    @Inject
+    lateinit var officeSearchingDialog: OfficeSearchingDialog
+
     lateinit var messageViewModel: MessagingViewModel
     var office: Office? = null
     lateinit var binding: FragmentEmailBinding
     var selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
 
     var officeList = arrayListOf<Office>()
+    var mainOfficeList: List<Office>? = null
+
     var loadingDialog: Dialog? = null
     var isAlreadyViewCreated = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,6 +100,20 @@ class EmailFragment : DaggerFragment() {
             Log.e("onCreateView", "onCreateView")
             init()
 
+
+            binding.ivSearch.setOnClickListener {
+                officeSearchingDialog.showOfficeSearchDialog(
+                    activity,
+                    utilViewmodel,
+                    object : OfficeDataValueListener {
+                        override fun valueChange(officeList: List<Office>?) {
+                            mainOfficeList = officeList
+                            setOffice()
+                        }
+                    })
+            }
+
+
             binding?.llAttachment.setOnClickListener {
                 galleryButtonClicked()
             }
@@ -104,32 +128,15 @@ class EmailFragment : DaggerFragment() {
                 object : OfficeDataValueListener {
                     override fun valueChange(list: List<Office>?) {
                         //   Log.e("gender", "gender message " + Gson().toJson(list))
-                        list?.let {
-                            SpinnerAdapter().setOfficeSpinner(
-                                binding?.spinner!!,
-                                context,
-                                list,
-                                0,
-                                object : CommonSpinnerSelectedItemListener {
-                                    override fun selectedItem(any: Any?) {
-                                        office = any as Office
-                                        office?.name?.let {
-                                            officeList?.add(office!!)
-                                            binding.tvOffice.append(
-                                                if (preparence.getLanguage().equals("en")) {
-                                                    "${office?.name},"
-                                                } else "${office?.name_bn},"
-                                            )
-                                        }
 
-                                        Log.e("selected item", " item : " + office)
-                                    }
-
-                                }
-                            )
+                        if (mainOfficeList==null){
+                            mainOfficeList = officeList
+                            setOffice()
                         }
                     }
                 })
+
+
 
 
             binding.send.setOnClickListener {
@@ -180,6 +187,34 @@ class EmailFragment : DaggerFragment() {
     }
 
 
+
+    fun setOffice() {
+        mainOfficeList?.let {
+            SpinnerAdapter().setOfficeSpinner(
+                binding?.spinner!!,
+                context,
+                it,
+                0,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        office = any as Office
+                        office?.name?.let {
+                            officeList?.add(office!!)
+                            binding.tvOffice.append(
+                                if (preparence.getLanguage().equals("en")) {
+                                    "${office?.name},"
+                                } else "${office?.name_bn},"
+                            )
+                        }
+
+                        Log.e("selected item", " item : " + office)
+                    }
+
+                }
+            )
+        }
+    }
+
     fun getMapData(): HashMap<Any, Any?> {
         var localOfficeList = arrayListOf<Int>()
         var localEmployeeList = arrayListOf<Int>()
@@ -216,7 +251,10 @@ class EmailFragment : DaggerFragment() {
             this,
             viewModelProviderFactory
         ).get(MessagingViewModel::class.java)
-
+        utilViewmodel = ViewModelProvider(
+            this,
+            viewModelProviderFactory
+        ).get(UtilViewModel::class.java)
     }
 
 

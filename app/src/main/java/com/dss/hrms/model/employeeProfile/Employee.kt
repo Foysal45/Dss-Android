@@ -391,6 +391,9 @@ class Employee {
         @SerializedName("joining_date")
         val joining_date: String? = null
 
+        @SerializedName("confirmation_date")
+        val confirmation_date: String? = null
+
         @SerializedName("pension_date")
         val pension_date: String? = null
 

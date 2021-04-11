@@ -245,6 +245,10 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
+                                android:id="@+id/fJobJoiningConfirmationDate"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
                                 android:id="@+id/fJobJoiningPrlDate"
                                 layout="@layout/personel_information_view_field" />
 
@@ -780,8 +784,12 @@
                                 android:id="@+id/fORInfoQuarterName"
                                 layout="@layout/personel_information_view_field" />
 
+
                             <include
                                 android:id="@+id/fORInfoFlatNo"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fORInfoStatus"
                                 layout="@layout/personel_information_view_field" />
 
                         </LinearLayout>

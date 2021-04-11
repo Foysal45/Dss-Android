@@ -93,6 +93,8 @@ class OfficeSearchingDialog @Inject constructor() {
             dialogCustome.dismiss()
         }
 
+        binding.designation.llBody.visibility = View.GONE
+        //loadDesignationList()
         commonRepo.getAllDistrict(
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
@@ -334,6 +336,29 @@ class OfficeSearchingDialog @Inject constructor() {
 
     fun loadDesignation(officeId: Int?) {
         commonRepo.getDesignationData("/api/auth/office/${officeId}",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding.designation.spinner,
+                            context,
+                            list,
+                            0,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    designation = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
+    }
+
+    fun loadDesignationList() {
+        commonRepo.getCommonData("/api/auth/designation/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     list?.let {

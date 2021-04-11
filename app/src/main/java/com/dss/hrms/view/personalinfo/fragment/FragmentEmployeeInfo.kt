@@ -19,6 +19,7 @@ import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dss.hrms.R
@@ -32,6 +33,7 @@ import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
 import com.dss.hrms.view.personalinfo.adapter.EmployeeInfoAdapter
 import com.dss.hrms.view.bottomsheet.SelectImageBottomSheet
 import com.dss.hrms.view.personalinfo.dialog.*
+import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import com.theartofdev.edmodo.cropper.CropImage
@@ -118,6 +120,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
     var employee: Employee? = null
 
+    lateinit var utilViewmodel: UtilViewModel
 
     // Storage Permissions
     private val REQUEST_EXTERNAL_STORAGE = 1
@@ -162,6 +165,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
         // binding = DataBindingUtil.inflate(inflater, R.layout.fragment_employee_info, container, false)
         v = inflater.inflate(R.layout.fragment_employee_info, container, false)
         Log.e("position", "position : " + position)
+
+
+        utilViewmodel = ViewModelProvider(
+            this,
+            viewModelProviderFactory
+        ).get(UtilViewModel::class.java)
 
         this.employee = employeeProfileData.employee
 
@@ -232,10 +241,10 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             StaticKey.Spouse -> {
                 dataList = employee?.spouses
                 this.title = getString(R.string.spouse)
-             //   if (dataList == null || dataList?.size == 0)
+                //   if (dataList == null || dataList?.size == 0)
                 //    v.fab.visibility = View.VISIBLE
-            //    else
-               //     v.fab.visibility = View.GONE
+                //    else
+                //     v.fab.visibility = View.GONE
             }
             StaticKey.Children -> {
                 dataList = employee?.childs
@@ -339,10 +348,16 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
         if (dataList != null && dataList?.size!! > 0) {
             v.recyclerView.visibility = View.VISIBLE
 
-            dataList?.let { key?.let { it1 -> activity?.let { it2 ->
-                adapter.setRequiredData(it, it1,
-                    it2,this)
-            } } }
+            dataList?.let {
+                key?.let { it1 ->
+                    activity?.let { it2 ->
+                        adapter.setRequiredData(
+                            it, it1,
+                            it2, this
+                        )
+                    }
+                }
+            }
 //            adapter = dataList?.let {
 //                activity?.let { it1 ->
 //                    EmployeeInfoAdapter(
@@ -452,7 +467,8 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                     activity?.let { it2 ->
                         editJobJoiningInformation.showDialog(
                             it2,
-                            position
+                            position,
+                            utilViewmodel
                         )
                     }
                 }

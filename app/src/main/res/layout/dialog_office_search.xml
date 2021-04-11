@@ -20,8 +20,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-
-
                 <LinearLayout
                     android:id="@+id/llOfficeSearch"
                     android:layout_width="match_parent"
