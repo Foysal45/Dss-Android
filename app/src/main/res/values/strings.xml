@@ -259,6 +259,7 @@
 
     <string name="training_management">Training Management</string>
     <string name="resource_person">Resource Person</string>
+
     <string name="resource_person_name">Resource Person Name</string>
     <string name="short_name">Short Name</string>
     <string name="first_email">First Email</string>
@@ -343,7 +344,13 @@
     <string name="please_select_month_and_year">Please Select Month And Year</string>
 
     <string name="office_search">Office Search</string>
-
+    <string name="course_schedule_title">Course Schedule Title</string>
+    <string name="course_schedule_title_bn">Course Schedule Title (Bangla)</string>
+    <string name="course_schedule_search">Course Schedule Search</string>
+    <string name="batch_schedule_search">Batch Schedule Search</string>
+    <string name="search_resource_person">Search Resource Person</string>
+    <string name="search_course_schedule">Search Course Schedule</string>
+    <string name="search_batch_schedule">Search Batch Schedule</string>
     <!--    -->
 <!--    <string name="full_name">Full Name</string>-->
 <!--    <string name="basic_salary">Basic Salary</string>-->

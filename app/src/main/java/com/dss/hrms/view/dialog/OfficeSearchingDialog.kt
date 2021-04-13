@@ -25,7 +25,6 @@ import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.HeadOfficeDepartmentDataValueListener
 import com.dss.hrms.view.allInterface.OfficeDataValueListener
-import com.dss.hrms.view.messaging.fragment.SearchEmployeeFragmentDirections
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.spinner.CommonSpinnerAdapter
 import com.dss.hrms.viewmodel.CommonViewModel

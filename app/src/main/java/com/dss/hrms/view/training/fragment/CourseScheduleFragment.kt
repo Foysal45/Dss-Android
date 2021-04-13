@@ -33,6 +33,7 @@ import com.dss.hrms.view.training.`interface`.OnCourseScheduleClickListener
 import com.dss.hrms.view.training.adaoter.CourseScheduleAdapter
 import com.dss.hrms.view.training.adaoter.spinner.CourseScheduleSpinnerAdapter
 import com.dss.hrms.view.training.adaoter.spinner.RoleWiseEmployeeAdapter
+import com.dss.hrms.view.training.dialog.CourseScheduleSearchingDialog
 import com.dss.hrms.view.training.model.BudgetAndSchedule
 import com.dss.hrms.view.training.viewmodel.BudgetAndScheduleViewModel
 import com.dss.hrms.viewmodel.EmployeeViewModel
@@ -53,6 +54,10 @@ class CourseScheduleFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var courseScheduleSearchDialog: CourseScheduleSearchingDialog
+
     lateinit var budgetAndScheduleViewModel: BudgetAndScheduleViewModel
     lateinit var employeeViewModel: EmployeeViewModel
 
@@ -92,6 +97,10 @@ class CourseScheduleFragment : DaggerFragment() {
                 prepareRecycleView()
 
             })
+        }
+
+        binding.llSearch.setOnClickListener {
+            courseScheduleSearchDialog.showCourseScheduleSearchDialog(activity,budgetAndScheduleViewModel)
         }
         binding.fab.setOnClickListener {
             showEditCreateDialog(Operation.CREATE, null)

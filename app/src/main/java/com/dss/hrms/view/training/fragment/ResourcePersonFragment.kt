@@ -50,6 +50,7 @@ import com.dss.hrms.view.training.`interface`.OnResourcePersonClickListener
 import com.dss.hrms.view.training.adaoter.ResourceAdapter
 import com.dss.hrms.view.training.adaoter.spinner.ExpertiseFieldAdapter
 import com.dss.hrms.view.training.adaoter.spinner.HonorariumHeadAdapter
+import com.dss.hrms.view.training.dialog.ResourcePersonSearchingDialog
 import com.dss.hrms.view.training.model.ExpertiseField
 import com.dss.hrms.view.training.model.HonorariumHead
 import com.dss.hrms.view.training.viewmodel.TrainingManagementViewModel
@@ -81,6 +82,9 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
     private var selectImageBottomSheet: SelectImageBottomSheet? = null
     private var imageFile: File? = null
     private var currentPhotoPath: String? = null
+
+    @Inject
+    lateinit var resourcePersonSearchingDialog: ResourcePersonSearchingDialog
 
     @Inject
     lateinit var commonRepo: CommonRepo
@@ -136,7 +140,12 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
             })
         }
 
-
+        binding.llSearch.setOnClickListener {
+            resourcePersonSearchingDialog.showResourcePersonSearchDialog(
+                activity,
+                trainingManagementViewModel
+            )
+        }
         binding.fab.setOnClickListener {
             showEditCreateDialog(Operation.CREATE, null)
         }

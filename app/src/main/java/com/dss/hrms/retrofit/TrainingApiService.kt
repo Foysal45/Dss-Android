@@ -55,6 +55,18 @@ interface TrainingApiService {
         @Header("Authorization") token: String
     ): Response<TrainingResponse.ResourcePersonResponse>
 
+    @Headers("Accept: application/json")
+    @GET("/api/auth/resource-person/list")
+    suspend fun searchResourcePerson(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String,
+        @Query("person_name") person_name: String?,
+        @Query("short_name") short_name: String?,
+        @Query("designation_id") designation_id: Int?,
+        @Query("first_email") first_email: String?,
+        @Query("first_mobile") first_mobile: String?
+    ): Response<TrainingResponse.ResourcePersonResponse>
+
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("/api/auth/resource-person/{ID}")
     suspend fun updateResourcePerson(
@@ -79,6 +91,17 @@ interface TrainingApiService {
         @Header("Authorization") token: String
     ): Response<BudgetAndSchedule.BatchScheduleResponse>
 
+    @Headers("Accept: application/json")
+    @GET("/api/auth/batch-schedule/list")
+    suspend fun searchBatchSchedule(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String,
+        @Query("batch_name") batch_name: String?,
+        @Query("batch_name_bn") batch_name_bn: String?,
+        @Query("start_date") start_date: String?,
+        @Query("end_date") end_date: String?
+    ): Response<BudgetAndSchedule.BatchScheduleResponse>
+
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/batch-schedule")
     suspend fun addBatchSchedule(
@@ -101,6 +124,17 @@ interface TrainingApiService {
     suspend fun courseSchedule(
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String
+    ): Response<BudgetAndSchedule.CourseScheduleResponse>
+
+
+    @Headers("Accept: application/json")
+    @GET("/api/auth/course-schedule/list")
+    suspend fun searchCourseSchedule(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String,
+        @Query("course_schedule_title") course_schedule_title: String?,
+        @Query("course_schedule_title_bn") course_schedule_title_bn: String?,
+        @Query("total_seat") total_seat: String?
     ): Response<BudgetAndSchedule.CourseScheduleResponse>
 
 

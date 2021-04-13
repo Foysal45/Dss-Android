@@ -41,6 +41,31 @@ class TrainingRepo @Inject constructor() {
         }
 
     }
+ suspend fun searchResourcePersonList(map: HashMap<Any, Any?>): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.searchResourcePerson(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}",
+                    map.get("person_name")?.let { it as String },
+                    map.get("short_name")?.let { it as String },
+                    map.get("designation_id")?.let { it as Int },
+                    map.get("first_email")?.let { it as String },
+                    map.get("first_mobile")?.let { it as String }
+
+                )
+                if (response.body()?.code == 200 || response.body()?.code == 201)
+                    response.body()
+                else
+                    null
+
+            } catch (e: Exception) {
+                null
+            }
+
+        }
+
+    }
 
 
     suspend fun addResourcePerson(

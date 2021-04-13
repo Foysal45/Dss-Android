@@ -10,15 +10,38 @@
         android:padding="10dp"
         tools:context=".view.training.fragment.CourseScheduleFragment">
 
+        <LinearLayout
+            android:id="@+id/llSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_4sdp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height_large"
+                android:background="@drawable/edittext_bg"
+                android:drawableRight="@drawable/ic_baseline_search_24"
+                android:gravity="center|left"
+                android:hint="@string/search_course_schedule"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingRight="10dp"
+                android:textColor="@color/light_black"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/text_size_small" />
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llSearch"
             app:layout_constraintVertical_bias="0.0" />
 
 

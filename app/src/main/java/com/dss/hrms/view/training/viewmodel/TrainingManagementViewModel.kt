@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dss.hrms.model.TrainingResponse
 import com.dss.hrms.repository.training.TrainingRepo
+import com.dss.hrms.view.training.`interface`.OnResourcePersonValueListener
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,6 +29,21 @@ class TrainingManagementViewModel @Inject constructor(application: Application) 
                 _resourcePerson.postValue(response.data)
             } else {
                 _resourcePerson.postValue(null)
+                // _resourcePerson.value = null
+            }
+        }
+
+    }
+
+    fun searchResourcePerson(map: HashMap<Any, Any?>,onResourcePersonValueListener : OnResourcePersonValueListener) {
+        viewModelScope.launch {
+            var response = trainingRepo.searchResourcePersonList(map)
+            if (response is TrainingResponse.ResourcePersonResponse) {
+                _resourcePerson.postValue(response.data)
+                onResourcePersonValueListener.onValueChange(response.data)
+            } else {
+                _resourcePerson.postValue(null)
+                onResourcePersonValueListener.onValueChange(null)
                 // _resourcePerson.value = null
             }
         }

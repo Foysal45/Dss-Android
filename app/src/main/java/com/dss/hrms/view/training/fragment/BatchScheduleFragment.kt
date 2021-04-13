@@ -27,6 +27,7 @@ import com.dss.hrms.view.training.`interface`.OnBatchScheduleClickListener
 import com.dss.hrms.view.training.adaoter.BatchScheduleAdapter
 import com.dss.hrms.view.training.adaoter.spinner.CourseScheduleSpinnerAdapter
 import com.dss.hrms.view.training.adaoter.spinner.RoleWiseEmployeeAdapter
+import com.dss.hrms.view.training.dialog.BatchScheduleSearchingDialog
 import com.dss.hrms.view.training.model.BudgetAndSchedule
 import com.dss.hrms.view.training.viewmodel.BudgetAndScheduleViewModel
 import com.dss.hrms.viewmodel.EmployeeViewModel
@@ -41,6 +42,10 @@ class BatchScheduleFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var batchScheduleSearchDialog: BatchScheduleSearchingDialog
+
     lateinit var budgetAndScheduleViewModel: BudgetAndScheduleViewModel
     lateinit var employeeViewModel: EmployeeViewModel
 
@@ -75,11 +80,17 @@ class BatchScheduleFragment : DaggerFragment() {
             getBatchSchedule()
             batchSchedule.observe(viewLifecycleOwner, Observer {
                 dialog?.dismiss()
-                dataList = it
-                prepareRecycleView()
-
+                it?.let {
+                    dataList = it
+                    prepareRecycleView()
+                }
             })
         }
+
+        binding.llSearch.setOnClickListener {
+            batchScheduleSearchDialog.showBatchScheduleSearchDialog(activity,budgetAndScheduleViewModel)
+        }
+
         binding.fab.setOnClickListener {
             showEditCreateDialog(Operation.CREATE, null)
         }

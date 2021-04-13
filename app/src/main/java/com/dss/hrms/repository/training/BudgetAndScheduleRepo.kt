@@ -36,10 +36,30 @@ class BudgetAndScheduleRepo @Inject constructor() {
             } catch (e: Exception) {
                 null
             }
+        }
+    }
+    suspend fun searchBatchScheduleList(map: HashMap<Any, Any?>): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.searchBatchSchedule(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}",
+                    map.get("batch_name")?.let { it as String },
+                    map.get("batch_name_bn")?.let { it as String },
+                    map.get("start_date")?.let { it as String },
+                    map.get("end_date")?.let { it as String }
+                )
+                if (response.body()?.code == 200 || response.body()?.code == 201)
+                    response.body()
+                else
+                    null
+            } catch (e: Exception) {
+                null
+            }
 
         }
-
     }
+
 
     suspend fun addBatchSchedule(
         map: HashMap<Any, Any?>,
@@ -89,7 +109,7 @@ class BudgetAndScheduleRepo @Inject constructor() {
                         liveData.postValue("Error");
                     }
                 } else {
-                    var error =ErrorUtils2.parseError(response)
+                    var error = ErrorUtils2.parseError(response)
                     Log.e("response", "Error response ${error.getError().size}")
                     response?.let { liveData.postValue(error) }
                 }
@@ -120,6 +140,27 @@ class BudgetAndScheduleRepo @Inject constructor() {
 
         }
 
+    }
+
+    suspend fun searchCourseSchedule(map: HashMap<Any, Any?>): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.searchCourseSchedule(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}",
+                    map.get("course_schedule_title")?.let { it as String },
+                    map.get("course_schedule_title_bn")?.let { it as String },
+                    map.get("total_seat")?.let { it as String }
+                )
+                Log.e("repo", "response: " + response.body())
+                if (response.body()?.code == 200 || response.body()?.code == 201)
+                    response.body()
+                else
+                    null
+            } catch (e: Exception) {
+                null
+            }
+        }
     }
 
 

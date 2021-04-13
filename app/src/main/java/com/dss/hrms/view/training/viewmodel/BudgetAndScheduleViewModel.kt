@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dss.hrms.repository.training.BudgetAndScheduleRepo
+import com.dss.hrms.view.training.OnBatchScheduleValueListener
+import com.dss.hrms.view.training.OnCourseScheduleValueListener
 import com.dss.hrms.view.training.model.BudgetAndSchedule
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,6 +32,23 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
                 _courseSchedule.postValue(response.data?.data)
             } else {
                 _courseSchedule.postValue(null)
+            }
+        }
+
+    }
+
+    fun searchCourseSchedule(
+        map: HashMap<Any, Any?>,
+        onCourseScheduleValueListener: OnCourseScheduleValueListener
+    ) {
+        viewModelScope.launch {
+            var response = budgetAndScheduleRepo.searchCourseSchedule(map)
+            if (response is BudgetAndSchedule.CourseScheduleResponse) {
+                _courseSchedule.postValue(response.data?.data)
+                onCourseScheduleValueListener.onValueChange(response.data?.data)
+            } else {
+                _courseSchedule.postValue(null)
+                onCourseScheduleValueListener.onValueChange(null)
             }
         }
 
@@ -75,6 +94,22 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
             liveData = budgetAndScheduleRepo.updateCourseSchedule(map, liveData, id)
         }
         return liveData
+    }
+
+    fun searchBatchScheduleList(
+        map: HashMap<Any, Any?>,
+        onBatchScheduleValueListener: OnBatchScheduleValueListener
+    ) {
+        viewModelScope.launch {
+            var response = budgetAndScheduleRepo.searchBatchScheduleList(map)
+            if (response is BudgetAndSchedule.BatchScheduleResponse) {
+                _batchSchedule.postValue(response.data?.data)
+                onBatchScheduleValueListener.onValueChange(response.data?.data)
+            } else {
+                _batchSchedule.postValue(null)
+                onBatchScheduleValueListener.onValueChange(null)
+            }
+        }
     }
 
     fun getBatchSchedule() {
