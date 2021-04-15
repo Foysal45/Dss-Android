@@ -93,8 +93,11 @@ class CourseScheduleFragment : DaggerFragment() {
             getCourseSchedule()
             courseSchedule.observe(viewLifecycleOwner, Observer {
                 dialog?.dismiss()
-                dataList = it
-                prepareRecycleView()
+                it?.let {
+                    dataList = it
+                    prepareRecycleView()
+
+                }
 
             })
         }

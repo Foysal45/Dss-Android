@@ -85,7 +85,7 @@ interface TrainingApiService {
     ): Response<CustomeResponse>
 
     @Headers("Accept: application/json")
-    @GET("/api/auth/batch-schedule")
+    @GET("/api/auth/batch-schedule/list")
     suspend fun batchSchedule(
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String
@@ -120,7 +120,7 @@ interface TrainingApiService {
     ): Response<CustomeResponse>
 
     @Headers("Accept: application/json")
-    @GET("/api/auth/course-schedule")
+    @GET("/api/auth/course-schedule/list")
     suspend fun courseSchedule(
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String

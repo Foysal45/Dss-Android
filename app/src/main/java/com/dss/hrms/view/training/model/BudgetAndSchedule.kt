@@ -7,7 +7,7 @@ class BudgetAndSchedule {
     data class BatchScheduleResponse(
         val status: String?,
         val code: Int?,
-        val data: BatchScheduleData?
+        val data: List<BatchSchedule>?
     )
 
     data class BatchScheduleData(val data: List<BatchSchedule>?)
@@ -49,7 +49,7 @@ class BudgetAndSchedule {
     data class CourseScheduleResponse(
         val status: String?,
         val code: Int?,
-        val data: CourseScheduleData?
+        val data: List<CourseSchedule>?
     )
 
     data class CourseScheduleData(val data: List<CourseSchedule>?)

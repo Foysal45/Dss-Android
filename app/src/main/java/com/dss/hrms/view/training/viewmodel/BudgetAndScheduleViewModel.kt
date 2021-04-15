@@ -29,7 +29,7 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
         viewModelScope.launch {
             var response = budgetAndScheduleRepo.getCourseSchedule()
             if (response is BudgetAndSchedule.CourseScheduleResponse) {
-                _courseSchedule.postValue(response.data?.data)
+                _courseSchedule.postValue(response.data)
             } else {
                 _courseSchedule.postValue(null)
             }
@@ -44,8 +44,8 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
         viewModelScope.launch {
             var response = budgetAndScheduleRepo.searchCourseSchedule(map)
             if (response is BudgetAndSchedule.CourseScheduleResponse) {
-                _courseSchedule.postValue(response.data?.data)
-                onCourseScheduleValueListener.onValueChange(response.data?.data)
+                _courseSchedule.postValue(response.data)
+                onCourseScheduleValueListener.onValueChange(response.data)
             } else {
                 _courseSchedule.postValue(null)
                 onCourseScheduleValueListener.onValueChange(null)
@@ -103,8 +103,8 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
         viewModelScope.launch {
             var response = budgetAndScheduleRepo.searchBatchScheduleList(map)
             if (response is BudgetAndSchedule.BatchScheduleResponse) {
-                _batchSchedule.postValue(response.data?.data)
-                onBatchScheduleValueListener.onValueChange(response.data?.data)
+                _batchSchedule.postValue(response.data)
+                onBatchScheduleValueListener.onValueChange(response.data)
             } else {
                 _batchSchedule.postValue(null)
                 onBatchScheduleValueListener.onValueChange(null)
@@ -116,7 +116,7 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
         viewModelScope.launch {
             var response = budgetAndScheduleRepo.getBatchScheduleList()
             if (response is BudgetAndSchedule.BatchScheduleResponse) {
-                _batchSchedule.postValue(response.data?.data)
+                _batchSchedule.postValue(response.data)
             } else {
                 _batchSchedule.postValue(null)
             }
