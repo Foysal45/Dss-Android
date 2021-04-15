@@ -174,7 +174,9 @@ class CourseScheduleFragment : DaggerFragment() {
         dialogTrainingLoyeoutBinding.courseTitleBn.etText.setText(courseSchedule?.course_schedule_title_bn)
         dialogTrainingLoyeoutBinding.courseTotalSeat.etText.setText(courseSchedule?.total_seat)
 
-
+        dialogTrainingLoyeoutBinding.courseScheduleHeader.tvClose.setOnClickListener {
+            dialogCustome?.dismiss()
+        }
         courseSchedule?.designations?.let {
             it.forEach { item ->
                 item?.designation?.let { it1 ->

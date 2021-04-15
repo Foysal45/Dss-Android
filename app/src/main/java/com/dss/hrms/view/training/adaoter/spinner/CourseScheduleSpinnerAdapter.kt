@@ -18,7 +18,7 @@ class CourseScheduleSpinnerAdapter {
     fun setCourseScheduleSpinner(
         spinner: Spinner,
         context: Context?,
-        dataList: List<BudgetAndSchedule.CourseScheduleList?>?,
+        dataList: List<BudgetAndSchedule.CourseSchedule?>?,
         id: Int?,
         commonSpinnerSelectedItemListener: CommonSpinnerSelectedItemListener
     ) {

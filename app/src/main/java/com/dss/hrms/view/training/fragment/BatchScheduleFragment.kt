@@ -64,7 +64,7 @@ class BatchScheduleFragment : DaggerFragment() {
     var staff1: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
     var staff2: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
     var staff3: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
-    var courseScheduleListData: BudgetAndSchedule.CourseScheduleList? = null
+    var courseScheduleListData: BudgetAndSchedule.CourseSchedule? = null
 
 
     override fun onCreateView(
@@ -235,7 +235,7 @@ class BatchScheduleFragment : DaggerFragment() {
 
                             any?.let {
                                 courseScheduleListData =
-                                    any as BudgetAndSchedule.CourseScheduleList
+                                    any as BudgetAndSchedule.CourseSchedule
                             }
 
                         }

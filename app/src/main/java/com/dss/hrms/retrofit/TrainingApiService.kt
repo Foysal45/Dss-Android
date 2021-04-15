@@ -150,7 +150,7 @@ interface TrainingApiService {
     suspend fun courseScheduleList(
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String
-    ): Response<BudgetAndSchedule.CourseScheduleListResponse>?
+    ): Response<BudgetAndSchedule.CourseScheduleResponse>?
 
 
     @Headers("Content-Type: application/json", "Accept: application/json")

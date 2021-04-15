@@ -54,11 +54,11 @@ class BudgetAndScheduleViewModel @Inject constructor(application: Application) :
 
     }
 
-    fun getCourseScheduleList(): MutableLiveData<List<BudgetAndSchedule.CourseScheduleList>?> {
-        var liveData = MutableLiveData<List<BudgetAndSchedule.CourseScheduleList>?>()
+    fun getCourseScheduleList(): MutableLiveData<List<BudgetAndSchedule.CourseSchedule?>?> {
+        var liveData = MutableLiveData<List<BudgetAndSchedule.CourseSchedule?>?>()
         viewModelScope.launch {
             var response = budgetAndScheduleRepo.getCourseScheduleList()
-            if (response is BudgetAndSchedule.CourseScheduleListResponse) {
+            if (response is BudgetAndSchedule.CourseScheduleResponse) {
                 liveData.postValue(response?.data)
             } else {
                 liveData.postValue(null)
