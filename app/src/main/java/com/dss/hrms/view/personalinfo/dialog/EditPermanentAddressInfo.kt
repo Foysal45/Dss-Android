@@ -17,16 +17,18 @@ import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.*
 import com.dss.hrms.model.employeeProfile.Employee
-import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.allInterface.SpecificDistrictValueListener
+import com.dss.hrms.view.allInterface.UnionDataValueListener
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
-import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
+import com.dss.hrms.view.personalinfo.adapter.*
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
@@ -48,7 +50,14 @@ class EditPermanentAddressInfo @Inject constructor() {
     var dialogCustome: Dialog? = null
     var division: SpinnerDataModel? = null
     var district: SpinnerDataModel? = null
-    var upazila: SpinnerDataModel? = null
+    var municipality: Municipalities? = null
+    var localGovernmentType: SpinnerDataModel? = null
+    var cityCorporations: CityCorporations? = null
+    var specificDistrictModel: SpecificDistrictModel? = null
+
+    //var upazila: SpinnerDataModel? = null
+    var upazila: Upazilas? = null
+    var union: Union? = null
     var permanentAddresses: Employee.PermanentAddresses? = null
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
@@ -134,7 +143,7 @@ class EditPermanentAddressInfo @Inject constructor() {
                     }
                 }
             })
-
+        getLocalGovernmentType()
 
         binding?.addressBtnUpdate?.btnUpdate?.setOnClickListener({
             var employeeInfoEditCreateRepo =
@@ -210,12 +219,7 @@ class EditPermanentAddressInfo @Inject constructor() {
                                 binding?.fAddressDistrict?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
-                            "upazila_id" -> {
-                                binding?.fAddressUpazila?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressUpazila?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
+
                             "police_station" -> {
                                 binding?.fAddressPoliceStation?.tvError?.visibility =
                                     View.VISIBLE
@@ -266,6 +270,36 @@ class EditPermanentAddressInfo @Inject constructor() {
                                 binding?.fAddressVillageOrHouseNoBn?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
+                            "local_government_type_id" -> {
+                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "city_corporation_id" -> {
+                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "municipality_id" -> {
+                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "upazila_id" -> {
+                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "union_id" -> {
+                                binding?.fAddressUnio?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fAddressUnio?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
                         }
                     }
                 }
@@ -291,7 +325,11 @@ class EditPermanentAddressInfo @Inject constructor() {
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("division_id", division?.id)
         map.put("district_id", district?.id)
-        map.put("upazila_id", upazila?.id)
+        localGovernmentType?.id?.let { map.put("local_government_type_id", it) }
+        municipality?.id?.let { map.put("municipality_id", it) }
+        cityCorporations?.id?.let { map.put("city_corporation_id", it) }
+        upazila?.id?.let { map.put("upazila_id", it) }
+        union?.id?.let { map.put("union_id", it) }
         map.put("police_station", binding?.fAddressPoliceStation?.etText?.text.toString())
         map.put("police_station_bn", binding?.fAddressPoliceStationBn?.etText?.text.toString())
         map.put("post_office", binding?.fAddressPostOffice?.etText?.text.toString())
@@ -319,7 +357,11 @@ class EditPermanentAddressInfo @Inject constructor() {
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     district = any as SpinnerDataModel
-                                    getUpazila(district?.id, permanentAddresses?.upazila_id)
+                                    // getUpazila(district?.id, presentAddress?.upazila_id)
+                                    getUpazilaWithMunicipalities(
+                                        district?.id,
+                                        permanentAddresses?.upazila_id
+                                    )
                                 }
 
                             }
@@ -330,20 +372,43 @@ class EditPermanentAddressInfo @Inject constructor() {
     }
 
 
-    fun getUpazila(districtId: Int?, upazilaId: Int?) {
-        commonRepo.getUpazila(districtId,
-            object : CommonDataValueListener {
-                override fun valueChange(list: List<SpinnerDataModel>?) {
+    fun setUpazila(upazilaId: Int?) {
+        UpazilaAdapter().setUpazilaSpinner(
+            binding?.fAddressUpazila?.spinner!!,
+            context,
+            specificDistrictModel?.upazilas,
+            upazilaId,
+            object : CommonSpinnerSelectedItemListener {
+                override fun selectedItem(any: Any?) {
+                    //upazila = any as SpinnerDataModel
+                    upazila = null
+                    any?.let {
+                        upazila = any as Upazilas
+                        setUnion(upazila?.id, permanentAddresses?.union_id)
+                    }
+                }
+            }
+        )
+    }
+
+    fun setUnion(upazilaId: Int?, unionId: Int?) {
+        commonRepo.getUnion(upazilaId,
+            object : UnionDataValueListener {
+                override fun valueChange(list: List<Union>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
                     list?.let {
-                        SpinnerAdapter().setSpinner(
-                            binding?.fAddressUpazila?.spinner!!,
+                        UnionAdapter().setUnionSpinner(
+                            binding?.fAddressUnio?.spinner!!,
                             context,
                             list,
-                            upazilaId,
+                            unionId,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
-                                    upazila = any as SpinnerDataModel
+                                    union = null
+                                    // getUpazila(district?.id, presentAddress?.upazila_id)
+                                    any?.let {
+                                        union = any as Union
+                                    }
                                 }
 
                             }
@@ -351,6 +416,141 @@ class EditPermanentAddressInfo @Inject constructor() {
                     }
                 }
             })
+    }
+
+
+    fun getLocalGovernmentType() {
+        commonRepo.getCommonData("/api/auth/local-government-type/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    //    Log.e("gender", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding?.fAddresstypeCityCorpUpazilaMunicipality?.spinner!!,
+                            context,
+                            list,
+                            permanentAddresses?.local_government_type_id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    localGovernmentType = any as SpinnerDataModel
+                                    setCityMuniUpailaAccordingToType()
+                                }
+                            }
+                        )
+                    }
+                }
+            })
+    }
+
+
+    fun getUpazilaWithMunicipalities(districtId: Int?, upazilaId: Int?) {
+        commonRepo.getUpazilaWithMunicipalities(districtId,
+            object : SpecificDistrictValueListener {
+                override fun valueChange(data: SpecificDistrictModel?) {
+                    specificDistrictModel = data
+                    //    Log.e("gender", "gender message " + Gson().toJson(list))
+                    setCityMuniUpailaAccordingToType()
+                }
+            })
+    }
+
+
+    fun setMunicipalities(list: List<Upazilas>?, id: Int?) {
+        list?.let {
+            MunicipalitiesAdapter().setMunicipalitiesSpinner(
+                binding?.fAddressMunicipalities?.spinner!!,
+                context,
+                getPoulatedMunicipalities(list),
+                id,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        // upazila = any as Municipalities
+                        municipality = null
+                        any?.let {
+                            municipality = any as Municipalities
+                        }
+                    }
+                }
+            )
+        }
+    }
+
+    fun setCityCorporation(list: List<CityCorporations>?, id: Int?) {
+        list?.let {
+            CityCorporationsAdapter().setCityCorporationsSpinner(
+                binding?.fAddressCityCorporations?.spinner!!,
+                context,
+                list,
+                id,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        // upazila = any as Municipalities
+                        cityCorporations = null
+                        any?.let {
+                            cityCorporations = any as CityCorporations
+                        }
+                    }
+                }
+            )
+        }
+    }
+
+
+    fun getPoulatedMunicipalities(
+        list: List<Upazilas>?
+    ): List<Municipalities> {
+        var municipalitiesList: List<Municipalities> = arrayListOf()
+        list?.let {
+            it.forEach({ uList ->
+                uList?.municipalities?.let { uListElement ->
+                    municipalitiesList += uListElement
+                }
+            })
+        }
+        return municipalitiesList
+    }
+
+    fun setCityMuniUpailaAccordingToType() {
+
+        if (localGovernmentType?.id == 1) {
+            upazila = null
+            union = null
+            municipality = null
+            binding?.fAddressCityCorporations?.llBody?.visibility = View.VISIBLE
+            binding?.fAddressMunicipalities?.llBody?.visibility = View.GONE
+            binding?.fAddressUpazila?.llBody?.visibility = View.GONE
+            binding?.fAddressUnio?.llBody?.visibility = View.GONE
+            setCityCorporation(
+                specificDistrictModel?.city_corporations,
+                permanentAddresses?.city_corporation_id
+            )
+        } else if (localGovernmentType?.id == 2) {
+            upazila = null
+            union = null
+            cityCorporations = null
+            binding?.fAddressMunicipalities?.llBody?.visibility = View.VISIBLE
+            binding?.fAddressCityCorporations?.llBody?.visibility = View.GONE
+            binding?.fAddressUpazila?.llBody?.visibility = View.GONE
+            binding?.fAddressUnio?.llBody?.visibility = View.GONE
+            setMunicipalities(specificDistrictModel?.upazilas, permanentAddresses?.municipality_id)
+        } else if (localGovernmentType?.id == 3) {
+            cityCorporations = null
+            municipality = null
+            binding?.fAddressUpazila?.llBody?.visibility = View.VISIBLE
+            binding?.fAddressUnio?.llBody?.visibility = View.VISIBLE
+            binding?.fAddressMunicipalities?.llBody?.visibility = View.GONE
+            binding?.fAddressCityCorporations?.llBody?.visibility = View.GONE
+            setUpazila(permanentAddresses?.upazila_id)
+        } else {
+            cityCorporations = null
+            municipality = null
+            upazila = null
+            union = null
+            binding?.fAddressMunicipalities?.llBody?.visibility = View.GONE
+            binding?.fAddressCityCorporations?.llBody?.visibility = View.GONE
+            binding?.fAddressUpazila?.llBody?.visibility = View.GONE
+            binding?.fAddressUnio?.llBody?.visibility = View.GONE
+        }
     }
 
 
@@ -379,6 +579,12 @@ class EditPermanentAddressInfo @Inject constructor() {
         binding?.fAddressVillageOrHouseNo?.tvError?.visibility =
             View.GONE
         binding?.fAddressVillageOrHouseNoBn?.tvError?.visibility =
+            View.GONE
+        binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
+            View.GONE
+        binding?.fAddressCityCorporations?.tvError?.visibility =
+            View.GONE
+        binding?.fAddressMunicipalities?.tvError?.visibility =
             View.GONE
     }
 

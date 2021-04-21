@@ -143,6 +143,20 @@
                                 android:id="@+id/fEmployeeRole"
                                 layout="@layout/personel_information_view_field" />
 
+
+                            <include
+                                android:id="@+id/fEmployeeStatusType"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fEmployeeStatusDate"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEmployeeFreedomFighterquota"
+                                layout="@layout/personel_information_view_field" />
+
                             <include
                                 android:id="@+id/fDisability"
                                 layout="@layout/personel_information_view_field" />

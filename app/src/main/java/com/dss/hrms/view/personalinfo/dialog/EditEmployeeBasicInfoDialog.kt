@@ -67,8 +67,11 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
     var gender: SpinnerDataModel? = null
     var disabilityType: SpinnerDataModel? = null
     var disabilityDegree: SpinnerDataModel? = null
+    var employmentStatusType: SpinnerDataModel? = null
+    var employeeType: SpinnerDataModel? = null
     var maritalStatus: SpinnerDataModel? = null
     var hasDisability: SpinnerDataModel? = null
+    var hasFreedomFighterQuota: SpinnerDataModel? = null
     var fileClickListener: FileClickListener? = null
     open var imageFile: File? = null
     var imageUrl: String? = null
@@ -117,6 +120,8 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         binding?.fPhone?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
         binding?.llBasicInfo?.visibility = View.VISIBLE
         binding?.fProfileId?.llBody?.visibility = View.GONE
+        binding?.fPresentBasicSalary?.llBody?.visibility = View.GONE
+        binding?.fPresentGrossSalary?.llBody?.visibility = View.GONE
 
         employee?.profile_id?.let { binding?.fProfileId?.etText?.setText("" + it) }
         employee?.nid_no?.let { binding?.fNid?.etText?.setText("" + it) }
@@ -133,6 +138,13 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         employee?.user?.email?.let { binding?.fEmail?.etText?.setText("" + it) }
         employee?.date_of_birth?.let {
             binding?.fDOB?.tvText?.setText(
+                "" + DateConverter.changeDateFormateForShowing(
+                    it
+                )
+            )
+        }
+        employee?.employment_job_status?.status_date?.let {
+            binding?.fEmploymentStatusDate?.tvText?.setText(
                 "" + DateConverter.changeDateFormateForShowing(
                     it
                 )
@@ -280,6 +292,45 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                     }
                 }
             })
+        commonRepo.getCommonData("/api/auth/employment-status-type/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding?.fEmploymentStatusType?.spinner!!,
+                            context,
+                            list,
+                            employee?.employment_job_status?.employment_status_id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    employmentStatusType = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
+        commonRepo.getCommonData("/api/auth/employee-type/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    list?.let {
+                        SpinnerAdapter().setEmployeeTypeSpinner(
+                            binding?.fEmployeeType?.spinner!!,
+                            context,
+                            list,
+                            employee.employee_type_id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    employeeType = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
 
 
 
@@ -299,10 +350,33 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 }
             )
         }
+
+        hasDisabilityData()?.let {
+            SpinnerAdapter().setSpinner(
+                binding?.fFreedomFighterQuota?.spinner!!,
+                context,
+                it,
+                employee?.has_freedom_fighter_quota,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        hasFreedomFighterQuota = any as SpinnerDataModel
+                    }
+                }
+            )
+        }
         binding?.fDOB?.tvText?.setOnClickListener({
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding?.fDOB?.tvText?.setText("" + it) }
+                }
+            })
+        })
+
+
+        binding?.fEmploymentStatusDate?.tvText?.setOnClickListener({
+            DatePicker().showDatePicker(context, object : OnDateListener {
+                override fun onDate(date: String) {
+                    date?.let { binding?.fEmploymentStatusDate?.tvText?.setText("" + it) }
                 }
             })
         })
@@ -523,6 +597,24 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                                 binding?.fNid?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
+                            "employee_type_id" -> {
+                                binding?.fNid?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fNid?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "employment_status_id" -> {
+                                binding?.fEmploymentStatusType?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fEmploymentStatusType?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "has_freedom_fighter_quota" -> {
+                                binding?.fFreedomFighterQuota?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fFreedomFighterQuota?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
                         }
                     }
                 }
@@ -545,6 +637,8 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
     fun getMapData(): HashMap<Any, Any?> {
         var date = DateConverter.changeDateFormateForSending(binding?.fDOB?.tvText?.text.toString())
+        var employeeStatusTyypeDate =
+            DateConverter.changeDateFormateForSending(binding?.fEmploymentStatusDate?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("profile_id", binding?.fProfileId?.etText?.text.toString())
@@ -553,6 +647,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         Log.e("dob", "dob : ${date}")
 
         map.put("date_of_birth", date)
+        map.put("status_date", employeeStatusTyypeDate)
         map.put("fathers_name", binding?.fFatherNameEng?.etText?.text.toString())
         map.put("fathers_name_bn", binding?.fFatherNameBangla?.etText?.text.toString())
         map.put("mothers_name", binding?.fMotherNameEng?.etText?.text.toString())
@@ -563,6 +658,9 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("religion_id", religion?.id)
         map.put("employee_type_id", employee?.employee_type_id)
         map.put("has_disability", hasDisability?.id)
+        employeeType?.id?.let { map.put("employee_type_id", it) }
+        employmentStatusType?.id?.let { map.put("employment_status_id", it) }
+        hasFreedomFighterQuota?.id?.let { map.put("has_freedom_fighter_quota", it) }
         map.put("disability_type_id", disabilityType?.id)
         map.put("disability_degree_id", disabilityDegree?.id)
         map.put("disabled_person_id", binding?.fDisabledPersonId?.etText?.text?.toString())
@@ -675,6 +773,9 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         binding?.fDisabilityDegree?.tvError?.visibility = View.GONE
         binding?.fDisabledPersonId?.tvError?.visibility = View.GONE
         binding?.fNid?.tvError?.visibility = View.GONE
+        binding?.fEmployeeType?.tvError?.visibility = View.GONE
+        binding?.fEmploymentStatusType?.tvError?.visibility = View.GONE
+        binding?.fFreedomFighterQuota?.tvError?.visibility = View.GONE
 
     }
 

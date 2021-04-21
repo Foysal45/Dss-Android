@@ -46,7 +46,13 @@ class SpinnerDataModel {
     @SerializedName("updated_at")
     var updated_at: String? = null
 
-    @SerializedName("paysacle")
+    @SerializedName("employee_type")
+    var employee_type: String? = null
+
+    @SerializedName("employee_type_bn")
+    var employee_type_bn: String? = null
+
+    @SerializedName("payscales")
     var paysacle: List<Paysacle>? = null
 
 

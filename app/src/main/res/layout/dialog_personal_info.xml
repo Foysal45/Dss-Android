@@ -178,9 +178,31 @@
                                     app:title="@{@string/phone}" />
 
                                 <include
+                                    android:id="@+id/fEmployeeType"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/employee_type}" />
+
+                                <include
+                                    android:id="@+id/fEmploymentStatusType"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/employee_status_type}" />
+
+                                <include
+                                    android:id="@+id/fEmploymentStatusDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/employee_status_date}" />
+
+                                <include
+                                    android:id="@+id/fFreedomFighterQuota"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/has_freedom_fighter_quota}" />
+
+
+                                <include
                                     android:id="@+id/fDisability"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/has_disability}" />
+
 
                                 <include
                                     android:id="@+id/fDisabilityType"
@@ -307,11 +329,11 @@
                                     </LinearLayout>
 
                                     <ImageView
-                                        android:layout_marginTop="20dp"
                                         android:id="@+id/JobJoiningIvSearch"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
+                                        android:layout_marginTop="10dp"
                                         android:paddingHorizontal="10dp"
                                         android:src="@drawable/ic_baseline_search_24" />
                                 </LinearLayout>
@@ -341,12 +363,12 @@
                                 <include
                                     android:id="@+id/fJobJoiningGrade"
                                     layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/grade}" />
+                                    app:title="@{@string/pay_scale_grade}" />
 
                                 <include
                                     android:id="@+id/fJobJoiningPayScale"
                                     layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/pay_scale}" />
+                                    app:title="@{@string/basic_pay}" />
 
                                 <include
                                     android:id="@+id/fJobJoiningConfirmationDate"
@@ -368,6 +390,10 @@
                                     layout="@layout/personal_info_textview"
                                     app:title="@{@string/pention_date}" />
 
+                                <include
+                                    android:id="@+id/fJobJoiningCurrentJob"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/current_job}" />
                                 <include
                                     android:id="@+id/jobjoiningUpdateButton"
                                     layout="@layout/personal_info_update_button" />
@@ -494,9 +520,29 @@
                                     app:title="@{@string/district}" />
 
                                 <include
+                                    android:id="@+id/fAddresstype_city_corp_upazila_municipality"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/type_city_corp_upazila_municipality}" />
+
+                                <include
+                                    android:id="@+id/fAddressMunicipalities"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/municipalities}" />
+
+                                <include
+                                    android:id="@+id/fAddressCityCorporations"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/citycorporations}" />
+
+                                <include
                                     android:id="@+id/fAddressUpazila"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/upazila}" />
+
+                                <include
+                                    android:id="@+id/fAddressUnio"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/union_or_municiplity}" />
 
                                 <include
                                     android:id="@+id/fAddressPoliceStation"

@@ -253,9 +253,14 @@
                                 layout="@layout/personel_information_view_field" />
 
 
+
                             <include
                                 android:id="@+id/fJobJoiningPensionDate"
                                 layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fJobJoiningCurrentJob"
+                                layout="@layout/personel_information_view_field" />
+
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

@@ -64,6 +64,9 @@
     <string name="name_b">Name (Bangla)</string>
     <string name="office">Office</string>
     <string name="district">District</string>
+    <string name="type_city_corp_upazila_municipality">Type (City corp/Upazila/Municipality)</string>
+    <string name="municipalities">Municipalities</string>
+    <string name="citycorporations">CityCorporations</string>
     <string name="email">E-mail Address</string>
     <string name="occupation">Occupation</string>
     <string name="mobile">Mobile No.</string>
@@ -86,7 +89,7 @@
     <string name="language_information">Language Information</string>
     <string name="local_training">Local Training</string>
     <string name="foreign_training">Foreign Training</string>
-    <string name="official_residential_information">Official Residential Information</string>
+    <string name="official_residential_information">Govt. Allocated Residential</string>
     <string name="foreign_travel">Foreign Travel</string>
     <string name="additional_professional_qualification">Additional Professional Qualification</string>
     <string name="publication">Publication</string>
@@ -154,8 +157,8 @@
     <string name="confirmation_date">Confirmation Date</string>
     <string name="pension">Pension Date</string>
     <string name="_class">Class</string>
-    <string name="grade">Grade(Scale)</string>
-    <string name="pay_scale">Pay Scale</string>
+    <string name="pay_scale_grade">Pay Scale Grade</string>
+    <string name="basic_pay">Basic Pay</string>
     <string name="prl_date">PRL Date</string>
     <string name="pention_date">Pention Date</string>
     <string name="vill_house">Village/House No.(English)</string>
@@ -167,6 +170,7 @@
     <string name="police_station">Police Station(English)</string>
     <string name="police_station_bn">Police Station(Bangla)</string>
     <string name="upazila">Upazila</string>
+    <string name="union_or_municiplity">Union/Municipality</string>
     <string name="division">Division</string>
     <string name="phone_mobile"><![CDATA[Phone & Mobile No.]]></string>
     <string name="name_deg">Name of Degree</string>
@@ -192,6 +196,7 @@
 
     <string name="pending">Pending</string>
     <string name="dismiss">Dismiss</string>
+    <string name="close">Close</string>
     <string name="date">Date</string>
     <string name="certification_date">Certification Date</string>
     <string name="qualification_name">Qualification Name(English)</string>
@@ -204,6 +209,10 @@
     <string name="disability_degree">Disability Degree</string>
     <string name="disabled_person_id">Disabled Person ID</string>
     <string name="employee_type">Employee Type</string>
+    <string name="employee_status_type">Employee Status Type</string>
+    <string name="employee_status_date">Employment Status Date</string>
+    <string name="has_freedom_fighter_quota">Has Freedom Fighter Quota ?</string>
+    <string name="current_job">Current Job</string>
     <string name="has_disability">Has Disability</string>
     <string name="profile_id">Profile  ID</string>
     <string name="birth">Date of Birth</string>

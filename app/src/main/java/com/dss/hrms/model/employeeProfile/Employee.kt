@@ -54,6 +54,9 @@ class Employee {
     @SerializedName("has_disability")
     val has_disability: Int = 0
 
+    @SerializedName("has_freedom_fighter_quota")
+    val has_freedom_fighter_quota: Int? = 0
+
     @SerializedName("disability_type_id")
     val disability_type_id: Int = 0
 
@@ -70,7 +73,7 @@ class Employee {
     val designation_id: Int = 0
 
     @SerializedName("employee_type_id")
-    val employee_type_id: String? = null
+    val employee_type_id: Int? = null
 
     @SerializedName("status")
     val status: Int = 0
@@ -110,6 +113,9 @@ class Employee {
 
     @SerializedName("user")
     val user: User? = null
+
+    @SerializedName("employment_job_status")
+    val employment_job_status: EmploymentJobStatus? = null
 
     @SerializedName("jobjoinings")
     val jobjoinings: List<Jobjoinings>? = null
@@ -169,9 +175,42 @@ class Employee {
     @SerializedName("official_residentials")
     val official_residentials: List<OfficialResidentials>? = null
 
-//    @SerializedName("posting_records")
+    //    @SerializedName("posting_records")
 //    val posting_records: List<PostingRecords>? = null
+    inner class EmploymentJobStatus {
+        @SerializedName("id")
+        val id: Int? = 0
 
+        @SerializedName("empolyee_id")
+        val empolyee_id: Int? = 0
+
+        @SerializedName("employment_status_id")
+        val employment_status_id: Int? = 0
+
+        @SerializedName("status_date")
+        val status_date: String? = null
+
+        @SerializedName("employeementstatus")
+        val employeementstatus: Employeementstatus? = null
+    }
+
+
+    inner class Employeementstatus {
+        @SerializedName("id")
+        val id: Int? = 0
+
+        @SerializedName("name")
+        val name: String? = null
+
+        @SerializedName("name_bn")
+        val name_bn: String? = null
+
+        @SerializedName("priority_order")
+        val priority_order: String? = null
+
+        @SerializedName("status")
+        val status: Int? = 0
+    }
 
     inner class DisabilityType {
         @SerializedName("id")
@@ -735,6 +774,18 @@ class Employee {
         @SerializedName("status")
         val status: Int = 0
 
+        @SerializedName("union_id")
+        val union_id: Int? = 0
+
+        @SerializedName("municipality_id")
+        val municipality_id: Int? = 0
+
+        @SerializedName("local_government_type_id")
+        val local_government_type_id: Int? = 0
+
+        @SerializedName("city_corporation_id")
+        val city_corporation_id: Int? = 0
+
         @SerializedName("deleted_at")
         val deleted_at: String? = null
 
@@ -799,6 +850,18 @@ class Employee {
 
         @SerializedName("status")
         val status: Int = 0
+
+        @SerializedName("union_id")
+        val union_id: Int? = 0
+
+        @SerializedName("municipality_id")
+        val municipality_id: Int? = 0
+
+        @SerializedName("local_government_type_id")
+        val local_government_type_id: Int? = 0
+
+        @SerializedName("city_corporation_id")
+        val city_corporation_id: Int? = 0
 
         @SerializedName("deleted_at")
         val deleted_at: String? = null

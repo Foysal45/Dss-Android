@@ -26,10 +26,7 @@ import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.DatePicker
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.allInterface.CommonDataValueListener
-import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
-import com.dss.hrms.view.allInterface.OfficeDataValueListener
-import com.dss.hrms.view.allInterface.OnDateListener
+import com.dss.hrms.view.allInterface.*
 import com.dss.hrms.view.dialog.OfficeSearchingDialog
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
@@ -64,13 +61,14 @@ class EditJobJoiningInformation @Inject constructor() {
     var payScale: Paysacle? = null
     var jobjoining: Employee.Jobjoinings? = null
 
-
+    lateinit var binding: DialogPersonalInfoBinding
     var office: Office? = null
     var desingNation: SpinnerDataModel? = null;
     var department: SpinnerDataModel? = null;
     var jobType: SpinnerDataModel? = null
     var _class: SpinnerDataModel? = null
     var grade: SpinnerDataModel? = null
+     lateinit var context:Context
 
 
     fun showDialog(
@@ -82,21 +80,22 @@ class EditJobJoiningInformation @Inject constructor() {
         this.position = position
         this.jobjoining = position?.let { employeeProfileData?.employee?.jobjoinings?.get(it) }
         this.utilViewmodel = utilViewmodel
+        this.context=context
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        var dialogCustomeBinding: DialogPersonalInfoBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
             R.layout.dialog_personal_info,
             null,
             false
         )
-        dialogCustome?.setContentView(dialogCustomeBinding.getRoot())
+        dialogCustome?.setContentView(binding.getRoot())
         var window: Window? = dialogCustome?.getWindow()
         window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updateJobjoiningInfo(context, dialogCustomeBinding)
+        updateJobjoiningInfo(context, binding)
         dialogCustome?.show()
 
     }
@@ -160,22 +159,6 @@ class EditJobJoiningInformation @Inject constructor() {
                         mainOfficeList = officeList
                         setOffice(context, binding)
                     }
-//                    list?.let {
-//                        SpinnerAdapter().setOfficeSpinner(
-//                            binding.fJobJoiningOffice.spinner,
-//                            context,
-//                            list,
-//                            jobjoining?.office_id,
-//                            object : CommonSpinnerSelectedItemListener {
-//                                override fun selectedItem(any: Any?) {
-//                                    office = any as Office
-//                                    loadDesignation(office?.id, context, binding)
-//                                    Log.e("selected item", " item : " + office?.name)
-//                                }
-//
-//                            }
-//                        )
-//                    }
                 }
             })
         commonRepo.getCommonData("/api/auth/department/list",
@@ -254,10 +237,8 @@ class EditJobJoiningInformation @Inject constructor() {
                                     grade = any as SpinnerDataModel
 
                                     grade?.paysacle?.let {
-                                        showPayScaleList(
-                                            it,
-                                            binding,
-                                            context,
+                                        setPayScale(
+                                            grade?.id,
                                             jobjoining?.pay_scale
                                         )
                                     }
@@ -269,6 +250,17 @@ class EditJobJoiningInformation @Inject constructor() {
                 }
             })
 
+        SpinnerAdapter().setSpinner(
+            binding.fJobJoiningCurrentJob.spinner,
+            context,
+            currentJobData(),
+            jobjoining?.status,
+            object : CommonSpinnerSelectedItemListener {
+                override fun selectedItem(any: Any?) {
+
+                }
+            }
+        )
 
 
         binding.fJobJoiningJoiningDate.tvText.setOnClickListener({
@@ -457,26 +449,27 @@ class EditJobJoiningInformation @Inject constructor() {
 
     }
 
-    fun showPayScaleList(
-        list: List<Paysacle>,
-        binding: DialogPersonalInfoBinding,
-        context: Context,
-        amount: String?
-    ) {
-        list?.let {
-            SpinnerAdapter().setPayscale(
-                binding.fJobJoiningPayScale.spinner,
-                context,
-                it,
-                amount,
-                object : CommonSpinnerSelectedItemListener {
-                    override fun selectedItem(any: Any?) {
-                        payScale = any as Paysacle
+    fun setPayScale(gradeId: Int?, payScaleAmount: String?) {
+        commonRepo.getSpecificSalaryGrade("/api/auth/salary-grade/${gradeId}",
+            object : PayScaleValueListener {
+                override fun valueChange(spinnerDataModel: SpinnerDataModel?) {
+                    Log.e("payscale", "payscale message " + Gson().toJson(spinnerDataModel?.paysacle))
+                    spinnerDataModel?.paysacle?.let {
+                        SpinnerAdapter().setPayscale(
+                            binding.fJobJoiningPayScale.spinner,
+                            context,
+                            it,
+                            payScaleAmount,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    payScale = any as Paysacle
+                                }
+                            }
+                        )
                     }
-
                 }
-            )
-        }
+            })
+
     }
 
     fun setOffice(
@@ -488,7 +481,7 @@ class EditJobJoiningInformation @Inject constructor() {
                 binding.fJobJoiningOffice.spinner,
                 context,
                 it,
-                0,
+                jobjoining?.office_id,
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
                         office = any as Office
@@ -522,9 +515,27 @@ class EditJobJoiningInformation @Inject constructor() {
                     }
                 }
             })
-
     }
 
+    fun currentJobData(): List<SpinnerDataModel> {
+
+        var rel = SpinnerDataModel()
+        rel.apply {
+            id = 1
+            name = "Yes"
+            name_bn = "হ্যাঁ"
+
+        }
+        var rel1 = SpinnerDataModel()
+        rel1.apply {
+            id = 0
+            name = "No"
+            name_bn = "না"
+
+
+        }
+        return arrayListOf(rel, rel1)
+    }
 
     fun invisiableAllError(binding: DialogPersonalInfoBinding) {
         binding.fJobJoiningOffice.tvError.visibility =

@@ -340,9 +340,10 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fJobJoiningConfirmationDate.tvTitle.setText(context.getString(R.string.confirmation_date))
         binding.fJobJoiningPensionDate.tvTitle.setText(context.getString(R.string.pension))
         binding.fJobJoiningClass.tvTitle.setText(context.getString(R.string._class))
-        binding.fJobJoiningGrade.tvTitle.setText(context.getString(R.string.grade))
-        binding.fJobJoiningPayScale.tvTitle.setText(context.getString(R.string.pay_scale))
+        binding.fJobJoiningGrade.tvTitle.setText(context.getString(R.string.pay_scale_grade))
+        binding.fJobJoiningPayScale.tvTitle.setText(context.getString(R.string.basic_pay))
         binding.fJobJoiningPrlDate.tvTitle.setText(context.getString(R.string.prl_date))
+        binding.fJobJoiningCurrentJob.tvTitle.setText(context.getString(R.string.current_job))
         binding.tvLanguageCertificate.setText(context.getString(R.string.certificate))
 
         context?.let {
@@ -354,6 +355,14 @@ class EmployeeInfoDataBinding @Inject constructor() {
         }
 
         jobjoinings.pay_scale?.let { binding.fJobJoiningPayScale.tvText.setText(it) }
+
+
+        jobjoinings?.status?.let {
+            binding?.fJobJoiningCurrentJob?.tvText.setText(
+                if (it == 1) context.getString(R.string.yes) else
+                    context.getString(R.string.no)
+            )
+        }
 
         if (preparence.getLanguage()
                 .equals("en")
@@ -386,6 +395,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     )
                 )
             }
+
 
             // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
         } else {
@@ -1205,7 +1215,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         disciplinaryAction.present_status?.let {
             binding.fDAPresentStatus.tvText.setText(
                 if (disciplinaryAction.present_status == 0) "" + context.getString(R.string.pending) else context.getText(
-                    R.string.dismiss
+                    R.string.close
                 )
             )
         }

@@ -153,8 +153,8 @@
     <string name="confirmation_date">নিশ্চিতকরণের তারিখ</string>
     <string name="pension">পেনশনের তারিখ</string>
     <string name="_class">শ্রেণী</string>
-    <string name="grade">গ্রেড (স্কেল)</string>
-    <string name="pay_scale">পে স্কেল</string>
+    <string name="pay_scale_grade">পে স্কেল গ্রেড </string>
+    <string name="basic_pay">বেসিক পে</string>
     <string name="prl_date">পিআরএল তারিখ</string>
     <string name="pention_date">পেনশনের তারিখ</string>
     <string name="vill_house">গ্রাম/বাড়ি নং(ইংরেজি)</string>
@@ -202,8 +202,9 @@
     <string name="disciplinary_action_details_bn">ডিসিপ্লিনারি অ্যাকশন বিবরণ (বাংলা)</string>
     <string name="remakrs_bn">মন্তব্য (বাংলা)</string>
     <string name="remakrs">মন্তব্য (ইংরেজি)</string>
-    <string name="pending">বিচারাধীন</string>
+    <string name="pending">Pending</string>
     <string name="dismiss">খারিজ</string>
+    <string name="close">Close</string>
 
     <string name="date">তারিখ</string>
     <string name="certification_date">সার্টিফিকেশনের তারিখ</string>

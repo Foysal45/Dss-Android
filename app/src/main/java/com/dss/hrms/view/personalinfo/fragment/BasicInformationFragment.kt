@@ -42,7 +42,35 @@ import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.dialog_personal_info.view.*
 import kotlinx.android.synthetic.main.fragment_basic_information.view.*
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fBloodGroup
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fDOB
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fDisability
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fDisabilityDegree
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fDisabilityType
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fDisabledPersonId
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fEmail
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fEmployeeType
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fFatherNameBangla
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fFatherNameEng
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fGender
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fMaritalStatus
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fMotherNameBangla
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fMotherNameEng
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fNameBangla
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fNameEng
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fNid
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fPhone
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fPresentBasicSalary
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fPresentGrossSalary
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fPunchId
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fReligion
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fTIN
+import kotlinx.android.synthetic.main.fragment_basic_information.view.fUserName
+import kotlinx.android.synthetic.main.fragment_basic_information.view.hBasicInformation
+import kotlinx.android.synthetic.main.fragment_basic_information.view.ivEmployee
+import kotlinx.android.synthetic.main.fragment_basic_information.view.tvImageTitle
 import kotlinx.android.synthetic.main.personal_information_header_field.view.*
 import kotlinx.android.synthetic.main.personel_information_view_field.view.*
 import kotlinx.android.synthetic.main.personel_information_view_field.view.tvTitle
@@ -117,6 +145,9 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
     fun setData() {
 
+        v.fPresentBasicSalary.llBody.visibility = View.GONE
+        v.fPresentGrossSalary.llBody.visibility = View.GONE
+
         v.hBasicInformation.tvTitle.setText(getString(R.string.personal_information))
         v.fEmployeeId.tvTitle.setText(getString(R.string.employee_id))
 
@@ -142,6 +173,9 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         v.fUserName.tvTitle.setText(getString(R.string.user_name))
         v.fPhone.tvTitle.setText(getString(R.string.phone))
         v.fEmployeeType.tvTitle.setText(getString(R.string.employee_type))
+        v.fEmployeeStatusType.tvTitle.setText(getString(R.string.employee_status_type))
+        v.fEmployeeStatusDate.tvTitle.setText(getString(R.string.employee_status_date))
+        v.fEmployeeFreedomFighterquota.tvTitle.setText(getString(R.string.has_freedom_fighter_quota))
         v.fDisability.tvTitle.setText(getString(R.string.has_disability))
         v.tvImageTitle.setText(getString(R.string.photo))
         v.fEmployeeRole.tvTitle.setText(getString(R.string.employee_role))
@@ -155,7 +189,13 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         v.fEmployeeId.tvText.setText("" + employee?.profile_id)
         employee?.name?.let { v.fNameEng.tvText.setText(it) }
         employee?.name_bn?.let { v.fNameBangla.tvText.setText(it) }
-        employee?.date_of_birth?.let { v.fDOB.tvText.setText(( DateConverter.changeDateFormateForShowing(it))) }
+        employee?.date_of_birth?.let {
+            v.fDOB.tvText.setText(
+                (DateConverter.changeDateFormateForShowing(
+                    it
+                ))
+            )
+        }
         employee?.fathers_name?.let { v.fFatherNameEng.tvText.setText(it) }
         employee?.fathers_name_bn?.let { v.fFatherNameBangla.tvText.setText(it) }
         employee?.mothers_name?.let { v.fMotherNameEng.tvText.setText(it) }
@@ -168,10 +208,23 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         employee?.punch_id?.let { v.fPunchId.tvText.setText(it) }
         employee?.present_basic_salary?.let { v.fPresentBasicSalary.tvText.setText(it) }
         employee?.present_gross_salary?.let { v.fPresentGrossSalary.tvText.setText(it) }
+        employee?.employment_job_status?.status_date?.let {
+            v.fEmployeeStatusDate.tvText.setText(
+                (DateConverter.changeDateFormateForShowing(
+                    it
+                ))
+            )
+        }
         employee?.user?.roles?.let {
             if (it.size > 0) {
                 v.fEmployeeRole.tvText.setText(it.get(0).name)
             }
+        }
+
+        employee?.has_freedom_fighter_quota?.let {
+            if (it == 1)
+                v.fEmployeeFreedomFighterquota.tvText.setText(context?.getString(R.string.yes)) else
+                v.fEmployeeFreedomFighterquota.tvText.setText(context?.getString(R.string.no))
         }
 
         if (employee?.has_disability == 0) {
@@ -192,15 +245,25 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             if (preparence?.getLanguage()
                     .equals("en")
             ) {
+
+
                 v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type)
                 v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree)
                 v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type)
-
+                employee?.employment_job_status?.employeementstatus?.name?.let {
+                    v.fPresentGrossSalary.tvText.setText(
+                        it
+                    )
+                }
             } else {
                 v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type_bn)
                 v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree_bn)
                 v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type_bn)
-
+                employee?.employment_job_status?.employeementstatus?.name_bn?.let {
+                    v.fPresentGrossSalary.tvText.setText(
+                        it
+                    )
+                }
             }
 
         }
@@ -217,6 +280,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
             v.fBloodGroup.tvText.setText(employee?.blood_group?.name)
             v.fReligion.tvText.setText(employee?.religion?.name)
+            v.fEmployeeStatusType.tvText.setText(employee?.employment_job_status?.employeementstatus?.name)
 
         } else {
             employee?.gender?.name_bn.let { v.fGender.tvText.setText(it) }
@@ -228,6 +292,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             }
             v.fBloodGroup.tvText.setText(employee?.blood_group?.name_bn)
             v.fReligion.tvText.setText(employee?.religion?.name_bn)
+            v.fEmployeeStatusType.tvText.setText(employee?.employment_job_status?.employeementstatus?.name_bn)
         }
 
         activity?.let {
