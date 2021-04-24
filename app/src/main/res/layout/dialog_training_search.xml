@@ -45,7 +45,7 @@
                             <include
                                 android:id="@+id/resourcePersonHeader"
                                 layout="@layout/personal_information_create_field_header"
-                                app:title="@{@string/office_search}" />
+                                app:title="@{@string/resource_person_search}" />
 
 
                             <include
@@ -216,7 +216,7 @@
                             <include
                                 android:id="@+id/batchScheduleHeader"
                                 layout="@layout/personal_information_create_field_header"
-                                app:title="@{@string/course_schedule_search}" />
+                                app:title="@{@string/batch_schedule_search}" />
 
 
                             <include

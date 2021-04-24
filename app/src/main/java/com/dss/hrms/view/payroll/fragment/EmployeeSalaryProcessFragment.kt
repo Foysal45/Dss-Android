@@ -140,7 +140,7 @@ class EmployeeSalaryProcessFragment : DaggerFragment() {
                 "salary process employee_id : ${employee?.user?.employee_id} office id :  ${employee?.office_id} "
             )
             getSalaryData(
-                (153).toString(),
+                (employee?.user?.employee_id).toString(),
                 employee?.office_id.toString(),
                 year,
                 month

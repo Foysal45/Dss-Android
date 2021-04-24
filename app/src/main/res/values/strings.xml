@@ -357,6 +357,7 @@
     <string name="course_schedule_title_bn">Course Schedule Title (Bangla)</string>
     <string name="course_schedule_search">Course Schedule Search</string>
     <string name="batch_schedule_search">Batch Schedule Search</string>
+    <string name="resource_person_search">Resource Person Search</string>
     <string name="search_resource_person">Search Resource Person</string>
     <string name="search_course_schedule">Search Course Schedule</string>
     <string name="search_batch_schedule">Search Batch Schedule</string>
