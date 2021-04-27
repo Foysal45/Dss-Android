@@ -41,7 +41,7 @@
                 android:drawableTint="@color/green"
                 android:gravity="right"
                 android:paddingRight="15dp"
-                android:text="@string/ok"
+                android:text="@string/ok_for_employee_selection"
                 android:textColor="@color/green"
                 android:textSize="@dimen/text_size_large" />
 

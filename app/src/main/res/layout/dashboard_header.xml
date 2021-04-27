@@ -23,11 +23,11 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
                 android:layout_gravity="center|left"
                 android:layout_marginVertical="15dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:src="@drawable/logo" />
 
             <LinearLayout
@@ -45,7 +45,7 @@
                     android:text="@string/dss_bangla"
                     android:textAllCaps="true"
                     android:textColor="@color/green"
-                    android:textSize="@dimen/text_size_large"
+                    android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
 
                 <TextView
@@ -63,8 +63,8 @@
             </LinearLayout>
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
                 android:layout_gravity="center|left"
                 android:paddingLeft="@dimen/_5sdp"
                 android:src="@drawable/bangladesh_logo" />
@@ -73,11 +73,11 @@
 
     <RelativeLayout
         android:id="@+id/notification"
-        android:layout_width="34dp"
+        android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_toLeftOf="@id/menu_icon">
 
@@ -100,12 +100,12 @@
 
     <ImageView
         android:id="@+id/menu_icon"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="5dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_baseline_menu_24"
         app:tint="@color/green" />

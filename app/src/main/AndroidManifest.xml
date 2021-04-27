@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.activity.WebViewActivity"></activity>
+        <activity android:name=".view.report.ReportActivity" />
+        <activity android:name=".view.activity.WebViewActivity" />
         <activity android:name=".view.payroll.PayrollActivity" />
         <activity android:name=".view.leave.LeaveActivity" /> <!-- android:theme="@style/AppThemeActionBar" -->
         <activity android:name=".view.messaging.MessagingActivity" />

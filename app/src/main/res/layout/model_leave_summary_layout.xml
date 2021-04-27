@@ -214,11 +214,6 @@
 
             </LinearLayout>
 
-            <!--            <View-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="0.2dp"-->
-            <!--                android:background="@color/gray" />-->
-
             <View
                 android:id="@+id/horizontalView"
                 android:layout_width="match_parent"
@@ -226,7 +221,6 @@
                 android:background="@color/gray" />
 
         </LinearLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -110,7 +110,7 @@ class SearchEmployeeFragment : DaggerFragment() {
                 // findNavController().popBackStack(R.id.action_searchEmployeeFragment3_to_createEditLeaveApplicationFragment, true)
                 navController.popBackStack()
             }
-
+            loadDesignationList()
             binding.headOfficesBranches.llBody.visibility =
                 View.GONE
             binding.branchesWiseSection.llBody.visibility =
@@ -279,7 +279,13 @@ class SearchEmployeeFragment : DaggerFragment() {
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
                         office = any as Office
-                        loadDesignation(office?.id)
+
+                        if (office?.id != null) {
+                            office?.id?.let { loadDesignation(office?.id) }
+                        } else {
+                            loadDesignationList()
+                        }
+
                         Log.e("selected item", " item : " + office?.name)
                     }
 
@@ -313,7 +319,6 @@ class SearchEmployeeFragment : DaggerFragment() {
         }
         return map
     }
-
 
     fun getDistrict(divisionId: Int?, districtId: Int?) {
         commonViewModel.getDistrict(divisionId)?.observe(viewLifecycleOwner, Observer { list ->
@@ -370,7 +375,6 @@ class SearchEmployeeFragment : DaggerFragment() {
                     }
                 })
     }
-
 
     fun setSection(dataList: List<HeadOfficeDepartmentApiResponse.Section>) {
         dataList?.let { list ->
@@ -440,4 +444,28 @@ class SearchEmployeeFragment : DaggerFragment() {
                     }
                 })
     }
+
+    fun loadDesignationList() {
+        commonRepo.getCommonData("/api/auth/designation/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding.designation.spinner,
+                            context,
+                            list,
+                            0,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    designation = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
+    }
+
 }

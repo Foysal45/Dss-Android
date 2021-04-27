@@ -114,11 +114,11 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
             init()
             leaveApplication = args.leaveApplication
             if (args.operation.equals("create")) {
-                binding.leaveApplicatoinBtnUpdate.setText(getString(R.string.create))
+                binding.leaveApplicatoinBtnUpdate.setText(getString(R.string.create_leave_application))
                 binding.leaveApplicatoinBtnDraft.visibility = View.VISIBLE
                 operation = Operation.CREATE
             } else {
-                binding.leaveApplicatoinBtnUpdate.setText(getString(R.string.create))
+                binding.leaveApplicatoinBtnUpdate.setText(getString(R.string.create_leave_application))
                 binding.leaveApplicatoinBtnDraft.visibility = View.VISIBLE
                 operation = Operation.EDIT
             }

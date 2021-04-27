@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.report.fragment.WorkingEmployeeListFragment">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/llOfficeSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="5dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+                            <include
+                                android:id="@+id/officeHeader"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/office_search}" />
+
+
+                            <include
+                                android:id="@+id/officeLeadCategory"
+                                layout="@layout/personal_info_spinner"
+                                app:title="@{@string/office_lead_category}" />
+
+
+                            <include
+                                android:id="@+id/headOfficesBranches"
+                                layout="@layout/personal_info_spinner"
+                                app:title="@{@string/head_office_branches}" />
+
+                            <include
+                                android:id="@+id/branches_wise_section"
+                                layout="@layout/personal_info_spinner"
+                                app:title="@{@string/branches_wise_section}" />
+
+                            <include
+                                android:id="@+id/section_wise_subsection"
+                                layout="@layout/personal_info_spinner"
+                                app:title="@{@string/section_wise_subsection}" />
+
+                            <include
+                                android:id="@+id/division"
+                                layout="@layout/personal_info_spinner"
+                                app:title="@{@string/division}" />
+
+                            <include
+                                android:id="@+id/district"
+                                layout="@layout/personal_info_spinner"
+                                app:title="@{@string/district}" />
+
+                            <include
+                                android:id="@+id/office"
+                                layout="@layout/personal_info_spinner"
+                                app:title="@{@string/office}" />
+
+                            <include
+                                android:id="@+id/designation"
+                                layout="@layout/personal_info_spinner"
+                                app:title="@{@string/designation}" />
+
+
+                            <include
+                                android:id="@+id/employeeNameOrId"
+                                layout="@layout/personel_information_edittext"
+                                app:hint="@{@string/employee_name_or_id}"
+                                app:title="@{@string/employee_name_or_id}" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/llBody">
+
+                                <soup.neumorphism.NeumorphButton
+                                    android:id="@+id/search"
+                                    style="@style/Widget.Neumorph.Button"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_60sdp"
+                                    android:layout_marginHorizontal="10dp"
+                                    android:layout_weight="1"
+                                    android:text="@string/search"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/green"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -44,9 +44,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:paddingVertical="@dimen/_5sdp"
                     android:text="@string/my_profile"
+                    android:paddingHorizontal="20dp"
+                    android:gravity="center"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/text_size_small"
                     android:textStyle="bold" />
@@ -91,7 +92,9 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:paddingVertical="@dimen/_5sdp"
-                    android:text="@string/training"
+                    android:paddingHorizontal="20dp"
+                    android:gravity="center"
+                    android:text="@string/training_management"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/text_size_small"
                     android:textStyle="bold" />
@@ -136,7 +139,9 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:paddingVertical="@dimen/_5sdp"
-                    android:text="@string/leave"
+                    android:text="@string/leave_management"
+                    android:paddingHorizontal="20dp"
+                    android:gravity="center"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/text_size_small"
                     android:textStyle="bold" />
@@ -185,7 +190,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingVertical="@dimen/_5sdp"
-                    android:text="@string/payroll"
+                    android:text="@string/payroll_management"
+                    android:paddingHorizontal="20dp"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/text_size_small"
                     android:textStyle="bold" />
@@ -231,6 +237,8 @@
                     android:layout_centerVertical="true"
                     android:paddingVertical="@dimen/_5sdp"
                     android:text="@string/messaging"
+                    android:paddingHorizontal="20dp"
+                    android:gravity="center"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/text_size_small"
                     android:textStyle="bold" />
@@ -281,5 +289,56 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <soup.neumorphism.NeumorphFloatingActionButton
+                android:id="@+id/btnReport"
+                style="@style/Widget.Neumorph.FloatingActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shadowElevation="@dimen/_3sdp"
+                app:neumorph_shapeType="flat" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/payroll_icon"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:text="@string/report"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
     </LinearLayout>
 </LinearLayout>

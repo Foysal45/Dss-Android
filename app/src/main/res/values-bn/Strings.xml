@@ -246,7 +246,8 @@
     <string name="edit">পরিবর্তন করুন</string>
 
 
-    <string name="create">তৈরি করা</string>
+    <string name="create">তৈরি করুন</string>
+    <string name="create_leave_application">দরখাস্ত করুন</string>
     <string name="content_management">বিষয়বস্তু ব্যবস্থাপনা</string>
     <string name="category">বিভাগ</string>
     <string name="add_category">বিভাগ যুক্ত করুন</string>
@@ -303,12 +304,13 @@
     <string name="employee_name_or_id">কর্মচারীর নাম / আইডি</string>
     <string name="attachment">সংযুক্তি</string>
     <string name="ok">ঠিক আছে</string>
+    <string name="ok_for_employee_selection">নির্বাচন করুন</string>
     <string name="cancel">বাতিল</string>
-    <string name="done">সম্পন্ন</string>
+    <string name="done">সম্পন্ন করুন</string>
 
 
 
-    <string name="draft">ড্রাফট</string>
+    <string name="draft">ড্রাফট করুন</string>
     <string name="head_office_branches">প্রধান অফিসের শাখা সূমুহ</string>
     <string name="branches_wise_section">শাখা অনুযায়ী উপশাখা</string>
     <string name="section_wise_subsection">শাখা অনুযায়ী উপ-উপ-শাখা</string>

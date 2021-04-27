@@ -134,5 +134,10 @@ class ApiModule {
             return retrofit.create(PayrollApiService::class.java)
         }
 
+        @Singleton
+        @Provides
+        fun provideReportApiServiceApiService(retrofit: Retrofit): ReportApiService {
+            return retrofit.create(ReportApiService::class.java)
+        }
     }
 }

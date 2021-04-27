@@ -33,6 +33,7 @@ import com.dss.hrms.view.leave.LeaveActivity
 import com.dss.hrms.view.messaging.MessagingActivity
 import com.dss.hrms.view.payroll.PayrollActivity
 import com.dss.hrms.view.receiver.NetworkChangeReceiver
+import com.dss.hrms.view.report.ReportActivity
 import com.dss.hrms.view.training.TrainingActivity
 import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.UtilViewModel
@@ -78,29 +79,6 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         context = this
         init()
 
-        var divisionArray = arrayListOf<String>()
-        var districtArray = arrayListOf<HashMap<Any, Any?>>()
-        var officeLeadCategoryArray = arrayListOf<String>()
-
-        var map = HashMap<Any, Any?>()
-        map.put(
-            "office_id",
-            "localOfficeList"
-        )
-        map.put(
-            "employee_id",
-            "localEmployeeList"
-        )
-        map.put(
-            "message_body",
-            12
-        )
-        districtArray.add(map)
-        districtArray.add(map)
-        districtArray.add(map)
-        districtArray.add(map)
-        Log.e("mapdata", "mapdata : " + districtArray)
-
         Log.e("mainactivity", "inject login data " + loginInfo?.email)
         Log.e("mainactivity", "inject employee data " + employeeProfileData?.employee?.profile_id)
         getEmployeeInfo()
@@ -135,6 +113,12 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         })
         btnLeave.setOnClickListener({
             Intent(this, LeaveActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        })
+        btnReport.setOnClickListener({
+            Intent(this, ReportActivity::class.java).apply {
                 startActivity(this)
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -340,6 +324,37 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         this.menu_dashboard_settings.setOnClickListener {
             startActivity(
                 Intent(this, SettingsActivity::class.java)
+            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+
+        this.menu_dashboard_training.setOnClickListener {
+            startActivity(
+                Intent(this, TrainingActivity::class.java)
+            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        this.menu_dashboard_leave.setOnClickListener {
+            startActivity(
+                Intent(this, LeaveActivity::class.java)
+            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        this.menu_dashboard_payroll.setOnClickListener {
+            startActivity(
+                Intent(this, PayrollActivity::class.java)
+            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        this.menu_dashboard_messaging.setOnClickListener {
+            startActivity(
+                Intent(this, MessagingActivity::class.java)
+            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        this.menu_dashboard_report.setOnClickListener {
+            startActivity(
+                Intent(this, ReportActivity::class.java)
             )
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }

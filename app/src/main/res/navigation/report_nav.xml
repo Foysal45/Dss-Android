@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/report_nav"
+    app:startDestination="@id/topReportFragment">
+
+    <fragment
+        android:id="@+id/topReportFragment"
+        android:name="com.dss.hrms.view.report.fragment.TopReportFragment"
+        android:label="@string/report"
+        tools:layout="@layout/fragment_top_report" >
+        <action
+            android:id="@+id/action_topReportFragment_to_vacantPositionFragment"
+            app:destination="@id/vacantPositionFragment" />
+        <action
+            android:id="@+id/action_topReportFragment_to_workingEmployeeListFragment"
+            app:destination="@id/workingEmployeeListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vacantPositionFragment"
+        android:name="com.dss.hrms.view.report.fragment.VacantPositionFragment"
+        android:label="@string/vacant_position_list" >
+        <action
+            android:id="@+id/action_vacantPositionFragment_to_topReportFragment"
+            app:destination="@id/topReportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workingEmployeeListFragment"
+        android:name="com.dss.hrms.view.report.fragment.WorkingEmployeeListFragment"
+        android:label="@string/working_employee_list"
+        tools:layout="@layout/fragment_working_employee_list" >
+        <action
+            android:id="@+id/action_workingEmployeeListFragment_to_topReportFragment"
+            app:destination="@id/topReportFragment" />
+    </fragment>
+</navigation>

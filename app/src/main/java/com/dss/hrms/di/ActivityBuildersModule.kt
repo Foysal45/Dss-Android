@@ -9,6 +9,7 @@ import com.dss.hrms.di.messaging.MessagingFragmentBuildersModule
 import com.dss.hrms.di.messaging.MessagingScope
 import com.dss.hrms.di.payroll.PayrollFragmentBuilderModule
 import com.dss.hrms.di.payroll.PayrollScope
+import com.dss.hrms.di.report.ReportFragmentBuilderModule
 import com.dss.hrms.di.training.TrainingFragmentBuildersModule
 import com.dss.hrms.di.training.TrainingScope
 import com.dss.hrms.di.viewmodel.ViewModelModule
@@ -22,6 +23,7 @@ import com.dss.hrms.view.login.OTPActivity
 import com.dss.hrms.view.messaging.MessagingActivity
 import com.dss.hrms.view.payroll.PayrollActivity
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
+import com.dss.hrms.view.report.ReportActivity
 import com.dss.hrms.view.settings.SettingsActivity
 import com.dss.hrms.view.training.TrainingActivity
 import com.example.dagger_android_practical.di.auth.LoginModule
@@ -74,6 +76,10 @@ abstract class ActivityBuildersModule {
     @LeaveScope
     @ContributesAndroidInjector(modules = [LeaveFragmentBuilderModule::class, ViewModelModule::class])
     abstract fun contributeLeaveActivity(): LeaveActivity
+
+    @LeaveScope
+    @ContributesAndroidInjector(modules = [ReportFragmentBuilderModule::class, ViewModelModule::class])
+    abstract fun contributeReportActivity(): ReportActivity
 
 
     @PayrollScope

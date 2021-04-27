@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:padding="10dp"
+        tools:context=".view.report.fragment.VacantPositionFragment">
+
+        <LinearLayout
+            android:id="@+id/llSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_4sdp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height_large"
+                android:background="@drawable/edittext_bg"
+                android:drawableRight="@drawable/ic_baseline_search_24"
+                android:gravity="center|left"
+                android:hint="@string/search_vacant_position"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingRight="10dp"
+                android:textColor="@color/light_black"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/text_size_small" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llSearch" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

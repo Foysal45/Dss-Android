@@ -52,6 +52,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="@string/copyright"
+            android:textSize="@dimen/text_size_extra_small"
             android:textAlignment="center" />
     </RelativeLayout>
 

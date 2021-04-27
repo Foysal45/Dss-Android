@@ -74,17 +74,17 @@ class ContentsContentFragment : DaggerFragment() {
 //                    "url",
 //                    "http://dss.staging.simecsystem.com/app-ui/training-management/content/create?token=Bearer ${preparence.getToken()}&lang=${preparence.getLanguage()}"
 //                )
-                putExtra(
-                    "url",
-                    "http://dss.staging.simecsystem.com/auth/login"
-                )
-
-                putExtra(
-                    "url",
-                    "https://www.espncricinfo.com/series/bangladesh-in-nz-2020-21-1233967/new-zealand-vs-bangladesh-3rd-t20i-1233981/live-cricket-score"
-                )
-
-                startActivity(this)
+//                putExtra(
+//                    "url",
+//                    "http://dss.staging.simecsystem.com/auth/login"
+//                )
+//
+//                putExtra(
+//                    "url",
+//                    "https://www.espncricinfo.com/series/bangladesh-in-nz-2020-21-1233967/new-zealand-vs-bangladesh-3rd-t20i-1233981/live-cricket-score"
+//                )
+//
+//                startActivity(this)
             }
 
            //showEditCreateDialog(Operation.CREATE)

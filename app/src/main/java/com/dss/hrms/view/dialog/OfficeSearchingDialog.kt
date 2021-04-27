@@ -93,7 +93,7 @@ class OfficeSearchingDialog @Inject constructor() {
         }
 
         binding.designation.llBody.visibility = View.GONE
-        //loadDesignationList()
+        loadDesignationList()
         commonRepo.getAllDistrict(
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {

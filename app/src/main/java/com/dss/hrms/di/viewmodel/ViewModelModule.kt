@@ -6,6 +6,7 @@ import com.dss.hrms.view.leave.viewmodel.LeaveSummaryViewModel
 import com.dss.hrms.view.messaging.viewmodel.MessagingViewModel
 import com.dss.hrms.view.payroll.viewmodel.PayRollBankInformationViewModel
 import com.dss.hrms.view.payroll.viewmodel.SalaryGenerateViewModel
+import com.dss.hrms.view.report.viewmodel.CommonReportViewModel
 import com.dss.hrms.view.training.viewmodel.BudgetAndScheduleViewModel
 import com.dss.hrms.view.training.viewmodel.ContentManagementViewModel
 import com.dss.hrms.view.training.viewmodel.TrainingManagementViewModel
@@ -92,5 +93,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LeaveSummaryViewModel::class)
     abstract fun bindLeaveSummaryViewModel(leaveSummaryViewModel: LeaveSummaryViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(CommonReportViewModel::class)
+    abstract fun bindCommonReportViewModel(commonReportViewModel: CommonReportViewModel): ViewModel
 
 }
