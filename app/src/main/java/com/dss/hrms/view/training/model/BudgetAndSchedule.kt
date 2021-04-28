@@ -75,6 +75,8 @@ class BudgetAndSchedule {
         val course_name: String?,
         val course_name_bn: String?,
         val course_category_id: Int?,
+        val time_in_hour: Int?,
+        val total_number: Int?,
         val course_image_path: String?,
         val course_description: String?
     )

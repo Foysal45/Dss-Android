@@ -1,22 +1,472 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#fff"
-    tools:context=".view.training.TrainingFragment">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/training"
-        android:textColor="#000"
-        android:textSize="@dimen/_20sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="dashboard"
+            type="com.dss.hrms.view.training.model.TrainingDashBoard.Dashboard" />
+
+        <variable
+            name="courseSchedule"
+            type="com.dss.hrms.view.training.model.BudgetAndSchedule.CourseScheduleBatch" />
+
+        <variable
+            name="batchSchedule"
+            type="com.dss.hrms.view.training.model.BudgetAndSchedule.BatchSchedule" />
+
+        <variable
+            name="course"
+            type="com.dss.hrms.view.training.model.BudgetAndSchedule.Course" />
+
+        <variable
+            name="courseSessions"
+            type="com.dss.hrms.view.training.model.TrainingDashBoard.CourseSessions" />
+
+        <variable
+            name="courseModules"
+            type="com.dss.hrms.view.training.model.TrainingDashBoard.CourseModules" />
+
+        <variable
+            name="faqs"
+            type="com.dss.hrms.model.TrainingResponse.Faq" />
+
+        <variable
+            name="language"
+            type="String" />
+
+        <variable
+            name="position"
+            type="Integer" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:background="@color/gray"
+            android:orientation="vertical"
+            tools:context=".view.training.TrainingFragment">
+
+            <LinearLayout
+                android:id="@+id/llCourseSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hCourseSchedule"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/course_schedule}" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/background"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <LinearLayout
+                                android:id="@+id/llCourseHeader"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.2dp"
+                                    android:background="@color/gray"
+                                    android:visibility="gone" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:paddingVertical="10dp">
+
+                                    <View
+                                        android:layout_width="0.2dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/gray" />
+
+                                    <TextView
+                                        android:id="@+id/tvSlT"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.4"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="3dp"
+                                        android:text="@string/sl"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <View
+                                        android:layout_width="0.2dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/gray" />
+
+                                    <TextView
+                                        android:id="@+id/tvCourseScheduleTitleT"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="3dp"
+                                        android:text="@string/course_schedule_title"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <View
+                                        android:layout_width="0.2dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/gray" />
+
+                                    <TextView
+                                        android:id="@+id/tvTotalSeatT"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.5"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="3dp"
+                                        android:text="@string/total_seats"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <View
+                                        android:layout_width="0.2dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/gray" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.2dp"
+                                android:background="@color/gray" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerViewCourse"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/llSearch"
+                                app:layout_constraintVertical_bias="0.0" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+            //.................................batch schedule.............................
+
+            <LinearLayout
+                android:id="@+id/llBatchSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hBatchSchedule"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/batch_schedule}" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/background"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <LinearLayout
+                                android:id="@+id/llBatchHeader"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.2dp"
+                                    android:background="@color/gray"
+                                    android:visibility="gone" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:paddingVertical="10dp">
+
+                                    <View
+                                        android:layout_width="0.2dp"
+                                        android:visibility="gone"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/gray" />
+
+                                    <TextView
+                                        android:id="@+id/tvBatchSlT"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.4"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="3dp"
+                                        android:text="@string/sl"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+
+                                    <View
+                                        android:layout_width="0.2dp"
+                                        android:visibility="visible"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/gray" />
+
+                                    <TextView
+                                        android:id="@+id/tvBatchScheduleTitleT"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="3dp"
+                                        android:text="@string/batch_name"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <View
+                                        android:layout_width="0.2dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/gray" />
+
+                                    <TextView
+                                        android:id="@+id/tvBatchTotalSeatT"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.5"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="3dp"
+                                        android:text="@string/total_seats"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <View
+                                        android:layout_width="0.2dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/gray" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.2dp"
+                                android:background="@color/gray" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerViewBatch"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/llSearch"
+                                app:layout_constraintVertical_bias="0.0" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+            //.................................faq.............................
+
+            <LinearLayout
+                android:id="@+id/llFaq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hFaq"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/faq_question}" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/background"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <LinearLayout
+                                android:id="@+id/llFaqHeader"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="visible">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.2dp"
+                                    android:background="@color/gray"
+                                    android:visibility="gone" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:paddingVertical="10dp">
+
+
+                                    <View
+                                        android:layout_width="0.2dp"
+                                        android:visibility="gone"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/gray" />
+
+                                    <TextView
+                                        android:id="@+id/tvFaqSlT"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.4"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="3dp"
+                                        android:text="@string/sl"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <View
+                                        android:layout_width="0.2dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/gray" />
+
+                                    <TextView
+                                        android:id="@+id/tvFaqQuestion"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="3dp"
+                                        android:text="@string/faq_question"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <View
+                                        android:layout_width="0.2dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/gray" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.2dp"
+                                android:background="@color/gray" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerViewFaq"
+                                android:layout_width="match_parent"
+                                android:layout_height="150dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/llSearch"
+                                app:layout_constraintVertical_bias="0.0" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</layout>

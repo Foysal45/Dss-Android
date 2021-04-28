@@ -2,10 +2,7 @@ package com.dss.hrms.retrofit
 
 import com.dss.hrms.model.CustomeResponse
 import com.dss.hrms.model.TrainingResponse
-import com.dss.hrms.view.training.model.BudgetAndSchedule
-import com.dss.hrms.view.training.model.ExpertiseField
-import com.dss.hrms.view.training.model.ExpertiseResponse
-import com.dss.hrms.view.training.model.HonorariumHeadResponse
+import com.dss.hrms.view.training.model.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -184,5 +181,12 @@ interface TrainingApiService {
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String
     ): Response<ExpertiseResponse>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @GET("/api/auth/training-dashboard")
+    suspend fun getTrainingDashboard(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String
+    ): Response<TrainingDashBoard.TrainingDashBoardResponse>
 
 }

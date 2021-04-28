@@ -45,7 +45,7 @@
                             <include
                                 android:id="@+id/officeHeader"
                                 layout="@layout/personal_information_create_field_header"
-                                app:title="@{@string/office_search}" />
+                                app:title="@{@string/working_employee_list_filters_form}" />
 
 
                             <include

@@ -365,11 +365,24 @@
     <string name="search_batch_schedule">Search Batch Schedule</string>
     <string name="search_vacant_position">Search Vacant Position</string>
     <string name="working_employee_list">Working Employee List</string>
+    <string name="working_employee_list_filters_form">Working Employee List Filters Form</string>
+    <string name="vacant_position_list_filters_form">Vacant Position Summary Filters Form</string>
     <string name="vacant_position_list">Vacant Position List</string>
-    <string name="report">Report</string>
+    <string name="report">Reports</string>
     <string name="permitted">Permitted</string>
     <string name="working">Working</string>
     <string name="empty">Empty</string>
+    <string name="sl">SL</string>
+    <string name="courses">Courses</string>
+    <string name="course_name">Course Name</string>
+    <string name="total_number">Total Number</string>
+    <string name="course_modules">Course Modules</string>
+    <string name="module_name">Module Name</string>
+    <string name="marks">Marks</string>
+    <string name="session">Session</string>
+    <string name="session_name">Session Name</string>
+    <string name="faq_question">FAQ Question</string>
+
     <!--    -->
     <!--    <string name="full_name">Full Name</string>-->
     <!--    <string name="basic_salary">Basic Salary</string>-->

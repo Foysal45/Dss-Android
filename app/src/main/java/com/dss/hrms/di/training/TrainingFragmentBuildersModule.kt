@@ -1,5 +1,6 @@
 package com.dss.hrms.di.training
 
+import com.dss.hrms.view.training.TrainingFragment
 import com.dss.hrms.view.training.fragment.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -24,4 +25,7 @@ abstract class TrainingFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeCourseScheduleFragment(): CourseScheduleFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeTrainingFragment(): TrainingFragment
 }

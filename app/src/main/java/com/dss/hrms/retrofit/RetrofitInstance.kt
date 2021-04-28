@@ -10,8 +10,8 @@ object RetrofitInstance {
     //  var BASE_URL = "http://192.168.10.180:8000"
     // var BASE_URL = "http://dss.aws.simecsystem.com:10014"
     //var BASE_URL = "http://dss.aws.simecsystem.com:10014"
-   // var BASE_URL = "http://dss.stage.simecsystem.com"
-    var BASE_URL = "http://dss.dev.simecsystem.com"
+    var BASE_URL = "http://dss.stage.simecsystem.com"
+    //var BASE_URL = "http://dss.dev.simecsystem.com"
 
     //  var BASE_URL = "http://dss.staging.simecsystem.com:10014"
     //  var BASE_URL = "http://182.160.111.81:10014"

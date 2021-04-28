@@ -41,6 +41,28 @@ class TrainingRepo @Inject constructor() {
         }
 
     }
+    suspend fun getTrainingDashboard(): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.getTrainingDashboard(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}"
+                )
+
+                Log.e("dashboard "," dashboard : ${response.body()?.code}")
+//                Log.e("dashboard "," dashboard : ${response.body()?.data}")
+                if (response.body()?.code == 200 || response.body()?.code == 201)
+                    response.body()
+                else
+                    null
+
+            } catch (e: Exception) {
+                null
+            }
+
+        }
+
+    }
  suspend fun searchResourcePersonList(map: HashMap<Any, Any?>): Any? {
         return withContext(Dispatchers.IO) {
             try {

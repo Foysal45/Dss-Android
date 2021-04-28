@@ -309,7 +309,6 @@
     <string name="done">সম্পন্ন করুন</string>
 
 
-
     <string name="draft">ড্রাফট করুন</string>
     <string name="head_office_branches">প্রধান অফিসের শাখা সূমুহ</string>
     <string name="branches_wise_section">শাখা অনুযায়ী উপশাখা</string>
@@ -350,4 +349,34 @@
     <string name="reason_details">Reason Details</string>
     <string name="please_select_month_and_year">Please Select Month And Year</string>
     <string name="office_search">অফিস অনুসন্ধান</string>
+
+
+    <string name="course_schedule_title">কোর্সের সময়সূচীর শিরোনাম</string>
+    <string name="course_schedule_title_bn">কোর্সের সময়সূচীর শিরোনাম (বাংলা)</string>
+    <string name="course_schedule_search">কোর্সের সময়সূচী অনুসন্ধান</string>
+    <string name="batch_schedule_search">ব্যাচের সময়সূচী অনুসন্ধান</string>
+    <string name="resource_person_search">রিসৌর্স পারসন অনুসন্ধান</string>
+    <string name="search_resource_person">রিসৌর্স পারসন অনুসন্ধান করুন</string>
+    <string name="search_course_schedule">কোর্সের সময়সূচী অনুসন্ধান করুন</string>
+    <string name="search_batch_schedule">ব্যাচের সময়সূচী অনুসন্ধান করুন</string>
+    <string name="search_vacant_position">শূন্য পদের তালিকা অনুসন্ধান করুন</string>
+    <string name="working_employee_list">কর্মরত কর্মচারী তালিকা</string>
+    <string name="vacant_position_list">শূন্য পদের তালিকা</string>
+    <string name="working_employee_list_filters_form">কর্মরত কর্মচারী তালিকা ফিল্টার ফর্ম</string>
+    <string name="vacant_position_list_filters_form">শূন্য পদের তালিকা সংক্ষিপ্তসার ফিল্টার ফর্ম</string>
+    <string name="report">রিপোর্টসমুহ</string>
+    <string name="permitted">অনুমোদিত</string>
+    <string name="working">কর্মরত</string>
+    <string name="empty">খালি</string>
+    <string name="sl">ক্রমিক</string>
+    <string name="courses">কোর্স </string>
+    <string name="course_name">কোর্সের নাম</string>
+    <string name="total_number">মোট সংখ্যা</string>
+    <string name="course_modules">কোর্স মডিউল</string>
+    <string name="module_name">মডিউলের নাম</string>
+    <string name="marks">মার্ক্স্</string>
+    <string name="session">সেশন</string>
+    <string name="session_name">সেশনের নাম</string>
+    <string name="faq_question">সচরাচর জিজ্ঞাসিত প্রশ্ন</string>
+
 </resources>

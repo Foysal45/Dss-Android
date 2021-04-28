@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.dss.hrms.model.TrainingResponse
 import com.dss.hrms.repository.training.TrainingRepo
 import com.dss.hrms.view.training.`interface`.OnResourcePersonValueListener
+import com.dss.hrms.view.training.model.TrainingDashBoard
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +22,21 @@ class TrainingManagementViewModel @Inject constructor(application: Application) 
     private var _resourcePerson = MutableLiveData<List<TrainingResponse.ResourcePerson>>()
     var resourcePerson: LiveData<List<TrainingResponse.ResourcePerson>> = _resourcePerson
 
+    private var _trainingDashboard = MutableLiveData<TrainingDashBoard.Dashboard?>()
+    var trainingDashboard: LiveData<TrainingDashBoard.Dashboard?> = _trainingDashboard
 
+
+    fun getTrainingDashboard() {
+        viewModelScope.launch {
+            var response = trainingRepo.getTrainingDashboard()
+            if (response is TrainingDashBoard.TrainingDashBoardResponse) {
+                _trainingDashboard.postValue(response.data)
+            } else {
+                _resourcePerson.postValue(null)
+                // _resourcePerson.value = null
+            }
+        }
+    }
     fun getResourcePerson() {
         viewModelScope.launch {
             var response = trainingRepo.getResourcePersonList()
