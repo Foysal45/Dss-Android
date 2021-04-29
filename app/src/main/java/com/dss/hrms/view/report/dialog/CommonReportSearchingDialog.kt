@@ -150,7 +150,7 @@ class CommonReportSearchingDialog @Inject constructor() {
                                                 binding.district.llBody.visibility =
                                                     View.VISIBLE
                                             }
-                                            searchOffice()
+                                            //searchOffice()
                                         }
                                     }
                                 }
@@ -179,26 +179,29 @@ class CommonReportSearchingDialog @Inject constructor() {
 
 
     fun searchVacantPositionSummary() {
+        var dialog = CustomLoadingDialog().createLoadingDialog(context)
         commonReportViewModel?.getVacantPositionSummaryList(getMapData(),
             object : VacantPositionSummaryValueListener {
                 override fun valueChange(list: List<ReportResponse.VacantPositionSummary>?) {
+                    Log.e("officelist", " list : " + list?.size)
+                    dialog?.dismiss()
                     dialogCustome?.dismiss()
                 }
             })
     }
 
-    fun searchOffice() {
-        var dialog = CustomLoadingDialog().createLoadingDialog(context)
-        commonRepo.getOfficeWithWhereClause(
-            getMapData(),
-            object : OfficeDataValueListener {
-                override fun valueChange(list: List<Office>?) {
-                    Log.e("officelist", " list : " + list?.size)
-                    dialog?.dismiss()
-                    dialogCustome.dismiss()
-                }
-            })
-    }
+//    fun searchOffice() {
+//        var dialog = CustomLoadingDialog().createLoadingDialog(context)
+//        commonRepo.getOfficeWithWhereClause(
+//            getMapData(),
+//            object : OfficeDataValueListener {
+//                override fun valueChange(list: List<Office>?) {
+//                    Log.e("officelist", " list : " + list?.size)
+//                    dialog?.dismiss()
+//                    dialogCustome.dismiss()
+//                }
+//            })
+//    }
 
 
     fun getMapData(): HashMap<Any, Any?> {
@@ -241,7 +244,7 @@ class CommonReportSearchingDialog @Inject constructor() {
                                 division = any as SpinnerDataModel
                                 division?.id?.let {
                                     district = null
-                                    searchOffice()
+                                   // searchOffice()
                                 }
                                 getDistrict(if (division?.id == null) 1 else division?.id, null)
                             }
@@ -290,7 +293,7 @@ class CommonReportSearchingDialog @Inject constructor() {
                             override fun selectedItem(any: Any?) {
                                 district = any as SpinnerDataModel
                                 district?.id?.let {
-                                    searchOffice()
+                                   // searchOffice()
                                 }
 
                             }
@@ -320,7 +323,7 @@ class CommonReportSearchingDialog @Inject constructor() {
                                     headOfficeBranches?.id?.let {
                                         section = null
                                         subSection = null
-                                        searchOffice()
+                                       // searchOffice()
                                     }
                                     headOfficeBranches?.sections?.let { it1 ->
                                         setSection(it1)
@@ -351,7 +354,7 @@ class CommonReportSearchingDialog @Inject constructor() {
                             section = any as HeadOfficeDepartmentApiResponse.Section
                             section?.id?.let {
                                 subSection = null
-                                searchOffice()
+                                //searchOffice()
                             }
                             section?.subsections?.let { it1 -> setSubSection(it1) }
                         }
@@ -375,7 +378,7 @@ class CommonReportSearchingDialog @Inject constructor() {
                         any?.let {
                             subSection = any as HeadOfficeDepartmentApiResponse.Subsection
                             subSection?.id?.let {
-                                searchOffice()
+                               // searchOffice()
                             }
                         }
                     }

@@ -394,6 +394,7 @@
                                     android:id="@+id/fJobJoiningCurrentJob"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/current_job}" />
+
                                 <include
                                     android:id="@+id/jobjoiningUpdateButton"
                                     layout="@layout/personal_info_update_button" />
@@ -464,6 +465,138 @@
                                 <include
                                     android:id="@+id/quotaBtnUpdate"
                                     layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+                <!-- ...........................nominee info start ........................................ -->
+                <LinearLayout
+                    android:id="@+id/llNomineeInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hNominee"
+
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/nominee_info}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/fNomineeName"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_of_nominee}"
+                                    app:title="@{@string/name_of_nominee}" />
+
+                                <include
+                                    android:id="@+id/fNomineeDob"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/birth}" />
+
+                                <include
+                                    android:id="@+id/fNomineeRelation"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/nominee_relation}"
+                                    app:title="@{@string/nominee_relation}" />
+
+                                <include
+                                    android:id="@+id/fNomineeAllocatedPercentage"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/nominee_allocated_percentage}"
+                                    app:title="@{@string/nominee_allocated_percentage}" />
+
+
+                                <include
+                                    android:id="@+id/fNomineeMaritalStatus"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/nominee_marital_status}" />
+
+
+                                <include
+                                    android:id="@+id/fNomineeGender"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/nominee_gender}" />
+
+
+                                <include
+                                    android:id="@+id/fNomineeHasDisability"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/nominee_has_disability}" />
+
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tvNomineeImageTitle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_weight="1"
+                                            android:text="@string/nominee_signature"
+                                            android:textColor="@color/light_black"
+                                            android:textSize="@dimen/text_size_small"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text=":" />
+
+                                        <ImageView
+                                            android:id="@+id/ivNomineeEmployee"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_100sdp"
+                                            android:paddingLeft="@dimen/_5sdp"
+                                            android:paddingRight="@dimen/_10sdp"
+                                            android:src="@drawable/ic_baseline_image_24" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom"
+                                        android:layout_weight="1">
+
+                                        <include
+                                            android:id="@+id/nomineeUpdate"
+                                            layout="@layout/personal_info_update_button" />
+                                    </LinearLayout>
+                                </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>

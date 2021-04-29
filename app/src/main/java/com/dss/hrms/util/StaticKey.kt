@@ -22,6 +22,7 @@ class StaticKey {
         val Promotion = "promotion"
         val DisciplinaryAction = "disciplinary_actions"
         val References = "references"
+        val Nominee = "nominee"
         val CREATE = "create"
         val EDIT = "edit"
         val PENDING = "Pending"

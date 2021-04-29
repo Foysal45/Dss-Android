@@ -229,6 +229,54 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
     }
 
 
+    suspend fun updateNomineeInfo(
+        map: HashMap<Any, Any?>?,
+        liveData: MutableLiveData<Any>?
+    ): MutableLiveData<Any>? {
+        withContext(Dispatchers.IO) {
+            flowOf(
+                apiService?.updateNomineeInfo(
+                    preparence?.getLanguage()!!,
+                    "Bearer ${preparence?.getToken()}",
+                    map
+                )
+            ).catch { throwable ->
+                liveData?.postValue(null)
+            }.collect { response ->
+                if (response == null) {
+                    liveData?.postValue(null)
+                } else
+                    response?.let {
+                        if (response?.isSuccessful!!) {
+                            try {
+                                val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                                val code: Int = jsonObjectParent.getInt("code")
+                                val status = jsonObjectParent.getString("status")
+                                val message = jsonObjectParent.getString("message")
+                                Log.e("response", "response : " + jsonObjectParent)
+                                if (code == 200 || code == 201
+                                ) {
+                                    Log.e("response", "response : " + jsonObjectParent)
+                                    liveData?.postValue(message)
+                                } else {
+                                    liveData?.postValue(null)
+                                }
+                            } catch (e: JSONException) {
+                                liveData?.postValue(null)
+                                Log.e("response", "JSONException : " + e.message)
+                            }
+                        } else {
+                            var value = ErrorUtils2.parseError(response)
+                            Log.e("response", "response : " + Gson().toJson(value.getError()))
+                            liveData?.postValue(value)
+                        }
+                    }
+            }
+        }
+        return liveData
+    }
+
+
     suspend fun updatePresentInfo(
         id: Int?,
         map: HashMap<Any, Any?>?,

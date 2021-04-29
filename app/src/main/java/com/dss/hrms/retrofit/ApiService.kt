@@ -201,6 +201,14 @@ interface ApiService {
     ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("/api/auth/nominee-information")
+    suspend fun updateNomineeInfo(
+        @Header("X-Localization") language: String,
+        @Header("Authorization") token: String?,
+        @Body map: HashMap<Any, Any?>?
+    ): Response<Any?>?
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("/api/auth/present/address")
     suspend fun addPresentInfo(
         @Header("X-Localization") language: String,

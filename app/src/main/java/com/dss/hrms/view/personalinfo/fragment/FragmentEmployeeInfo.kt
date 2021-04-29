@@ -107,6 +107,9 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
     lateinit var editReferenceInfo: EditReferenceInfo
 
     @Inject
+    lateinit var editCreateNomineeInfo: EditCreateNomineeInfo
+
+    @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
 
     @Inject
@@ -343,6 +346,17 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().References())
             }
+            StaticKey.Nominee -> {
+                dataList = employee?.nominees
+                this.title = getString(R.string.nominee_info)
+                if (dataList != null && dataList?.size!! > 0) {
+                    v.fab.visibility = View.VISIBLE
+                } else {
+                    v.fab.visibility = View.VISIBLE
+                }
+//                if (dataList == null || dataList?.size == 0)
+//                    dataList = listOf(Employee().References())
+            }
         }
 
         if (dataList != null && dataList?.size!! > 0) {
@@ -500,6 +514,38 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editAndCreateSpouseInfo.showDialog(
                             it2,
                             position,
+                            StaticKey.CREATE
+                        )
+                    }
+                }
+            }
+            StaticKey.Nominee -> {
+                if (operation?.equals(StaticKey.EDIT)!!) {
+                    activity?.let { it2 ->
+                        editCreateNomineeInfo.showDialog(
+                            it2,
+                            position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
+                            StaticKey.EDIT
+                        )
+                    }
+
+                } else if (operation?.equals(StaticKey.CREATE)!!) {
+                    activity?.let { it2 ->
+                        editCreateNomineeInfo.showDialog(
+                            it2,
+                            position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.CREATE
                         )
                     }

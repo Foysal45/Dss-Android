@@ -383,6 +383,16 @@
     <string name="session_name">Session Name</string>
     <string name="faq_question">FAQ Question</string>
 
+    <string name="nominee_info">Nominee Information</string>
+    <string name="name_of_nominee">Name of Nominee</string>
+    <string name="nominee_relation">Nominee Relation</string>
+    <string name="nominee_allocated_percentage">Nominee Allocated Percentage</string>
+    <string name="nominee_marital_status">Nominee Marital Status</string>
+    <string name="nominee_gender">Nominee Gender</string>
+    <string name="nominee_has_disability">Nominee Has Disability</string>
+    <string name="nominee_signature">Nominee Signature</string>
+
+
     <!--    -->
     <!--    <string name="full_name">Full Name</string>-->
     <!--    <string name="basic_salary">Basic Salary</string>-->

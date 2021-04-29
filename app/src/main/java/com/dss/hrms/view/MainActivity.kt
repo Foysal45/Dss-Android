@@ -303,6 +303,10 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             selectedPosition = 17
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 17))
         })
+        menu_profile_nominee.setOnClickListener({ view ->
+            selectedPosition = 18
+            startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 18))
+        })
 
         this.menu_dashboard_signout.setOnClickListener {
 //            var mainActivityViewModel_logout =

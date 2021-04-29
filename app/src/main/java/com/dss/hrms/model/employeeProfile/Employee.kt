@@ -141,6 +141,9 @@ class Employee {
     @SerializedName("references")
     val references: List<References>? = null
 
+    @SerializedName("nominees")
+    val nominees: List<Nominee>? = null
+
 
     @SerializedName("gender")
     val gender: Gender? = null
@@ -726,6 +729,46 @@ class Employee {
         }
 
     }
+
+
+    inner class Nominee {
+        @SerializedName("id")
+        val id: Int = 0
+
+        @SerializedName("employee_id")
+        val employee_id: Int = 0
+
+        @SerializedName("name")
+        val name: String? = null
+
+        @SerializedName("date_of_birth")
+        val date_of_birth: String? = null
+
+        @SerializedName("relation")
+        val relation: String? = null
+
+        @SerializedName("allocated_percentage")
+        val allocated_percentage: String? = null
+
+        @SerializedName("nominee_signature")
+        val nominee_signature: String? = null
+
+        @SerializedName("has_disability")
+        val has_disability: Int = 0
+
+        @SerializedName("marital_status_id")
+        val marital_status_id: Int? = null
+
+        @SerializedName("gender_id")
+        val gender_id: Int? = null
+
+        @SerializedName("gender")
+        val gender: Gender? = null
+
+        @SerializedName("marital_status")
+        val marital_status: MaritalStatus? = null
+    }
+
 
     inner class PresentAddresses {
 

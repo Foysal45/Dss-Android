@@ -219,6 +219,13 @@ class EmployeeInfoActivity : BaseActivity() {
         referenceFrg.arguments = referenceBundle
         adapter!!.addFragment(referenceFrg, getString(R.string.reference))
 
+        var nomineeBundle = Bundle()
+        nomineeBundle.putString("key", StaticKey.Nominee)
+        nomineeBundle.putBoolean("addWillAppear", true)
+        var nomineeFrg = FragmentEmployeeInfo()
+        nomineeFrg.arguments = nomineeBundle
+        adapter!!.addFragment(nomineeFrg, getString(R.string.nominee_info))
+
         Log.e("position", "selected position ; " + MainActivity.selectedPosition)
 
     }

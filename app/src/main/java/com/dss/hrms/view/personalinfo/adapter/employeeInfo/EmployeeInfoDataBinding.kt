@@ -8,9 +8,12 @@ import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelEmployeeInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.DateConverter
 import com.dss.hrms.view.personalinfo.dialog.EditOfficialResidentialIInfo
 import com.namaztime.namaztime.database.MySharedPreparence
+import kotlinx.android.synthetic.main.fragment_basic_information.view.*
+import kotlinx.android.synthetic.main.personel_information_view_field.view.*
 import javax.inject.Inject
 
 
@@ -258,6 +261,61 @@ class EmployeeInfoDataBinding @Inject constructor() {
             qualifications.passing_year?.let { binding.fEQPassingYear.tvText.setText(it) }
             qualifications.division_cgpa?.let { binding.fEQDivisionOrCgpa.tvText.setText(it) }
 
+        }
+    }
+
+
+    fun bindNomineeData(
+        binding: ModelEmployeeInfoBinding,
+        nominee: Employee.Nominee,
+        context: Context,
+        heading: String
+    ) {
+
+        binding.hNominee.tvTitle.setText(heading)
+        binding.fNName.tvTitle.setText(context.getString(R.string.name_of_nominee))
+        binding.fNDOB.tvTitle.setText(context.getString(R.string.birth))
+        binding.fNRelation.tvTitle.setText(context.getString(R.string.nominee_relation))
+        binding.fNAllocatedPercentage.tvTitle.setText(context.getString(R.string.nominee_allocated_percentage))
+        binding.fNGender.tvTitle.setText(context.getString(R.string.nominee_gender))
+        binding.fNMaritalStatus.tvTitle.setText(context.getString(R.string.nominee_marital_status))
+        binding.fNHasDisavility.tvTitle.setText(context.getString(R.string.nominee_has_disability))
+        binding.tvNSignatureTitle.setText(context.getString(R.string.nominee_signature))
+
+
+        nominee.name?.let { binding.fNName.tvText.setText(it) }
+        nominee?.date_of_birth?.let {
+            binding.fNDOB.tvText.setText(
+                (DateConverter.changeDateFormateForShowing(
+                    it
+                ))
+            )
+        }
+        nominee.relation?.let { binding.fNRelation.tvText.setText(it) }
+        nominee.allocated_percentage?.let { binding.fNAllocatedPercentage.tvText.setText(it) }
+
+        nominee?.has_disability?.let {
+            if (it == 1)
+                binding.fNHasDisavility.tvText.setText(context?.getString(R.string.yes)) else
+                binding.fNHasDisavility.tvText.setText(context?.getString(R.string.no))
+        }
+
+        context?.let {
+            Glide.with(it).applyDefaultRequestOptions(
+                RequestOptions()
+                    .placeholder(R.drawable.ic_baseline_image_24)
+            ).load(RetrofitInstance.BASE_URL + nominee?.nominee_signature)
+                .into(binding.ivNSignature)
+        }
+
+        if (preparence.getLanguage()
+                .equals("en")
+        ) {
+            nominee.marital_status?.name?.let { binding.fNMaritalStatus.tvText.setText(it) }
+            nominee.gender?.name?.let { binding.fNGender.tvText.setText(it) }
+        } else {
+            nominee.marital_status?.name_bn?.let { binding.fNMaritalStatus.tvText.setText(it) }
+            nominee.gender?.name_bn?.let { binding.fNGender.tvText.setText(it) }
         }
     }
 

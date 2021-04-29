@@ -39,6 +39,14 @@ class EmployeeInfoEditCreateViewModel @Inject constructor(application: Applicati
         return liveData
     }
 
+    fun updateNomineeInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any>? {
+        var liveData: MutableLiveData<Any>? = MutableLiveData<Any>()
+        viewModelScope.launch(Dispatchers.Default) {
+            liveData = employeeInfoEditCreateRepo?.updateNomineeInfo(map, liveData)
+        }
+        return liveData
+    }
+
     fun updatePresentInfo(id: Int?, map: HashMap<Any, Any?>?): MutableLiveData<Any>? {
         var liveData: MutableLiveData<Any>? = MutableLiveData<Any>()
         viewModelScope.launch(Dispatchers.Default) {
@@ -294,7 +302,8 @@ class EmployeeInfoEditCreateViewModel @Inject constructor(application: Applicati
     ): MutableLiveData<Any>? {
         var liveData: MutableLiveData<Any>? = MutableLiveData<Any>()
         viewModelScope.launch(Dispatchers.Default) {
-            liveData = employeeInfoEditCreateRepo?.updateAdditionalQualificationInfo(id, map, liveData)
+            liveData =
+                employeeInfoEditCreateRepo?.updateAdditionalQualificationInfo(id, map, liveData)
         }
         return liveData
     }

@@ -51,7 +51,8 @@ class VacantPositionSummaryAdapter @Inject constructor() :
 
         if (position >= 1) {
             holder.binding.llHeader.visibility = View.GONE
-
+        }else{
+            holder.binding.llHeader.visibility = View.VISIBLE
         }
         dataList?.let {
             if (position + 1 >= it.size) {

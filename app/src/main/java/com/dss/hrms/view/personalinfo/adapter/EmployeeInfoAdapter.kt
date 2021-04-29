@@ -299,6 +299,18 @@ class EmployeeInfoAdapter @Inject constructor() :
                 )
             }
 
+            StaticKey.Nominee -> {
+                holder.binding?.llNomineeInfo?.visibility = View.VISIBLE
+                holder.binding?.hNominee?.tvEdit?.setOnClickListener({
+                    onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
+                })
+                employeeInfoDataBinding.bindNomineeData(
+                    holder.binding!!,
+                    dataList.get(position) as Employee.Nominee,
+                    context,
+                    context.getString(R.string.nominee_info)
+                )
+            }
 
         }
 
