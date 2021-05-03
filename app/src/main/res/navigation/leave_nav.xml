@@ -75,6 +75,9 @@
         <argument
             android:name="employee"
             app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]" />
+        <action
+            android:id="@+id/action_employeeBottomSheetFragment_to_createEditLeaveApplicationFragment"
+            app:destination="@id/createEditLeaveApplicationFragment" />
     </dialog>
     <fragment
         android:id="@+id/createEditLeaveApplicationFragment"
@@ -101,5 +104,8 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="create" />
+        <action
+            android:id="@+id/action_createEditLeaveApplicationFragment_to_employeeBottomSheetFragment"
+            app:destination="@id/employeeBottomSheetFragment" />
     </fragment>
 </navigation>

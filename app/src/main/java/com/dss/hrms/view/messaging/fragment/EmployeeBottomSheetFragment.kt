@@ -42,6 +42,10 @@ class EmployeeBottomSheetFragment : BottomSheetDialogFragment() {
         dataList?.let {
             prepareRecycleView()
         }
+
+        binding.tvCancel.setOnClickListener {
+            findNavController().popBackStack()
+        }
         Log.e("EmployeeBottomSheet", "EmployeeBottomSheetFragment : ${args.employee.size}")
         binding.tvOk.setOnClickListener {
             findNavController().previousBackStackEntry?.savedStateHandle?.set(

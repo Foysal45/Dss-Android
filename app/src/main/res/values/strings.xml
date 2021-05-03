@@ -368,6 +368,7 @@
     <string name="working_employee_list_filters_form">Working Employee List Filters Form</string>
     <string name="vacant_position_list_filters_form">Vacant Position Summary Filters Form</string>
     <string name="vacant_position_list">Vacant Position List</string>
+    <string name="vacant_position_summary">VVacant Position Summary</string>
     <string name="report">Reports</string>
     <string name="permitted">Permitted</string>
     <string name="working">Working</string>
@@ -391,6 +392,9 @@
     <string name="nominee_gender">Nominee Gender</string>
     <string name="nominee_has_disability">Nominee Has Disability</string>
     <string name="nominee_signature">Nominee Signature</string>
+    <string name="download_pdf">Download Pdf</string>
+    <string name="no_responsible_person_found">No responsible person found</string>
+    <string name="downloading_see_progess_on_notification_bar">Downloading... See progress on notification bar</string>
 
 
     <!--    -->

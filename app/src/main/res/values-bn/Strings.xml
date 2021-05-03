@@ -362,6 +362,7 @@
     <string name="search_vacant_position">শূন্য পদের তালিকা অনুসন্ধান করুন</string>
     <string name="working_employee_list">কর্মরত কর্মচারী তালিকা</string>
     <string name="vacant_position_list">শূন্য পদের তালিকা</string>
+    <string name="vacant_position_summary">শূন্য পদের তালিকা সংক্ষিপ্তসার </string>
     <string name="working_employee_list_filters_form">কর্মরত কর্মচারী তালিকা ফিল্টার ফর্ম</string>
     <string name="vacant_position_list_filters_form">শূন্য পদের তালিকা সংক্ষিপ্তসার ফিল্টার ফর্ম</string>
     <string name="report">রিপোর্টসমুহ</string>

@@ -37,7 +37,9 @@ import com.dss.hrms.view.allInterface.OnDateListener
 import com.dss.hrms.view.leave.adapter.spinner.LeavePolicySpinnerAdapter
 import com.dss.hrms.view.leave.model.LeaveApplicationApiResponse
 import com.dss.hrms.view.leave.viewmodel.LeaveApplicationViewmodel
+import com.dss.hrms.view.messaging.fragment.SearchEmployeeFragmentDirections
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import com.theartofdev.edmodo.cropper.CropImage
@@ -54,6 +56,7 @@ import javax.inject.Inject
 class CreateEditLeaveApplicationFragment : DaggerFragment() {
     private val args by navArgs<CreateEditLeaveApplicationFragmentArgs>()
 
+    lateinit var employeeViewModel: EmployeeViewModel
 
     // Storage Permissions
     private val REQUEST_EXTERNAL_STORAGE = 1
@@ -66,6 +69,7 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
 
     var uploadImageUrl: String? = null
 
+    var totalResposiblePersonList: List<RoleWiseEmployeeResponseClass.RoleWiseEmployee>? = null
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
@@ -288,7 +292,7 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
             Navigation.findNavController(binding.root)
                 .navigate(R.id.action_createEditLeaveApplicationFragment_to_searchEmployeeFragment3)
         }
-
+        loadResponsiblepersonList()
         leaveApplication?.leave_application_details?.let {
             if (it.size > 0)
                 binding.etBody.setText(it.get(0)?.reason)
@@ -297,12 +301,37 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
         binding.llResponsibleEmployee.setOnClickListener {
             Log.e(
                 "leaveapplication",
-                "notify person :........................................................"
+                "ResponsibleEmployee :........................................................"
             )
             isFromNotify = false
             selectedDataList = arrayListOf<RoleWiseEmployeeResponseClass.RoleWiseEmployee>()
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_createEditLeaveApplicationFragment_to_searchEmployeeFragment3)
+//            Navigation.findNavController(binding.root)
+//                .navigate(R.id.action_createEditLeaveApplicationFragment_to_searchEmployeeFragment3)
+//
+
+            totalResposiblePersonList?.let {
+                if (it.size > 0) {
+                    val action =
+                        totalResposiblePersonList?.toTypedArray()?.let { it1 ->
+                            CreateEditLeaveApplicationFragmentDirections.actionCreateEditLeaveApplicationFragmentToEmployeeBottomSheetFragment(
+                                it1
+                            )
+                        }
+                    if (action != null) {
+                        findNavController().navigate(action)
+                    }
+//                        Navigation.findNavController(binding.root)
+//                            .navigate(R.id.action_searchEmployeeFragment_to_employeeBottomSheetFragment)
+                }
+            }
+            if (totalResposiblePersonList == null || totalResposiblePersonList?.size!! == 0) {
+                Toast.makeText(
+                    activity,
+                    getString(R.string.no_responsible_person_found),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
         }
 
         binding.llNotifyEmployee.setOnClickListener {
@@ -354,6 +383,31 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
 
         }
     }
+
+    fun loadResponsiblepersonList() {
+        employeeViewModel?.apply {
+            getEmployeeList(
+                employeeProfile?.employee?.office_id?.let { it.toString() },
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+                //    "1", "1", "1", "1", "1", "Raju"
+            ).observe(viewLifecycleOwner, Observer {
+                Log.e("data", "datalist : ${it.size}")
+                it?.let {
+                    totalResposiblePersonList = it
+                }
+
+
+            })
+        }
+    }
+
 
     fun uploadData() {
         if (operation == Operation.CREATE) {
@@ -481,9 +535,9 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
         map.put("leave_policy_id", leaveType?.id.toString())
         map.put(
             "approval_status",
-         //   if (operation == Operation.CREATE) {
-                if (buttonClicked.equals(StaticKey.DRAFT)) StaticKey.DRAFT else StaticKey.PENDING
-          //  } else StaticKey.PENDING
+            //   if (operation == Operation.CREATE) {
+            if (buttonClicked.equals(StaticKey.DRAFT)) StaticKey.DRAFT else StaticKey.PENDING
+            //  } else StaticKey.PENDING
         )
         map.put("forword_to_employee_id", notifyPerson?.id)
         map.put("apply_date", applyDate)
@@ -495,7 +549,7 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
             "leave_application_details",
             arrayListOf<HashMap<Any, Any?>>(leaveDeatails(leaveApplication))
         )
-       if (operation != Operation.CREATE)
+        if (operation != Operation.CREATE)
             map.put("status", leaveApplication?.status)
         return map
     }
@@ -547,6 +601,8 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
     }
 
     private fun init() {
+        employeeViewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
         leaveApplicationViewModel = ViewModelProvider(
             this,
             viewModelProviderFactory

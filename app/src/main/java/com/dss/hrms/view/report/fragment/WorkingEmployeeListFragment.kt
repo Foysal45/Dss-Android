@@ -1,5 +1,7 @@
 package com.dss.hrms.view.report.fragment
 
+
+import android.Manifest
 import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
@@ -10,14 +12,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getSystemService
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.dss.hrms.R
 import com.dss.hrms.databinding.FragmentWorkingEmployeeListBinding
 import com.dss.hrms.model.HeadOfficeDepartmentApiResponse
 import com.dss.hrms.model.Office
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
+import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OfficeDataValueListener
@@ -29,6 +34,7 @@ import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.personal_info_spinner.view.*
 import java.util.*
 import javax.inject.Inject
 
@@ -58,7 +64,7 @@ class WorkingEmployeeListFragment : DaggerFragment() {
     var headOfficeBranches: HeadOfficeDepartmentApiResponse.HeadOfficeBranch? = null
     var section: HeadOfficeDepartmentApiResponse.Section? = null
     var subSection: HeadOfficeDepartmentApiResponse.Subsection? = null
-
+    var ctx: Context? = null
 
     var isOfficeAlreadySet = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +76,7 @@ class WorkingEmployeeListFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
         if (!isAlreadyViewCreated) {
+            ctx = activity
             isAlreadyViewCreated = true
             binding = FragmentWorkingEmployeeListBinding.inflate(inflater, container, false)
             init()
@@ -141,32 +148,97 @@ class WorkingEmployeeListFragment : DaggerFragment() {
                 })
 
             binding.search.setOnClickListener {
-//                val url = "url you want to download"
-//                val request = DownloadManager.Request(Uri.parse(url))
-//                request.setDescription("Some descrition")
-//                request.setTitle("Some title")
-//// in order for this if to run, you must use the android 3.2 to compile your app
-//// in order for this if to run, you must use the android 3.2 to compile your app
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-//                    request.allowScanningByMediaScanner()
-//                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-//                }
-//                request.setDestinationInExternalPublicDir(
-//                    Environment.DIRECTORY_DOWNLOADS,
-//                    "name-of-the-file.ext"
-//                )
-//                val manager =
-//                    getSystemService<Any>(activity.DOWNLOAD_SERVICE) as DownloadManager?
-//                manager!!.enqueue(request)
-
+                onDownload()
             }
         }
         return binding.root
 
     }
 
+    private fun onDownload() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            Toast.makeText(
+                activity,
+                " " + getString(R.string.downloading_see_progess_on_notification_bar),
+                Toast.LENGTH_LONG
+            ).show()
+            downloadFile(
+                getString(R.string.working_employee_list),
+                "" + getString(R.string.working_employee_list),
+                getDownloadUrl()
+            )
+        } else {
+            requestPermission()
+        }
 
+    }
 
+    private fun downloadFile(fileName: String, desc: String, url: String) {
+        // fileName -> fileName with extension
+        val request = DownloadManager.Request(Uri.parse(url))
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+            .setTitle(fileName)
+            .setDescription(desc)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setAllowedOverMetered(true)
+            .setAllowedOverRoaming(false)
+
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+        val downloadManager = ctx?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
+        val downloadID = downloadManager.enqueue(request)
+
+        //   To Store file in External App-Specific Directory
+        //  .setDestinationInExternalFilesDir(context, Environment.DIRECTORY_MUSIC,fileName)
+
+        //   To Store file in External Public Directory
+        // .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,fileName)
+
+    }
+
+    private fun getDownloadUrl(): String {
+        Log.e(
+            "url",
+            "....................   " + "${RetrofitInstance.BASE_URL}/api/employee/working-pdf?division_id=${ if (division?.id != null) division?.id else ""}" +
+                    "&district_id=${if (district?.id != null) district?.id else ""}&office_id=${if (office?.id != null) office?.id else ""}" +
+                    "&designation_id=${if (designation?.id != null) designation?.id else ""}" +
+                    "&sixteen_category_id=${if (officeLeadCategory?.id != null) officeLeadCategory?.id else ""}"
+        )
+        return  "${RetrofitInstance.BASE_URL}/api/employee/working-pdf?division_id=${ if (division?.id != null) division?.id else ""}" +
+                "&district_id=${if (district?.id != null) district?.id else ""}&office_id=${if (office?.id != null) office?.id else ""}" +
+                "&designation_id=${if (designation?.id != null) designation?.id else ""}" +
+                "&sixteen_category_id=${if (officeLeadCategory?.id != null) officeLeadCategory?.id else ""}"+
+                "&head_office_department_id=${ if (headOfficeBranches?.id != null) headOfficeBranches?.id else ""}" +
+                "&head_office_section_id=${  if (section?.id != null) section?.id else ""}" +
+               "&head_office_sub_section_id=${ if (subSection?.id != null) subSection?.id else ""}"
+
+//        return "${RetrofitInstance.BASE_URL}/api/employee/working-pdf?" +
+//                "&division_id=${division?.id?.let { it }}&" + "district_id=${district?.id?.let { it }}&office_id=${office?.id?.let { it }}" +
+//                "&designation_id=${designation?.id?.let { it }}&sixteen_category_id=${officeLeadCategory?.id?.let { it }}" +
+//                "&head_office_department_id=${headOfficeBranches?.id?.let { it }}&head_office_section_id=${section?.id?.let { it }}" +
+//                "&head_office_sub_section_id=${subSection?.id?.let { it }}"
+    }
+
+    private fun requestPermission() {
+        activity?.let {
+            val result = ActivityCompat.requestPermissions(
+                it,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                12
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 12) {
+            onDownload()
+        }
+    }
 
     fun init() {
         employeeViewModel =
