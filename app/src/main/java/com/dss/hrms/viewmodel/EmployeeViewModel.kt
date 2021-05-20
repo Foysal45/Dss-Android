@@ -6,10 +6,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.dss.hrms.model.PermissionResponse
+import com.dss.hrms.model.ReportResponse
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.repository.EmployeeInfoRepo
 import com.dss.hrms.util.Status
+import com.dss.hrms.view.report.VacantPositionSummaryValueListener
 import com.dss.hrms.view.training.model.BudgetAndSchedule
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -23,6 +26,10 @@ class EmployeeViewModel @Inject constructor(application: Application) :
     lateinit var employeeInfoRepo: EmployeeInfoRepo
 
 
+    private var _userPermission: MutableLiveData<List<Any>> =
+        MutableLiveData()
+    var userPermission: LiveData<List<Any>> =
+        _userPermission
     suspend fun getEmployeeInfo(employeeId: Int?): Flow<Any?>? = flow {
         //   val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
         //  viewModelScope.launch(dispatcher.Main) {
@@ -30,7 +37,21 @@ class EmployeeViewModel @Inject constructor(application: Application) :
         // }
     }
 
+    fun getUserPermissions(
+    ) {
+        viewModelScope.launch {
 
+            var response =
+                employeeInfoRepo.getUserPermissions()
+
+            if (response is PermissionResponse) {
+               // Log.e("employeeviewmodel","response : ${response.data}")
+                _userPermission.postValue(response.data)
+            } else {
+                _userPermission.postValue(null)
+            }
+        }
+    }
     fun getRoleWiseEmployeeInfo(role: String?): MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>> {
         var liveData = MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>>()
         viewModelScope.launch {

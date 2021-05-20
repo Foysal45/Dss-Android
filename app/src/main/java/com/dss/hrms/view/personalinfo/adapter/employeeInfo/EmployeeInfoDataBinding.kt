@@ -46,6 +46,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAddressDivision.tvTitle.setText(context.getString(R.string.division))
         binding.fAddressDistrict.tvTitle.setText(context.getString(R.string.district))
         binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+        binding.fAddressUnion.tvTitle.setText(context.getString(R.string.union_or_municiplity))
         binding.fAddressPoliceStationBn.tvTitle.setText(context.getString(R.string.police_station_bn))
         binding.fAddressPhoneOrMobileNo.tvTitle.setText(context.getString(R.string.phone_mobile))
         binding.fAddressVillageOrHouseNo.tvTitle.setText(context.getString(R.string.vill_house))
@@ -139,6 +140,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAddressDivision.tvTitle.setText(context.getString(R.string.division))
         binding.fAddressDistrict.tvTitle.setText(context.getString(R.string.district))
         binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+        binding.fAddressUnion.tvTitle.setText(context.getString(R.string.union_or_municiplity))
         binding.fAddressPoliceStationBn.tvTitle.setText(context.getString(R.string.police_station_bn))
         binding.fAddressPhoneOrMobileNo.tvTitle.setText(context.getString(R.string.phone_mobile))
         binding.fAddressVillageOrHouseNo.tvTitle.setText(context.getString(R.string.vill_house))
@@ -392,6 +394,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.hJobJoiningInformation.tvTitle.setText(heading)
         binding.fJobJoiningOffice.tvTitle.setText(context.getString(R.string.office))
         binding.fJobJoiningDesignation.tvTitle.setText(context.getString(R.string.designation))
+        binding.fJobJoiningAdditionalDesignation.tvTitle.setText(context.getString(R.string.additional_designation))
         binding.fJobJoiningDepartment.tvTitle.setText(context.getString(R.string.depertment))
         binding.fJobJoiningJobType.tvTitle.setText(context.getString(R.string.job_type))
         binding.fJobJoiningJoiningDate.tvTitle.setText(context.getString(R.string.joning_date))
@@ -414,7 +417,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
         jobjoinings.pay_scale?.let { binding.fJobJoiningPayScale.tvText.setText(it) }
 
-
+        if (employeeProfileData?.employee?.designation_id == jobjoinings?.designation_id &&
+            employeeProfileData?.employee?.office_id == jobjoinings?.office_id) {
+            binding?.fJobJoiningCurrentJob?.tvText.setText(context.getString(R.string.yes))
+        }else{
+            binding?.fJobJoiningCurrentJob?.tvText.setText(context.getString(R.string.no))
+        }
         jobjoinings?.status?.let {
             binding?.fJobJoiningCurrentJob?.tvText.setText(
                 if (it == 1) context.getString(R.string.yes) else
@@ -427,6 +435,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         ) {
             jobjoinings.office?.office_name?.let { binding.fJobJoiningOffice.tvText.setText(it) }
             jobjoinings.designation?.name?.let { binding.fJobJoiningDesignation.tvText.setText(it) }
+            jobjoinings.additional_designation?.name?.let { binding.fJobJoiningAdditionalDesignation.tvText.setText(it) }
             jobjoinings.department?.name?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
             jobjoinings.job_type?.name?.let { binding.fJobJoiningJobType.tvText.setText(it) }
             jobjoinings.joining_date?.let {
@@ -459,6 +468,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         } else {
             jobjoinings.office?.office_name_bn?.let { binding.fJobJoiningOffice.tvText.setText(it) }
             jobjoinings.designation?.name_bn?.let { binding.fJobJoiningDesignation.tvText.setText(it) }
+            jobjoinings.additional_designation?.name_bn?.let { binding.fJobJoiningAdditionalDesignation.tvText.setText(it) }
             jobjoinings.department?.name_bn?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
             jobjoinings.job_type?.name_bn?.let { binding.fJobJoiningJobType.tvText.setText(it) }
             jobjoinings.joining_date?.let {
@@ -920,6 +930,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         context: Context,
         heading: String
     ) {
+        binding.fForeignTravelPurposeBn.llBody.visibility=View.GONE
         binding.hForeignTravelInfo.tvTitle.setText(heading)
         binding.fForeignTravelCountry.tvTitle.setText(context.getString(R.string.country))
         binding.fForeignTravelPurpose.tvTitle.setText(context.getString(R.string.purpose))
@@ -954,8 +965,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
         } else {
             foreignTravels.country?.name_bn?.let { binding.fForeignTravelCountry.tvText.setText(it) }
-            foreignTravels.purpose?.let { binding.fForeignTravelPurpose.tvText.setText(it) }
-            foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
+            foreignTravels.purpose_bn?.let { binding.fForeignTravelPurpose.tvText.setText(it) }
+          //  foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
             foreignTravels.details?.let { binding.fForeignTravelDetailsEn.tvText.setText(it) }
             foreignTravels.details_bn?.let { binding.fForeignTravelDetailsBn.tvText.setText(it) }
             foreignTravels.from_date?.let {

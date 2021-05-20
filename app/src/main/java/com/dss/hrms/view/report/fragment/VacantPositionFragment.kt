@@ -82,8 +82,22 @@ class VacantPositionFragment : DaggerFragment() {
 
         commonReportViewModel?.apply {
             vacantPositionSummary.observe(viewLifecycleOwner, Observer { list ->
-                dataList = list
-                if (dataList != null && dataList?.size!! > 0) {
+                val templist= arrayListOf<ReportResponse.VacantPositionSummary>()
+                templist += list
+                if (templist != null && templist?.size!! > 0) {
+                    var permitted=0
+                    var working=0
+                    var empty=0
+
+                    templist?.forEach({element->
+                        element.permitted?.let { permitted+=it }
+                        element.working?.let { working+=it }
+                        element.empty?.let { empty+=it }
+                    })
+
+                    templist.add(ReportResponse.VacantPositionSummary(getString(R.string.total),
+                        getString(R.string.total_bn),permitted,working,empty,0,0,null))
+                    dataList =templist
                     binding.llDownload.visibility = View.VISIBLE
                     prepareRecyleView()
                 } else {

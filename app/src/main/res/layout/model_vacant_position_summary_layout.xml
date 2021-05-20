@@ -54,9 +54,9 @@
                         android:id="@+id/tvLeaveType"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+
                         android:layout_weight="1.2"
-                        android:gravity="center"
+                        android:gravity="center|left"
                         android:paddingHorizontal="3dp"
                         android:text="@string/designation"
                         android:textColor="@color/black"

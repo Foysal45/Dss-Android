@@ -200,7 +200,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
     private fun initRV() {
         when (key) {
             StaticKey.PERMANENT_ADDRESS -> {
-                dataList = employee?.permanentAddresses
+                employee?.permanentAddresses?.let {
+                    if (it.size>0){
+                        dataList = arrayListOf(it.get(0))
+                    }
+                }
+
                 this.title = getString(R.string.permanent_address)
                 if (dataList != null && dataList?.size!! > 0) {
                     v.fab.visibility = View.GONE
@@ -211,7 +216,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                 Log.e("list size", "list size :  " + dataList?.size)
             }
             StaticKey.PRESENT_ADDRESS -> {
-                dataList = employee?.presentAddresses
+                employee?.presentAddresses?.let {
+                    if (it.size>0){
+                        dataList = arrayListOf(it.get(0))
+                    }
+                }
+
                 this.title = getString(R.string.present_address)
                 if (dataList != null && dataList?.size!! > 0) {
                     v.fab.visibility = View.GONE

@@ -29,6 +29,7 @@ import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.training.TrainingActivity
 import com.dss.hrms.view.training.`interface`.OnCourseScheduleClickListener
 import com.dss.hrms.view.training.adaoter.CourseScheduleAdapter
 import com.dss.hrms.view.training.adaoter.spinner.CourseScheduleSpinnerAdapter
@@ -155,10 +156,10 @@ class CourseScheduleFragment : DaggerFragment() {
         courseSchedule: BudgetAndSchedule.CourseSchedule?
     ) {
 
-        dialogCustome = activity?.let { Dialog(it) }
+        dialogCustome = TrainingActivity.context?.let { Dialog(it) }
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogTrainingLoyeoutBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(context),
+            LayoutInflater.from(TrainingActivity.context),
             R.layout.dialog_training_loyeout,
             null,
             false

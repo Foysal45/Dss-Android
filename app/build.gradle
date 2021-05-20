@@ -19,7 +19,23 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    signingConfigs {
+        def propertiesFile = file("properties.gradle")
+        def properties = new Properties()
+        properties.load(new FileInputStream(propertiesFile))
+        debug {
+            storeFile file(properties['dev_keystore'])
+            storePassword "dsshrm12345"
+            keyAlias "dssHrm"
+            keyPassword "dsshrm12345"
+        }
+        release {
+            storeFile file(properties['release_keystore'])
+            storePassword "dsshrm12345"
+            keyAlias "dssHrm"
+            keyPassword "dsshrm12345"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false

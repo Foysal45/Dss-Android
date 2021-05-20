@@ -91,7 +91,9 @@ class LeaveApplicationFragment : DaggerFragment() {
         init()
 
         binding.fab.setOnClickListener {
-            var leave: LeaveApplicationApiResponse.LeaveApplication? = dataList?.get(0)
+//            dataList?.let {
+//                var leave: LeaveApplicationApiResponse.LeaveApplication? = dataList?.get(0)
+//            }
             val action =
                 LeaveApplicationFragmentDirections.actionLeaveApplicationFragmentToCreateEditLeaveApplicationFragment(
                     leaveRoleWiseemployee = null,

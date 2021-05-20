@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/background"
-        android:layout_marginBottom="40dp"
+        android:orientation="vertical"
         android:padding="10dp"
         tools:context=".view.report.fragment.VacantPositionFragment">
 
@@ -40,10 +40,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:orientation="vertical"
             android:gravity="right"
-            android:visibility="gone"
+            android:orientation="vertical"
             android:paddingVertical="@dimen/_4sdp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/llSearch">
 
             <Button
@@ -52,12 +52,12 @@
                 android:layout_height="@dimen/edittext_height_large"
                 android:background="#008A06"
                 android:drawableLeft="@drawable/ic_pdf_24"
-                android:gravity="center|left"
-                android:drawableTint="@color/white"
                 android:drawablePadding="5dp"
-                android:text="@string/download_pdf"
+                android:drawableTint="@color/white"
+                android:gravity="center|left"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:paddingRight="10dp"
+                android:text="@string/download_pdf"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_small" />
 
@@ -66,11 +66,23 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginTop="@dimen/_10sdp"
-
+            android:layout_marginBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/llDownload" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_4sdp"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </LinearLayout>
+
+    </LinearLayout>
 </layout>

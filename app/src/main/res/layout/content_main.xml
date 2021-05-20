@@ -45,11 +45,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingVertical="@dimen/_5sdp"
-                    android:text="@string/my_profile"
+                    android:text="@string/my_profile_home_page"
                     android:paddingHorizontal="20dp"
                     android:gravity="center"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/text_size_extra_small"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
@@ -94,9 +94,9 @@
                     android:paddingVertical="@dimen/_5sdp"
                     android:paddingHorizontal="20dp"
                     android:gravity="center"
-                    android:text="@string/training_management"
+                    android:text="@string/training_management_home_page"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/text_size_extra_small"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
@@ -139,11 +139,11 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:paddingVertical="@dimen/_5sdp"
-                    android:text="@string/leave_management"
+                    android:text="@string/leave_management_home_page"
                     android:paddingHorizontal="20dp"
                     android:gravity="center"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/text_size_extra_small"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
@@ -190,10 +190,10 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingVertical="@dimen/_5sdp"
-                    android:text="@string/payroll_management"
+                    android:text="@string/payroll_management_home_page"
                     android:paddingHorizontal="20dp"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/text_size_extra_small"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
@@ -240,7 +240,7 @@
                     android:paddingHorizontal="20dp"
                     android:gravity="center"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/text_size_extra_small"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
@@ -285,7 +285,7 @@
                     android:paddingVertical="@dimen/_5sdp"
                     android:text="@string/action_settings"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/text_size_extra_small"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
@@ -298,6 +298,7 @@
         android:weightSum="3">
 
         <RelativeLayout
+            android:id="@+id/rlReport"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -335,7 +336,7 @@
                     android:paddingVertical="@dimen/_5sdp"
                     android:text="@string/report"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/text_size_extra_small"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>

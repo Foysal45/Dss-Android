@@ -35,7 +35,7 @@ class TrainingResponse {
         val category: Category?
     )
 
-    data class ContentsFaq(var status: String?, var code: Int?, var data: FaqData?)
+    data class ContentsFaq(var status: String?, var code: Int?, var data: List<Faq>?)
     data class FaqData(val data: List<Faq>)
     data class Faq(val id: Int?, val faq_question: String?, val faq_answer: String)
     data class ResourcePersonResponse(

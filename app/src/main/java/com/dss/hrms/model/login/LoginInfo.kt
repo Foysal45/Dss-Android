@@ -14,7 +14,7 @@ class LoginInfo {
     val employee_id: Int? = null
 
     @SerializedName("phone_number")
-    val phone_number: Int? = null
+    val phone_number: String? = null
 
     @SerializedName("username")
     val username: String? = null

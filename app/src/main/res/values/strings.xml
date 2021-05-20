@@ -29,6 +29,7 @@
     <string name="logout">LOGOUT</string>
     <string name="hrm">HRM</string>
     <string name="my_profile">My Profile</string>
+    <string name="my_profile_home_page">My\n Profile</string>
     <string name="coming">coming...</string>
     <string name="profile">Employee Personal Information</string>
     <string name="title_activity_main2">MainActivity</string>
@@ -150,6 +151,7 @@
     <string name="award_details">Award Details(English)</string>
     <string name="award_details_bn">Award Details(Bangla)</string>
     <string name="award_date">Award Date</string>
+    <string name="additional_designation">Additional Designation</string>
     <string name="designation">Designation</string>
     <string name="depertment">Department</string>
     <string name="job_type">Job Type</string>
@@ -268,6 +270,7 @@
     <string name="is_published">Is Published</string>
 
     <string name="training_management">Training Management</string>
+    <string name="training_management_home_page">Training\n Management</string>
     <string name="resource_person">Resource Person</string>
 
     <string name="resource_person_name">Resource Person Name</string>
@@ -320,9 +323,11 @@
     <string name="section_wise_subsection">Section wise Sub-Section</string>
 
     <string name="leave_management">Leave Management</string>
+    <string name="leave_management_home_page">Leave\n Management</string>
     <string name="leave_application">Leave Application</string>
     <string name="leave_summary_dashboard">Leave Summary Dashboard</string>
     <string name="payroll_management">Payroll Management</string>
+    <string name="payroll_management_home_page">Payroll\n Management</string>
     <string name="bank_information">Bank Information</string>
     <string name="salary_process">Salary Process</string>
 
@@ -334,6 +339,7 @@
     <string name="leave_balance">Leave Balance</string>
     <string name="enjoyed">Enjoyed</string>
     <string name="total">Total</string>
+    <string name="total_bn">Total(Bangla)</string>
     <string name="remaining_balance">Remaining Balance</string>
     <string name="balance">Balance</string>
     <string name="account_type">Account Type</string>
@@ -384,6 +390,7 @@
     <string name="session_name">Session Name</string>
     <string name="faq_question">FAQ Question</string>
 
+    <string name="same_as_present_address">Same As Present Address</string>
     <string name="nominee_info">Nominee Information</string>
     <string name="name_of_nominee">Name of Nominee</string>
     <string name="nominee_relation">Nominee Relation</string>

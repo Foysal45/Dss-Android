@@ -20,6 +20,7 @@ import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.*
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.repository.CommonRepo
+import com.dss.hrms.repository.EmployeeInfoEditCreateRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
@@ -61,9 +62,9 @@ class EditPermanentAddressInfo @Inject constructor() {
     var permanentAddresses: Employee.PermanentAddresses? = null
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
+    var isSameAsPresentAddress = false
 
     lateinit var key: String
-
     fun showDialog(
         context: Context,
         position: Int?,
@@ -106,6 +107,21 @@ class EditPermanentAddressInfo @Inject constructor() {
             dialogCustome?.dismiss()
         })
 
+        binding?.cbSameAsPresentAddress?.setOnClickListener {
+            if (binding?.cbSameAsPresentAddress?.isChecked==true){
+                employeeProfileData?.employee?.presentAddresses?.let {
+                    if (it.size>0){
+                        var  presentAddressJson=Gson().toJson(it.get(0))
+                        var pmAddresses=   Gson().fromJson(presentAddressJson.toString(),Employee.PermanentAddresses::class.java)
+                        updatePresentAddressInfo(context, pmAddresses)
+                    }
+                }
+            }else{
+                updatePresentAddressInfo(context, permanentAddresses)
+            }
+        }
+
+
         if (key.equals(StaticKey.CREATE)) {
             binding?.addressBtnUpdate?.btnUpdate?.setText("" + context.getString(R.string.submit))
         } else {
@@ -146,9 +162,11 @@ class EditPermanentAddressInfo @Inject constructor() {
         getLocalGovernmentType()
 
         binding?.addressBtnUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo =
+            var  employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
+
+
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
@@ -180,8 +198,8 @@ class EditPermanentAddressInfo @Inject constructor() {
         })
 
     }
-
     fun showResponse(any: Any) {
+
         if (any is String) {
             toast(EmployeeInfoActivity.context, any)
 
@@ -418,7 +436,6 @@ class EditPermanentAddressInfo @Inject constructor() {
             })
     }
 
-
     fun getLocalGovernmentType() {
         commonRepo.getCommonData("/api/auth/local-government-type/list",
             object : CommonDataValueListener {
@@ -442,7 +459,6 @@ class EditPermanentAddressInfo @Inject constructor() {
             })
     }
 
-
     fun getUpazilaWithMunicipalities(districtId: Int?, upazilaId: Int?) {
         commonRepo.getUpazilaWithMunicipalities(districtId,
             object : SpecificDistrictValueListener {
@@ -453,7 +469,6 @@ class EditPermanentAddressInfo @Inject constructor() {
                 }
             })
     }
-
 
     fun setMunicipalities(list: List<Upazilas>?, id: Int?) {
         list?.let {
@@ -495,7 +510,6 @@ class EditPermanentAddressInfo @Inject constructor() {
         }
     }
 
-
     fun getPoulatedMunicipalities(
         list: List<Upazilas>?
     ): List<Municipalities> {
@@ -511,7 +525,6 @@ class EditPermanentAddressInfo @Inject constructor() {
     }
 
     fun setCityMuniUpailaAccordingToType() {
-
         if (localGovernmentType?.id == 1) {
             upazila = null
             union = null
@@ -552,7 +565,6 @@ class EditPermanentAddressInfo @Inject constructor() {
             binding?.fAddressUnio?.llBody?.visibility = View.GONE
         }
     }
-
 
     fun invisiableAllError(binding: DialogPersonalInfoBinding??) {
         binding?.fAddressDivision?.tvError?.visibility =

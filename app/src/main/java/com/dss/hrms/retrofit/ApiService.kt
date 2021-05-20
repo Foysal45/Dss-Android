@@ -2,6 +2,7 @@ package com.btbapp.alquranapp.retrofit
 
 
 import com.dss.hrms.model.HeadOfficeDepartmentApiResponse
+import com.dss.hrms.model.PermissionResponse
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.employeeProfile.EmployeeResponse
 import com.dss.hrms.model.login.*
@@ -23,6 +24,14 @@ interface ApiService {
         @Header("X-Localization") language: String,
         @Body map: HashMap<Any, Any>
     ): Response<LoginResponse?>?
+
+
+    @Headers("Accept: application/json")
+    @GET("/api/auth/user-permissions")
+    suspend fun getUserPermissions(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String?
+    ): Response<PermissionResponse?>?
 
 
     @Headers("Accept: application/json")

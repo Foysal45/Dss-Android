@@ -54,7 +54,7 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
     var context: Context? = null
     lateinit var key: String
     var country: SpinnerDataModel? = null
-
+    var purpose: SpinnerDataModel? = null
 
     fun showDialog(
         context: Context,
@@ -98,8 +98,8 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
         } else {
             binding?.foreignTravelBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
         }
-        binding?.fForeignTravelPurpose?.etText?.setText(foreignTravels1?.purpose)
-        binding?.fForeignTravelPurposeBn?.etText?.setText(foreignTravels1?.purpose_bn)
+        //  binding?.fForeignTravelPurpose?.etText?.setText(foreignTravels1?.purpose)
+        //  binding?.fForeignTravelPurposeBn?.etText?.setText(foreignTravels1?.purpose_bn)
         binding?.fForeignTravelDetailsEn?.etText?.setText(foreignTravels1?.details)
         binding?.fForeignTravelDetailsBn?.etText?.setText(foreignTravels1?.details_bn)
         binding?.fForeignTravelToDate?.tvText?.setText(foreignTravels1?.to_date?.let {
@@ -107,6 +107,7 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
                 it
             )
         })
+
         binding?.fForeignTravelFromDate?.tvText?.setText(foreignTravels1?.from_date?.let {
             DateConverter.changeDateFormateForShowing(
                 it
@@ -147,8 +148,28 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
                     }
                 }
             })
+        foreignTravels1?.purpose?.let {
+            if (it.equals("Personal") || it.equals("ব্যক্তিগত")) {
+                purpose = getPurposeList().get(0)
+            } else {
+                purpose = getPurposeList().get(1)
+            }
+        }
 
+            getPurposeList()?.let {
+                SpinnerAdapter().setSpinner(
+                    binding?.fForeignTravelPurpose?.spinner!!,
+                    context,
+                    it,
+                    purpose?.id,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+                            purpose = any as SpinnerDataModel
+                        }
 
+                    }
+                )
+            }
 
         binding?.foreignTravelBtnAddUpdate?.btnUpdate?.setOnClickListener({
             var employeeInfoEditCreateRepo =
@@ -222,12 +243,6 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
                                 binding?.fForeignTravelPurpose?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
-                            "purpose_bn" -> {
-                                binding?.fForeignTravelPurposeBn?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fForeignTravelPurposeBn?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
                             "details" -> {
                                 binding?.fForeignTravelDetailsEn?.tvError?.visibility =
                                     View.VISIBLE
@@ -280,8 +295,10 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("country_id", country?.id)
-        map.put("purpose", binding?.fForeignTravelPurpose?.etText?.text.toString())
-        map.put("purpose_bn", binding?.fForeignTravelPurposeBn?.etText?.text.toString())
+        purpose?.id?.let {
+            map.put("purpose", purpose?.name)
+            map.put("purpose_bn", purpose?.name_bn)
+        }
         map.put("details", binding?.fForeignTravelDetailsEn?.etText?.text.toString())
         map.put("details_bn", binding?.fForeignTravelDetailsBn?.etText?.text.toString())
         map.put("from_date", fromDate)
@@ -291,6 +308,24 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
     }
 
 
+    fun getPurposeList(): List<SpinnerDataModel> {
+
+        var rel = SpinnerDataModel()
+        rel.apply {
+            id = 1
+            name = "Personal"
+            name_bn = "ব্যক্তিগত"
+
+        }
+        var rel1 = SpinnerDataModel()
+        rel1.apply {
+            id = 2
+            name = "Official"
+            name_bn = "দাপ্তরিক"
+        }
+        return arrayListOf(rel, rel1)
+    }
+
     fun invisiableAllError(binding: DialogPersonalInfoBinding?) {
         binding?.fForeignTravelCountry?.tvError?.visibility =
             View.GONE
@@ -298,8 +333,6 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
         binding?.fForeignTravelPurpose?.tvError?.visibility =
             View.GONE
 
-        binding?.fForeignTravelPurposeBn?.tvError?.visibility =
-            View.GONE
         binding?.fForeignTravelDetailsEn?.tvError?.visibility =
             View.GONE
         binding?.fForeignTravelDetailsBn?.tvError?.visibility =

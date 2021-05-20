@@ -75,7 +75,7 @@ class ContentManagementViewModel @Inject constructor(application: Application) :
             var response = contentRepo.getFaqList()
 
             if (response is TrainingResponse.ContentsFaq) {
-                _faq.postValue(response.data?.data)
+                _faq.postValue(response.data)
             } else {
                 _faq.postValue(null)
             }

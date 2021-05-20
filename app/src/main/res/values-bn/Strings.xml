@@ -29,6 +29,7 @@
 
     <string name="hrm">এইচ আর এম</string>
     <string name="my_profile">আমার প্রোফাইল</string>
+    <string name="my_profile_home_page">আমার\n প্রোফাইল</string>
     <string name="coming">আসছে...</string>
     <string name="profile">ব্যক্তিগত তথ্য</string>
     <string name="title">শিরোনাম</string>
@@ -40,7 +41,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">সেটিংস</string>
 
-    <string name="employee_role">কর্মচারী ভূমিকা</string>
+    <string name="employee_role">কর্মকর্তা/কর্মচারী ভূমিকা</string>
     <string name="disability_type">অক্ষমতা প্রকার</string>
     <string name="disability_degree">প্রতিবন্ধী ডিগ্রি</string>
     <string name="disabled_person_id">অক্ষম ব্যক্তি আইডি</string>
@@ -147,6 +148,7 @@
     <string name="award_details_bn">পুরষ্কার বিশদ(বাংলা)</string>
     <string name="award_date">পুরুস্কারের দিন</string>
     <string name="designation">পদবি</string>
+    <string name="additional_designation">অতিরিক্ত পদবি</string>
     <string name="depertment">বিভাগ</string>
     <string name="job_type">কাজের ধরন</string>
     <string name="joning_date">যোগদানের তারিখ</string>
@@ -262,6 +264,7 @@
     <string name="is_published">প্রকাশিত ?</string>
 
     <string name="training_management">প্রশিক্ষণ ব্যবস্থাপনা</string>
+    <string name="training_management_home_page">প্রশিক্ষণ\n ব্যবস্থাপনা</string>
     <string name="resource_person">রিসোস পারসন</string>
     <string name="resource_person_name">রিসোস পারসন নাম</string>
     <string name="short_name">সংক্ষিপ্ত নাম</string>
@@ -301,7 +304,7 @@
     <string name="search_employee">কর্মচারী অনুসন্ধান করুন</string>
     <string name="search">অনুসন্ধান করুন</string>
     <string name="office_lead_category">অফিস নেতৃত্ব বিভাগ</string>
-    <string name="employee_name_or_id">কর্মচারীর নাম / আইডি</string>
+    <string name="employee_name_or_id">কর্মকর্তা/কর্মচারীর নাম/আইডি</string>
     <string name="attachment">সংযুক্তি</string>
     <string name="ok">ঠিক আছে</string>
     <string name="ok_for_employee_selection">নির্বাচন করুন</string>
@@ -315,9 +318,10 @@
     <string name="section_wise_subsection">শাখা অনুযায়ী উপ-উপ-শাখা</string>
 
     <string name="leave_management">ছুটির ব্যাবস্থাপনা</string>
+    <string name="leave_management_home_page">ছুটির\n ব্যাবস্থাপনা</string>
     <string name="leave_application">ছুটির দরখাস্ত</string>
     <string name="leave_summary_dashboard">ছুটির ড্যাশবোর্ড সামারি</string>
-    <string name="payroll_management">বেতন ব্যাবস্থাপনা</string>
+    <string name="payroll_management_home_page">বেতন\n ব্যাবস্থাপনা</string>
     <string name="bank_information">ব্যাংক তথ্য</string>
     <string name="salary_process">বেতন ভাতার পলিসি</string>
 
@@ -329,15 +333,16 @@
     <string name="leave_balance">Leave Balance</string>
     <string name="enjoyed">Enjoyed</string>
     <string name="total">Total</string>
+    <string name="total_bn">মোট</string>
     <string name="remaining_balance">Remaining Balance</string>
     <string name="balance">Balance</string>
-    <string name="account_type">Account Type</string>
-    <string name="bank_name">Bank Name</string>
-    <string name="bank_routing_number">Bank Routing Number</string>
-    <string name="branch_name">Branch Name</string>
-    <string name="account_no">Account No</string>
-    <string name="account_name">Account Name</string>
-    <string name="branch_district_name">Branch District Name</string>
+    <string name="account_type">অ্যাকাউন্ট ধরন</string>
+    <string name="bank_name">ব্যাংকের নাম</string>
+    <string name="bank_routing_number">ব্যাংক রাউটিং নম্বর</string>
+    <string name="branch_name">শাখার নাম</string>
+    <string name="account_no">হিসাব নাম্বার</string>
+    <string name="account_name">হিসাবের নাম</string>
+    <string name="branch_district_name">জেলা</string>
     <string name="branch_routing_no">Branch Routing No</string>
     <string name="year_and_month">Year and Month</string>
     <string name="select_notify">Select Notify</string>
@@ -351,6 +356,22 @@
     <string name="office_search">অফিস অনুসন্ধান</string>
 
 
+    <string name="same_as_present_address">Same As Present Address</string>
+    <string name="nominee_info">নমিনি তথ্য</string>
+    <string name="name_of_nominee">নমিনির নাম</string>
+    <string name="nominee_relation">নমিনির সাথে সম্পর্ক</string>
+    <string name="nominee_allocated_percentage">মনোনয়ন প্রত্যাশিত শতাংশ</string>
+    <string name="nominee_marital_status">নমিনির বৈবাহিক অবস্থা</string>
+    <string name="nominee_gender">নমিনি লিঙ্গ</string>
+    <string name="nominee_has_disability">নমিনির অক্ষমতা আছে</string>
+    <string name="nominee_signature">নমিনির স্বাক্ষর</string>
+    <string name="download_pdf">Pdf ডাউনলোড করুন </string>
+    <string name="no_responsible_person_found">কোনও রেস্পন্সিবল পারসন  পাওয়া যায়নি</string>
+    <string name="downloading_see_progess_on_notification_bar">Downloading... See progress on notification bar</string>
+
+
+
+
     <string name="course_schedule_title">কোর্সের সময়সূচীর শিরোনাম</string>
     <string name="course_schedule_title_bn">কোর্সের সময়সূচীর শিরোনাম (বাংলা)</string>
     <string name="course_schedule_search">কোর্সের সময়সূচী অনুসন্ধান</string>
@@ -360,11 +381,11 @@
     <string name="search_course_schedule">কোর্সের সময়সূচী অনুসন্ধান করুন</string>
     <string name="search_batch_schedule">ব্যাচের সময়সূচী অনুসন্ধান করুন</string>
     <string name="search_vacant_position">শূন্য পদের তালিকা অনুসন্ধান করুন</string>
-    <string name="working_employee_list">কর্মরত কর্মচারী তালিকা</string>
-    <string name="vacant_position_list">শূন্য পদের তালিকা</string>
+    <string name="working_employee_list">কর্মরত কর্মকর্তা/কর্মচারী তালিকা</string>
+    <string name="vacant_position_list">শূন্য পদের তালিকা সংক্ষিপ্তসার</string>
     <string name="vacant_position_summary">শূন্য পদের তালিকা সংক্ষিপ্তসার </string>
-    <string name="working_employee_list_filters_form">কর্মরত কর্মচারী তালিকা ফিল্টার ফর্ম</string>
-    <string name="vacant_position_list_filters_form">শূন্য পদের তালিকা সংক্ষিপ্তসার ফিল্টার ফর্ম</string>
+    <string name="working_employee_list_filters_form">কর্মরত কর্মকর্তা/কর্মচারী অনুসন্ধান করুন</string>
+    <string name="vacant_position_list_filters_form">শূন্য পদের তালিকা সংক্ষিপ্তসার অনুসন্ধান ফর্ম</string>
     <string name="report">রিপোর্টসমুহ</string>
     <string name="permitted">অনুমোদিত</string>
     <string name="working">কর্মরত</string>

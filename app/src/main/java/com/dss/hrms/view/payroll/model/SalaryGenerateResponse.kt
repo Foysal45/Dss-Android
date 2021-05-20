@@ -14,4 +14,4 @@ data class SalaryGenerate(
 )
 
 data class Header(val name: String?, val name_bn: String?, val type: String?)
-data class Row(val name: String?, val name_bn: String?, val amount: Int?, val type: String?)
+data class Row(val name: String?, val name_bn: String?, val amount: Double?, val type: String?)

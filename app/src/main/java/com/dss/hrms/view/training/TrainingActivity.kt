@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ActivityTrainingBinding
 import com.dss.hrms.view.activity.BaseActivity
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 
 class TrainingActivity : BaseActivity() {
     private lateinit var navController: NavController
@@ -22,7 +23,7 @@ class TrainingActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_training)
-
+        context = this
         navController = this.findNavController(R.id.fragment)
         drawerLayout = binding.drawerLayout
         binding?.navMenu.setupWithNavController(navController)
@@ -35,6 +36,10 @@ class TrainingActivity : BaseActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    companion object {
+        var context: TrainingActivity? = null
     }
 
 }

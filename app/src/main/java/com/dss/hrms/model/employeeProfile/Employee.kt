@@ -412,6 +412,9 @@ class Employee {
         @SerializedName("office_id")
         val office_id: Int = 0
 
+        @SerializedName("additional_designation_id")
+        val additional_designation_id: Int = 0
+
         @SerializedName("designation_id")
         val designation_id: Int = 0
 
@@ -459,6 +462,9 @@ class Employee {
 
         @SerializedName("designation")
         val designation: Designation? = null
+
+        @SerializedName("additional_designation")
+        val additional_designation: AdditionalDesignation? = null
 
         @SerializedName("department")
         val department: Department? = null
@@ -527,6 +533,33 @@ class Employee {
 
             @SerializedName("status")
             val status: Int = 0
+
+            @SerializedName("deleted_at")
+            val deleted_at: String? = null
+
+            @SerializedName("created_at")
+            val created_at: String? = null
+
+            @SerializedName("updated_at")
+            val updated_at: String? = null
+        }
+
+        inner class AdditionalDesignation {
+
+            @SerializedName("id")
+            val id: Int = 0
+
+            @SerializedName("name")
+            val name: String? = null
+
+            @SerializedName("name_bn")
+            val name_bn: String? = null
+
+            @SerializedName("status")
+            val status: Int = 0
+
+            @SerializedName("priority_order")
+            val priority_order: Int? = 0
 
             @SerializedName("deleted_at")
             val deleted_at: String? = null
@@ -845,84 +878,84 @@ class Employee {
         val district: District? = null
 
         @SerializedName("upazila")
-        val upazila: Upazila? = null
+        var upazila: Upazila? = null
     }
 
     inner class PermanentAddresses {
         @SerializedName("id")
-        val id: Int = 0
+        var id: Int = 0
 
         @SerializedName("employee_id")
-        val employee_id: Int = 0
+        var employee_id: Int = 0
 
         @SerializedName("division_id")
-        val division_id: Int = 0
+        var division_id: Int = 0
 
         @SerializedName("district_id")
-        val district_id: Int = 0
+        var district_id: Int = 0
 
         @SerializedName("upazila_id")
-        val upazila_id: Int = 0
+        var upazila_id: Int = 0
 
         @SerializedName("phone_no")
-        val phone_no: String? = null
+        var phone_no: String? = null
 
         @SerializedName("police_station")
-        val police_station: String? = null
+        var police_station: String? = null
 
         @SerializedName("police_station_bn")
-        val police_station_bn: String? = null
+        var police_station_bn: String? = null
 
         @SerializedName("post_office")
-        val post_office: String? = null
+        var post_office: String? = null
 
         @SerializedName("post_office_bn")
-        val post_office_bn: String? = null
+        var post_office_bn: String? = null
 
         @SerializedName("road_word_no")
-        val road_word_no: String? = null
+        var road_word_no: String? = null
 
         @SerializedName("road_word_no_bn")
-        val road_word_no_bn: String? = null
+        var road_word_no_bn: String? = null
 
         @SerializedName("village_house_no")
-        val village_house_no: String? = null
+        var village_house_no: String? = null
 
         @SerializedName("village_house_no_bn")
-        val village_house_no_bn: String? = null
+        var village_house_no_bn: String? = null
 
         @SerializedName("status")
-        val status: Int = 0
+        var status: Int = 0
 
         @SerializedName("union_id")
-        val union_id: Int? = 0
+        var union_id: Int? = 0
 
         @SerializedName("municipality_id")
-        val municipality_id: Int? = 0
+        var municipality_id: Int? = 0
 
         @SerializedName("local_government_type_id")
-        val local_government_type_id: Int? = 0
+        var local_government_type_id: Int? = 0
 
         @SerializedName("city_corporation_id")
-        val city_corporation_id: Int? = 0
+        var city_corporation_id: Int? = 0
 
         @SerializedName("deleted_at")
-        val deleted_at: String? = null
+        var deleted_at: String? = null
 
         @SerializedName("created_at")
-        val created_at: String? = null
+        var created_at: String? = null
 
         @SerializedName("updated_at")
-        val updated_at: String? = null
+        var updated_at: String? = null
 
         @SerializedName("division")
-        val division: Division? = null
+        var division: Division? = null
 
         @SerializedName("district")
-        val district: District? = null
+        var district: District? = null
 
         @SerializedName("upazila")
-        val upazila: Upazila? = null
+        var upazila: Upazila? = null
 
     }
 

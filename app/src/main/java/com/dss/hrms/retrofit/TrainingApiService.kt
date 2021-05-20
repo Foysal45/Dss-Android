@@ -39,7 +39,7 @@ interface TrainingApiService {
     ): Response<TrainingResponse.ContentsContent>
 
     @Headers("Accept: application/json")
-    @GET("/api/auth/faq")
+    @GET("/api/auth/faq/list")
     suspend fun faq(
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String

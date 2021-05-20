@@ -34,7 +34,7 @@ class SalaryProcessRepo @Inject constructor() {
             try {
                 var response = payrollApiService.salaryGenerate(
                     preparence.getLanguage(), "Bearer ${preparence.getToken()}",
-                    salary_year, employeeId, salary_month
+                    salary_year, salary_month
                 )
                 Log.e("salaryprocessresponse", "salary process header : ${response?.body()?.data?.row}")
                 Log.e("salaryprocessresponse", "salary process row : ${response?.body()?.data?.row}")

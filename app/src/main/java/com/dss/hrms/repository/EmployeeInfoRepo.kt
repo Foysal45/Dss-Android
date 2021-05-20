@@ -1,11 +1,13 @@
 package com.dss.hrms.repository
 
 import android.app.Application
+import android.util.JsonReader
 import android.util.Log
+import android.widget.Toast
 import com.btbapp.alquranapp.retrofit.ApiService
 import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.Office
+import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.model.employeeProfile.Employee
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +37,35 @@ class EmployeeInfoRepo @Inject constructor() {
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) {
                     employeeProfileData.employee = response?.body()?.data as Employee
                     response?.body()?.data as Employee
+                } else response?.let {
+                    var apiError = ErrorUtils2.parseError(
+                        it
+                    )
+                    apiError
+                }
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
+    suspend fun getUserPermissions(): Any? {
+        val token = preparence?.getToken()
+        return withContext(Dispatchers.IO) {
+            try {
+                val response =
+                    apiService?.getUserPermissions(
+                        preparence.getLanguage()!!,
+                        "Bearer ${token}"
+                    )
+//                Log.e(
+//                    "employeerepository",
+//                    "........................................response : ${response?.body()}"
+//                )
+                if (response?.body()?.code == 200 || response?.body()?.code == 201) {
+
+
+                    response?.body()
                 } else response?.let {
                     var apiError = ErrorUtils2.parseError(
                         it

@@ -81,6 +81,7 @@ class WorkingEmployeeListFragment : DaggerFragment() {
             binding = FragmentWorkingEmployeeListBinding.inflate(inflater, container, false)
             init()
             loadDesignationList()
+            binding.officeHeader.tvClose.visibility = View.GONE
             binding.headOfficesBranches.llBody.visibility =
                 View.GONE
             binding.branchesWiseSection.llBody.visibility =
@@ -199,18 +200,18 @@ class WorkingEmployeeListFragment : DaggerFragment() {
     private fun getDownloadUrl(): String {
         Log.e(
             "url",
-            "....................   " + "${RetrofitInstance.BASE_URL}/api/employee/working-pdf?division_id=${ if (division?.id != null) division?.id else ""}" +
+            "....................   " + "${RetrofitInstance.BASE_URL}/api/employee/working-pdf?division_id=${if (division?.id != null) division?.id else ""}" +
                     "&district_id=${if (district?.id != null) district?.id else ""}&office_id=${if (office?.id != null) office?.id else ""}" +
                     "&designation_id=${if (designation?.id != null) designation?.id else ""}" +
                     "&sixteen_category_id=${if (officeLeadCategory?.id != null) officeLeadCategory?.id else ""}"
         )
-        return  "${RetrofitInstance.BASE_URL}/api/employee/working-pdf?division_id=${ if (division?.id != null) division?.id else ""}" +
+        return "${RetrofitInstance.BASE_URL}/api/employee/working-pdf?division_id=${if (division?.id != null) division?.id else ""}" +
                 "&district_id=${if (district?.id != null) district?.id else ""}&office_id=${if (office?.id != null) office?.id else ""}" +
                 "&designation_id=${if (designation?.id != null) designation?.id else ""}" +
-                "&sixteen_category_id=${if (officeLeadCategory?.id != null) officeLeadCategory?.id else ""}"+
-                "&head_office_department_id=${ if (headOfficeBranches?.id != null) headOfficeBranches?.id else ""}" +
-                "&head_office_section_id=${  if (section?.id != null) section?.id else ""}" +
-               "&head_office_sub_section_id=${ if (subSection?.id != null) subSection?.id else ""}"
+                "&sixteen_category_id=${if (officeLeadCategory?.id != null) officeLeadCategory?.id else ""}" +
+                "&head_office_department_id=${if (headOfficeBranches?.id != null) headOfficeBranches?.id else ""}" +
+                "&head_office_section_id=${if (section?.id != null) section?.id else ""}" +
+                "&head_office_sub_section_id=${if (subSection?.id != null) subSection?.id else ""}"
 
 //        return "${RetrofitInstance.BASE_URL}/api/employee/working-pdf?" +
 //                "&division_id=${division?.id?.let { it }}&" + "district_id=${district?.id?.let { it }}&office_id=${office?.id?.let { it }}" +

@@ -345,6 +345,11 @@
                                     app:title="@{@string/designation}" />
 
                                 <include
+                                    android:id="@+id/fJobJoiningAdditionalDesignation"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/additional_designation}" />
+
+                                <include
                                     android:id="@+id/fJobJoiningDepartment"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/depertment}" />
@@ -725,7 +730,15 @@
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/vill_house_bn}"
                                     app:title="@{@string/vill_house_bn}" />
-
+                                <CheckBox
+                                    android:id="@+id/cbSameAsPresentAddress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="10dp"
+                                    android:text="@string/same_as_present_address"
+                                    android:layout_above="@+id/button"
+                                    android:textColor="@color/black"
+                                    android:layout_centerHorizontal="true" />
                                 <include
                                     android:id="@+id/addressBtnUpdate"
                                     layout="@layout/personal_info_update_button" />
@@ -1436,20 +1449,23 @@
                                     android:id="@+id/fForeignTravelToDate"
                                     layout="@layout/personal_info_textview"
                                     app:title="@{@string/to_date}" />
-
-
                                 <include
                                     android:id="@+id/fForeignTravelPurpose"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/purpose}"
+                                    layout="@layout/personal_info_spinner"
                                     app:title="@{@string/purpose}" />
 
+<!--                                <include-->
+<!--                                    android:id="@+id/fForeignTravelPurpose"-->
+<!--                                    layout="@layout/personel_information_edittext"-->
+<!--                                    app:hint="@{@string/purpose}"-->
+<!--                                    app:title="@{@string/purpose}" />-->
 
-                                <include
-                                    android:id="@+id/fForeignTravelPurposeBn"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/purpose_bangla}"
-                                    app:title="@{@string/purpose_bangla}" />
+
+<!--                                <include-->
+<!--                                    android:id="@+id/fForeignTravelPurposeBn"-->
+<!--                                    layout="@layout/personel_information_edittext"-->
+<!--                                    app:hint="@{@string/purpose_bangla}"-->
+<!--                                    app:title="@{@string/purpose_bangla}" />-->
 
 
                                 <include

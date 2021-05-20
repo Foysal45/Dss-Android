@@ -400,6 +400,7 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
                                 liveData?.postValue(null)
                             }
                         } else {
+                            Log.e("response", "response  error   response.message()  ${response.message()}  :  response.headers() ${ response.headers()}" + response.message())
                             liveData?.postValue(ErrorUtils2.parseError(response))
                         }
                     }
@@ -443,6 +444,7 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
                                 liveData?.postValue(null)
                             }
                         } else {
+                            Log.e("response", "response : " + response)
                             liveData?.postValue(ErrorUtils2.parseError(response))
                         }
                     }

@@ -32,7 +32,7 @@ class LoginRepo @Inject constructor() {
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiService?.login(preparence?.getLanguage()!!, map)
-                Log.e("apiresponse", "response ${response?.body()?.code}")
+                Log.e("apiresponse", "response ${response?.body()}")
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) response?.body()?.data
                 else response?.let {
                     var apiError = ErrorUtils2.parseError(

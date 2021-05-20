@@ -1,0 +1,2 @@
+dev_keystore = dss.jks
+release_keystore = dss.jks

@@ -64,11 +64,13 @@ class EditJobJoiningInformation @Inject constructor() {
     lateinit var binding: DialogPersonalInfoBinding
     var office: Office? = null
     var desingNation: SpinnerDataModel? = null;
+    var additionalDesingNation: SpinnerDataModel? = null
     var department: SpinnerDataModel? = null;
     var jobType: SpinnerDataModel? = null
+    var currentJob: SpinnerDataModel? = null
     var _class: SpinnerDataModel? = null
     var grade: SpinnerDataModel? = null
-     lateinit var context:Context
+    lateinit var context: Context
 
 
     fun showDialog(
@@ -80,7 +82,7 @@ class EditJobJoiningInformation @Inject constructor() {
         this.position = position
         this.jobjoining = position?.let { employeeProfileData?.employee?.jobjoinings?.get(it) }
         this.utilViewmodel = utilViewmodel
-        this.context=context
+        this.context = context
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DataBindingUtil.inflate(
@@ -110,7 +112,12 @@ class EditJobJoiningInformation @Inject constructor() {
             dialogCustome?.dismiss()
         })
 
-
+        if (employeeProfileData?.employee?.designation_id == jobjoining?.designation_id &&
+            employeeProfileData?.employee?.office_id == jobjoining?.office_id) {
+            currentJob=currentJobData().get(0)
+        }else{
+            currentJob=currentJobData().get(1)
+        }
 
         binding.fJobJoiningPensionDate.llBody.visibility = View.GONE
         binding.fJobJoiningPrlDate.llBody.visibility = View.GONE
@@ -254,10 +261,10 @@ class EditJobJoiningInformation @Inject constructor() {
             binding.fJobJoiningCurrentJob.spinner,
             context,
             currentJobData(),
-            jobjoining?.status,
+            currentJob?.id,
             object : CommonSpinnerSelectedItemListener {
                 override fun selectedItem(any: Any?) {
-
+                     currentJob=any as SpinnerDataModel
                 }
             }
         )
@@ -314,11 +321,13 @@ class EditJobJoiningInformation @Inject constructor() {
             map.put("employee_id", employeeProfileData?.employee?.id)
             map.put("office_id", office?.id)
             map.put("designation_id", desingNation?.id)
+            map.put("additional_designation_id", additionalDesingNation?.id)
             map.put("department_id", department?.id)
             map.put("job_type_id", jobType?.id)
             map.put("employee_class_id", _class?.id)
             map.put("grade_id", grade?.id)
             map.put("pay_scale", payScale?.amount)
+            map.put("current", if (currentJob?.id==1) true else false )
             map.put("joining_date", joininfDate)
             map.put("confirmation_date", confirmation_date)
             map.put("pension_date", pension_date)
@@ -358,7 +367,6 @@ class EditJobJoiningInformation @Inject constructor() {
                                             }
 
                                         }
-
                                         when (error) {
                                             "office_id" -> {
                                                 binding.fJobJoiningOffice.tvError.visibility =
@@ -370,6 +378,12 @@ class EditJobJoiningInformation @Inject constructor() {
                                                 binding.fJobJoiningDesignation.tvError.visibility =
                                                     View.VISIBLE
                                                 binding.fJobJoiningDesignation.tvError.text =
+                                                    ErrorUtils2.mainError(message)
+                                            }
+                                            "additional_designation_id" -> {
+                                                binding.fJobJoiningAdditionalDesignation.tvError.visibility =
+                                                    View.VISIBLE
+                                                binding.fJobJoiningAdditionalDesignation.tvError.text =
                                                     ErrorUtils2.mainError(message)
                                             }
                                             "department_id" -> {
@@ -453,7 +467,10 @@ class EditJobJoiningInformation @Inject constructor() {
         commonRepo.getSpecificSalaryGrade("/api/auth/salary-grade/${gradeId}",
             object : PayScaleValueListener {
                 override fun valueChange(spinnerDataModel: SpinnerDataModel?) {
-                    Log.e("payscale", "payscale message " + Gson().toJson(spinnerDataModel?.paysacle))
+                    Log.e(
+                        "payscale",
+                        "payscale message " + Gson().toJson(spinnerDataModel?.paysacle)
+                    )
                     spinnerDataModel?.paysacle?.let {
                         SpinnerAdapter().setPayscale(
                             binding.fJobJoiningPayScale.spinner,
@@ -486,6 +503,7 @@ class EditJobJoiningInformation @Inject constructor() {
                     override fun selectedItem(any: Any?) {
                         office = any as Office
                         loadDesignation(office?.id, context, binding)
+                        loadAdditionalDesignation(office?.id, context, binding)
                         Log.e("selected item", " item : " + office?.name)
                     }
 
@@ -508,6 +526,33 @@ class EditJobJoiningInformation @Inject constructor() {
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     desingNation = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+    }
+
+    fun loadAdditionalDesignation(
+        officeId: Int?,
+        context: Context,
+        binding: DialogPersonalInfoBinding
+    ) {
+        commonRepo.getDesignationData("/api/auth/office/${officeId}",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    //   Log.e("gender", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding.fJobJoiningAdditionalDesignation.spinner,
+                            context,
+                            list,
+                            jobjoining?.additional_designation_id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    additionalDesingNation = any as SpinnerDataModel
                                 }
 
                             }
@@ -542,6 +587,8 @@ class EditJobJoiningInformation @Inject constructor() {
             View.GONE
 
         binding.fJobJoiningDesignation.tvError.visibility =
+            View.GONE
+        binding.fJobJoiningAdditionalDesignation.tvError.visibility =
             View.GONE
 
         binding.fJobJoiningDepartment.tvError.visibility =

@@ -109,6 +109,8 @@ class EditPresentAddressInfo @Inject constructor() {
             binding?.addressBtnUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
         }
 
+        binding?.cbSameAsPresentAddress?.visibility=View.GONE
+
         binding?.fAddressPoliceStation?.etText?.setText(presentAddress?.police_station)
         binding?.fAddressPoliceStationBn?.etText?.setText(presentAddress?.police_station_bn)
         binding?.fAddressPostOffice?.etText?.setText(presentAddress?.post_office)

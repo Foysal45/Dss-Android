@@ -9,9 +9,11 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -19,6 +21,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.chaadride.network.error.ApiError
 import com.dss.hrms.R
 import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.login.LoginInfo
 import com.dss.hrms.retrofit.RetrofitInstance
@@ -78,7 +81,31 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         appContext = application
         context = this
         init()
+        employeeViewModel?.apply {
+            getUserPermissions()
 
+            userPermission.observe(this@MainActivity, Observer { list ->
+                list?.let {
+
+                    if (JsonKeyReader.hasPermission("reports", it)) {
+                        rlReport.visibility = View.VISIBLE
+                        menu_dashboard_report.visibility= View.VISIBLE
+                    } else {
+                        rlReport.visibility = View.GONE
+                        menu_dashboard_report.visibility = View.GONE
+                    }
+                    Log.e(
+                        "permission",
+                        ".......................................permission result ${
+                            JsonKeyReader.hasPermission(
+                                "commonstationary-edit",
+                                it
+                            )
+                        }"
+                    )
+                }
+            })
+        }
         Log.e("mainactivity", "inject login data " + loginInfo?.email)
         Log.e("mainactivity", "inject employee data " + employeeProfileData?.employee?.profile_id)
         getEmployeeInfo()
@@ -332,7 +359,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
-        this.menu_dashboard_training.setOnClickListener {
+        menu_dashboard_training.setOnClickListener {
             startActivity(
                 Intent(this, TrainingActivity::class.java)
             )
@@ -356,7 +383,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             )
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
-        this.menu_dashboard_report.setOnClickListener {
+        menu_dashboard_report.setOnClickListener {
             startActivity(
                 Intent(this, ReportActivity::class.java)
             )

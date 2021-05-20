@@ -104,15 +104,20 @@ class EditCreateNomineeInfo @Inject constructor() {
             dialogCustome?.dismiss()
         })
 
-
+        if (key.equals(StaticKey.EDIT)) {
+            binding.nomineeUpdate.btnUpdate.setText(context.getString(R.string.update))
+        }else{
+            binding.nomineeUpdate.btnUpdate.setText(context.getString(R.string.update))
+        }
 
         binding.fNomineeName.etText.setText(nominee?.name)
         binding.fNomineeRelation.etText.setText(nominee?.relation)
         binding.fNomineeAllocatedPercentage.etText.setText(nominee?.allocated_percentage)
 
-        binding?.fNomineeAllocatedPercentage?.llBody?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
+        binding?.fNomineeAllocatedPercentage?.llBody?.etText?.inputType =
+            InputType.TYPE_CLASS_NUMBER
 
-        imageUrl=nominee?.nominee_signature
+        imageUrl = nominee?.nominee_signature
 
         nominee?.date_of_birth?.let {
             binding?.fNomineeDob?.tvText?.setText(
@@ -222,7 +227,7 @@ class EditCreateNomineeInfo @Inject constructor() {
         var dob =
             DateConverter.changeDateFormateForSending(binding.fNomineeDob?.tvText?.text.toString())
         var map = java.util.HashMap<Any, Any?>()
-        nominee?.id?.let { map.put("id", it) }
+        if (nominee?.id == null) map.put("id", 0) else nominee?.id?.let { map.put("id", it) }
         map.put("employee_id", employee?.user?.employee_id)
         map.put("name", binding?.fNomineeName.etText.text.toString().trim())
         map.put(
