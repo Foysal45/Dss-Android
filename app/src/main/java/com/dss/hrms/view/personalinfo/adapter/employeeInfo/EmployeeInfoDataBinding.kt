@@ -423,12 +423,6 @@ class EmployeeInfoDataBinding @Inject constructor() {
         }else{
             binding?.fJobJoiningCurrentJob?.tvText.setText(context.getString(R.string.no))
         }
-        jobjoinings?.status?.let {
-            binding?.fJobJoiningCurrentJob?.tvText.setText(
-                if (it == 1) context.getString(R.string.yes) else
-                    context.getString(R.string.no)
-            )
-        }
 
         if (preparence.getLanguage()
                 .equals("en")

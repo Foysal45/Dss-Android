@@ -327,6 +327,8 @@ class EditJobJoiningInformation @Inject constructor() {
             map.put("employee_class_id", _class?.id)
             map.put("grade_id", grade?.id)
             map.put("pay_scale", payScale?.amount)
+            Log.e("current","..................................current  ${if (currentJob?.id==1) true else false}................................")
+
             map.put("current", if (currentJob?.id==1) true else false )
             map.put("joining_date", joininfDate)
             map.put("confirmation_date", confirmation_date)

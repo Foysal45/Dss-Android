@@ -221,6 +221,12 @@
     <string name="employee_id">কর্মকর্তা/কর্মচারী আইডি</string>
     <string name="employee_type">কর্মকর্তা/কর্মচারী প্রকার</string>
     <string name="has_disability">অক্ষমতা আছে</string>
+
+    <string name="employee_status_type">Employee Status Type</string>
+    <string name="employee_status_date">Employment Status Date</string>
+    <string name="has_freedom_fighter_quota">মুক্তিযোদ্ধা কোটা আছে ?</string>
+    <string name="current_job">বর্তমান চাকরি</string>
+
     <string name="photo">ছবি</string>
     <string name="birth">জন্ম তারিখ</string>
     <string name="f_name">পিতার নাম (ইংরেজি)</string>
@@ -346,14 +352,14 @@
     <string name="branch_district_name">জেলা</string>
     <string name="branch_routing_no">Branch Routing No</string>
     <string name="year_and_month">Year and Month</string>
-    <string name="select_notify">Select Notify</string>
-    <string name="select_responsible">Select Responsible</string>
-    <string name="leave_date">Leave Date</string>
-    <string name="leave_type">Leave Type</string>
-    <string name="leave_request_reference">Leave Request Reference</string>
-    <string name="emergency_contact_no">Emergency contact no</string>
-    <string name="reason_details">Reason Details</string>
-    <string name="please_select_month_and_year">Please Select Month And Year</string>
+    <string name="select_notify">সিলেক্ট নোটিফাই</string>
+    <string name="select_responsible">দায়িত্বপ্রাপ্ত ব্যাক্তি নির্বাচন করুন</string>
+    <string name="leave_date">ছুটির তারিখ</string>
+    <string name="leave_type">ছুটির ধরণ</string>
+    <string name="leave_request_reference">ছুটির আবেদন এর জন্য রেফারেন্স</string>
+    <string name="emergency_contact_no">জরুরি যোগাযোগ নং</string>
+    <string name="reason_details">কারন (বিস্তারিত)</string>
+    <string name="please_select_month_and_year">দয়া করে মাস এবং বছর নির্বাচন করুন</string>
     <string name="office_search">অফিস অনুসন্ধান</string>
 
 

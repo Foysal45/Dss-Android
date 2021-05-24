@@ -11,9 +11,9 @@ object RetrofitInstance {
     // var BASE_URL = "http://dss.aws.simecsystem.com:10014"
     //var BASE_URL = "http://dss.aws.simecsystem.com:10014"
     //var BASE_URL = "http://dss.stage.simecsystem.com:10014"
-    var BASE_URL = "http://dss.dev.simecsystem.com:10014"
+   // var BASE_URL = "http://dss.dev.simecsystem.com:10014"
 
-    //  var BASE_URL = "http://dss.staging.simecsystem.com:10014"
+    var BASE_URL = "http://dss.stage.simecsystem.com:10014"
     //  var BASE_URL = "http://182.160.111.81:10014"
     const val BASE_URL_PLACE_API = "https://maps.googleapis.com/maps/api"
     const val BASE_URL_FCM = "https://fcm.googleapis.com"
