@@ -708,6 +708,12 @@
                                     app:title="@{@string/post_off_bn}" />
 
                                 <include
+                                    android:id="@+id/fAddressPostCode"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/post_code}"
+                                    app:title="@{@string/post_code}" />
+
+                                <include
                                     android:id="@+id/fAddressRoadOrWordNo"
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/road_word}"

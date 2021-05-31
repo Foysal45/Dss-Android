@@ -5,6 +5,6 @@ data class HonorariumHeadResponse(val message:String?,val code:Int?,val data:Lis
 data class HonorariumHead(
     val id: Int?,
     val honorarium_type_id: Int?,
-    val honorarium_year: Int?,
+    val honorarium_date: String?,
     val status: Int?
 )

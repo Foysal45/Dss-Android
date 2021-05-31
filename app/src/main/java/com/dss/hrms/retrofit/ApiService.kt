@@ -1,6 +1,7 @@
 package com.btbapp.alquranapp.retrofit
 
 
+import androidx.annotation.Keep
 import com.dss.hrms.model.HeadOfficeDepartmentApiResponse
 import com.dss.hrms.model.PermissionResponse
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass

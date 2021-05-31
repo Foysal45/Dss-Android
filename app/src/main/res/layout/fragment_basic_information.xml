@@ -145,6 +145,10 @@
 
 
                             <include
+                                android:id="@+id/fEmployeeJobJoiningDate"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
                                 android:id="@+id/fEmployeeStatusType"
                                 layout="@layout/personel_information_view_field" />
 

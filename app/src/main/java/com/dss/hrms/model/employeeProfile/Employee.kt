@@ -96,6 +96,9 @@ class Employee {
     @SerializedName("blood_group")
     val blood_group: BloodGroup? = null
 
+    @SerializedName("job_joining_date")
+    val job_joining_date: String? = null
+
     @SerializedName("religion")
     val religion: Religion? = null
 
@@ -835,6 +838,9 @@ class Employee {
         @SerializedName("post_office_bn")
         val post_office_bn: String? = null
 
+        @SerializedName("post_code")
+        val post_code: String? = null
+
         @SerializedName("road_word_no")
         val road_word_no: String? = null
 
@@ -911,6 +917,9 @@ class Employee {
 
         @SerializedName("post_office_bn")
         var post_office_bn: String? = null
+
+        @SerializedName("post_code")
+        var post_code: String? = null
 
         @SerializedName("road_word_no")
         var road_word_no: String? = null

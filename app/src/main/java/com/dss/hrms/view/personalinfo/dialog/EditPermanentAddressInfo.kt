@@ -108,15 +108,18 @@ class EditPermanentAddressInfo @Inject constructor() {
         })
 
         binding?.cbSameAsPresentAddress?.setOnClickListener {
-            if (binding?.cbSameAsPresentAddress?.isChecked==true){
+            if (binding?.cbSameAsPresentAddress?.isChecked == true) {
                 employeeProfileData?.employee?.presentAddresses?.let {
-                    if (it.size>0){
-                        var  presentAddressJson=Gson().toJson(it.get(0))
-                        var pmAddresses=   Gson().fromJson(presentAddressJson.toString(),Employee.PermanentAddresses::class.java)
+                    if (it.size > 0) {
+                        var presentAddressJson = Gson().toJson(it.get(0))
+                        var pmAddresses = Gson().fromJson(
+                            presentAddressJson.toString(),
+                            Employee.PermanentAddresses::class.java
+                        )
                         updatePresentAddressInfo(context, pmAddresses)
                     }
                 }
-            }else{
+            } else {
                 updatePresentAddressInfo(context, permanentAddresses)
             }
         }
@@ -132,6 +135,7 @@ class EditPermanentAddressInfo @Inject constructor() {
         binding?.fAddressPoliceStationBn?.etText?.setText(permanentAddresses1?.police_station_bn)
         binding?.fAddressPostOffice?.etText?.setText(permanentAddresses1?.post_office)
         binding?.fAddressPostOfficeBn?.etText?.setText(permanentAddresses1?.post_office_bn)
+        binding?.fAddressPostCode?.etText?.setText(permanentAddresses1?.post_code)
         binding?.fAddressRoadOrWordNo?.etText?.setText(permanentAddresses1?.road_word_no)
         binding?.fAddressRoadOrWordNoBn?.etText?.setText(permanentAddresses1?.road_word_no_bn)
         binding?.fAddressVillageOrHouseNo?.etText?.setText(permanentAddresses1?.village_house_no)
@@ -162,7 +166,7 @@ class EditPermanentAddressInfo @Inject constructor() {
         getLocalGovernmentType()
 
         binding?.addressBtnUpdate?.btnUpdate?.setOnClickListener({
-            var  employeeInfoEditCreateRepo =
+            var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
 
@@ -198,6 +202,7 @@ class EditPermanentAddressInfo @Inject constructor() {
         })
 
     }
+
     fun showResponse(any: Any) {
 
         if (any is String) {
@@ -261,6 +266,12 @@ class EditPermanentAddressInfo @Inject constructor() {
                                 binding?.fAddressPostOfficeBn?.tvError?.visibility =
                                     View.VISIBLE
                                 binding?.fAddressPostOfficeBn?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "post_code" -> {
+                                binding?.fAddressPostCode?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fAddressPostCode?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
                             "road_word_no" -> {
@@ -352,6 +363,7 @@ class EditPermanentAddressInfo @Inject constructor() {
         map.put("police_station_bn", binding?.fAddressPoliceStationBn?.etText?.text.toString())
         map.put("post_office", binding?.fAddressPostOffice?.etText?.text.toString())
         map.put("post_office_bn", binding?.fAddressPostOfficeBn?.etText?.text.toString())
+        map.put("post_code", binding?.fAddressPostCode?.etText?.text.toString())
         map.put("road_word_no", binding?.fAddressRoadOrWordNo?.etText?.text.toString())
         map.put("road_word_no_bn", binding?.fAddressRoadOrWordNoBn?.etText?.text.toString())
         map.put("village_house_no", binding?.fAddressVillageOrHouseNo?.etText?.text.toString())
@@ -584,6 +596,8 @@ class EditPermanentAddressInfo @Inject constructor() {
             View.GONE
         binding?.fAddressPostOfficeBn?.tvError?.visibility =
             View.GONE
+        binding ?. fAddressPostCode ?. tvError ?. visibility =
+        View.GONE
         binding?.fAddressRoadOrWordNo?.tvError?.visibility =
             View.GONE
         binding?.fAddressRoadOrWordNoBn?.tvError?.visibility =

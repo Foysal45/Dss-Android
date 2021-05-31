@@ -508,7 +508,6 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
         }
     }
 
-
     fun invisiableAllError() {
         dialogTrainingLoyeoutBinding.resourcePersonName?.tvError?.visibility =
             View.GONE

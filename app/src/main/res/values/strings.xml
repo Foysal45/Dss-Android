@@ -211,6 +211,7 @@
     <string name="disability_degree">Disability Degree</string>
     <string name="disabled_person_id">Disabled Person ID</string>
     <string name="employee_type">Employee Type</string>
+    <string name="employment_job_joining_date">Employment Job Joining Date</string>
     <string name="employee_status_type">Employee Status Type</string>
     <string name="employee_status_date">Employment Status Date</string>
     <string name="has_freedom_fighter_quota">Has Freedom Fighter Quota ?</string>
@@ -342,6 +343,7 @@
     <string name="total_bn">Total(Bangla)</string>
     <string name="remaining_balance">Remaining Balance</string>
     <string name="balance">Balance</string>
+    <string name="post_code">Post Code</string>
     <string name="account_type">Account Type</string>
     <string name="bank_name">Bank Name</string>
     <string name="bank_routing_number">Bank Routing Number</string>

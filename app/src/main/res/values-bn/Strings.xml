@@ -221,9 +221,9 @@
     <string name="employee_id">কর্মকর্তা/কর্মচারী আইডি</string>
     <string name="employee_type">কর্মকর্তা/কর্মচারী প্রকার</string>
     <string name="has_disability">অক্ষমতা আছে</string>
-
-    <string name="employee_status_type">Employee Status Type</string>
-    <string name="employee_status_date">Employment Status Date</string>
+    <string name="employment_job_joining_date">চাকরি যোগদানের তারিখ</string>
+    <string name="employee_status_type">কর্মসংস্থান স্থিতির ধরণ</string>
+    <string name="employee_status_date">কর্মসংস্থান স্থিতির তারিখ</string>
     <string name="has_freedom_fighter_quota">মুক্তিযোদ্ধা কোটা আছে ?</string>
     <string name="current_job">বর্তমান চাকরি</string>
 
@@ -375,7 +375,7 @@
     <string name="download_pdf">Pdf ডাউনলোড করুন </string>
     <string name="no_responsible_person_found">কোনও রেস্পন্সিবল পারসন  পাওয়া যায়নি</string>
     <string name="downloading_see_progess_on_notification_bar">Downloading... See progress on notification bar</string>
-
+    <string name="post_code">Post Code</string>
 
 
 

@@ -85,6 +85,10 @@
                                 android:id="@+id/fAddressPostOfficeBn"
                                 layout="@layout/personel_information_view_field" />
 
+                            <include
+                                android:id="@+id/fAddressPostCode"
+                                layout="@layout/personel_information_view_field" />
+
 
                             <include
                                 android:id="@+id/fAddressRoadOrWordNo"

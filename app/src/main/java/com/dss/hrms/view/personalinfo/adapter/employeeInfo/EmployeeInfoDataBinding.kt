@@ -42,6 +42,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAddressRoadOrWordNo.tvTitle.setText(context.getString(R.string.road_word))
         binding.fAddressRoadOrWordNoBn.tvTitle.setText(context.getString(R.string.road_word_bn))
         binding.fAddressPoliceStation.tvTitle.setText(context.getString(R.string.police_station))
+        binding.fAddressPostCode.tvTitle.setText(context.getString(R.string.post_code))
 
         binding.fAddressDivision.tvTitle.setText(context.getString(R.string.division))
         binding.fAddressDistrict.tvTitle.setText(context.getString(R.string.district))
@@ -78,6 +79,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
             addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
             addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
+            addresses.post_code?.let { binding.fAddressPostCode.tvText.setText(it) }
             addresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
             addresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
             addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
@@ -105,6 +107,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     it
                 )
             }
+            addresses.post_code?.let { binding.fAddressPostCode.tvText.setText(it) }
             addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
             addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
             addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
@@ -134,6 +137,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAddressPhoneOrMobileNo.llBody.visibility = View.GONE
         binding.fAddressPostOffice.tvTitle.setText(context.getString(R.string.post_off))
         binding.fAddressPostOfficeBn.tvTitle.setText(context.getString(R.string.post_off_bn))
+        binding.fAddressPostCode.tvTitle.setText(context.getString(R.string.post_code))
         binding.fAddressRoadOrWordNo.tvTitle.setText(context.getString(R.string.road_word))
         binding.fAddressRoadOrWordNoBn.tvTitle.setText(context.getString(R.string.road_word_bn))
         binding.fAddressPoliceStation.tvTitle.setText(context.getString(R.string.police_station))
@@ -170,6 +174,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
             addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
             addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
+            addresses.post_code?.let { binding.fAddressPostCode.tvText.setText(it) }
             addresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
             addresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
             addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
@@ -197,6 +202,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     it
                 )
             }
+            addresses.post_code?.let { binding.fAddressPostCode.tvText.setText(it) }
             addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
             addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
             addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }

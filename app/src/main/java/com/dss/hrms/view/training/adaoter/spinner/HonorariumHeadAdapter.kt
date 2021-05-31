@@ -29,19 +29,31 @@ class HonorariumHeadAdapter {
         list.add(context?.getString(R.string.select_option))
         dataList?.let {
             while (i < it.size) {
-                if (preparence?.getLanguage().equals("en"))
-                    list.add(dataList.get(i)?.honorarium_year.toString())
-                else
-                    list.add(
-                        "${dataList.get(i)?.honorarium_year}  ${
-                            preparence?.getLanguage()?.let { it1 ->
-                                getHonorariumTypeName(
-                                    it1,
-                                    dataList.get(i)?.honorarium_type_id
-                                )
-                            }
-                        }"
-                    )
+
+                list.add(
+                    "${dataList.get(i)?.honorarium_date}  ${
+                        preparence?.getLanguage()?.let { it1 ->
+                            getHonorariumTypeName(
+                                it1,
+                                dataList.get(i)?.honorarium_type_id
+                            )
+                        }
+                    }"
+                )
+
+//                if (preparence?.getLanguage().equals("en"))
+//                    list.add(dataList.get(i)?.honorarium_date)
+//                else
+//                    list.add(
+//                        "${dataList.get(i)?.honorarium_date}  ${
+//                            preparence?.getLanguage()?.let { it1 ->
+//                                getHonorariumTypeName(
+//                                    it1,
+//                                    dataList.get(i)?.honorarium_type_id
+//                                )
+//                            }
+//                        }"
+//                    )
                 if (it.get(i)?.id == id) {
                     selectedPosition = i + 1
                 }

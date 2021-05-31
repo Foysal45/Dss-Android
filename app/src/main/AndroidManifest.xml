@@ -26,7 +26,8 @@
         <activity android:name=".view.messaging.MessagingActivity" />
         <activity
             android:name=".view.training.TrainingActivity"
-            android:theme="@style/AppThemeActionBar" />
+         />
+<!--        android:theme="@style/AppThemeActionBar"-->
         <activity android:name=".view.settings.SettingsActivity" />
         <activity
             android:name=".view.personalinfo.EmployeeInfoActivity"

@@ -173,6 +173,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         v.fUserName.tvTitle.setText(getString(R.string.user_name))
         v.fPhone.tvTitle.setText(getString(R.string.phone))
         v.fEmployeeType.tvTitle.setText(getString(R.string.employee_type))
+        v.fEmployeeJobJoiningDate.tvTitle.setText(getString(R.string.employment_job_joining_date))
         v.fEmployeeStatusType.tvTitle.setText(getString(R.string.employee_status_type))
         v.fEmployeeStatusDate.tvTitle.setText(getString(R.string.employee_status_date))
         v.fEmployeeFreedomFighterquota.tvTitle.setText(getString(R.string.has_freedom_fighter_quota))
@@ -191,6 +192,13 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         employee?.name_bn?.let { v.fNameBangla.tvText.setText(it) }
         employee?.date_of_birth?.let {
             v.fDOB.tvText.setText(
+                (DateConverter.changeDateFormateForShowing(
+                    it
+                ))
+            )
+        }
+        employee?.job_joining_date?.let {
+            v.fEmployeeJobJoiningDate.tvText.setText(
                 (DateConverter.changeDateFormateForShowing(
                     it
                 ))

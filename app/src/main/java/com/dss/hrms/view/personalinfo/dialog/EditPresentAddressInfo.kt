@@ -115,6 +115,7 @@ class EditPresentAddressInfo @Inject constructor() {
         binding?.fAddressPoliceStationBn?.etText?.setText(presentAddress?.police_station_bn)
         binding?.fAddressPostOffice?.etText?.setText(presentAddress?.post_office)
         binding?.fAddressPostOfficeBn?.etText?.setText(presentAddress?.post_office_bn)
+        binding?.fAddressPostCode?.etText?.setText(presentAddress?.post_code)
         binding?.fAddressRoadOrWordNo?.etText?.setText(presentAddress?.road_word_no)
         binding?.fAddressRoadOrWordNoBn?.etText?.setText(presentAddress?.road_word_no_bn)
         binding?.fAddressVillageOrHouseNo?.etText?.setText(presentAddress?.village_house_no)
@@ -244,6 +245,12 @@ class EditPresentAddressInfo @Inject constructor() {
                                 binding?.fAddressPostOfficeBn?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
+                            "post_code" -> {
+                                binding?.fAddressPostCode?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fAddressPostCode?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
                             "road_word_no" -> {
                                 binding?.fAddressRoadOrWordNo?.tvError?.visibility =
                                     View.VISIBLE
@@ -333,6 +340,7 @@ class EditPresentAddressInfo @Inject constructor() {
         map.put("police_station_bn", binding?.fAddressPoliceStationBn?.etText?.text.toString())
         map.put("post_office", binding?.fAddressPostOffice?.etText?.text.toString())
         map.put("post_office_bn", binding?.fAddressPostOfficeBn?.etText?.text.toString())
+        map.put("post_code", binding?.fAddressPostCode?.etText?.text.toString())
         map.put("road_word_no", binding?.fAddressRoadOrWordNo?.etText?.text.toString())
         map.put("road_word_no_bn", binding?.fAddressRoadOrWordNoBn?.etText?.text.toString())
         map.put("village_house_no", binding?.fAddressVillageOrHouseNo?.etText?.text.toString())
@@ -570,6 +578,8 @@ class EditPresentAddressInfo @Inject constructor() {
         binding?.fAddressPostOffice?.tvError?.visibility =
             View.GONE
         binding?.fAddressPostOfficeBn?.tvError?.visibility =
+            View.GONE
+        binding ?. fAddressPostCode ?. tvError ?. visibility =
             View.GONE
         binding?.fAddressRoadOrWordNo?.tvError?.visibility =
             View.GONE
