@@ -18,6 +18,7 @@
     <string name="from_camera_text">ক্যামেরা থেকে</string>
     <string name="from_gallery_text">গ্যালারী থেকে</string>
     <string name="select_language">ভাষা নির্বাচন করুন</string>
+    <string name="version">ভার্সন</string>
     <string name="select_option">অপসন সিলেক্ট করুন</string>
     <string name="login_to_ndss_hrm_system">লগইন</string>
     <string name="user_id_email_address">ব্যবহারকারী আইডি/ইমেল</string>
@@ -326,7 +327,7 @@
     <string name="leave_management">ছুটির ব্যাবস্থাপনা</string>
     <string name="leave_management_home_page">ছুটির\n ব্যাবস্থাপনা</string>
     <string name="leave_application">ছুটির দরখাস্ত</string>
-    <string name="leave_summary_dashboard">ছুটির ড্যাশবোর্ড সামারি</string>
+    <string name="leave_summary_dashboard">ছুটির সামারি</string>
     <string name="payroll_management_home_page">বেতন\n ব্যাবস্থাপনা</string>
     <string name="payroll_management">বেতন ব্যাবস্থাপনা</string>
     <string name="bank_information">ব্যাংক তথ্য</string>

@@ -436,6 +436,9 @@ class Employee {
         @SerializedName("pay_scale")
         val pay_scale: String? = null
 
+        @SerializedName("pay_scale_id")
+        val pay_scale_id: Int? = null
+
         @SerializedName("joining_date")
         val joining_date: String? = null
 

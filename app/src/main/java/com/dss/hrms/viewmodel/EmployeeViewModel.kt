@@ -12,6 +12,7 @@ import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.repository.EmployeeInfoRepo
 import com.dss.hrms.util.Status
+import com.dss.hrms.view.notification.model.NotificationResponse
 import com.dss.hrms.view.report.VacantPositionSummaryValueListener
 import com.dss.hrms.view.training.model.BudgetAndSchedule
 import kotlinx.coroutines.*
@@ -26,15 +27,37 @@ class EmployeeViewModel @Inject constructor(application: Application) :
     lateinit var employeeInfoRepo: EmployeeInfoRepo
 
 
+    private var _notifications: MutableLiveData<List<NotificationResponse.Notification>>? =
+        MutableLiveData()
+    var notifications: LiveData<List<NotificationResponse.Notification>>? =
+        _notifications
+
     private var _userPermission: MutableLiveData<List<Any>> =
         MutableLiveData()
     var userPermission: LiveData<List<Any>> =
         _userPermission
+
     suspend fun getEmployeeInfo(employeeId: Int?): Flow<Any?>? = flow {
         //   val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
         //  viewModelScope.launch(dispatcher.Main) {
         emit(employeeInfoRepo?.getEmployeeInfo(employeeId))
         // }
+    }
+
+    fun getAllNotifications(
+        platform: String?
+    ) {
+        viewModelScope.launch {
+            var response =
+                employeeInfoRepo.getAllNotifications(platform)
+
+            if (response is NotificationResponse) {
+                // Log.e("employeeviewmodel","response : ${response.data}")
+                _notifications?.postValue(response.data?.data)
+            } else {
+                _notifications?.postValue(null)
+            }
+        }
     }
 
     fun getUserPermissions(
@@ -45,13 +68,14 @@ class EmployeeViewModel @Inject constructor(application: Application) :
                 employeeInfoRepo.getUserPermissions()
 
             if (response is PermissionResponse) {
-               // Log.e("employeeviewmodel","response : ${response.data}")
+                // Log.e("employeeviewmodel","response : ${response.data}")
                 _userPermission.postValue(response.data)
             } else {
                 _userPermission.postValue(null)
             }
         }
     }
+
     fun getRoleWiseEmployeeInfo(role: String?): MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>> {
         var liveData = MutableLiveData<List<RoleWiseEmployeeResponseClass.RoleWiseEmployee?>>()
         viewModelScope.launch {

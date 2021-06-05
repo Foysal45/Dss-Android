@@ -73,14 +73,14 @@ class EmployeeSalaryProcessFragment : DaggerFragment() {
         init()
         year = cal.get(Calendar.YEAR).toString()
         month = (cal.get(Calendar.MONTH) + 1).toString()
-        binding.includeDate.tvText.setText("${month}-${year}")
+        binding.tvText.setText("${month}-${year}")
         Log.e("date", "year : ${year} month : ${month}")
         employee = employeeProfileData.employee
         binding.name =
             if (preparence.getLanguage().equals("en")) employee?.name else employee?.name_bn
 
 
-        binding.includeDate.llBody.setOnClickListener {
+        binding.llBody.setOnClickListener {
             activity?.let {
                 val string = "1900-01-01"
                 val date =
@@ -102,7 +102,7 @@ class EmployeeSalaryProcessFragment : DaggerFragment() {
                             year = y
                             month = m
                             Log.e("date", "year : ${year} month : ${month}")
-                            binding.includeDate.tvText.setText("${month}-${year}")
+                            binding.tvText.setText("${month}-${year}")
                         }
 
                     }).show(

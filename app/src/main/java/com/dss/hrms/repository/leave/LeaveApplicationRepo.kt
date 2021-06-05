@@ -116,7 +116,7 @@ class LeaveApplicationRepo @Inject constructor() {
                 )
                 Log.e(
                     "createLeaveApplication",
-                    "createLeaveApplication : ${response?.raw()} status : ${response?.headers()} "
+                    "createLeaveApplication : ${response?.raw()} status : ${response?.headers()} error : ${response?.errorBody()} "
                 )
                 if (response == null) {
                     liveData.postValue(null)

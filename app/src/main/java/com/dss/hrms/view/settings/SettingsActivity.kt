@@ -1,7 +1,10 @@
 package com.dss.hrms.view.settings
 
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.dss.hrms.R
 import com.dss.hrms.view.activity.BaseActivity
@@ -9,8 +12,6 @@ import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.android.synthetic.main.activity_employee_info.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.activity_settings.back
-import kotlinx.android.synthetic.main.activity_settings.tvBn
-import kotlinx.android.synthetic.main.activity_settings.tvEn
 import javax.inject.Inject
 
 
@@ -48,6 +49,23 @@ class SettingsActivity : BaseActivity() {
             )
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
+
+
+
+        val manager = this.packageManager
+        val info = manager.getPackageInfo(this.packageName, PackageManager.GET_ACTIVITIES)
+        Log.e("settings",("PackageName = " + info.packageName + "\nVersionCode = "
+                + info.versionCode + "\nVersionName = "
+                + info.versionName + "\nPermissions = " + info.permissions))
+        tvVersion.setText(info.versionName)
+//        try {
+//            val pInfo: PackageInfo =
+//                getPackageManager().getPackageInfo(getPackageName(), 0)
+//            val version = pInfo.versionName
+//            tvVersion.setText(version)
+//        } catch (e: PackageManager.NameNotFoundException) {
+//            e.printStackTrace()
+//        }
 
     }
 

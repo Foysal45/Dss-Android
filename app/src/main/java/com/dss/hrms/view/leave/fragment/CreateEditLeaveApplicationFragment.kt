@@ -199,6 +199,7 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
         leaveApplication?.leave_application_note?.let {
             if (it?.size!! > 0) {
                 notifyPerson = it.get(0).forword_to_employee
+                //Log.e("leaveapplication",".............................it.get(0).responsible_person ${leaveApplication?.leave_application_details?.get(0)?.responsible_person}")
                 setNotifyPersonData()
             }
             //
@@ -505,6 +506,12 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
                                 binding?.lToDate?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
+                            "leave_application_details.0.responsible_person_id" -> {
+                                binding?.tvResponsibleEmployeeError?.visibility =
+                                    View.VISIBLE
+                                binding?.tvResponsibleEmployeeError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
 
                         }
                     }
@@ -541,6 +548,7 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
         )
         map.put("forword_to_employee_id", notifyPerson?.id)
         map.put("apply_date", applyDate)
+        map.put("note_leave", "")
 
         uploadImageUrl?.let { map.put("document_path", it) }
         // map.put("note_leave", leaveApplication?.leave_application_details.note)
@@ -563,6 +571,8 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
         map.put("date_form", fromDate)
         map.put("date_to", toDate)
         map.put("designation_id", employee?.designation_id)
+        Log.e("responsiblePerson",".........................................................${responsiblePerson?.name}")
+        map.put("responsible_person_id", responsiblePerson?.id)
         map.put("employee_id", employee?.user?.employee_id)
         map.put("reason", binding.etBody.text.trim().toString())
         map.put(

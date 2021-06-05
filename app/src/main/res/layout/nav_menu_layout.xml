@@ -22,11 +22,12 @@
             android:background="@drawable/navigation_bg"
             android:orientation="vertical">
 
+<!--            android:background="@drawable/button_click_for_menu"-->
             <LinearLayout
                 android:id="@+id/menu_dashboard_lay_head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_click_for_menu"
+
                 android:gravity="center|left"
                 android:minHeight="60dp"
 
@@ -68,14 +69,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/shape_line_white"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/menu_profile_lay_head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:background="@drawable/button_click_for_menu"
+
 
                 android:gravity="center|left"
                 android:minHeight="60dp"
@@ -513,13 +514,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/shape_line_white"
-                android:visibility="gone" />
+                android:visibility="visible" />
             <LinearLayout
                 android:id="@+id/menu_dashboard_training"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:background="@drawable/button_click_for_menu"
                 android:gravity="center|left"
                 android:minHeight="60dp"
                 android:orientation="horizontal">
@@ -547,13 +547,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/shape_line_white"
-                android:visibility="gone" />
+                android:visibility="visible" />
             <LinearLayout
                 android:id="@+id/menu_dashboard_leave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:background="@drawable/button_click_for_menu"
                 android:gravity="center|left"
                 android:minHeight="60dp"
                 android:orientation="horizontal">
@@ -581,13 +580,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/shape_line_white"
-                android:visibility="gone" />
+                android:visibility="visible" />
             <LinearLayout
                 android:id="@+id/menu_dashboard_payroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:background="@drawable/button_click_for_menu"
                 android:gravity="center|left"
                 android:minHeight="60dp"
                 android:orientation="horizontal">
@@ -615,13 +613,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/shape_line_white"
-                android:visibility="gone" />
+                android:visibility="visible" />
             <LinearLayout
                 android:id="@+id/menu_dashboard_messaging"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:background="@drawable/button_click_for_menu"
                 android:gravity="center|left"
                 android:minHeight="60dp"
                 android:orientation="horizontal">
@@ -649,13 +646,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/shape_line_white"
-                android:visibility="gone" />
+                android:visibility="visible" />
             <LinearLayout
                 android:id="@+id/menu_dashboard_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:background="@drawable/button_click_for_menu"
                 android:gravity="center|left"
                 android:minHeight="60dp"
                 android:orientation="horizontal">
@@ -684,13 +680,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/shape_line_white"
-                android:visibility="gone" />
+                android:visibility="visible" />
             <LinearLayout
                 android:id="@+id/menu_dashboard_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:background="@drawable/button_click_for_menu"
+
                 android:gravity="center|left"
                 android:minHeight="60dp"
                 android:orientation="horizontal">
@@ -719,13 +715,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/shape_line_white"
-                android:visibility="gone" />
+                android:visibility="visible" />
             <LinearLayout
                 android:id="@+id/menu_dashboard_signout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:background="@drawable/button_click_for_menu"
                 android:gravity="center|left"
                 android:minHeight="60dp"
                 android:orientation="horizontal">

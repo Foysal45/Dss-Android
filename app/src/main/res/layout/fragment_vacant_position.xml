@@ -9,6 +9,7 @@
         android:background="@color/background"
         android:orientation="vertical"
         android:padding="10dp"
+        android:fitsSystemWindows="true"
         tools:context=".view.report.fragment.VacantPositionFragment">
 
         <LinearLayout

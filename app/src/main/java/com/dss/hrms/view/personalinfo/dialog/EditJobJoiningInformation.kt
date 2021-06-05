@@ -326,6 +326,7 @@ class EditJobJoiningInformation @Inject constructor() {
             map.put("job_type_id", jobType?.id)
             map.put("employee_class_id", _class?.id)
             map.put("grade_id", grade?.id)
+            map.put("pay_scale_id", payScale?.id)
             map.put("pay_scale", payScale?.amount)
             Log.e("current","..................................current  ${if (currentJob?.id==1) true else false}................................")
 
@@ -371,9 +372,9 @@ class EditJobJoiningInformation @Inject constructor() {
                                         }
                                         when (error) {
                                             "office_id" -> {
-                                                binding.fJobJoiningOffice.tvError.visibility =
+                                                binding.tvJobJoiningOfficeError.visibility =
                                                     View.VISIBLE
-                                                binding.fJobJoiningOffice.tvError.text =
+                                                binding.tvJobJoiningOfficeError.text =
                                                     ErrorUtils2.mainError(message)
                                             }
                                             "designation_id" -> {
@@ -412,7 +413,7 @@ class EditJobJoiningInformation @Inject constructor() {
                                                 binding.fJobJoiningGrade.tvError.text =
                                                     ErrorUtils2.mainError(message)
                                             }
-                                            "pay_scale" -> {
+                                            "pay_scale_id" -> {
                                                 binding.fJobJoiningPayScale.tvError.visibility =
                                                     View.VISIBLE
                                                 binding.fJobJoiningPayScale.tvError.text =
@@ -469,16 +470,19 @@ class EditJobJoiningInformation @Inject constructor() {
         commonRepo.getSpecificSalaryGrade("/api/auth/salary-grade/${gradeId}",
             object : PayScaleValueListener {
                 override fun valueChange(spinnerDataModel: SpinnerDataModel?) {
+//                    Log.e(
+//                        "payscale",
+//                        "payscale message " + Gson().toJson(spinnerDataModel?.paysacle)
+//                    )
                     Log.e(
                         "payscale",
-                        "payscale message " + Gson().toJson(spinnerDataModel?.paysacle)
-                    )
+                        "payscale message ............................................................................................" + jobjoining?.pay_scale_id)
                     spinnerDataModel?.paysacle?.let {
                         SpinnerAdapter().setPayscale(
                             binding.fJobJoiningPayScale.spinner,
                             context,
                             it,
-                            payScaleAmount,
+                            jobjoining?.pay_scale_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     payScale = any as Paysacle
@@ -497,7 +501,7 @@ class EditJobJoiningInformation @Inject constructor() {
     ) {
         mainOfficeList?.let {
             SpinnerAdapter().setOfficeSpinner(
-                binding.fJobJoiningOffice.spinner,
+                binding.JobJoiningOfficeSpinner,
                 context,
                 it,
                 jobjoining?.office_id,
@@ -585,7 +589,7 @@ class EditJobJoiningInformation @Inject constructor() {
     }
 
     fun invisiableAllError(binding: DialogPersonalInfoBinding) {
-        binding.fJobJoiningOffice.tvError.visibility =
+        binding.tvJobJoiningOfficeError.visibility =
             View.GONE
 
         binding.fJobJoiningDesignation.tvError.visibility =

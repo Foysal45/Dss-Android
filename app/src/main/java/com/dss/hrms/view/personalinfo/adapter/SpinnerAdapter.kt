@@ -293,7 +293,7 @@ class SpinnerAdapter {
         spinner: Spinner,
         context: Context?,
         dataList: List<Paysacle>?,
-        amount: String?,
+        payScaleId: Int?,
         commonSpinnerSelectedItemListener: CommonSpinnerSelectedItemListener
     ) {
         var preparence: MySharedPreparence? = context?.let { MySharedPreparence(it) }
@@ -307,8 +307,8 @@ class SpinnerAdapter {
                     list.add(dataList.get(i).amount)
                 else
                     list.add(dataList.get(i).amount)
-                amount?.let { it2 ->
-                    if (it2.equals(it.get(i).amount)) {
+                payScaleId?.let { it2 ->
+                    if (it2==it.get(i).id) {
                         selectedPosition = i + 1
                     }
                 }

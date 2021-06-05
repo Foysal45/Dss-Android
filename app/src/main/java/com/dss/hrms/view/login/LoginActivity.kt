@@ -10,7 +10,9 @@ import android.os.Handler
 import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -36,6 +38,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
     @Inject
@@ -141,14 +144,25 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
         }
     }
 
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (currentFocus != null) {
+            val imm: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
+
     fun init() {
-       //lazy {loginViewModel= ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel::class.java) }
+        //lazy {loginViewModel= ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel::class.java) }
         loginViewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel::class.java)
         cbRemenber.isChecked = preparence?.isRemember()!!
         mNetworkReceiver = NetworkChangeReceiver(this)
         registerNetworkBroadcast()
     }
+
 
     fun getDeviceToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -176,7 +190,7 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
         //  var dialog = CustomLoadingDialog().createLoadingDialog(this)
         Log.e("LoginActivity", "login  : ")
         lifecycleScope.launch {
-            async { loginViewModel?.login(email,password) }.await()
+            async { loginViewModel?.login(email, password) }.await()
                 ?.collect {
                     loading_dialog.visibility = View.GONE
                     login.visibility = View.VISIBLE

@@ -23,12 +23,18 @@ open class BaseActivity : DaggerAppCompatActivity() {
         Locale.setDefault(locale)
         val configuration: Configuration = resources.configuration
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+            val configuration = Configuration()
             configuration.setLocale(locale)
-            createConfigurationContext(configuration)
+            configuration.setLayoutDirection(locale)
+            resources.updateConfiguration(configuration, resources.displayMetrics)
+//            configuration.setLocale(locale)
+//            createConfigurationContext(configuration)
+        }else{
+            configuration.locale = locale
+            configuration.setLayoutDirection(locale)
+            resources.updateConfiguration(configuration, resources.displayMetrics)
         }
-        configuration.locale = locale
-        configuration.setLayoutDirection(locale)
-        resources.updateConfiguration(configuration, resources.displayMetrics)
+
     }
 
 //

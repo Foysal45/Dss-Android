@@ -1,11 +1,15 @@
 package com.dss.hrms.view.training
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -41,45 +45,58 @@ class TrainingFragment : DaggerFragment() {
     lateinit var trainingManagementViewModel: TrainingManagementViewModel
 
     var dashBoard: TrainingDashBoard.Dashboard? = null
+    var isAlreadyViewLoaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        if (!isAlreadyViewLoaded) {
+            isAlreadyViewLoaded = true
+            binding = FragmentTrainingBinding.inflate(inflater, container, false)
+
+
+
+            init()
+
+
+            setTitleStyle(binding.hCourseSchedule.tvTitle)
+            setTitleStyle(binding.hBatchSchedule.tvTitle)
+            setTitleStyle(binding.hFaq.tvTitle)
+
+            binding.hCourseSchedule.tvClose.visibility = View.GONE
+            binding.hBatchSchedule.tvClose.visibility = View.GONE
+            binding.hFaq.tvClose.visibility = View.GONE
+
+            trainingManagementViewModel.apply {
+                var dialog = CustomLoadingDialog().createLoadingDialog(activity)
+                getTrainingDashboard()
+                trainingDashboard.observe(viewLifecycleOwner, Observer {
+                    dialog?.dismiss()
+
+                    it?.let {
+                        Log.e("dashboard ", " dashboard : ${it}")
+                        dashBoard = it
+                        prepareBatchRecycleView()
+                        prepareCourseRecycleView()
+                        prepareFaqRecycleView()
+                    }
+                })
+            }
+
+            binding.llCourseSchedule.setOnClickListener {
+                gotoDestination(R.id.action_trainingFragment_to_courseScheduleFragment)
+            }
+            binding.llBatchSchedule.setOnClickListener {
+                gotoDestination(R.id.action_trainingFragment_to_batchScheduleFragment)
+            }
+            binding.llFaq.setOnClickListener {
+                gotoDestination(R.id.action_trainingFragment_to_contentFaqFragment)
+            }
+        }
         // Inflate the layout for this fragment
-        binding = FragmentTrainingBinding.inflate(inflater, container, false)
-        init()
 
-
-        binding.hCourseSchedule.tvClose.visibility = View.GONE
-        binding.hBatchSchedule.tvClose.visibility = View.GONE
-        binding.hFaq.tvClose.visibility = View.GONE
-
-        trainingManagementViewModel.apply {
-            var dialog = CustomLoadingDialog().createLoadingDialog(activity)
-            getTrainingDashboard()
-            trainingDashboard.observe(viewLifecycleOwner, Observer {
-                dialog?.dismiss()
-
-                it?.let {
-                    Log.e("dashboard ", " dashboard : ${it}")
-                    dashBoard = it
-                    prepareBatchRecycleView()
-                    prepareCourseRecycleView()
-                    prepareFaqRecycleView()
-                }
-            })
-        }
-
-        binding.llCourseSchedule.setOnClickListener {
-            gotoDestination(R.id.action_trainingFragment_to_courseScheduleFragment)
-        }
-        binding.llBatchSchedule.setOnClickListener {
-            gotoDestination(R.id.action_trainingFragment_to_batchScheduleFragment)
-        }
-        binding.llFaq.setOnClickListener {
-            gotoDestination(R.id.action_trainingFragment_to_contentFaqFragment)
-        }
         return binding.root
     }
 
@@ -156,6 +173,14 @@ class TrainingFragment : DaggerFragment() {
     fun gotoDestination(id: Int) {
         Navigation.findNavController(binding.root)
             .navigate(id)
+    }
+
+
+    fun setTitleStyle(view: TextView) {
+        view.gravity = Gravity.CENTER
+        activity?.getColor(R.color.black)?.let { view.setTextColor(it) }
+        view.typeface = Typeface.DEFAULT_BOLD
+        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20F)
     }
 
 }

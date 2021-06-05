@@ -9,6 +9,7 @@ import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.retrofit.NotificationApiService
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -23,11 +24,37 @@ class EmployeeInfoRepo @Inject constructor() {
     lateinit var apiService: ApiService
 
     @Inject
+    lateinit var notificationApiService: NotificationApiService
+
+    @Inject
     lateinit var preparence: MySharedPreparence
 
     @Inject
     lateinit var employeeProfileData: EmployeeProfileData
 
+
+    suspend fun getAllNotifications(platform: String?): Any? {
+        val token = preparence?.getToken()
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = notificationApiService?.getAllNotifications(
+                    preparence.getLanguage()!!,
+                    "Bearer ${token}",
+                    platform
+                )
+                if (response?.body()?.code == 200 || response?.body()?.code == 201) {
+                    response?.body()
+                } else response?.let {
+                    var apiError = ErrorUtils2.parseError(
+                        it
+                    )
+                    apiError
+                }
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
 
     suspend fun getEmployeeInfo(employeeId: Int?): Any? {
         val token = preparence?.getToken()

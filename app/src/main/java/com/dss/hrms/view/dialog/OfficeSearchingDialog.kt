@@ -208,7 +208,7 @@ class OfficeSearchingDialog @Inject constructor() {
             object : OfficeDataValueListener {
                 override fun valueChange(list: List<Office>?) {
                     Log.e("officelist", " list : " + list?.size)
-                    Toast.makeText(context,"office : ${list?.size}",Toast.LENGTH_LONG).show()
+                //    Toast.makeText(context,"office : ${list?.size}",Toast.LENGTH_LONG).show()
                     officeValueListener.valueChange(list)
                     dialog?.dismiss()
                     dialogCustome.dismiss()

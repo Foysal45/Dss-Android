@@ -1,5 +1,6 @@
 package com.dss.hrms.view.training
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -13,7 +14,10 @@ import androidx.navigation.ui.*
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ActivityTrainingBinding
 import com.dss.hrms.view.activity.BaseActivity
+import com.dss.hrms.view.activity.WebViewActivity
 import com.google.android.material.navigation.NavigationView
+import com.namaztime.namaztime.database.MySharedPreparence
+import javax.inject.Inject
 
 
 class TrainingActivity : BaseActivity() {
@@ -22,6 +26,9 @@ class TrainingActivity : BaseActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var binding: ActivityTrainingBinding
 
+    @Inject
+    lateinit var preparence: MySharedPreparence
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,11 +36,11 @@ class TrainingActivity : BaseActivity() {
         context = this
         navController = this.findNavController(R.id.fragment)
         setSupportActionBar(binding.toolBar)
-     //   getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        //   getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         drawerLayout = binding.drawerLayout
-       binding?.navMenu.setupWithNavController(navController)
+        binding?.navMenu.setupWithNavController(navController)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
-       setupActionBarWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
         setupToolbar()
 
         binding.drawerIcon.setOnClickListener {
@@ -50,8 +57,9 @@ class TrainingActivity : BaseActivity() {
 
             Log.e(
                 "drawer",
-                "...............................................................item clicked............................................"
+                "...............................................................item  ${menuItem.itemId}............................................"
             )
+
             val id = menuItem.itemId
             //This is for maintaining the behavior of the Navigation view
             NavigationUI.onNavDestinationSelected(menuItem, navController)
@@ -81,7 +89,7 @@ class TrainingActivity : BaseActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.fragment)
-      //  return true
+        //  return true
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 

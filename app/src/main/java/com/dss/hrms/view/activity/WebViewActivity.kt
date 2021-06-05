@@ -16,6 +16,7 @@ import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ActivityWebViewBinding
+import com.dss.hrms.retrofit.RetrofitInstance
 import com.namaztime.namaztime.database.MySharedPreparence
 import javax.inject.Inject
 
@@ -35,11 +36,12 @@ class WebViewActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_web_view)
         // changeStatusBarIconColor()
-
-        if (intent.extras != null) {
-            url = intent.getStringExtra("url")!!
-            Log.e("url", "url : ${url}")
-        }
+        url =
+            "${RetrofitInstance.BASE_URL_FOR_WEBVIEW}/app-ui/training-management/content?token=${preparence.getToken()}&lang=${preparence.getLanguage()}"
+//        if (intent.extras != null) {
+//            url = intent.getStringExtra("url")!!
+//            Log.e("url", "url : ${url}")
+//        }
         binding?.swipeRefreshL?.isRefreshing = true
 
 

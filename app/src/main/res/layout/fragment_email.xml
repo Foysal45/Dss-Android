@@ -28,28 +28,28 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingVertical="@dimen/_4sdp">
-
                     <TextView
                         android:id="@+id/tvOfficeTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="@dimen/_5sdp"
                         android:text="@string/office"
                         android:textColor="@color/light_black"
+                        android:paddingBottom="5dp"
                         android:textSize="@dimen/text_size_large"
                         android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_bg"
                         android:orientation="horizontal">
+
 
                         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                             android:id="@+id/spinner"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/edittext_height_large"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_bg" />
+                            android:layout_weight="1" />
 
                         <ImageView
                             android:id="@+id/ivSearch"
@@ -107,7 +107,7 @@
                     <EditText
                         android:id="@+id/etSubject"
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
+                        android:layout_height="45dp"
                         android:background="@drawable/edittext_bg"
                         android:hint="@string/message_subject"
                         android:inputType="text"

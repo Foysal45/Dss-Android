@@ -17,6 +17,7 @@ import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentContentsContentBinding
 import com.dss.hrms.model.TrainingResponse
+import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.Operation
 import com.dss.hrms.view.activity.WebViewActivity
@@ -83,7 +84,7 @@ class ContentsContentFragment : DaggerFragment() {
 //                )
                 putExtra(
                     "url",
-                    "http://dss.dev.simecsystem.com:10015/app-ui/training-management/content/create?token=${preparence.getToken()}&lang=${preparence.getLanguage()}"
+                    "${RetrofitInstance.BASE_URL_FOR_WEBVIEW}/app-ui/training-management/content/create?token=${preparence.getToken()}&lang=${preparence.getLanguage()}"
                )
 //
 //                putExtra(

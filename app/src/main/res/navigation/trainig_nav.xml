@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_trainingFragment_to_courseScheduleFragment"
             app:destination="@id/courseScheduleFragment" />
+        <action
+            android:id="@+id/action_trainingFragment_to_webViewActivity2"
+            app:destination="@id/webViewActivity" />
     </fragment>
     <fragment
         android:id="@+id/resourcePersonFragment"
@@ -76,4 +79,8 @@
             android:id="@+id/action_batchScheduleFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
     </fragment>
+    <activity
+        android:id="@+id/webViewActivity"
+        android:name="com.dss.hrms.view.activity.WebViewActivity"
+        android:label="WebViewActivity" />
 </navigation>

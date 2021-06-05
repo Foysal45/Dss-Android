@@ -16,6 +16,7 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chaadride.network.error.ApiError
@@ -34,6 +35,7 @@ import com.dss.hrms.view.settings.SettingsActivity
 import com.dss.hrms.view.allInterface.OnNetworkStateChangeListener
 import com.dss.hrms.view.leave.LeaveActivity
 import com.dss.hrms.view.messaging.MessagingActivity
+import com.dss.hrms.view.notification.NotificationActivity
 import com.dss.hrms.view.payroll.PayrollActivity
 import com.dss.hrms.view.receiver.NetworkChangeReceiver
 import com.dss.hrms.view.report.ReportActivity
@@ -83,13 +85,13 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         init()
         employeeViewModel?.apply {
             getUserPermissions()
-
+            getAllNotifications("mobile")
             userPermission.observe(this@MainActivity, Observer { list ->
                 list?.let {
 
                     if (JsonKeyReader.hasPermission("reports", it)) {
                         rlReport.visibility = View.VISIBLE
-                        menu_dashboard_report.visibility= View.VISIBLE
+                        menu_dashboard_report.visibility = View.VISIBLE
                     } else {
                         rlReport.visibility = View.GONE
                         menu_dashboard_report.visibility = View.GONE
@@ -105,10 +107,39 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
                     )
                 }
             })
+
+
+            notifications?.observe(this@MainActivity, Observer { notificatiosList ->
+                notificatiosList?.let { list ->
+
+                    list?.let {
+                        var count = 0
+                        var i = 0
+                        while (i < list.size) {
+                            if (list.get(i).is_read == 0)
+                                count++
+
+                            i++
+                        }
+                        tvNotification.setText("${count}")
+                    }
+                }
+            })
+
         }
         Log.e("mainactivity", "inject login data " + loginInfo?.email)
         Log.e("mainactivity", "inject employee data " + employeeProfileData?.employee?.profile_id)
         getEmployeeInfo()
+
+        employeeViewModel?.apply {
+
+        }
+        notification.setOnClickListener {
+            Intent(this, NotificationActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
 
         btnPersonalInfo.setOnClickListener({
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 0))
@@ -230,16 +261,16 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         menu_profile_lay_head.setOnClickListener {
             menu_profile_lay_expandableLayout.toggle()
             if (!menu_profile_lay_expandableLayout.isExpanded) {
-                menu_profile_lay_head.setBackgroundResource(
-                    R.drawable.selected
-                )
+//                menu_profile_lay_head.setBackgroundResource(
+//                    R.drawable.selected
+//                )
                 menu_profile.setTextColor(ContextCompat.getColor(this, R.color.black))
                 //  more_profile.setImageDrawable(getDrawable(R.drawable.ic_baseline_expand_more_white_24))
                 more_profile.animate().setDuration(300).rotation(180.0f).start()
             } else {
-                menu_profile_lay_head.setBackgroundResource(
-                    R.drawable.focused
-                )
+//                menu_profile_lay_head.setBackgroundResource(
+//                    R.drawable.focused
+//                )
                 menu_profile.setTextColor(ContextCompat.getColor(this, R.color.black))
                 more_profile.setImageDrawable(getDrawable(R.drawable.ic_baseline_expand_more_24))
                 more_profile.animate().setDuration(300).rotation(360.0f).start()

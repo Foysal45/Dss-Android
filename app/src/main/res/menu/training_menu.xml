@@ -22,7 +22,7 @@
                     android:icon="@drawable/ic_payroll"
                     android:title="@string/category" />
                 <item
-                    android:id="@+id/contentsContentFragment"
+                    android:id="@+id/webViewActivity"
                     android:icon="@drawable/ic_payroll"
                     android:title="@string/content" />
                 <item

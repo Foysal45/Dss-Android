@@ -640,7 +640,9 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         var employeeStatusTyypeDate =
             DateConverter.changeDateFormateForSending(binding?.fEmploymentStatusDate?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
+        Log.e("jobjoiningdate","....................................................jobjoining date ${employeeProfileData?.employee?.job_joining_date}")
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
+        map.put("job_joining_date", employeeProfileData?.employee?.job_joining_date)
         map.put("profile_id", binding?.fProfileId?.etText?.text.toString())
         map.put("name", binding?.fNameEng?.etText?.text.toString())
         map.put("name_bn", binding?.fNameBangla?.etText?.text.toString())

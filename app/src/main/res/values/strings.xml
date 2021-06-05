@@ -4,6 +4,8 @@
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 
+    <string name="notifications">Notifications</string>
+    <string name="no_notification_found">No notification found</string>
     <string name="confirmation">Confirmation</string>
     <string name="are_you_sure">would you like to exit?</string>
     <string name="no">No</string>
@@ -19,6 +21,7 @@
 
     <string name="select_option">Select Option</string>
     <string name="select_language">Select Language</string>
+    <string name="version">Version</string>
     <string name="login_to_ndss_hrm_system">LOGIN</string>
     <string name="user_id_email_address">User ID / Email</string>
     <string name="user_name">User Name</string>
@@ -326,7 +329,7 @@
     <string name="leave_management">Leave Management</string>
     <string name="leave_management_home_page">Leave\n Management</string>
     <string name="leave_application">Leave Application</string>
-    <string name="leave_summary_dashboard">Leave Summary Dashboard</string>
+    <string name="leave_summary_dashboard">Leave Dashboard</string>
     <string name="payroll_management">Payroll Management</string>
     <string name="payroll_management_home_page">Payroll\n Management</string>
     <string name="bank_information">Bank Information</string>

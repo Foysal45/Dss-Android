@@ -30,5 +30,6 @@ class StaticKey {
         val REJECTED = "Rejected"
         val APPROVED = "Approved"
         val DRAFT = "Draft"
+        val PLATFORM = "mobile"
     }
 }

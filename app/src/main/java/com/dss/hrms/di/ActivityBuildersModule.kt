@@ -21,6 +21,7 @@ import com.dss.hrms.view.login.ForgetPAssActivity
 import com.dss.hrms.view.login.LoginActivity
 import com.dss.hrms.view.login.OTPActivity
 import com.dss.hrms.view.messaging.MessagingActivity
+import com.dss.hrms.view.notification.NotificationActivity
 import com.dss.hrms.view.payroll.PayrollActivity
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.report.ReportActivity
@@ -64,6 +65,10 @@ abstract class ActivityBuildersModule {
     @MainScope
     @ContributesAndroidInjector(modules = [MainModule::class, ViewModelModule::class])
     abstract fun contributeSettingsActivity(): SettingsActivity
+
+    @MainScope
+    @ContributesAndroidInjector(modules = [MainModule::class, ViewModelModule::class])
+    abstract fun contributeNotificationActivity(): NotificationActivity
 
     @TrainingScope
     @ContributesAndroidInjector(modules = [TrainingFragmentBuildersModule::class, ViewModelModule::class])
