@@ -21,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingVertical="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -36,18 +35,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{(((language.equals(`en`))?salaryInfoRow.name:salaryInfoRow.name_bn))+` : `}"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/text_size_extra_large"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
                     android:text="@{salaryInfoRow.amount.toString()}"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

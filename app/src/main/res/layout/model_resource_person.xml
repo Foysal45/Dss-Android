@@ -14,7 +14,7 @@
             type="String" />
     </data>
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,9 +28,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintMain"
             android:layout_width="0dp"
-            android:layout_height="75dp"
+            android:layout_height="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/constraingRight"
+            app:layout_constraintBottom_toTopOf="@+id/constraintExpand"
             app:layout_constraintTop_toTopOf="parent"></androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -59,9 +60,9 @@
             android:paddingVertical="2dp"
             android:singleLine="true"
             android:text="@{(@string/designation)+`:`+((language.equals(`en`))? resourcePerson.designation.name : resourcePerson.designation.name_bn)}"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/text_size_large"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="@id/constraintMain"
             app:layout_constraintLeft_toLeftOf="@id/constraintMain"
             app:layout_constraintRight_toRightOf="@id/constraintMain"
@@ -70,7 +71,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraingRight"
             android:layout_width="60dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/constraintMain"
             app:layout_constraintLeft_toRightOf="@id/constraintMain"
             app:layout_constraintRight_toRightOf="parent"
@@ -107,7 +108,6 @@
             android:id="@+id/constraintExpand"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="2dp"
             android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -118,15 +118,15 @@
         <TextView
             android:id="@+id/tvPhone"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="left"
             android:paddingVertical="2dp"
             android:singleLine="true"
             android:text="@{(@string/phone+`:`)+resourcePerson.first_mobile}"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/text_size_large"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="normal"
             app:layout_constraintBottom_toTopOf="@id/tvEmail"
             app:layout_constraintLeft_toLeftOf="@id/constraintExpand"
             app:layout_constraintRight_toRightOf="@id/constraintExpand"
@@ -135,18 +135,17 @@
         <TextView
             android:id="@+id/tvEmail"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="left"
-            android:paddingBottom="10dp"
             android:singleLine="true"
             android:text="@{(@string/email+`:`)+resourcePerson.first_email}"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/text_size_large"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="@+id/constraintExpand"
             app:layout_constraintLeft_toLeftOf="@id/constraintExpand"
             app:layout_constraintRight_toRightOf="@id/constraintExpand"
             app:layout_constraintTop_toBottomOf="@id/tvPhone" />
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

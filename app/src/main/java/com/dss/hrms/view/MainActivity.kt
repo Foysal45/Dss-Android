@@ -36,6 +36,7 @@ import com.dss.hrms.view.allInterface.OnNetworkStateChangeListener
 import com.dss.hrms.view.leave.LeaveActivity
 import com.dss.hrms.view.messaging.MessagingActivity
 import com.dss.hrms.view.notification.NotificationActivity
+import com.dss.hrms.view.notification.viewmodel.NotificationViewModel
 import com.dss.hrms.view.payroll.PayrollActivity
 import com.dss.hrms.view.receiver.NetworkChangeReceiver
 import com.dss.hrms.view.report.ReportActivity
@@ -70,7 +71,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
 
     var employee: Employee? = null
 
-
+    lateinit var notificationViewModel: NotificationViewModel
     lateinit var employeeViewModel: EmployeeViewModel
     var mNetworkReceiver: NetworkChangeReceiver? = null
     var utilViewModel: UtilViewModel? = null
@@ -85,7 +86,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         init()
         employeeViewModel?.apply {
             getUserPermissions()
-            getAllNotifications("mobile")
+
             userPermission.observe(this@MainActivity, Observer { list ->
                 list?.let {
 
@@ -109,31 +110,22 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             })
 
 
-            notifications?.observe(this@MainActivity, Observer { notificatiosList ->
-                notificatiosList?.let { list ->
+        }
 
-                    list?.let {
-                        var count = 0
-                        var i = 0
-                        while (i < list.size) {
-                            if (list.get(i).is_read == 0)
-                                count++
-
-                            i++
-                        }
-                        tvNotification.setText("${count}")
+        notificationViewModel.apply {
+            getAllNotifications()
+            totalUnRead?.observe(this@MainActivity, Observer { notificatiosList ->
+                notificatiosList?.let { totalUnreadNotificaiton ->
+                    totalUnreadNotificaiton?.let {
+                        tvNotification.setText("${it}")
                     }
                 }
             })
-
         }
+
         Log.e("mainactivity", "inject login data " + loginInfo?.email)
         Log.e("mainactivity", "inject employee data " + employeeProfileData?.employee?.profile_id)
         getEmployeeInfo()
-
-        employeeViewModel?.apply {
-
-        }
         notification.setOnClickListener {
             Intent(this, NotificationActivity::class.java).apply {
                 startActivity(this)
@@ -199,6 +191,8 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
     fun init() {
         employeeViewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
+        notificationViewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(NotificationViewModel::class.java)
         mNetworkReceiver = NetworkChangeReceiver(this)
         registerNetworkBroadcast()
     }

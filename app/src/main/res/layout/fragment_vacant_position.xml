@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout>
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        android:orientation="vertical"
-        android:padding="10dp"
         android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
         tools:context=".view.report.fragment.VacantPositionFragment">
 
         <LinearLayout
@@ -68,9 +68,9 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="10dp"
+            android:layout_weight="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/llDownload" />
@@ -81,6 +81,7 @@
             android:layout_marginBottom="10dp"
             android:orientation="vertical"
             android:paddingVertical="@dimen/_4sdp"
+            android:visibility="visible"
             app:layout_constraintTop_toTopOf="parent">
 
         </LinearLayout>

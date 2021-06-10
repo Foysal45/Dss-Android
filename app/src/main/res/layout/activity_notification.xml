@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.dss.hrms.view.notification.viewmodel.NotificationViewModel" />
+    </data>
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -34,10 +43,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:textStyle="bold"
                 android:text="@string/notifications"
                 android:textColor="@color/light_black"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -51,12 +60,20 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/llSearch" />
+
+            <ProgressBar
+                android:id="@+id/prLoading"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:visibility="@{viewModel.showLoadingMore ? View.VISIBLE : View.GONE}"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:id="@+id/tvEmptyNotification"

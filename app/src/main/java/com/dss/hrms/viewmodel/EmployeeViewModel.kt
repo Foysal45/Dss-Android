@@ -44,21 +44,21 @@ class EmployeeViewModel @Inject constructor(application: Application) :
         // }
     }
 
-    fun getAllNotifications(
-        platform: String?
-    ) {
-        viewModelScope.launch {
-            var response =
-                employeeInfoRepo.getAllNotifications(platform)
-
-            if (response is NotificationResponse) {
-                // Log.e("employeeviewmodel","response : ${response.data}")
-                _notifications?.postValue(response.data?.data)
-            } else {
-                _notifications?.postValue(null)
-            }
-        }
-    }
+//    fun getAllNotifications(
+//        platform: String?
+//    ) {
+//        viewModelScope.launch {
+//            var response =
+//                employeeInfoRepo.getAllNotifications(platform)
+//
+//            if (response is NotificationResponse) {
+//                // Log.e("employeeviewmodel","response : ${response.data}")
+//                _notifications?.postValue(response.data?.data)
+//            } else {
+//                _notifications?.postValue(null)
+//            }
+//        }
+//    }
 
     fun getUserPermissions(
     ) {

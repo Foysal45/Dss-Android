@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp"
+        android:fitsSystemWindows="true"
         tools:context=".view.payroll.fragment.EmployeeSalaryProcessFragment">
 
         <TextView
@@ -23,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingVertical="10dp"
             android:text="@{name}"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_extra_large"
@@ -112,7 +112,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:paddingBottom="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

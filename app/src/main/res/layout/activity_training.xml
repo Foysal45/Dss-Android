@@ -28,7 +28,19 @@
                     android:layout_height="match_parent"
                     android:gravity="center|right"
                     android:paddingHorizontal="10dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:gravity="left|center"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/training_management"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold" />
                     <ImageView
                         android:id="@+id/drawerIcon"
                         android:layout_width="wrap_content"

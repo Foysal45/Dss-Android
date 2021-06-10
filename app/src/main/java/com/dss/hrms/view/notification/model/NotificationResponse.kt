@@ -10,7 +10,9 @@ class NotificationResponse {
 
 
     data class NotificationData(
-        val data: List<Notification>? = null
+        val data: List<Notification>? = null,
+        val current_page: Int? = null,
+        val total_unread: Int? = null
     )
 
     data class Notification(

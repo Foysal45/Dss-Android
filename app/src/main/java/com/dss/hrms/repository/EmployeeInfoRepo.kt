@@ -33,14 +33,16 @@ class EmployeeInfoRepo @Inject constructor() {
     lateinit var employeeProfileData: EmployeeProfileData
 
 
-    suspend fun getAllNotifications(platform: String?): Any? {
+    suspend fun getAllNotifications(platform: String?, limit: Int?, page: Int?): Any? {
         val token = preparence?.getToken()
         return withContext(Dispatchers.IO) {
             try {
                 val response = notificationApiService?.getAllNotifications(
                     preparence.getLanguage()!!,
                     "Bearer ${token}",
-                    platform
+                    platform,
+                    page,
+                    limit
                 )
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) {
                     response?.body()

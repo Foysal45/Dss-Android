@@ -13,7 +13,7 @@
             type="String" />
     </data>
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rootConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintMain"
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/constraintExpand"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/constraingRight"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +36,7 @@
             android:id="@+id/tvName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="4dp"
+            android:layout_marginVertical="2dp"
             android:ellipsize="end"
             android:paddingHorizontal="4dp"
             android:text="@{((language.equals(`en`))?(@string/name_only)+`:`+batchSchedule.batch_name : (@string/name_only)+`:`+batchSchedule.batch_name_bn)}"
@@ -43,45 +44,39 @@
             android:textSize="@dimen/text_size_extra_large"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/tvCounter"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="@id/constraintMain"
             app:layout_constraintRight_toRightOf="@id/constraintMain"
             app:layout_constraintTop_toTopOf="@id/constraintMain" />
         <!--        (@string/course)+ `:`+-->
         <TextView
             android:id="@+id/tvCounter"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginVertical="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="2dp"
             android:ellipsize="end"
             android:paddingHorizontal="4dp"
             android:text="@{(@string/course)+`:`+((language.equals(`en`))?batchSchedule.course_schedule.course_schedule_title:batchSchedule.course_schedule.course_schedule_title_bn)}"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/text_size_large"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="@id/constraintMain"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="@id/constraintMain"
             app:layout_constraintRight_toRightOf="@id/constraintMain"
             app:layout_constraintTop_toBottomOf="@id/tvName" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraingRight"
-            android:layout_width="60dp"
-            android:layout_height="0dp"
-
-            app:layout_constraintBottom_toBottomOf="@id/constraintMain"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@id/constraintMain"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintRight_toRightOf="parent"></androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/imgEdit"
+            android:layout_height="50dp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:gravity="center|right"
             android:paddingHorizontal="5dp"
-            app:layout_constraintBottom_toBottomOf="@id/constraingRight"
             app:layout_constraintRight_toLeftOf="@id/imgDelete"
             app:layout_constraintTop_toTopOf="@id/constraingRight"
             app:srcCompat="@drawable/edit_icon_24"
@@ -105,58 +100,57 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintExpand"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/constraintMain"></androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/tvStartDate"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:id="@+id/tvTotalSeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:paddingHorizontal="4dp"
-            android:paddingVertical="5dp"
+            android:paddingVertical="2dp"
+            android:text="@{(@string/total_seats)+`:`+((language.equals(`en`))?batchSchedule.course_schedule.total_seat:batchSchedule.course_schedule.total_seat)}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="normal"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="@id/constraintExpand"
+            app:layout_constraintRight_toRightOf="@id/constraintExpand"
+            app:layout_constraintTop_toTopOf="@id/constraintExpand" />
+        <TextView
+            android:id="@+id/tvStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp"
             android:text="@{(@string/start_date)+`:`+((language.equals(`en`))?batchSchedule.start_date:batchSchedule.start_date)}"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/text_size_large"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="normal"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="@id/constraintExpand"
             app:layout_constraintRight_toRightOf="@id/constraintExpand"
             app:layout_constraintTop_toBottomOf="@id/tvTotalSeat" />
 
+
         <TextView
             android:id="@+id/tvEndDate"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:paddingHorizontal="4dp"
-            android:paddingVertical="5dp"
+            android:paddingVertical="2dp"
             android:text="@{(@string/end_date)+`:`+((language.equals(`en`))?batchSchedule.end_date:batchSchedule.end_date)}"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/text_size_large"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="normal"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="@id/constraintExpand"
             app:layout_constraintRight_toRightOf="@id/constraintExpand"
             app:layout_constraintTop_toBottomOf="@id/tvStartDate" />
-
-        <TextView
-            android:id="@+id/tvTotalSeat"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:ellipsize="end"
-            android:paddingHorizontal="4dp"
-            android:paddingVertical="5dp"
-            android:text="@{(@string/total_seats)+`:`+((language.equals(`en`))?batchSchedule.course_schedule.total_seat:batchSchedule.course_schedule.total_seat)}"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/text_size_large"
-            android:textStyle="bold"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="@id/constraintExpand"
-            app:layout_constraintRight_toRightOf="@id/constraintExpand"
-            app:layout_constraintTop_toTopOf="@id/constraintExpand" />
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -46,6 +46,7 @@
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="20dp"
                         app:cardElevation="10dp"
+                        android:layout_marginLeft="5dp"
                         app:cardMaxElevation="10dp"
                         app:cardPreventCornerOverlap="true"
                         app:cardUseCompatPadding="true">
@@ -53,12 +54,12 @@
 
                         <ImageView
                             android:id="@+id/img"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:layout_margin="5dp"
                             android:contentDescription="@string/app_name"
-                            android:src="@drawable/ic_messaging_system" />
+                            android:src="@drawable/bank_information" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -81,6 +82,7 @@
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="20dp"
                         app:cardElevation="10dp"
+                        android:layout_marginRight="5dp"
                         app:cardMaxElevation="10dp"
                         app:cardPreventCornerOverlap="true"
                         app:cardUseCompatPadding="true">
@@ -88,12 +90,12 @@
 
                         <ImageView
                             android:id="@+id/imgEmail"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:layout_margin="5dp"
                             android:contentDescription="@string/app_name"
-                            android:src="@drawable/ic_messaging_system" />
+                            android:src="@drawable/sallary_process" />
 
                         <TextView
                             android:layout_width="wrap_content"

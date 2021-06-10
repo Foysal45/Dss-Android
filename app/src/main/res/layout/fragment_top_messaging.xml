@@ -43,6 +43,7 @@
                         android:layout_width="0dp"
                         android:layout_height="200dp"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="20dp"
@@ -54,12 +55,12 @@
 
                         <ImageView
                             android:id="@+id/img"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:layout_margin="5dp"
                             android:contentDescription="@string/app_name"
-                            android:src="@drawable/ic_messaging_system" />
+                            android:src="@drawable/message" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -78,6 +79,7 @@
                         android:layout_width="0dp"
                         android:layout_height="200dp"
                         android:layout_gravity="center"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="20dp"
@@ -89,12 +91,12 @@
 
                         <ImageView
                             android:id="@+id/imgEmail"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:layout_margin="5dp"
                             android:contentDescription="@string/app_name"
-                            android:src="@drawable/ic_messaging_system" />
+                            android:src="@drawable/email" />
 
                         <TextView
                             android:layout_width="wrap_content"

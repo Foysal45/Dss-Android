@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -22,7 +24,7 @@ import javax.inject.Inject
 
 class NotificationAdapter @Inject constructor() :
     RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
-    var dataList: List<NotificationResponse.Notification>? = null
+    var dataList: List<NotificationResponse.Notification>? = arrayListOf()
     lateinit var context: Context
     lateinit var preparensce: MySharedPreparence
 
@@ -51,14 +53,16 @@ class NotificationAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var notification = dataList?.get(position)
+        //  var notification = getItem(position)
         holder.binding.notification = notification
 
 
         context?.let {
             Glide.with(it).applyDefaultRequestOptions(
                 RequestOptions()
-                    .placeholder(R.drawable.ic_baseline_image_24)
+                    .placeholder(R.drawable.ic_empty_user_icon)
             ).load(RetrofitInstance.BASE_URL + notification?.notified_by?.photo)
+                .placeholder(R.drawable.ic_empty_user_icon)
                 .into(holder.binding?.imageView)
         }
 
@@ -85,4 +89,29 @@ class NotificationAdapter @Inject constructor() :
     override fun getItemCount(): Int {
         return dataList?.size!!
     }
+
+    fun setNewNotification(
+        dataList: List<NotificationResponse.Notification>?
+    ) {
+        this.dataList = dataList
+        notifyDataSetChanged()
+    }
+
+    companion object {
+        private val USER_COMPARATOR =
+            object : DiffUtil.ItemCallback<NotificationResponse.Notification>() {
+                override fun areItemsTheSame(
+                    oldItem: NotificationResponse.Notification,
+                    newItem: NotificationResponse.Notification
+                ): Boolean =
+                    oldItem.id == newItem.id
+
+                override fun areContentsTheSame(
+                    oldItem: NotificationResponse.Notification,
+                    newItem: NotificationResponse.Notification
+                ): Boolean =
+                    newItem == oldItem
+            }
+    }
+
 }

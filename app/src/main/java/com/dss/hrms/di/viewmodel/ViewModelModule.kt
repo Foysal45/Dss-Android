@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.dss.hrms.view.leave.viewmodel.LeaveApplicationViewmodel
 import com.dss.hrms.view.leave.viewmodel.LeaveSummaryViewModel
 import com.dss.hrms.view.messaging.viewmodel.MessagingViewModel
+import com.dss.hrms.view.notification.viewmodel.NotificationViewModel
 import com.dss.hrms.view.payroll.viewmodel.PayRollBankInformationViewModel
 import com.dss.hrms.view.payroll.viewmodel.SalaryGenerateViewModel
 import com.dss.hrms.view.report.viewmodel.CommonReportViewModel
@@ -93,9 +94,15 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LeaveSummaryViewModel::class)
     abstract fun bindLeaveSummaryViewModel(leaveSummaryViewModel: LeaveSummaryViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(CommonReportViewModel::class)
     abstract fun bindCommonReportViewModel(commonReportViewModel: CommonReportViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NotificationViewModel::class)
+    abstract fun bindNotificationViewModel(notificationViewModel: NotificationViewModel): ViewModel
 
 }

@@ -132,7 +132,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="10dp"
                 android:weightSum="4">
 
                 <View
@@ -147,6 +146,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1.2"
                     android:gravity="center"
+                    android:paddingVertical="10dp"
                     android:paddingHorizontal="3dp"
                     android:text="@{(((language.equals(`en`))?leaveSummaray.name :leaveSummaray.name_bn)+`(`+leaveSummaray.total.toString()+`)`)}"
                     android:textColor="@color/black"
@@ -165,6 +165,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.8"
                     android:gravity="center"
+                    android:paddingVertical="10dp"
                     android:paddingHorizontal="3dp"
                     android:text="@{leaveSummaray.applied.toString()}"
                     android:textColor="@color/black"
@@ -183,6 +184,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:paddingVertical="10dp"
                     android:paddingHorizontal="3dp"
                     android:text="@{leaveSummaray.enjoyed.toString()}"
                     android:textColor="@color/black"
@@ -201,6 +203,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:paddingVertical="10dp"
                     android:paddingHorizontal="3dp"
                     android:text="@{leaveSummaray.remaining_balance.toString()}"
                     android:textColor="@color/black"
