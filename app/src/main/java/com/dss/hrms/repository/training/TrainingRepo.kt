@@ -57,6 +57,8 @@ class TrainingRepo @Inject constructor() {
                     null
 
             } catch (e: Exception) {
+
+                Log.e("repo", "response:..................................... ${e.message} ......................................header ${e}")
                 null
             }
 

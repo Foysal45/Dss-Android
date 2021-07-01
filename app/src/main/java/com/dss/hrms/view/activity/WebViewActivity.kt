@@ -47,7 +47,7 @@ class WebViewActivity : BaseActivity() {
 
         loadUr()
 
-        binding?.backBtnCV?.setOnClickListener {
+        binding?.backBtnIV?.setOnClickListener {
 
             onBackPressed()
         }

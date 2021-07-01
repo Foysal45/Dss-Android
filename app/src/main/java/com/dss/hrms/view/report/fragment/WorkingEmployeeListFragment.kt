@@ -2,20 +2,26 @@ package com.dss.hrms.view.report.fragment
 
 
 import android.Manifest
+import android.app.Dialog
 import android.app.DownloadManager
-import android.content.Context
+import android.content.*
+import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Environment.DIRECTORY_DOWNLOADS
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.dss.hrms.R
 import com.dss.hrms.databinding.FragmentWorkingEmployeeListBinding
 import com.dss.hrms.model.HeadOfficeDepartmentApiResponse
@@ -23,6 +29,7 @@ import com.dss.hrms.model.Office
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.retrofit.RetrofitInstance
+import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OfficeDataValueListener
@@ -35,6 +42,7 @@ import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.personal_info_spinner.view.*
+import java.io.File
 import java.util.*
 import javax.inject.Inject
 
@@ -65,8 +73,10 @@ class WorkingEmployeeListFragment : DaggerFragment() {
     var section: HeadOfficeDepartmentApiResponse.Section? = null
     var subSection: HeadOfficeDepartmentApiResponse.Subsection? = null
     var ctx: Context? = null
-
+    var downloadID: Long = -1
     var isOfficeAlreadySet = false
+    var dialog: Dialog? = null
+    lateinit var downloadManager: DownloadManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -80,6 +90,11 @@ class WorkingEmployeeListFragment : DaggerFragment() {
             isAlreadyViewCreated = true
             binding = FragmentWorkingEmployeeListBinding.inflate(inflater, container, false)
             init()
+            activity?.registerReceiver(
+                onDownloadComplete,
+                IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+            )
+            binding.employeeNameOrId.llBody.visibility = View.GONE
             loadDesignationList()
             binding.officeHeader.tvClose.visibility = View.GONE
             binding.headOfficesBranches.llBody.visibility =
@@ -156,6 +171,11 @@ class WorkingEmployeeListFragment : DaggerFragment() {
 
     }
 
+    override fun onDestroy() {
+        activity?.unregisterReceiver(onDownloadComplete)
+        super.onDestroy()
+    }
+
     private fun onDownload() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             Toast.makeText(
@@ -176,26 +196,53 @@ class WorkingEmployeeListFragment : DaggerFragment() {
 
     private fun downloadFile(fileName: String, desc: String, url: String) {
         // fileName -> fileName with extension
+        val file = File(activity?.getExternalFilesDir(null), "Dss")
         val request = DownloadManager.Request(Uri.parse(url))
             .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
             .setTitle(fileName)
             .setDescription(desc)
+            .setDestinationUri(Uri.fromFile(file))
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             .setAllowedOverMetered(true)
             .setAllowedOverRoaming(false)
-
             .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
-        val downloadManager = ctx?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadManager = ctx?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
-        val downloadID = downloadManager.enqueue(request)
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+        request.setDestinationInExternalFilesDir(
+            activity,
+            Environment.DIRECTORY_DOWNLOADS,
+            "dsshrm.pdf"
+        );
 
-        //   To Store file in External App-Specific Directory
-        //  .setDestinationInExternalFilesDir(context, Environment.DIRECTORY_MUSIC,fileName)
-
-        //   To Store file in External Public Directory
-        // .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,fileName)
-
+        dialog = CustomLoadingDialog().createLoadingDialog(activity)
+        dialog?.show()
+        downloadID = downloadManager.enqueue(request)
     }
+
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (downloadID === id) {
+                dialog?.dismiss()
+                Toast.makeText(activity, "Download Completed", Toast.LENGTH_SHORT).show()
+                Log.e(
+                    "uri",
+                    "uri.......................................................................${
+                        downloadManager.getUriForDownloadedFile(downloadID)
+                    }"
+                )
+                val action =
+                    WorkingEmployeeListFragmentDirections.actionWorkingEmployeeListFragmentToPdfViewerFragment(
+                        downloadManager.getUriForDownloadedFile(downloadID).toString(),
+                        getString(R.string.working_employee_list)
+                    )
+
+                findNavController().navigate(action)
+            }
+        }
+    }
+
 
     private fun getDownloadUrl(): String {
         Log.e(

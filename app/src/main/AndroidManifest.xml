@@ -18,6 +18,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".view.notification.NotificationActivity"></activity>
@@ -32,17 +33,17 @@
             android:name=".view.personalinfo.EmployeeInfoActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".view.login.ForgetPAssActivity"
+            android:name=".view.auth.ForgetPAssActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".view.login.ChangePassActivity"
+            android:name=".view.auth.ChangePassActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".view.login.OTPActivity"
+            android:name=".view.auth.OTPActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".view.MainActivity" />
         <activity
-            android:name=".view.login.LoginActivity"
+            android:name=".view.auth.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

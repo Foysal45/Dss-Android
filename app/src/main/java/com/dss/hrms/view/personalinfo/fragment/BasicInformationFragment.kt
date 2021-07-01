@@ -428,6 +428,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 }
             }
         } else if (requestCode == REQUEST_SELECT_PHOTO && resultCode == RESULT_OK && data != null) {
+            Log.e("url","uri .......................................................${data.data}")
             val resultUri: Uri? = data.data
             try {
                 activity?.let {

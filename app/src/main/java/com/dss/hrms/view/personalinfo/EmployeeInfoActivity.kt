@@ -19,7 +19,7 @@ import com.dss.hrms.view.activity.BaseActivity
 import com.dss.hrms.view.personalinfo.adapter.EmployeeViewPagerAdapter
 import com.dss.hrms.view.personalinfo.fragment.BasicInformationFragment
 import com.dss.hrms.view.personalinfo.fragment.FragmentEmployeeInfo
-import com.dss.hrms.view.login.LoginActivity
+import com.dss.hrms.view.auth.LoginActivity
 import com.dss.hrms.view.settings.SettingsActivity
 import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory

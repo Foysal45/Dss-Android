@@ -44,6 +44,9 @@ class EmployeeInfoRepo @Inject constructor() {
                     page,
                     limit
                 )
+
+                Log.e("messagebody","message ......................"+response?.message()+"             headers  "+response?.headers())
+                Log.e("messagebody","message ......................"+response?.message()+"             headers  "+response?.headers())
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) {
                     response?.body()
                 } else response?.let {

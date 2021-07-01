@@ -9,8 +9,6 @@ class BudgetAndSchedule {
         val code: Int?,
         val data: List<BatchSchedule>?
     )
-
-    data class BatchScheduleData(val data: List<BatchSchedule>?)
     data class BatchSchedule(
         val id: Int?,
         val course_schedule_id: Int?,
@@ -21,11 +19,17 @@ class BudgetAndSchedule {
         val end_date: String?,
         val reg_start_date: String,
         val reg_end_date: String?,
+        val course_co_coordinator_is_external: Int?,
+        val course_coordinator_is_external: Int?,
+        val external_coordinator: SpinnerDataModel?,
+        val external_co_coordinator: SpinnerDataModel?,
         val course_coordinator: Int?,
         val course_co_coordinator: Int?,
-        val staff1: Int?,
-        val staff2: Int?,
-        val staff3: Int?,
+        val co_coordinator: CommonClass?,
+        val coordinator: CommonClass?,
+        val staff1: CommonClass?,
+        val staff2: CommonClass?,
+        val staff3: CommonClass?,
         val status: Int,
         val course_schedule: CourseScheduleBatch
     )
@@ -52,8 +56,6 @@ class BudgetAndSchedule {
         val data: List<CourseSchedule>?
     )
 
-    data class CourseScheduleData(val data: List<CourseSchedule>?)
-
     data class CourseSchedule(
         val id: Int?,
         val course_schedule_title: String?,
@@ -61,8 +63,14 @@ class BudgetAndSchedule {
         val course_id: Int?,
         val total_seat: String?,
         val status: Int?,
-        val coordinator: CommonClass?,
-        val co_coordinator: CommonClass?,
+        val co_coordinator_is_external: Int?,
+        val coordinator_is_external: Int?,
+        val external_coordinator: SpinnerDataModel?,
+        val external_co_coordinator: SpinnerDataModel?,
+        val coordinator: Int?,
+        val co_coordinator: Int?,
+        val course_coordinator: CommonClass?,
+        val course_co_coordinator: CommonClass?,
         val staff1: CommonClass?,
         val staff2: CommonClass?,
         val staff3: CommonClass?,
@@ -119,28 +127,5 @@ class BudgetAndSchedule {
         val designation_id: Int?,
         val designation: SpinnerDataModel?
     )
-
-    data class Designation(
-        val id: Int?,
-        val name: String?,
-        val name_bn: String?,
-        val priority_order: Int?,
-        val status: Int?
-    )
-
-    data class CourseScheduleListResponse(val code: Int?, val data: List<CourseScheduleList>?)
     data class CourseListResponse(val code: Int?, val data: List<Course>?)
-    data class CourseScheduleList(
-        val id: Int?,
-        val course_schedule_title: String?,
-        val course_schedule_title_bn: String?,
-        val course_id: Int?,
-        val total_seat: String?,
-        val status: Int?,
-        val coordinator: Int?,
-        val co_coordinator: Int?,
-        val staff1: Int?,
-        val staff2: Int?,
-        val staff3: Int?
-    )
 }

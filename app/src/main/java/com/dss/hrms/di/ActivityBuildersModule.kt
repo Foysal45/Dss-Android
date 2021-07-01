@@ -16,10 +16,10 @@ import com.dss.hrms.di.viewmodel.ViewModelModule
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.activity.*
 import com.dss.hrms.view.leave.LeaveActivity
-import com.dss.hrms.view.login.ChangePassActivity
-import com.dss.hrms.view.login.ForgetPAssActivity
-import com.dss.hrms.view.login.LoginActivity
-import com.dss.hrms.view.login.OTPActivity
+import com.dss.hrms.view.auth.ChangePassActivity
+import com.dss.hrms.view.auth.ForgetPAssActivity
+import com.dss.hrms.view.auth.LoginActivity
+import com.dss.hrms.view.auth.OTPActivity
 import com.dss.hrms.view.messaging.MessagingActivity
 import com.dss.hrms.view.notification.NotificationActivity
 import com.dss.hrms.view.payroll.PayrollActivity

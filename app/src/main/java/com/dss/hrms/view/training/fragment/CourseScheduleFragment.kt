@@ -47,6 +47,7 @@ import javax.inject.Inject
 
 
 class CourseScheduleFragment : DaggerFragment() {
+
     @Inject
     lateinit var commonRepo: CommonRepo
 
@@ -75,6 +76,8 @@ class CourseScheduleFragment : DaggerFragment() {
     var isDesignationFirstSelection: Boolean = true
 
     var coordinator: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
+    var coordinatorExternal: SpinnerDataModel? = null
+    var cocoordinatorExternal: SpinnerDataModel? = null
     var cocoordinator: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
     var staff1: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
     var staff2: RoleWiseEmployeeResponseClass.RoleWiseEmployee? = null
@@ -104,7 +107,10 @@ class CourseScheduleFragment : DaggerFragment() {
         }
 
         binding.llSearch.setOnClickListener {
-            courseScheduleSearchDialog.showCourseScheduleSearchDialog(activity,budgetAndScheduleViewModel)
+            courseScheduleSearchDialog.showCourseScheduleSearchDialog(
+                activity,
+                budgetAndScheduleViewModel
+            )
         }
         binding.fab.setOnClickListener {
             showEditCreateDialog(Operation.CREATE, null)
@@ -178,6 +184,58 @@ class CourseScheduleFragment : DaggerFragment() {
         dialogTrainingLoyeoutBinding.courseScheduleHeader.tvClose.setOnClickListener {
             dialogCustome?.dismiss()
         }
+
+
+
+        if (courseSchedule?.coordinator_is_external == 1) {
+            dialogTrainingLoyeoutBinding.courseCoOrdinatorExternal.llBody.visibility =
+                View.VISIBLE
+            dialogTrainingLoyeoutBinding.courseCoOrdinator.llBody.visibility = View.GONE
+            dialogTrainingLoyeoutBinding.cbCoCoordinatorExternal.isChecked = true
+
+        } else {
+            dialogTrainingLoyeoutBinding.courseCoOrdinatorExternal.llBody.visibility = View.GONE
+            dialogTrainingLoyeoutBinding.courseCoOrdinator.llBody.visibility = View.VISIBLE
+            dialogTrainingLoyeoutBinding.cbCoCoordinatorExternal.isChecked = false
+        }
+
+
+
+        if (courseSchedule?.co_coordinator_is_external == 1) {
+            dialogTrainingLoyeoutBinding.courseCoCoOrdinatorExternal.llBody.visibility =
+                View.VISIBLE
+            dialogTrainingLoyeoutBinding.courseCoCoOrdinator.llBody.visibility = View.GONE
+            dialogTrainingLoyeoutBinding.cbCoCoCoordinatorExternal.isChecked = true
+        } else {
+            dialogTrainingLoyeoutBinding.courseCoCoOrdinatorExternal.llBody.visibility = View.GONE
+            dialogTrainingLoyeoutBinding.courseCoCoOrdinator.llBody.visibility = View.VISIBLE
+            dialogTrainingLoyeoutBinding.cbCoCoCoordinatorExternal.isChecked = false
+        }
+
+
+        dialogTrainingLoyeoutBinding.cbCoCoCoordinatorExternal.setOnClickListener {
+            if (dialogTrainingLoyeoutBinding.cbCoCoCoordinatorExternal.isChecked) {
+                dialogTrainingLoyeoutBinding.courseCoCoOrdinatorExternal.llBody.visibility =
+                    View.VISIBLE
+                dialogTrainingLoyeoutBinding.courseCoCoOrdinator.llBody.visibility = View.GONE
+            } else {
+                dialogTrainingLoyeoutBinding.courseCoCoOrdinatorExternal.llBody.visibility =
+                    View.GONE
+                dialogTrainingLoyeoutBinding.courseCoCoOrdinator.llBody.visibility = View.VISIBLE
+            }
+        }
+
+        dialogTrainingLoyeoutBinding.cbCoCoordinatorExternal.setOnClickListener {
+            if (dialogTrainingLoyeoutBinding.cbCoCoordinatorExternal.isChecked) {
+                dialogTrainingLoyeoutBinding.courseCoOrdinatorExternal.llBody.visibility =
+                    View.VISIBLE
+                dialogTrainingLoyeoutBinding.courseCoOrdinator.llBody.visibility = View.GONE
+            } else {
+                dialogTrainingLoyeoutBinding.courseCoOrdinatorExternal.llBody.visibility = View.GONE
+                dialogTrainingLoyeoutBinding.courseCoOrdinator.llBody.visibility = View.VISIBLE
+            }
+        }
+
         courseSchedule?.designations?.let {
             it.forEach { item ->
                 item?.designation?.let { it1 ->
@@ -190,6 +248,55 @@ class CourseScheduleFragment : DaggerFragment() {
                 }
             }
         }
+
+        Log.e(
+            "coordinatorid",
+            "coordination id .........................................${cocoordinatorExternal?.id}"
+        )
+
+        commonRepo.getCommonData("/api/auth/co-coordinator/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    //   Log.e("gender", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            dialogTrainingLoyeoutBinding?.courseCoCoOrdinatorExternal?.spinner!!,
+                            context,
+                            list,
+                            courseSchedule?.external_co_coordinator?.id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    cocoordinatorExternal = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
+
+
+        commonRepo.getCommonData("/api/auth/coordinator/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    //   Log.e("gender", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            dialogTrainingLoyeoutBinding?.courseCoOrdinatorExternal?.spinner!!,
+                            context,
+                            list,
+                            courseSchedule?.external_coordinator?.id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    coordinatorExternal = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
 
         commonRepo?.getCommonData("/api/auth/designation/list",
             object : CommonDataValueListener {
@@ -238,7 +345,7 @@ class CourseScheduleFragment : DaggerFragment() {
                         override fun selectedItem(any: Any?) {
 
                             any?.let {
-                               // Log.e("courseschedule","course schedule : ${(any as BudgetAndSchedule.CourseScheduleList).id}")
+                                // Log.e("courseschedule","course schedule : ${(any as BudgetAndSchedule.CourseScheduleList).id}")
                                 course = (any as BudgetAndSchedule.Course)
                             }
 
@@ -257,7 +364,7 @@ class CourseScheduleFragment : DaggerFragment() {
                     dialogTrainingLoyeoutBinding?.courseCoOrdinator?.spinner!!,
                     context,
                     it,
-                    courseSchedule?.coordinator?.id,
+                    courseSchedule?.course_coordinator?.id,
                     object : CommonSpinnerSelectedItemListener {
                         override fun selectedItem(any: Any?) {
 
@@ -275,7 +382,7 @@ class CourseScheduleFragment : DaggerFragment() {
                     dialogTrainingLoyeoutBinding?.courseCoCoOrdinator?.spinner!!,
                     context,
                     it,
-                    courseSchedule?.co_coordinator?.id,
+                    courseSchedule?.course_co_coordinator?.id,
                     object : CommonSpinnerSelectedItemListener {
                         override fun selectedItem(any: Any?) {
 
@@ -326,7 +433,7 @@ class CourseScheduleFragment : DaggerFragment() {
                 )
             })
             getRoleWiseEmployeeInfo(Role.STAFF1).observe(viewLifecycleOwner, Observer {
-                Log.e("staff1tag","staff 1 ${it.size}")
+                Log.e("staff1tag", "staff 1 ${it.size}")
                 RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
                     dialogTrainingLoyeoutBinding?.courseStaff1?.spinner!!,
                     context,
@@ -506,8 +613,22 @@ class CourseScheduleFragment : DaggerFragment() {
         )
         map.put("course_id", course?.id)
         map.put("designations", designationIdList)
-        map.put("coordinator", coordinator?.id)
-        map.put("co_coordinator", cocoordinator?.id)
+        map.put(
+            "co_coordinator_is_external",
+            dialogTrainingLoyeoutBinding.cbCoCoCoordinatorExternal.isChecked
+        )
+        map.put(
+            "coordinator_is_external",
+            dialogTrainingLoyeoutBinding.cbCoCoordinatorExternal.isChecked
+        )
+        map.put(
+            "coordinator",
+            if (dialogTrainingLoyeoutBinding.cbCoCoordinatorExternal.isChecked) coordinatorExternal?.id else coordinator?.id
+        )
+        map.put(
+            "co_coordinator",
+            if (dialogTrainingLoyeoutBinding.cbCoCoordinatorExternal.isChecked) cocoordinatorExternal?.id else cocoordinator?.id
+        )
         // map.put("designation_id", courseSchedule?.de)
         map.put("staff1", staff1?.id)
         map.put("staff2", staff2?.id)

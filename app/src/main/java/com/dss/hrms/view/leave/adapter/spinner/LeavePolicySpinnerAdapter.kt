@@ -40,11 +40,13 @@ class LeavePolicySpinnerAdapter {
                 i++
             }
         }
+
         if (list != null && list.size > 0 && context != null) {
             var adapter = ArrayAdapter(context!!, R.layout.spinner_layout, R.id.tvContent, list)
             adapter?.let { spinner.setAdapter(it) }
             spinner.setSelection(selectedPosition)
         }
+
         spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,

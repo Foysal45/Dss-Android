@@ -296,6 +296,8 @@
     <string name="batch_name">Batch Name</string>
     <string name="batch_name_bn">Batch Name(Bangla)</string>
     <string name="coordinator">Coordinator</string>
+    <string name="if_co_cordinator_is_external_dss">IF Co-Cordinator is External DSS</string>
+    <string name="if_cordinator_is_external_dss">IF Cordinator is External DSS</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="registration_start_date">Registration  Start Date</string>
@@ -405,6 +407,7 @@
     <string name="nominee_has_disability">Nominee Has Disability</string>
     <string name="nominee_signature">Nominee Signature</string>
     <string name="download_pdf">Download Pdf</string>
+    <string name="show_pdf">Show Pdf</string>
     <string name="no_responsible_person_found">No responsible person found</string>
     <string name="downloading_see_progess_on_notification_bar">Downloading... See progress on notification bar</string>
 

@@ -9,7 +9,7 @@
 
         <variable
             name="courseSchedule"
-            type="com.dss.hrms.view.training.model.BudgetAndSchedule.CourseScheduleBatch" />
+            type="com.dss.hrms.view.training.model.BudgetAndSchedule.CourseSchedule" />
 
         <variable
             name="batchSchedule"

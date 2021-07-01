@@ -36,7 +36,11 @@ class SpinnerAdapter {
                 if (preparence?.getLanguage().equals("en"))
                     list.add(dataList.get(i).name)
                 else
-                    list.add(dataList.get(i).name_bn)
+                    list.add(
+                        if (dataList.get(i).name_bn != null) dataList.get(i).name_bn else dataList.get(
+                            i
+                        ).name
+                    )
                 if (it.get(i).id == id) {
                     selectedPosition = i + 1
                 }
@@ -74,7 +78,7 @@ class SpinnerAdapter {
 
     }
 
-  fun setEmployeeTypeSpinner(
+    fun setEmployeeTypeSpinner(
         spinner: Spinner,
         context: Context?,
         dataList: List<SpinnerDataModel>?,
@@ -308,7 +312,7 @@ class SpinnerAdapter {
                 else
                     list.add(dataList.get(i).amount)
                 payScaleId?.let { it2 ->
-                    if (it2==it.get(i).id) {
+                    if (it2 == it.get(i).id) {
                         selectedPosition = i + 1
                     }
                 }

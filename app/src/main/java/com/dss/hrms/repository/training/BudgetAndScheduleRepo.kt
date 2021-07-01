@@ -25,15 +25,20 @@ class BudgetAndScheduleRepo @Inject constructor() {
     suspend fun getBatchScheduleList(): Any? {
         return withContext(Dispatchers.IO) {
             try {
+                Log.e("batchschedule","batch schedule.....................before.......................")
                 var response = trainingApiService.batchSchedule(
                     preparence.getLanguage()!!,
                     "Bearer ${preparence.getToken()!!}"
                 )
+
+                Log.e("batchschedule","batch schedule.....................dfsaaaaaaaaa.......................${response}")
+
                 if (response.body()?.code == 200 || response.body()?.code == 201)
                     response.body()
                 else
                     null
             } catch (e: Exception) {
+                Log.e("batchschedule","batch schedule.....................dfsaaaaaaaaa.......................${e.message}")
                 null
             }
         }

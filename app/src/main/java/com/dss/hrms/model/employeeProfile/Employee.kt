@@ -1,6 +1,7 @@
 package com.dss.hrms.model.employeeProfile
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -369,24 +370,13 @@ class Employee {
 
         @SerializedName("status")
         val status: Int = 0
-
-        @SerializedName("deleted_at")
-        val deleted_at: String? = null
-
-        @SerializedName("created_at")
-        val created_at: String? = null
-
-        @SerializedName("updated_at")
-        val updated_at: String? = null
-
-
         @SerializedName("roles")
         val roles: List<Role>? = null
     }
 
-    inner class Role {
+    class Role {
         @SerializedName("id")
-        val id: Int = 0
+        val id: Int? = 0
 
         @SerializedName("name")
         val name: String? = null
@@ -396,13 +386,6 @@ class Employee {
 
         @SerializedName("guard_name_bn")
         val guard_name_bn: String? = null
-
-        @SerializedName("created_at")
-        val created_at: String? = null
-
-        @SerializedName("updated_at")
-        val updated_at: String? = null
-
     }
 
     inner class Jobjoinings {

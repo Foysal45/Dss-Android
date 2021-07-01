@@ -112,10 +112,22 @@ class LeaveApplicationFragment : DaggerFragment() {
             getLeaveApplication(employee?.user?.employee_id.toString())
             leaveApplication.observe(viewLifecycleOwner, Observer { leaaveAppList ->
                 loadingDialog?.dismiss()
+
                 leaaveAppList?.let {
-                    dataList = leaaveAppList
+                    var list = arrayListOf<LeaveApplicationApiResponse.LeaveApplication>()
+                    list.addAll(leaaveAppList)
+                    dataList = list
                     prepareRecyleView()
                 }
+
+                if (leaaveAppList != null && leaaveAppList?.size!! > 0) {
+                    binding.emptyCard.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
+                } else {
+                    binding.emptyCard.visibility = View.VISIBLE
+                    binding.recyclerView.visibility = View.GONE
+                }
+
             })
         }
         return binding.root

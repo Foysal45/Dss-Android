@@ -292,6 +292,8 @@
     <string name="batch_name">ব্যাচ নাম</string>
     <string name="batch_name_bn">ব্যাচ নাম (বাংলা)</string>
     <string name="coordinator">কো-অর্ডিনেটর</string>
+    <string name="if_co_cordinator_is_external_dss">IF Co-Cordinator is External DSS</string>
+    <string name="if_cordinator_is_external_dss">IF Cordinator is External DSS</string>
     <string name="start_date">শুরুর তারিখ</string>
     <string name="end_date">শেষ তারিখ</string>
     <string name="registration_start_date">নিবন্ধন শুরুর তারিখ</string>
@@ -310,7 +312,7 @@
     <string name="select_employee">কর্মচারী নির্বাচন করুন</string>
     <string name="search_employee">কর্মচারী অনুসন্ধান করুন</string>
     <string name="search">অনুসন্ধান করুন</string>
-    <string name="office_lead_category">অফিস নেতৃত্ব বিভাগ</string>
+    <string name="office_lead_category">অফিস মুখ্য শ্রেণী</string>
     <string name="employee_name_or_id">কর্মকর্তা/কর্মচারীর নাম/আইডি</string>
     <string name="attachment">সংযুক্তি</string>
     <string name="ok">ঠিক আছে</string>
@@ -337,13 +339,13 @@
     <string name="casual_leave">নৈমিত্তিক ছুটি</string>
     <string name="sick_leave">অসুস্থতাজনিত ছুটি</string>
     <string name="ex_bangladesh_leave">	বহিঃ বাংলাদেশ ছুটি</string>
-    <string name="applied">Applied</string>
+    <string name="applied">আবেদন করেছেন</string>
     <string name="leave_balance">Leave Balance</string>
-    <string name="enjoyed">Enjoyed</string>
+    <string name="enjoyed">উপভোগ করেছেন</string>
     <string name="total">Total</string>
     <string name="total_bn">মোট</string>
-    <string name="remaining_balance">Remaining Balance</string>
-    <string name="balance">Balance</string>
+    <string name="remaining_balance">অবশিষ্ট পরিমান</string>
+    <string name="balance">পরিমান</string>
     <string name="account_type">অ্যাকাউন্ট ধরন</string>
     <string name="bank_name">ব্যাংকের নাম</string>
     <string name="bank_routing_number">ব্যাংক রাউটিং নম্বর</string>
@@ -374,6 +376,7 @@
     <string name="nominee_has_disability">নমিনির অক্ষমতা আছে</string>
     <string name="nominee_signature">নমিনির স্বাক্ষর</string>
     <string name="download_pdf">Pdf ডাউনলোড করুন </string>
+    <string name="show_pdf">Show Pdf</string>
     <string name="no_responsible_person_found">কোনও রেস্পন্সিবল পারসন  পাওয়া যায়নি</string>
     <string name="downloading_see_progess_on_notification_bar">Downloading... See progress on notification bar</string>
     <string name="post_code">Post Code</string>

@@ -110,7 +110,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:paddingHorizontal="3dp"
-                        android:text="@string/balance"
+                        android:text="@string/remaining_balance"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_medium"
                         android:textStyle="bold" />

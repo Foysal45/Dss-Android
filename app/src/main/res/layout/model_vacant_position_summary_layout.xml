@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingVertical="10dp"
+
                     android:weightSum="4">
 
                     <View
@@ -54,7 +54,7 @@
                         android:id="@+id/tvLeaveType"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-
+                        android:paddingVertical="10dp"
                         android:layout_weight="1.2"
                         android:gravity="center|left"
                         android:paddingHorizontal="3dp"
@@ -74,6 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="0.8"
+                        android:paddingVertical="10dp"
                         android:gravity="center"
                         android:paddingHorizontal="3dp"
                         android:text="@string/permitted"
@@ -93,6 +94,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:paddingVertical="10dp"
                         android:paddingHorizontal="3dp"
                         android:text="@string/working"
                         android:textColor="@color/black"
@@ -113,6 +115,7 @@
                         android:gravity="center"
                         android:paddingHorizontal="3dp"
                         android:text="@string/empty"
+                        android:paddingVertical="10dp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_medium"
                         android:textStyle="bold" />
@@ -134,7 +137,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="10dp"
                 android:weightSum="4">
 
                 <View
@@ -150,6 +152,7 @@
                     android:layout_weight="1.2"
                     android:gravity="center"
                     android:paddingHorizontal="3dp"
+                    android:paddingVertical="10dp"
                     android:text="@{(((language.equals(`en`))?vacantPositionSummary.designation :vacantPositionSummary.designation_bn))}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_small"
@@ -167,6 +170,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.8"
                     android:gravity="center"
+                    android:paddingVertical="10dp"
                     android:paddingHorizontal="3dp"
                     android:text="@{vacantPositionSummary.permitted.toString()}"
                     android:textColor="@color/black"
@@ -185,6 +189,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:paddingVertical="10dp"
                     android:paddingHorizontal="3dp"
                     android:text="@{vacantPositionSummary.working.toString()}"
                     android:textColor="@color/black"
@@ -202,6 +207,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:paddingVertical="10dp"
                     android:gravity="center"
                     android:paddingHorizontal="3dp"
                     android:text="@{vacantPositionSummary.empty.toString()}"

@@ -16,7 +16,6 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chaadride.network.error.ApiError
@@ -30,7 +29,7 @@ import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.CustomVisibility
 import com.dss.hrms.view.activity.BaseActivity
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
-import com.dss.hrms.view.login.LoginActivity
+import com.dss.hrms.view.auth.LoginActivity
 import com.dss.hrms.view.settings.SettingsActivity
 import com.dss.hrms.view.allInterface.OnNetworkStateChangeListener
 import com.dss.hrms.view.leave.LeaveActivity
@@ -52,7 +51,6 @@ import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.android.synthetic.main.nav_menu_layout.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.HashMap
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
@@ -84,6 +82,8 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         appContext = application
         context = this
         init()
+
+
         employeeViewModel?.apply {
             getUserPermissions()
 
@@ -210,6 +210,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
                             "mainactivity",
                             "inject employee data name : " + employeeProfileData?.employee?.name_bn
                         )
+                        Log.e("basic info","....................................................roles date ${employeeProfileData?.employee?.user?.roles?.size}")
                         //   Log.e("MainActivity", "response : " + any)
                     } else if (it is ApiError) {
 

@@ -484,6 +484,62 @@ class CommonRepo @Inject constructor() {
         return liveData
     }
 
+    fun getUserRole(
+        identity: String,
+        commonDataValueListener: CommonDataValueListener
+    ): MutableLiveData<List<SpinnerDataModel>>? {
+        val liveData: MutableLiveData<List<SpinnerDataModel>> =
+            MutableLiveData<List<SpinnerDataModel>>()
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getCommonData(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}",
+                identity
+            )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+
+                        if (code == 200 || code == 201) {
+                            val dataJO = jsonObjectParent.getJSONObject("data")
+                            val userJO = dataJO.getJSONObject("user")
+                            val roleJA = userJO.getJSONArray("roles")
+
+                            val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
+                            val dataList: List<SpinnerDataModel> =
+                                Gson().fromJson(roleJA.toString(), type)
+                            liveData.postValue(dataList)
+                            commonDataValueListener.valueChange(dataList)
+                        } else {
+                            liveData.postValue(null)
+                            commonDataValueListener.valueChange(null)
+                        }
+                    } catch (e: JSONException) {
+                        liveData.postValue(null)
+                        commonDataValueListener.valueChange(null)
+                    }
+                } else {
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    liveData.postValue(null)
+                    commonDataValueListener.valueChange(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
+                commonDataValueListener.valueChange(null)
+            }
+
+        })
+        return liveData
+    }
+
     fun getSpecificSalaryGrade(
         identity: String,
         payScaleValueListener: PayScaleValueListener

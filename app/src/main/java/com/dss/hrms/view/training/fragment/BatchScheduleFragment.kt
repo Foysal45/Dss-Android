@@ -20,9 +20,13 @@ import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentBatchScheduleBinding
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
+import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.*
+import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OnDateListener
+import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.training.`interface`.OnBatchScheduleClickListener
 import com.dss.hrms.view.training.adaoter.BatchScheduleAdapter
 import com.dss.hrms.view.training.adaoter.spinner.CourseScheduleSpinnerAdapter
@@ -39,6 +43,10 @@ import javax.inject.Inject
 
 
 class BatchScheduleFragment : DaggerFragment() {
+
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
@@ -67,6 +75,9 @@ class BatchScheduleFragment : DaggerFragment() {
     var courseScheduleListData: BudgetAndSchedule.CourseSchedule? = null
 
 
+    var coordinatorExternal: SpinnerDataModel? = null
+    var cocoordinatorExternal: SpinnerDataModel? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -78,6 +89,7 @@ class BatchScheduleFragment : DaggerFragment() {
         budgetAndScheduleViewModel.apply {
             var dialog = CustomLoadingDialog().createLoadingDialog(activity)
             getBatchSchedule()
+            Log.e("batchschedule", "batch schedule............................................")
             batchSchedule.observe(viewLifecycleOwner, Observer {
                 dialog?.dismiss()
                 it?.let {
@@ -88,7 +100,10 @@ class BatchScheduleFragment : DaggerFragment() {
         }
 
         binding.llSearch.setOnClickListener {
-            batchScheduleSearchDialog.showBatchScheduleSearchDialog(activity,budgetAndScheduleViewModel)
+            batchScheduleSearchDialog.showBatchScheduleSearchDialog(
+                activity,
+                budgetAndScheduleViewModel
+            )
         }
 
         binding.fab.setOnClickListener {
@@ -161,6 +176,65 @@ class BatchScheduleFragment : DaggerFragment() {
         dialogTrainingLoyeoutBinding.batchBatchName.etText.setText(batchSchedule?.batch_name)
         dialogTrainingLoyeoutBinding.batchBatchNameBn.etText.setText(batchSchedule?.batch_name_bn)
         dialogTrainingLoyeoutBinding.batchTotalSeatts.etText.setText(batchSchedule?.total_seat)
+
+        dialogTrainingLoyeoutBinding.batchScheduleHeader.tvClose.setOnClickListener {
+            dialogCustome?.dismiss()
+        }
+
+        Log.e(
+            "bathschedule",
+            "batchschedule...................course_co_coordinator_is_external............................................${batchSchedule?.course_co_coordinator_is_external}"
+        )
+        if (batchSchedule?.course_coordinator_is_external == 1) {
+            dialogTrainingLoyeoutBinding.batchCoOrdinatorExternal.llBody.visibility =
+                View.VISIBLE
+            dialogTrainingLoyeoutBinding.batchCoOrdinator.llBody.visibility = View.GONE
+            dialogTrainingLoyeoutBinding.cbBastchCoordinatorExternal.isChecked = true
+
+        } else {
+            dialogTrainingLoyeoutBinding.batchCoOrdinatorExternal.llBody.visibility = View.GONE
+            dialogTrainingLoyeoutBinding.batchCoOrdinator.llBody.visibility = View.VISIBLE
+            dialogTrainingLoyeoutBinding.cbBastchCoordinatorExternal.isChecked = false
+        }
+
+
+        if (batchSchedule?.course_co_coordinator_is_external == 1) {
+            dialogTrainingLoyeoutBinding.batchCoCoOrdinatorExternal.llBody.visibility =
+                View.VISIBLE
+            dialogTrainingLoyeoutBinding.batchCoCoOrdinator.llBody.visibility = View.GONE
+            dialogTrainingLoyeoutBinding.cbBastchCoCoordinatorExternal.isChecked = true
+        } else {
+            dialogTrainingLoyeoutBinding.batchCoCoOrdinatorExternal.llBody.visibility = View.GONE
+            dialogTrainingLoyeoutBinding.batchCoCoOrdinator.llBody.visibility = View.VISIBLE
+            dialogTrainingLoyeoutBinding.cbBastchCoCoordinatorExternal.isChecked = false
+        }
+
+
+        dialogTrainingLoyeoutBinding.cbBastchCoCoordinatorExternal.setOnClickListener {
+            if (dialogTrainingLoyeoutBinding.cbBastchCoCoordinatorExternal.isChecked) {
+                dialogTrainingLoyeoutBinding.batchCoCoOrdinatorExternal.llBody.visibility =
+                    View.VISIBLE
+                dialogTrainingLoyeoutBinding.batchCoCoOrdinator.llBody.visibility = View.GONE
+            } else {
+                dialogTrainingLoyeoutBinding.batchCoCoOrdinatorExternal.llBody.visibility =
+                    View.GONE
+                dialogTrainingLoyeoutBinding.batchCoCoOrdinator.llBody.visibility = View.VISIBLE
+            }
+        }
+
+        dialogTrainingLoyeoutBinding.cbBastchCoordinatorExternal.setOnClickListener {
+            if (dialogTrainingLoyeoutBinding.cbBastchCoordinatorExternal.isChecked) {
+                dialogTrainingLoyeoutBinding.batchCoOrdinatorExternal.llBody.visibility =
+                    View.VISIBLE
+                dialogTrainingLoyeoutBinding.batchCoOrdinator.llBody.visibility = View.GONE
+            } else {
+                dialogTrainingLoyeoutBinding.batchCoOrdinatorExternal.llBody.visibility = View.GONE
+                dialogTrainingLoyeoutBinding.batchCoOrdinator.llBody.visibility = View.VISIBLE
+            }
+        }
+
+
+
 
         dialogTrainingLoyeoutBinding.batchStartDate.tvText.setText(batchSchedule?.start_date?.let {
             DateConverter.changeDateFormateForShowing(
@@ -247,6 +321,52 @@ class BatchScheduleFragment : DaggerFragment() {
         }
 
 
+        commonRepo.getCommonData("/api/auth/co-coordinator/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    //   Log.e("gender", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            dialogTrainingLoyeoutBinding?.batchCoCoOrdinatorExternal?.spinner!!,
+                            context,
+                            list,
+                            batchSchedule?.external_co_coordinator?.id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    cocoordinatorExternal = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
+
+
+        commonRepo.getCommonData("/api/auth/coordinator/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    //   Log.e("gender", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            dialogTrainingLoyeoutBinding?.batchCoOrdinatorExternal?.spinner!!,
+                            context,
+                            list,
+                            batchSchedule?.external_coordinator?.id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    coordinatorExternal = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
+
+
         employeeViewModel?.apply {
             getRoleWiseEmployeeInfo(Role.COORDINATOR).observe(viewLifecycleOwner, Observer {
                 RoleWiseEmployeeAdapter().setRoleWiseEmployeeSpinner(
@@ -289,7 +409,7 @@ class BatchScheduleFragment : DaggerFragment() {
                     dialogTrainingLoyeoutBinding?.batchStaff1?.spinner!!,
                     context,
                     it,
-                    batchSchedule?.staff1,
+                    batchSchedule?.staff1?.id,
                     object : CommonSpinnerSelectedItemListener {
                         override fun selectedItem(any: Any?) {
 
@@ -307,7 +427,7 @@ class BatchScheduleFragment : DaggerFragment() {
                     dialogTrainingLoyeoutBinding?.batchStaff2?.spinner!!,
                     context,
                     it,
-                    batchSchedule?.staff2,
+                    batchSchedule?.staff2?.id,
                     object : CommonSpinnerSelectedItemListener {
                         override fun selectedItem(any: Any?) {
 
@@ -325,7 +445,7 @@ class BatchScheduleFragment : DaggerFragment() {
                     dialogTrainingLoyeoutBinding?.batchStaff3?.spinner!!,
                     context,
                     it,
-                    batchSchedule?.staff3,
+                    batchSchedule?.staff3?.id,
                     object : CommonSpinnerSelectedItemListener {
                         override fun selectedItem(any: Any?) {
 
@@ -540,8 +660,23 @@ class BatchScheduleFragment : DaggerFragment() {
         map.put("end_date", batchEndDate)
         map.put("reg_start_date", batchRegistrationStartDate)
         map.put("reg_end_date", batchRegistrationEndDate)
-        map.put("course_coordinator", coordinator?.id)
-        map.put("course_co_coordinator", cocoordinator?.id)
+
+        map.put(
+            "course_co_coordinator_is_external",
+            dialogTrainingLoyeoutBinding.cbBastchCoCoordinatorExternal.isChecked
+        )
+        map.put(
+            "course_coordinator_is_external",
+             dialogTrainingLoyeoutBinding.cbBastchCoordinatorExternal.isChecked
+        )
+        map.put(
+            "course_coordinator",
+            if (dialogTrainingLoyeoutBinding.cbBastchCoordinatorExternal.isChecked) coordinatorExternal?.id else coordinator?.id
+        )
+        map.put(
+            "course_co_coordinator",
+            if (dialogTrainingLoyeoutBinding.cbBastchCoCoordinatorExternal.isChecked) cocoordinatorExternal?.id else cocoordinator?.id
+        )
         // map.put("designation_id", courseSchedule?.de)
         map.put("staff1", staff1?.id)
         map.put("staff2", staff2?.id)

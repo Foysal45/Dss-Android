@@ -71,6 +71,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
     var employeeType: SpinnerDataModel? = null
     var maritalStatus: SpinnerDataModel? = null
     var hasDisability: SpinnerDataModel? = null
+    var roles: List<SpinnerDataModel>? = null
     var hasFreedomFighterQuota: SpinnerDataModel? = null
     var fileClickListener: FileClickListener? = null
     open var imageFile: File? = null
@@ -229,6 +230,15 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
                             }
                         )
+                    }
+                }
+            })
+
+        commonRepo.getUserRole("/api/auth/employee/${employee?.user?.employee_id}",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    list?.let {
+                        roles = it
                     }
                 }
             })
@@ -636,12 +646,22 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
     }
 
     fun getMapData(): HashMap<Any, Any?> {
+        var rolesList = arrayListOf<Int?>()
+        roles?.forEach { element ->
+            rolesList.add(element?.id)
+        }
+      //  rolesList.add(1)
+
         var date = DateConverter.changeDateFormateForSending(binding?.fDOB?.tvText?.text.toString())
         var employeeStatusTyypeDate =
             DateConverter.changeDateFormateForSending(binding?.fEmploymentStatusDate?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
-        Log.e("jobjoiningdate","....................................................jobjoining date ${employeeProfileData?.employee?.job_joining_date}")
+        Log.e(
+            "basicinfo",
+            "....................................................roles date ${employeeProfileData?.employee?.user?.employee_id}"
+        )
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
+        map.put("role", rolesList)
         map.put("job_joining_date", employeeProfileData?.employee?.job_joining_date)
         map.put("profile_id", binding?.fProfileId?.etText?.text.toString())
         map.put("name", binding?.fNameEng?.etText?.text.toString())
