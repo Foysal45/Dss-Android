@@ -66,6 +66,9 @@ class EmployeeInfoRepo @Inject constructor() {
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiService?.getEmployeeInfo("Bearer ${token}", employeeId)
+
+                Log.e("employee","...................response................${response?.body()}...........")
+
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) {
                     employeeProfileData.employee = response?.body()?.data as Employee
                     response?.body()?.data as Employee
@@ -77,6 +80,8 @@ class EmployeeInfoRepo @Inject constructor() {
                 }
             } catch (e: Exception) {
                 null
+                Log.e("employee","...................Exception................${e.message}...........")
+
             }
         }
     }

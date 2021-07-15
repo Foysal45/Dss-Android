@@ -15,9 +15,9 @@ class TrainingDashBoard {
     data class Dashboard(
            val course_shedules:List<BudgetAndSchedule.CourseSchedule>,
            val batch_shedules:List<BudgetAndSchedule.BatchSchedule>,
-           val course_sessions:List<CourseSessions>,
-           val course_modules:List<CourseModules>,
-           val course:List<BudgetAndSchedule.Course>,
+         //  val course_sessions:List<CourseSessions>,
+          // val course_modules:List<CourseModules>,
+          // val course:List<BudgetAndSchedule.Course>,
            val faqs:List<TrainingResponse.Faq>
     )
   data  class CourseSessions(

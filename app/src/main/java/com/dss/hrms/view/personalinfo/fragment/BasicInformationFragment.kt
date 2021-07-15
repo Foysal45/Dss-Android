@@ -81,8 +81,6 @@ import java.util.*
 import javax.inject.Inject
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
@@ -235,7 +233,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 v.fEmployeeFreedomFighterquota.tvText.setText(context?.getString(R.string.no))
         }
 
-        if (employee?.has_disability == 0) {
+        if (employee?.has_disability==true) {
             Log.e("hasdisability", "" + employee?.has_disability)
             v.fDisability.tvText.setText("" + context?.getString(R.string.no))
             v.fDisabilityDegree.llBody.visibility = View.GONE
@@ -494,7 +492,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             }
             if (photoFile != null) {
                 val photoURI: Uri = FileProvider.getUriForFile(
-                    activity!!,
+                    requireActivity(),
                     "com.dss.hrms.customerfileprovider",
                     photoFile
                 )

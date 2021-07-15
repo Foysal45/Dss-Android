@@ -107,7 +107,6 @@ class BudgetAndSchedule {
         val religion_id: Int?,
         val blood_group_id: Int?,
         val marital_status_id: Int?,
-        val has_disability: Int?,
         val has_freedom_fighter_quota: Int?,
         val disability_type_id: String?,
         val disability_degree_id: String?,

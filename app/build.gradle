@@ -217,6 +217,10 @@ dependencies {
 //...................pdf viewer...........
     implementation 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
 
+    // add these lines in your app build.gradle
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'com.google.android.gms:play-services-auth-api-phone:17.1.0'
+
 }
 // Apply the Crashlytics Gradle plugin
 apply plugin: 'com.google.firebase.crashlytics'

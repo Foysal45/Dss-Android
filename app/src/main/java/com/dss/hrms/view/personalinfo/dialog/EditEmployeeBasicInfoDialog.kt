@@ -349,7 +349,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 binding?.fDisability?.spinner!!,
                 context,
                 it,
-                employee?.has_disability,
+                if (employee?.has_disability) 1 else 0,
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
                         hasDisability = any as SpinnerDataModel
@@ -679,7 +679,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("blood_group_id", bloodGroup?.id)
         map.put("religion_id", religion?.id)
         map.put("employee_type_id", employee?.employee_type_id)
-        map.put("has_disability", hasDisability?.id)
+        map.put("has_disability", if ( hasDisability?.id==1) true else false)
         employeeType?.id?.let { map.put("employee_type_id", it) }
         employmentStatusType?.id?.let { map.put("employment_status_id", it) }
         hasFreedomFighterQuota?.id?.let { map.put("has_freedom_fighter_quota", it) }

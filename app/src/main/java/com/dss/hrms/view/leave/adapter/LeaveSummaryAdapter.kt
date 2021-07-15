@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelLeaveApplicationLayoutBinding
 import com.dss.hrms.databinding.ModelLeaveSummaryLayoutBinding
+import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.view.leave.`interface`.OnLeaveApplicationClickListener
 import com.dss.hrms.view.leave.model.LeaveApplicationApiResponse
 import com.dss.hrms.view.leave.model.LeaveSummaryApiResponse
@@ -49,17 +50,18 @@ class LeaveSummaryAdapter @Inject constructor() :
 
         holder.binding.leaveSummaray = leaveSummary
         holder.binding.language = preparensce.getLanguage()
+        holder.binding.converter = ConvertNumber()
 
         if (position >= 1) {
             holder.binding.llHeader.visibility = View.GONE
 
-        }else{
+        } else {
             holder.binding.llHeader.visibility = View.VISIBLE
         }
         dataList?.let {
             if (position + 1 >= it.size) {
                 holder.binding.horizontalView.visibility = View.VISIBLE
-            }else{
+            } else {
                 holder.binding.horizontalView.visibility = View.GONE
             }
         }
