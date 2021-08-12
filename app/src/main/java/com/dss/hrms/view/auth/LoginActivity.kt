@@ -18,9 +18,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.RequestManager
-import com.chaadride.network.error.ApiError
-import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
+import com.dss.hrms.model.error.ApiError
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.model.login.LoginInfo
 import com.dss.hrms.util.CustomVisibility
 import com.dss.hrms.view.MainActivity

@@ -40,14 +40,12 @@ android {
         release {
             minifyEnabled false
             shrinkResources false
-            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             debuggable false
             minifyEnabled false
             shrinkResources false
-            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -111,7 +109,7 @@ dependencies {
     annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.0.0'
 
     //New Material Design
-    implementation 'com.google.android.material:material:1.2.0-alpha06'
+    implementation 'com.google.android.material:material:1.4.0'
 
 
     // Import the BoM for the Firebase platform

@@ -9,10 +9,10 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
-import com.chaadride.network.error.ApiError
-import com.chaadride.network.error.ErrorUtils2
 
 import com.dss.hrms.R
+import com.dss.hrms.model.error.ApiError
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.model.login.ResetPassword
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.view.activity.BaseActivity

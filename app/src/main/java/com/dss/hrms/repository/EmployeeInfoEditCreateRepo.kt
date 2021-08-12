@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.btbapp.alquranapp.retrofit.ApiService
-import com.chaadride.network.error.ErrorUtils2
+import com.dss.hrms.model.error.ErrorUtils2
 import com.google.gson.Gson
 import com.namaztime.namaztime.database.MySharedPreparence
 import io.reactivex.Observer

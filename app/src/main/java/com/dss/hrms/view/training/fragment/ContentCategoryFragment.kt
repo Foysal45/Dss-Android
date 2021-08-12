@@ -17,13 +17,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chaadride.network.error.ApiError
-import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentContentCategoryBinding
 import com.dss.hrms.model.TrainingResponse
+import com.dss.hrms.model.error.ApiError
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.Operation
 import com.dss.hrms.view.MainActivity

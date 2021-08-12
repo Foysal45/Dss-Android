@@ -5,10 +5,10 @@ import android.util.JsonReader
 import android.util.Log
 import android.widget.Toast
 import com.btbapp.alquranapp.retrofit.ApiService
-import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.retrofit.NotificationApiService
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.coroutines.Dispatchers

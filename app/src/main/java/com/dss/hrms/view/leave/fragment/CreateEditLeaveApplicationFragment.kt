@@ -23,13 +23,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.chaadride.network.error.ApiError
-import com.chaadride.network.error.ErrorUtils2
+
 import com.dss.hrms.R
 import com.dss.hrms.databinding.FragmentCreateEditLeaveApplicationBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.model.error.ApiError
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.*
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
@@ -248,6 +249,9 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
 
 
         binding?.lFromDate?.tvText?.setOnClickListener({
+//            val locale = resources.configuration.locale
+//            Locale.setDefault(locale)
+
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding?.lFromDate?.tvText?.setText("" + it) }
@@ -399,7 +403,7 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
                 ""
                 //"1", "1", "1", "1", "1", "Raju"
             ).observe(viewLifecycleOwner, Observer {
-                Log.e("data", "datalist : ${it.size}")
+           //     Log.e("data", "datalist : ${it.size}")
                 it?.let {
                     totalResposiblePersonList = it
                 }

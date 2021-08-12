@@ -18,11 +18,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.chaadride.network.error.ApiError
 import com.dss.hrms.R
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.login.LoginInfo
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog

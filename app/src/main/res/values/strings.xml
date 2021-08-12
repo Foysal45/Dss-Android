@@ -175,7 +175,7 @@
     <string name="police_station">Police Station(English)</string>
     <string name="police_station_bn">Police Station(Bangla)</string>
     <string name="upazila">Upazila</string>
-    <string name="union_or_municiplity">Union/Municipality</string>
+    <string name="union_or_municiplity">Type (City corp/Upazila/Municipality)</string>
     <string name="division">Division</string>
     <string name="phone_mobile"><![CDATA[Phone & Mobile No.]]></string>
     <string name="name_deg">Name of Degree</string>
@@ -219,7 +219,7 @@
     <string name="employee_status_date">Employment Status Date</string>
     <string name="has_freedom_fighter_quota">Has Freedom Fighter Quota ?</string>
     <string name="current_job">Current Job</string>
-    <string name="has_disability">Has Disability</string>
+    <string name="has_disability">Disability (PWDs)</string>
     <string name="profile_id">Profile  ID</string>
     <string name="birth">Date of Birth</string>
     <string name="birth_certificate_no">Birth Certificate No</string>

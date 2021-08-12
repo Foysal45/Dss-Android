@@ -27,8 +27,7 @@ class PdfViewerFragment : DaggerFragment(), OnLoadCompleteListener, OnPageChange
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity?)!!.toolBar!!.title = args?.title
         view?.let {
-            Navigation.findNavController(it)
-                .getCurrentDestination()?.setLabel("Hello")
+          //  Navigation.findNavController(it).getCurrentDestination()?.setLabel("Hello")
         }
 
     }

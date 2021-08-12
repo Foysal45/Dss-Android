@@ -11,12 +11,12 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import com.chaadride.network.error.ApiError
-import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.FragmentMessageBinding
 import com.dss.hrms.model.Office
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
+import com.dss.hrms.model.error.ApiError
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter

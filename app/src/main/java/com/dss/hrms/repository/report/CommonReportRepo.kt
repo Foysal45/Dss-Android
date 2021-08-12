@@ -3,7 +3,7 @@ package com.dss.hrms.repository.report
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.chaadride.network.error.ErrorUtils2
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.retrofit.ReportApiService
 import com.dss.hrms.view.report.VacantPositionSummaryValueListener
 import com.google.gson.Gson

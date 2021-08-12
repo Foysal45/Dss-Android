@@ -13,9 +13,9 @@ import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import com.chaadride.network.error.ApiError
-import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
+import com.dss.hrms.model.error.ApiError
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.model.login.ResetPasswordReq
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.view.activity.BaseActivity

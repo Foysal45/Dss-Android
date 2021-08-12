@@ -1,7 +1,4 @@
-package com.chaadride.network.error
-
-
-
+package com.dss.hrms.model.error
 class Error (
     private var field: String,
     private var message: List<String>

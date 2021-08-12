@@ -29,13 +29,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
-import com.chaadride.network.error.ApiError
-import com.chaadride.network.error.ErrorUtils2
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentResourcePersonBinding
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.TrainingResponse
+import com.dss.hrms.model.error.ApiError
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
@@ -745,6 +745,5 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
             }
         }
     }
-
 
 }

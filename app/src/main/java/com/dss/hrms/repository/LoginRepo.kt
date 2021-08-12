@@ -3,7 +3,7 @@ package com.dss.hrms.repository
 import android.app.Application
 import android.util.Log
 import com.btbapp.alquranapp.retrofit.ApiService
-import com.chaadride.network.error.ErrorUtils2
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.model.login.ResetPassword
 import com.dss.hrms.model.login.ResetPasswordReq
 import com.dss.hrms.model.login.VerifyOtp

@@ -3,7 +3,7 @@ package com.dss.hrms.repository.payroll
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.chaadride.network.error.ErrorUtils2
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.retrofit.PayrollApiService
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.coroutines.Dispatchers

@@ -19,8 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chaadride.network.error.ApiError
-import com.chaadride.network.error.ErrorUtils2
+
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogLeaveManagementLayoutBinding
 import com.dss.hrms.databinding.FragmentLeaveApplicationBinding
@@ -28,6 +27,8 @@ import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.model.error.ApiError
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.util.*
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener

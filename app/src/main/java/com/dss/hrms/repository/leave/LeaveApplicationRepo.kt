@@ -2,7 +2,7 @@ package com.dss.hrms.repository.leave
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.chaadride.network.error.ErrorUtils2
+import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.retrofit.LeaveApiService
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.coroutines.Dispatchers
