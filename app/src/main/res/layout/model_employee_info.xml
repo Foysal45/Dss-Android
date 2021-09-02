@@ -69,6 +69,18 @@
                                 android:id="@+id/fAddressUnion"
                                 layout="@layout/personel_information_view_field" />
 
+
+                            <include
+                                android:id="@+id/fAddressLocalName"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fAddressUnionName"
+                                layout="@layout/personel_information_view_field" />
+
+
+
                             <include
                                 android:id="@+id/fAddressPoliceStation"
                                 layout="@layout/personel_information_view_field" />

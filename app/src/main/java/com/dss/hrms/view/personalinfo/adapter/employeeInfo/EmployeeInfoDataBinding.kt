@@ -3,6 +3,7 @@ package com.dss.hrms.view.personalinfo.adapter.employeeInfo
 import android.content.Context
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
@@ -184,6 +185,31 @@ class EmployeeInfoDataBinding @Inject constructor() {
             addresses.upazila?.name?.let { binding.fAddressUpazila.tvText.setText(it) }
             addresses.police_station_bn?.let { binding.fAddressPoliceStationBn.tvText.setText(it) }
 
+            addresses.localGovernmentType?.name?.let {
+                binding.fAddressUnion.tvText.text = it
+            }
+
+            // adding check for  cilty , municipility  or union
+            binding.fAddressLocalName.tvTitle.setText("সিটি কর্পোরেশনের নাম") 
+
+            if(addresses.local_government_type_id == 1  ){
+                // city corpo
+                addresses.cityCorporation?.name?.let {
+                    binding.fAddressLocalName.tvText.text = it
+                }
+
+                binding.fAddressLocalName.tvTitle.text = "সিটি কর্পোরেশনের নাম"
+
+            }else if ( addresses.local_government_type_id == 2  ){
+                // municipility
+
+            }else if (addresses.local_government_type_id == 3  ){
+                // upzilla
+
+            }
+
+
+
 
         } else {
             addresses.district?.name_bn?.let {
@@ -215,10 +241,14 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 )
             }
             addresses.division?.name_bn?.let { binding.fAddressDivision.tvText.setText(it) }
-            addresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.setText(it) }
-            addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
-            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
+            addresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.text = it }
+            addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.text = it }
+            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.text = it }
             addresses.upazila?.name_bn?.let { binding.fAddressUpazila.tvText.setText(it) }
+
+            addresses.localGovernmentType?.name_bn?.let {
+                binding.fAddressUnion.tvText.text = it
+            }
         }
     }
 

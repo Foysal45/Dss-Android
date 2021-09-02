@@ -1,5 +1,6 @@
 package com.dss.hrms.model.employeeProfile
 
+import com.dss.hrms.model.Municipalities
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
@@ -371,6 +372,7 @@ class Employee {
 
         @SerializedName("status")
         val status: Int = 0
+
         @SerializedName("roles")
         val roles: List<Role>? = null
     }
@@ -871,6 +873,18 @@ class Employee {
 
         @SerializedName("upazila")
         var upazila: Upazila? = null
+
+        @SerializedName("local_government_type")
+        var localGovernmentType: LocalGovernmentType? = null
+
+        @SerializedName("city_corporation")
+        var cityCorporation: CityCorporation? = null
+
+        @SerializedName("municipality")
+        var municipality: municipality? = null
+
+        @SerializedName("Union")
+        var union: Union? = null
     }
 
     inner class PermanentAddresses {
@@ -953,6 +967,58 @@ class Employee {
         var upazila: Upazila? = null
 
     }
+
+    inner class LocalGovernmentType {
+        @SerializedName("id")
+        val id: Int = 0
+
+        @SerializedName("name")
+        val name: String? = null
+
+        @SerializedName("name_bn")
+        val name_bn: String? = null
+
+        @SerializedName("status")
+        val status: Int = 0
+
+        @SerializedName("deleted_at")
+        val deleted_at: String? = null
+
+        @SerializedName("created_at")
+        val created_at: String? = null
+
+        @SerializedName("updated_at")
+        val updated_at: String? = null
+
+    }
+
+    inner class CityCorporation {
+        @SerializedName("id")
+        val id: Int = 0
+
+        @SerializedName("division_id")
+        val divisionID: Int = 0
+
+        @SerializedName("district_id")
+        val districtID: Int = 0
+
+        val name: String? = null
+
+        @SerializedName("name_bn")
+        val nameBn: String? = null
+
+        val status: Int = 0
+
+        @SerializedName("deleted_at")
+        val deletedAt: String? = null
+
+        @SerializedName("created_at")
+        val createdAt: String? = null
+
+        @SerializedName("updated_at")
+        val updatedAt: String? = null
+    }
+
 
     inner class EducationalQualifications {
 
@@ -2128,6 +2194,62 @@ class Employee {
 
         @SerializedName("district_id")
         val district_id: Int = 0
+
+        @SerializedName("name")
+        val name: String? = null
+
+        @SerializedName("name_bn")
+        val name_bn: String? = null
+
+        @SerializedName("status")
+        val status: Int = 0
+
+        @SerializedName("deleted_at")
+        val deleted_at: String? = null
+
+        @SerializedName("created_at")
+        val created_at: String? = null
+
+        @SerializedName("updated_at")
+        val updated_at: String? = null
+    }
+
+    inner class Union {
+        @SerializedName("id")
+        val id: Int = 0
+
+        @SerializedName("district_id")
+        val upazila_id: Int = 0
+
+        @SerializedName("name")
+        val name: String? = null
+
+        @SerializedName("name_bn")
+        val name_bn: String? = null
+
+        @SerializedName("status")
+        val status: Int = 0
+
+        @SerializedName("is_municipality")
+        val is_municipality: Boolean? = null
+
+        @SerializedName("deleted_at")
+        val deleted_at: String? = null
+
+        @SerializedName("created_at")
+        val created_at: String? = null
+
+        @SerializedName("updated_at")
+        val updated_at: String? = null
+    }
+
+    inner class municipality {
+
+        @SerializedName("id")
+        val id: Int = 0
+
+        @SerializedName("district_id")
+        val upazila_id: Int = 0
 
         @SerializedName("name")
         val name: String? = null
