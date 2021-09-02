@@ -2,26 +2,19 @@ package com.dss.hrms.view.dialog
 
 import android.app.Dialog
 import android.content.Context
-import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
-import androidx.navigation.fragment.findNavController
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogOfficeSearchBinding
-import com.dss.hrms.databinding.DialogPayrollManagementLayoutBinding
 import com.dss.hrms.model.HeadOfficeDepartmentApiResponse
 import com.dss.hrms.model.Office
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.Operation
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.HeadOfficeDepartmentDataValueListener
@@ -31,9 +24,6 @@ import com.dss.hrms.view.spinner.CommonSpinnerAdapter
 import com.dss.hrms.viewmodel.CommonViewModel
 import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_employee_bottom_sheet.view.*
-import retrofit2.http.Query
 import java.util.HashMap
 import javax.inject.Inject
 

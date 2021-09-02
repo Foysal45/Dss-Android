@@ -56,7 +56,8 @@ class Employee {
     val has_disability: Boolean = false
 
     @SerializedName("has_freedom_fighter_quota")
-    val has_freedom_fighter_quota: Int? = 0
+    val has_freedom_fighter_quota: Boolean = false
+
 
     @SerializedName("disability_type_id")
     val disability_type_id: Int = 0
@@ -790,7 +791,6 @@ class Employee {
         @SerializedName("marital_status")
         val marital_status: MaritalStatus? = null
     }
-
 
     inner class PresentAddresses {
 

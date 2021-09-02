@@ -61,7 +61,7 @@ class BudgetAndSchedule {
         val course_schedule_title: String?,
         val course_schedule_title_bn: String?,
         val course_id: Int?,
-        val total_seat: String?,
+        val total_seat: Int?,
         val status: Int?,
         val co_coordinator_is_external: Int?,
         val coordinator_is_external: Int?,
@@ -101,13 +101,13 @@ class BudgetAndSchedule {
         val fathers_name_bn: String?,
         val mothers_name: String?,
         val mothers_name_bn: String?,
-        val nid_no: String?,
+        val nid_no: Double?,
         val tin_no: String?,
         val punch_id: String?,
         val religion_id: Int?,
         val blood_group_id: Int?,
         val marital_status_id: Int?,
-        val has_freedom_fighter_quota: Int?,
+        val has_freedom_fighter_quota: Boolean?,
         val disability_type_id: String?,
         val disability_degree_id: String?,
         val disabled_person_id: String?,
@@ -116,8 +116,8 @@ class BudgetAndSchedule {
         val job_joining_date: String?,
         val employee_type_id: Int?,
         val status: Int?,
-        val present_basic_salary: String?,
-        val present_gross_salary: String?
+        val present_basic_salary: Double?,
+        val present_gross_salary: Double?
     )
 
     data class Designations(

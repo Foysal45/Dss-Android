@@ -228,7 +228,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         }
 
         employee?.has_freedom_fighter_quota?.let {
-            if (it == 1)
+            if (it)
                 v.fEmployeeFreedomFighterquota.tvText.setText(context?.getString(R.string.yes)) else
                 v.fEmployeeFreedomFighterquota.tvText.setText(context?.getString(R.string.no))
         }

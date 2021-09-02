@@ -366,7 +366,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 binding?.fFreedomFighterQuota?.spinner!!,
                 context,
                 it,
-                employee?.has_freedom_fighter_quota,
+                if (employee?.has_freedom_fighter_quota) 1 else 0,
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
                         hasFreedomFighterQuota = any as SpinnerDataModel
@@ -650,7 +650,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         roles?.forEach { element ->
             rolesList.add(element?.id)
         }
-      //  rolesList.add(1)
+        //  rolesList.add(1)
 
         var date = DateConverter.changeDateFormateForSending(binding?.fDOB?.tvText?.text.toString())
         var employeeStatusTyypeDate =

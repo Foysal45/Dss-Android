@@ -17,6 +17,7 @@ import javax.inject.Inject
 
 
 class EmployeeInfoRepo @Inject constructor() {
+
     @Inject
     lateinit var application: Application
 
@@ -72,6 +73,8 @@ class EmployeeInfoRepo @Inject constructor() {
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) {
                     employeeProfileData.employee = response?.body()?.data as Employee
                     response?.body()?.data as Employee
+                    Log.d("response  tariqul ", ""+ response?.body()!!.data?.employee_quotas?.get(0)!!.quotaInformation)
+
                 } else response?.let {
                     var apiError = ErrorUtils2.parseError(
                         it

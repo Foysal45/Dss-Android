@@ -401,7 +401,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fJobJoiningOffice.tvTitle.setText(context.getString(R.string.office))
         binding.fJobJoiningDesignation.tvTitle.setText(context.getString(R.string.designation))
         binding.fJobJoiningAdditionalDesignation.tvTitle.setText(context.getString(R.string.additional_designation))
-        binding.fJobJoiningDepartment.tvTitle.setText(context.getString(R.string.depertment))
+       // binding.fJobJoiningDepartment.tvTitle.setText(context.getString(R.string.depertment))
         binding.fJobJoiningJobType.tvTitle.setText(context.getString(R.string.job_type))
         binding.fJobJoiningJoiningDate.tvTitle.setText(context.getString(R.string.joning_date))
         binding.fJobJoiningConfirmationDate.tvTitle.setText(context.getString(R.string.confirmation_date))
@@ -436,7 +436,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
             jobjoinings.office?.office_name?.let { binding.fJobJoiningOffice.tvText.setText(it) }
             jobjoinings.designation?.name?.let { binding.fJobJoiningDesignation.tvText.setText(it) }
             jobjoinings.additional_designation?.name?.let { binding.fJobJoiningAdditionalDesignation.tvText.setText(it) }
-            jobjoinings.department?.name?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
+          //  jobjoinings.department?.name?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
             jobjoinings.job_type?.name?.let { binding.fJobJoiningJobType.tvText.setText(it) }
             jobjoinings.joining_date?.let {
                 binding.fJobJoiningJoiningDate.tvText.setText(
@@ -469,7 +469,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
             jobjoinings.office?.office_name_bn?.let { binding.fJobJoiningOffice.tvText.setText(it) }
             jobjoinings.designation?.name_bn?.let { binding.fJobJoiningDesignation.tvText.setText(it) }
             jobjoinings.additional_designation?.name_bn?.let { binding.fJobJoiningAdditionalDesignation.tvText.setText(it) }
-            jobjoinings.department?.name_bn?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
+           // jobjoinings.department?.name_bn?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
             jobjoinings.job_type?.name_bn?.let { binding.fJobJoiningJobType.tvText.setText(it) }
             jobjoinings.joining_date?.let {
                 binding.fJobJoiningJoiningDate.tvText.setText(
@@ -1460,6 +1460,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
         if (preparence.getLanguage()
                 .equals("en")
         ) {
+
+
             quotas.description?.let {
                 binding.fQuotaDescription.tvText.setText(
                     it

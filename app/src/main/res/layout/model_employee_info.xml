@@ -333,9 +333,9 @@
                                 android:id="@+id/fJobJoiningAdditionalDesignation"
                                 layout="@layout/personel_information_view_field" />
 
-                            <include
+                 <!--           <include
                                 android:id="@+id/fJobJoiningDepartment"
-                                layout="@layout/personel_information_view_field" />
+                                layout="@layout/personel_information_view_field" />-->
 
                             <include
                                 android:id="@+id/fJobJoiningJobType"

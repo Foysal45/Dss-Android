@@ -8,17 +8,20 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.dss.hrms"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 4
-        versionName "1.0.4"
+        versionCode 11
+        versionName "1.0.11"
+
+        ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     signingConfigs {
         def propertiesFile = file("properties.gradle")
         def properties = new Properties()
@@ -43,16 +46,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            debuggable false
+            debuggable true
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     dataBinding {
         enabled true
     }
-
+    lintOptions {
+        checkReleaseBuilds false
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -68,6 +74,20 @@ android {
             // resources are instead packaged with each base and
             // dynamic feature APK.
             enableSplit = false
+        }
+    }
+
+    splits {
+        abi {
+            include  "armeabi-v7a", "arm64-v8a"
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            // For each separate APK per architecture, set a unique version code as described here:
+            // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
+            def versionCodes = ["armeabi-v7a":1, "arm64-v8a":2]
+
         }
     }
 
@@ -218,6 +238,8 @@ dependencies {
     // add these lines in your app build.gradle
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.google.android.gms:play-services-auth-api-phone:17.1.0'
+    //ndk support /64 bit
+  //  implementation 'org.adblockplus:adblock-android-webview:3.16'
 
 }
 // Apply the Crashlytics Gradle plugin

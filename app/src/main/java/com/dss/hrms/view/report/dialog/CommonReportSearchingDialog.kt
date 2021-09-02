@@ -15,7 +15,6 @@ import com.dss.hrms.model.*
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.repository.report.CommonReportRepo
 import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.Operation
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.HeadOfficeDepartmentDataValueListener
@@ -28,10 +27,7 @@ import com.dss.hrms.viewmodel.CommonViewModel
 import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
-import com.google.gson.Gson
 import com.namaztime.namaztime.database.MySharedPreparence
-import kotlinx.android.synthetic.main.fragment_employee_bottom_sheet.view.*
-import retrofit2.http.Query
 import java.util.HashMap
 import javax.inject.Inject
 

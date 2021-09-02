@@ -179,7 +179,7 @@ class CourseScheduleFragment : DaggerFragment() {
         dialogTrainingLoyeoutBinding.llCourseSchedule.visibility = View.VISIBLE
         dialogTrainingLoyeoutBinding.courseTitle.etText.setText(courseSchedule?.course_schedule_title)
         dialogTrainingLoyeoutBinding.courseTitleBn.etText.setText(courseSchedule?.course_schedule_title_bn)
-        dialogTrainingLoyeoutBinding.courseTotalSeat.etText.setText(courseSchedule?.total_seat)
+        dialogTrainingLoyeoutBinding.courseTotalSeat.etText.setText(courseSchedule?.total_seat.toString())
 
         dialogTrainingLoyeoutBinding.courseScheduleHeader.tvClose.setOnClickListener {
             dialogCustome?.dismiss()

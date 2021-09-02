@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +13,7 @@ import android.view.Window
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide.init
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPayrollManagementLayoutBinding
 import com.dss.hrms.databinding.FragmentEmployeeBankInformationBinding
@@ -28,9 +24,6 @@ import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.util.*
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
-import com.dss.hrms.view.allInterface.OnDateListener
-import com.dss.hrms.view.leave.adapter.spinner.LeavePolicySpinnerAdapter
-import com.dss.hrms.view.leave.model.LeaveApplicationApiResponse
 import com.dss.hrms.view.payroll.`interface`.OnPayRollInfoClickListener
 import com.dss.hrms.view.payroll.adapter.BankInformationAdapter
 import com.dss.hrms.view.payroll.model.PayRollBankInfo
@@ -39,9 +32,7 @@ import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.CommonViewModel
 import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
-import com.example.dagger_android_practical.di.viewmodel.ViewModelFactoryModule
 import dagger.android.support.DaggerFragment
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
