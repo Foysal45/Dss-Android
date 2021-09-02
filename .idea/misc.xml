@@ -3,12 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/fragment_employee_info.xml" value="0.12310030395136778" />
-        <entry key="app/src/main/res/layout/model_employee_info.xml" value="0.12310030395136778" />
-        <entry key="app/src/main/res/layout/model_leave_summary_layout.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/nav_menu_layout.xml" value="0.253125" />
-        <entry key="app/src/main/res/layout/personel_information_view_field.xml" value="0.253125" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/Users/SIMEC/Documents/Projects/dss-android/app/src/main/res/layout/dialog_personal_info.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/Projects/dss-android/app/src/main/res/layout/model_employee_info.xml" value="0.34375" />
       </map>
     </option>
   </component>

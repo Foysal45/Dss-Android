@@ -47,7 +47,7 @@ class ApiModule {
                 .connectTimeout(TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
                 .writeTimeout(TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
-                // .addNetworkInterceptor(logging)
+                .addInterceptor(logging)
                 .cache(cache)
                 // .cache(null)
                 .build()
@@ -63,7 +63,8 @@ class ApiModule {
             return Retrofit.Builder().baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(okHttpClient).build()
+                .client(okHttpClient)
+                .build()
 
         }
 

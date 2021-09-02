@@ -1,6 +1,7 @@
 package com.dss.hrms.view.personalinfo.adapter.employeeInfo
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -175,12 +176,14 @@ class EmployeeInfoDataBinding @Inject constructor() {
             addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
             addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
             addresses.post_code?.let { binding.fAddressPostCode.tvText.setText(it) }
+
             addresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
             addresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
             addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
             addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
             addresses.upazila?.name?.let { binding.fAddressUpazila.tvText.setText(it) }
             addresses.police_station_bn?.let { binding.fAddressPoliceStationBn.tvText.setText(it) }
+
 
         } else {
             addresses.district?.name_bn?.let {

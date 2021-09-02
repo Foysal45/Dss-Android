@@ -114,8 +114,11 @@ class EditPresentAddressInfo @Inject constructor() {
         binding?.fAddressPoliceStation?.etText?.setText(presentAddress?.police_station)
         binding?.fAddressPoliceStationBn?.etText?.setText(presentAddress?.police_station_bn)
         binding?.fAddressPostOffice?.etText?.setText(presentAddress?.post_office)
+
         binding?.fAddressPostOfficeBn?.etText?.setText(presentAddress?.post_office_bn)
         binding?.fAddressPostCode?.etText?.setText(presentAddress?.post_code)
+
+
         binding?.fAddressRoadOrWordNo?.etText?.setText(presentAddress?.road_word_no)
         binding?.fAddressRoadOrWordNoBn?.etText?.setText(presentAddress?.road_word_no_bn)
         binding?.fAddressVillageOrHouseNo?.etText?.setText(presentAddress?.village_house_no)
