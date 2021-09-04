@@ -874,6 +874,9 @@ class Employee {
         @SerializedName("upazila")
         var upazila: Upazila? = null
 
+        @SerializedName("ward_no")
+        val wardNo: String? = null
+
         @SerializedName("local_government_type")
         var localGovernmentType: LocalGovernmentType? = null
 

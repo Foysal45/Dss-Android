@@ -149,7 +149,7 @@ class EditPresentAddressInfo @Inject constructor() {
 
         getLocalGovernmentType()
 
-        binding?.addressBtnUpdate?.btnUpdate?.setOnClickListener({
+        binding?.addressBtnUpdate?.btnUpdate?.setOnClickListener {
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
@@ -181,7 +181,7 @@ class EditPresentAddressInfo @Inject constructor() {
                             })
                 }
             }
-        })
+        }
 
     }
 
@@ -349,6 +349,10 @@ class EditPresentAddressInfo @Inject constructor() {
         map.put("village_house_no", binding?.fAddressVillageOrHouseNo?.etText?.text.toString())
         map.put("village_house_no_bn", binding?.fAddressVillageOrHouseNoBn?.etText?.text.toString())
         map.put("status", presentAddress?.status)
+        map.put("ward_no" , presentAddress?.wardNo)
+
+        Log.d("TSA", "getMapData: ${map.toString()}" )
+
         return map
     }
 

@@ -70,7 +70,10 @@
     <string name="district">District</string>
     <string name="type_city_corp_upazila_municipality">Type (City corp/Upazila/Municipality)</string>
     <string name="municipalities">Municipalities</string>
+    <string name="municipality">Municipality</string>
+    <string name="union">Union</string>
     <string name="citycorporations">CityCorporations</string>
+    <string name="citycorporation">City Corporation</string>
     <string name="email">E-mail Address</string>
     <string name="occupation">Occupation</string>
     <string name="mobile">Mobile No.</string>

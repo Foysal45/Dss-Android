@@ -135,8 +135,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
         heading: String
     ) {
         binding.hAddress.tvTitle.setText(heading)
+
+        binding.fAddressUpazila.llBody.visibility = View.GONE
         binding.fAddressEmailAddress.llBody.visibility = View.GONE
         binding.fAddressPhoneOrMobileNo.llBody.visibility = View.GONE
+
+
         binding.fAddressPostOffice.tvTitle.setText(context.getString(R.string.post_off))
         binding.fAddressPostOfficeBn.tvTitle.setText(context.getString(R.string.post_off_bn))
         binding.fAddressPostCode.tvTitle.setText(context.getString(R.string.post_code))
@@ -190,25 +194,41 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
 
             // adding check for  cilty , municipility  or union
-            binding.fAddressLocalName.tvTitle.setText("সিটি কর্পোরেশনের নাম") 
 
-            if(addresses.local_government_type_id == 1  ){
-                // city corpo
-                addresses.cityCorporation?.name?.let {
-                    binding.fAddressLocalName.tvText.text = it
+
+            when (addresses.local_government_type_id) {
+                1 -> {
+                    // city corpo
+                    addresses.cityCorporation?.name?.let {
+                        binding.fAddressLocalName.tvText.text = it
+                    }
+                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                    binding.fAddressLocalName.tvTitle.text =
+                        context.getString(R.string.citycorporation)
+                    binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.name
+                    binding.fAddressUnionName.llBody.visibility = View.GONE
+
                 }
+                2 -> {
+                    // municipility
 
-                binding.fAddressLocalName.tvTitle.text = "সিটি কর্পোরেশনের নাম"
+                    binding.fAddressLocalName.tvTitle.text =
+                        context.getString(R.string.municipalities)
+                    binding.fAddressLocalName.tvText.text = addresses.municipality?.name
+                    binding.fAddressUnionName.llBody.visibility = View.GONE
 
-            }else if ( addresses.local_government_type_id == 2  ){
-                // municipility
+                }
+                3 -> {
+                    // upzilla
+                    binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                    binding.fAddressLocalName.tvText.text = addresses.upazila?.name
 
-            }else if (addresses.local_government_type_id == 3  ){
-                // upzilla
+                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
+                    binding.fAddressUnion.tvText.text = addresses.union?.name
+                    binding.fAddressUnionName.llBody.visibility = View.GONE
 
+                }
             }
-
-
 
 
         } else {
@@ -249,6 +269,41 @@ class EmployeeInfoDataBinding @Inject constructor() {
             addresses.localGovernmentType?.name_bn?.let {
                 binding.fAddressUnion.tvText.text = it
             }
+
+            when (addresses.local_government_type_id) {
+                1 -> {
+                    // city corpo
+                    addresses.cityCorporation?.name?.let {
+                        binding.fAddressLocalName.tvText.text = it
+                    }
+                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                    binding.fAddressLocalName.tvTitle.text =
+                        context.getString(R.string.citycorporation)
+                    binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.nameBn
+
+                    binding.fAddressUnionName.llBody.visibility = View.GONE
+                }
+                2 -> {
+                    // municipility
+
+                    binding.fAddressLocalName.tvTitle.text =
+                        context.getString(R.string.municipalities)
+                    binding.fAddressLocalName.tvText.text = addresses.municipality?.name_bn
+                    binding.fAddressUnionName.llBody.visibility = View.GONE
+                }
+                3 -> {
+                    // upzilla
+                    binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                    binding.fAddressLocalName.tvText.text = addresses.upazila?.name_bn
+
+                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
+                    binding.fAddressUnion.tvText.text = addresses.union?.name_bn
+
+                    binding.fAddressUnionName.llBody.visibility = View.VISIBLE
+
+                }
+            }
+
         }
     }
 
@@ -434,7 +489,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fJobJoiningOffice.tvTitle.setText(context.getString(R.string.office))
         binding.fJobJoiningDesignation.tvTitle.setText(context.getString(R.string.designation))
         binding.fJobJoiningAdditionalDesignation.tvTitle.setText(context.getString(R.string.additional_designation))
-       // binding.fJobJoiningDepartment.tvTitle.setText(context.getString(R.string.depertment))
+        // binding.fJobJoiningDepartment.tvTitle.setText(context.getString(R.string.depertment))
         binding.fJobJoiningJobType.tvTitle.setText(context.getString(R.string.job_type))
         binding.fJobJoiningJoiningDate.tvTitle.setText(context.getString(R.string.joning_date))
         binding.fJobJoiningConfirmationDate.tvTitle.setText(context.getString(R.string.confirmation_date))
@@ -457,9 +512,10 @@ class EmployeeInfoDataBinding @Inject constructor() {
         jobjoinings.pay_scale?.let { binding.fJobJoiningPayScale.tvText.setText(it) }
 
         if (employeeProfileData?.employee?.designation_id == jobjoinings?.designation_id &&
-            employeeProfileData?.employee?.office_id == jobjoinings?.office_id) {
+            employeeProfileData?.employee?.office_id == jobjoinings?.office_id
+        ) {
             binding?.fJobJoiningCurrentJob?.tvText.setText(context.getString(R.string.yes))
-        }else{
+        } else {
             binding?.fJobJoiningCurrentJob?.tvText.setText(context.getString(R.string.no))
         }
 
@@ -468,8 +524,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
         ) {
             jobjoinings.office?.office_name?.let { binding.fJobJoiningOffice.tvText.setText(it) }
             jobjoinings.designation?.name?.let { binding.fJobJoiningDesignation.tvText.setText(it) }
-            jobjoinings.additional_designation?.name?.let { binding.fJobJoiningAdditionalDesignation.tvText.setText(it) }
-          //  jobjoinings.department?.name?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
+            jobjoinings.additional_designation?.name?.let {
+                binding.fJobJoiningAdditionalDesignation.tvText.setText(
+                    it
+                )
+            }
+            //  jobjoinings.department?.name?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
             jobjoinings.job_type?.name?.let { binding.fJobJoiningJobType.tvText.setText(it) }
             jobjoinings.joining_date?.let {
                 binding.fJobJoiningJoiningDate.tvText.setText(
@@ -501,8 +561,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
         } else {
             jobjoinings.office?.office_name_bn?.let { binding.fJobJoiningOffice.tvText.setText(it) }
             jobjoinings.designation?.name_bn?.let { binding.fJobJoiningDesignation.tvText.setText(it) }
-            jobjoinings.additional_designation?.name_bn?.let { binding.fJobJoiningAdditionalDesignation.tvText.setText(it) }
-           // jobjoinings.department?.name_bn?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
+            jobjoinings.additional_designation?.name_bn?.let {
+                binding.fJobJoiningAdditionalDesignation.tvText.setText(
+                    it
+                )
+            }
+            // jobjoinings.department?.name_bn?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
             jobjoinings.job_type?.name_bn?.let { binding.fJobJoiningJobType.tvText.setText(it) }
             jobjoinings.joining_date?.let {
                 binding.fJobJoiningJoiningDate.tvText.setText(
@@ -963,7 +1027,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         context: Context,
         heading: String
     ) {
-        binding.fForeignTravelPurposeBn.llBody.visibility=View.GONE
+        binding.fForeignTravelPurposeBn.llBody.visibility = View.GONE
         binding.hForeignTravelInfo.tvTitle.setText(heading)
         binding.fForeignTravelCountry.tvTitle.setText(context.getString(R.string.country))
         binding.fForeignTravelPurpose.tvTitle.setText(context.getString(R.string.purpose))
@@ -999,7 +1063,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         } else {
             foreignTravels.country?.name_bn?.let { binding.fForeignTravelCountry.tvText.setText(it) }
             foreignTravels.purpose_bn?.let { binding.fForeignTravelPurpose.tvText.setText(it) }
-          //  foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
+            //  foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
             foreignTravels.details?.let { binding.fForeignTravelDetailsEn.tvText.setText(it) }
             foreignTravels.details_bn?.let { binding.fForeignTravelDetailsBn.tvText.setText(it) }
             foreignTravels.from_date?.let {
