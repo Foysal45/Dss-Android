@@ -197,12 +197,110 @@
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/has_freedom_fighter_quota}" />
 
+                                <LinearLayout
+                                    android:id="@+id/llFreedomFighterAttachment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    app:layout_constraintBottom_toTopOf="@id/send"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/llBody">
+
+                                    <TextView
+                                        android:id="@+id/tvFreedomFighterAttachment"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:drawableLeft="@drawable/ic_baseline_attachment_24"
+                                        android:drawablePadding="20dp"
+                                        android:text="@string/attachment"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_large"
+                                        android:textStyle="bold" />
+
+
+                                    <TextView
+                                        android:id="@+id/tvllFreedomFighterAttachmentFileName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:ellipsize="end"
+                                        android:paddingHorizontal="5dp"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        android:textColor="@color/light_black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tvFreedomFighterAttachmentError"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center|left"
+                                        android:gravity="center|left"
+                                        android:paddingHorizontal="@dimen/_5sdp"
+                                        android:paddingVertical="5dp"
+                                        android:text="error"
+                                        android:textColor="@color/red"
+                                        android:textSize="@dimen/text_size_small"
+                                        android:visibility="gone" />
+                                </LinearLayout>
 
                                 <include
                                     android:id="@+id/fDisability"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/has_disability}" />
 
+                                <LinearLayout
+                                    android:id="@+id/llDiasabiltyAttachment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    app:layout_constraintBottom_toTopOf="@id/send"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/llBody">
+
+                                    <TextView
+                                        android:id="@+id/tvAttachment"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:drawableLeft="@drawable/ic_baseline_attachment_24"
+                                        android:drawablePadding="20dp"
+                                        android:text="@string/attachment"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_large"
+                                        android:textStyle="bold" />
+
+
+                                    <TextView
+                                        android:id="@+id/tvllDiasabiltyAttachmentFileName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:ellipsize="end"
+                                        android:paddingHorizontal="5dp"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        android:textColor="@color/light_black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tvAttachmentError"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center|left"
+                                        android:gravity="center|left"
+                                        android:paddingHorizontal="@dimen/_5sdp"
+                                        android:paddingVertical="5dp"
+                                        android:text="error"
+                                        android:textColor="@color/red"
+                                        android:textSize="@dimen/text_size_small"
+                                        android:visibility="gone" />
+                                </LinearLayout>
 
                                 <include
                                     android:id="@+id/fDisabilityType"

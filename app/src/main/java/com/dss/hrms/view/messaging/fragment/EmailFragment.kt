@@ -54,6 +54,7 @@ class EmailFragment : DaggerFragment() {
     private val REQUEST_SELECT_PHOTO = 2
     private var imageFile: File? = null
 
+    
     var uploadImageUrl: String? = null
 
     lateinit var utilViewmodel: UtilViewModel
@@ -129,7 +130,7 @@ class EmailFragment : DaggerFragment() {
                     override fun valueChange(list: List<Office>?) {
                         //   Log.e("gender", "gender message " + Gson().toJson(list))
 
-                        if (mainOfficeList==null){
+                        if (mainOfficeList == null) {
                             mainOfficeList = officeList
                             setOffice()
                         }
@@ -185,7 +186,6 @@ class EmailFragment : DaggerFragment() {
 
         return binding.root
     }
-
 
 
     fun setOffice() {
@@ -447,6 +447,15 @@ class EmailFragment : DaggerFragment() {
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 
         }
+    }
+
+    private fun uploadTheFile() {
+
+        // decide what is  being updated
+        // autism
+        // freedom fighter
+
+
     }
 
 

@@ -42,7 +42,6 @@ import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.dialog_personal_info.view.*
 import kotlinx.android.synthetic.main.fragment_basic_information.view.*
 import kotlinx.android.synthetic.main.fragment_basic_information.view.fBloodGroup
 import kotlinx.android.synthetic.main.fragment_basic_information.view.fDOB
@@ -233,7 +232,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 v.fEmployeeFreedomFighterquota.tvText.setText(context?.getString(R.string.no))
         }
 
-        if (employee?.has_disability==true) {
+        if (employee?.has_disability == true) {
             Log.e("hasdisability", "" + employee?.has_disability)
             v.fDisability.tvText.setText("" + context?.getString(R.string.no))
             v.fDisabilityDegree.llBody.visibility = View.GONE
@@ -309,19 +308,25 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 .into(v.ivEmployee)
         }
 
+        val page = activity
+
+
         v.hBasicInformation.tvEdit.setOnClickListener({
             employee?.let { it1 ->
                 activity?.let { it2 ->
-                    editEmployeeBasicInfoDialog?.showDialog(
-                        it2,
-                        object : FileClickListener {
-                            override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
-                                onFilevalueReceiveListener = onFilevalueReceiveListener1
-                                openSelectImageBottomSheet()
-                            }
-                        },
-                        StaticKey.EDIT
-                    )
+                    if (page != null) {
+                        editEmployeeBasicInfoDialog?.showDialog(
+                            it2,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
+                            StaticKey.EDIT,
+                            page
+                        )
+                    }
                 }
             }
         })
@@ -426,7 +431,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 }
             }
         } else if (requestCode == REQUEST_SELECT_PHOTO && resultCode == RESULT_OK && data != null) {
-            Log.e("url","uri .......................................................${data.data}")
+            Log.e("url", "uri .......................................................${data.data}")
             val resultUri: Uri? = data.data
             try {
                 activity?.let {
@@ -550,6 +555,11 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             matrix, true
         )
     }
+
+    fun passDataToDialogueFragment(imagePath: String) {
+        editEmployeeBasicInfoDialog.uploadFile(imagePath)
+    }
+
 
     companion object {
         @JvmStatic

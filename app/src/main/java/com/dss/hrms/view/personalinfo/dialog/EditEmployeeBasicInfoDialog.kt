@@ -1,9 +1,15 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 
+import android.app.Activity
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
+import android.provider.Settings
 import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
@@ -13,6 +19,8 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -25,10 +33,7 @@ import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.retrofit.RetrofitInstance
-import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.DateConverter
-import com.dss.hrms.util.DatePicker
-import com.dss.hrms.util.StaticKey
+import com.dss.hrms.util.*
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.allInterface.*
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
@@ -56,9 +61,14 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
     lateinit var employeeProfileData: EmployeeProfileData
 
     var position: Int? = 0
+    private var isFreedomFighter: Boolean = false
 
     var dialogCustome: Dialog? = null
 
+    var empolyInfoPage: EmployeeInfoActivity? = null
+
+    var disabilityURL = ""
+    var freedomFighterUrl = ""
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
     lateinit var key: String
@@ -83,12 +93,14 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
     fun showDialog(
         context: Context,
         fileClickListener: FileClickListener,
-        key: String
+        key: String,
+        activity: FragmentActivity
     ) {
         this.employee = employeeProfileData?.employee!!
         this.context = context
         this.fileClickListener = fileClickListener
         this.key = key
+        this.empolyInfoPage = activity as EmployeeInfoActivity
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DataBindingUtil.inflate(
@@ -105,6 +117,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         )
         editBasicInfo(context, binding)
         dialogCustome?.show()
+
 
     }
 
@@ -370,6 +383,21 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
                         hasFreedomFighterQuota = any as SpinnerDataModel
+                        try {
+
+                            if (hasFreedomFighterQuota!!.id == 0) {
+                                // no quta
+                                binding.tvFreedomFighterAttachment.visibility = View.GONE
+                            } else {
+
+                                binding.tvFreedomFighterAttachment.visibility = View.VISIBLE
+                            }
+
+
+                        } catch (ex: Exception) {
+
+                        }
+
                     }
                 }
             )
@@ -414,14 +442,33 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         })
 
 
+        binding?.llDiasabiltyAttachment?.setOnClickListener {
+
+            isFreedomFighter = false
+
+            empolyInfoPage?.galleryButtonClicked()
+
+
+        }
+
+        binding?.llFreedomFighterAttachment?.setOnClickListener {
+
+            isFreedomFighter = true
+
+            empolyInfoPage?.galleryButtonClicked()
+        }
+
+
     }
 
     fun showOrHideDisabilityView(id: Int?) {
         if (id == null || id == 0) {
+            binding?.llDiasabiltyAttachment?.visibility = View.GONE
             binding?.fDisabilityDegree?.llBody?.visibility = View.GONE
             binding?.fDisabledPersonId?.llBody?.visibility = View.GONE
             binding?.fDisabilityType?.llBody?.visibility = View.GONE
         } else {
+            binding?.llDiasabiltyAttachment?.visibility = View.VISIBLE
             binding?.fDisabilityDegree?.llBody?.visibility = View.VISIBLE
             binding?.fDisabledPersonId?.llBody?.visibility = View.VISIBLE
             binding?.fDisabilityType?.llBody?.visibility = View.VISIBLE
@@ -679,7 +726,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("blood_group_id", bloodGroup?.id)
         map.put("religion_id", religion?.id)
         map.put("employee_type_id", employee?.employee_type_id)
-        map.put("has_disability", if ( hasDisability?.id==1) true else false)
+        map.put("has_disability", if (hasDisability?.id == 1) true else false)
         employeeType?.id?.let { map.put("employee_type_id", it) }
         employmentStatusType?.id?.let { map.put("employment_status_id", it) }
         hasFreedomFighterQuota?.id?.let { map.put("has_freedom_fighter_quota", it) }
@@ -824,6 +871,76 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         }
         return arrayListOf(rel, rel1)
     }
+
+
+    fun uploadFile(filePath: String) {
+        val dialouge = ProgressDialog(empolyInfoPage)
+        dialouge.setMessage("uploading...")
+        dialouge.setCancelable(false)
+        dialouge.show()
+
+        var file = File(filePath)
+        var profilePic: MultipartBody.Part?
+
+        var filePart: MultipartBody.Part?
+
+        val requestFile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        profilePic =
+            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+
+        val profile_photo: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+
+        var employeeInfoEditCreateRepo =
+            ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        employeeInfoEditCreateRepo?.uploadProfilePic(
+            profilePic,
+            file.name,
+            profile_photo
+        )
+            ?.observe(
+                EmployeeInfoActivity.context!!,
+                androidx.lifecycle.Observer { any ->
+                    Log.e("yousuf", "profile pic : " + any)
+                    //  showResponse(any)
+                    dialouge?.dismiss()
+                    if (any != null) {
+                        var fileUrl = any as String
+                        Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
+                        if (isFreedomFighter) {
+                            binding?.tvllFreedomFighterAttachmentFileName?.setText("${file.name}")
+                            freedomFighterUrl = fileUrl
+                        } else {
+                            binding?.tvllDiasabiltyAttachmentFileName?.setText("${file.name}")
+                            disabilityURL = fileUrl
+
+                        }
+
+                        Toast.makeText(
+                            context,
+                            "Message : File Upload Done !!! $fileUrl",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                    } else {
+
+                        Toast.makeText(
+                            context,
+                            "Message : File Upload Failed !!!",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+
+
+    }
+
+
 }
 
 

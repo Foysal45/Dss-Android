@@ -1,11 +1,16 @@
 package com.dss.hrms.view.personalinfo
 
+import android.app.Activity
 import android.app.Application
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer
@@ -13,6 +18,7 @@ import com.dss.hrms.R
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.login.LoginInfo
 import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.FilePath
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.activity.BaseActivity
@@ -24,15 +30,19 @@ import com.dss.hrms.view.settings.SettingsActivity
 import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
+import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_employee_info.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.IOException
 import javax.inject.Inject
 
 
 class EmployeeInfoActivity : BaseActivity() {
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
+    val REQUEST_SELECT_PHOTO: Int = 2
 
     @Inject
     lateinit var preparence: MySharedPreparence
@@ -42,7 +52,7 @@ class EmployeeInfoActivity : BaseActivity() {
 
     @Inject
     lateinit var adapter: EmployeeViewPagerAdapter
-
+    var personalFrg = BasicInformationFragment()
     private var pos = 0
     lateinit var employeeViewModel: EmployeeViewModel
 
@@ -66,7 +76,7 @@ class EmployeeInfoActivity : BaseActivity() {
         var personal = Bundle()
         personal.putString("key", StaticKey.PersonalInformation)
         personal.putBoolean("addWillAppear", false)
-        var personalFrg = BasicInformationFragment()
+
         personalFrg.arguments = personal
         adapter!!.addFragment(personalFrg, "")
 
@@ -318,4 +328,82 @@ class EmployeeInfoActivity : BaseActivity() {
         }
         return true
     }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+    }
+
+
+    fun galleryButtonClicked() {
+        val galleryIntent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+        galleryIntent.setType("*/*")
+        val mimetypes = arrayOf("image/*", "application/pdf", "application/msword")
+        galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
+        startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        @Nullable data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+
+        if (requestCode == REQUEST_SELECT_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
+            val resultUri: Uri? = data.data
+            try {
+
+                val path = resultUri?.let {
+                    FilePath().getPath(applicationContext, resultUri)
+                }
+
+                if (!path.isNullOrBlank() && viewpager_go.currentItem == 0) {
+
+                    personalFrg.passDataToDialogueFragment(path)
+
+                } else {
+                    Toast.makeText(context, "Error : No File Was Picked", Toast.LENGTH_LONG).show()
+                }
+
+                // send the file  and starts trigger update
+
+
+            }
+//            activity?.let {
+//                resultUri?.let { it1 ->
+//                    FilePath().getPath(
+//                        it,
+//                        it1
+//                    )?.let { getImageFile(it) }
+//                }
+
+            catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+
+//            val bitmap =
+//                MediaStore.Images.Media.getBitmap(getContentResolver(), resultUri)
+//            Log.e("imagefile", "imagefile : $imageFile")
+//            var fileName: List<String>? = imageFile?.toString()?.split("/")
+//
+//            fileName?.let {
+//                binding?.tvFileName?.setText(it.get(it.size - 1))
+//            }
+
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+        }
+    }
+
 }

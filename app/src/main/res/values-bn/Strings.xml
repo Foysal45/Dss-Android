@@ -413,5 +413,6 @@
     <string name="session">সেশন</string>
     <string name="session_name">সেশনের নাম</string>
     <string name="faq_question">সচরাচর জিজ্ঞাসিত প্রশ্ন</string>
+    <string name="docoument">সংযুক্তি</string>
 
 </resources>

@@ -466,8 +466,10 @@ interface ApiService {
     fun uploadProfilePic(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
-        @Part("type ") type: RequestBody?,
+        @Part("type") type: RequestBody?,
         @Part file: MultipartBody.Part?
     ): Call<Any?>?
+
+
 
 }
