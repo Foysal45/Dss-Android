@@ -60,6 +60,13 @@ class Employee {
     val has_freedom_fighter_quota: Boolean = false
 
 
+    @SerializedName("disability_document_path")
+    val disability_document_path: String? = null
+
+    @SerializedName("freedom_fighter_document_path")
+    val freedom_fighter_document_path: String? = null
+
+
     @SerializedName("disability_type_id")
     val disability_type_id: Int = 0
 
@@ -789,6 +796,33 @@ class Employee {
 
         @SerializedName("gender")
         val gender: Gender? = null
+
+
+        @SerializedName("municipality_id")
+        val municipality_id: Int? = null
+
+
+        @SerializedName("city_corporation_id")
+        val city_corporation_id: Int? = null
+
+        @SerializedName("local_government_type_id")
+        val local_government_type_id: Int? = null
+
+        @SerializedName("address_details")
+        val address_details: String? = null
+
+        @SerializedName("division_id")
+        val division_id: Int = 0
+
+        @SerializedName("district_id")
+        val district_id: Int = 0
+
+        @SerializedName("upazila_id")
+        val upazila_id: Int = 0
+
+        @SerializedName("union_id")
+        val union_id: Int = 0
+
 
         @SerializedName("marital_status")
         val marital_status: MaritalStatus? = null

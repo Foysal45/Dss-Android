@@ -162,8 +162,19 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
+                                android:id="@+id/fEmployeeFreedomFighterAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+                            <include
                                 android:id="@+id/fDisability"
                                 layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fDisabilityAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
 
                             <include
                                 android:id="@+id/fDisabilityType"
@@ -172,6 +183,7 @@
                             <include
                                 android:id="@+id/fDisabilityDegree"
                                 layout="@layout/personel_information_view_field" />
+
 
                             <include
                                 android:id="@+id/fDisabledPersonId"
@@ -196,9 +208,9 @@
 
                                 <TextView
                                     android:layout_width="wrap_content"
-                                    android:visibility="gone"
                                     android:layout_height="wrap_content"
-                                    android:text=":" />
+                                    android:text=":"
+                                    android:visibility="gone" />
 
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="@dimen/_110sdp"

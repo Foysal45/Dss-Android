@@ -20,6 +20,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -30,6 +31,7 @@ import com.dss.hrms.R
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.retrofit.RetrofitInstance
+import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.FilePath
 import com.dss.hrms.util.StaticKey
@@ -72,7 +74,10 @@ import kotlinx.android.synthetic.main.fragment_basic_information.view.ivEmployee
 import kotlinx.android.synthetic.main.fragment_basic_information.view.tvImageTitle
 import kotlinx.android.synthetic.main.personal_information_header_field.view.*
 import kotlinx.android.synthetic.main.personel_information_view_field.view.*
+import kotlinx.android.synthetic.main.personel_information_view_field.view.llBody
+import kotlinx.android.synthetic.main.personel_information_view_field.view.tvText
 import kotlinx.android.synthetic.main.personel_information_view_field.view.tvTitle
+import kotlinx.android.synthetic.main.personel_information_view_field_with_icon.view.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -127,6 +132,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         }
     }
 
+    private lateinit var ctx: Context
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -134,6 +140,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_basic_information, container, false)
         this.employee = employeeProfileData.employee
+        ctx = v.context
         setData()
         EmployeeInfoActivity.context?.let { verifyStoragePermissions(it) }
 
@@ -227,17 +234,47 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         }
 
         employee?.has_freedom_fighter_quota?.let {
-            if (it)
-                v.fEmployeeFreedomFighterquota.tvText.setText(context?.getString(R.string.yes)) else
-                v.fEmployeeFreedomFighterquota.tvText.setText(context?.getString(R.string.no))
+            if (it) {
+                v.fEmployeeFreedomFighterquota.tvText.text = context?.getString(R.string.yes)
+                // emp has the fredom fihter quta
+                // decide what to do
+                v.fEmployeeFreedomFighterAttachment.llBody.visibility = View.VISIBLE
+                // assgin text to the view
+                v.fEmployeeFreedomFighterAttachment.tvTitle.text =
+                    context?.getString(R.string.attachment)
+                v.fEmployeeFreedomFighterAttachment.tvText.setTextColor(
+                    ContextCompat.getColor(
+                        ctx,
+                        R.color.green
+                    )
+                )
+                v.fEmployeeFreedomFighterAttachment.tvText.text = " Tap To View"
+                val fileExtentions =
+                    ConvertNumber.getTheFileExtention(employee?.freedom_fighter_document_path.toString())
+                        .toLowerCase()
+
+                if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+                        "jpg"
+                    )){
+                    v.fEmployeeFreedomFighterAttachment.icon.background = ContextCompat.getDrawable(ctx , R.drawable.picture)
+                } else {
+                    v.fEmployeeFreedomFighterAttachment.icon.background = ContextCompat.getDrawable(ctx , R.drawable.ic_pdf)
+                }
+
+            } else {
+                v.fEmployeeFreedomFighterquota.tvText.text = context?.getString(R.string.no)
+                v.fEmployeeFreedomFighterAttachment.llBody.visibility = View.GONE
+            }
+
         }
 
-        if (employee?.has_disability == true) {
+        if (employee?.has_disability == false) {
             Log.e("hasdisability", "" + employee?.has_disability)
             v.fDisability.tvText.setText("" + context?.getString(R.string.no))
             v.fDisabilityDegree.llBody.visibility = View.GONE
             v.fDisabilityType?.llBody?.visibility = View.GONE
             v.fDisabledPersonId?.llBody?.visibility = View.GONE
+            v.fDisabilityAttachment.llBody.visibility = View.GONE
 
         } else {
             v.fDisability.tvText.setText("" + context?.getString(R.string.yes))
@@ -246,30 +283,46 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             v.fDisabledPersonId?.llBody?.visibility = View.VISIBLE
             v.fDisabledPersonId.tvText.setText(employee?.disabled_person_id)
 
+            v.fDisabilityAttachment.llBody.visibility = View.VISIBLE
+            v.fDisabilityAttachment.tvTitle.text = context?.getString(R.string.attachment)
+            v.fDisabilityAttachment.tvText.setTextColor(ContextCompat.getColor(ctx, R.color.green))
+            v.fDisabilityAttachment.tvText.text = " Tap To View"
 
-            if (preparence?.getLanguage()
-                    .equals("en")
-            ) {
+            val fileExtentions =
+                ConvertNumber.getTheFileExtention(employee?.disability_document_path.toString())
+                    .toLowerCase()
 
-
-                v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type)
-                v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree)
-                v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type)
-                employee?.employment_job_status?.employeementstatus?.name?.let {
-                    v.fPresentGrossSalary.tvText.setText(
-                        it
-                    )
-                }
-            } else {
-                v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type_bn)
-                v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree_bn)
-                v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type_bn)
-                employee?.employment_job_status?.employeementstatus?.name_bn?.let {
-                    v.fPresentGrossSalary.tvText.setText(
-                        it
-                    )
-                }
+            if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+                    "jpg"
+                )){
+                    v.fDisabilityAttachment.icon.background = ContextCompat.getDrawable(ctx , R.drawable.picture)
+                } else {
+                v.fDisabilityAttachment.icon.background = ContextCompat.getDrawable(ctx , R.drawable.ic_pdf)
             }
+
+                if (preparence?.getLanguage()
+                        .equals("en")
+                ) {
+
+
+                    v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type)
+                    v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree)
+                    v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type)
+                    employee?.employment_job_status?.employeementstatus?.name?.let {
+                        v.fPresentGrossSalary.tvText.setText(
+                            it
+                        )
+                    }
+                } else {
+                    v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type_bn)
+                    v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree_bn)
+                    v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type_bn)
+                    employee?.employment_job_status?.employeementstatus?.name_bn?.let {
+                        v.fPresentGrossSalary.tvText.setText(
+                            it
+                        )
+                    }
+                }
 
         }
         if (preparence?.getLanguage()
@@ -309,6 +362,45 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         }
 
         val page = activity
+
+        // \
+        v.fEmployeeFreedomFighterAttachment.setOnClickListener {
+
+            if (employee?.disability_document_path.isNullOrBlank()) {
+                Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+            } else {
+                // check action
+                val fileExtensions =
+                    ConvertNumber.getTheFileExtention(employee?.disability_document_path.toString())
+
+
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(RetrofitInstance.FILE_BASE + employee?.freedom_fighter_document_path.toString())
+                )
+                startActivity(browserIntent)
+            }
+        }
+
+        v.fDisabilityAttachment.setOnClickListener {
+            // get the extention oof the file
+
+            if (employee?.disability_document_path.isNullOrBlank()) {
+                Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+            } else {
+                // check action
+                val fileExtensions =
+                    ConvertNumber.getTheFileExtention(employee?.disability_document_path.toString())
+
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(RetrofitInstance.FILE_BASE + employee?.disability_document_path.toString())
+                )
+                startActivity(browserIntent)
+
+            }
+        }
+
 
 
         v.hBasicInformation.tvEdit.setOnClickListener({

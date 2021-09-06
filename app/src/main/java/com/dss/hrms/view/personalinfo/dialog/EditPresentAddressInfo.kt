@@ -468,6 +468,21 @@ class EditPresentAddressInfo @Inject constructor() {
             })
     }
 
+    fun getPoulatedMunicipalities(
+        list: List<Upazilas>?
+    ): List<Municipalities> {
+        var municipalitiesList: List<Municipalities> = arrayListOf()
+        list?.let {
+            it.forEach({ uList ->
+                uList?.municipalities?.let { uListElement ->
+                    municipalitiesList += uListElement
+                }
+            })
+        }
+        return municipalitiesList
+    }
+
+
 
     fun setMunicipalities(list: List<Upazilas>?, id: Int?) {
         list?.let {
@@ -510,19 +525,6 @@ class EditPresentAddressInfo @Inject constructor() {
     }
 
 
-    fun getPoulatedMunicipalities(
-        list: List<Upazilas>?
-    ): List<Municipalities> {
-        var municipalitiesList: List<Municipalities> = arrayListOf()
-        list?.let {
-            it.forEach({ uList ->
-                uList?.municipalities?.let { uListElement ->
-                    municipalitiesList += uListElement
-                }
-            })
-        }
-        return municipalitiesList
-    }
 
     fun setCityMuniUpailaAccordingToType() {
 

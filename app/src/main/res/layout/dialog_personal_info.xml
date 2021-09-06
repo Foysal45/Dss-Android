@@ -699,11 +699,53 @@
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/nominee_gender}" />
 
+                                <include
+                                    android:id="@+id/fNominneAddressDivision"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/division}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddressDistrict"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/district}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddresstype_city_corp_upazila_municipality"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/type_city_corp_upazila_municipality}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddressMunicipalities"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/municipalities}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddressCityCorporations"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/citycorporations}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddressUpazila"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/upazila}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddressUnio"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/union_or_municiplity}" />
+
 
                                 <include
                                     android:id="@+id/fNomineeHasDisability"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/nominee_has_disability}" />
+
+
+                                <include
+                                    android:id="@+id/fNomineeFullAddress"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/address_details}"
+                                    app:title="@{@string/address_details}" />
 
 
                                 <LinearLayout
@@ -738,8 +780,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/_100sdp"
                                             android:paddingLeft="@dimen/_5sdp"
-                                            android:paddingRight="@dimen/_10sdp"
-                                            android:src="@drawable/ic_baseline_image_24" />
+                                            android:paddingRight="@dimen/_10sdp" />
                                     </LinearLayout>
 
                                     <LinearLayout

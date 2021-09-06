@@ -134,6 +134,7 @@
     <string name="relation">সম্পর্ক</string>
     <string name="relation_bn">সম্পর্ক (বাংলা)</string>
     <string name="address">ঠিকানা (ইংরেজি)</string>
+    <string name="address_details">বিস্তারিত ঠিকানা</string>
     <string name="address_bn">ঠিকানা (বাংলা)</string>
     <string name="contact">যোগাযোগের নম্বর</string>
     <string name="contact_bn">যোগাযোগের নম্বর (বাংলা)</string>
@@ -414,5 +415,7 @@
     <string name="session_name">সেশনের নাম</string>
     <string name="faq_question">সচরাচর জিজ্ঞাসিত প্রশ্ন</string>
     <string name="docoument">সংযুক্তি</string>
+    <string name="error_disaiblity_doc">Please Add Your Disability Documents.</string>
+    <string name="error_freedom_fighter">Please Add Your Freedom Fighter Documents</string>
 
 </resources>

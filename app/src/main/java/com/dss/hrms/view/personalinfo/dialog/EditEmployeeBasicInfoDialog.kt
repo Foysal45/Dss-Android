@@ -421,7 +421,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
 
 
-        binding?.ivEmployee?.setOnClickListener({
+        binding?.ivEmployee?.setOnClickListener {
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap) {
                     imageFile = imgFile
@@ -430,16 +430,40 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                     Log.e("image", "dialog imageFile  : " + bitmap)
                 }
             })
-        })
+        }
 
-        binding?.basicUpdate?.btnUpdate?.setOnClickListener({
+        binding?.basicUpdate?.btnUpdate?.setOnClickListener {
+
+            // file validation to check if the freedom fighter  and hasDisabilty
+
+            if (hasFreedomFighterQuota?.id == 1 && freedomFighterUrl.isEmpty()) {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.error_freedom_fighter),
+                    Toast.LENGTH_LONG
+                ).show()
+
+                return@setOnClickListener
+            }
+            if (hasDisability?.id == 1 && disabilityURL.isEmpty()) {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.error_disaiblity_doc),
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+                return@setOnClickListener
+            }
+
+
             dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             if (imageFile != null) {
                 imageFile?.let { it1 -> uploadImage(it1) }
+
             } else {
                 uploadData()
             }
-        })
+        }
 
 
         binding?.llDiasabiltyAttachment?.setOnClickListener {
@@ -744,6 +768,9 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("present_basic_salary", binding?.fPresentBasicSalary?.etText?.text?.toString())
         map.put("present_gross_salary", binding?.fPresentGrossSalary?.etText?.text?.toString())
         map.put("status", employee?.status)
+        // adding document path
+        map["freedom_fighter_document_path"] = freedomFighterUrl
+        map["disability_document_path"] = disabilityURL
         return map
     }
 
@@ -754,6 +781,8 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 .get(EmployeeInfoEditCreateViewModel::class.java)
         invisiableAllError(binding)
         key?.let {
+
+
             if (it.equals(StaticKey.EDIT)) {
                 employeeInfoEditCreateRepo?.updateBasicInfo(
                     employee?.id,
@@ -780,7 +809,6 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
             val profile_photo: RequestBody =
                 RequestBody.create(MediaType.parse("text/plain"), "profile_photo")
-
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
@@ -887,7 +915,9 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         val requestFile: RequestBody =
             RequestBody.create(MediaType.parse("multipart/form-data"), file)
         profilePic =
-            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic =
+//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
 
         val profile_photo: RequestBody =
             RequestBody.create(MediaType.parse("text/plain"), "profile_ph")

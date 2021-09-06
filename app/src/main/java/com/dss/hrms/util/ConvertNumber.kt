@@ -35,4 +35,26 @@ class ConvertNumber {
 
         return result
     }
+
+    companion object {
+        fun getTheFileNameFromTheLink(link: String?): String {
+
+            return if (link.isNullOrBlank()) {
+                "No File Found"
+            } else {
+                link.substring(link.lastIndexOf('/') + 1)
+            }
+        }
+
+        fun getTheFileExtention(link: String): String {
+            return if (link.isNullOrBlank()) {
+                "No File Found"
+            } else {
+                link.substring(link.lastIndexOf("."))
+            }
+        }
+
+    }
+
 }
+

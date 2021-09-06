@@ -12,14 +12,17 @@ object RetrofitInstance {
     // var BASE_URL = "http://dss.aws.simecsystem.com:10014"
     //var BASE_URL = "http://dss.aws.simecsystem.com:10014"
     //var BASE_URL = "http://dss.stage.simecsystem.com:10014"
- //   var BASE_URL = "http://dss.dev.simecsystem.com:10014"
-  //  var BASE_URL_FOR_WEBVIEW = "http://dss.dev.simecsystem.com:10015"
-   // var BASE_URL = "http://192.168.10.134:8000"
+    //   var BASE_URL = "http://dss.dev.simecsystem.com:10014"
+    //  var BASE_URL_FOR_WEBVIEW = "http://dss.dev.simecsystem.com:10015"
+    // var BASE_URL = "http://192.168.10.134:8000"
 
-  // var BASE_URL = "http://dss.stage.simecsystem.com:10014"
-   var BASE_URL = "http://192.168.10.124:8000"
+    // var BASE_URL = "http://dss.stage.simecsystem.com:10014"
+    var BASE_URL = "http://dss.dev.simecsystem.com:10014"
 
-   var BASE_URL_FOR_WEBVIEW = "http://dss.stage.simecsystem.com:10015"
+    var BASE_URL_FOR_WEBVIEW = "http://dss.stage.simecsystem.com:10015"
+    var IMAGE_BASE = "http://192.168.10.124:8000/uploads/photos/"
+    var FILE_BASE = "http://dss.dev.simecsystem.com:10014"
+
     //  var BASE_URL = "http://182.160.111.81:10014"
     const val BASE_URL_PLACE_API = "https://maps.googleapis.com/maps/api"
     const val BASE_URL_FCM = "https://fcm.googleapis.com"
@@ -32,7 +35,6 @@ object RetrofitInstance {
         .writeTimeout(25, TimeUnit.SECONDS)
 
         .build()
-
 
 
     val retrofitInstance: Retrofit?
