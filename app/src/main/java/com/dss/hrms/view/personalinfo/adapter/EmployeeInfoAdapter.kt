@@ -170,9 +170,9 @@ class EmployeeInfoAdapter @Inject constructor() :
             }
 
             StaticKey.ForeingTraining -> {
-                holder.binding?.hLocaltraining?.tvEdit?.setOnClickListener({
+                holder.binding?.hLocaltraining?.tvEdit?.setOnClickListener {
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                }
                 holder.binding?.llLocalTrainingInfo?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindForeignTrainingData(
                     holder.binding!!,
@@ -183,9 +183,9 @@ class EmployeeInfoAdapter @Inject constructor() :
             }
 
             StaticKey.OfficialResidentials -> {
-                holder.binding?.hOfficialResidentialInfo?.tvEdit?.setOnClickListener({
+                holder.binding?.hOfficialResidentialInfo?.tvEdit?.setOnClickListener {
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                }
                 holder.binding?.llOfficialResidentialInfo?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindOfficialResidentialInfoData(
                     holder.binding!!,
