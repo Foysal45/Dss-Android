@@ -19,6 +19,7 @@ import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.graphics.createBitmap
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_employee_info.view.*
 import java.io.File
 import java.io.IOException
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -201,7 +203,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
         when (key) {
             StaticKey.PERMANENT_ADDRESS -> {
                 employee?.permanentAddresses?.let {
-                    if (it.size>0){
+                    if (it.size > 0) {
                         dataList = arrayListOf(it.get(0))
                     }
                 }
@@ -217,7 +219,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             }
             StaticKey.PRESENT_ADDRESS -> {
                 employee?.presentAddresses?.let {
-                    if (it.size>0){
+                    if (it.size > 0) {
                         dataList = arrayListOf(it.get(0))
                     }
                 }
@@ -473,6 +475,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editEducationQualificationInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.EDIT
                         )
                     }
@@ -481,6 +489,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editEducationQualificationInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.CREATE
                         )
                     }
@@ -846,6 +860,9 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
+        galleryIntent.setType("*/*");
+        val mimetypes = arrayOf("image/*", "application/pdf", "application/msword")
+        galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
         startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
         selectImageBottomSheet!!.dismiss()
     }
@@ -882,9 +899,15 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            val bitmap =
-                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
+            var  bitmap = createBitmap(1, 1)
 
+            bitmap = try {
+                MediaStore.Images.Media.getBitmap(activity?.contentResolver, resultUri)
+            }catch (
+                ex : Exception
+            ){
+                bitmap
+            }
             imageFile?.let {
                 bitmap?.let { it1 ->
                     resultUri?.let { it2 ->
@@ -892,6 +915,8 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                     }
                 }
             }
+
+
         } else if (requestCode == REQUEST_SELECT_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
             val resultUri: Uri? = data.data
             try {

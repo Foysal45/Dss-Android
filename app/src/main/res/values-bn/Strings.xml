@@ -16,7 +16,7 @@
     <string name="sign_out">সাইন আউট</string>
     <string name="choose_option_text">পছন্দ করুন</string>
     <string name="from_camera_text">ক্যামেরা থেকে</string>
-    <string name="from_gallery_text">গ্যালারী থেকে</string>
+    <string name="from_gallery_text">স্টোরেজ থেকে</string>
     <string name="select_language">ভাষা নির্বাচন করুন</string>
     <string name="version">ভার্সন</string>
     <string name="select_option">অপসন সিলেক্ট করুন</string>
@@ -417,5 +417,6 @@
     <string name="docoument">সংযুক্তি</string>
     <string name="error_disaiblity_doc">Please Add Your Disability Documents.</string>
     <string name="error_freedom_fighter">Please Add Your Freedom Fighter Documents</string>
+    <string name="error_file_size">ফাইলের আকার সীমা অতিক্রম করেছে। সর্বোচ্চ ফাইলের আকার 2 এমবি</string>
 
 </resources>

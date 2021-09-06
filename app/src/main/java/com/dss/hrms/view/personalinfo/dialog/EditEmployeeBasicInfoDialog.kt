@@ -423,8 +423,15 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
         binding?.ivEmployee?.setOnClickListener {
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
-                override fun onFileValue(imgFile: File, bitmap: Bitmap) {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
                     imageFile = imgFile
+
+                    Glide.with(context)
+                        .asBitmap()
+                        .centerCrop()
+                        .load(bitmap)
+                        .into(binding.ivEmployee)
+
                     binding?.ivEmployee?.setImageBitmap(bitmap)
                     //   Toast.makeText(context, "image", Toast.LENGTH_LONG).show()
                     Log.e("image", "dialog imageFile  : " + bitmap)
@@ -458,7 +465,26 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
             dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             if (imageFile != null) {
-                imageFile?.let { it1 -> uploadImage(it1) }
+
+                // Get length of file in bytes
+
+                // Get length of file in bytes
+                val fileSizeInBytes: Long = imageFile!!.length()
+// Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
+// Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
+                val fileSizeInKB = fileSizeInBytes / 1024
+// Convert the KB to MegaBytes (1 MB = 1024 KBytes)
+// Convert the KB to MegaBytes (1 MB = 1024 KBytes)
+                //val fileSizeInMB = fileSizeInKB / 1024
+
+                if (fileSizeInKB > (2 * 1024)) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.error_file_size) ,
+                        Toast.LENGTH_LONG
+                    ).show()
+                    dialog?.dismiss()
+                } else imageFile?.let { it1 -> uploadImage(it1) }
 
             } else {
                 uploadData()
@@ -805,10 +831,10 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
             val requestFile: RequestBody =
                 RequestBody.create(MediaType.parse("multipart/form-data"), imageFile)
             profilePic =
-                MultipartBody.Part.createFormData("filenames[]", "filenames[]", requestFile)
+                MultipartBody.Part.createFormData("filenames[]", "${imageFile.name}", requestFile)
 
             val profile_photo: RequestBody =
-                RequestBody.create(MediaType.parse("text/plain"), "profile_photo")
+                RequestBody.create(MediaType.parse("text/plain"), "profilto")
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)

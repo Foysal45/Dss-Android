@@ -80,6 +80,7 @@ import kotlinx.android.synthetic.main.personel_information_view_field.view.tvTit
 import kotlinx.android.synthetic.main.personel_information_view_field_with_icon.view.*
 import java.io.File
 import java.io.IOException
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -250,15 +251,18 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 )
                 v.fEmployeeFreedomFighterAttachment.tvText.text = " Tap To View"
                 val fileExtentions =
-                    ConvertNumber.getTheFileExtention(employee?.freedom_fighter_document_path.toString())
+                    ConvertNumber.getTheFileExtention(employee?.freedom_fighter_document_path)
                         .toLowerCase()
 
                 if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
                         "jpg"
-                    )){
-                    v.fEmployeeFreedomFighterAttachment.icon.background = ContextCompat.getDrawable(ctx , R.drawable.picture)
+                    )
+                ) {
+                    v.fEmployeeFreedomFighterAttachment.icon.background =
+                        ContextCompat.getDrawable(ctx, R.drawable.picture)
                 } else {
-                    v.fEmployeeFreedomFighterAttachment.icon.background = ContextCompat.getDrawable(ctx , R.drawable.ic_pdf)
+                    v.fEmployeeFreedomFighterAttachment.icon.background =
+                        ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
                 }
 
             } else {
@@ -289,40 +293,43 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             v.fDisabilityAttachment.tvText.text = " Tap To View"
 
             val fileExtentions =
-                ConvertNumber.getTheFileExtention(employee?.disability_document_path.toString())
+                ConvertNumber.getTheFileExtention(employee?.disability_document_path)
                     .toLowerCase()
 
             if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
                     "jpg"
-                )){
-                    v.fDisabilityAttachment.icon.background = ContextCompat.getDrawable(ctx , R.drawable.picture)
-                } else {
-                v.fDisabilityAttachment.icon.background = ContextCompat.getDrawable(ctx , R.drawable.ic_pdf)
+                )
+            ) {
+                v.fDisabilityAttachment.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.picture)
+            } else {
+                v.fDisabilityAttachment.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
             }
 
-                if (preparence?.getLanguage()
-                        .equals("en")
-                ) {
+            if (preparence?.getLanguage()
+                    .equals("en")
+            ) {
 
 
-                    v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type)
-                    v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree)
-                    v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type)
-                    employee?.employment_job_status?.employeementstatus?.name?.let {
-                        v.fPresentGrossSalary.tvText.setText(
-                            it
-                        )
-                    }
-                } else {
-                    v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type_bn)
-                    v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree_bn)
-                    v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type_bn)
-                    employee?.employment_job_status?.employeementstatus?.name_bn?.let {
-                        v.fPresentGrossSalary.tvText.setText(
-                            it
-                        )
-                    }
+                v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type)
+                v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree)
+                v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type)
+                employee?.employment_job_status?.employeementstatus?.name?.let {
+                    v.fPresentGrossSalary.tvText.setText(
+                        it
+                    )
                 }
+            } else {
+                v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type_bn)
+                v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree_bn)
+                v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type_bn)
+                employee?.employment_job_status?.employeementstatus?.name_bn?.let {
+                    v.fPresentGrossSalary.tvText.setText(
+                        it
+                    )
+                }
+            }
 
         }
         if (preparence?.getLanguage()
@@ -353,25 +360,28 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             v.fEmployeeStatusType.tvText.setText(employee?.employment_job_status?.employeementstatus?.name_bn)
         }
 
-        activity?.let {
-            Glide.with(it).applyDefaultRequestOptions(
-                RequestOptions()
-                    .placeholder(R.drawable.ic_baseline_image_24)
-            ).load(RetrofitInstance.BASE_URL + employee?.photo)
-                .into(v.ivEmployee)
-        }
+//        activity?.let {
+//            Glide.with(it).applyDefaultRequestOptions(
+//                RequestOptions()
+//                    .placeholder(R.drawable.ic_baseline_image_24)
+//            ).load(RetrofitInstance.BASE_URL + employee?.photo)
+//                .into(v.ivEmployee)
+//        }
+
+        Glide.with(ctx)
+            .load(RetrofitInstance.BASE_URL + employee?.photo)
+            .placeholder(R.drawable.ic_baseline_image_24)
+            .into(v.ivEmployee)
 
         val page = activity
 
         // \
         v.fEmployeeFreedomFighterAttachment.setOnClickListener {
 
-            if (employee?.disability_document_path.isNullOrBlank()) {
+            if (employee?.freedom_fighter_document_path.isNullOrBlank()) {
                 Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
             } else {
                 // check action
-                val fileExtensions =
-                    ConvertNumber.getTheFileExtention(employee?.disability_document_path.toString())
 
 
                 val browserIntent = Intent(
@@ -388,9 +398,6 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             if (employee?.disability_document_path.isNullOrBlank()) {
                 Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
             } else {
-                // check action
-                val fileExtensions =
-                    ConvertNumber.getTheFileExtention(employee?.disability_document_path.toString())
 
                 val browserIntent = Intent(
                     Intent.ACTION_VIEW,
@@ -474,7 +481,9 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             Intent.ACTION_PICK,
             android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
-        galleryIntent.setType("image/*");
+        galleryIntent.setType("*/*");
+        val mimetypes = arrayOf("image/*", "application/pdf", "application/msword")
+        galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
         startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
         selectImageBottomSheet!!.dismiss()
     }
@@ -512,16 +521,24 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            val bitmap =
-                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
+            var bitmap: Bitmap? = null
+            try {
+                bitmap =
+                    MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
+            } catch (e: Exception) {
+                bitmap = null
 
-            imageFile?.let {
-                bitmap?.let { it1 ->
-                    resultUri?.let { it2 ->
-                        onFilevalueReceiveListener?.onFileValue(it, it1)
-                    }
-                }
             }
+
+
+            imageFile?.let { onFilevalueReceiveListener?.onFileValue(it, bitmap) }
+//            imageFile?.let {
+//                bitmap?.let { it1 ->
+//                    resultUri?.let { it2 ->
+//                        onFilevalueReceiveListener?.onFileValue(it, it1)
+//                    }
+//                }
+//            }
         } else if (requestCode == REQUEST_SELECT_PHOTO && resultCode == RESULT_OK && data != null) {
             Log.e("url", "uri .......................................................${data.data}")
             val resultUri: Uri? = data.data

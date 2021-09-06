@@ -208,7 +208,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
                         drawerMenu()
                         Log.e(
                             "mainactivity",
-                            "inject employee data name : " + employeeProfileData?.employee?.name_bn
+                            "inject employee data name : " + employeeProfileData?.employee?.permanentAddresses.toString()
                         )
                         Log.e("basic info","....................................................roles date ${employeeProfileData?.employee?.user?.roles?.size}")
                         //   Log.e("MainActivity", "response : " + any)

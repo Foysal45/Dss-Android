@@ -59,7 +59,7 @@
     <!--Spouse-->
     <string name="choose_option_text">Choose Option</string>
     <string name="from_camera_text">From Camera</string>
-    <string name="from_gallery_text">From Gallery</string>
+    <string name="from_gallery_text">From Device</string>
     <string name="employee_name">Employee Name</string>
     <string name="name">Name (English)</string>
     <string name="name_of_spouse">Name Of Spouse(English)</string>
@@ -417,6 +417,7 @@
     <string name="address_details">বিস্তারিত ঠিকানা</string>
     <string name="error_disaiblity_doc">Please Add Your Disability Documents.</string>
     <string name="error_freedom_fighter">Please Add Your Freedom Fighter Documents</string>
+    <string name="error_file_size">File size limit exceeded. Max File Size 2 Megabytes.</string>
 
 
     <!--    -->

@@ -1,5 +1,7 @@
 package com.dss.hrms.util
 
+import java.lang.Exception
+
 class ConvertNumber {
 
 
@@ -46,11 +48,15 @@ class ConvertNumber {
             }
         }
 
-        fun getTheFileExtention(link: String): String {
-            return if (link.isNullOrBlank()) {
-                "No File Found"
-            } else {
-                link.substring(link.lastIndexOf("."))
+        fun getTheFileExtention(link: String?): String {
+            return try {
+                if (link.isNullOrBlank()) {
+                    "No File Found"
+                } else {
+                    link.substring(link.lastIndexOf("."))
+                }
+            } catch ( ex : Exception ){
+                "No File"
             }
         }
 

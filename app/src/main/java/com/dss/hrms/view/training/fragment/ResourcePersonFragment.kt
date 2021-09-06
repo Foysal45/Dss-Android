@@ -630,12 +630,13 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
     }
 
     override fun onGalleryButtonClicked() {
-
         val galleryIntent = Intent(
             Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
-        galleryIntent.setType("image/*");
+        galleryIntent.setType("*/*");
+        val mimetypes = arrayOf("image/*", "application/pdf", "application/msword")
+        galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
         startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
         selectImageBottomSheet!!.dismiss()
     }
@@ -676,7 +677,8 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
             val bitmap =
                 MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
             dialogTrainingLoyeoutBinding.ivResourcePerson.setImageBitmap(bitmap)
-        } else if (requestCode == REQUEST_SELECT_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
+        }
+        else if (requestCode == REQUEST_SELECT_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
             val resultUri: Uri? = data.data
             try {
                 activity?.let {

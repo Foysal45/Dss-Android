@@ -441,7 +441,7 @@ class EditCreateNomineeInfo @Inject constructor() {
 
         binding?.ivNomineeEmployee?.setOnClickListener {
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
-                override fun onFileValue(imgFile: File, bitmap: Bitmap) {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
                     imageFile = imgFile
 
                     Glide.with(context)

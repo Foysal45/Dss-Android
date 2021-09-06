@@ -100,17 +100,19 @@ class EditPermanentAddressInfo @Inject constructor() {
 
         binding?.llAddress?.visibility = View.VISIBLE
         binding?.hAddress?.title = context.getString(R.string.permanent_address)
-        Log.e("address", "permanent")
+        Log.e("address", "permanent ${permanentAddresses1?.localGovernmentType?.name_bn}")
         //  binding?.hAddress?.tvTitle?.setText(context?.getString(R.string.permanent_address))
         binding?.hAddress?.tvClose?.setOnClickListener({
             dialogCustome?.dismiss()
         })
 
+        permanentAddresses = permanentAddresses1
         binding?.cbSameAsPresentAddress?.setOnClickListener {
             if (binding?.cbSameAsPresentAddress?.isChecked == true) {
                 employeeProfileData?.employee?.presentAddresses?.let {
                     if (it.size > 0) {
                         var presentAddressJson = Gson().toJson(it.get(0))
+                        Log.e("TAG", "updatePresentAddressInfo:  $presentAddressJson")
                         var pmAddresses = Gson().fromJson(
                             presentAddressJson.toString(),
                             Employee.PermanentAddresses::class.java

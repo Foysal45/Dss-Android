@@ -2,6 +2,7 @@ package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Bitmap
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
@@ -20,6 +22,7 @@ import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
+import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
@@ -27,10 +30,13 @@ import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.allInterface.FileClickListener
+import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import java.io.File
 import javax.inject.Inject
 
 class EditEducationQualificationInfo @Inject constructor() {
@@ -42,7 +48,7 @@ class EditEducationQualificationInfo @Inject constructor() {
 
     @Inject
     lateinit var employeeProfileData: EmployeeProfileData
-
+    var fileClickListener: FileClickListener? = null
     var position: Int? = 0
     var dialogCustome: Dialog? = null
     var educationalQualification: Employee.EducationalQualifications? = null
@@ -56,12 +62,15 @@ class EditEducationQualificationInfo @Inject constructor() {
     var boardId: String? = null
 
 
-    fun showDialog(context: Context, position: Int?, key: String) {
+    fun showDialog(context: Context, position: Int? ,  fileClickListener: FileClickListener, key: String) {
         this.position = position
         this.educationalQualification =
             position?.let { employeeProfileData?.employee?.educationalQualifications?.get(it) }
         this.context = context
         this.key = key
+
+        this.fileClickListener = fileClickListener
+
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DataBindingUtil.inflate(
@@ -119,7 +128,7 @@ class EditEducationQualificationInfo @Inject constructor() {
                                     if (degreeName?.name?.toLowerCase()
                                             .equals("ssc") || degreeName?.name?.toLowerCase()
                                             .equals("hsc") || degreeName?.name?.toLowerCase()
-                                            .equals("jsc")|| degreeName?.name?.toLowerCase()
+                                            .equals("jsc") || degreeName?.name?.toLowerCase()
                                             .equals("psc")
                                     ) {
                                         binding?.fEQBoardOrUniversity?.llBody?.visibility =
@@ -190,7 +199,7 @@ class EditEducationQualificationInfo @Inject constructor() {
             })
 
 
-        binding?.educationBtnUpdate?.btnUpdate?.setOnClickListener({
+        binding?.educationBtnUpdate?.btnUpdate?.setOnClickListener {
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
@@ -220,7 +229,21 @@ class EditEducationQualificationInfo @Inject constructor() {
                             })
                 }
             }
-        })
+        }
+
+
+
+        binding?.fEQAttachment?.setOnClickListener {
+          //  Toast.makeText(context, "image", Toast.LENGTH_LONG).show()
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+                    binding?.fEQAttachmentFileName?.text =
+                        "${ConvertNumber.getTheFileNameFromTheLink(imgFile.name)}"
+                    //
+                  //  Log.e("image", "dialog imageFile  : " + bitmap)
+                }
+            })
+        }
 
 
     }
@@ -279,6 +302,12 @@ class EditEducationQualificationInfo @Inject constructor() {
                                 binding?.fEQDivisionOrCgpa?.tvError?.visibility =
                                     View.VISIBLE
                                 binding?.fEQDivisionOrCgpa?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "document_path" -> {
+                                binding?.fEQAtrtachmentError?.visibility =
+                                    View.VISIBLE
+                                binding?.fEQAtrtachmentError?.text =
                                     ErrorUtils2.mainError(message)
                             }
                         }

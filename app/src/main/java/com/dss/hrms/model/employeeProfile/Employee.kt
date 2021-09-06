@@ -1,8 +1,6 @@
 package com.dss.hrms.model.employeeProfile
 
-import com.dss.hrms.model.Municipalities
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -920,13 +918,14 @@ class Employee {
         @SerializedName("municipality")
         var municipality: municipality? = null
 
-        @SerializedName("Union")
-        var union: Union? = null
+        @SerializedName("union")
+        var Union: union? = null
     }
 
     inner class PermanentAddresses {
         @SerializedName("id")
         var id: Int = 0
+
 
         @SerializedName("employee_id")
         var employee_id: Int = 0
@@ -1002,6 +1001,18 @@ class Employee {
 
         @SerializedName("upazila")
         var upazila: Upazila? = null
+
+        @SerializedName("local_government_type")
+        var localGovernmentType: LocalGovernmentType? = null
+
+        @SerializedName("city_corporation")
+        var cityCorporation: CityCorporation? = null
+
+        @SerializedName("municipality")
+        var municipality: municipality? = null
+
+        @SerializedName("union")
+        var union: union? = null
 
     }
 
@@ -2251,7 +2262,7 @@ class Employee {
         val updated_at: String? = null
     }
 
-    inner class Union {
+    inner class union {
         @SerializedName("id")
         val id: Int = 0
 
@@ -2268,7 +2279,7 @@ class Employee {
         val status: Int = 0
 
         @SerializedName("is_municipality")
-        val is_municipality: Boolean? = null
+        val is_municipality: Int? = null
 
         @SerializedName("deleted_at")
         val deleted_at: String? = null
