@@ -467,6 +467,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fNAllocatedPercentage.tvTitle.setText(context.getString(R.string.nominee_allocated_percentage))
         binding.fNGender.tvTitle.setText(context.getString(R.string.nominee_gender))
         binding.fNMaritalStatus.tvTitle.setText(context.getString(R.string.nominee_marital_status))
+
         binding.fNHasDisavility.tvTitle.setText(context.getString(R.string.nominee_has_disability))
         binding.tvNSignatureTitle.setText(context.getString(R.string.nominee_signature))
 
@@ -481,6 +482,25 @@ class EmployeeInfoDataBinding @Inject constructor() {
         }
         nominee.relation?.let { binding.fNRelation.tvText.setText(it) }
         nominee.allocated_percentage?.let { binding.fNAllocatedPercentage.tvText.setText(it) }
+
+
+        // check what type of attachment we are getting
+        val extentions = ConvertNumber.getTheFileExtention(nominee.nominee_document_path)
+
+        // setting icon on the view
+
+        ConvertNumber.setIconOnTextView(
+            binding.fNAttachment.icon,
+            binding.fNAttachment.tvText,
+            nominee.nominee_document_path,
+            context
+        )
+
+        binding.fNAttachment.llBody.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(context, nominee.nominee_document_path.toString())
+        }
+
+
 
         nominee?.has_disability?.let {
             if (it == 1)
@@ -1471,9 +1491,10 @@ class EmployeeInfoDataBinding @Inject constructor() {
             )
         }
         disciplinaryAction.present_status.let {
-            binding.fDAPresentStatus.tvText.text = if (disciplinaryAction.present_status == 0) "" + context.getString(R.string.pending) else context.getText(
-                R.string.close
-            )
+            binding.fDAPresentStatus.tvText.text =
+                if (disciplinaryAction.present_status == 0) "" + context.getString(R.string.pending) else context.getText(
+                    R.string.close
+                )
         }
         disciplinaryAction.disciplinary_action_details?.let {
             binding.fDADescription.tvText.setText(

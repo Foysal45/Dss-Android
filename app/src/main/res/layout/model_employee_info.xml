@@ -259,6 +259,11 @@
                                 android:id="@+id/fNHasDisavility"
                                 layout="@layout/personel_information_view_field" />
 
+
+                            <include
+                                android:id="@+id/fNAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -289,6 +294,8 @@
                                     android:paddingRight="@dimen/_10sdp"
                                     android:src="@drawable/ic_baseline_image_24" />
                             </LinearLayout>
+
+
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

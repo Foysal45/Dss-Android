@@ -1,6 +1,7 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
@@ -68,6 +69,8 @@ class EditCreateNomineeInfo @Inject constructor() {
     var maritalStatus: SpinnerDataModel? = null
     var hasDisabaility: SpinnerDataModel? = null
     open var imageFile: File? = null
+    var documentPath: String? = null
+
     var imageUrl: String? = null
     var dialog: Dialog? = null
 
@@ -314,6 +317,7 @@ class EditCreateNomineeInfo @Inject constructor() {
         binding.fNomineeFullAddress.etText.minLines = 6
         binding.fNomineeFullAddress.etText.maxLines = 12
 
+
         binding.fNomineeFullAddress.etText.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         binding.fNomineeFullAddress.etText.requestLayout()
 
@@ -359,6 +363,19 @@ class EditCreateNomineeInfo @Inject constructor() {
                 }
             })
         })
+
+
+        binding.fNominneAttachment.Attachment.setOnClickListener {
+
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+                    imageFile = imgFile
+                    binding.fNominneAttachment.fEQAttachmentFileName.text = imgFile.name
+                    uploadFile(imgFile, context)
+                }
+            })
+
+        }
 
 
         commonRepo.getCommonData("/api/auth/division/list",
@@ -494,6 +511,66 @@ class EditCreateNomineeInfo @Inject constructor() {
             })
     }
 
+    fun uploadFile(file: File, context: Context) {
+        val dialouge = ProgressDialog(EmployeeInfoActivity.context)
+        dialouge.setMessage("uploading...")
+        dialouge.setCancelable(false)
+        dialouge.show()
+
+        var profilePic: MultipartBody.Part?
+
+        var filePart: MultipartBody.Part?
+
+        val requestFile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        profilePic =
+            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic =
+//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+
+        val profile_photo: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+
+        val employeeInfoEditCreateRepo =
+            ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        employeeInfoEditCreateRepo.uploadProfilePic(
+            profilePic,
+            file.name,
+            profile_photo
+        )
+            ?.observe(
+                EmployeeInfoActivity.context!!,
+                { any ->
+                    Log.e("yousuf", "profile pic : " + any)
+                    //  showResponse(any)
+                    dialouge?.dismiss()
+                    if (any != null) {
+                        val fileUrl = any as String
+                        Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
+                        documentPath = fileUrl
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.successMsg),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                    } else {
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.uploadFailed),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+
+
+    }
+
     fun getMapData(): java.util.HashMap<Any, Any?> {
         var dob =
             DateConverter.changeDateFormateForSending(binding.fNomineeDob?.tvText?.text.toString())
@@ -512,6 +589,7 @@ class EditCreateNomineeInfo @Inject constructor() {
          */
         map.put("division_id", division?.id)
         map.put("district_id", district?.id)
+        map.put("nominee_document_path", documentPath)
         localGovernmentType?.id?.let { map.put("local_government_type_id", it) }
         municipality?.id?.let { map.put("municipality_id", it) }
         cityCorporations?.id?.let { map.put("city_corporation_id", it) }

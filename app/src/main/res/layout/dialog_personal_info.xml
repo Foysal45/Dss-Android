@@ -748,6 +748,12 @@
                                     app:title="@{@string/address_details}" />
 
 
+                                <include
+                                    android:id="@+id/fNominneAttachment"
+                                    layout="@layout/personel_information_attachment_field"
+                                    app:title="@{@string/nominee_attachment}" />
+
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -795,6 +801,8 @@
                                             layout="@layout/personal_info_update_button" />
                                     </LinearLayout>
                                 </LinearLayout>
+
+
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>

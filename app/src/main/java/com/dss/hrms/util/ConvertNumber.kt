@@ -3,7 +3,10 @@ package com.dss.hrms.util
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import com.dss.hrms.R
 import com.dss.hrms.retrofit.RetrofitInstance
 import java.lang.Exception
 
@@ -44,6 +47,22 @@ class ConvertNumber {
     }
 
     companion object {
+
+        fun setIconOnTextView( icon : ImageView , textview  : TextView ,  link : String? , ctx: Context  ){
+
+            val extentions = getTheFileExtention(link)
+
+           textview.text = (ctx.getString(R.string.tap_to_view))
+
+            if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains("gif")) {
+
+                icon.setImageResource(R.drawable.ic_picture)
+
+            } else {
+                icon.setImageResource(R.drawable.ic_pdf)
+            }
+
+        }
 
         fun viewFileInShareIntent(ctx: Context, link: String) {
             try {

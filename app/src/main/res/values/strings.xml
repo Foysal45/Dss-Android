@@ -59,6 +59,7 @@
     <!--Spouse-->
     <string name="choose_option_text">Choose Option</string>
     <string name="from_camera_text">From Camera</string>
+    <string name="nominee_attachment">Nominee Document</string>
     <string name="from_gallery_text">From Device</string>
     <string name="employee_name">Employee Name</string>
     <string name="name">Name (English)</string>
@@ -413,7 +414,7 @@
     <string name="show_pdf">Show Pdf</string>
     <string name="no_responsible_person_found">No responsible person found</string>
     <string name="downloading_see_progess_on_notification_bar">Downloading... See progress on notification bar</string>
-    <string name="docoument">সংযুক্তি</string>
+    <string name="docoument">Document</string>
     <string name="address_details">বিস্তারিত ঠিকানা</string>
     <string name="error_disaiblity_doc">Please Add Your Disability Documents.</string>
     <string name="error_freedom_fighter">Please Add Your Freedom Fighter Documents</string>

@@ -783,6 +783,10 @@ class Employee {
         @SerializedName("nominee_signature")
         val nominee_signature: String? = null
 
+        @SerializedName("nominee_document_path")
+        val nominee_document_path: String? = null
+
+
         @SerializedName("has_disability")
         val has_disability: Int = 0
 

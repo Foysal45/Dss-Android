@@ -946,7 +946,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 //                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
 
             imageFile?.let {
-                bitmap?.let { it1 ->
+                bitmap.let { it1 ->
                     resultUri?.let { it2 ->
                         onFilevalueReceiveListener?.onFileValue(it, it1)
                     }
