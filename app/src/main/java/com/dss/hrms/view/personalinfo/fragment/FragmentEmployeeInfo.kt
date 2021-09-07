@@ -909,7 +909,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                 bitmap
             }
             imageFile?.let {
-                bitmap?.let { it1 ->
+                bitmap.let { it1 ->
                     resultUri?.let { it2 ->
                         onFilevalueReceiveListener?.onFileValue(it, it1)
                     }
@@ -930,9 +930,20 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                 };
             } catch (e: IOException) {
                 e.printStackTrace()
+
             }
-            val bitmap =
-                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
+
+            var bitmap = createBitmap(1, 1)
+
+            bitmap = try {
+                MediaStore.Images.Media.getBitmap(activity?.contentResolver, resultUri)
+            } catch (
+                ex: Exception
+            ) {
+                bitmap
+            }
+//            val bitmap =
+//                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
 
             imageFile?.let {
                 bitmap?.let { it1 ->

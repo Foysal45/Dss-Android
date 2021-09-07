@@ -74,7 +74,7 @@ class EditEducationQualificationInfo @Inject constructor() {
     ) {
         this.position = position
         this.educationalQualification =
-            position?.let { employeeProfileData?.employee?.educationalQualifications?.get(it) }
+            position?.let { employeeProfileData.employee?.educationalQualifications?.get(it) }
         this.context = context
         this.key = key
 
@@ -89,7 +89,7 @@ class EditEducationQualificationInfo @Inject constructor() {
             false
         )
         binding?.getRoot()?.let { dialogCustome?.setContentView(it) }
-        var window: Window? = dialogCustome?.getWindow()
+        var window: Window? = dialogCustome?.window
         window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -122,7 +122,7 @@ class EditEducationQualificationInfo @Inject constructor() {
         val employeeInfoEditCreateRepo =
             ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
                 .get(EmployeeInfoEditCreateViewModel::class.java)
-        employeeInfoEditCreateRepo?.uploadProfilePic(
+        employeeInfoEditCreateRepo.uploadProfilePic(
             profilePic,
             file.name,
             profile_photo
@@ -136,7 +136,7 @@ class EditEducationQualificationInfo @Inject constructor() {
                     if (any != null) {
                         val fileUrl = any as String
                         Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
-
+                        educationDocumetLink = fileUrl
                         Toast.makeText(
                             context,
                             context.getString(R.string.successMsg),
