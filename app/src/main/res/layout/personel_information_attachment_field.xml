@@ -31,20 +31,20 @@
             app:layout_constraintRight_toRightOf="parent">
 
             <TextView
-                android:id="@+id/fEQtvAttachment"
+                android:id="@+id/ftvAttachment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_5sdp"
                 android:drawableLeft="@drawable/ic_baseline_attachment_24"
                 android:drawablePadding="20dp"
-                android:text="@{title}"
+                android:text="@string/attachment"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_large"
                 android:textStyle="bold" />
 
 
             <TextView
-                android:id="@+id/fEQAttachmentFileName"
+                android:id="@+id/fAttachmentFileName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_5sdp"
@@ -57,7 +57,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/fEQAtrtachmentError"
+                android:id="@+id/fAtrtachmentError"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"

@@ -1350,6 +1350,12 @@
                                     app:title="@{@string/certification_date}" />
 
 
+                                <include
+                                    android:id="@+id/fLanguageAttachment"
+                                    layout="@layout/personel_information_attachment_field"
+                                    app:title="@{@string/document}" />
+
+
                                 <LinearLayout
 
                                     android:layout_width="match_parent"

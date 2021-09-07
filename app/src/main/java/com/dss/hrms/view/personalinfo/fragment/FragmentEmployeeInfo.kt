@@ -193,11 +193,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
         return v
     }
 
-    override fun onStart() {
-        super.onStart()
 
-
-    }
 
     private fun initRV() {
         when (key) {

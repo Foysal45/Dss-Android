@@ -370,7 +370,7 @@ class EditCreateNomineeInfo @Inject constructor() {
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
                     imageFile = imgFile
-                    binding.fNominneAttachment.fEQAttachmentFileName.text = imgFile.name
+                    binding.fNominneAttachment.fAttachmentFileName.text = imgFile.name
                     uploadFile(imgFile, context)
                 }
             })
@@ -572,8 +572,7 @@ class EditCreateNomineeInfo @Inject constructor() {
     }
 
     fun getMapData(): java.util.HashMap<Any, Any?> {
-        var dob =
-            DateConverter.changeDateFormateForSending(binding.fNomineeDob?.tvText?.text.toString())
+        var dob = DateConverter.changeDateFormateForSending(binding.fNomineeDob?.tvText?.text.toString())
         var map = java.util.HashMap<Any, Any?>()
         if (nominee?.id == null) map.put("id", 0) else nominee?.id?.let { map.put("id", it) }
         map.put("employee_id", employee?.user?.employee_id)

@@ -1,6 +1,7 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.text.TextUtils
@@ -23,10 +24,7 @@ import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
-import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.DateConverter
-import com.dss.hrms.util.DatePicker
-import com.dss.hrms.util.StaticKey
+import com.dss.hrms.util.*
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.FileClickListener
@@ -55,10 +53,10 @@ class EditAndCreateLanguageInfo @Inject constructor() {
     lateinit var employeeProfileData: EmployeeProfileData
 
     var position: Int? = 0
-
+    var languageDocumentLinK: String? = null
     var dialogCustome: Dialog? = null
     var language: Employee.Languages? = null
-    var binding: DialogPersonalInfoBinding? = null
+    lateinit var binding: DialogPersonalInfoBinding
     var context: Context? = null
     lateinit var key: String
     var fileClickListener: FileClickListener? = null
@@ -137,7 +135,7 @@ class EditAndCreateLanguageInfo @Inject constructor() {
             }
         }
 
-        binding?.ivLanguage?.setOnClickListener({
+        binding?.ivLanguage?.setOnClickListener {
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
                     imageFile = imgFile
@@ -146,18 +144,32 @@ class EditAndCreateLanguageInfo @Inject constructor() {
                     Log.e("image", "dialog imageFile  : " + imageFile)
                 }
             })
-        })
+        }
 
-        binding?.fLanguageCertificationDate?.tvText?.setOnClickListener({
+        binding?.fLanguageCertificationDate?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
-                    date?.let { binding?.fLanguageCertificationDate?.tvText?.setText("" + it) }
+                    date.let { binding?.fLanguageCertificationDate?.tvText?.setText("" + it) }
                 }
             })
-        })
+        }
+
+        binding?.fLanguageAttachment?.Attachment?.setOnClickListener {
+            // bring  fille picker
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+
+                    binding.fLanguageAttachment.fAttachmentFileName.text = imgFile.name.toString()
+                    uploadFile(imgFile, context)
+
+                }
+            })
+
+
+        }
 
         //   Log.e("gender", "gender message " + Gson().toJson(list))
-        getExpertiseLevel()?.let {
+        getExpertiseLevel().let {
             SpinnerAdapter().setSpinnerForStringMatch(
                 binding?.fLanguageExperienceLevel?.spinner!!,
                 context,
@@ -286,6 +298,7 @@ class EditAndCreateLanguageInfo @Inject constructor() {
         map.put("expertise_level", expertLevel?.name?.toLowerCase())
         // imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
         map.put("certification_date", date)
+        map.put("certificate_document_path" , languageDocumentLinK)
         map.put("status", language?.status)
         return map
     }
@@ -406,6 +419,67 @@ class EditAndCreateLanguageInfo @Inject constructor() {
 
         }
         return arrayListOf(rel, rel1, rel2, rel3)
+    }
+
+
+    fun uploadFile(file: File, context: Context) {
+        val dialouge = ProgressDialog(EmployeeInfoActivity.context)
+        dialouge.setMessage("uploading...")
+        dialouge.setCancelable(false)
+        dialouge.show()
+
+        var profilePic: MultipartBody.Part?
+
+        var filePart: MultipartBody.Part?
+
+        val requestFile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        profilePic =
+            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic =
+//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+
+        val profile_photo: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+
+        val employeeInfoEditCreateRepo =
+            ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        employeeInfoEditCreateRepo.uploadProfilePic(
+            profilePic,
+            file.name,
+            profile_photo
+        )
+            ?.observe(
+                EmployeeInfoActivity.context!!,
+                androidx.lifecycle.Observer { any ->
+                    Log.e("yousuf", "profile pic : " + any)
+                    //  showResponse(any)
+                    dialouge?.dismiss()
+                    if (any != null) {
+                        val fileUrl = any as String
+                        Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
+                        languageDocumentLinK = fileUrl
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.successMsg),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                    } else {
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.uploadFailed),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+
+
     }
 
 }

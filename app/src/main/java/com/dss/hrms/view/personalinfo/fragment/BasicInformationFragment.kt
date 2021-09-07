@@ -254,7 +254,11 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                     ConvertNumber.getTheFileExtention(employee?.freedom_fighter_document_path)
                         .toLowerCase()
 
-                if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+
+                if(fileExtentions.isEmpty()){
+                    v.fEmployeeFreedomFighterAttachment.tvText.text = " No Attachment"
+                }
+                else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
                         "jpg"
                     )
                 ) {
@@ -296,7 +300,12 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 ConvertNumber.getTheFileExtention(employee?.disability_document_path)
                     .toLowerCase()
 
-            if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+
+            if(fileExtentions.isEmpty()){
+                v.fEmployeeFreedomFighterAttachment.tvText.text = " No Attachment"
+            }
+
+            else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
                     "jpg"
                 )
             ) {
@@ -382,8 +391,6 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
             } else {
                 // check action
-
-
                 val browserIntent = Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(RetrofitInstance.FILE_BASE + employee?.freedom_fighter_document_path.toString())

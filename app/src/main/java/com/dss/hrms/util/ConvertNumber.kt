@@ -2,6 +2,7 @@ package com.dss.hrms.util
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
@@ -54,7 +55,12 @@ class ConvertNumber {
 
            textview.text = (ctx.getString(R.string.tap_to_view))
 
-            if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains("gif")) {
+            if(link.equals("null") || link.isNullOrBlank()){
+                textview.text = " No Attachment "
+                textview.setTextColor(Color.DKGRAY)
+            }
+
+            else if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains("gif")) {
 
                 icon.setImageResource(R.drawable.ic_picture)
 
@@ -64,10 +70,10 @@ class ConvertNumber {
 
         }
 
-        fun viewFileInShareIntent(ctx: Context, link: String) {
+        fun viewFileInShareIntent(ctx: Context, link: String?) {
             try {
-                if (link.isNullOrBlank() || link.contains("null")) {
-                    Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+                if (link.isNullOrBlank() || link == "null") {
+                    Toast.makeText(ctx, "Something Went Wrong !! link empty", Toast.LENGTH_LONG).show()
                 } else {
                     val browserIntent = Intent(
                         Intent.ACTION_VIEW,
@@ -76,7 +82,7 @@ class ConvertNumber {
                     ctx.startActivity(browserIntent)
                 }
             } catch (Ex: Exception) {
-                Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+                Toast.makeText(ctx, "Something Went Wrong !! ${Ex.localizedMessage}", Toast.LENGTH_LONG).show()
             }
 
         }

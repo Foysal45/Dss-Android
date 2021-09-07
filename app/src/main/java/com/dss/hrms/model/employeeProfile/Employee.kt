@@ -1652,6 +1652,9 @@ class Employee {
         @SerializedName("certification_date")
         val certification_date: String? = null
 
+        @SerializedName("certificate_document_path")
+        val certificate_document_path: String? = null
+
         @SerializedName("certificate")
         val certificate: String? = null
 

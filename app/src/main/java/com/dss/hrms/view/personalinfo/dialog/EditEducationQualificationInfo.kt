@@ -53,6 +53,8 @@ class EditEducationQualificationInfo @Inject constructor() {
     @Inject
     lateinit var employeeProfileData: EmployeeProfileData
     var fileClickListener: FileClickListener? = null
+
+
     var position: Int? = 0
     var dialogCustome: Dialog? = null
     var educationalQualification: Employee.EducationalQualifications? = null
@@ -309,7 +311,7 @@ class EditEducationQualificationInfo @Inject constructor() {
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
                     binding?.fEQAttachmentFileName?.text =
-                        "${ConvertNumber.getTheFileNameFromTheLink(imgFile.name)}"
+                        "${imgFile.name}"
                     //
                     Log.e("image", "dialog imageFile  : " + imgFile.name)
 

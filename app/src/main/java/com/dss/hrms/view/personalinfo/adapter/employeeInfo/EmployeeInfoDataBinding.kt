@@ -1,8 +1,12 @@
 package com.dss.hrms.view.personalinfo.adapter.employeeInfo
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
@@ -14,6 +18,7 @@ import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.util.DateConverter
 import com.dss.hrms.view.personalinfo.dialog.EditOfficialResidentialIInfo
 import com.namaztime.namaztime.database.MySharedPreparence
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -404,6 +409,9 @@ class EmployeeInfoDataBinding @Inject constructor() {
         val extentions = ConvertNumber.getTheFileExtention(qualifications.documentPath)
         binding.fEQAttachment.tvText.text = (context.getString(R.string.tap_to_view))
 
+        if(extentions.isEmpty()){
+            binding.fEQAttachment.tvText.text ="No Attachment"
+        }
         if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains("gif")) {
 
             binding.fEQAttachment.icon.setImageResource(R.drawable.ic_picture)
@@ -412,8 +420,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
             binding.fEQAttachment.icon.setImageResource(R.drawable.ic_pdf)
         }
 
-        binding.fEQAttachment.llBody.setOnClickListener {
-            ConvertNumber.viewFileInShareIntent(context, qualifications.documentPath.toString())
+        binding.fEQAttachment.tvText.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(context, qualifications.documentPath)
         }
 
         qualifications.board?.let {
@@ -485,19 +493,38 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
 
         // check what type of attachment we are getting
-        val extentions = ConvertNumber.getTheFileExtention(nominee.nominee_document_path)
 
         // setting icon on the view
 
         ConvertNumber.setIconOnTextView(
-            binding.fNAttachment.icon,
-            binding.fNAttachment.tvText,
+            binding.icon,
+            binding.tvText,
             nominee.nominee_document_path,
             context
         )
 
-        binding.fNAttachment.llBody.setOnClickListener {
-            ConvertNumber.viewFileInShareIntent(context, nominee.nominee_document_path.toString())
+        binding.tvText.setOnClickListener {
+            val link = nominee.nominee_document_path
+
+            try {
+                if (link.isNullOrBlank() || link == "null") {
+                    Toast.makeText(context, "Something Went Wrong !! link empty", Toast.LENGTH_LONG)
+                        .show()
+                } else {
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(RetrofitInstance.FILE_BASE + link.toString())
+                    )
+                    context.startActivity(browserIntent);
+                }
+            } catch (Ex: Exception) {
+                Toast.makeText(
+                    context,
+                    "Something Went Wrong !! ${Ex.localizedMessage}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            //  ConvertNumber.viewFileInShareIntent(context, nominee.nominee_document_path.toString())
         }
 
 
@@ -774,6 +801,22 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fLanguageCertificationDate.tvTitle.setText(context.getString(R.string.certification_date))
 
         binding?.tvLanguageCertificate?.setText(context.getString(R.string.certificate))
+
+
+        ConvertNumber.setIconOnTextView(
+            binding.fLanguageCertificationAttachment.icon,
+            binding.fLanguageCertificationAttachment.tvText,
+            languages.certificate_document_path,
+            context
+        )
+
+
+        binding.fLanguageCertificationAttachment.tvText.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(
+                context,
+                languages.certificate_document_path
+            )
+        }
 
         context?.let {
             binding?.ivLanguageCertificate?.let { it1 ->
