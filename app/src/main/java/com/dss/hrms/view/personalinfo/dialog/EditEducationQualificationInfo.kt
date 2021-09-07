@@ -1,6 +1,7 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.text.TextUtils
@@ -36,6 +37,9 @@ import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import javax.inject.Inject
 
@@ -60,9 +64,14 @@ class EditEducationQualificationInfo @Inject constructor() {
     var instituteName: SpinnerDataModel? = null
     var instituteId: String? = null
     var boardId: String? = null
+    var educationDocumetLink: String? = null
 
-
-    fun showDialog(context: Context, position: Int? ,  fileClickListener: FileClickListener, key: String) {
+    fun showDialog(
+        context: Context,
+        position: Int?,
+        fileClickListener: FileClickListener,
+        key: String
+    ) {
         this.position = position
         this.educationalQualification =
             position?.let { employeeProfileData?.employee?.educationalQualifications?.get(it) }
@@ -90,10 +99,70 @@ class EditEducationQualificationInfo @Inject constructor() {
 
     }
 
+    fun uploadFile(file: File, context: Context) {
+        val dialouge = ProgressDialog(EmployeeInfoActivity.context)
+        dialouge.setMessage("uploading...")
+        dialouge.setCancelable(false)
+        dialouge.show()
+
+        var profilePic: MultipartBody.Part?
+
+        var filePart: MultipartBody.Part?
+
+        val requestFile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        profilePic =
+            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic =
+//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+
+        val profile_photo: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+
+        val employeeInfoEditCreateRepo =
+            ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        employeeInfoEditCreateRepo?.uploadProfilePic(
+            profilePic,
+            file.name,
+            profile_photo
+        )
+            ?.observe(
+                EmployeeInfoActivity.context!!,
+                androidx.lifecycle.Observer { any ->
+                    Log.e("yousuf", "profile pic : " + any)
+                    //  showResponse(any)
+                    dialouge?.dismiss()
+                    if (any != null) {
+                        val fileUrl = any as String
+                        Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.successMsg),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                    } else {
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.uploadFailed),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+
+
+    }
+
     fun updateEducationQualification(
         context: Context
     ) {
-
+        val educationDocument: String? = null
         binding?.llEducationQualificaion?.visibility = View.VISIBLE
         binding?.hEducationQualification?.tvClose?.setOnClickListener({
             dialogCustome?.dismiss()
@@ -110,6 +179,8 @@ class EditEducationQualificationInfo @Inject constructor() {
             View.GONE
         binding?.fEQPassingYear?.etText?.setText(educationalQualification?.passing_year)
         binding?.fEQDivisionOrCgpa?.etText?.setText(educationalQualification?.division_cgpa)
+
+        // binding?.
 
 
         commonRepo.getCommonData("/api/auth/examination/list",
@@ -234,13 +305,16 @@ class EditEducationQualificationInfo @Inject constructor() {
 
 
         binding?.fEQAttachment?.setOnClickListener {
-          //  Toast.makeText(context, "image", Toast.LENGTH_LONG).show()
+
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
                     binding?.fEQAttachmentFileName?.text =
                         "${ConvertNumber.getTheFileNameFromTheLink(imgFile.name)}"
                     //
-                  //  Log.e("image", "dialog imageFile  : " + bitmap)
+                    Log.e("image", "dialog imageFile  : " + imgFile.name)
+
+                    uploadFile(imgFile, context)
+
                 }
             })
         }
@@ -342,6 +416,7 @@ class EditEducationQualificationInfo @Inject constructor() {
         map.put("passing_year", binding?.fEQPassingYear?.etText?.text.toString())
         map.put("division_cgpa", binding?.fEQDivisionOrCgpa?.etText?.text.toString())
         map.put("status", educationalQualification?.status)
+        map.put("document_path", educationDocumetLink)
         return map
     }
 

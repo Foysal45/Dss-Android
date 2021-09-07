@@ -139,7 +139,7 @@ class EditAndCreateLanguageInfo @Inject constructor() {
 
         binding?.ivLanguage?.setOnClickListener({
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
-                override fun onFileValue(imgFile: File, bitmap: Bitmap) {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
                     imageFile = imgFile
                     binding?.ivLanguage?.setImageBitmap(bitmap)
                     //   Toast.makeText(context, "image", Toast.LENGTH_LONG).show()

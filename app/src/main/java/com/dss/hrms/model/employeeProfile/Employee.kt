@@ -1091,6 +1091,10 @@ class Employee {
         @SerializedName("division_cgpa")
         val division_cgpa: String? = null
 
+
+        @SerializedName("document_path")
+        val documentPath: String? = null
+
         @SerializedName("status")
         val status: Int = 0
 

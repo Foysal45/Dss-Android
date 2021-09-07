@@ -1,5 +1,10 @@
 package com.dss.hrms.util
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
+import com.dss.hrms.retrofit.RetrofitInstance
 import java.lang.Exception
 
 class ConvertNumber {
@@ -39,6 +44,24 @@ class ConvertNumber {
     }
 
     companion object {
+
+        fun viewFileInShareIntent(ctx: Context, link: String) {
+            try {
+                if (link.isNullOrBlank() || link.contains("null")) {
+                    Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+                } else {
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(RetrofitInstance.FILE_BASE + link.toString())
+                    )
+                    ctx.startActivity(browserIntent)
+                }
+            } catch (Ex: Exception) {
+                Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+            }
+
+        }
+
         fun getTheFileNameFromTheLink(link: String?): String {
 
             return if (link.isNullOrBlank()) {
@@ -55,7 +78,7 @@ class ConvertNumber {
                 } else {
                     link.substring(link.lastIndexOf("."))
                 }
-            } catch ( ex : Exception ){
+            } catch (ex: Exception) {
                 "No File"
             }
         }

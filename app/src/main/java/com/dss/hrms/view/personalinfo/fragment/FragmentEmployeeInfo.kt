@@ -559,7 +559,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         )
                     }
 
-                } else if (operation?.equals(StaticKey.CREATE)!!) {
+                } else if (operation?.equals(StaticKey.CREATE)) {
                     activity?.let { it2 ->
                         editCreateNomineeInfo.showDialog(
                             it2,
@@ -895,17 +895,17 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                             it1
                         )?.let { getImageFile(it) }
                     }
-                };
+                }
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            var  bitmap = createBitmap(1, 1)
+            var bitmap = createBitmap(1, 1)
 
             bitmap = try {
                 MediaStore.Images.Media.getBitmap(activity?.contentResolver, resultUri)
-            }catch (
-                ex : Exception
-            ){
+            } catch (
+                ex: Exception
+            ) {
                 bitmap
             }
             imageFile?.let {
@@ -941,9 +941,10 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                     }
                 }
             }
-        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-
         }
+//        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+//
+//        }
     }
 
     private fun getImageFile(photoPath: String) {
@@ -960,7 +961,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
     private fun createImageFile(): File? {
         val timeStamp: String =
             SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val imageFileName = "JPEG_" + timeStamp + "_"
+        val imageFileName = "JPEG_" + System.currentTimeMillis() + "_"
         val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image = File.createTempFile(
             imageFileName,
@@ -974,7 +975,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
     private fun dispatchTakePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (activity?.getPackageManager()?.let { takePictureIntent.resolveActivity(it) } != null) {
+        if (activity?.packageManager?.let { takePictureIntent.resolveActivity(it) } != null) {
             var photoFile: File? = null
             try {
                 photoFile = createImageFile()
@@ -982,7 +983,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             }
             if (photoFile != null) {
                 val photoURI: Uri = FileProvider.getUriForFile(
-                    activity!!,
+                   requireActivity(),
                     "com.dss.hrms.customerfileprovider",
                     photoFile
                 )

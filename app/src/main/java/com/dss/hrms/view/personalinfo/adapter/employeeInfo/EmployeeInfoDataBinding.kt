@@ -10,6 +10,7 @@ import com.dss.hrms.databinding.ModelEmployeeInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.retrofit.RetrofitInstance
+import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.util.DateConverter
 import com.dss.hrms.view.personalinfo.dialog.EditOfficialResidentialIInfo
 import com.namaztime.namaztime.database.MySharedPreparence
@@ -396,7 +397,24 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fEQBoardOrUniversity.tvTitle.setText(context.getString(R.string.name_of_board))
         binding.fEQPassingYear.tvTitle.setText(context.getString(R.string.passing_year))
         binding.fEQDivisionOrCgpa.tvTitle.setText(context.getString(R.string.div_cgpa))
+        binding.fEQAttachment.tvTitle.setText(context.getString(R.string.attachment))
 
+
+        // check what type of attachment we are getting
+        val extentions = ConvertNumber.getTheFileExtention(qualifications.documentPath)
+        binding.fEQAttachment.tvText.text = (context.getString(R.string.tap_to_view))
+
+        if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains("gif")) {
+
+            binding.fEQAttachment.icon.setImageResource(R.drawable.ic_picture)
+
+        } else {
+            binding.fEQAttachment.icon.setImageResource(R.drawable.ic_pdf)
+        }
+
+        binding.fEQAttachment.llBody.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(context, qualifications.documentPath.toString())
+        }
 
         qualifications.board?.let {
             binding.fEQBoardOrUniversity.llBody.visibility = View.VISIBLE
@@ -1452,11 +1470,9 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 it
             )
         }
-        disciplinaryAction.present_status?.let {
-            binding.fDAPresentStatus.tvText.setText(
-                if (disciplinaryAction.present_status == 0) "" + context.getString(R.string.pending) else context.getText(
-                    R.string.close
-                )
+        disciplinaryAction.present_status.let {
+            binding.fDAPresentStatus.tvText.text = if (disciplinaryAction.present_status == 0) "" + context.getString(R.string.pending) else context.getText(
+                R.string.close
             )
         }
         disciplinaryAction.disciplinary_action_details?.let {

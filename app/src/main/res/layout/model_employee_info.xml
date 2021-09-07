@@ -449,6 +449,12 @@
                             <include
                                 android:id="@+id/fEQDivisionOrCgpa"
                                 layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEQAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

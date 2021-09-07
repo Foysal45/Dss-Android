@@ -247,7 +247,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 }
             })
 
-        commonRepo.getUserRole("/api/auth/employee/${employee?.user?.employee_id}",
+        commonRepo.getUserRole("/api/auth/employee/${employee.user?.employee_id}",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     list?.let {
@@ -402,22 +402,22 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 }
             )
         }
-        binding?.fDOB?.tvText?.setOnClickListener({
+        binding?.fDOB?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding?.fDOB?.tvText?.setText("" + it) }
                 }
             })
-        })
+        }
 
 
-        binding?.fEmploymentStatusDate?.tvText?.setOnClickListener({
+        binding?.fEmploymentStatusDate?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding?.fEmploymentStatusDate?.tvText?.setText("" + it) }
                 }
             })
-        })
+        }
 
 
 
@@ -432,7 +432,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                         .load(bitmap)
                         .into(binding.ivEmployee)
 
-                    binding?.ivEmployee?.setImageBitmap(bitmap)
+                    binding.ivEmployee?.setImageBitmap(bitmap)
                     //   Toast.makeText(context, "image", Toast.LENGTH_LONG).show()
                     Log.e("image", "dialog imageFile  : " + bitmap)
                 }

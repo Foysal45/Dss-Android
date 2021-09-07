@@ -146,34 +146,34 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
                 }
             }
         }
-        binding?.ivTraining?.setOnClickListener({
+        binding?.ivTraining?.setOnClickListener {
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
-                override fun onFileValue(imgFile: File, bitmap: Bitmap) {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
                     imageFile = imgFile
                     binding?.ivTraining?.setImageBitmap(bitmap)
                     //   Toast.makeText(context, "image", Toast.LENGTH_LONG).show()
                     Log.e("image", "dialog imageFile  : " + imageFile)
                 }
             })
-        })
+        }
 
-        binding?.fLocalTrainingToDate?.tvText?.setOnClickListener({
+        binding?.fLocalTrainingToDate?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding?.fLocalTrainingToDate?.tvText?.setText("" + it) }
                 }
             })
-        })
-        binding?.fLocalTrainingFromDate?.tvText?.setOnClickListener({
+        }
+        binding?.fLocalTrainingFromDate?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding?.fLocalTrainingFromDate?.tvText?.setText("" + it) }
                 }
             })
-        })
+        }
 
 
-        binding?.trainingBtnAddUpdate?.btnUpdate?.setOnClickListener({
+        binding?.trainingBtnAddUpdate?.btnUpdate?.setOnClickListener {
             dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             if (imageFile != null) {
                 imageFile?.let { it1 -> uploadImage(it1) }
@@ -182,7 +182,7 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
             }
 
 
-        })
+        }
 
 
     }
