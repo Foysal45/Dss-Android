@@ -409,8 +409,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
         val extentions = ConvertNumber.getTheFileExtention(qualifications.documentPath)
         binding.fEQAttachment.tvText.text = (context.getString(R.string.tap_to_view))
 
-        if(extentions.isEmpty()){
-            binding.fEQAttachment.tvText.text ="No Attachment"
+        if (extentions.isEmpty()) {
+            binding.fEQAttachment.tvText.text = "No Attachment"
         }
         if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains("gif")) {
 
@@ -524,7 +524,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
 //                    Toast.LENGTH_LONG
 //                ).show()
 //            }
-             ConvertNumber.triggerWebView(context, nominee.nominee_document_path.toString())
+            ConvertNumber.triggerWebView(context, nominee.nominee_document_path.toString())
         }
 
 
@@ -883,10 +883,25 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fLocalTrainingFromDate.tvTitle.setText(context.getString(R.string.from_date))
         binding.fLocalTrainingToDate.tvTitle.setText(context.getString(R.string.to_date))
 
-        binding?.tvTrainingTitle?.setText(context.getString(R.string.certificate))
+        // decide what to show in document
+        ConvertNumber.setIconOnTextView(
+            binding.fLocalTrainingDocument.icon,
+            binding.fLocalTrainingDocument.tvText,
+            localTrainings.local_training_document_path,
+            context
+        )
 
-        context?.let {
-            binding?.ivTraining?.let { it1 ->
+        binding.fLocalTrainingDocument.tvText.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(
+                context,
+                localTrainings.local_training_document_path
+            )
+        }
+
+        binding.tvTrainingTitle.text = context.getString(R.string.certificate)
+
+        context.let {
+            binding.ivTraining.let { it1 ->
                 Glide.with(it).applyDefaultRequestOptions(
                     RequestOptions()
                         .placeholder(R.drawable.ic_baseline_image_24)

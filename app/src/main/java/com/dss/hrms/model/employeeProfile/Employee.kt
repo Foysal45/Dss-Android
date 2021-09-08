@@ -1703,6 +1703,9 @@ class Employee {
         @SerializedName("to_date")
         val to_date: String? = null
 
+        @SerializedName("local_training_document_path")
+        val local_training_document_path: String? = null
+
         @SerializedName("certificate")
         val certificate: String? = null
 
@@ -1717,6 +1720,11 @@ class Employee {
 
         @SerializedName("updated_at")
         val updated_at: String? = null
+
+        override fun toString(): String {
+            return "LocalTrainings(id=$id, employee_id=$employee_id, course_title=$course_title, course_title_bn=$course_title_bn, name_of_institute=$name_of_institute, name_of_institute_bn=$name_of_institute_bn, location=$location, location_bn=$location_bn, from_date=$from_date, to_date=$to_date, local_training_document_path=$local_training_document_path, certificate=$certificate, status=$status, deleted_at=$deleted_at, created_at=$created_at, updated_at=$updated_at)"
+        }
+
     }
 
     inner class Foreigntrainings {

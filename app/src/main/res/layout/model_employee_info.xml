@@ -872,6 +872,9 @@
                                 android:id="@+id/fLocalTrainingToDate"
                                 layout="@layout/personel_information_view_field" />
 
+                            <include
+                                android:id="@+id/fLocalTrainingDocument"
+                                layout="@layout/personel_information_view_field_with_icon"/>
 
                             <LinearLayout
                                 android:id="@+id/llTrainingCertification"

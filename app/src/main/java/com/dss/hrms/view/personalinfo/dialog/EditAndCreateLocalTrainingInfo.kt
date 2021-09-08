@@ -1,6 +1,7 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.text.TextUtils
@@ -25,10 +26,7 @@ import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.retrofit.RetrofitInstance
-import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.DateConverter
-import com.dss.hrms.util.DatePicker
-import com.dss.hrms.util.StaticKey
+import com.dss.hrms.util.*
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.allInterface.*
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
@@ -62,6 +60,7 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
     lateinit var key: String
     var gender: SpinnerDataModel? = null
     var fileClickListener: FileClickListener? = null
+    var loacTrainingDocumnet: String? = null
     var imageFile: File? = null
     var imageUrl: String? = null
     var dialog: Dialog? = null
@@ -153,6 +152,33 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
                     binding?.ivTraining?.setImageBitmap(bitmap)
                     //   Toast.makeText(context, "image", Toast.LENGTH_LONG).show()
                     Log.e("image", "dialog imageFile  : " + imageFile)
+                }
+            })
+        }
+
+        binding?.fLocalTrainingAddAttachment?.Attachment?.setOnClickListener {
+            var count = 0
+
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+                    // check for file size validation
+
+                    try {
+                        count =+ 1
+                        if (ConvertNumber.isFileLessThan2MB(imgFile)) {
+                            binding?.fLocalTrainingAddAttachment?.fAttachmentFileName?.text =
+                                imgFile.name
+                            uploadFile(imgFile, context)
+                        } else {
+
+                            ConvertNumber.errorDialogueWithProgressBar(context , context.getString(R.string.error_file_size))
+
+                        }
+                    } catch (e: Exception) {
+                        toast(context, "ERROR : ${e.localizedMessage}")
+                    }
+
+
                 }
             })
         }
@@ -297,6 +323,7 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         map.put("location_bn", binding?.fLocalTrainingLocationBn?.etText?.text.toString())
         map.put("from_date", fromDate)
         map.put("to_date", toDate)
+        map.put("local_training_document_path", loacTrainingDocumnet)
         imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
         if (localTraining?.status != null) map.put(
             "status",
@@ -395,5 +422,66 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
     fun toast(context: Context?, massage: String) {
         Toast.makeText(context, massage, Toast.LENGTH_SHORT).show()
     }
+
+    fun uploadFile(file: File, context: Context) {
+        val dialouge = ProgressDialog(EmployeeInfoActivity.context)
+        dialouge.setMessage("uploading...")
+        dialouge.setCancelable(false)
+        dialouge.show()
+
+        var profilePic: MultipartBody.Part?
+
+        var filePart: MultipartBody.Part?
+
+        val requestFile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        profilePic =
+            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic =
+//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+
+        val profile_photo: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+
+        val employeeInfoEditCreateRepo =
+            ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        employeeInfoEditCreateRepo.uploadProfilePic(
+            profilePic,
+            file.name,
+            profile_photo
+        )
+            ?.observe(
+                EmployeeInfoActivity.context!!,
+                { any ->
+                    Log.e("yousuf", "profile pic : " + any)
+                    //  showResponse(any)
+                    dialouge?.dismiss()
+                    if (any != null) {
+                        val fileUrl = any as String
+                        Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
+                        loacTrainingDocumnet = fileUrl
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.successMsg),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                    } else {
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.uploadFailed),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+
+
+    }
+
 
 }

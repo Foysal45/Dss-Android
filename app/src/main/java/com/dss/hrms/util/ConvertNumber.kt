@@ -1,28 +1,25 @@
 package com.dss.hrms.util
 
-import android.app.AlertDialog
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.dss.hrms.R
 import com.dss.hrms.retrofit.RetrofitInstance
 import java.lang.Exception
-import android.content.DialogInterface
 import android.util.Log
 
 import android.webkit.WebView
 
 import android.webkit.WebViewClient
-import android.os.Build
-import android.view.ContextThemeWrapper
 import android.view.View
-import android.view.WindowManager
-import android.webkit.WebChromeClient
+import androidx.appcompat.app.AlertDialog
+import java.io.File
 
 
 class ConvertNumber {
@@ -71,13 +68,13 @@ class ConvertNumber {
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
         fun setIconOnTextView(icon: ImageView, textview: TextView, link: String?, ctx: Context) {
-
+            Log.d("TAG", "documnet link: $link")
             val extentions = getTheFileExtention(link)
 
             textview.text = (ctx.getString(R.string.tap_to_view))
 
-            if (link.equals("null") || link.isNullOrBlank()) {
-                textview.text = " No Attachment "
+            if (link.equals("null") || link.isNullOrBlank() || link.toString().length < 4) {
+                textview.text = ctx.getString(R.string.no_attachment)
                 textview.setTextColor(Color.DKGRAY)
             } else if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains(
                     "gif"
@@ -117,7 +114,7 @@ class ConvertNumber {
             wv.loadUrl(lik)
 
             wv.webViewClient = object : WebViewClient() {
-//                override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                //                override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
 //                    view?.loadUrl(lik)
 //                    return true
 //                }
@@ -182,6 +179,38 @@ class ConvertNumber {
             } catch (ex: Exception) {
                 "No File"
             }
+        }
+
+
+        fun isFileLessThan2MB(file: File?): Boolean {
+            val maxFileSize = 2 * 1024 * 1024
+            val l = file?.length()
+            val fileSize = l.toString()
+            val finalFileSize = fileSize.toInt()
+            return finalFileSize <= maxFileSize
+        }
+
+        fun errorDialogueWithProgressBar(context: Context, string: String) {
+
+            val progreesDialog = ProgressDialog(context)
+            progreesDialog.setMessage("Uploading...")
+            progreesDialog.show()
+            progreesDialog.setCancelable(false)
+
+            val alertDialog = AlertDialog.Builder(context)
+            Handler(Looper.getMainLooper()).postDelayed({
+                progreesDialog.dismiss()
+                alertDialog.apply {
+                    setIcon(R.drawable.ic_baseline_notifications_24)
+                    setTitle(context.getString(R.string.error))
+                    setMessage(string)
+                    setPositiveButton("Ok") { _, _ ->
+
+                    }
+                }.create().show()
+            }, 1000)
+
+
         }
 
     }
