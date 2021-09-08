@@ -1,5 +1,7 @@
 package com.dss.hrms.util
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -10,6 +12,18 @@ import android.widget.Toast
 import com.dss.hrms.R
 import com.dss.hrms.retrofit.RetrofitInstance
 import java.lang.Exception
+import android.content.DialogInterface
+import android.util.Log
+
+import android.webkit.WebView
+
+import android.webkit.WebViewClient
+import android.os.Build
+import android.view.ContextThemeWrapper
+import android.view.View
+import android.view.WindowManager
+import android.webkit.WebChromeClient
+
 
 class ConvertNumber {
 
@@ -48,19 +62,27 @@ class ConvertNumber {
     }
 
     companion object {
+        const val FLAGS_FULLSCREEN =
+            View.SYSTEM_UI_FLAG_LOW_PROFILE or
+                    View.SYSTEM_UI_FLAG_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
-        fun setIconOnTextView( icon : ImageView , textview  : TextView ,  link : String? , ctx: Context  ){
+        fun setIconOnTextView(icon: ImageView, textview: TextView, link: String?, ctx: Context) {
 
             val extentions = getTheFileExtention(link)
 
-           textview.text = (ctx.getString(R.string.tap_to_view))
+            textview.text = (ctx.getString(R.string.tap_to_view))
 
-            if(link.equals("null") || link.isNullOrBlank()){
+            if (link.equals("null") || link.isNullOrBlank()) {
                 textview.text = " No Attachment "
                 textview.setTextColor(Color.DKGRAY)
-            }
-
-            else if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains("gif")) {
+            } else if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains(
+                    "gif"
+                )
+            ) {
 
                 icon.setImageResource(R.drawable.ic_picture)
 
@@ -70,19 +92,73 @@ class ConvertNumber {
 
         }
 
+
+        fun triggerWebView(ctx: Context, link: String) {
+            val PDfBase = "https://docs.google.com/viewer?url="
+            val alert = Dialog(ctx, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen)
+            alert.setContentView(R.layout.fullscreen_web_view)
+
+            alert.setTitle("Document")
+
+            val wv: WebView = alert.findViewById(R.id.webView)
+            val closeImage: ImageView = alert.findViewById(R.id.closeBtn)
+
+            wv.settings.javaScriptEnabled = true
+            wv.webViewClient = WebViewClient()
+            wv.settings.loadWithOverviewMode = true
+            wv.settings.useWideViewPort = true
+            val lik = if (getTheFileExtention(link)
+                    .contains("pdf") || getTheFileExtention(link).contains("docx")
+            ) {
+                PDfBase + RetrofitInstance.BASE_URL + link
+            } else {
+                RetrofitInstance.BASE_URL + link
+            }
+            wv.loadUrl(lik)
+
+            wv.webViewClient = object : WebViewClient() {
+//                override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+//                    view?.loadUrl(lik)
+//                    return true
+//                }
+                override fun onPageFinished(view: WebView, url: String) {
+                    if (view.title.equals("")) {
+                        view.reload()
+                    }
+                    super.onPageFinished(view, url)
+                }
+            }
+            wv.clearCache(true)
+            wv.settings.javaScriptEnabled = true
+            Log.d("TAG", "triggerWebView: " + lik)
+
+            closeImage.setOnClickListener {
+                alert.dismiss()
+            }
+            alert.setCancelable(true)
+            alert.show()
+        }
+
         fun viewFileInShareIntent(ctx: Context, link: String?) {
             try {
                 if (link.isNullOrBlank() || link == "null") {
-                    Toast.makeText(ctx, "Something Went Wrong !! link empty", Toast.LENGTH_LONG).show()
+                    Toast.makeText(ctx, "Something Went Wrong !! link empty", Toast.LENGTH_LONG)
+                        .show()
                 } else {
-                    val browserIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(RetrofitInstance.FILE_BASE + link.toString())
-                    )
-                    ctx.startActivity(browserIntent)
+
+                    triggerWebView(ctx, link)
+//                    val browserIntent = Intent(
+//                        Intent.ACTION_VIEW,
+//                        Uri.parse(RetrofitInstance.FILE_BASE + link.toString())
+//                    )
+//                    ctx.startActivity(browserIntent)
                 }
             } catch (Ex: Exception) {
-                Toast.makeText(ctx, "Something Went Wrong !! ${Ex.localizedMessage}", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    ctx,
+                    "Something Went Wrong !! ${Ex.localizedMessage}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
         }
@@ -109,6 +185,7 @@ class ConvertNumber {
         }
 
     }
+
 
 }
 

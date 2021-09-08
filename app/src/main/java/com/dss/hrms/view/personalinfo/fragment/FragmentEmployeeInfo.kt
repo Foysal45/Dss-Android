@@ -388,15 +388,13 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 //                    )
 //                }
 //            }!!
-            v.recyclerView.setLayoutManager(
-                LinearLayoutManager(
-                    activity,
-                    RecyclerView.VERTICAL,
-                    false
-                )
+            v.recyclerView.layoutManager = LinearLayoutManager(
+                activity,
+                RecyclerView.VERTICAL,
+                false
             )
-            v.recyclerView.setAdapter(adapter)
-            // v.recyclerView.isNestedScrollingEnabled = true
+            v.recyclerView.adapter = adapter
+             v.recyclerView.isNestedScrollingEnabled = true
 
 
         } else {
@@ -404,6 +402,8 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             title?.let { v.tvTitle?.setText(it) }
 
         }
+
+
 
     }
 

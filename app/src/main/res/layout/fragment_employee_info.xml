@@ -19,9 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_100sdp"
             android:gravity="center"
-            android:textSize="@dimen/_20sdp"
+            android:text="@string/coming"
             android:textColor="@color/black"
-            android:text="@string/coming" />
+            android:textSize="@dimen/_20sdp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

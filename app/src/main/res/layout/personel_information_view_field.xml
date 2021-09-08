@@ -37,6 +37,8 @@
             <TextView
                 android:id="@+id/tvText"
                 android:layout_width="0dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
                 android:paddingHorizontal="@dimen/_5sdp"

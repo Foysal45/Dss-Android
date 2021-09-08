@@ -264,7 +264,8 @@
                                 android:focusable="true"
                                 android:id="@+id/llBody"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_150sdp"
+                                android:layout_height="wrap_content"
+
                                 android:background="@drawable/shape_rectangale"
                                 android:orientation="horizontal"
                                 android:paddingVertical="@dimen/_8sdp"

@@ -506,25 +506,25 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.tvText.setOnClickListener {
             val link = nominee.nominee_document_path
 
-            try {
-                if (link.isNullOrBlank() || link == "null") {
-                    Toast.makeText(context, "Something Went Wrong !! link empty", Toast.LENGTH_LONG)
-                        .show()
-                } else {
-                    val browserIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(RetrofitInstance.FILE_BASE + link.toString())
-                    )
-                    context.startActivity(browserIntent);
-                }
-            } catch (Ex: Exception) {
-                Toast.makeText(
-                    context,
-                    "Something Went Wrong !! ${Ex.localizedMessage}",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            //  ConvertNumber.viewFileInShareIntent(context, nominee.nominee_document_path.toString())
+//            try {
+//                if (link.isNullOrBlank() || link == "null") {
+//                    Toast.makeText(context, "Something Went Wrong !! link empty", Toast.LENGTH_LONG)
+//                        .show()
+//                } else {
+//                    val browserIntent = Intent(
+//                        Intent.ACTION_VIEW,
+//                        Uri.parse(RetrofitInstance.FILE_BASE + link.toString())
+//                    )
+//                    context.startActivity(browserIntent);
+//                }
+//            } catch (Ex: Exception) {
+//                Toast.makeText(
+//                    context,
+//                    "Something Went Wrong !! ${Ex.localizedMessage}",
+//                    Toast.LENGTH_LONG
+//                ).show()
+//            }
+             ConvertNumber.triggerWebView(context, nominee.nominee_document_path.toString())
         }
 
 

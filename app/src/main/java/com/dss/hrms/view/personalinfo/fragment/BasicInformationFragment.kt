@@ -385,7 +385,8 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         val page = activity
 
         // \
-        v.fEmployeeFreedomFighterAttachment.setOnClickListener {
+        v.fEmployeeFreedomFighterAttachment.tvText
+            .setOnClickListener {
 
             if (employee?.freedom_fighter_document_path.isNullOrBlank()) {
                 Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
@@ -399,7 +400,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             }
         }
 
-        v.fDisabilityAttachment.setOnClickListener {
+        v.fDisabilityAttachment.tvText.setOnClickListener {
             // get the extention oof the file
 
             if (employee?.disability_document_path.isNullOrBlank()) {
@@ -417,7 +418,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
 
 
-        v.hBasicInformation.tvEdit.setOnClickListener({
+        v.hBasicInformation.tvEdit.setOnClickListener {
             employee?.let { it1 ->
                 activity?.let { it2 ->
                     if (page != null) {
@@ -435,7 +436,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                     }
                 }
             }
-        })
+        }
 
     }
 
