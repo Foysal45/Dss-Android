@@ -157,14 +157,10 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         }
 
         binding?.fLocalTrainingAddAttachment?.Attachment?.setOnClickListener {
-            var count = 0
-
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
                     // check for file size validation
-
                     try {
-                        count =+ 1
                         if (ConvertNumber.isFileLessThan2MB(imgFile)) {
                             binding?.fLocalTrainingAddAttachment?.fAttachmentFileName?.text =
                                 imgFile.name
@@ -175,7 +171,7 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
 
                         }
                     } catch (e: Exception) {
-                        toast(context, "ERROR : ${e.localizedMessage}")
+                        toast(context, "ERROR : ${e.localizedMessage} . Try again")
                     }
 
 

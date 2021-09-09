@@ -619,6 +619,10 @@
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/description_bn}"
                                     app:title="@{@string/description_bn}" />
+                                <include
+                                    android:id="@+id/fQuotaAttachment"
+                                    layout="@layout/personel_information_attachment_field"
+                                    />
 
                                 <include
                                     android:id="@+id/quotaBtnUpdate"
@@ -1751,6 +1755,12 @@
                                     app:hint="@{@string/details_bn}"
                                     app:title="@{@string/details_bn}" />
 
+
+                                <include
+                                    android:id="@+id/fForeignTravelAttachment"
+                                    layout="@layout/personel_information_attachment_field"
+                                     />
+
                                 <include
                                     android:id="@+id/foreignTravelBtnAddUpdate"
                                     layout="@layout/personal_info_update_button" />
@@ -1821,6 +1831,11 @@
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/qualification_details_bangla}"
                                     app:title="@{@string/qualification_details_bangla}" />
+
+                                <include
+                                    android:id="@+id/fAQAttachemnt"
+                                    layout="@layout/personel_information_attachment_field" />
+
 
                                 <include
                                     android:id="@+id/additionalPQBtnAddUpdate"
@@ -1895,6 +1910,10 @@
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/public_details_bn}"
                                     app:title="@{@string/public_details_bn}" />
+
+                                <include
+                                    android:id="@+id/fPublicationAttachment"
+                                    layout="@layout/personel_information_attachment_field" />
 
 
                                 <include
@@ -1971,6 +1990,10 @@
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/award_details_bn}"
                                     app:title="@{@string/award_details_bn}" />
+
+                                <include
+                                    android:id="@+id/fAwardAttachment"
+                                    layout="@layout/personel_information_attachment_field" />
 
                                 <include
                                     android:id="@+id/honoursAwardBtnAddUpdate"

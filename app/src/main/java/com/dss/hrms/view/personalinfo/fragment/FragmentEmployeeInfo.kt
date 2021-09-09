@@ -194,7 +194,6 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
     }
 
 
-
     private fun initRV() {
         when (key) {
             StaticKey.PERMANENT_ADDRESS -> {
@@ -394,7 +393,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                 false
             )
             v.recyclerView.adapter = adapter
-             v.recyclerView.isNestedScrollingEnabled = true
+            v.recyclerView.isNestedScrollingEnabled = true
 
 
         } else {
@@ -402,7 +401,6 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             title?.let { v.tvTitle?.setText(it) }
 
         }
-
 
 
     }
@@ -514,7 +512,13 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                     activity?.let { it2 ->
                         editQuotaInfo.showDialog(
                             it2,
-                            position
+                            position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                         )
                     }
                 }
@@ -713,6 +717,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editAndCreateForeignTravelInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.EDIT
                         )
                     }
@@ -721,6 +731,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editAndCreateForeignTravelInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.CREATE
                         )
                     }
@@ -733,6 +749,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editAndCreateAdditionalQualificationInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.EDIT
                         )
                     }
@@ -741,6 +763,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editAndCreateAdditionalQualificationInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.CREATE
                         )
                     }
@@ -753,6 +781,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editAndCreatePublicatioInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.EDIT
                         )
                     }
@@ -762,6 +796,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editAndCreatePublicatioInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.CREATE
                         )
                     }
@@ -774,6 +814,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editCreateHonoursAwardInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.EDIT
                         )
                     }
@@ -782,6 +828,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editCreateHonoursAwardInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.CREATE
                         )
                     }
@@ -990,7 +1042,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             }
             if (photoFile != null) {
                 val photoURI: Uri = FileProvider.getUriForFile(
-                   requireActivity(),
+                    requireActivity(),
                     "com.dss.hrms.customerfileprovider",
                     photoFile
                 )

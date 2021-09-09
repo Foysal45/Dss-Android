@@ -77,9 +77,11 @@ class ConvertNumber {
                 textview.text = ctx.getString(R.string.no_attachment)
                 textview.setTextColor(Color.DKGRAY)
             } else if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains(
-                    "gif"
+                    "gif") || extentions.contains(
+                        "png"
+                    )
                 )
-            ) {
+             {
 
                 icon.setImageResource(R.drawable.ic_picture)
 

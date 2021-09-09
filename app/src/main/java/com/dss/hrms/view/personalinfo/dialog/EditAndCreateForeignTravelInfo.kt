@@ -1,7 +1,9 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
+import android.graphics.Bitmap
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,20 +22,19 @@ import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
-import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.DateConverter
-import com.dss.hrms.util.DatePicker
-import com.dss.hrms.util.StaticKey
+import com.dss.hrms.util.*
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.allInterface.CommonDataValueListener
-import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
-import com.dss.hrms.view.allInterface.OnDateListener
+import com.dss.hrms.view.allInterface.*
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import javax.inject.Inject
 
 class EditAndCreateForeignTravelInfo @Inject constructor() {
@@ -47,24 +48,28 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
     lateinit var employeeProfileData: EmployeeProfileData
 
     var position: Int? = 0
-
+    var fileClickListener: FileClickListener? = null
     var dialogCustome: Dialog? = null
     var foreignTravels1: Employee.ForeignTravels? = null
-    var binding: DialogPersonalInfoBinding? = null
+    private lateinit var binding: DialogPersonalInfoBinding
     var context: Context? = null
     lateinit var key: String
     var country: SpinnerDataModel? = null
     var purpose: SpinnerDataModel? = null
+    var documnet_path: String? = null
+
 
     fun showDialog(
         context: Context,
         position: Int?,
+        fileClickListener: FileClickListener,
         key: String
     ) {
         this.foreignTravels1 =
             position?.let { employeeProfileData?.employee?.foreign_travels?.get(it) }
         this.context = context
         this.key = key
+        this.fileClickListener = fileClickListener
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DataBindingUtil.inflate(
@@ -114,20 +119,48 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
             )
         })
 
-        binding?.fForeignTravelFromDate?.tvText?.setOnClickListener({
+        binding?.fForeignTravelFromDate?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding?.fForeignTravelFromDate?.tvText?.setText("" + it) }
                 }
             })
-        })
-        binding?.fForeignTravelToDate?.tvText?.setOnClickListener({
+        }
+        binding?.fForeignTravelToDate?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding?.fForeignTravelToDate?.tvText?.setText("" + it) }
                 }
             })
-        })
+        }
+        binding.fForeignTravelAttachment.Attachment.setOnClickListener {
+
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+                    try {
+                        if (ConvertNumber.isFileLessThan2MB(imgFile)) {
+                            binding.fForeignTravelAttachment.fAttachmentFileName.text =
+                                imgFile.name
+                            uploadFile(imgFile, context)
+                        } else {
+
+                            ConvertNumber.errorDialogueWithProgressBar(
+                                context,
+                                context.getString(R.string.error_file_size)
+                            )
+
+                        }
+                    } catch (e: Exception) {
+                        toast(context, "ERROR : ${e.localizedMessage} . Try again")
+                    }
+
+
+                }
+            })
+
+        }
+
+
         commonRepo.getCommonData("/api/auth/country/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
@@ -149,29 +182,29 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
                 }
             })
         foreignTravels1?.purpose?.let {
-            if (it.equals("Personal") || it.equals("ব্যক্তিগত")) {
+            if (it == "Personal" || it == "ব্যক্তিগত") {
                 purpose = getPurposeList().get(0)
             } else {
                 purpose = getPurposeList().get(1)
             }
         }
 
-            getPurposeList()?.let {
-                SpinnerAdapter().setSpinner(
-                    binding?.fForeignTravelPurpose?.spinner!!,
-                    context,
-                    it,
-                    purpose?.id,
-                    object : CommonSpinnerSelectedItemListener {
-                        override fun selectedItem(any: Any?) {
-                            purpose = any as SpinnerDataModel
-                        }
-
+        getPurposeList()?.let {
+            SpinnerAdapter().setSpinner(
+                binding?.fForeignTravelPurpose?.spinner!!,
+                context,
+                it,
+                purpose?.id,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        purpose = any as SpinnerDataModel
                     }
-                )
-            }
 
-        binding?.foreignTravelBtnAddUpdate?.btnUpdate?.setOnClickListener({
+                }
+            )
+        }
+
+        binding?.foreignTravelBtnAddUpdate?.btnUpdate?.setOnClickListener {
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
@@ -201,7 +234,7 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
                             })
                 }
             }
-        })
+        }
 
 
     }
@@ -303,10 +336,71 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
         map.put("details_bn", binding?.fForeignTravelDetailsBn?.etText?.text.toString())
         map.put("from_date", fromDate)
         map.put("to_date", toDate)
+        map.put("document_path", documnet_path)
         map.put("status", foreignTravels1?.status)
         return map
     }
 
+
+    fun uploadFile(file: File, context: Context) {
+        val dialouge = ProgressDialog(EmployeeInfoActivity.context)
+        dialouge.setMessage("uploading...")
+        dialouge.setCancelable(false)
+        dialouge.show()
+
+        var profilePic: MultipartBody.Part?
+
+        var filePart: MultipartBody.Part?
+
+        val requestFile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        profilePic =
+            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic =
+//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+
+        val profile_photo: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+
+        val employeeInfoEditCreateRepo =
+            ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        employeeInfoEditCreateRepo.uploadProfilePic(
+            profilePic,
+            file.name,
+            profile_photo
+        )
+            ?.observe(
+                EmployeeInfoActivity.context!!,
+                { any ->
+                    Log.e("yousuf", "profile pic : " + any)
+                    //  showResponse(any)
+                    dialouge?.dismiss()
+                    if (any != null) {
+                        val fileUrl = any as String
+                        Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
+                        documnet_path = fileUrl
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.successMsg),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                    } else {
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.uploadFailed),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+
+
+    }
 
     fun getPurposeList(): List<SpinnerDataModel> {
 

@@ -80,7 +80,6 @@
                                 layout="@layout/personel_information_view_field" />
 
 
-
                             <include
                                 android:id="@+id/fAddressPoliceStation"
                                 layout="@layout/personel_information_view_field" />
@@ -248,25 +247,27 @@
                             <include
                                 android:id="@+id/fNAllocatedPercentage"
                                 layout="@layout/personel_information_view_field" />
+
                             <include
                                 android:id="@+id/fNGender"
                                 layout="@layout/personel_information_view_field" />
+
                             <include
                                 android:id="@+id/fNMaritalStatus"
                                 layout="@layout/personel_information_view_field" />
 
-                           <include
+                            <include
                                 android:id="@+id/fNHasDisavility"
                                 layout="@layout/personel_information_view_field" />
 
                             <LinearLayout
-                                android:clickable="true"
-                                android:focusable="true"
                                 android:id="@+id/llBody"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-
                                 android:background="@drawable/shape_rectangale"
+                                android:clickable="true"
+
+                                android:focusable="true"
                                 android:orientation="horizontal"
                                 android:paddingVertical="@dimen/_8sdp"
                                 app:layout_constraintTop_toTopOf="parent">
@@ -301,16 +302,15 @@
                                         android:id="@+id/icon"
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
-                                        android:layout_marginHorizontal="@dimen/_3sdp"
-                                        />
+                                        android:layout_marginHorizontal="@dimen/_3sdp" />
 
                                     <TextView
                                         android:id="@+id/tvText"
                                         android:layout_width="0dp"
-                                        android:clickable="true"
-                                        android:focusable="true"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
+                                        android:clickable="true"
+                                        android:focusable="true"
                                         android:paddingHorizontal="@dimen/_5sdp"
                                         android:paddingVertical="@dimen/_2sdp"
                                         android:text=""
@@ -324,9 +324,9 @@
 
                             </LinearLayout>
 
-<!--                            <include-->
-<!--                                android:id="@+id/fNAttachment"-->
-<!--                                layout="@layout/personel_information_view_field_with_icon" />-->
+                            <!--                            <include-->
+                            <!--                                android:id="@+id/fNAttachment"-->
+                            <!--                                layout="@layout/personel_information_view_field_with_icon" />-->
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -416,9 +416,9 @@
                                 android:id="@+id/fJobJoiningAdditionalDesignation"
                                 layout="@layout/personel_information_view_field" />
 
-                 <!--           <include
-                                android:id="@+id/fJobJoiningDepartment"
-                                layout="@layout/personel_information_view_field" />-->
+                            <!--           <include
+                                           android:id="@+id/fJobJoiningDepartment"
+                                           layout="@layout/personel_information_view_field" />-->
 
                             <include
                                 android:id="@+id/fJobJoiningJobType"
@@ -449,10 +449,10 @@
                                 layout="@layout/personel_information_view_field" />
 
 
-
                             <include
                                 android:id="@+id/fJobJoiningPensionDate"
                                 layout="@layout/personel_information_view_field" />
+
                             <include
                                 android:id="@+id/fJobJoiningCurrentJob"
                                 layout="@layout/personel_information_view_field" />
@@ -874,7 +874,7 @@
 
                             <include
                                 android:id="@+id/fLocalTrainingDocument"
-                                layout="@layout/personel_information_view_field_with_icon"/>
+                                layout="@layout/personel_information_view_field_with_icon" />
 
                             <LinearLayout
                                 android:id="@+id/llTrainingCertification"
@@ -1002,6 +1002,7 @@
                             <include
                                 android:id="@+id/fORInfoFlatNo"
                                 layout="@layout/personel_information_view_field" />
+
                             <include
                                 android:id="@+id/fORInfoStatus"
                                 layout="@layout/personel_information_view_field" />
@@ -1081,6 +1082,11 @@
                                 layout="@layout/personel_information_view_field" />
 
 
+                            <include
+                                android:id="@+id/fForeignAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -1142,6 +1148,12 @@
                             <include
                                 android:id="@+id/fAQDetailsBn"
                                 layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAQDocument"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -1203,9 +1215,15 @@
                                 android:id="@+id/fPublicationDetails"
                                 layout="@layout/personel_information_view_field" />
 
+
+                            <include
+                                android:id="@+id/fPublicationAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
                             <include
                                 android:id="@+id/fPublicationDetailsBn"
                                 layout="@layout/personel_information_view_field" />
+
 
                         </LinearLayout>
                     </LinearLayout>
@@ -1272,6 +1290,11 @@
                             <include
                                 android:id="@+id/fAwardDetailsDetailsBn"
                                 layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAwardAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
 
 
                         </LinearLayout>

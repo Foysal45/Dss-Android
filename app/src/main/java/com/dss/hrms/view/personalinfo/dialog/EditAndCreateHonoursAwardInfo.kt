@@ -1,7 +1,9 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
+import android.graphics.Bitmap
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,17 +21,20 @@ import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
-import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.DateConverter
-import com.dss.hrms.util.DatePicker
-import com.dss.hrms.util.StaticKey
+import com.dss.hrms.util.*
 import com.dss.hrms.view.MainActivity
+import com.dss.hrms.view.allInterface.FileClickListener
 import com.dss.hrms.view.allInterface.OnDateListener
+import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import javax.inject.Inject
 
 class EditAndCreateHonoursAwardInfo @Inject constructor() {
@@ -43,23 +48,25 @@ class EditAndCreateHonoursAwardInfo @Inject constructor() {
     lateinit var employeeProfileData: EmployeeProfileData
 
     var position: Int? = 0
-
+    var fileClickListener: FileClickListener? = null
     var dialogCustome: Dialog? = null
     var honoursAward: Employee.HonoursAwards? = null
-    var binding: DialogPersonalInfoBinding? = null
+    private lateinit var binding: DialogPersonalInfoBinding
     var context: Context? = null
     lateinit var key: String
-
+    var honours_awards_document_path: String? = null
 
     fun showDialog(
         context: Context,
         position: Int?,
+        fileClickListener: FileClickListener,
         key: String
     ) {
         this.position = position
         this.honoursAward = position?.let { employeeProfileData?.employee?.honours_awards?.get(it) }
         this.context = context
         this.key = key
+        this.fileClickListener = fileClickListener
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DataBindingUtil.inflate(
@@ -94,6 +101,8 @@ class EditAndCreateHonoursAwardInfo @Inject constructor() {
             binding?.honoursAwardBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
         }
 
+
+
         binding?.fAwardTitle?.etText?.setText(honoursAward?.award_title)
         binding?.fAwardTitleBn?.etText?.setText(honoursAward?.award_title_bn)
         binding?.fAwardDetailsDetails?.etText?.setText(honoursAward?.award_details)
@@ -104,16 +113,43 @@ class EditAndCreateHonoursAwardInfo @Inject constructor() {
             )
         })
 
-        binding?.fAwardDate?.tvText?.setOnClickListener({
+        binding?.fAwardDate?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding?.fAwardDate?.tvText?.setText("" + it) }
                 }
             })
-        })
+        }
+
+        binding.fAwardAttachment.Attachment.setOnClickListener {
+
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+                    try {
+                        if (ConvertNumber.isFileLessThan2MB(imgFile)) {
+                            binding.fAwardAttachment.fAttachmentFileName.text =
+                                imgFile.name
+                            uploadFile(imgFile, context)
+                        } else {
+
+                            ConvertNumber.errorDialogueWithProgressBar(
+                                context,
+                                context.getString(R.string.error_file_size)
+                            )
+
+                        }
+                    } catch (e: Exception) {
+                        toast(context, "ERROR : ${e.localizedMessage} . Try again")
+                    }
 
 
-        binding?.honoursAwardBtnAddUpdate?.btnUpdate?.setOnClickListener({
+                }
+            })
+
+        }
+
+
+        binding?.honoursAwardBtnAddUpdate?.btnUpdate?.setOnClickListener {
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
@@ -143,7 +179,7 @@ class EditAndCreateHonoursAwardInfo @Inject constructor() {
                             })
                 }
             }
-        })
+        }
 
 
     }
@@ -232,10 +268,70 @@ class EditAndCreateHonoursAwardInfo @Inject constructor() {
         map.put("award_title", binding?.fAwardTitle?.etText?.text.toString())
         map.put("award_title_bn", binding?.fAwardTitleBn?.etText?.text.toString())
         map.put("award_details", binding?.fAwardDetailsDetails?.etText?.text.toString())
-        map.put("award_details_bn", binding?.fAwardDetailsDetailsBn?.etText?.text.toString())
+        map.put("honours_awards_document_path", honours_awards_document_path)
         map.put("award_date", award_date)
         map.put("status", honoursAward?.status)
         return map
+    }
+
+    fun uploadFile(file: File, context: Context) {
+        val dialouge = ProgressDialog(EmployeeInfoActivity.context)
+        dialouge.setMessage("uploading...")
+        dialouge.setCancelable(false)
+        dialouge.show()
+
+        var profilePic: MultipartBody.Part?
+
+        var filePart: MultipartBody.Part?
+
+        val requestFile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        profilePic =
+            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic =
+//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+
+        val profile_photo: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+
+        val employeeInfoEditCreateRepo =
+            ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        employeeInfoEditCreateRepo.uploadProfilePic(
+            profilePic,
+            file.name,
+            profile_photo
+        )
+            ?.observe(
+                EmployeeInfoActivity.context!!,
+                { any ->
+                    Log.e("yousuf", "profile pic : " + any)
+                    //  showResponse(any)
+                    dialouge?.dismiss()
+                    if (any != null) {
+                        val fileUrl = any as String
+                        Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
+                        honours_awards_document_path = fileUrl
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.successMsg),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                    } else {
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.uploadFailed),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+
+
     }
 
 

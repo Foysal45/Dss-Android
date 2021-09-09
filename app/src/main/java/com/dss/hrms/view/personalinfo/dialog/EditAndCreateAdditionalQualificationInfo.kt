@@ -1,7 +1,9 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
+import android.graphics.Bitmap
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,14 +21,21 @@ import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
+import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
+import com.dss.hrms.view.allInterface.FileClickListener
+import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import javax.inject.Inject
 
 class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
@@ -45,10 +54,12 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
     var dialogCustome: Dialog? = null
 
 
+    var fileClickListener: FileClickListener? = null
     var additionalQualifications: Employee.AdditionalQualifications? = null
 
+    var documentPath : String? =null
 
-    var binding: DialogPersonalInfoBinding? = null
+    lateinit var binding: DialogPersonalInfoBinding
 
     var context: Context? = null
     lateinit var key: String
@@ -58,10 +69,12 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
     fun showDialog(
         context: Context,
         position: Int?,
+        fileClickListener: FileClickListener,
         key: String
     ) {
         this.context = context
         this.key = key
+        this.fileClickListener = fileClickListener
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DataBindingUtil.inflate(
@@ -111,7 +124,36 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
         binding?.fAQDetailsBn?.etText?.setText(additionalQualifications?.qualification_details_bn)
 
 
-        binding?.additionalPQBtnAddUpdate?.btnUpdate?.setOnClickListener({
+        binding?.fAQAttachemnt?.Attachment?.setOnClickListener {
+
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+                    try {
+                        if (ConvertNumber.isFileLessThan2MB(imgFile)) {
+                            binding.fAQAttachemnt.fAttachmentFileName.text =
+                                imgFile.name
+                            uploadFile(imgFile, context)
+                        } else {
+
+                            ConvertNumber.errorDialogueWithProgressBar(
+                                context,
+                                context.getString(R.string.error_file_size)
+                            )
+
+                        }
+                    } catch (e: Exception) {
+                        toast(context, "ERROR : ${e.localizedMessage} . Try again")
+                    }
+
+
+                }
+            })
+
+        }
+
+
+
+        binding?.additionalPQBtnAddUpdate?.btnUpdate?.setOnClickListener {
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
@@ -142,11 +184,70 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
                             })
                 }
             }
-        })
+        }
 
 
     }
 
+    fun uploadFile(file: File, context: Context) {
+        val dialouge = ProgressDialog(EmployeeInfoActivity.context)
+        dialouge.setMessage("uploading...")
+        dialouge.setCancelable(false)
+        dialouge.show()
+
+        var profilePic: MultipartBody.Part?
+
+        var filePart: MultipartBody.Part?
+
+        val requestFile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        profilePic =
+            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic =
+//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+
+        val profile_photo: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+
+        val employeeInfoEditCreateRepo =
+            ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        employeeInfoEditCreateRepo.uploadProfilePic(
+            profilePic,
+            file.name,
+            profile_photo
+        )
+            ?.observe(
+                EmployeeInfoActivity.context!!,
+                { any ->
+                    Log.e("yousuf", "profile pic : " + any)
+                    //  showResponse(any)
+                    dialouge?.dismiss()
+                    if (any != null) {
+                        val fileUrl = any as String
+                        Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
+                        documentPath = fileUrl
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.successMsg),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                    } else {
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.uploadFailed),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+
+
+    }
     fun showResponse(any: Any) {
         if (any is String) {
             toast(EmployeeInfoActivity.context, any)
@@ -218,11 +319,12 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
-        map.put("qualification_name", binding?.fAQName?.etText?.text.toString())
-        map.put("qualification_name_bn", binding?.fAQNameBn?.etText?.text.toString())
-        map.put("qualification_details", binding?.fAQDetails?.etText?.text.toString())
-        map.put("qualification_details_bn", binding?.fAQDetailsBn?.etText?.text.toString())
+        map.put("employee_id", employeeProfileData.employee?.user?.employee_id)
+        map.put("qualification_name", binding.fAQName.etText.text.toString())
+        map.put("qualification_name_bn", binding.fAQNameBn.etText.text.toString())
+        map.put("qualification_details", binding.fAQDetails.etText.text.toString())
+        map.put("qualification_details_bn", binding.fAQDetailsBn.etText.text.toString())
+        map.put("additional_professional_qualification_document_path", documentPath)
         if (additionalQualifications?.status != null) map.put(
             "status",
             additionalQualifications?.status

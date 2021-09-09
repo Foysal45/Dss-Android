@@ -987,6 +987,21 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fLocalTrainingCountry.tvTitle.setText(context.getString(R.string.country))
         binding?.tvTrainingTitle?.setText(context.getString(R.string.certificate))
 
+        // decide what to show in document
+        ConvertNumber.setIconOnTextView(
+            binding.fLocalTrainingDocument.icon,
+            binding.fLocalTrainingDocument.tvText,
+            foreigntrainings.foreign_training_document_path,
+            context
+        )
+
+        binding.fLocalTrainingDocument.tvText.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(
+                context,
+                foreigntrainings.foreign_training_document_path
+            )
+        }
+
         context?.let {
             binding?.ivTraining?.let { it1 ->
                 Glide.with(it).applyDefaultRequestOptions(
@@ -1208,6 +1223,23 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fForeignTravelToDate.tvTitle.setText(context.getString(R.string.to_date))
 
 
+        // decide what to show in document
+        ConvertNumber.setIconOnTextView(
+            binding.fForeignAttachment.icon,
+            binding.fForeignAttachment.tvText,
+            foreignTravels.document_path,
+            context
+        )
+
+        binding.fForeignAttachment.tvText.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(
+                context,
+                foreignTravels.document_path
+            )
+        }
+
+
+
         if (preparence.getLanguage()
                 .equals("en")
         ) {
@@ -1265,6 +1297,21 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAQDetailsBn.tvTitle.setText(context.getString(R.string.qualification_details_bangla))
 
 
+        ConvertNumber.setIconOnTextView(
+            binding.fAQDocument.icon,
+            binding.fAQDocument.tvText,
+            additionalQualifications.additional_professional_qualification_document_path,
+            context
+        )
+
+        binding.fAQDocument.tvText.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(
+                context,
+                additionalQualifications.additional_professional_qualification_document_path
+            )
+
+        }
+
 
         if (preparence.getLanguage()
                 .equals("en")
@@ -1320,6 +1367,21 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fPublicationNameEn.tvTitle.setText(context.getString(R.string.pub_name))
         binding.fPublicationNameBn.tvTitle.setText(context.getString(R.string.pub_name_bn))
 
+
+        ConvertNumber.setIconOnTextView(
+            binding.fPublicationAttachment.icon,
+            binding.fPublicationAttachment.tvText,
+            qualifications.document_path,
+            context
+        )
+
+        binding.fPublicationAttachment.tvText.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(
+                context,
+                qualifications.document_path
+            )
+
+        }
 
 
         if (preparence.getLanguage()
@@ -1393,6 +1455,21 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAwardDetailsDetails.tvTitle.setText(context.getString(R.string.award_details))
         binding.fAwardDetailsDetailsBn.tvTitle.setText(context.getString(R.string.award_details_bn))
         binding.fAwardDate.tvTitle.setText(context.getString(R.string.award_date))
+
+        ConvertNumber.setIconOnTextView(
+            binding.fAwardAttachment.icon,
+            binding.fAwardAttachment.tvText,
+            honoursAwards.honours_awards_document_path,
+            context
+        )
+
+        binding.fAwardAttachment.tvText.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(
+                context,
+                honoursAwards.honours_awards_document_path
+            )
+
+        }
 
         if (preparence.getLanguage()
                 .equals("en")

@@ -1,6 +1,7 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.text.TextUtils
@@ -24,10 +25,7 @@ import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.retrofit.RetrofitInstance
-import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.DateConverter
-import com.dss.hrms.util.DatePicker
-import com.dss.hrms.util.StaticKey
+import com.dss.hrms.util.*
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.allInterface.*
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
@@ -66,6 +64,7 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
     var imageFile: File? = null
     var imageUrl: String? = null
     var dialog: Dialog? = null
+    var foreign_training_document_path: String? = null
 
     fun showDialog(
         context: Context,
@@ -150,6 +149,31 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
                 }
             }
         }
+
+
+        binding?.fLocalTrainingAddAttachment?.Attachment?.setOnClickListener {
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+                    // check for file size validation
+                    try {
+                        if (ConvertNumber.isFileLessThan2MB(imgFile)) {
+                            binding?.fLocalTrainingAddAttachment?.fAttachmentFileName?.text =
+                                imgFile.name
+                            uploadFile(imgFile, context)
+                        } else {
+
+                            ConvertNumber.errorDialogueWithProgressBar(context , context.getString(R.string.error_file_size))
+
+                        }
+                    } catch (e: Exception) {
+                        toast(context, "ERROR : ${e.localizedMessage} . Try again")
+                    }
+
+
+                }
+            })
+        }
+
 
         binding?.ivTraining?.setOnClickListener {
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
@@ -290,6 +314,9 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
                                 binding?.fLocalTrainingToDate?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
+                             "hrm_training_category_id" -> {
+                                 ErrorUtils2.mainError(message)
+                             }
                         }
                     }
                 }
@@ -311,8 +338,10 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
     }
 
     fun getMapData(): HashMap<Any, Any?> {
-        var fromDate = DateConverter.changeDateFormateForSending( binding?.fLocalTrainingFromDate?.tvText?.text.toString())
-        var toDate = DateConverter.changeDateFormateForSending(binding?.fLocalTrainingToDate?.tvText?.text.toString())
+        var fromDate =
+            DateConverter.changeDateFormateForSending(binding?.fLocalTrainingFromDate?.tvText?.text.toString())
+        var toDate =
+            DateConverter.changeDateFormateForSending(binding?.fLocalTrainingToDate?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("course_title", binding?.fLocalTrainingCourseT?.etText?.text.toString())
@@ -320,8 +349,9 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
         map.put("name_of_institute", binding?.fLocalTrainingNOInst?.etText?.text.toString())
         map.put("name_of_institute_bn", binding?.fLocalTrainingNOInstBn?.etText?.text.toString())
         map.put("country_id", country?.id)
-        map.put("from_date",fromDate)
+        map.put("from_date", fromDate)
         map.put("to_date", toDate)
+        map.put("foreign_training_document_path", foreign_training_document_path)
         imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
         map.put("status", foreigntraining?.status)
         return map
@@ -418,6 +448,66 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
 
     fun toast(context: Context?, massage: String) {
         Toast.makeText(context, massage, Toast.LENGTH_SHORT).show()
+    }
+
+    fun uploadFile(file: File, context: Context) {
+        val dialouge = ProgressDialog(EmployeeInfoActivity.context)
+        dialouge.setMessage("uploading...")
+        dialouge.setCancelable(false)
+        dialouge.show()
+
+        var profilePic: MultipartBody.Part?
+
+        var filePart: MultipartBody.Part?
+
+        val requestFile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        profilePic =
+            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic =
+//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+
+        val profile_photo: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+
+        val employeeInfoEditCreateRepo =
+            ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        employeeInfoEditCreateRepo.uploadProfilePic(
+            profilePic,
+            file.name,
+            profile_photo
+        )
+            ?.observe(
+                EmployeeInfoActivity.context!!,
+                { any ->
+                    Log.e("yousuf", "profile pic : " + any)
+                    //  showResponse(any)
+                    dialouge?.dismiss()
+                    if (any != null) {
+                        val fileUrl = any as String
+                        Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
+                        foreign_training_document_path = fileUrl
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.successMsg),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                    } else {
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.uploadFailed),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+
+
     }
 
 }

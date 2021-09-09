@@ -1,7 +1,9 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
+import android.graphics.Bitmap
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,16 +22,25 @@ import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
+import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.allInterface.FileClickListener
+import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
+import com.google.gson.JsonArray
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import org.json.JSONArray
+import java.io.File
 import javax.inject.Inject
 
 class EditQuotaInfo @Inject constructor() {
@@ -45,12 +56,14 @@ class EditQuotaInfo @Inject constructor() {
     var position: Int? = 0
     var dialogCustome: Dialog? = null
     var employeeQuotas: Employee.EmployeeQuotas? = null
+    var fileClickListener: FileClickListener? = null
+    var documentPaths = JSONArray()
 
     fun showDialog(
-        context: Context, position: Int?
-
+        context: Context, position: Int?,
+        fileClickListener: FileClickListener
     ) {
-
+        this.fileClickListener = fileClickListener
         this.position = position
         this.employeeQuotas =
             position?.let { employeeProfileData?.employee?.employee_quotas?.get(it) }
@@ -87,6 +100,33 @@ class EditQuotaInfo @Inject constructor() {
 
         binding.fQuotaDescription.etText.setText(employeeQuotas?.description)
         binding.fQuotaDescriptionBn.etText.setText(employeeQuotas?.description_bn)
+
+        binding.fQuotaAttachment.Attachment.setOnClickListener {
+
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+                    try {
+                        if (ConvertNumber.isFileLessThan2MB(imgFile)) {
+                            binding.fQuotaAttachment.fAttachmentFileName.text =
+                                imgFile.name
+                            uploadFile(imgFile, context)
+                        } else {
+
+                            ConvertNumber.errorDialogueWithProgressBar(
+                                context,
+                                context.getString(R.string.error_file_size)
+                            )
+
+                        }
+                    } catch (e: Exception) {
+                        toast(context, "ERROR : ${e.localizedMessage} . Try again")
+                    }
+
+
+                }
+            })
+
+        }
 
 
         commonRepo.getCommonData("/api/auth/quota-information/list",
@@ -133,7 +173,7 @@ class EditQuotaInfo @Inject constructor() {
             })
 
 
-        binding.quotaBtnUpdate.btnUpdate.setOnClickListener({
+        binding.quotaBtnUpdate.btnUpdate.setOnClickListener {
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
@@ -144,7 +184,10 @@ class EditQuotaInfo @Inject constructor() {
             map.put("quota_information_detail_id", quotaType?.id)
             map.put("description", binding.fQuotaDescription.etText.text.toString())
             map.put("description_bn", binding.fQuotaDescriptionBn.etText.text.toString())
+            map.put("quota_documentPath", documentPaths)
             map.put("status", employeeQuotas?.status)
+
+            Log.d("TAGGGED", "updateJobjoiningInfo: ${map.toString()}")
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             employeeInfoEditCreateRepo?.updateQuotaInfo(employeeQuotas?.id, map)
@@ -222,7 +265,68 @@ class EditQuotaInfo @Inject constructor() {
                             }
                         }
                     })
-        })
+        }
+
+    }
+
+    fun uploadFile(file: File, context: Context) {
+        val dialouge = ProgressDialog(EmployeeInfoActivity.context)
+        dialouge.setMessage("uploading...")
+        dialouge.setCancelable(false)
+        dialouge.show()
+
+        var profilePic: MultipartBody.Part?
+
+        var filePart: MultipartBody.Part?
+
+        val requestFile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        profilePic =
+            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic =
+//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+
+        val profile_photo: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+
+        val employeeInfoEditCreateRepo =
+            ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        employeeInfoEditCreateRepo.uploadProfilePic(
+            profilePic,
+            file.name,
+            profile_photo
+        )
+            ?.observe(
+                EmployeeInfoActivity.context!!,
+                { any ->
+                    Log.e("yousuf", "profile pic : " + any)
+                    //  showResponse(any)
+                    dialouge?.dismiss()
+                    if (any != null) {
+                        val fileUrl = any as String
+                        Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
+                        documentPaths.put(documentPaths)
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.successMsg),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                    } else {
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.uploadFailed),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+
 
     }
 
@@ -243,4 +347,5 @@ class EditQuotaInfo @Inject constructor() {
     fun toast(context: Context?, massage: String) {
         Toast.makeText(context, massage, Toast.LENGTH_SHORT).show()
     }
+
 }

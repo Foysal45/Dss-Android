@@ -1741,6 +1741,10 @@ class Employee {
         @SerializedName("course_title_bn")
         val course_title_bn: String? = null
 
+
+        @SerializedName("foreign_training_document_path")
+        val foreign_training_document_path: String? = null
+
         @SerializedName("name_of_institute")
         val name_of_institute: String? = null
 
@@ -1802,6 +1806,9 @@ class Employee {
 
         @SerializedName("id")
         val id: Int = 0
+
+        @SerializedName("document_path")
+        val document_path:  String? = null
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -1887,6 +1894,9 @@ class Employee {
         @SerializedName("qualification_details_bn")
         val qualification_details_bn: String? = null
 
+        @SerializedName("additional_professional_qualification_document_path")
+        val additional_professional_qualification_document_path: String? = null
+
         @SerializedName("status")
         val status: Int = 0
 
@@ -1922,6 +1932,10 @@ class Employee {
 
         @SerializedName("publication_details_bn")
         val publication_details_bn: String? = null
+
+
+        @SerializedName("document_path")
+        val document_path: String? = null
 
         @SerializedName("status")
         val status: Int = 0
@@ -1971,6 +1985,9 @@ class Employee {
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
+
+        @SerializedName("honours_awards_document_path")
+        val honours_awards_document_path: String? = null
 
         @SerializedName("award_title")
         val award_title: String? = null

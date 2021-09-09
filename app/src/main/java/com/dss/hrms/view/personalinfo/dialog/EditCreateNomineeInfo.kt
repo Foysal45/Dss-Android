@@ -356,22 +356,34 @@ class EditCreateNomineeInfo @Inject constructor() {
                 }
             )
         }
-        binding?.fNomineeDob?.tvText?.setOnClickListener({
+        binding.fNomineeDob.tvText.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
-                    date?.let { binding?.fNomineeDob?.tvText?.setText("" + it) }
+                    date.let { binding.fNomineeDob.tvText.text = "" + it }
                 }
             })
-        })
+        }
 
 
         binding.fNominneAttachment.Attachment.setOnClickListener {
 
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
-                    imageFile = imgFile
-                    binding.fNominneAttachment.fAttachmentFileName.text = imgFile.name
-                    uploadFile(imgFile, context)
+                    try {
+                        if (ConvertNumber.isFileLessThan2MB(imgFile)) {
+                            binding.fLocalTrainingAddAttachment.fAttachmentFileName.text =
+                                imgFile.name
+                            uploadFile(imgFile, context)
+                        } else {
+
+                            ConvertNumber.errorDialogueWithProgressBar(context , context.getString(R.string.error_file_size))
+
+                        }
+                    } catch (e: Exception) {
+                        toast(context, "ERROR : ${e.localizedMessage} . Try again")
+                    }
+
+
                 }
             })
 
