@@ -187,6 +187,17 @@
                             <include
                                 android:id="@+id/fQuotaDescriptionBn"
                                 layout="@layout/personel_information_view_field" />
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:id="@+id/nameList"
+                                android:clipToPadding="false"
+                                android:minHeight="@dimen/_200sdp"
+                                android:nestedScrollingEnabled="false"
+                                android:layout_height="wrap_content"/>
+
+
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -688,6 +699,24 @@
                             <include
                                 android:id="@+id/fChildrenGenderOrSex"
                                 layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fChildbirth_certificate"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+                            <include
+                                android:id="@+id/fChildNid"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+                            <include
+                                android:id="@+id/fChildPassport"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+
+
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

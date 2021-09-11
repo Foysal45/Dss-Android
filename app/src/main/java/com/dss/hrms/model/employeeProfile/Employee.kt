@@ -701,6 +701,10 @@ class Employee {
         @SerializedName("updated_at")
         val updated_at: String? = null
 
+
+        @SerializedName("quota_documents")
+        val quota_documnets: List<String>? = null
+
         @SerializedName("quota_information")
         val quotaInformation: QuotaInformation? = null
 
@@ -1598,6 +1602,17 @@ class Employee {
         @SerializedName("updated_at")
         val updated_at: String? = null
 
+
+        @SerializedName("birth_certificate_document_path")
+        val birth_certificate_document_path: String? = null
+
+        @SerializedName("passport_document_path")
+        val passport_document_path: String? = null
+
+        @SerializedName("nid_document_path")
+        val nid_document_path: String? = null
+
+
         @SerializedName("gender")
         val gender: Gender? = null
 
@@ -1808,7 +1823,7 @@ class Employee {
         val id: Int = 0
 
         @SerializedName("document_path")
-        val document_path:  String? = null
+        val document_path: String? = null
 
         @SerializedName("employee_id")
         val employee_id: Int = 0

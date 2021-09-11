@@ -624,6 +624,14 @@
                                     layout="@layout/personel_information_attachment_field"
                                     />
 
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:nestedScrollingEnabled="false"
+                                    android:id="@+id/NameList"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    />
+
+
                                 <include
                                     android:id="@+id/quotaBtnUpdate"
                                     layout="@layout/personal_info_update_button" />
@@ -1271,6 +1279,22 @@
                                     android:id="@+id/fChildrenGenderOrSex"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/gender}" />
+
+
+                                <include
+                                    android:id="@+id/fChildbirth_certificateADD"
+                                    layout="@layout/personel_information_attachment_field" />
+
+                                <include
+                                    android:id="@+id/fChildNidADD"
+                                    layout="@layout/personel_information_attachment_field" />
+
+
+                                <include
+                                    android:id="@+id/fChildPassportADD"
+                                    layout="@layout/personel_information_attachment_field" />
+
+
 
                                 <include
                                     android:id="@+id/childrenBtnAddUpdate"

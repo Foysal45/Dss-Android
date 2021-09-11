@@ -1,7 +1,9 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
+import android.graphics.Bitmap
 import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
@@ -21,20 +23,19 @@ import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
-import com.dss.hrms.util.CustomLoadingDialog
-import com.dss.hrms.util.DateConverter
-import com.dss.hrms.util.DatePicker
-import com.dss.hrms.util.StaticKey
+import com.dss.hrms.util.*
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.allInterface.CommonDataValueListener
-import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
-import com.dss.hrms.view.allInterface.OnDateListener
+import com.dss.hrms.view.allInterface.*
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import javax.inject.Inject
 import kotlin.collections.HashMap
 
@@ -54,22 +55,26 @@ class EditAndCreateChildInfo @Inject constructor() {
 
     var dialogCustome: Dialog? = null
     var child: Employee.Childs? = null
-    var binding: DialogPersonalInfoBinding? = null
+    private lateinit var binding: DialogPersonalInfoBinding
     var context: Context? = null
     lateinit var key: String
     var gender: SpinnerDataModel? = null
+    var nid_document_path: String? = null
+    var passport_documnet_path: String? = null
+    var birth_certificate_document_path: String? = null
 
-
+    var fileClickListener: FileClickListener? = null
     fun showDialog(
         context: Context,
         position: Int?,
+        fileClickListener: FileClickListener,
         key: String
     ) {
         this.child = position?.let { employeeProfileData.employee?.childs?.get(it) }
         this.position = position
         this.context = context
         this.key = key
-
+        this.fileClickListener = fileClickListener
 
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -79,8 +84,8 @@ class EditAndCreateChildInfo @Inject constructor() {
             null,
             false
         )
-        binding?.getRoot()?.let { dialogCustome?.setContentView(it) }
-        var window: Window? = dialogCustome?.getWindow()
+        binding.root.let { dialogCustome?.setContentView(it) }
+        val window: Window? = dialogCustome?.window
         window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -97,9 +102,9 @@ class EditAndCreateChildInfo @Inject constructor() {
         binding?.fChildrenNidNo?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
         binding?.fChildrenBirthCertificateNo?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
         binding?.llChildrenInfo?.visibility = View.VISIBLE
-        binding?.hChildren?.tvClose?.setOnClickListener({
+        binding?.hChildren?.tvClose?.setOnClickListener {
             dialogCustome?.dismiss()
-        })
+        }
 
         if (key.equals(StaticKey.CREATE)) {
             binding?.childrenBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.submit))
@@ -120,13 +125,13 @@ class EditAndCreateChildInfo @Inject constructor() {
             }
         )
 
-        binding?.fChildrenDOB?.tvText?.setOnClickListener({
+        binding?.fChildrenDOB?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
-                    date?.let { binding?.fChildrenDOB?.tvText?.setText("" + it) }
+                    date.let { binding.fChildrenDOB.tvText.text = "" + it }
                 }
             })
-        })
+        }
         commonRepo?.getCommonData("/api/auth/gender/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
@@ -147,10 +152,97 @@ class EditAndCreateChildInfo @Inject constructor() {
                     }
                 }
             })
+        binding.fChildNidADD.ftvAttachment.text = context.getString(R.string.nid_attachment)
+        binding.fChildPassportADD.ftvAttachment.text = context.getString(R.string.passport_attachment)
+        binding.fChildbirthCertificateADD.ftvAttachment.text =
+            context.getString(R.string.birth_certificate_attachment)
+
+        /*
+         1 = nid
+         2 = passport
+         3 = birth certificate
+         */
+
+        binding.fChildNidADD.Attachment.setOnClickListener {
+
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+                    try {
+                        if (ConvertNumber.isFileLessThan2MB(imgFile)) {
+                            binding.fChildNidADD.fAttachmentFileName.text =
+                                imgFile.name
+                            uploadFile(imgFile, context , 1 )
+                        } else {
+
+                            ConvertNumber.errorDialogueWithProgressBar(
+                                context,
+                                context.getString(R.string.error_file_size)
+                            )
+
+                        }
+                    } catch (e: Exception) {
+                        toast(context, "ERROR : ${e.localizedMessage} . Try again")
+                    }
 
 
+                }
+            })
 
-        binding?.childrenBtnAddUpdate?.btnUpdate?.setOnClickListener({
+        }
+        binding.fChildPassportADD.Attachment.setOnClickListener {
+
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+                    try {
+                        if (ConvertNumber.isFileLessThan2MB(imgFile)) {
+                            binding.fChildPassportADD.fAttachmentFileName.text =
+                                imgFile.name
+                            uploadFile(imgFile, context , 2)
+                        } else {
+
+                            ConvertNumber.errorDialogueWithProgressBar(
+                                context,
+                                context.getString(R.string.error_file_size)
+                            )
+
+                        }
+                    } catch (e: Exception) {
+                        toast(context, "ERROR : ${e.localizedMessage} . Try again")
+                    }
+
+
+                }
+            })
+
+        }
+        binding.fChildbirthCertificateADD.Attachment.setOnClickListener {
+
+            fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
+                override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
+                    try {
+                        if (ConvertNumber.isFileLessThan2MB(imgFile)) {
+                            binding.fChildbirthCertificateADD.fAttachmentFileName.text =
+                                imgFile.name
+                            uploadFile(imgFile, context , 3)
+                        } else {
+
+                            ConvertNumber.errorDialogueWithProgressBar(
+                                context,
+                                context.getString(R.string.error_file_size)
+                            )
+
+                        }
+                    } catch (e: Exception) {
+                        toast(context, "ERROR : ${e.localizedMessage} . Try again")
+                    }
+
+
+                }
+            })
+
+        }
+
+        binding?.childrenBtnAddUpdate?.btnUpdate?.setOnClickListener {
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
@@ -180,7 +272,7 @@ class EditAndCreateChildInfo @Inject constructor() {
                             })
                 }
             }
-        })
+        }
 
 
     }
@@ -275,15 +367,22 @@ class EditAndCreateChildInfo @Inject constructor() {
 
     fun getMapData(): HashMap<Any, Any?> {
         var map = HashMap<Any, Any?>()
-        var date = DateConverter.changeDateFormateForSending(binding?.fChildrenDOB?.tvText?.text.toString())
+        var date =
+            DateConverter.changeDateFormateForSending(binding?.fChildrenDOB?.tvText?.text.toString())
         map.put("employee_id", employeeProfileData.employee?.user?.employee_id)
         map.put("name_of_children", binding?.fChildrenNameOChEn?.etText?.text.toString())
         map.put("name_of_children_bn", binding?.fChildrenNameOChBn?.etText?.text.toString())
-        map.put("date_of_birth",date )
+        map.put("date_of_birth", date)
         map.put("gender_id", gender?.id)
         map.put("birth_certificate", binding?.fChildrenBirthCertificateNo?.etText?.text.toString())
         map.put("nid", binding?.fChildrenNidNo?.etText?.text.toString())
         map.put("passport", binding?.fChildrenPassportNo?.etText?.text.toString())
+        map.put(
+            "birth_certificate_document_path",
+            birth_certificate_document_path
+        )
+        map.put("passport_document_path", passport_documnet_path)
+        map.put("nid_document_path", nid_document_path)
         map.put("status", child?.status)
         return map
     }
@@ -332,5 +431,79 @@ class EditAndCreateChildInfo @Inject constructor() {
 
         }
         return arrayListOf(rel, rel1)
+    }
+
+    fun uploadFile(file: File, context: Context, value: Int) {
+        val dialouge = ProgressDialog(EmployeeInfoActivity.context)
+        dialouge.setMessage("uploading...")
+        dialouge.setCancelable(false)
+        dialouge.show()
+
+        var profilePic: MultipartBody.Part?
+
+        var filePart: MultipartBody.Part?
+
+        val requestFile: RequestBody =
+            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        profilePic =
+            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic =
+//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+
+        val profile_photo: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+
+        val employeeInfoEditCreateRepo =
+            ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
+                .get(EmployeeInfoEditCreateViewModel::class.java)
+        employeeInfoEditCreateRepo.uploadProfilePic(
+            profilePic,
+            file.name,
+            profile_photo
+        )
+            ?.observe(
+                EmployeeInfoActivity.context!!,
+                { any ->
+                    Log.e("yousuf", "profile pic : " + any)
+                    //  showResponse(any)
+                    dialouge?.dismiss()
+                    if (any != null) {
+                        val fileUrl = any as String
+                        /*
+                         1 = nid
+                         2 = passport
+                         3 = birth certificate
+                         */
+                        when (value) {
+                            1 -> {
+                                nid_document_path = fileUrl
+                            }
+                            2 -> {
+                                passport_documnet_path = fileUrl
+                            }
+                            3 -> {
+                                birth_certificate_document_path = fileUrl
+                            }
+                        }
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.successMsg),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                    } else {
+
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.uploadFailed),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+
+
     }
 }

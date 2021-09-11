@@ -5,8 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
@@ -16,6 +18,7 @@ import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.util.DateConverter
+import com.dss.hrms.view.personalinfo.adapter.name_view_row_adapter
 import com.dss.hrms.view.personalinfo.dialog.EditOfficialResidentialIInfo
 import com.namaztime.namaztime.database.MySharedPreparence
 import java.lang.Exception
@@ -750,6 +753,43 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fChildrenNidNo.tvTitle.setText(context.getString(R.string.nid_no))
         binding.fChildrenPassportNo.tvTitle.setText(context.getString(R.string.passport_no))
         binding.fChildrenGenderOrSex.tvTitle.setText(context.getString(R.string.gender))
+
+        binding.fChildNid.tvTitle.text = context.getString(R.string.nid_attachment)
+        binding.fChildPassport.tvTitle.text = context.getString(R.string.passport_attachment)
+        binding.fChildbirthCertificate.tvTitle.text =
+            context.getString(R.string.birth_certificate_attachment)
+
+
+        ConvertNumber.setIconOnTextView(
+            binding.fChildbirthCertificate.icon,
+            binding.fChildbirthCertificate.tvText,
+            childs.birth_certificate_document_path,
+            context
+        )
+        ConvertNumber.setIconOnTextView(
+            binding.fChildNid.icon,
+            binding.fChildNid.tvText,
+            childs.nid_document_path,
+            context
+        )
+
+        ConvertNumber.setIconOnTextView(
+            binding.fChildPassport.icon,
+            binding.fChildPassport.tvText,
+            childs.passport_document_path,
+            context
+        )
+
+        binding.fChildbirthCertificate.tvText.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(context, childs.birth_certificate_document_path)
+        }
+        binding.fChildPassport.tvText.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(context, childs.passport_document_path)
+        }
+        binding.fChildNid.tvText.setOnClickListener {
+            ConvertNumber.viewFileInShareIntent(context, childs.nid_document_path)
+        }
+
 
         if (preparence.getLanguage()
                 .equals("en")
@@ -1800,6 +1840,27 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fQuotaType.tvTitle.setText(context.getString(R.string.quota_type))
         binding.fQuotaDescription.tvTitle.setText(context.getString(R.string.description))
         binding.fQuotaDescriptionBn.tvTitle.setText(context.getString(R.string.description_bn))
+
+        Log.d("TAGGGED", "updateJobjoiningInfo: ${quotas.quota_documnets}")
+
+        val itemOnClick: (Int) -> Unit = {
+            try {
+                ConvertNumber.viewFileInShareIntent(context, quotas.quota_documnets?.get(it))
+            } catch (Ex: java.lang.Exception) {
+                Toast.makeText(context, "${Ex.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        val mAdapter: name_view_row_adapter =
+            name_view_row_adapter(quotas.quota_documnets.orEmpty(), itemOnClick)
+
+        binding.nameList.apply {
+            adapter = mAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+
+        Log.d("TAG", "LENGTH: ${mAdapter.itemCount} ")
+
         if (preparence.getLanguage()
                 .equals("en")
         ) {

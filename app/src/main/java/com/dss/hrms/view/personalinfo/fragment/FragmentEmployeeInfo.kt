@@ -581,6 +581,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editCreateChildInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.EDIT
                         )
                     }
@@ -589,6 +595,12 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         editCreateChildInfo.showDialog(
                             it2,
                             position,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
                             StaticKey.CREATE
                         )
                     }

@@ -426,4 +426,7 @@
     <string name="uploadFailed" />
     <string name="no_attachment"> No Attachment </string>
     <string name="error">Error</string>
+    <string name="nid_attachment">এনআইডি ডকুমেন্ট</string>
+    <string name="passport_attachment">পাসপোর্ট ডকুমেন্ট</string>
+    <string name="birth_certificate_attachment">জন্ম সনদ ডকুমেন্ট</string>
 </resources>

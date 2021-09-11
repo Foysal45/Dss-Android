@@ -14,6 +14,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
@@ -31,9 +33,11 @@ import com.dss.hrms.view.allInterface.FileClickListener
 import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
+import com.dss.hrms.view.personalinfo.adapter.name_row_adapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
 import okhttp3.MediaType
@@ -53,11 +57,14 @@ class EditQuotaInfo @Inject constructor() {
     @Inject
     lateinit var employeeProfileData: EmployeeProfileData
 
+
     var position: Int? = 0
     var dialogCustome: Dialog? = null
     var employeeQuotas: Employee.EmployeeQuotas? = null
     var fileClickListener: FileClickListener? = null
     var documentPaths = JSONArray()
+    val nameList: MutableList<String> = ArrayList()
+    private lateinit var nameRowAdapter: name_row_adapter
 
     fun showDialog(
         context: Context, position: Int?,
@@ -81,6 +88,23 @@ class EditQuotaInfo @Inject constructor() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+        nameList.clear()
+        documentPaths = JSONArray()
+
+        val itemOnClick: (Int) -> Unit = {
+            try {
+                nameList.removeAt(it)
+                nameRowAdapter.notifyItemRemoved(it)
+            } catch (Ex: java.lang.Exception) {
+                toast(context, "${Ex.localizedMessage}")
+            }
+        }
+        nameRowAdapter = name_row_adapter(nameList, itemOnClick)
+
+        dialogCustomeBinding.NameList.apply {
+            adapter = nameRowAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
         updateJobjoiningInfo(context, dialogCustomeBinding)
         dialogCustome?.show()
 
@@ -91,9 +115,9 @@ class EditQuotaInfo @Inject constructor() {
         binding: DialogPersonalInfoBinding
     ) {
         binding.llQuotaInfo.visibility = View.VISIBLE
-        binding.hQuota.tvClose.setOnClickListener({
+        binding.hQuota.tvClose.setOnClickListener {
             dialogCustome?.dismiss()
-        })
+        }
 
         var quotaName: SpinnerDataModel? = null
         var quotaType: SpinnerDataModel? = null
@@ -107,8 +131,8 @@ class EditQuotaInfo @Inject constructor() {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
                     try {
                         if (ConvertNumber.isFileLessThan2MB(imgFile)) {
-                            binding.fQuotaAttachment.fAttachmentFileName.text =
-                                imgFile.name
+//                            binding.fQuotaAttachment.fAttachmentFileName.text =
+//                                imgFile.name
                             uploadFile(imgFile, context)
                         } else {
 
@@ -184,7 +208,9 @@ class EditQuotaInfo @Inject constructor() {
             map.put("quota_information_detail_id", quotaType?.id)
             map.put("description", binding.fQuotaDescription.etText.text.toString())
             map.put("description_bn", binding.fQuotaDescriptionBn.etText.text.toString())
-            map.put("quota_documentPath", documentPaths)
+            val gson = GsonBuilder().create()
+            val packagesArray = gson.fromJson(nameList.toString() , Array<String>::class.java).toList()
+            map.put("quota_documents", packagesArray)
             map.put("status", employeeQuotas?.status)
 
             Log.d("TAGGGED", "updateJobjoiningInfo: ${map.toString()}")
@@ -306,7 +332,10 @@ class EditQuotaInfo @Inject constructor() {
                     if (any != null) {
                         val fileUrl = any as String
                         Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
-                        documentPaths.put(documentPaths)
+                        documentPaths.put(fileUrl)
+                        nameList.add(ConvertNumber.getTheFileNameFromTheLink(fileUrl))
+                        Log.d("JSON", "uploadFile: " + documentPaths)
+                        nameRowAdapter.notifyDataSetChanged()
 
                         Toast.makeText(
                             context,

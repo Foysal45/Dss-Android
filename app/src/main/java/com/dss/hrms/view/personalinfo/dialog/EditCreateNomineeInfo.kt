@@ -371,7 +371,7 @@ class EditCreateNomineeInfo @Inject constructor() {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
                     try {
                         if (ConvertNumber.isFileLessThan2MB(imgFile)) {
-                            binding.fLocalTrainingAddAttachment.fAttachmentFileName.text =
+                            binding.fNominneAttachment.fAttachmentFileName.text =
                                 imgFile.name
                             uploadFile(imgFile, context)
                         } else {

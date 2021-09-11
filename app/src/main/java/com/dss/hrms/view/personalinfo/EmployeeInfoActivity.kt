@@ -60,6 +60,9 @@ class EmployeeInfoActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setLocalLanguage(preparence.getLanguage())
         setContentView(R.layout.activity_employee_info)
+
+        employeeViewModel =
+           ViewModelProviders.of(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
         // setSupportActionBar(toolBar)
         toolBar.post {
             toolBar.inflateMenu(R.menu.my_profile)
@@ -71,7 +74,10 @@ class EmployeeInfoActivity : BaseActivity() {
             onBackPressed()
         })
         setSupportActionBar(toolBar);
-        init()
+ //       fun init() {
+//        employeeViewModel =
+//            ViewModelProviders.of(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
+//    }
 
         var personal = Bundle()
         personal.putString("key", StaticKey.PersonalInformation)
@@ -261,10 +267,10 @@ class EmployeeInfoActivity : BaseActivity() {
         }).start()
     }
 
-    fun init() {
-        employeeViewModel =
-            ViewModelProviders.of(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
-    }
+//    fun init() {
+//        employeeViewModel =
+//            ViewModelProviders.of(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
+//    }
 
     fun restartActivity() {
         finish()

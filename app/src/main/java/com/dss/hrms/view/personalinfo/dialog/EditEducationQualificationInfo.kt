@@ -36,6 +36,7 @@ import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.dialog_personal_info.view.*
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -58,7 +59,7 @@ class EditEducationQualificationInfo @Inject constructor() {
     var position: Int? = 0
     var dialogCustome: Dialog? = null
     var educationalQualification: Employee.EducationalQualifications? = null
-    var binding: DialogPersonalInfoBinding? = null
+    private lateinit var binding: DialogPersonalInfoBinding
     var context: Context? = null
     lateinit var key: String
     var degreeName: SpinnerDataModel? = null
@@ -310,17 +311,28 @@ class EditEducationQualificationInfo @Inject constructor() {
 
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap?) {
-                    binding?.fEQAttachmentFileName?.text =
-                        "${imgFile.name}"
-                    //
-                    Log.e("image", "dialog imageFile  : " + imgFile.name)
+                    try {
+                        if (ConvertNumber.isFileLessThan2MB(imgFile)) {
 
-                    uploadFile(imgFile, context)
+                            binding.fEQAttachment.fEQAttachmentFileName.text = imgFile.name
+                            uploadFile(imgFile, context)
+                        } else {
+
+                            ConvertNumber.errorDialogueWithProgressBar(
+                                context,
+                                context.getString(R.string.error_file_size)
+                            )
+
+                        }
+                    } catch (e: Exception) {
+                        toast(context, "ERROR : ${e.localizedMessage} . Try again")
+                    }
+
 
                 }
             })
-        }
 
+        }
 
     }
 
