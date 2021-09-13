@@ -289,7 +289,7 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
                                     ErrorUtils2.mainError(message)
                             }
                             "from_date" -> {
-                                binding?.fForeignTravelFromDate?.tvError?.visibility =
+                                binding?.fForeignTravelFromDate.tvError?.visibility =
                                     View.VISIBLE
                                 binding?.fForeignTravelFromDate?.tvError?.text =
                                     ErrorUtils2.mainError(message)

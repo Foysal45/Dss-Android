@@ -46,7 +46,6 @@ class EditAndCreateChildInfo @Inject constructor() {
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
 
-
     @Inject
     lateinit var employeeProfileData: EmployeeProfileData
 
@@ -107,9 +106,9 @@ class EditAndCreateChildInfo @Inject constructor() {
         }
 
         if (key.equals(StaticKey.CREATE)) {
-            binding?.childrenBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.submit))
+            binding.childrenBtnAddUpdate.btnUpdate?.setText("" + context.getString(R.string.submit))
         } else {
-            binding?.childrenBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
+            binding.childrenBtnAddUpdate.btnUpdate?.setText("" + context.getString(R.string.update))
         }
 
         binding?.fChildrenNameOChEn?.etText?.setText(child?.name_of_children)

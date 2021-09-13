@@ -271,6 +271,12 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
                                 binding?.fLocalTrainingLocationBn?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
+                            "hrm_training_category_id"-> {
+//                                binding?.fLocalTrainingFromDate?.tvError?.visibility =
+//                                    View.VISIBLE
+                                binding?.fLocalTrainingFromDate?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
                             "from_date" -> {
                                 binding?.fLocalTrainingFromDate?.tvError?.visibility =
                                     View.VISIBLE

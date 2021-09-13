@@ -211,7 +211,7 @@ class EditAndCreateSpouseInfo @Inject constructor() {
                 }
             })
 
-        binding?.spouseBtnAddUpdate?.btnUpdate?.setOnClickListener({
+        binding?.spouseBtnAddUpdate?.btnUpdate?.setOnClickListener {
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
@@ -240,7 +240,7 @@ class EditAndCreateSpouseInfo @Inject constructor() {
                             })
                 }
             }
-        })
+        }
 
 
     }

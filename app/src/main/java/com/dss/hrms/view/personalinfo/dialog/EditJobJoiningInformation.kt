@@ -299,7 +299,7 @@ class EditJobJoiningInformation @Inject constructor() {
             })
         })
 
-        binding.jobjoiningUpdateButton.btnUpdate.setOnClickListener({
+        binding.jobjoiningUpdateButton.btnUpdate.setOnClickListener {
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
@@ -328,9 +328,12 @@ class EditJobJoiningInformation @Inject constructor() {
             map.put("grade_id", grade?.id)
             map.put("pay_scale_id", payScale?.id)
             map.put("pay_scale", payScale?.amount)
-            Log.e("current","..................................current  ${if (currentJob?.id==1) true else false}................................")
+            Log.e(
+                "current",
+                "..................................current  ${if (currentJob?.id == 1) true else false}................................"
+            )
 
-            map.put("current", if (currentJob?.id==1) true else false )
+            map.put("current", if (currentJob?.id == 1) true else false)
             map.put("joining_date", joininfDate)
             map.put("confirmation_date", confirmation_date)
             map.put("pension_date", pension_date)
@@ -419,6 +422,12 @@ class EditJobJoiningInformation @Inject constructor() {
                                                 binding.fJobJoiningPayScale.tvError.text =
                                                     ErrorUtils2.mainError(message)
                                             }
+                                            "pay_scale" -> {
+                                                binding.fJobJoiningGrade.tvError.visibility =
+                                                    View.VISIBLE
+                                                binding.fJobJoiningGrade.tvError.text =
+                                                    ErrorUtils2.mainError(message)
+                                            }
                                             "joining_date" -> {
                                                 binding.fJobJoiningJoiningDate.tvError.visibility =
                                                     View.VISIBLE
@@ -462,7 +471,7 @@ class EditJobJoiningInformation @Inject constructor() {
                             }
                         }
                     })
-        })
+        }
 
     }
 

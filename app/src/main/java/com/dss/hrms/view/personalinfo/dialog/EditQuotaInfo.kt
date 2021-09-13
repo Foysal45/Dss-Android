@@ -15,7 +15,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
@@ -38,7 +37,6 @@ import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonArray
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -63,7 +61,7 @@ class EditQuotaInfo @Inject constructor() {
     var employeeQuotas: Employee.EmployeeQuotas? = null
     var fileClickListener: FileClickListener? = null
     var documentPaths = JSONArray()
-    val nameList: MutableList<String> = ArrayList()
+    val documentNameList: MutableList<String> = ArrayList()
     private lateinit var nameRowAdapter: name_row_adapter
 
     fun showDialog(
@@ -88,18 +86,18 @@ class EditQuotaInfo @Inject constructor() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        nameList.clear()
+        documentNameList.clear()
         documentPaths = JSONArray()
 
         val itemOnClick: (Int) -> Unit = {
             try {
-                nameList.removeAt(it)
+                documentNameList.removeAt(it)
                 nameRowAdapter.notifyItemRemoved(it)
             } catch (Ex: java.lang.Exception) {
                 toast(context, "${Ex.localizedMessage}")
             }
         }
-        nameRowAdapter = name_row_adapter(nameList, itemOnClick)
+        nameRowAdapter = name_row_adapter(documentNameList, itemOnClick)
 
         dialogCustomeBinding.NameList.apply {
             adapter = nameRowAdapter
@@ -133,6 +131,8 @@ class EditQuotaInfo @Inject constructor() {
                         if (ConvertNumber.isFileLessThan2MB(imgFile)) {
 //                            binding.fQuotaAttachment.fAttachmentFileName.text =
 //                                imgFile.name
+                            documentNameList.add(imgFile.name)
+                            nameRowAdapter.notifyDataSetChanged()
                             uploadFile(imgFile, context)
                         } else {
 
@@ -209,7 +209,7 @@ class EditQuotaInfo @Inject constructor() {
             map.put("description", binding.fQuotaDescription.etText.text.toString())
             map.put("description_bn", binding.fQuotaDescriptionBn.etText.text.toString())
             val gson = GsonBuilder().create()
-            val packagesArray = gson.fromJson(nameList.toString() , Array<String>::class.java).toList()
+            val packagesArray = gson.fromJson(documentNameList.toString() , Array<String>::class.java).toList()
             map.put("quota_documents", packagesArray)
             map.put("status", employeeQuotas?.status)
 
@@ -333,9 +333,9 @@ class EditQuotaInfo @Inject constructor() {
                         val fileUrl = any as String
                         Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
                         documentPaths.put(fileUrl)
-                        nameList.add(ConvertNumber.getTheFileNameFromTheLink(fileUrl))
+//                        documentNameList.add(ConvertNumber.getTheFileNameFromTheLink(fileUrl))
                         Log.d("JSON", "uploadFile: " + documentPaths)
-                        nameRowAdapter.notifyDataSetChanged()
+
 
                         Toast.makeText(
                             context,
