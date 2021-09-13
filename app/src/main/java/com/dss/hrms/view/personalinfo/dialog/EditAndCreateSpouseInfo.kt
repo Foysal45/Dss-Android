@@ -55,6 +55,13 @@ class EditAndCreateSpouseInfo @Inject constructor() {
     var district: SpinnerDataModel? = null
     var upazila: SpinnerDataModel? = null
 
+    var upazilaa: Upazilas? = null
+    var union: Union? = null
+    var municipality: Municipalities? = null
+    var localGovernmentType: SpinnerDataModel? = null
+    var cityCorporations: CityCorporations? = null
+    var specificDistrictModel: SpecificDistrictModel? = null
+
     @Inject
     lateinit var employeeProfileData: EmployeeProfileData
 

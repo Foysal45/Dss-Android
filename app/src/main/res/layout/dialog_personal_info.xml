@@ -1174,12 +1174,14 @@
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/district}" />
 
-
                                 <include
                                     android:id="@+id/fSpouseThana"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/upazila}" />
 
+                                <include android:id="@+id/location_container"
+                                    layout="@layout/location_container"
+                                    />
 
                                 <include
                                     android:id="@+id/fSpousePhoneNo"
