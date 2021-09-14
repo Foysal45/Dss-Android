@@ -189,6 +189,7 @@ class EmployeeBankInformationFragment : DaggerFragment() {
                     )
                 }
             })
+
         commonViewModel.getCommonData("/api/auth/account-type/list")
             ?.observe(viewLifecycleOwner, androidx.lifecycle.Observer { list ->
                 list?.let {

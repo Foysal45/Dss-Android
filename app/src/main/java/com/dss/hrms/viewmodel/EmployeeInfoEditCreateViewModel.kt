@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.repository.EmployeeInfoEditCreateRepo
 import com.dss.hrms.repository.LoginRepo
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
@@ -116,6 +117,12 @@ class EmployeeInfoEditCreateViewModel @Inject constructor(application: Applicati
         }
         return liveData
 
+    }
+
+
+    fun getAllHrTrainingList(
+    ): MutableLiveData<List<SpinnerDataModel>>? {
+        return employeeInfoEditCreateRepo.getAllHrTraining()
     }
 
     fun updateChildInfo(

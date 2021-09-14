@@ -4,8 +4,10 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.btbapp.alquranapp.retrofit.ApiService
+import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.error.ErrorUtils2
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.namaztime.namaztime.database.MySharedPreparence
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,6 +23,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.reflect.Type
 import javax.inject.Inject
 
 
@@ -1548,6 +1551,50 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
                     }
             }
         }
+        return liveData
+    }
+
+    fun getAllHrTraining(
+    ): MutableLiveData<List<SpinnerDataModel>>? {
+        val liveData: MutableLiveData<List<SpinnerDataModel>> =
+            MutableLiveData<List<SpinnerDataModel>>()
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getHrTrainingList(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}"
+            )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+
+                        if (code == 200 || code == 201) {
+                            val dataJA = jsonObjectParent.getJSONArray("data")
+                            val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
+                            val hrTrainingList: List<SpinnerDataModel> =
+                                Gson().fromJson(dataJA.toString(), type)
+                            liveData.postValue(hrTrainingList)
+                        } else {
+                            liveData.postValue(null)
+                        }
+                    } catch (e: JSONException) {
+                        liveData.postValue(null)
+                    }
+                } else {
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    liveData.postValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
+            }
+
+        })
         return liveData
     }
 }

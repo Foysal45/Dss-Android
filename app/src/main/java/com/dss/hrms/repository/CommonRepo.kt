@@ -224,6 +224,106 @@ class CommonRepo @Inject constructor() {
         return liveData
     }
 
+
+    fun getAllHrTraining(
+        commonDataValueListener: CommonDataValueListener
+    ): MutableLiveData<List<SpinnerDataModel>>? {
+        val liveData: MutableLiveData<List<SpinnerDataModel>> =
+            MutableLiveData<List<SpinnerDataModel>>()
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getHrTrainingList(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}"
+            )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+
+                        if (code == 200 || code == 201) {
+                            val dataJA = jsonObjectParent.getJSONArray("data")
+                            val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
+                            val district: List<SpinnerDataModel> =
+                                Gson().fromJson(dataJA.toString(), type)
+                            liveData.postValue(district)
+                            commonDataValueListener.valueChange(district)
+                        } else {
+                            liveData.postValue(null)
+                        }
+                    } catch (e: JSONException) {
+                        commonDataValueListener.valueChange(null)
+                        liveData.postValue(null)
+                    }
+                } else {
+                    commonDataValueListener.valueChange(null)
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    liveData.postValue(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.postValue(null)
+                commonDataValueListener.valueChange(null)
+            }
+
+        })
+        return liveData
+    }
+
+    fun getAllHrTraining(): MutableList<SpinnerDataModel> {
+        val liveData: MutableList<SpinnerDataModel> = arrayListOf()
+
+        var preparence = application?.let { MySharedPreparence(it) }
+        val call: Call<Any?>? =
+            apiService?.getHrTrainingList(
+                preparence?.getLanguage()!!,
+                "Bearer ${preparence?.getToken()}"
+            )
+        call?.enqueue(object : Callback<Any?> {
+            override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+
+                if (response.body() != null) {
+                    try {
+                        val jsonObjectParent = JSONObject(Gson().toJson(response.body()))
+                        val code: Int = jsonObjectParent.getInt("code")
+                        val status = jsonObjectParent.getString("status")
+
+                        if (code == 200 || code == 201) {
+                            val dataJA = jsonObjectParent.getJSONArray("data")
+                            val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
+                            val district: List<SpinnerDataModel> =
+                                Gson().fromJson(dataJA.toString(), type)
+                            liveData.clear()
+                            liveData.addAll(district)
+
+                        } else {
+                            liveData.clear()
+                        }
+                    } catch (e: JSONException) {
+
+                        liveData.clear()
+                    }
+                } else {
+
+                    // liveData.postValue(ErrorUtils2.parseError(response))
+                    liveData.clear()
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                liveData.clear()
+
+            }
+
+        })
+        return liveData
+    }
+
     fun getAllDistrict(
         commonDataValueListener: CommonDataValueListener
     ): MutableLiveData<List<SpinnerDataModel>>? {

@@ -38,6 +38,8 @@ class CommonViewModel @Inject constructor(application: Application) :
         return commonRepo.getAllDistrict()
     }
 
+
+
     fun getUpozilla(
         identity: Int
     ): MutableLiveData<List<SpinnerDataModel>>? {

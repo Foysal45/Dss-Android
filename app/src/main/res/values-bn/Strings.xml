@@ -7,7 +7,7 @@
     <string name="no">না</string>
     <string name="yes">হ্যাঁ</string>
     <string name="required_field_cannot_be_empty">required field cannot be empty</string>
-
+    <string name="training_category">Training Category</string>
     <string name="failed">ব্যর্থ হয়েছে</string>
     <string name="wrong_otp">ভুল ওটিপি</string>
     <string name="password_mismatch">পাসওয়ার্ড মেলেনি</string>

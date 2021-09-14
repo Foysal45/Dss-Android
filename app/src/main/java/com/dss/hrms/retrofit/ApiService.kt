@@ -117,6 +117,13 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<Any?>?
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @GET("/api/auth/hr-training-category/list")
+    fun getHrTrainingList(
+        @Header("X-Localization") language: String,
+        @Header("Authorization") token: String
+    ): Call<Any?>?
+
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @GET("/api/auth/division/{Id}")

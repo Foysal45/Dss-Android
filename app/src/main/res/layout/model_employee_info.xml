@@ -960,6 +960,19 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
+                                android:id="@+id/fLocalTrainingCategory"
+                                layout="@layout/personal_info_spinner"
+                                android:visibility="gone"
+                                app:title="@{@string/training_category}"
+                                />
+
+                            <include
+                                android:id="@+id/fLocalTrainingCatName"
+                                layout="@layout/personel_information_view_field" />
+
+
+
+                            <include
                                 android:id="@+id/fLocalTrainingDocument"
                                 layout="@layout/personel_information_view_field_with_icon" />
 

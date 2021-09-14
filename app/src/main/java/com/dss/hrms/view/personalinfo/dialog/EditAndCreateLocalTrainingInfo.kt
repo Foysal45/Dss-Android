@@ -30,6 +30,7 @@ import com.dss.hrms.util.*
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.allInterface.*
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
+import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
@@ -64,7 +65,7 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
     var imageFile: File? = null
     var imageUrl: String? = null
     var dialog: Dialog? = null
-
+    var hrm_trainningId: Int? = 0
 
     fun showDialog(
         context: Context,
@@ -127,6 +128,32 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
                 it
             )
         })
+
+
+
+        commonRepo.getAllHrTraining(
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    Log.e("HR", "HR message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding?.fLocalTrainingCategory?.spinner!!,
+                            context,
+                            list,
+                            localTraining?.hrm_training_category_id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    var hrm = any as SpinnerDataModel
+                                    hrm_trainningId = hrm.id
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
+
         binding?.fLocalTrainingToDate?.tvText?.setText(localTraining?.to_date?.let {
             DateConverter.changeDateFormateForShowing(
                 it
@@ -167,7 +194,10 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
                             uploadFile(imgFile, context)
                         } else {
 
-                            ConvertNumber.errorDialogueWithProgressBar(context , context.getString(R.string.error_file_size))
+                            ConvertNumber.errorDialogueWithProgressBar(
+                                context,
+                                context.getString(R.string.error_file_size)
+                            )
 
                         }
                     } catch (e: Exception) {
@@ -271,7 +301,7 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
                                 binding?.fLocalTrainingLocationBn?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
-                            "hrm_training_category_id"-> {
+                            "hrm_training_category_id" -> {
 //                                binding?.fLocalTrainingFromDate?.tvError?.visibility =
 //                                    View.VISIBLE
                                 binding?.fLocalTrainingFromDate?.tvError?.text =
@@ -325,6 +355,7 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         map.put("location_bn", binding?.fLocalTrainingLocationBn?.etText?.text.toString())
         map.put("from_date", fromDate)
         map.put("to_date", toDate)
+        map.put("hrm_training_category_id" , hrm_trainningId)
         map.put("local_training_document_path", loacTrainingDocumnet)
         imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
         if (localTraining?.status != null) map.put(

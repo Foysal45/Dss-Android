@@ -127,6 +127,7 @@
     <string name="quarter_name">Quarter Name</string>
     <string name="flat_no"><![CDATA[Flat No & Flat Type]]></string>
     <string name="country">Country</string>
+    <string name="training_category">Training Category</string>
     <string name="status">Status</string>
     <string name="purpose">Purpose(English)</string>
     <string name="purpose_bangla">Purpose (Bangla)</string>

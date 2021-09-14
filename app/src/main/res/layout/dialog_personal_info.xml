@@ -1514,6 +1514,11 @@
                                     app:title="@{@string/country}" />
 
                                 <include
+                                    android:id="@+id/fLocalTrainingCategory"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/training_category}" />
+
+                                <include
                                     android:id="@+id/fLocalTrainingFromDate"
                                     layout="@layout/personal_info_textview"
                                     app:hint="@{@string/from_date}"

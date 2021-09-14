@@ -1761,6 +1761,8 @@ class Employee {
         @SerializedName("name_of_institute_bn")
         val name_of_institute_bn: String? = null
 
+        @SerializedName("hrm_training_category_id")
+        val hrm_training_category_id: Int= 0
         @SerializedName("location")
         val location: String? = null
 
@@ -1790,6 +1792,10 @@ class Employee {
 
         @SerializedName("updated_at")
         val updated_at: String? = null
+
+
+        @SerializedName("hrm_training_category")
+        val hrm_training_category: hrm_training_category? = null
 
         override fun toString(): String {
             return "LocalTrainings(id=$id, employee_id=$employee_id, course_title=$course_title, course_title_bn=$course_title_bn, name_of_institute=$name_of_institute, name_of_institute_bn=$name_of_institute_bn, location=$location, location_bn=$location_bn, from_date=$from_date, to_date=$to_date, local_training_document_path=$local_training_document_path, certificate=$certificate, status=$status, deleted_at=$deleted_at, created_at=$created_at, updated_at=$updated_at)"
@@ -2086,6 +2092,7 @@ class Employee {
         @SerializedName("updated_at")
         val updated_at: String? = null
     }
+
 
     inner class OfficialResidentials {
 
@@ -2500,4 +2507,28 @@ class Employee {
         @SerializedName("updated_at")
         var updated_at: String? = null
     }
+
+    inner class hrm_training_category {
+
+        @SerializedName("id")
+        var id: Int = 0
+
+        @SerializedName("name")
+        var name: String? = null
+
+        @SerializedName("name_bn")
+        var name_bn: String? = null
+
+        @SerializedName("status")
+        var status: Int = 0
+        @SerializedName("deleted_at")
+        var deleted_at: String? = null
+
+        @SerializedName("created_at")
+        var created_at: String? = null
+
+        @SerializedName("updated_at")
+        var updated_at: String? = null
+    }
+
 }

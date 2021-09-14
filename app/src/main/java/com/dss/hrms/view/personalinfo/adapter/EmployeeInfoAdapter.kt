@@ -161,6 +161,7 @@ class EmployeeInfoAdapter @Inject constructor() :
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
                 })
                 holder.binding?.llLocalTrainingInfo?.visibility = View.VISIBLE
+
                 employeeInfoDataBinding.bindLocaltrainingData(
                     holder.binding!!,
                     dataList.get(position) as Employee.LocalTrainings,

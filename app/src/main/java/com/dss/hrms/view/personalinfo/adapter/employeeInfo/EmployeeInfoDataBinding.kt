@@ -14,12 +14,18 @@ import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelEmployeeInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.util.DateConverter
+import com.dss.hrms.view.allInterface.CommonDataValueListener
+import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.personalinfo.adapter.name_view_row_adapter
 import com.dss.hrms.view.personalinfo.dialog.EditOfficialResidentialIInfo
+import com.google.gson.Gson
 import com.namaztime.namaztime.database.MySharedPreparence
 import java.lang.Exception
 import javax.inject.Inject
@@ -27,6 +33,9 @@ import javax.inject.Inject
 
 class EmployeeInfoDataBinding @Inject constructor() {
     //
+    @Inject
+    lateinit var commonRepo: CommonRepo
+
     @Inject
     lateinit var employeeProfileData: EmployeeProfileData
 
@@ -671,16 +680,16 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 }
                 3 -> {
                     // upzilla
-                    binding.fSpouseAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                    binding.fSpouseAddressLocalName.tvTitle.text =
+                        context.getString(R.string.upazila)
                     binding.fSpouseAddressLocalName.tvText.text = spouses.upazila?.name
-                //    binding.fSpouseAddressUpazila.llBody.visibility = View.VISIBLE
+                    //    binding.fSpouseAddressUpazila.llBody.visibility = View.VISIBLE
                     binding.fSpouseAddressUnion.tvTitle.text = context.getString(R.string.union)
                     binding.fSpouseAddressUnion.tvText.text = spouses.union?.name
                     binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
 
                 }
             }
-
 
 
         } else {
@@ -1002,6 +1011,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fLocalTrainingCountry.llBody.visibility = View.GONE
         binding.llTrainingCertification.visibility = View.GONE
 
+        binding.fLocalTrainingCatName.tvTitle.setText(context.getString(R.string.training_category))
         binding.fLocalTrainingCourseT.tvTitle.setText(context.getString(R.string.course_title))
         binding.fLocalTrainingCourseTBn.tvTitle.setText(context.getString(R.string.course_title_bn))
         binding.fLocalTrainingNOInst.tvTitle.setText(context.getString(R.string.name_institute))
@@ -1018,6 +1028,27 @@ class EmployeeInfoDataBinding @Inject constructor() {
             localTrainings.local_training_document_path,
             context
         )
+
+
+        binding.fLocalTrainingCatName.tvText.text = "${localTrainings.hrm_training_category?.name}"
+
+
+
+//
+//       val list =  commonRepo.getAllHrTraining()
+//
+//        if(list.isEmpty()){
+//
+//        }else {
+//            for(item in list){
+//                Log.d(|, "bindLocaltrainingData: ")
+//                if(item.id == localTrainings?.hrm_training_category_id ){
+//                    binding.fLocalTrainingCatName.tvText.text =  "${ item.name}"
+//                    break ;
+//                }
+//            }
+//        }
+
 
         binding.fLocalTrainingDocument.tvText.setOnClickListener {
             ConvertNumber.viewFileInShareIntent(
