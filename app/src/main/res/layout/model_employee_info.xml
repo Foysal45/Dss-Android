@@ -615,6 +615,64 @@
 
                             <include
                                 android:id="@+id/fSpouseThana"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressUpazila"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressUnion"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fSpouseAddressLocalName"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fSpouseAddressUnionName"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fSpouseAddressPoliceStation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressPoliceStationBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressPostOffice"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressPostOfficeBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressPostCode"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fSpouseAddressRoadOrWordNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressRoadOrWordNoBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fSpouseAddressVillageOrHouseNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressVillageOrHouseNoBn"
                                 layout="@layout/personel_information_view_field" />
 
 

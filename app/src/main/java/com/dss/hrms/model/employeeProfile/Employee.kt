@@ -1473,6 +1473,9 @@ class Employee {
         @SerializedName("occupation_id")
         val occupation_id: Int = 0
 
+        @SerializedName("local_government_type")
+        var localGovernmentType: LocalGovernmentType? = null
+
         @SerializedName("spouse_workstation_id")
         val spouse_workstation_id: Int = 0
 
@@ -1535,6 +1538,58 @@ class Employee {
 
         @SerializedName("upazila")
         val upazila: Upazila? = null
+
+
+        @SerializedName("police_station")
+        val police_station: String? = null
+
+        @SerializedName("police_station_bn")
+        val police_station_bn: String? = null
+
+        @SerializedName("post_office")
+        val post_office: String? = null
+
+        @SerializedName("post_office_bn")
+        val post_office_bn: String? = null
+
+        @SerializedName("post_code")
+        val post_code: String? = null
+
+        @SerializedName("road_word_no")
+        val road_word_no: String? = null
+
+        @SerializedName("road_word_no_bn")
+        val road_word_no_bn: String? = null
+
+        @SerializedName("village_house_no")
+        val village_house_no: String? = null
+
+        @SerializedName("village_house_no_bn")
+        val village_house_no_bn: String? = null
+
+
+        @SerializedName("union_id")
+        val union_id: Int? = 0
+
+        @SerializedName("municipality_id")
+        val municipality_id: Int? = 0
+
+        @SerializedName("local_government_type_id")
+        val local_government_type_id: Int? = 0
+
+        @SerializedName("city_corporation_id")
+        val city_corporation_id: Int? = 0
+
+
+
+        @SerializedName("city_corporation")
+        var cityCorporation: CityCorporation? = null
+
+        @SerializedName("municipality")
+        var municipality: municipality? = null
+
+        @SerializedName("union")
+        var union: union? = null
 
         inner class Occupation {
 

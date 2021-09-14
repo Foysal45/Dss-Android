@@ -8,6 +8,7 @@
         android:orientation="vertical">
 
         <include
+
             android:id="@+id/city_corp_upazila_municipality"
             layout="@layout/personal_info_spinner"
             app:title="@{@string/type_city_corp_upazila_municipality}" />
@@ -30,7 +31,7 @@
         <include
             android:id="@+id/Unio"
             layout="@layout/personal_info_spinner"
-            app:title="@{@string/union_or_municiplity}" />
+            app:title="@{@string/union}" />
 
         <include
             android:id="@+id/PoliceStation"

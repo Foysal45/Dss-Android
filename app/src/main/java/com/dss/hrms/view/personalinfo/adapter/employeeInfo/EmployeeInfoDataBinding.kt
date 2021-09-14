@@ -564,6 +564,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         context: Context,
         heading: String
     ) {
+        binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
         binding.hSpouse.tvTitle.setText(heading)
         binding.fSpouseNameBn.tvTitle.setText(context.getString(R.string.name_b))
         binding.fSpouseNameEn.tvTitle.setText(context.getString(R.string.name))
@@ -577,6 +578,21 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fSpousePhoneNo.tvTitle.setText(context.getString(R.string.phone))
         binding.fSpouseMobileNo.tvTitle.setText(context.getString(R.string.mobile))
         binding.fSpouseReligion.tvTitle.setText(context.getString(R.string.religion))
+        binding.fSpouseAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+        binding.fSpouseAddressUnion.tvTitle.setText(context.getString(R.string.union_or_municiplity))
+        binding.fSpouseAddressPoliceStation.tvTitle.setText(context.getString(R.string.police_station))
+        binding.fSpouseAddressPoliceStationBn.tvTitle.setText(context.getString(R.string.police_station_bn))
+        binding.fSpouseAddressPostOffice.tvTitle.setText(context.getString(R.string.post_off))
+        binding.fSpouseAddressPostOfficeBn.tvTitle.setText(context.getString(R.string.post_off_bn))
+        binding.fSpouseAddressPostCode.tvTitle.setText(context.getString(R.string.post_code))
+        binding.fSpouseAddressRoadOrWordNo.tvTitle.setText(context.getString(R.string.road_word))
+        binding.fSpouseAddressRoadOrWordNoBn.tvTitle.setText(context.getString(R.string.road_word_bn))
+
+
+
+        binding.fSpousePhoneNo.tvTitle.setText(context.getString(R.string.phone_mobile))
+        binding.fSpouseAddressVillageOrHouseNo.tvTitle.setText(context.getString(R.string.vill_house))
+        binding.fSpouseAddressVillageOrHouseNoBn.tvTitle.setText(context.getString(R.string.vill_house_bn))
         binding.fSpouseReligion.llBody.visibility = View.GONE
 
         if (preparence.getLanguage()
@@ -595,6 +611,78 @@ class EmployeeInfoDataBinding @Inject constructor() {
             spouses.phone_no?.let { binding.fSpousePhoneNo.tvText.setText(it) }
             spouses.mobile_no?.let { binding.fSpouseMobileNo.tvText.setText(it) }
             // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
+            spouses.village_house_no?.let {
+                binding.fSpouseAddressVillageOrHouseNo.tvText.setText(it)
+            }
+            spouses.village_house_no?.let {
+                binding.fSpouseAddressVillageOrHouseNo.tvText.setText(
+                    it
+                )
+            }
+            spouses.village_house_no_bn?.let {
+                binding.fSpouseAddressVillageOrHouseNoBn.tvText.setText(
+                    it
+                )
+            }
+            spouses.road_word_no?.let { binding.fSpouseAddressRoadOrWordNo.tvText.setText(it) }
+            spouses.road_word_no_bn?.let {
+                binding.fSpouseAddressRoadOrWordNoBn.tvText.setText(
+                    it
+                )
+            }
+            spouses.post_office?.let { binding.fSpouseAddressPostOffice.tvText.setText(it) }
+            spouses.post_office_bn?.let { binding.fSpouseAddressPostOfficeBn.tvText.setText(it) }
+            spouses.post_code?.let { binding.fSpouseAddressPostCode.tvText.setText(it) }
+            spouses.division?.name?.let { binding.fSpouseDivision.tvText.setText(it) }
+            spouses.distric?.name?.let { binding.fSpouseDistrict.tvText.setText(it) }
+            spouses.phone_no?.let { binding.fSpousePhoneNo.tvText.setText(it) }
+            spouses.police_station?.let { binding.fSpouseAddressPoliceStation.tvText.setText(it) }
+            spouses.police_station_bn?.let { binding.fSpouseAddressPoliceStationBn.tvText.setText(it) }
+            spouses.upazila?.name?.let { binding.fSpouseAddressUpazila.tvText.setText(it) }
+            spouses.localGovernmentType?.name?.let {
+                binding.fSpouseAddressUnion.tvText.text = it
+            }
+
+            // adding check for  cilty , municipility  or union
+
+
+            when (spouses.local_government_type_id) {
+                1 -> {
+                    // city corpo
+                    spouses.cityCorporation?.name?.let {
+                        binding.fSpouseAddressLocalName.tvText.text = it
+                    }
+                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                    binding.fSpouseAddressLocalName.tvTitle.text =
+                        context.getString(R.string.citycorporation)
+                    binding.fSpouseAddressLocalName.tvText.text = spouses.cityCorporation?.name
+                    binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+                    binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
+
+                }
+                2 -> {
+                    // municipility
+
+                    binding.fSpouseAddressLocalName.tvTitle.text =
+                        context.getString(R.string.municipalities)
+                    binding.fSpouseAddressLocalName.tvText.text = spouses.municipality?.name
+                    binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+                    binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
+                }
+                3 -> {
+                    // upzilla
+                    binding.fSpouseAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                    binding.fSpouseAddressLocalName.tvText.text = spouses.upazila?.name
+                //    binding.fSpouseAddressUpazila.llBody.visibility = View.VISIBLE
+                    binding.fSpouseAddressUnion.tvTitle.text = context.getString(R.string.union)
+                    binding.fSpouseAddressUnion.tvText.text = spouses.union?.name
+                    binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+
+                }
+            }
+
+
+
         } else {
             spouses.name_bn?.let { binding.fSpouseNameBn.tvText.setText(it) }
             spouses.name?.let { binding.fSpouseNameEn.tvText.setText(it) }

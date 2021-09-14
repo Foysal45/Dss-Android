@@ -16,8 +16,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.*
 import com.dss.hrms.model.employeeProfile.Employee
-import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
@@ -26,8 +26,10 @@ import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.allInterface.SpecificDistrictValueListener
+import com.dss.hrms.view.allInterface.UnionDataValueListener
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
-import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
+import com.dss.hrms.view.personalinfo.adapter.*
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
@@ -218,6 +220,8 @@ class EditAndCreateSpouseInfo @Inject constructor() {
                 }
             })
 
+        getLocalGovernmentType()
+
         binding?.spouseBtnAddUpdate?.btnUpdate?.setOnClickListener {
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
@@ -226,7 +230,7 @@ class EditAndCreateSpouseInfo @Inject constructor() {
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
                 if (it.equals(StaticKey.EDIT)) {
-                    employeeInfoEditCreateRepo?.addSpouseInfo(
+                    employeeInfoEditCreateRepo?.updateSpouseInfo( spouses?.id ,
                         getMapData()
                     )
                         ?.observe(
@@ -386,6 +390,21 @@ class EditAndCreateSpouseInfo @Inject constructor() {
         map.put("phone_no", binding?.fSpousePhoneNo?.etText?.text.toString())
         map.put("mobile_no", binding?.fSpouseMobileNo?.etText?.text.toString())
         map.put("status", spouses?.status)
+
+        localGovernmentType?.id?.let { map.put("local_government_type_id", it) }
+        municipality?.id?.let { map.put("municipality_id", it) }
+        cityCorporations?.id?.let { map.put("city_corporation_id", it) }
+        upazilaa?.id?.let { map.put("upazila_id", it) }
+        union?.id?.let { map.put("union_id", it) }
+        map.put("police_station", binding?.locationContainer?.PoliceStation?.etText?.text.toString())
+        map.put("police_station_bn", binding?.locationContainer?.PoliceStationBn?.etText?.text.toString())
+        map.put("post_office", binding?.locationContainer?.PostOffice?.etText?.text.toString())
+        map.put("post_office_bn", binding?.locationContainer?.PostOfficeBn?.etText?.text.toString())
+        map.put("post_code", binding?.locationContainer?.PostCode?.etText?.text.toString())
+        map.put("road_word_no", binding?.locationContainer?.RoadOrWordNo?.etText?.text.toString())
+        map.put("road_word_no_bn", binding?.locationContainer?.RoadOrWordNoBn?.etText?.text.toString())
+        map.put("village_house_no", binding?.locationContainer?.VillageOrHouseNo?.etText?.text.toString())
+        map.put("village_house_no_bn", binding?.locationContainer?.VillageOrHouseNoBn?.etText?.text.toString())
         return map
     }
 
@@ -441,7 +460,11 @@ class EditAndCreateSpouseInfo @Inject constructor() {
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     district = any as SpinnerDataModel
-                                    getUpazila(district?.id, spouses?.upazila_id)
+                                   // getUpazila(district?.id, spouses?.upazila_id)
+                                    getUpazilaWithMunicipalities(
+                                        district?.id,
+                                        spouses?.upazila_id
+                                    )
                                 }
 
                             }
@@ -491,5 +514,185 @@ class EditAndCreateSpouseInfo @Inject constructor() {
 
         }
         return arrayListOf(rel, rel1)
+    }
+
+    fun getLocalGovernmentType() {
+        commonRepo.getCommonData("/api/auth/local-government-type/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    //    Log.e("gender", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding?.locationContainer?.cityCorpUpazilaMunicipality?.spinner!!,
+                            context,
+                            list,
+                            spouses?.local_government_type_id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    localGovernmentType = any as SpinnerDataModel
+                                    setCityMuniUpailaAccordingToType()
+                                }
+                            }
+                        )
+                    }
+                }
+            })
+    }
+
+
+    fun getUpazilaWithMunicipalities(districtId: Int?, upazilaId: Int?) {
+        commonRepo.getUpazilaWithMunicipalities(districtId,
+            object : SpecificDistrictValueListener {
+                override fun valueChange(data: SpecificDistrictModel?) {
+                    specificDistrictModel = data
+                    //    Log.e("gender", "gender message " + Gson().toJson(list))
+                    setCityMuniUpailaAccordingToType()
+                }
+            })
+    }
+
+    fun getPoulatedMunicipalities(
+        list: List<Upazilas>?
+    ): List<Municipalities> {
+        var municipalitiesList: List<Municipalities> = arrayListOf()
+        list?.let {
+            it.forEach({ uList ->
+                uList?.municipalities?.let { uListElement ->
+                    municipalitiesList += uListElement
+                }
+            })
+        }
+        return municipalitiesList
+    }
+
+
+    fun setMunicipalities(list: List<Upazilas>?, id: Int?) {
+        list?.let {
+            MunicipalitiesAdapter().setMunicipalitiesSpinner(
+                binding?.locationContainer?.Municipalities?.spinner!!,
+                context,
+                getPoulatedMunicipalities(list),
+                id,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        // upazila = any as Municipalities
+                        municipality = null
+                        any?.let {
+                            municipality = any as Municipalities
+                        }
+                    }
+                }
+            )
+        }
+    }
+
+    fun setCityCorporation(list: List<CityCorporations>?, id: Int?) {
+        list?.let {
+            CityCorporationsAdapter().setCityCorporationsSpinner(
+                binding?.locationContainer?.CityCorporations?.spinner!!,
+                context,
+                list,
+                id,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        // upazila = any as Municipalities
+                        cityCorporations = null
+                        any?.let {
+                            cityCorporations = any as CityCorporations
+                        }
+                    }
+                }
+            )
+        }
+    }
+
+
+    fun setCityMuniUpailaAccordingToType() {
+
+        if (localGovernmentType?.id == 1) {
+            upazilaa = null
+            union = null
+            municipality = null
+            binding?.locationContainer?.CityCorporations?.llBody?.visibility = View.VISIBLE
+            binding?.locationContainer?.Municipalities?.llBody?.visibility = View.GONE
+            binding?.locationContainer?.Upazila?.llBody?.visibility = View.GONE
+            binding?.locationContainer?.Unio?.llBody?.visibility = View.GONE
+            setCityCorporation(
+                specificDistrictModel?.city_corporations,
+                spouses?.city_corporation_id
+            )
+        } else if (localGovernmentType?.id == 2) {
+            upazilaa = null
+            union = null
+            cityCorporations = null
+            binding?.locationContainer?.Municipalities?.llBody?.visibility = View.VISIBLE
+            binding?.locationContainer?.CityCorporations?.llBody?.visibility = View.GONE
+            binding?.locationContainer?.Upazila?.llBody?.visibility = View.GONE
+            binding?.locationContainer?.Unio?.llBody?.visibility = View.GONE
+            setMunicipalities(specificDistrictModel?.upazilas, spouses?.municipality_id)
+        } else if (localGovernmentType?.id == 3) {
+            cityCorporations = null
+            municipality = null
+            binding?.locationContainer?.Upazila?.llBody?.visibility = View.VISIBLE
+            binding?.locationContainer?.Unio?.llBody?.visibility = View.VISIBLE
+            binding?.locationContainer?.Municipalities?.llBody?.visibility = View.GONE
+            binding?.locationContainer?.CityCorporations?.llBody?.visibility = View.GONE
+            setUpaila(spouses?.upazila_id)
+        } else {
+            cityCorporations = null
+            municipality = null
+            upazilaa = null
+            union = null
+            binding?.locationContainer?.Municipalities?.llBody?.visibility = View.GONE
+            binding?.locationContainer?.CityCorporations?.llBody?.visibility = View.GONE
+            binding?.locationContainer?.Upazila?.llBody?.visibility = View.GONE
+            binding?.locationContainer?.Unio?.llBody?.visibility = View.GONE
+        }
+    }
+
+    fun setUpaila(upazilaId: Int?) {
+        UpazilaAdapter().setUpazilaSpinner(
+            binding?.locationContainer?.Upazila?.spinner!!,
+            context,
+            specificDistrictModel?.upazilas,
+            upazilaId,
+            object : CommonSpinnerSelectedItemListener {
+                override fun selectedItem(any: Any?) {
+                    //upazila = any as SpinnerDataModel
+                    upazilaa = null
+                    any?.let {
+                        upazilaa = any as Upazilas
+                        setUnion(upazilaa?.id, spouses?.union_id)
+                    }
+                }
+            }
+        )
+    }
+
+    fun setUnion(upazilaId: Int?, unionId: Int?) {
+        commonRepo.getUnion(upazilaId,
+            object : UnionDataValueListener {
+                override fun valueChange(list: List<Union>?) {
+                    //    Log.e("gender", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        UnionAdapter().setUnionSpinner(
+                            binding?.locationContainer?.Unio?.spinner!!,
+                            context,
+                            list,
+                            unionId,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    union = null
+                                    // getUpazila(district?.id, presentAddress?.upazila_id)
+                                    any?.let {
+                                        union = any as Union
+                                    }
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
     }
 }
