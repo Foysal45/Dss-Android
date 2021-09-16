@@ -44,6 +44,8 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
     @Inject
     lateinit var commonRepo: CommonRepo
 
+
+
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
 
@@ -56,6 +58,7 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
 
     var dialogCustome: Dialog? = null
     var foreigntraining: Employee.Foreigntrainings? = null
+    var hrmTrainingId : Int? = 0
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
     lateinit var key: String
@@ -110,9 +113,9 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
         binding?.fLocalTrainingLocationBn?.llBody?.visibility = View.GONE
         binding?.llLocalTrainingInfo?.visibility = View.VISIBLE
         binding?.hLocaltraining?.title = context.getString(R.string.foreign_training)
-        binding?.hLocaltraining?.tvClose?.setOnClickListener({
+        binding?.hLocaltraining?.tvClose?.setOnClickListener {
             dialogCustome?.dismiss()
-        })
+        }
 
         if (key.equals(StaticKey.CREATE)) {
             binding?.trainingBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.submit))
@@ -134,6 +137,29 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
                 it
             )
         })
+
+
+        commonRepo.getAllHrTraining(
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    Log.e("HR", "HR message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding?.fLocalTrainingCategory?.spinner!!,
+                            context,
+                            list,
+                            foreigntraining?.hrm_training_category_id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    val hrm = any as SpinnerDataModel
+                                    hrmTrainingId = hrm.id
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
 
 
         binding?.tvTrainingCertificate?.setText(context.getString(R.string.certificate))
@@ -351,6 +377,7 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
         map.put("country_id", country?.id)
         map.put("from_date", fromDate)
         map.put("to_date", toDate)
+        map.put("hrm_training_category_id" , hrmTrainingId  )
         map.put("foreign_training_document_path", foreign_training_document_path)
         imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
         map.put("status", foreigntraining?.status)

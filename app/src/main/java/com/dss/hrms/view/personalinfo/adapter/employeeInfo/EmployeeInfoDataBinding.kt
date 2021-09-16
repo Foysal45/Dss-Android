@@ -1136,6 +1136,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fLocalTrainingLocationBn.llBody.visibility = View.GONE
         binding.llTrainingCertification.visibility = View.GONE
 
+        binding.fLocalTrainingCatName.tvTitle.setText(context.getString(R.string.training_category))
         binding.fLocalTrainingCourseT.tvTitle.setText(context.getString(R.string.course_title))
         binding.fLocalTrainingCourseTBn.tvTitle.setText(context.getString(R.string.course_title_bn))
         binding.fLocalTrainingNOInst.tvTitle.setText(context.getString(R.string.name_institute))
@@ -1145,6 +1146,9 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
         binding.fLocalTrainingCountry.tvTitle.setText(context.getString(R.string.country))
         binding?.tvTrainingTitle?.setText(context.getString(R.string.certificate))
+
+        binding.fLocalTrainingCatName.tvText.text = "${foreigntrainings.hrm_training_category?.name}"
+
 
         // decide what to show in document
         ConvertNumber.setIconOnTextView(

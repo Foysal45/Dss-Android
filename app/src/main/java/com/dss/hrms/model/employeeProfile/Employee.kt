@@ -1814,9 +1814,14 @@ class Employee {
         @SerializedName("course_title")
         val course_title: String? = null
 
+        @SerializedName("hrm_training_category")
+        val hrm_training_category: hrm_training_category? = null
+
         @SerializedName("course_title_bn")
         val course_title_bn: String? = null
 
+        @SerializedName("hrm_training_category_id")
+        val hrm_training_category_id: Int= 0
 
         @SerializedName("foreign_training_document_path")
         val foreign_training_document_path: String? = null
