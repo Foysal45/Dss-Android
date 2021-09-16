@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:background="@drawable/shadow_custome"
+
         android:gravity="center">
 
         <LinearLayout

@@ -54,23 +54,23 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAddressUpazila.llBody.visibility = View.GONE
         binding.fAddressEmailAddress.llBody.visibility = View.GONE
         binding.fAddressPhoneOrMobileNo.llBody.visibility = View.GONE
-        binding.hAddress.tvTitle.setText(heading)
-        binding.fAddressPostOffice.tvTitle.setText(context.getString(R.string.post_off))
-        binding.fAddressPostOfficeBn.tvTitle.setText(context.getString(R.string.post_off_bn))
-        binding.fAddressRoadOrWordNo.tvTitle.setText(context.getString(R.string.road_word))
-        binding.fAddressRoadOrWordNoBn.tvTitle.setText(context.getString(R.string.road_word_bn))
-        binding.fAddressPoliceStation.tvTitle.setText(context.getString(R.string.police_station))
-        binding.fAddressPostCode.tvTitle.setText(context.getString(R.string.post_code))
+        binding.hAddress.tvTitle.text = heading
+        binding.fAddressPostOffice.tvTitle.text = context.getString(R.string.post_off)
+        binding.fAddressPostOfficeBn.tvTitle.text = context.getString(R.string.post_off_bn)
+        binding.fAddressRoadOrWordNo.tvTitle.text = context.getString(R.string.road_word)
+        binding.fAddressRoadOrWordNoBn.tvTitle.text = context.getString(R.string.road_word_bn)
+        binding.fAddressPoliceStation.tvTitle.text = context.getString(R.string.police_station)
+        binding.fAddressPostCode.tvTitle.text = context.getString(R.string.post_code)
 
-        binding.fAddressDivision.tvTitle.setText(context.getString(R.string.division))
-        binding.fAddressDistrict.tvTitle.setText(context.getString(R.string.district))
-        binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
-        binding.fAddressUnion.tvTitle.setText(context.getString(R.string.union_or_municiplity))
-        binding.fAddressPoliceStationBn.tvTitle.setText(context.getString(R.string.police_station_bn))
-        binding.fAddressPhoneOrMobileNo.tvTitle.setText(context.getString(R.string.phone_mobile))
-        binding.fAddressVillageOrHouseNo.tvTitle.setText(context.getString(R.string.vill_house))
-        binding.fAddressVillageOrHouseNoBn.tvTitle.setText(context.getString(R.string.vill_house_bn))
-        binding.fAddressEmailAddress.tvTitle.setText(context.getString(R.string.email))
+        binding.fAddressDivision.tvTitle.text = context.getString(R.string.division)
+        binding.fAddressDistrict.tvTitle.text = context.getString(R.string.district)
+        binding.fAddressUpazila.tvTitle.text = context.getString(R.string.upazila)
+        binding.fAddressUnion.tvTitle.text = context.getString(R.string.union_or_municiplity)
+        binding.fAddressPoliceStationBn.tvTitle.text = context.getString(R.string.police_station_bn)
+        binding.fAddressPhoneOrMobileNo.tvTitle.text = context.getString(R.string.phone_mobile)
+        binding.fAddressVillageOrHouseNo.tvTitle.text = context.getString(R.string.vill_house)
+        binding.fAddressVillageOrHouseNoBn.tvTitle.text = context.getString(R.string.vill_house_bn)
+        binding.fAddressEmailAddress.tvTitle.text = context.getString(R.string.email)
 
 
 
@@ -149,38 +149,30 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 binding.fAddressUnion.tvText.text = it
             }
             addresses.district?.name_bn?.let {
-                binding.fAddressDistrict.tvText.setText(it)
+                binding.fAddressDistrict.tvText.text = it
 
             }
             addresses.village_house_no?.let {
-                binding.fAddressVillageOrHouseNo.tvText.setText(
-                    it
-                )
+                binding.fAddressVillageOrHouseNo.tvText.text = it
             }
             addresses.village_house_no_bn?.let {
-                binding.fAddressVillageOrHouseNoBn.tvText.setText(
-                    it
-                )
+                binding.fAddressVillageOrHouseNoBn.tvText.text = it
             }
             addresses.road_word_no_bn?.let {
-                binding.fAddressRoadOrWordNoBn.tvText.setText(
-                    it
-                )
+                binding.fAddressRoadOrWordNoBn.tvText.text = it
             }
-            addresses.post_code?.let { binding.fAddressPostCode.tvText.setText(it) }
-            addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
-            addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
-            addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
+            addresses.post_code?.let { binding.fAddressPostCode.tvText.text = it }
+            addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.text = it }
+            addresses.post_office?.let { binding.fAddressPostOffice.tvText.text = it }
+            addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.text = it }
             addresses.police_station_bn?.let {
-                binding.fAddressPoliceStationBn.tvText.setText(
-                    it
-                )
+                binding.fAddressPoliceStationBn.tvText.text = it
             }
-            addresses.division?.name_bn?.let { binding.fAddressDivision.tvText.setText(it) }
-            addresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.setText(it) }
-            addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
-            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
-            addresses.upazila?.name_bn?.let { binding.fAddressUpazila.tvText.setText(it) }
+            addresses.division?.name_bn?.let { binding.fAddressDivision.tvText.text = it }
+            addresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.text = it }
+            addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.text = it }
+            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.text = it }
+            addresses.upazila?.name_bn?.let { binding.fAddressUpazila.tvText.text = it }
 
             when (addresses.local_government_type_id) {
                 1 -> {
@@ -252,34 +244,28 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 .equals("en")
         ) {
             addresses.village_house_no?.let {
-                binding.fAddressVillageOrHouseNo.tvText.setText(it)
+                binding.fAddressVillageOrHouseNo.tvText.text = it
             }
             addresses.village_house_no?.let {
-                binding.fAddressVillageOrHouseNo.tvText.setText(
-                    it
-                )
+                binding.fAddressVillageOrHouseNo.tvText.text = it
             }
             addresses.village_house_no_bn?.let {
-                binding.fAddressVillageOrHouseNoBn.tvText.setText(
-                    it
-                )
+                binding.fAddressVillageOrHouseNoBn.tvText.text = it
             }
-            addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
+            addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.text = it }
             addresses.road_word_no_bn?.let {
-                binding.fAddressRoadOrWordNoBn.tvText.setText(
-                    it
-                )
+                binding.fAddressRoadOrWordNoBn.tvText.text = it
             }
-            addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
-            addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
-            addresses.post_code?.let { binding.fAddressPostCode.tvText.setText(it) }
+            addresses.post_office?.let { binding.fAddressPostOffice.tvText.text = it }
+            addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.text = it }
+            addresses.post_code?.let { binding.fAddressPostCode.tvText.text = it }
 
             addresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
             addresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
             addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
-            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
-            addresses.upazila?.name?.let { binding.fAddressUpazila.tvText.setText(it) }
-            addresses.police_station_bn?.let { binding.fAddressPoliceStationBn.tvText.setText(it) }
+            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.text = it }
+            addresses.upazila?.name?.let { binding.fAddressUpazila.tvText.text = it }
+            addresses.police_station_bn?.let { binding.fAddressPoliceStationBn.tvText.text = it }
 
             addresses.localGovernmentType?.name?.let {
                 binding.fAddressUnion.tvText.text = it
@@ -1033,7 +1019,6 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fLocalTrainingCatName.tvText.text = "${localTrainings.hrm_training_category?.name}"
 
 
-
 //
 //       val list =  commonRepo.getAllHrTraining()
 //
@@ -1136,18 +1121,19 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fLocalTrainingLocationBn.llBody.visibility = View.GONE
         binding.llTrainingCertification.visibility = View.GONE
 
-        binding.fLocalTrainingCatName.tvTitle.setText(context.getString(R.string.training_category))
-        binding.fLocalTrainingCourseT.tvTitle.setText(context.getString(R.string.course_title))
-        binding.fLocalTrainingCourseTBn.tvTitle.setText(context.getString(R.string.course_title_bn))
-        binding.fLocalTrainingNOInst.tvTitle.setText(context.getString(R.string.name_institute))
-        binding.fLocalTrainingNOInstBn.tvTitle.setText(context.getString(R.string.name_institute_bn))
+        binding.fLocalTrainingCatName.tvTitle.text = context.getString(R.string.training_category)
+        binding.fLocalTrainingCourseT.tvTitle.text = context.getString(R.string.course_title)
+        binding.fLocalTrainingCourseTBn.tvTitle.text = context.getString(R.string.course_title_bn)
+        binding.fLocalTrainingNOInst.tvTitle.text = context.getString(R.string.name_institute)
+        binding.fLocalTrainingNOInstBn.tvTitle.text = context.getString(R.string.name_institute_bn)
         binding.fLocalTrainingFromDate.tvTitle.setText(context.getString(R.string.from_date))
-        binding.fLocalTrainingToDate.tvTitle.setText(context.getString(R.string.to_date))
+        binding.fLocalTrainingToDate.tvTitle.text = context.getString(R.string.to_date)
 
         binding.fLocalTrainingCountry.tvTitle.setText(context.getString(R.string.country))
-        binding?.tvTrainingTitle?.setText(context.getString(R.string.certificate))
+        binding.tvTrainingTitle.setText(context.getString(R.string.certificate))
 
-        binding.fLocalTrainingCatName.tvText.text = "${foreigntrainings.hrm_training_category?.name}"
+        binding.fLocalTrainingCatName.tvText.text =
+            "${foreigntrainings.hrm_training_category?.name}"
 
 
         // decide what to show in document

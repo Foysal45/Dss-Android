@@ -67,7 +67,7 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
     var imageFile: File? = null
     var imageUrl: String? = null
     var dialog: Dialog? = null
-    var foreign_training_document_path: String? = null
+    private var foreign_training_document_path: String? = null
 
     fun showDialog(
         context: Context,
@@ -92,7 +92,7 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
             false
         )
         binding?.getRoot()?.let { dialogCustome?.setContentView(it) }
-        var window: Window? = dialogCustome?.getWindow()
+        val window: Window? = dialogCustome?.window
         window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -118,25 +118,25 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
         }
 
         if (key.equals(StaticKey.CREATE)) {
-            binding?.trainingBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.submit))
+            binding?.trainingBtnAddUpdate?.btnUpdate?.text = "" + context.getString(R.string.submit)
         } else {
-            binding?.trainingBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
+            binding?.trainingBtnAddUpdate?.btnUpdate?.text = "" + context.getString(R.string.update)
         }
 
         binding?.fLocalTrainingCourseT?.etText?.setText(foreigntraining?.course_title)
         binding?.fLocalTrainingCourseTBn?.etText?.setText(foreigntraining?.course_title_bn)
         binding?.fLocalTrainingNOInst?.etText?.setText(foreigntraining?.name_of_institute)
         binding?.fLocalTrainingNOInstBn?.etText?.setText(foreigntraining?.name_of_institute_bn)
-        binding?.fLocalTrainingFromDate?.tvText?.setText(foreigntraining?.from_date?.let {
+        binding?.fLocalTrainingFromDate?.tvText?.text = foreigntraining?.from_date?.let {
             DateConverter.changeDateFormateForShowing(
                 it
             )
-        })
-        binding?.fLocalTrainingToDate?.tvText?.setText(foreigntraining?.to_date?.let {
+        }
+        binding?.fLocalTrainingToDate?.tvText?.text = foreigntraining?.to_date?.let {
             DateConverter.changeDateFormateForShowing(
                 it
             )
-        })
+        }
 
 
         commonRepo.getAllHrTraining(
@@ -162,7 +162,7 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
             })
 
 
-        binding?.tvTrainingCertificate?.setText(context.getString(R.string.certificate))
+        binding?.tvTrainingCertificate?.text = context.getString(R.string.certificate)
 
         context?.let {
             binding?.ivTraining?.let { it1 ->
@@ -207,25 +207,25 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
                     imageFile = imgFile
                     binding?.ivTraining?.setImageBitmap(bitmap)
                     //   Toast.makeText(context, "image", Toast.LENGTH_LONG).show()
-                    Log.e("image", "dialog imageFile  : " + imageFile)
+                    Log.e("image", "dialog imageFile  : $imageFile")
                 }
             })
         }
 
-        binding?.fLocalTrainingToDate?.tvText?.setOnClickListener({
+        binding?.fLocalTrainingToDate?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding?.fLocalTrainingToDate?.tvText?.setText("" + it) }
                 }
             })
-        })
-        binding?.fLocalTrainingFromDate?.tvText?.setOnClickListener({
+        }
+        binding?.fLocalTrainingFromDate?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding?.fLocalTrainingFromDate?.tvText?.setText("" + it) }
                 }
             })
-        })
+        }
 
         commonRepo.getCommonData("/api/auth/country/list",
             object : CommonDataValueListener {
@@ -248,14 +248,14 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
                 }
             })
 
-        binding?.trainingBtnAddUpdate?.btnUpdate?.setOnClickListener({
+        binding?.trainingBtnAddUpdate?.btnUpdate?.setOnClickListener {
             dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             if (imageFile != null) {
                 imageFile?.let { it1 -> uploadImage(it1) }
             } else {
                 uploadData()
             }
-        })
+        }
 
 
     }
@@ -369,24 +369,24 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
         var toDate =
             DateConverter.changeDateFormateForSending(binding?.fLocalTrainingToDate?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
-        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
-        map.put("course_title", binding?.fLocalTrainingCourseT?.etText?.text.toString())
-        map.put("course_title_bn", binding?.fLocalTrainingCourseTBn?.etText?.text.toString())
-        map.put("name_of_institute", binding?.fLocalTrainingNOInst?.etText?.text.toString())
-        map.put("name_of_institute_bn", binding?.fLocalTrainingNOInstBn?.etText?.text.toString())
-        map.put("country_id", country?.id)
-        map.put("from_date", fromDate)
-        map.put("to_date", toDate)
-        map.put("hrm_training_category_id" , hrmTrainingId  )
-        map.put("foreign_training_document_path", foreign_training_document_path)
+        map["employee_id"] = employeeProfileData.employee?.user?.employee_id
+        map["course_title"] = binding?.fLocalTrainingCourseT?.etText?.text.toString()
+        map["course_title_bn"] = binding?.fLocalTrainingCourseTBn?.etText?.text.toString()
+        map["name_of_institute"] = binding?.fLocalTrainingNOInst?.etText?.text.toString()
+        map["name_of_institute_bn"] = binding?.fLocalTrainingNOInstBn?.etText?.text.toString()
+        map["country_id"] = country?.id
+        map["from_date"] = fromDate
+        map["to_date"] = toDate
+        map["hrm_training_category_id"] = hrmTrainingId
+        map["foreign_training_document_path"] = foreign_training_document_path
         imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
-        map.put("status", foreigntraining?.status)
+        map["status"] = foreigntraining?.status
         return map
     }
 
 
-    fun uploadData() {
-        var employeeInfoEditCreateRepo =
+    private fun uploadData() {
+        val employeeInfoEditCreateRepo =
             ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                 .get(EmployeeInfoEditCreateViewModel::class.java)
         invisiableAllError(binding)
@@ -418,7 +418,7 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
 
 
     fun uploadImage(imageFile: File) {
-        var profilePic: MultipartBody.Part?
+        val profilePic: MultipartBody.Part?
         if (imageFile != null) {
             val profile_photo: RequestBody =
                 RequestBody.create(MediaType.parse("text/plain"), "profile_photo")
@@ -483,7 +483,7 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
         dialouge.setCancelable(false)
         dialouge.show()
 
-        var profilePic: MultipartBody.Part?
+        val profilePic: MultipartBody.Part?
 
         var filePart: MultipartBody.Part?
 

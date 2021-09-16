@@ -59,6 +59,8 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         preparence?.let {
             setLocalLanguage(preparence.getLanguage())
             if (preparence.isLogin()!!) {

@@ -607,7 +607,7 @@ class EditCreateNomineeInfo @Inject constructor() {
         upazila?.id?.let { map.put("upazila_id", it) }
         union?.id?.let { map.put("union_id", it) }
 
-        map.put("address_details", binding.fNomineeFullAddress.etText.toString())
+        map.put("address_details", binding.fNomineeFullAddress.etText.text.toString())
         maritalStatus?.id?.let {
             map.put("marital_status_id", it.toString())
         }

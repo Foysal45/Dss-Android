@@ -3,11 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/dialog_personal_info.xml" value="0.284375" />
-        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/location_container.xml" value="0.1859375" />
-        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/model_employee_info.xml" value="0.284375" />
-        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/personal_info_spinner.xml" value="0.284375" />
-        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/personal_information_create_field_header.xml" value="0.284375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/activity_employee_info.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/activity_splash_screen.xml" value="0.1859375" />
       </map>
     </option>
   </component>
