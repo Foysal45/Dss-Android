@@ -13,7 +13,6 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.tasks.Task
-import kotlin.math.log
 
 class SplashScreen : AppCompatActivity() {
     private val REQUEST_UPDATE = 100
@@ -42,7 +41,7 @@ class SplashScreen : AppCompatActivity() {
         if (APP_UPDATE_TYPE_SUPPORTED == AppUpdateType.IMMEDIATE) {
 
             if(info.result.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE){
-                GoToHOme()
+                goToHome()
             }else {
                 handleImmediateUpdate(manager, info)
             }
@@ -66,7 +65,7 @@ class SplashScreen : AppCompatActivity() {
             )
         }
     }
-    private fun GoToHOme(){
+    private fun goToHome(){
         val mainIntent = Intent(this, LoginActivity::class.java)
         startActivity(mainIntent)
         finish()
