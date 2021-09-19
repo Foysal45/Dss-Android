@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/activity_employee_info.xml" value="0.34375" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/activity_splash_screen.xml" value="0.1859375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/fragment_employee_info.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/model_employee_info.xml" value="0.34375" />
       </map>
     </option>
   </component>
@@ -13,5 +15,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1859375" />
+      </ProjectState>
+    </option>
   </component>
 </project>

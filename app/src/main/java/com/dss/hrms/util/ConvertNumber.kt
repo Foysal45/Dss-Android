@@ -3,7 +3,9 @@ package com.dss.hrms.util
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.widget.ImageView
@@ -19,6 +21,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import com.dss.hrms.view.MainActivity
 import java.io.File
 
 
@@ -145,12 +148,13 @@ class ConvertNumber {
                         .show()
                 } else {
 
-                    triggerWebView(ctx, link)
-//                    val browserIntent = Intent(
-//                        Intent.ACTION_VIEW,
-//                        Uri.parse(RetrofitInstance.FILE_BASE + link.toString())
-//                    )
-//                    ctx.startActivity(browserIntent)
+          //          triggerWebView(ctx, link)
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(RetrofitInstance.FILE_BASE + link.toString())
+                    )
+                    MainActivity.isViewIntent = 1
+                    ctx.startActivity(browserIntent)
                 }
             } catch (Ex: Exception) {
                 Toast.makeText(

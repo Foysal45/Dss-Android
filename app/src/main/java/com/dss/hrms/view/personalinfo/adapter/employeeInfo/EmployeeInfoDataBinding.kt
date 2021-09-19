@@ -404,19 +404,23 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
 
         // check what type of attachment we are getting
-        val extentions = ConvertNumber.getTheFileExtention(qualifications.documentPath)
-        binding.fEQAttachment.tvText.text = (context.getString(R.string.tap_to_view))
 
-        if (extentions.isEmpty()) {
-            binding.fEQAttachment.tvText.text = "No Attachment"
-        }
-        if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains("gif")) {
+        ConvertNumber.setIconOnTextView(binding.fEQAttachment.icon ,  binding.fEQAttachment.tvText
+        , qualifications.documentPath , context)
 
-            binding.fEQAttachment.icon.setImageResource(R.drawable.ic_picture)
-
-        } else {
-            binding.fEQAttachment.icon.setImageResource(R.drawable.ic_pdf)
-        }
+//        val extentions = ConvertNumber.getTheFileExtention(qualifications.documentPath)
+//        binding.fEQAttachment.tvText.text = (context.getString(R.string.tap_to_view))
+//
+//        if (extentions.isEmpty()) {
+//            binding.fEQAttachment.tvText.text = "No Attachment"
+//        }
+//        if (extentions.contains("jpeg") || extentions.contains("jpg") || extentions.contains("gif")) {
+//
+//            binding.fEQAttachment.icon.setImageResource(R.drawable.ic_picture)
+//
+//        } else {
+//            binding.fEQAttachment.icon.setImageResource(R.drawable.ic_pdf)
+//        }
 
         binding.fEQAttachment.tvText.setOnClickListener {
             ConvertNumber.viewFileInShareIntent(context, qualifications.documentPath)
@@ -473,7 +477,6 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fNAllocatedPercentage.tvTitle.setText(context.getString(R.string.nominee_allocated_percentage))
         binding.fNGender.tvTitle.setText(context.getString(R.string.nominee_gender))
         binding.fNMaritalStatus.tvTitle.setText(context.getString(R.string.nominee_marital_status))
-
         binding.fNHasDisavility.tvTitle.setText(context.getString(R.string.nominee_has_disability))
         binding.tvNSignatureTitle.setText(context.getString(R.string.nominee_signature))
 
@@ -522,7 +525,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
 //                    Toast.LENGTH_LONG
 //                ).show()
 //            }
-            ConvertNumber.triggerWebView(context, nominee.nominee_document_path.toString())
+            ConvertNumber.viewFileInShareIntent(context, nominee.nominee_document_path.toString())
         }
 
 

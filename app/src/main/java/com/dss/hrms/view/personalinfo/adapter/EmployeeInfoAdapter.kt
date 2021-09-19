@@ -329,6 +329,6 @@ class EmployeeInfoAdapter @Inject constructor() :
 
 
     override fun getItemCount(): Int {
-        return dataList?.size!!
+        return dataList.size
     }
 }

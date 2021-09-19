@@ -70,9 +70,9 @@ class EmployeeInfoActivity : BaseActivity() {
 
         appContext = application
         context = this
-        back.setOnClickListener({
+        back.setOnClickListener {
             onBackPressed()
-        })
+        }
         setSupportActionBar(toolBar);
  //       fun init() {
 //        employeeViewModel =
@@ -255,16 +255,25 @@ class EmployeeInfoActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        Thread(Runnable {
-            Thread.sleep(100)
-            kotlin.run {
-                runOnUiThread(Runnable {
-                    viewpager_go.adapter = adapter
-                    viewpager_go.setPageTransformer(true, RotateUpTransformer())
-                    viewpager_go.currentItem = MainActivity.selectedPosition
-                })
-            }
-        }).start()
+        if(MainActivity.isViewIntent == 0 ){
+            MainActivity.isViewIntent = 0
+            Thread(Runnable {
+                Thread.sleep(100)
+                kotlin.run {
+                    runOnUiThread(Runnable {
+                        viewpager_go.adapter = adapter
+                        viewpager_go.setPageTransformer(true, RotateUpTransformer())
+                        viewpager_go.currentItem = MainActivity.selectedPosition
+                    })
+                }
+            }).start()
+        }else {
+            MainActivity.isViewIntent = 0
+          //  viewpager_go.adapter = adapter
+         //   viewpager_go.setPageTransformer(true, RotateUpTransformer())
+         //   viewpager_go.currentItem = MainActivity.selectedPosition
+        }
+
     }
 
 //    fun init() {

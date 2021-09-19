@@ -38,10 +38,6 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuildersModule {
 
-//    @LoginScope
-//    @ContributesAndroidInjector(modules = [LoginModule::class, ViewModelModule::class])
-//    abstract fun contributeSplashActivity(): SplashScreen
-
     @LoginScope
     @ContributesAndroidInjector(modules = [LoginModule::class, ViewModelModule::class])
     abstract fun contributeAuthActivity(): LoginActivity

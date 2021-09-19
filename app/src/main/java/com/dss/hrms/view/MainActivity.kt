@@ -478,5 +478,6 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         var appContext: Application? = null
         var context: MainActivity? = null
         var selectedPosition: Int = 0
+        var isViewIntent : Int = 0
     }
 }

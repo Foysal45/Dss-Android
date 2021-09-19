@@ -22,27 +22,24 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            /* Create an Intent that will start the Menu-Activity. */
+            //checking for play store update
             checkForUpdates()
         }, 700)
     }
 
     private fun checkForUpdates() {
-
         val appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         val appUpdateInfo = appUpdateManager.appUpdateInfo
         appUpdateInfo.addOnSuccessListener {
-            Log.e( "TAGGED",  "${appUpdateInfo.result.updateAvailability()}")
             handleUpdate(appUpdateManager, appUpdateInfo)
         }
     }
 
     private fun handleUpdate(manager: AppUpdateManager, info: Task<AppUpdateInfo>) {
         if (APP_UPDATE_TYPE_SUPPORTED == AppUpdateType.IMMEDIATE) {
-
-            if(info.result.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE){
+            if (info.result.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE) {
                 goToHome()
-            }else {
+            } else {
                 handleImmediateUpdate(manager, info)
             }
 
@@ -65,7 +62,8 @@ class SplashScreen : AppCompatActivity() {
             )
         }
     }
-    private fun goToHome(){
+
+    private fun goToHome() {
         val mainIntent = Intent(this, LoginActivity::class.java)
         startActivity(mainIntent)
         finish()

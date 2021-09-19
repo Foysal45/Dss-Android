@@ -15,6 +15,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -393,7 +394,8 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                 false
             )
             v.recyclerView.adapter = adapter
-            v.recyclerView.isNestedScrollingEnabled = true
+
+
 
 
         } else {
@@ -403,6 +405,11 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
         }
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+       // Toast.makeText(context , "asd" , Toast.LENGTH_SHORT).show()
     }
 
 
