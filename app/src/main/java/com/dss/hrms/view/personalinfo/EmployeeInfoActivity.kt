@@ -361,7 +361,7 @@ class EmployeeInfoActivity : BaseActivity() {
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
         galleryIntent.setType("*/*")
-        val mimetypes = arrayOf("image/*", "application/pdf", "application/msword")
+        val mimetypes = arrayOf("image/*", "application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword")
         galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
         startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
     }

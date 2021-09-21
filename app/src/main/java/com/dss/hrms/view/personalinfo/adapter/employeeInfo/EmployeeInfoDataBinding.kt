@@ -507,24 +507,6 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.tvText.setOnClickListener {
             val link = nominee.nominee_document_path
 
-//            try {
-//                if (link.isNullOrBlank() || link == "null") {
-//                    Toast.makeText(context, "Something Went Wrong !! link empty", Toast.LENGTH_LONG)
-//                        .show()
-//                } else {
-//                    val browserIntent = Intent(
-//                        Intent.ACTION_VIEW,
-//                        Uri.parse(RetrofitInstance.FILE_BASE + link.toString())
-//                    )
-//                    context.startActivity(browserIntent);
-//                }
-//            } catch (Ex: Exception) {
-//                Toast.makeText(
-//                    context,
-//                    "Something Went Wrong !! ${Ex.localizedMessage}",
-//                    Toast.LENGTH_LONG
-//                ).show()
-//            }
             ConvertNumber.viewFileInShareIntent(context, nominee.nominee_document_path.toString())
         }
 
@@ -593,6 +575,16 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fSpouseAddressVillageOrHouseNoBn.tvTitle.setText(context.getString(R.string.vill_house_bn))
         binding.fSpouseReligion.llBody.visibility = View.GONE
 
+        binding?.fSpouseAddressPoliceStation?.tvText?.setText(spouses?.police_station)
+        binding?.fSpouseAddressPoliceStationBn?.tvText?.setText(spouses?.police_station_bn)
+        binding.fSpouseAddressPostOffice?.tvText?.setText(spouses?.post_office)
+        binding.fSpouseAddressPostOfficeBn?.tvText?.setText(spouses?.post_office_bn)
+        binding.fSpouseAddressPostCode?.tvText?.setText(spouses?.post_code)
+        binding.fSpouseAddressRoadOrWordNo?.tvText?.setText(spouses?.road_word_no)
+        binding.fSpouseAddressRoadOrWordNoBn?.tvText?.setText(spouses?.road_word_no_bn)
+        binding.fSpouseAddressVillageOrHouseNo?.tvText?.setText(spouses?.village_house_no)
+        binding.fSpouseAddressVillageOrHouseNoBn?.tvText?.setText(spouses?.village_house_no_bn)
+
         if (preparence.getLanguage()
                 .equals("en")
         ) {
@@ -648,9 +640,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 1 -> {
                     // city corpo
                     spouses.cityCorporation?.name?.let {
-                        binding.fSpouseAddressLocalName.tvText.text = it
+                        binding.fSpouseAddressUnion.tvText.text = it
                     }
                     //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                    binding.fSpouseAddressUnion.tvText.text =
+                        context.getString(R.string.citycorporation)
                     binding.fSpouseAddressLocalName.tvTitle.text =
                         context.getString(R.string.citycorporation)
                     binding.fSpouseAddressLocalName.tvText.text = spouses.cityCorporation?.name
@@ -661,16 +655,21 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 2 -> {
                     // municipility
 
+                    binding.fSpouseAddressUnion.tvText.text =
+                        context.getString(R.string.municipalities)
                     binding.fSpouseAddressLocalName.tvTitle.text =
                         context.getString(R.string.municipalities)
+
                     binding.fSpouseAddressLocalName.tvText.text = spouses.municipality?.name
                     binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
                     binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
                 }
                 3 -> {
                     // upzilla
-                    binding.fSpouseAddressLocalName.tvTitle.text =
+                    binding.fSpouseAddressUnion.tvText.text =
                         context.getString(R.string.upazila)
+                    binding.fSpouseAddressLocalName.tvTitle.text =
+                        context.getString(R.string.municipalities)
                     binding.fSpouseAddressLocalName.tvText.text = spouses.upazila?.name
                     //    binding.fSpouseAddressUpazila.llBody.visibility = View.VISIBLE
                     binding.fSpouseAddressUnion.tvTitle.text = context.getString(R.string.union)
@@ -700,6 +699,48 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
             spouses.division?.name_bn?.let { binding.fSpouseDivision.tvText.setText(it) }
             // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
+
+            when (spouses.local_government_type_id) {
+                1 -> {
+                    // city corpo
+                    spouses.cityCorporation?.name?.let {
+                        binding.fSpouseAddressLocalName.tvText.text = it
+                    }
+                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                    binding.fSpouseAddressLocalName.tvTitle.text =
+                        context.getString(R.string.citycorporation)
+                    binding.fSpouseAddressUnion.tvText.text =
+                        context.getString(R.string.citycorporation)
+                    binding.fSpouseAddressLocalName.tvText.text = spouses.cityCorporation?.nameBn
+                    binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+                    binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
+
+                }
+                2 -> {
+                    // municipility
+                    binding.fSpouseAddressLocalName.tvTitle.text =
+                        context.getString(R.string.municipalities)
+                    binding.fSpouseAddressUnion.tvText.text =
+                        context.getString(R.string.municipalities)
+
+                    binding.fSpouseAddressLocalName.tvText.text = spouses.municipality?.name_bn
+                    binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+                    binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
+                }
+                3 -> {
+                    // upzilla
+                    binding.fSpouseAddressUnion.tvText.text =
+                        context.getString(R.string.upazila)
+                    binding.fSpouseAddressLocalName.tvTitle.text =
+                        context.getString(R.string.upazila)
+                    binding.fSpouseAddressLocalName.tvText.text = spouses.upazila?.name_bn
+                    //    binding.fSpouseAddressUpazila.llBody.visibility = View.VISIBLE
+                    binding.fSpouseAddressUnion.tvTitle.text = context.getString(R.string.union)
+                    binding.fSpouseAddressUnion.tvText.text = spouses.union?.name_bn
+                    binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+
+                }
+            }
         }
     }
 

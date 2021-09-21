@@ -120,6 +120,17 @@ class EditAndCreateSpouseInfo @Inject constructor() {
         binding?.fSpouseMobileNo?.etText?.setText(spouses?.mobile_no)
 
 
+
+        binding?.locationContainer?.PoliceStation?.etText?.setText(spouses?.police_station)
+        binding?.locationContainer?.PoliceStationBn?.etText?.setText(spouses?.police_station_bn)
+        binding?.locationContainer?.PostOffice?.etText?.setText(spouses?.post_office)
+        binding?.locationContainer?.PostOfficeBn?.etText?.setText(spouses?.post_office_bn)
+        binding?.locationContainer?.PostCode?.etText?.setText(spouses?.post_code)
+        binding?.locationContainer?.RoadOrWordNo?.etText?.setText(spouses?.road_word_no)
+        binding?.locationContainer?.RoadOrWordNoBn?.etText?.setText(spouses?.road_word_no_bn)
+        binding?.locationContainer?.VillageOrHouseNo?.etText?.setText(spouses?.village_house_no)
+        binding?.locationContainer?.VillageOrHouseNoBn?.etText?.setText(spouses?.village_house_no_bn)
+
         commonRepo.getCommonData("/api/auth/spouse-occupation/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {

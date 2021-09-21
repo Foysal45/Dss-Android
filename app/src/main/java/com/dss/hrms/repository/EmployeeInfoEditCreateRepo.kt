@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.btbapp.alquranapp.retrofit.ApiService
+import com.dss.hrms.model.ListOfMap
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.error.ErrorUtils2
 import com.google.gson.Gson
@@ -403,7 +404,10 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
                                 liveData?.postValue(null)
                             }
                         } else {
-                            Log.e("response", "response  error   response.message()  ${response.message()}  :  response.headers() ${ response.headers()}" + response.message())
+                            Log.e(
+                                "response",
+                                "response  error   response.message()  ${response.message()}  :  response.headers() ${response.headers()}" + response.message()
+                            )
                             liveData?.postValue(ErrorUtils2.parseError(response))
                         }
                     }
@@ -546,11 +550,31 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
         map: HashMap<Any, Any?>?, liveData: MutableLiveData<Any>?
     ): MutableLiveData<Any>? {
         withContext(Dispatchers.IO) {
+//            val jarray = JSONArray()
+//            try {
+//                val obj : JSONObject = JSONObject()
+//                map?.forEach { (key, value) ->
+//                    println("$key = $value")
+//                    obj.put(key.toString() , value)
+//                }
+//
+////                val newObj : JSONObject = JSONObject()
+////                newObj.put("0" , obj)
+//                jarray.put( obj)
+//                Log.d("JSON", "addSpouseInfo:  ${jarray}")
+//            } catch (Ex: Exception) {
+//                Log.d("JSON", "addSpouseInfo:  ${Ex.localizedMessage}")
+//            }
+            val Liist : List<HashMap<Any , Any?>?> = arrayListOf(map)
+
+            val m  = ListOfMap(Liist)
+
+
             flowOf(
                 apiService?.addSpouseInfo(
                     preparence?.getLanguage()!!,
                     "Bearer ${preparence?.getToken()}",
-                    map
+                    Liist
                 )
             ).catch { throwable ->
                 liveData?.postValue(null)

@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Part
+import java.lang.Exception
 import javax.inject.Inject
 
 class EmployeeInfoEditCreateViewModel @Inject constructor(application: Application) :
@@ -113,7 +114,12 @@ class EmployeeInfoEditCreateViewModel @Inject constructor(application: Applicati
     fun addSpouseInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any>? {
         var liveData: MutableLiveData<Any>? = MutableLiveData<Any>()
         viewModelScope.launch(Dispatchers.Default) {
-            liveData = employeeInfoEditCreateRepo?.addSpouseInfo(map, liveData)
+            try {
+                liveData = employeeInfoEditCreateRepo?.addSpouseInfo(map, liveData)
+            }catch (ex : Exception){
+                Log.d("LIOVE", "addSpouseInfo: ${ex.localizedMessage} ")
+            }
+
         }
         return liveData
 

@@ -20,6 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
+
         <activity
             android:name=".SplashScreen"
             android:exported="true" >
@@ -92,6 +94,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+
     </application>
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.ACTION_PICK"/>
+            <data android:mimeType="*/*"/>
+        </intent>
+    </queries>
 </manifest>

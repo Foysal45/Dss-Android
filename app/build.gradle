@@ -239,9 +239,10 @@ dependencies {
     // add these lines in your app build.gradle
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.google.android.gms:play-services-auth-api-phone:17.1.0'
+    implementation "com.anggrayudi:storage:0.13.0"
     //ndk support /64 bit
   //  implementation 'org.adblockplus:adblock-android-webview:3.16'
-
+    implementation 'commons-io:commons-io:2.5'
 }
 // Apply the Crashlytics Gradle plugin
 apply plugin: 'com.google.firebase.crashlytics'

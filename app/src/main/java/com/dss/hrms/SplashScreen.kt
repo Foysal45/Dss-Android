@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import com.anggrayudi.storage.SimpleStorage
 import com.dss.hrms.view.auth.LoginActivity
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
@@ -16,11 +17,12 @@ import com.google.android.play.core.tasks.Task
 
 class SplashScreen : AppCompatActivity() {
     private val REQUEST_UPDATE = 100
+    private val storage = SimpleStorage(this)
     private val APP_UPDATE_TYPE_SUPPORTED = AppUpdateType.IMMEDIATE
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-
+       // storage.requestStorageAccess(100)
         Handler(Looper.getMainLooper()).postDelayed({
             //checking for play store update
             checkForUpdates()
@@ -68,5 +70,6 @@ class SplashScreen : AppCompatActivity() {
         startActivity(mainIntent)
         finish()
     }
+
 
 }

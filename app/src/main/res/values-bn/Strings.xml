@@ -422,7 +422,7 @@
     <string name="error_freedom_fighter">Please Add Your Freedom Fighter Documents</string>
     <string name="error_file_size">ফাইলের আকার সীমা অতিক্রম করেছে। সর্বোচ্চ ফাইলের আকার 2 এমবি . পুনরায় চেষ্টা করুন </string>
     <string name="tap_to_view">"  Tap To View "</string>
-    <string name="successMsg">Message : File Upload Done !!!</string>
+    <string name="successMsg">File upload successfully</string>
     <string name="uploadFailed" />
     <string name="no_attachment"> No Attachment </string>
     <string name="error">Error</string>

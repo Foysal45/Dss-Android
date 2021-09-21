@@ -1,7 +1,6 @@
 package com.btbapp.alquranapp.retrofit
 
 
-import androidx.annotation.Keep
 import com.dss.hrms.model.HeadOfficeDepartmentApiResponse
 import com.dss.hrms.model.PermissionResponse
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
@@ -13,7 +12,6 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -279,12 +277,16 @@ interface ApiService {
     ): Response<Any?>?
 
 
-    @Headers("Content-Type: application/json", "Accept: application/json")
+   // @Headers("Content-Type: application/json", "Accept: application/json")
+
     @POST("/api/auth/spouse")
+
+    @JvmSuppressWildcards
+
     suspend fun addSpouseInfo(
-        @Header("X-Localization") language: String,
-        @Header("Authorization") token: String?,
-        @Body map: HashMap<Any, Any?>?
+       @Header("X-Localization") language: String,
+       @Header("Authorization") token: String?,
+       @Body map: List<HashMap<Any, Any?>?>
     ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")

@@ -744,7 +744,7 @@
                                 <include
                                     android:id="@+id/fNominneAddressUnio"
                                     layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/union_or_municiplity}" />
+                                    app:title="@{@string/union}" />
 
 
                                 <include

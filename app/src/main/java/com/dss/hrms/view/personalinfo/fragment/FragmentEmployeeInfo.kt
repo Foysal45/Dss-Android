@@ -2,6 +2,7 @@ package com.dss.hrms.view.personalinfo.fragment
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -10,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.FileUtils
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,12 +23,19 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.graphics.createBitmap
+import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anggrayudi.storage.SimpleStorage
+import com.anggrayudi.storage.SimpleStorageHelper
+import com.anggrayudi.storage.callback.FilePickerCallback
+import com.anggrayudi.storage.file.*
 import com.dss.hrms.R
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.util.ConvertNumber
+import com.dss.hrms.util.ConvertNumber.Companion.getRealPathFromURI
 import com.dss.hrms.util.FilePath
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.allInterface.FileClickListener
@@ -42,8 +51,11 @@ import com.theartofdev.edmodo.cropper.CropImage
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_employee_info.view.*
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 import java.lang.Exception
+import java.nio.file.Files
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -135,7 +147,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
-
+    private lateinit var ctx: Context
     private val REQUEST_TAKE_PHOTO = 1
     private val REQUEST_SELECT_PHOTO = 2
     private var selectImageBottomSheet: SelectImageBottomSheet? = null
@@ -144,6 +156,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
     private var onFilevalueReceiveListener: OnFilevalueReceiveListener? = null
 
 
+    private val storageHelper = SimpleStorageHelper(this)
     private var position: Int? = null
     private var addButtonWiilAppear = false
     private var key: String? = null
@@ -162,6 +175,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             addButtonWiilAppear = it.getBoolean("addWillAppear")
 
         }
+
     }
 
     override fun onCreateView(
@@ -172,6 +186,49 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
         v = inflater.inflate(R.layout.fragment_employee_info, container, false)
         Log.e("position", "position : " + position)
 
+        ctx = v.context
+
+        storageHelper.onFolderSelected = { requestCode, folder ->
+            // do stuff
+        }
+        storageHelper.onFileSelected = { requestCode, files ->
+            // do stuff
+
+            val resultUri: Uri = files[0].uri
+            try {
+                val media = files[0].toMediaFile(ctx)
+                val path = media?.absolutePath
+                if (path != null) {
+                    getImageFile(path)
+                }
+
+            } catch (e: IOException) {
+                Log.e("TAGG", "onActivityResult: ${e.localizedMessage}")
+                e.printStackTrace()
+
+            }
+
+            var bitmap = createBitmap(1, 1)
+
+            bitmap = try {
+                MediaStore.Images.Media.getBitmap(activity?.contentResolver, resultUri)
+            } catch (
+                ex: Exception
+            ) {
+                bitmap
+            }
+//            val bitmap =
+//                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
+
+
+            val file: File? = files[0].toRawFile(ctx)
+
+
+            file?.let {
+                onFilevalueReceiveListener?.onFileValue(it, bitmap)
+            }
+        }
+
 
         utilViewmodel = ViewModelProvider(
             this,
@@ -181,9 +238,9 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
         this.employee = employeeProfileData.employee
 
 
-        v.fab.setOnClickListener({
+        v.fab.setOnClickListener {
             operation(key, null, StaticKey.CREATE, null)
-        })
+        }
 
         if (addButtonWiilAppear) {
             v.fab.visibility = View.VISIBLE
@@ -194,6 +251,20 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
         return v
     }
 
+    fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
+        inputStream.use { input ->
+            val outputStream = FileOutputStream(outputFile)
+            outputStream.use { output ->
+                val buffer = ByteArray(4 * 1024) // buffer size
+                while (true) {
+                    val byteCount = input.read(buffer)
+                    if (byteCount < 0) break
+                    output.write(buffer, 0, byteCount)
+                }
+                output.flush()
+            }
+        }
+    }
 
     private fun initRV() {
         when (key) {
@@ -396,8 +467,6 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             v.recyclerView.adapter = adapter
 
 
-
-
         } else {
             v.rlEmptyView.visibility = View.VISIBLE
             title?.let { v.tvTitle?.setText(it) }
@@ -409,7 +478,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
     override fun onResume() {
         super.onResume()
-       // Toast.makeText(context , "asd" , Toast.LENGTH_SHORT).show()
+        // Toast.makeText(context , "asd" , Toast.LENGTH_SHORT).show()
     }
 
 
@@ -923,15 +992,44 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
     override fun onGalleryButtonClicked() {
 
-        val galleryIntent = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
-        galleryIntent.setType("*/*");
-        val mimetypes = arrayOf("image/*", "application/pdf", "application/msword")
-        galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
-        startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
-        selectImageBottomSheet!!.dismiss()
+        if (Build.VERSION.SDK_INT >= 30) {
+            val galleryIntent = Intent(
+                Intent.ACTION_OPEN_DOCUMENT
+            )
+            //   galleryIntent.addCategory(Intent.CATEGORY_OPENABLE)
+            galleryIntent.setType("*/*");
+            val mimetypes = arrayOf(
+                "image/*",
+                "application/pdf",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "application/msword"
+            )
+            galleryIntent.addCategory(Intent.CATEGORY_OPENABLE)
+            galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
+            startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
+            selectImageBottomSheet!!.dismiss()
+        } else {
+            val galleryIntent = Intent(
+                Intent.ACTION_PICK
+            )
+            //   galleryIntent.addCategory(Intent.CATEGORY_OPENABLE)
+            galleryIntent.type = "*/*";
+            val mimetypes = arrayOf(
+                "image/*",
+                "application/pdf",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "application/msword"
+            )
+            galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
+            startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
+            selectImageBottomSheet!!.dismiss()
+        }
+
+    }
+
+    private fun openFilePickewr() {
+
+        storageHelper.openFilePicker()
     }
 
     override fun onRequestPermissionsResult(
@@ -986,18 +1084,29 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
         } else if (requestCode == REQUEST_SELECT_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
             val resultUri: Uri? = data.data
-            try {
-                activity?.let {
-                    resultUri?.let { it1 ->
-                        FilePath().getPath(
-                            it,
-                            it1
-                        )?.let { getImageFile(it) }
-                    }
-                };
-            } catch (e: IOException) {
-                e.printStackTrace()
+            Log.d("ACTION_OPEN_DOCUMENT", "onActivityResult: " + resultUri)
 
+            try {
+
+                if (resultUri != null) {
+
+                    var path = FilePath().getPath(ctx, resultUri)
+
+                    if (path.isNullOrBlank() || path.isNullOrEmpty() || path.length < 5) {
+                        path = ConvertNumber.makeFileCopyInCacheDir(resultUri, ctx)
+                    }
+                    Log.d("ACTION_OPEN_DOCUMENT", "onActivityResult: " + path)
+                    if (path != null) {
+                        getImageFile(path)
+                    }
+
+                } else {
+                    Log.d("ACTION_OPEN_DOCUMENT", "onActivityResult: " + resultUri)
+                }
+
+            } catch (e: IOException) {
+                Log.e("TAGG", "onActivityResult: ${e.localizedMessage}")
+                e.printStackTrace()
             }
 
             var bitmap = createBitmap(1, 1)
@@ -1012,20 +1121,31 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 //            val bitmap =
 //                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
 
+            //      Toast.makeText(context , "FILE -> "  + imageFile?.name  , Toast.LENGTH_SHORT).show()
             imageFile?.let {
                 bitmap.let { it1 ->
-                    resultUri?.let { it2 ->
-                        onFilevalueReceiveListener?.onFileValue(it, it1)
-                    }
+
+                    onFilevalueReceiveListener?.onFileValue(it, it1)
+
                 }
             }
         }
 //        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 //
 //        }
+        else {
+            storageHelper.storage.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        storageHelper.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     private fun getImageFile(photoPath: String) {
+
+        Log.d("TAGGGED", "getImageFile:  $photoPath")
         imageFile = File(photoPath)
 
     }

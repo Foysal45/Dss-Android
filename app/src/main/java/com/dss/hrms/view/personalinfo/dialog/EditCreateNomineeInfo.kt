@@ -485,14 +485,14 @@ class EditCreateNomineeInfo @Inject constructor() {
 
 
 
-        binding?.nomineeUpdate?.btnUpdate?.setOnClickListener({
+        binding.nomineeUpdate.btnUpdate?.setOnClickListener {
             dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             if (imageFile != null) {
                 imageFile?.let { it1 -> uploadImage(it1) }
             } else {
                 uploadData()
             }
-        })
+        }
     }
 
     fun getDistrict(divisionId: Int?, districtId: Int?) {
