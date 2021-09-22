@@ -49,8 +49,11 @@ import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.dashboard_header.*
 import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.android.synthetic.main.nav_menu_layout.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
@@ -126,6 +129,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         Log.e("mainactivity", "inject login data " + loginInfo?.email)
         Log.e("mainactivity", "inject employee data " + employeeProfileData?.employee?.profile_id)
         getEmployeeInfo()
+
         notification.setOnClickListener {
             Intent(this, NotificationActivity::class.java).apply {
                 startActivity(this)
@@ -173,6 +177,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         })
+
     }
 
     override fun onRestart() {
@@ -199,19 +204,14 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
 
     fun getEmployeeInfo() {
         var dialog = CustomLoadingDialog().createLoadingDialog(this)
-        lifecycleScope.launch {
+        val a = lifecycleScope.launch {
             employeeViewModel?.getEmployeeInfo(loginInfo?.employee_id)
                 ?.collect {
                     dialog?.dismiss()
                     if (it is Employee) {
                         employee = employeeProfileData.employee
-                        drawerMenu()
-                        Log.e(
-                            "mainactivity",
-                            "inject employee data name : " + employeeProfileData?.employee?.permanentAddresses.toString()
-                        )
-                        Log.e("basic info","....................................................roles date ${employeeProfileData?.employee?.user?.roles?.size}")
-                        //   Log.e("MainActivity", "response : " + any)
+
+
                     } else if (it is ApiError) {
 
                     } else if (it is Throwable) {
@@ -219,34 +219,38 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
                     }
                 }
         }
+        a.invokeOnCompletion {
+            drawerMenu()
+        }
     }
 
 
     fun drawerMenu() {
 
+        Log.d("LOGGGGGGGG", "drawerMenu: i am here ")
 
         Glide.with(this).applyDefaultRequestOptions(
             RequestOptions()
                 .placeholder(R.drawable.ic_baseline_image_24)
-        ).load(RetrofitInstance.BASE_URL + employee?.photo)
+        ).load(RetrofitInstance.BASE_URL + employeeProfileData.employee?.photo)
             .into(headerLayout.menu_logo)
 
 
-        if (employee?.jobjoinings != null && employee?.jobjoinings!!.size > 0)
+        if (employeeProfileData.employee?.jobjoinings != null && employeeProfileData.employee?.jobjoinings!!.isNotEmpty())
             if (preparence.getLanguage().equals("en")) {
-                headerLayout.menu_name.setText(employee?.name)
-                headerLayout.menu_office_address.setText(employee?.jobjoinings!![0]?.office?.office_name)
-                headerLayout.menu_designation.setText(employee?.jobjoinings!![0]?.designation?.name)
+                headerLayout.menu_name.setText(employeeProfileData.employee?.name)
+                headerLayout.menu_office_address.setText(employeeProfileData.employee?.jobjoinings!![0]?.office?.office_name)
+                headerLayout.menu_designation.setText(employeeProfileData.employee?.jobjoinings!![0]?.designation?.name)
             } else {
-                headerLayout.menu_name.setText(employee?.name_bn)
-                headerLayout.menu_office_address.setText(employee?.jobjoinings!![0]?.office?.office_name_bn)
-                headerLayout.menu_designation.setText(employee?.jobjoinings!![0]?.designation?.name_bn)
+                headerLayout.menu_name.setText(employeeProfileData.employee?.name_bn)
+                headerLayout.menu_office_address.setText(employeeProfileData.employee?.jobjoinings!![0]?.office?.office_name_bn)
+                headerLayout.menu_designation.setText(employeeProfileData.employee?.jobjoinings!![0]?.designation?.name_bn)
             }
 
 
-        headerLayout.rlPersonalInfo.setOnClickListener({
+        headerLayout.rlPersonalInfo.setOnClickListener {
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 0))
-        })
+        }
 
 
         menu_profile_lay_expandableLayout.collapse()
@@ -478,6 +482,6 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         var appContext: Application? = null
         var context: MainActivity? = null
         var selectedPosition: Int = 0
-        var isViewIntent : Int = 0
+        var isViewIntent: Int = 0
     }
 }
