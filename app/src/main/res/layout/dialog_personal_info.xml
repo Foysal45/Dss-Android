@@ -663,7 +663,6 @@
 
                             <include
                                 android:id="@+id/hNominee"
-
                                 layout="@layout/personal_information_create_field_header"
                                 app:title="@{@string/nominee_info}" />
 
@@ -675,6 +674,17 @@
                                 android:orientation="vertical"
                                 android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
                                 android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+
+                                <include
+                                    android:id="@+id/fNomineeSelect"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/name_of_nominee}" />
+
+                                <include
+                                    android:id="@+id/fNomineeNestedSelect"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/name_of_nominee}" />
 
                                 <include
                                     android:id="@+id/fNomineeName"

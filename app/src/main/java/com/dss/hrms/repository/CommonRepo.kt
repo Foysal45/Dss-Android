@@ -435,9 +435,9 @@ class CommonRepo @Inject constructor() {
             MutableLiveData<SpecificDistrictModel>()
         var preparence = application?.let { MySharedPreparence(it) }
         val call: Call<Any?>? =
-            apiService?.getUpazila(
+            apiService.getUpazila(
                 preparence?.getLanguage()!!,
-                "Bearer ${preparence?.getToken()}",
+                "Bearer ${preparence.getToken()}",
                 districtId
             )
         call?.enqueue(object : Callback<Any?> {
@@ -457,6 +457,19 @@ class CommonRepo @Inject constructor() {
                                     dataJO.toString(),
                                     SpecificDistrictModel::class.java
                                 )
+
+                            try {
+                                if (!data.municipalities.isNullOrEmpty()) {
+
+                                    if (!data.upazilas.isNullOrEmpty()) {
+                                        data.upazilas[0].municipalities?.addAll(data.municipalities)
+                                    }
+
+                                }
+                            } catch (ex: Exception) {
+                            }
+
+
                             liveData.postValue(data)
                             specificDistrictValueListener.valueChange(data)
                         } else {

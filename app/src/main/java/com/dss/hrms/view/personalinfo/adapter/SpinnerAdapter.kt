@@ -12,6 +12,7 @@ import com.dss.hrms.R
 import com.dss.hrms.model.Office
 import com.dss.hrms.model.Paysacle
 import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.namaztime.namaztime.database.MySharedPreparence
 
@@ -398,6 +399,80 @@ class SpinnerAdapter {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         })
+
+    }
+
+    fun setRelationToNominee(
+        spinner: Spinner,
+        context: Context?,
+        dataList: Array<String>,
+        commonSpinnerSelectedItemListener: CommonSpinnerSelectedItemListener
+    ) {
+        var preparence: MySharedPreparence? = context?.let { MySharedPreparence(it) }
+        var selectedPosition = 0
+        var i = 0
+
+        val adapter = ArrayAdapter(context!!, R.layout.spinner_layout, R.id.tvContent, dataList)
+        adapter.let { spinner.adapter = it }
+        spinner.setSelection(selectedPosition)
+
+        spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                dataList.let {
+                    if (position <= it.size && position > 0)
+                        commonSpinnerSelectedItemListener.selectedItem(position)
+                    else {
+                        //if (position == 0)
+                        // commonSpinnerSelectedItemListener.selectedItem(0)
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+    }
+
+    fun setSpousesToSpinner(
+        spinner: Spinner,
+        context: Context?,
+        dataList: List<Employee.Spouses>,
+        commonSpinnerSelectedItemListener: CommonSpinnerSelectedItemListener
+    ) {
+        var preparence: MySharedPreparence? = context?.let { MySharedPreparence(it) }
+        var selectedPosition = 0
+        var i = 0
+        val adapter =
+            context?.let { ArrayAdapter(it, R.layout.spinner_layout, R.id.tvContent, dataList) }
+        adapter.let { spinner.adapter = it }
+        spinner.setSelection(selectedPosition)
+
+        spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                dataList.let {
+                    if (position <= it.size && position > 0)
+                        commonSpinnerSelectedItemListener.selectedItem(dataList[position])
+                    else {
+                        if (position == 0) {
+                            commonSpinnerSelectedItemListener.selectedItem(dataList[position])
+                        }
+                        // commonSpinnerSelectedItemListener.selectedItem(0)
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
 
     }
 

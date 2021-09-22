@@ -818,7 +818,7 @@ class Employee {
         val address_details: String? = null
 
         @SerializedName("division_id")
-        val division_id: Int = 0
+        var division_id: Int = 0
 
         @SerializedName("district_id")
         val district_id: Int = 0
@@ -1483,7 +1483,7 @@ class Employee {
         val spouse_job_type_id: Int? = 0
 
         @SerializedName("district_id")
-        val district_id: Int? = 0
+        val district_id: Int = 0
 
         @SerializedName("upazila_id")
         val upazila_id: Int? = 0
@@ -1590,6 +1590,10 @@ class Employee {
 
         @SerializedName("union")
         var union: union? = null
+
+        override fun toString(): String {
+            return name.toString()
+        }
 
         inner class Occupation {
 

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DSS-HRMS</string>
+    <string-array name="nominee_list">
+        <item>সম্পর্ক নির্বাচন করুন</item>
+        <item>পিতা</item>
+        <item>মা</item>
+        <item>স্বামী বা স্ত্রী</item>
+        <item>সন্তান</item>
+        <item>অন্যান্য</item>
 
+    </string-array>
     <string name="confirmation">Confirmation</string>
     <string name="are_you_sure">would you like to exit?</string>
     <string name="no">না</string>

@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
 import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
@@ -14,10 +13,8 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
@@ -30,7 +27,6 @@ import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.*
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.allInterface.*
-import com.dss.hrms.view.leave.model.LeaveApplicationApiResponse
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.*
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
@@ -55,6 +51,7 @@ class EditCreateNomineeInfo @Inject constructor() {
     lateinit var employeeProfileData: EmployeeProfileData
     var employee: Employee? = null
     lateinit var ctx: Context
+    var sposeModel: Employee.Spouses? = null
     var division: SpinnerDataModel? = null
     var district: SpinnerDataModel? = null
     var municipality: Municipalities? = null
@@ -88,8 +85,7 @@ class EditCreateNomineeInfo @Inject constructor() {
         this.position = position
         this.key = key
         this.fileClickListener = fileClickListener
-        this.nominee =
-            position?.let { employeeProfileData?.employee?.nominees?.get(it) }
+        this.nominee = position?.let { employeeProfileData?.employee?.nominees?.get(it) }
         employee = employeeProfileData?.employee
         dialogCustome = Dialog(context)
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -107,12 +103,12 @@ class EditCreateNomineeInfo @Inject constructor() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        updateNomineeInfo(context)
+        updateNomineeInfo(context, true)
         dialogCustome?.show()
 
     }
 
-    fun getLocalGovernmentType() {
+    fun getLocalGovernmentType(local_government_type_id: Int?, isRelation: Boolean) {
         commonRepo.getCommonData("/api/auth/local-government-type/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
@@ -122,11 +118,27 @@ class EditCreateNomineeInfo @Inject constructor() {
                             binding?.fNominneAddresstypeCityCorpUpazilaMunicipality?.spinner!!,
                             ctx,
                             list,
-                            nominee?.local_government_type_id,
+                            local_government_type_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     localGovernmentType = any as SpinnerDataModel
-                                    setCityMuniUpailaAccordingToType()
+                                    if (!isRelation) {
+                                        setCityMuniUpailaAccordingToType(
+                                            nominee?.local_government_type_id,
+                                            nominee?.city_corporation_id,
+                                            nominee?.municipality_id,
+                                            nominee?.upazila_id
+                                        )
+                                    }
+                                    else {
+                                        setCityMuniUpailaAccordingToType(
+                                            sposeModel?.local_government_type_id,
+                                            sposeModel?.city_corporation_id,
+                                            sposeModel?.municipality_id,
+                                            sposeModel?.upazila_id
+                                        )
+
+                                    }
                                 }
                             }
                         )
@@ -136,8 +148,14 @@ class EditCreateNomineeInfo @Inject constructor() {
     }
 
 
-    fun setCityMuniUpailaAccordingToType() {
-
+    fun setCityMuniUpailaAccordingToType(
+        localGovtId: Int?, city_corporation_id: Int?,
+        municipality_id: Int?, upazila_id: Int?
+    ) {
+        Log.d(
+            "TAGGGED",
+            "setCityMuniUpailaAccordingToType:  ${localGovernmentType?.id}  $city_corporation_id $municipality_id , $upazila_id"
+        )
         //   Toast.makeText(ctx , "TYPE_ID ${localGovernmentType?.id}" , Toast.LENGTH_LONG).show()
         if (localGovernmentType?.id == 1) {
             upazila = null
@@ -149,7 +167,7 @@ class EditCreateNomineeInfo @Inject constructor() {
             binding?.fNominneAddressUnio?.llBody?.visibility = View.GONE
             setCityCorporation(
                 specificDistrictModel?.city_corporations,
-                nominee?.city_corporation_id
+                city_corporation_id
             )
         } else if (localGovernmentType?.id == 2) {
 
@@ -160,7 +178,7 @@ class EditCreateNomineeInfo @Inject constructor() {
             binding?.fNominneAddressCityCorporations?.llBody?.visibility = View.GONE
             binding?.fNominneAddressUpazila?.llBody?.visibility = View.GONE
             binding?.fNominneAddressUnio?.llBody?.visibility = View.GONE
-            setMunicipalities(specificDistrictModel?.upazilas, nominee?.municipality_id)
+            setMunicipalities(specificDistrictModel?.upazilas, municipality_id)
         } else if (localGovernmentType?.id == 3) {
             cityCorporations = null
             municipality = null
@@ -168,7 +186,7 @@ class EditCreateNomineeInfo @Inject constructor() {
             binding?.fNominneAddressUnio?.llBody?.visibility = View.VISIBLE
             binding?.fNominneAddressMunicipalities?.llBody?.visibility = View.GONE
             binding?.fNominneAddressCityCorporations?.llBody?.visibility = View.GONE
-            setUpaila(nominee?.upazila_id)
+            setUpaila(upazila_id)
         } else {
             cityCorporations = null
             municipality = null
@@ -182,13 +200,25 @@ class EditCreateNomineeInfo @Inject constructor() {
     }
 
 
-    fun getUpazilaWithMunicipalities(districtId: Int?, upazilaId: Int?) {
+    fun getUpazilaWithMunicipalities(districtId: Int?, upazilaId: Int?, isFromRelation: Boolean) {
         commonRepo.getUpazilaWithMunicipalities(districtId,
             object : SpecificDistrictValueListener {
                 override fun valueChange(data: SpecificDistrictModel?) {
                     specificDistrictModel = data
+
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
-                    setCityMuniUpailaAccordingToType()
+                    if (isFromRelation) {
+                        setCityMuniUpailaAccordingToType(
+                            sposeModel?.local_government_type_id, sposeModel?.city_corporation_id,
+                            sposeModel?.municipality_id, sposeModel?.upazila_id
+                        )
+                    } else {
+                        setCityMuniUpailaAccordingToType(
+                            nominee?.local_government_type_id, nominee?.city_corporation_id,
+                            nominee?.municipality_id, nominee?.upazila_id
+                        )
+                    }
+
                 }
             })
     }
@@ -196,7 +226,7 @@ class EditCreateNomineeInfo @Inject constructor() {
     fun setMunicipalities(list: List<Upazilas>?, id: Int?) {
         list?.let {
             MunicipalitiesAdapter().setMunicipalitiesSpinner(
-                binding?.fNominneAddressMunicipalities?.spinner!!,
+                binding.fNominneAddressMunicipalities.spinner,
                 ctx,
                 getPoulatedMunicipalities(list),
                 id,
@@ -266,11 +296,11 @@ class EditCreateNomineeInfo @Inject constructor() {
     ): List<Municipalities> {
         var municipalitiesList: List<Municipalities> = arrayListOf()
         list?.let {
-            it.forEach({ uList ->
-                uList?.municipalities?.let { uListElement ->
+            it.forEach { uList ->
+                uList.municipalities?.let { uListElement ->
                     municipalitiesList += uListElement
                 }
-            })
+            }
         }
         Log.d("MUNILIST", "getPoulatedMunicipalities: ${municipalitiesList.toString()}")
         return municipalitiesList
@@ -298,15 +328,18 @@ class EditCreateNomineeInfo @Inject constructor() {
 
 
     fun updateNomineeInfo(
-        context: Context
+        context: Context, isLoad: Boolean
 
     ) {
-        binding.llNomineeInfo.visibility = View.VISIBLE
-        binding.hNominee.tvClose.setOnClickListener({
-            dialogCustome?.dismiss()
-        })
 
-        if (key.equals(StaticKey.EDIT)) {
+
+////////////////////////
+        binding.llNomineeInfo.visibility = View.VISIBLE
+        binding.hNominee.tvClose.setOnClickListener {
+            dialogCustome?.dismiss()
+        }
+
+        if (key == StaticKey.EDIT) {
             binding.nomineeUpdate.btnUpdate.setText(context.getString(R.string.update))
         } else {
             binding.nomineeUpdate.btnUpdate.setText(context.getString(R.string.update))
@@ -376,7 +409,10 @@ class EditCreateNomineeInfo @Inject constructor() {
                             uploadFile(imgFile, context)
                         } else {
 
-                            ConvertNumber.errorDialogueWithProgressBar(context , context.getString(R.string.error_file_size))
+                            ConvertNumber.errorDialogueWithProgressBar(
+                                context,
+                                context.getString(R.string.error_file_size)
+                            )
 
                         }
                     } catch (e: Exception) {
@@ -390,29 +426,10 @@ class EditCreateNomineeInfo @Inject constructor() {
         }
 
 
-        commonRepo.getCommonData("/api/auth/division/list",
-            object : CommonDataValueListener {
-                override fun valueChange(list: List<SpinnerDataModel>?) {
-                    //   Log.e("DIVISION", "gender message " + Gson().toJson(list))
-                    list?.let {
-                        SpinnerAdapter().setSpinner(
-                            binding.fNominneAddressDivision.spinner,
-                            context,
-                            list,
-                            nominee?.division_id,
-                            object : CommonSpinnerSelectedItemListener {
-                                override fun selectedItem(any: Any?) {
-                                    division = any as SpinnerDataModel
-                                    getDistrict(division?.id, nominee?.district_id)
-                                }
+        loadDivision(false, nominee?.division_id)
 
-                            }
-                        )
-                    }
-                }
-            })
 
-        getLocalGovernmentType()
+        getLocalGovernmentType(nominee?.local_government_type_id, false)
 
         commonRepo.getCommonData("/api/auth/marital-status/list",
             object : CommonDataValueListener {
@@ -493,9 +510,199 @@ class EditCreateNomineeInfo @Inject constructor() {
                 uploadData()
             }
         }
+
+        if (isLoad) {
+            SpinnerAdapter().setRelationToNominee(
+                binding.fNomineeSelect.spinner,
+                context,
+                context.resources.getStringArray(R.array.nominee_list),
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        //TODO here neeed to get the index  number of the realation
+                        // and make query of the selected realtion
+                        val index = any as Int
+
+                        if (index == 1) {
+                            // its  father
+                            loadFather()
+                            loadDivision(false, nominee?.division_id)
+                        } else if (index == 2) {
+                            loadMother()
+                            loadDivision(false, nominee?.division_id)
+                        } else if (index == 3) {
+                            loadNestedSpinner(index)
+                        } else {
+                            loadDivision(false, nominee?.division_id)
+                        }
+
+
+                    }
+
+                }
+            )
+        }
+
+
     }
 
-    fun getDistrict(divisionId: Int?, districtId: Int?) {
+    private fun loadDivision(b: Boolean, divisionId: Int?) {
+
+        commonRepo.getCommonData("/api/auth/division/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    //   Log.e("DIVISION", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding.fNominneAddressDivision.spinner,
+                            ctx,
+                            list,
+                            divisionId,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    division = any as SpinnerDataModel
+                                    if (b && sposeModel != null) {
+                                        // true means it came from realtion model
+                                        getDistrict(division?.id, sposeModel?.district_id, b)
+
+                                    } else {
+                                        // normal
+                                        getDistrict(division?.id, nominee?.district_id, b)
+                                    }
+
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
+    }
+
+    private fun loadNestedSpinner(index: Int) {
+        binding.fNomineeNestedSelect.llBody.visibility = View.VISIBLE
+        if (index == 3) {
+            // spouses
+            // get the spouses
+            val lsit = employeeProfileData.employee?.spouses
+
+            if (!lsit.isNullOrEmpty()) {
+                SpinnerAdapter().setSpousesToSpinner(
+                    binding.fNomineeNestedSelect.spinner,
+                    ctx,
+                    lsit,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+                            val model = any as Employee.Spouses
+                            loadSpouse(model)
+
+                        }
+
+                    }
+                )
+            } else {
+
+            }
+
+
+        }
+
+    }
+
+    private fun loadFather() {
+        // male
+        // name
+        // disability  gone by default
+        binding.fNomineeNestedSelect.llBody.visibility = View.GONE
+        binding.fNomineeName.etText.setText(employeeProfileData.employee?.fathers_name.toString() + "")
+        binding.fNomineeGender.spinner.setSelection(1)
+        binding.fNomineeMaritalStatus.spinner.setSelection(2)
+        binding.fNomineeHasDisability.spinner.setSelection(2)
+
+    }
+
+    private fun loadMother() {
+        // female
+        // name
+        // disability  gone by default
+        binding.fNomineeNestedSelect.llBody.visibility = View.GONE
+        binding.fNomineeName.etText.setText(employeeProfileData.employee?.mothers_name.toString() + "")
+        binding.fNomineeGender.spinner.setSelection(2)
+        binding.fNomineeMaritalStatus.spinner.setSelection(2)
+        binding.fNomineeHasDisability.spinner.setSelection(2)
+
+    }
+
+    private fun loadSpouse(model: Employee.Spouses) {
+        // male
+        // name
+        // disability  gone by default
+        // lets check  officer gender male = 1
+        if (employee?.gender_id == 1) {
+            // officer is male
+            // so spouse will be wife -> female
+            binding.fNomineeName.etText.setText((model.name + ""))
+            binding.fNomineeGender.spinner.setSelection(2)
+            binding.fNomineeMaritalStatus.spinner.setSelection(2)
+            binding.fNomineeHasDisability.spinner.setSelection(2)
+        } else {
+            // officer is female
+            // so spouse will be husband  -> male
+            binding.fNomineeName.etText.setText((model.name + ""))
+            binding.fNomineeGender.spinner.setSelection(1)
+            binding.fNomineeMaritalStatus.spinner.setSelection(2)
+            binding.fNomineeHasDisability.spinner.setSelection(2)
+
+        }
+
+        loadAddress(model)
+
+
+    }
+
+    private fun loadAddress(spouses: Employee.Spouses) {
+
+        //  division.=  spouses.divisioni
+        //  district = null
+        // load division
+        sposeModel = spouses
+        loadDivision(true, spouses.division_id)
+
+        getLocalGovernmentType(spouses.local_government_type_id  , true)
+      //  localGovernmentType?.id = spouses.local_government_type_id
+
+
+//        commonRepo.getCommonData("/api/auth/local-government-type/list",
+//            object : CommonDataValueListener {
+//                override fun valueChange(list: List<SpinnerDataModel>?) {
+//                    Log.e("gender", "local govt  message " + Gson().toJson(list))
+//                    list?.let {
+//                        SpinnerAdapter().setSpinner(
+//                            binding.fNominneAddresstypeCityCorpUpazilaMunicipality?.spinner!!,
+//                            ctx,
+//                            list,
+//                            spouses.local_government_type_id,
+//                            object : CommonSpinnerSelectedItemListener {
+//                                override fun selectedItem(any: Any?) {
+//                                    localGovernmentType = any as SpinnerDataModel
+//                                    setCityMuniUpailaAccordingToType(
+//                                        spouses.local_government_type_id,
+//                                        spouses.city_corporation_id,
+//                                        spouses.municipality_id,
+//                                        spouses.upazila_id
+//                                    )
+//                                }
+//                            }
+//                        )
+//                    }
+//                }
+//            })
+
+
+    }
+
+
+    fun getDistrict(divisionId: Int?, districtId: Int?, isFromRelation: Boolean) {
         commonRepo.getDistrict(divisionId,
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
@@ -510,10 +717,19 @@ class EditCreateNomineeInfo @Inject constructor() {
                                 override fun selectedItem(any: Any?) {
                                     district = any as SpinnerDataModel
                                     // getUpazila(district?.id, presentAddress?.upazila_id)
-                                    getUpazilaWithMunicipalities(
-                                        district?.id,
-                                        nominee?.upazila_id
-                                    )
+                                    if (isFromRelation && sposeModel != null) {
+                                        getUpazilaWithMunicipalities(
+                                            district?.id,
+                                            sposeModel?.upazila_id, isFromRelation
+                                        )
+                                    } else {
+                                        getUpazilaWithMunicipalities(
+                                            district?.id,
+                                            nominee?.upazila_id, isFromRelation
+
+                                        )
+                                    }
+
                                 }
 
                             }
@@ -584,7 +800,8 @@ class EditCreateNomineeInfo @Inject constructor() {
     }
 
     fun getMapData(): java.util.HashMap<Any, Any?> {
-        var dob = DateConverter.changeDateFormateForSending(binding.fNomineeDob?.tvText?.text.toString())
+        var dob =
+            DateConverter.changeDateFormateForSending(binding.fNomineeDob?.tvText?.text.toString())
         var map = java.util.HashMap<Any, Any?>()
         if (nominee?.id == null) map.put("id", 0) else nominee?.id?.let { map.put("id", it) }
         map.put("employee_id", employee?.user?.employee_id)

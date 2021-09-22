@@ -227,7 +227,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
 
     fun drawerMenu() {
 
-        Log.d("LOGGGGGGGG", "drawerMenu: i am here ")
+
 
         Glide.with(this).applyDefaultRequestOptions(
             RequestOptions()

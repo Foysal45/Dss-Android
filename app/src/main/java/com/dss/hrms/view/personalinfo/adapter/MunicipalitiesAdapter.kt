@@ -1,6 +1,7 @@
 package com.dss.hrms.view.personalinfo.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -25,9 +26,11 @@ class MunicipalitiesAdapter {
         var list = ArrayList<String?>()
         var selectedPosition = 0
         var i = 0
+        Log.d("TAG", "setMunicipalitiesSpinner: ${dataList?.size}")
         list.add(context?.getString(R.string.select_option))
         dataList?.let {
             while (i < it.size) {
+
                 if (preparence?.getLanguage().equals("en"))
                     list.add(dataList.get(i).name)
                 else

@@ -17,7 +17,7 @@ data class Upazilas(
     val district_id: Int?,
     val name: String?,
     val name_bn: String?,
-    val municipalities: List<Municipalities>?
+    val municipalities: MutableList<Municipalities>?
 )
 data class Union(
     val id: Int?,

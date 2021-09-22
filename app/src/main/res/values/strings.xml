@@ -4,6 +4,16 @@
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 
+    <string-array name="nominee_list">
+        <item>Select Relation</item>
+        <item>Father</item>
+        <item>Mother</item>
+        <item>Spouse</item>
+        <item>Child</item>
+        <item>Others</item>
+    </string-array>
+
+
     <string name="notifications">Notifications</string>
     <string name="no_notification_found">No notification found</string>
     <string name="confirmation">Confirmation</string>
