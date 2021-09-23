@@ -38,6 +38,7 @@
     <string name="designaiton">পদবি</string>
     <string name="namee">Name</string>
     <string name="password">Password</string>
+    <string name="only_address">ঠিকানা</string>
     <string name="remember_me">Remember Me</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="login">LOGIN</string>
@@ -445,6 +446,19 @@
     <string name="birth_certificate_attachment">জন্ম সনদ ডকুমেন্ট</string>
     <string name="nominne_from">Nominee From</string>
     <string name="director_general"> Director General </string>
+
+
+
+    <string name="offices">Office</string>
+    <string name="phone_office">Phone (Office)</string>
+    <string name="moobile">Mobile</string>
+    <string name="fax">FAX</string>
+    <string name="ooffice_addres">Office Address</string>
+    <string name="pabx">PABX</string>
+    <string name="privacy_other">Privacy and others</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms">Terms and Condition</string>
+
     <!--    -->
     <!--    <string name="full_name">Full Name</string>-->
     <!--    <string name="basic_salary">Basic Salary</string>-->

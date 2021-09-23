@@ -66,6 +66,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="permanent_address">স্থায়ী ঠিকানা</string>
     <string name="present_address">বর্তমান ঠিকানা</string>
+    <string name="only_address">ঠিকানা</string>
 
     <!--Spouse-->
     <string name="name">নাম (ইংরেজি)</string>
@@ -443,4 +444,16 @@
     <string name="birth_certificate_attachment">জন্ম সনদ ডকুমেন্ট</string>
     <string name="nominne_from">Nominee From</string>
     <string name="director_general">মহাপরিচালক</string>
+
+
+    <string name="offices">দপ্তর</string>
+    <string name="phone_office">ফোন (দপ্তর)</string>
+    <string name="moobile">মোবাইল</string>
+    <string name="fax">ফ্যাক্স</string>
+    <string name="ooffice_addres">অফিসের ঠিকানা</string>
+    <string name="pabx">পিএবিএক্স</string>
+    <string name="privacy_other">গোপনীয়তা এবং অন্যান্য</string>
+    <string name="privacy_policy">গোপনীয়তা নীতি</string>
+    <string name="terms">শর্তাবলী</string>
+
 </resources>
