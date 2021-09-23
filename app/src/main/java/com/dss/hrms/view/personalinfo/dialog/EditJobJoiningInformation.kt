@@ -188,6 +188,7 @@ class EditJobJoiningInformation @Inject constructor() {
                     }
                 }
             })
+
         commonRepo.getCommonData("/api/auth/job-type/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
@@ -350,8 +351,7 @@ class EditJobJoiningInformation @Inject constructor() {
                         Log.e("yousuf", "error : " + Gson().toJson(any))
 
                         if (any is String) {
-                            toast(EmployeeInfoActivity.context, "Updated")
-
+                            toast(EmployeeInfoActivity.context, "" + context?.getString(R.string.updated))
                             MainActivity.selectedPosition = 7
                             EmployeeInfoActivity.refreshEmployeeInfo()
                             dialogCustome?.dismiss()
@@ -638,6 +638,6 @@ class EditJobJoiningInformation @Inject constructor() {
     }
 
     fun toast(context: Context?, massage: String) {
-        Toast.makeText(context, massage, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, massage, Toast.LENGTH_LONG).show()
     }
 }

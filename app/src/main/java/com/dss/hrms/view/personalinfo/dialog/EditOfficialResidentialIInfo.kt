@@ -92,7 +92,7 @@ class EditOfficialResidentialIInfo @Inject constructor() {
     fun updateOfficialResidentialInfo(
         context: Context
     ) {
-        binding?.fORInfoDesignation?.llBody?.visibility=View.GONE
+        binding?.fORInfoDesignation?.llBody?.visibility = View.GONE
         binding?.llOfficialResidentialInfo?.visibility = View.VISIBLE
         binding?.hOfficialResidentialInfo?.tvClose?.setOnClickListener({
             dialogCustome?.dismiss()
@@ -224,8 +224,7 @@ class EditOfficialResidentialIInfo @Inject constructor() {
 
     fun showResponse(any: Any) {
         if (any is String) {
-            toast(EmployeeInfoActivity.context, any)
-
+            toast(EmployeeInfoActivity.context, "" + context?.getString(R.string.updated))
             MainActivity.selectedPosition = 11
             EmployeeInfoActivity.refreshEmployeeInfo()
             dialogCustome?.dismiss()
@@ -348,7 +347,7 @@ class EditOfficialResidentialIInfo @Inject constructor() {
         Log.e("designation ", "id : " + designation?.id)
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
-       map.put("designation_id", officialResidential?.designation_id)
+        map.put("designation_id", officialResidential?.designation_id)
         map.put("division_id", division?.id)
         map.put("district_id", district?.id)
         map.put("upazila_id", upazila?.id)
@@ -444,7 +443,7 @@ class EditOfficialResidentialIInfo @Inject constructor() {
     }
 
     fun toast(context: Context?, massage: String) {
-        Toast.makeText(context, massage, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, massage, Toast.LENGTH_LONG).show()
     }
 
     fun getStatusList(): List<SpinnerDataModel> {

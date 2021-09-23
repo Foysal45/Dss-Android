@@ -1581,7 +1581,6 @@ class Employee {
         val city_corporation_id: Int? = 0
 
 
-
         @SerializedName("city_corporation")
         var cityCorporation: CityCorporation? = null
 
@@ -1620,7 +1619,7 @@ class Employee {
         }
     }
 
-    inner class Childs {
+     class Childs {
 
         @SerializedName("id")
         val id: Int = 0
@@ -1698,6 +1697,9 @@ class Employee {
             val updated_at: String? = null
         }
 
+        override fun toString(): String {
+            return name_of_children.toString()
+        }
     }
 
     inner class Languages {
@@ -1766,7 +1768,8 @@ class Employee {
         val name_of_institute_bn: String? = null
 
         @SerializedName("hrm_training_category_id")
-        val hrm_training_category_id: Int= 0
+        val hrm_training_category_id: Int = 0
+
         @SerializedName("location")
         val location: String? = null
 
@@ -1825,7 +1828,7 @@ class Employee {
         val course_title_bn: String? = null
 
         @SerializedName("hrm_training_category_id")
-        val hrm_training_category_id: Int= 0
+        val hrm_training_category_id: Int = 0
 
         @SerializedName("foreign_training_document_path")
         val foreign_training_document_path: String? = null
@@ -2530,6 +2533,7 @@ class Employee {
 
         @SerializedName("status")
         var status: Int = 0
+
         @SerializedName("deleted_at")
         var deleted_at: String? = null
 

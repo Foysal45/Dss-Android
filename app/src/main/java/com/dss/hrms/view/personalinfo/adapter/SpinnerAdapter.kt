@@ -428,7 +428,7 @@ class SpinnerAdapter {
                         commonSpinnerSelectedItemListener.selectedItem(position)
                     else {
                         //if (position == 0)
-                        // commonSpinnerSelectedItemListener.selectedItem(0)
+                        commonSpinnerSelectedItemListener.selectedItem(0)
                     }
                 }
             }
@@ -477,4 +477,41 @@ class SpinnerAdapter {
     }
 
 
+    fun setChildrenToSpinner(
+        spinner: Spinner,
+        context: Context?,
+        dataList: List<Employee.Childs>,
+        commonSpinnerSelectedItemListener: CommonSpinnerSelectedItemListener
+    ) {
+        var preparence: MySharedPreparence? = context?.let { MySharedPreparence(it) }
+        var selectedPosition = 0
+        var i = 0
+        val adapter =
+            context?.let { ArrayAdapter(it, R.layout.spinner_layout, R.id.tvContent, dataList) }
+        adapter.let { spinner.adapter = it }
+        spinner.setSelection(selectedPosition)
+
+        spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                dataList.let {
+                    if (position <= it.size && position > 0)
+                        commonSpinnerSelectedItemListener.selectedItem(dataList[position])
+                    else {
+                        if (position == 0) {
+                            commonSpinnerSelectedItemListener.selectedItem(dataList[position])
+                        }
+                        // commonSpinnerSelectedItemListener.selectedItem(0)
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+    }
 }

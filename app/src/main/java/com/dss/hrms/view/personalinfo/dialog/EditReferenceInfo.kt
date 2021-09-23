@@ -130,7 +130,7 @@ class EditReferenceInfo @Inject constructor() {
 
     fun showResponse(any: Any) {
         if (any is String) {
-            toast(EmployeeInfoActivity.context, any)
+            toast(EmployeeInfoActivity.context, "" + context?.getString(R.string.updated))
             MainActivity.selectedPosition = 17
             EmployeeInfoActivity.refreshEmployeeInfo()
             dialogCustome?.dismiss()

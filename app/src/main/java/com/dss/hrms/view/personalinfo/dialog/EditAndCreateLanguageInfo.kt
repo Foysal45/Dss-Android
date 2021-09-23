@@ -199,7 +199,7 @@ class EditAndCreateLanguageInfo @Inject constructor() {
 
     fun showResponse(any: Any) {
         if (any is String) {
-            toast(EmployeeInfoActivity.context, any)
+            toast(EmployeeInfoActivity.context, "" + context?.getString(R.string.updated))
             MainActivity.selectedPosition = 6
             EmployeeInfoActivity.refreshEmployeeInfo()
             dialogCustome?.dismiss()
@@ -385,7 +385,7 @@ class EditAndCreateLanguageInfo @Inject constructor() {
     }
 
     fun toast(context: Context?, massage: String) {
-        Toast.makeText(context, massage, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, massage, Toast.LENGTH_LONG).show()
     }
 
 

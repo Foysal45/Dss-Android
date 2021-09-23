@@ -129,8 +129,7 @@ class EditCreateNomineeInfo @Inject constructor() {
                                             nominee?.municipality_id,
                                             nominee?.upazila_id
                                         )
-                                    }
-                                    else {
+                                    } else {
                                         setCityMuniUpailaAccordingToType(
                                             sposeModel?.local_government_type_id,
                                             sposeModel?.city_corporation_id,
@@ -246,7 +245,7 @@ class EditCreateNomineeInfo @Inject constructor() {
 
     fun setUpaila(upazilaId: Int?) {
         UpazilaAdapter().setUpazilaSpinner(
-            binding?.fNominneAddressUpazila?.spinner!!,
+            binding?.fNominneAddressUpazila.spinner,
             ctx,
             specificDistrictModel?.upazilas,
             upazilaId,
@@ -334,6 +333,7 @@ class EditCreateNomineeInfo @Inject constructor() {
 
 
 ////////////////////////
+        binding.fNomineeNestedSelect.llBody.visibility = View.GONE
         binding.llNomineeInfo.visibility = View.VISIBLE
         binding.hNominee.tvClose.setOnClickListener {
             dialogCustome?.dismiss()
@@ -522,17 +522,52 @@ class EditCreateNomineeInfo @Inject constructor() {
                         // and make query of the selected realtion
                         val index = any as Int
 
-                        if (index == 1) {
-                            // its  father
-                            loadFather()
-                            loadDivision(false, nominee?.division_id)
-                        } else if (index == 2) {
-                            loadMother()
-                            loadDivision(false, nominee?.division_id)
-                        } else if (index == 3) {
-                            loadNestedSpinner(index)
-                        } else {
-                            loadDivision(false, nominee?.division_id)
+                        when (index) {
+                            0->{
+
+                            }
+                            1 -> {
+                                // its  father
+                                loadFather()
+                                if (key == StaticKey.EDIT) {
+                                    resetAllSpinner()
+                                } else loadDivision(false, nominee?.division_id)
+                            }
+                            2 -> {
+                                loadMother()
+                                if (key == StaticKey.EDIT) {
+                                    resetAllSpinner()
+                                } else loadDivision(false, nominee?.division_id)
+                            }
+                            3 -> {
+                                loadNestedSpinner(index)
+                            }
+                            4 -> {
+                                loadNestedSpinner(index)
+                                if (key == StaticKey.EDIT) {
+                                    resetAllSpinner()
+                                } else loadDivision(false, nominee?.division_id)
+                            }
+                            else -> {
+                                binding.fNomineeNestedSelect.llBody.visibility = View.GONE
+                                binding.fNomineeName.etText.setText("")
+                                binding.fNomineeDob.tvText.text = ""
+                                binding.fNomineeRelation.etText.setText("")
+                                binding.fNomineeGender.spinner.setSelection(0)
+                                binding.fNomineeMaritalStatus.spinner.setSelection(0)
+                                binding.fNomineeHasDisability.spinner.setSelection(0)
+                                if (key == StaticKey.EDIT) {
+                                    resetAllSpinner()
+                                } else {
+                                    binding.fNomineeRelation.etText.setText("")
+                                 //   binding.fNomineeNestedSelect.llBody.visibility = View.GONE
+                                    binding.fNomineeName.etText.setText("")
+//                                    binding.fNomineeGender.spinner.setSelection(0)
+//                                    binding.fNomineeMaritalStatus.spinner.setSelection(0)
+//                                    binding.fNomineeHasDisability.spinner.setSelection(0)
+                                    loadDivision(false, 0)
+                                }
+                            }
                         }
 
 
@@ -541,6 +576,20 @@ class EditCreateNomineeInfo @Inject constructor() {
                 }
             )
         }
+
+
+    }
+
+    private fun resetAllSpinner() {
+
+        binding.fNominneAddressDivision.spinner.setSelection(0)
+        binding.fNominneAddressDistrict.spinner.setSelection(0)
+        binding.fNominneAddresstypeCityCorpUpazilaMunicipality.spinner.setSelection(0)
+        binding.fNominneAddressMunicipalities.spinner.setSelection(0)
+        binding.fNominneAddressUnio.spinner.setSelection(0)
+        binding.fNominneAddressUpazila.spinner.setSelection(0)
+        binding.fNominneAddressCityCorporations.spinner.setSelection(0)
+        binding.fNomineeAllocatedPercentage.etText.setText("")
 
 
     }
@@ -583,6 +632,7 @@ class EditCreateNomineeInfo @Inject constructor() {
         binding.fNomineeNestedSelect.llBody.visibility = View.VISIBLE
         if (index == 3) {
             // spouses
+            binding.fNomineeNestedSelect.tvTitle.setText("Select Spouses")
             // get the spouses
             val lsit = employeeProfileData.employee?.spouses
 
@@ -600,12 +650,50 @@ class EditCreateNomineeInfo @Inject constructor() {
 
                     }
                 )
-            } else {
+            }
+
+        } else {
+            // this if for child
+            // populate the list of child
+            binding.fNomineeNestedSelect.tvTitle.setText("Select Children")
+
+            val childList = employeeProfileData.employee?.childs
+
+            if (!childList.isNullOrEmpty()) {
+                // set it to the the spinner
+                SpinnerAdapter().setChildrenToSpinner(
+                    binding.fNomineeNestedSelect.spinner,
+                    ctx,
+                    childList,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+                            val model = any as Employee.Childs
+                            loadChild(model)
+
+                        }
+
+                    }
+                )
+
 
             }
 
-
         }
+
+    }
+
+    private fun loadChild(model: Employee.Childs) {
+
+        binding.fNomineeRelation.etText.setText("Children")
+
+        binding.fNomineeName.etText.setText((model.name_of_children + ""))
+        if (model.gender_id == 1) {
+            // male
+            binding.fNomineeGender.spinner.setSelection(1)
+        } else {
+            binding.fNomineeGender.spinner.setSelection(2)
+        }
+        binding.fNomineeHasDisability.spinner.setSelection(2)
 
     }
 
@@ -613,6 +701,7 @@ class EditCreateNomineeInfo @Inject constructor() {
         // male
         // name
         // disability  gone by default
+        binding.fNomineeRelation.etText.setText("Father")
         binding.fNomineeNestedSelect.llBody.visibility = View.GONE
         binding.fNomineeName.etText.setText(employeeProfileData.employee?.fathers_name.toString() + "")
         binding.fNomineeGender.spinner.setSelection(1)
@@ -625,6 +714,7 @@ class EditCreateNomineeInfo @Inject constructor() {
         // female
         // name
         // disability  gone by default
+        binding.fNomineeRelation.etText.setText("Mother")
         binding.fNomineeNestedSelect.llBody.visibility = View.GONE
         binding.fNomineeName.etText.setText(employeeProfileData.employee?.mothers_name.toString() + "")
         binding.fNomineeGender.spinner.setSelection(2)
@@ -641,6 +731,7 @@ class EditCreateNomineeInfo @Inject constructor() {
         if (employee?.gender_id == 1) {
             // officer is male
             // so spouse will be wife -> female
+            binding.fNomineeRelation.etText.setText("Wife")
             binding.fNomineeName.etText.setText((model.name + ""))
             binding.fNomineeGender.spinner.setSelection(2)
             binding.fNomineeMaritalStatus.spinner.setSelection(2)
@@ -648,13 +739,13 @@ class EditCreateNomineeInfo @Inject constructor() {
         } else {
             // officer is female
             // so spouse will be husband  -> male
+            binding.fNomineeRelation.etText.setText("Husband")
             binding.fNomineeName.etText.setText((model.name + ""))
             binding.fNomineeGender.spinner.setSelection(1)
             binding.fNomineeMaritalStatus.spinner.setSelection(2)
             binding.fNomineeHasDisability.spinner.setSelection(2)
 
         }
-
         loadAddress(model)
 
 
@@ -668,8 +759,8 @@ class EditCreateNomineeInfo @Inject constructor() {
         sposeModel = spouses
         loadDivision(true, spouses.division_id)
 
-        getLocalGovernmentType(spouses.local_government_type_id  , true)
-      //  localGovernmentType?.id = spouses.local_government_type_id
+        getLocalGovernmentType(spouses.local_government_type_id, true)
+        //  localGovernmentType?.id = spouses.local_government_type_id
 
 
 //        commonRepo.getCommonData("/api/auth/local-government-type/list",
@@ -873,7 +964,8 @@ class EditCreateNomineeInfo @Inject constructor() {
 
     fun showResponse(any: Any) {
         if (any is String) {
-            toast(EmployeeInfoActivity.context, any)
+            toast(EmployeeInfoActivity.context,
+                "" + ctx?.getString(R.string.updated))
             MainActivity.selectedPosition = 18
             EmployeeInfoActivity.refreshEmployeeInfo()
             dialogCustome?.dismiss()
@@ -1042,6 +1134,6 @@ class EditCreateNomineeInfo @Inject constructor() {
     }
 
     fun toast(context: Context?, massage: String) {
-        Toast.makeText(context, massage, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, massage, Toast.LENGTH_LONG).show()
     }
 }

@@ -108,9 +108,9 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
     ) {
 
         binding?.llAdditionalQualification?.visibility = View.VISIBLE
-        binding?.hAdditionalQualification?.tvClose?.setOnClickListener({
+        binding?.hAdditionalQualification?.tvClose?.setOnClickListener {
             dialogCustome?.dismiss()
-        })
+        }
 
         if (key.equals(StaticKey.CREATE)) {
             binding?.additionalPQBtnAddUpdate?.btnUpdate?.setText("" + context.getString(R.string.submit))
@@ -250,7 +250,7 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
     }
     fun showResponse(any: Any) {
         if (any is String) {
-            toast(EmployeeInfoActivity.context, any)
+            toast(EmployeeInfoActivity.context, "" + context?.getString(R.string.updated))
             MainActivity.selectedPosition = 13
             EmployeeInfoActivity.refreshEmployeeInfo()
             dialogCustome?.dismiss()
@@ -348,6 +348,6 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
     }
 
     fun toast(context: Context?, massage: String) {
-        Toast.makeText(context, massage, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, massage, Toast.LENGTH_LONG).show()
     }
 }

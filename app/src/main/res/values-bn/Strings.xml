@@ -111,7 +111,7 @@
     <string name="child_bd">জন্ম তারিখ</string>
     <string name="child_sex">লিঙ্গ</string>
     <string name="update">আপডেট</string>
-    <string name="updated">আপডেট হয়েছে</string>
+    <string name="updated">"আপনার তথ্য অনুমোদনের জন্য অপেক্ষমান"</string>
     <string name="profile_id">প্রোফাইল আইডি</string>
 
     <string name="name_language">ভাষার নাম (ইংরেজি)</string>
@@ -415,6 +415,7 @@
     <string name="permitted">অনুমোদিত</string>
     <string name="working">কর্মরত</string>
     <string name="empty">খালি</string>
+    <string name="designaiton">পদবি</string>
     <string name="sl">ক্রমিক</string>
     <string name="courses">কোর্স </string>
     <string name="course_name">কোর্সের নাম</string>
@@ -423,18 +424,23 @@
     <string name="module_name">মডিউলের নাম</string>
     <string name="marks">মার্ক্স্</string>
     <string name="session">সেশন</string>
+    <string name="help_desk">Help Desk</string>
+
     <string name="session_name">সেশনের নাম</string>
     <string name="faq_question">সচরাচর জিজ্ঞাসিত প্রশ্ন</string>
     <string name="docoument">সংযুক্তি</string>
-    <string name="error_disaiblity_doc">Please Add Your Disability Documents.</string>
-    <string name="error_freedom_fighter">Please Add Your Freedom Fighter Documents</string>
+    <string name="error_disaiblity_doc">আপনার অক্ষমতার নথি আপলোড করুন</string>
+    <string name="error_freedom_fighter">আপনার মুক্তিযোদ্ধা ডকুমেন্ট আপলোড করুন</string>
     <string name="error_file_size">ফাইলের আকার সীমা অতিক্রম করেছে। সর্বোচ্চ ফাইলের আকার 2 এমবি . পুনরায় চেষ্টা করুন </string>
     <string name="tap_to_view">"  Tap To View "</string>
-    <string name="successMsg">File upload successfully</string>
+    <string name="successMsg">নথিটি আপলোড সম্পূর্ণ হয়েছে</string>
     <string name="uploadFailed" />
+    <string name="namee">নাম</string>
     <string name="no_attachment"> No Attachment </string>
     <string name="error">Error</string>
     <string name="nid_attachment">এনআইডি ডকুমেন্ট</string>
     <string name="passport_attachment">পাসপোর্ট ডকুমেন্ট</string>
     <string name="birth_certificate_attachment">জন্ম সনদ ডকুমেন্ট</string>
+    <string name="nominne_from">Nominee From</string>
+    <string name="director_general">মহাপরিচালক</string>
 </resources>

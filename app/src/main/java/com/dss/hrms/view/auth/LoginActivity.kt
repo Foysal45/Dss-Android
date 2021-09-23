@@ -25,6 +25,7 @@ import com.dss.hrms.model.login.LoginInfo
 import com.dss.hrms.util.CustomVisibility
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.activity.BaseActivity
+import com.dss.hrms.view.activity.HelpDeskPage
 import com.dss.hrms.view.allInterface.OnNetworkStateChangeListener
 import com.dss.hrms.view.receiver.NetworkChangeReceiver
 import com.dss.hrms.viewmodel.LoginViewModel
@@ -91,6 +92,11 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
 
 
     fun clickListener() {
+
+        f_helpDesk.setOnClickListener {
+            startActivity(Intent( this , HelpDeskPage::class.java))
+        }
+
         ivPassword.setOnClickListener({
             if (isShowPassword) {
                 etPassword.inputType =

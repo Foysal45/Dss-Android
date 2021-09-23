@@ -241,7 +241,8 @@ class EditAndCreateSpouseInfo @Inject constructor() {
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             key?.let {
                 if (it.equals(StaticKey.EDIT)) {
-                    employeeInfoEditCreateRepo?.updateSpouseInfo( spouses?.id ,
+                    employeeInfoEditCreateRepo?.updateSpouseInfo(
+                        spouses?.id,
                         getMapData()
                     )
                         ?.observe(
@@ -273,7 +274,10 @@ class EditAndCreateSpouseInfo @Inject constructor() {
                 if (StaticKey.EDIT.equals(it)) toast(
                     EmployeeInfoActivity.context,
                     "" + context?.getString(R.string.updated)
-                ) else toast(EmployeeInfoActivity.context, any)
+                ) else toast(
+                    EmployeeInfoActivity.context,
+                    "" + context?.getString(R.string.updated)
+                )
             }
 
             MainActivity.selectedPosition = 1
@@ -407,15 +411,30 @@ class EditAndCreateSpouseInfo @Inject constructor() {
         cityCorporations?.id?.let { map.put("city_corporation_id", it) }
         upazilaa?.id?.let { map.put("upazila_id", it) }
         union?.id?.let { map.put("union_id", it) }
-        map.put("police_station", binding?.locationContainer?.PoliceStation?.etText?.text.toString())
-        map.put("police_station_bn", binding?.locationContainer?.PoliceStationBn?.etText?.text.toString())
+        map.put(
+            "police_station",
+            binding?.locationContainer?.PoliceStation?.etText?.text.toString()
+        )
+        map.put(
+            "police_station_bn",
+            binding?.locationContainer?.PoliceStationBn?.etText?.text.toString()
+        )
         map.put("post_office", binding?.locationContainer?.PostOffice?.etText?.text.toString())
         map.put("post_office_bn", binding?.locationContainer?.PostOfficeBn?.etText?.text.toString())
         map.put("post_code", binding?.locationContainer?.PostCode?.etText?.text.toString())
         map.put("road_word_no", binding?.locationContainer?.RoadOrWordNo?.etText?.text.toString())
-        map.put("road_word_no_bn", binding?.locationContainer?.RoadOrWordNoBn?.etText?.text.toString())
-        map.put("village_house_no", binding?.locationContainer?.VillageOrHouseNo?.etText?.text.toString())
-        map.put("village_house_no_bn", binding?.locationContainer?.VillageOrHouseNoBn?.etText?.text.toString())
+        map.put(
+            "road_word_no_bn",
+            binding?.locationContainer?.RoadOrWordNoBn?.etText?.text.toString()
+        )
+        map.put(
+            "village_house_no",
+            binding?.locationContainer?.VillageOrHouseNo?.etText?.text.toString()
+        )
+        map.put(
+            "village_house_no_bn",
+            binding?.locationContainer?.VillageOrHouseNoBn?.etText?.text.toString()
+        )
         return map
     }
 
@@ -471,7 +490,7 @@ class EditAndCreateSpouseInfo @Inject constructor() {
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     district = any as SpinnerDataModel
-                                   // getUpazila(district?.id, spouses?.upazila_id)
+                                    // getUpazila(district?.id, spouses?.upazila_id)
                                     getUpazilaWithMunicipalities(
                                         district?.id,
                                         spouses?.upazila_id

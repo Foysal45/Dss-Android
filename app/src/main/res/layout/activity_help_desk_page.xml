@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.HelpDeskPage">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:background="@drawable/ic_baseline_arrow_back_24"
+                android:backgroundTint="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_toEndOf="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:text="@string/help_desk"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="@dimen/_3sdp"
+        android:textSize="@dimen/text_size_small"
+        android:text="@string/director_general"/>
+
+    <include
+        android:id="@+id/fName"
+        layout="@layout/personel_information_view_field_with_right_icon"
+        app:title="@{@string/namee}"
+        />
+
+    <include
+        android:id="@+id/fdesignnation"
+        layout="@layout/personel_information_view_field_with_right_icon"
+        app:title="@{@string/designation}"
+        />
+
+    <include
+        android:id="@+id/fdepartment"
+        layout="@layout/personel_information_view_field_with_right_icon"
+        app:title="@{@string/designation}"
+        />
+
+    <include
+        android:id="@+id/femail"
+        layout="@layout/personel_information_view_field_with_right_icon"
+        app:title="@{@string/designation}"
+        />
+
+    <include
+        android:id="@+id/fphone"
+        layout="@layout/personel_information_view_field_with_right_icon"
+        app:title="@{@string/designation}"
+        />
+    <include
+        android:id="@+id/fmobile"
+        layout="@layout/personel_information_view_field_with_right_icon"
+        app:title="@{@string/designation}"
+        />
+
+    <include
+        android:id="@+id/ffax"
+        layout="@layout/personel_information_view_field_with_right_icon"
+        app:title="@{@string/designation}"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="@dimen/_3sdp"
+        android:textSize="@dimen/text_size_small"
+        android:text="@string/office_address"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:padding="@dimen/_3sdp"
+        android:textSize="16sp"
+        android:text="@string/dss_bangla"/>
+
+    <include
+        android:id="@+id/fAddress"
+        layout="@layout/personel_information_view_field_with_right_icon"
+        />
+    <include
+        android:id="@+id/fpobx"
+        layout="@layout/personel_information_view_field_with_right_icon"
+        />
+    <include
+        android:id="@+id/fFax"
+        layout="@layout/personel_information_view_field_with_right_icon"
+        />
+    <include
+        android:id="@+id/fEmail"
+        layout="@layout/personel_information_view_field_with_right_icon"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="@dimen/_3sdp"
+        android:textSize="@dimen/text_size_small"
+        android:text="@string/office_address"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:padding="@dimen/_3sdp"
+        android:textSize="16sp"
+        android:text="@string/dss_bangla"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:padding="@dimen/_3sdp"
+        android:textSize="16sp"
+        android:text="@string/dss_bangla"/>
+
+</LinearLayout>

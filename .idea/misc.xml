@@ -7,14 +7,25 @@
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/drawable/ic_doc.xml" value="0.35989583333333336" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/drawable/ic_pdf.xml" value="0.35989583333333336" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/activity_employee_info.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/activity_help_desk_page.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/activity_login.xml" value="0.34375" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/activity_main.xml" value="0.34375" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/activity_splash_screen.xml" value="0.1859375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/activity_training.xml" value="0.34375" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/dashboard_header.xml" value="0.34375" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/dialog_personal_info.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/dialog_training_loyeout.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/fragment_content_faq.xml" value="0.34375" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/fragment_employee_info.xml" value="0.34375" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/model_employee_info.xml" value="0.34375" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/nav_header.xml" value="0.34375" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/nav_menu_layout.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/personal_info_textview.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/personel_information_edittext.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/personel_information_view_field.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/personel_information_view_field_with_icon.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/personel_information_view_field_with_right_icon.xml" value="0.34375" />
+        <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/practice_activity.xml" value="0.34375" />
       </map>
     </option>
   </component>

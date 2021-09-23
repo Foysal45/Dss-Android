@@ -505,6 +505,7 @@
                                 <include
                                     android:id="@+id/fJobJoiningDepartment"
                                     layout="@layout/personal_info_spinner"
+                                    android:visibility="gone"
                                     app:title="@{@string/depertment}" />
 
                                 <include
@@ -619,17 +620,16 @@
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/description_bn}"
                                     app:title="@{@string/description_bn}" />
+
                                 <include
                                     android:id="@+id/fQuotaAttachment"
-                                    layout="@layout/personel_information_attachment_field"
-                                    />
+                                    layout="@layout/personel_information_attachment_field" />
 
                                 <androidx.recyclerview.widget.RecyclerView
-                                    android:nestedScrollingEnabled="false"
                                     android:id="@+id/NameList"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    />
+                                    android:nestedScrollingEnabled="false" />
 
 
                                 <include
@@ -679,12 +679,12 @@
                                 <include
                                     android:id="@+id/fNomineeSelect"
                                     layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/name_of_nominee}" />
+                                    app:title="@{@string/nominne_from}"/>
 
                                 <include
                                     android:id="@+id/fNomineeNestedSelect"
                                     layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/name_of_nominee}" />
+                                />
 
                                 <include
                                     android:id="@+id/fNomineeName"
@@ -1190,9 +1190,9 @@
                                     android:visibility="gone"
                                     app:title="@{@string/upazila}" />
 
-                                <include android:id="@+id/location_container"
-                                    layout="@layout/location_container"
-                                    />
+                                <include
+                                    android:id="@+id/location_container"
+                                    layout="@layout/location_container" />
 
                                 <include
                                     android:id="@+id/fSpousePhoneNo"
@@ -1306,7 +1306,6 @@
                                 <include
                                     android:id="@+id/fChildPassportADD"
                                     layout="@layout/personel_information_attachment_field" />
-
 
 
                                 <include
@@ -1800,8 +1799,7 @@
 
                                 <include
                                     android:id="@+id/fForeignTravelAttachment"
-                                    layout="@layout/personel_information_attachment_field"
-                                     />
+                                    layout="@layout/personel_information_attachment_field" />
 
                                 <include
                                     android:id="@+id/foreignTravelBtnAddUpdate"
