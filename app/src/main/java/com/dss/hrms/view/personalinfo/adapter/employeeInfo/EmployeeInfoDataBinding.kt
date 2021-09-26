@@ -240,80 +240,162 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAddressVillageOrHouseNo.tvTitle.setText(context.getString(R.string.vill_house))
         binding.fAddressVillageOrHouseNoBn.tvTitle.setText(context.getString(R.string.vill_house_bn))
         binding.fAddressEmailAddress.tvTitle.setText(context.getString(R.string.email))
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            addresses.village_house_no?.let {
-                binding.fAddressVillageOrHouseNo.tvText.text = it
-            }
-            addresses.village_house_no?.let {
-                binding.fAddressVillageOrHouseNo.tvText.text = it
-            }
-            addresses.village_house_no_bn?.let {
-                binding.fAddressVillageOrHouseNoBn.tvText.text = it
-            }
-            addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.text = it }
-            addresses.road_word_no_bn?.let {
-                binding.fAddressRoadOrWordNoBn.tvText.text = it
-            }
-            addresses.post_office?.let { binding.fAddressPostOffice.tvText.text = it }
-            addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.text = it }
-            addresses.post_code?.let { binding.fAddressPostCode.tvText.text = it }
 
-            addresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
-            addresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
-            addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
-            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.text = it }
-            addresses.upazila?.name?.let { binding.fAddressUpazila.tvText.text = it }
-            addresses.police_station_bn?.let { binding.fAddressPoliceStationBn.tvText.text = it }
+        if (addresses.isPendingData == false)
+        {
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                addresses.village_house_no?.let {
+                    binding.fAddressVillageOrHouseNo.tvText.text = it
+                }
+                addresses.village_house_no?.let {
+                    binding.fAddressVillageOrHouseNo.tvText.text = it
+                }
+                addresses.village_house_no_bn?.let {
+                    binding.fAddressVillageOrHouseNoBn.tvText.text = it
+                }
+                addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.text = it }
+                addresses.road_word_no_bn?.let {
+                    binding.fAddressRoadOrWordNoBn.tvText.text = it
+                }
+                addresses.post_office?.let { binding.fAddressPostOffice.tvText.text = it }
+                addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.text = it }
+                addresses.post_code?.let { binding.fAddressPostCode.tvText.text = it }
 
-            addresses.localGovernmentType?.name?.let {
-                binding.fAddressUnion.tvText.text = it
-            }
+                addresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
+                addresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
+                addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
+                addresses.police_station?.let { binding.fAddressPoliceStation.tvText.text = it }
+                addresses.upazila?.name?.let { binding.fAddressUpazila.tvText.text = it }
+                addresses.police_station_bn?.let {
+                    binding.fAddressPoliceStationBn.tvText.text = it
+                }
 
-            // adding check for  cilty , municipility  or union
+                addresses.localGovernmentType?.name?.let {
+                    binding.fAddressUnion.tvText.text = it
+                }
+
+                // adding check for  cilty , municipility  or union
 
 
-            when (addresses.local_government_type_id) {
-                1 -> {
-                    // city corpo
-                    addresses.cityCorporation?.name?.let {
-                        binding.fAddressLocalName.tvText.text = it
+                when (addresses.local_government_type_id) {
+                    1 -> {
+                        // city corpo
+                        addresses.cityCorporation?.name?.let {
+                            binding.fAddressLocalName.tvText.text = it
+                        }
+                        //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                        binding.fAddressLocalName.tvTitle.text =
+                            context.getString(R.string.citycorporation)
+                        binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.name
+                        binding.fAddressUnionName.llBody.visibility = View.GONE
+
                     }
-                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
-                    binding.fAddressLocalName.tvTitle.text =
-                        context.getString(R.string.citycorporation)
-                    binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.name
-                    binding.fAddressUnionName.llBody.visibility = View.GONE
+                    2 -> {
+                        // municipility
+
+                        binding.fAddressLocalName.tvTitle.text =
+                            context.getString(R.string.municipalities)
+                        binding.fAddressLocalName.tvText.text = addresses.municipality?.name
+                        binding.fAddressUnionName.llBody.visibility = View.GONE
+
+                    }
+                    3 -> {
+                        // upzilla
+                        binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                        binding.fAddressLocalName.tvText.text = addresses.upazila?.name
+
+                        binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
+                        binding.fAddressUnion.tvText.text = addresses.Union?.name
+                        binding.fAddressUnionName.llBody.visibility = View.GONE
+
+                    }
+                }
+
+
+            } else {
+                addresses.district?.name_bn?.let {
+                    binding.fAddressDistrict.tvText.setText(it)
 
                 }
-                2 -> {
-                    // municipility
-
-                    binding.fAddressLocalName.tvTitle.text =
-                        context.getString(R.string.municipalities)
-                    binding.fAddressLocalName.tvText.text = addresses.municipality?.name
-                    binding.fAddressUnionName.llBody.visibility = View.GONE
-
+                addresses.village_house_no?.let {
+                    binding.fAddressVillageOrHouseNo.tvText.setText(
+                        it
+                    )
                 }
-                3 -> {
-                    // upzilla
-                    binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
-                    binding.fAddressLocalName.tvText.text = addresses.upazila?.name
-
-                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
-                    binding.fAddressUnion.tvText.text = addresses.Union?.name
-                    binding.fAddressUnionName.llBody.visibility = View.GONE
-
+                addresses.village_house_no_bn?.let {
+                    binding.fAddressVillageOrHouseNoBn.tvText.setText(
+                        it
+                    )
                 }
+                addresses.road_word_no_bn?.let {
+                    binding.fAddressRoadOrWordNoBn.tvText.setText(
+                        it
+                    )
+                }
+                addresses.post_code?.let { binding.fAddressPostCode.tvText.setText(it) }
+                addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
+                addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
+                addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
+                addresses.police_station_bn?.let {
+                    binding.fAddressPoliceStationBn.tvText.setText(
+                        it
+                    )
+                }
+                addresses.division?.name_bn?.let { binding.fAddressDivision.tvText.setText(it) }
+                addresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.text = it }
+                addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.text = it }
+                addresses.police_station?.let { binding.fAddressPoliceStation.tvText.text = it }
+                addresses.upazila?.name_bn?.let { binding.fAddressUpazila.tvText.setText(it) }
+
+                addresses.localGovernmentType?.name_bn?.let {
+                    binding.fAddressUnion.tvText.text = it
+                }
+
+                when (addresses.local_government_type_id) {
+                    1 -> {
+                        // city corpo
+                        addresses.cityCorporation?.name?.let {
+                            binding.fAddressLocalName.tvText.text = it
+                        }
+                        //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                        binding.fAddressLocalName.tvTitle.text =
+                            context.getString(R.string.citycorporation)
+                        binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.nameBn
+
+                        binding.fAddressUnionName.llBody.visibility = View.GONE
+                    }
+                    2 -> {
+                        // municipility
+
+                        binding.fAddressLocalName.tvTitle.text =
+                            context.getString(R.string.municipalities)
+                        binding.fAddressLocalName.tvText.text = addresses.municipality?.name_bn
+                        binding.fAddressUnionName.llBody.visibility = View.GONE
+                    }
+                    3 -> {
+                        // upzilla
+                        binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                        binding.fAddressLocalName.tvText.text = addresses.upazila?.name_bn
+
+                        binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
+                        binding.fAddressUnion.tvText.text = addresses.Union?.name_bn
+
+                        binding.fAddressUnionName.llBody.visibility = View.VISIBLE
+
+                    }
+                }
+
             }
+        }
+        else if ( addresses.isPendingData == true) {
 
+            binding.hAddress.tvTitle.setText("Pending Data")
+            binding.hAddress.tvEdit.visibility = View.GONE
 
-        } else {
-            addresses.district?.name_bn?.let {
-                binding.fAddressDistrict.tvText.setText(it)
+            binding.fAddressDistrict.tvText.setText(addresses.district_id.toString())
 
-            }
             addresses.village_house_no?.let {
                 binding.fAddressVillageOrHouseNo.tvText.setText(
                     it
@@ -333,55 +415,53 @@ class EmployeeInfoDataBinding @Inject constructor() {
             addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
             addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
             addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
-            addresses.police_station_bn?.let {
-                binding.fAddressPoliceStationBn.tvText.setText(
-                    it
+            binding.fAddressPoliceStationBn.tvText.setText(
+                    addresses.police_station_bn + ""
                 )
-            }
-            addresses.division?.name_bn?.let { binding.fAddressDivision.tvText.setText(it) }
-            addresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.text = it }
+
+            addresses.division_id?.let { binding.fAddressDivision.tvText.setText(it.toString()) }
+            addresses.district_id?.let { binding.fAddressDistrict.tvText.text = it.toString() }
             addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.text = it }
-            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.text = it }
-            addresses.upazila?.name_bn?.let { binding.fAddressUpazila.tvText.setText(it) }
+            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.text = it.toString() }
+            addresses.upazila_id?.let { binding.fAddressUpazila.tvText.setText(it.toString()) }
 
-            addresses.localGovernmentType?.name_bn?.let {
-                binding.fAddressUnion.tvText.text = it
-            }
+//            addresses.localGovernmentType?.name_bn?.let {
+//                binding.fAddressUnion.tvText.text = it
+//            }
 
-            when (addresses.local_government_type_id) {
-                1 -> {
-                    // city corpo
-                    addresses.cityCorporation?.name?.let {
-                        binding.fAddressLocalName.tvText.text = it
-                    }
-                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
-                    binding.fAddressLocalName.tvTitle.text =
-                        context.getString(R.string.citycorporation)
-                    binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.nameBn
-
-                    binding.fAddressUnionName.llBody.visibility = View.GONE
-                }
-                2 -> {
-                    // municipility
-
-                    binding.fAddressLocalName.tvTitle.text =
-                        context.getString(R.string.municipalities)
-                    binding.fAddressLocalName.tvText.text = addresses.municipality?.name_bn
-                    binding.fAddressUnionName.llBody.visibility = View.GONE
-                }
-                3 -> {
-                    // upzilla
-                    binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
-                    binding.fAddressLocalName.tvText.text = addresses.upazila?.name_bn
-
-                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
-                    binding.fAddressUnion.tvText.text = addresses.Union?.name_bn
-
-                    binding.fAddressUnionName.llBody.visibility = View.VISIBLE
-
-                }
-            }
-
+//            when (addresses.local_government_type_id) {
+//                1 -> {
+//                    // city corpo
+//                    addresses.cityCorporation?.name?.let {
+//                        binding.fAddressLocalName.tvText.text = it
+//                    }
+//                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+//                    binding.fAddressLocalName.tvTitle.text =
+//                        context.getString(R.string.citycorporation)
+//                    binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.nameBn
+//
+//                    binding.fAddressUnionName.llBody.visibility = View.GONE
+//                }
+//                2 -> {
+//                    // municipility
+//
+//                    binding.fAddressLocalName.tvTitle.text =
+//                        context.getString(R.string.municipalities)
+//                    binding.fAddressLocalName.tvText.text = addresses.municipality?.name_bn
+//                    binding.fAddressUnionName.llBody.visibility = View.GONE
+//                }
+//                3 -> {
+//                    // upzilla
+//                    binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+//                    binding.fAddressLocalName.tvText.text = addresses.upazila?.name_bn
+//
+//                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
+//                    binding.fAddressUnion.tvText.text = addresses.Union?.name_bn
+//
+//                    binding.fAddressUnionName.llBody.visibility = View.VISIBLE
+//
+//                }
+//            }
         }
     }
 
@@ -405,8 +485,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
         // check what type of attachment we are getting
 
-        ConvertNumber.setIconOnTextView(binding.fEQAttachment.icon ,  binding.fEQAttachment.tvText
-        , qualifications.documentPath , context)
+        ConvertNumber.setIconOnTextView(
+            binding.fEQAttachment.icon,
+            binding.fEQAttachment.tvText,
+            qualifications.documentPath,
+            context
+        )
 
 //        val extentions = ConvertNumber.getTheFileExtention(qualifications.documentPath)
 //        binding.fEQAttachment.tvText.text = (context.getString(R.string.tap_to_view))

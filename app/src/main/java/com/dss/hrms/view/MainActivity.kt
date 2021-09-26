@@ -19,14 +19,17 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
+import com.dss.hrms.di.mainScope.EmployeePendingData
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.login.LoginInfo
+import com.dss.hrms.model.pendingDataModel.PendingDataModel
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.CustomVisibility
+import com.dss.hrms.util.HelperClass
 import com.dss.hrms.view.activity.BaseActivity
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.auth.LoginActivity
@@ -55,6 +58,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.math.log
 
 class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
     @Inject
@@ -70,7 +74,12 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
     // @Named("employee")
     lateinit var employeeProfileData: EmployeeProfileData
 
+    @Inject
+    // @Named("employee")
+    lateinit var employeePendingData: EmployeePendingData
+
     var employee: Employee? = null
+    var pendingData : PendingDataModel? = null
 
     lateinit var notificationViewModel: NotificationViewModel
     lateinit var employeeViewModel: EmployeeViewModel
@@ -128,7 +137,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
 
         Log.e("mainactivity", "inject login data " + loginInfo?.email)
         Log.e("mainactivity", "inject employee data " + employeeProfileData?.employee?.profile_id)
-        getEmployeeInfo()
+        getPendingData()
 
         notification.setOnClickListener {
             Intent(this, NotificationActivity::class.java).apply {
@@ -205,13 +214,11 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
     fun getEmployeeInfo() {
         var dialog = CustomLoadingDialog().createLoadingDialog(this)
         val a = lifecycleScope.launch {
-            employeeViewModel?.getEmployeeInfo(loginInfo?.employee_id)
+            employeeViewModel.getEmployeeInfo(loginInfo.employee_id)
                 ?.collect {
                     dialog?.dismiss()
                     if (it is Employee) {
                         employee = employeeProfileData.employee
-
-
                     } else if (it is ApiError) {
 
                     } else if (it is Throwable) {
@@ -219,14 +226,39 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
                     }
                 }
         }
+
         a.invokeOnCompletion {
             drawerMenu()
+
         }
     }
 
 
-    fun drawerMenu() {
+    fun getPendingData() {
+        var dialog = CustomLoadingDialog().createLoadingDialog(this)
+        val mm = lifecycleScope.launch {
+            employeeViewModel.getPendingData(loginInfo.employee_id)
+                .collect {
+                    dialog?.dismiss()
+                    if (it is PendingDataModel) {
+                        pendingData = employeePendingData.PendingData
 
+                        Log.d("TAGED", "getPendingData:  ${employeeProfileData.employee?.presentAddresses?.size}")
+                    } else if (it is ApiError) {
+                        Log.d("TAGED", "Error :  ${it.getMessage()}")
+                    } else if (it is Throwable) {
+                        toast(appContext!!, it.toString())
+                    }
+                }
+        }
+
+        mm.invokeOnCompletion {
+            preparence.put(pendingData  , HelperClass.PEDING_DATA)
+            getEmployeeInfo()
+        }
+    }
+
+    fun drawerMenu() {
 
 
         Glide.with(this).applyDefaultRequestOptions(

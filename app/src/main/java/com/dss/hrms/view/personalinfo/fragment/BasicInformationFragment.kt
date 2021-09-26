@@ -384,7 +384,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
         val page = activity
 
-        // \
+        //
         v.fEmployeeFreedomFighterAttachment.tvText
             .setOnClickListener {
 
@@ -394,7 +394,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 // check action
                 val browserIntent = Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse(RetrofitInstance.FILE_BASE + employee?.freedom_fighter_document_path.toString())
+                    Uri.parse(RetrofitInstance.BASE_URL + employee?.freedom_fighter_document_path.toString())
                 )
                 startActivity(browserIntent)
             }
@@ -409,7 +409,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
                 val browserIntent = Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse(RetrofitInstance.FILE_BASE + employee?.disability_document_path.toString())
+                    Uri.parse(RetrofitInstance.BASE_URL + employee?.disability_document_path.toString())
                 )
                 startActivity(browserIntent)
 
@@ -422,7 +422,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             employee?.let { it1 ->
                 activity?.let { it2 ->
                     if (page != null) {
-                        editEmployeeBasicInfoDialog?.showDialog(
+                        editEmployeeBasicInfoDialog.showDialog(
                             it2,
                             object : FileClickListener {
                                 override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {

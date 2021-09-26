@@ -14,8 +14,8 @@ android {
         applicationId "com.dss.hrms"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 13 // internal test started at 11
-        versionName "1.0.12"
+        versionCode 17 // internal test started at 11
+        versionName "1.0.15"
 
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
 
@@ -77,19 +77,19 @@ android {
         }
     }
 
-    splits {
-        abi {
-            include  "armeabi-v7a", "arm64-v8a"
-        }
-    }
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            // For each separate APK per architecture, set a unique version code as described here:
-            // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "arm64-v8a":2]
-
-        }
-    }
+//    splits {
+//        abi {
+//            include  "armeabi-v7a", "arm64-v8a"
+//        }
+//    }
+//    applicationVariants.all { variant ->
+//        variant.outputs.each { output ->
+//            // For each separate APK per architecture, set a unique version code as described here:
+//            // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
+//            def versionCodes = ["armeabi-v7a":1, "arm64-v8a":2]
+//
+//        }
+//    }
 
 }
 
@@ -241,8 +241,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth-api-phone:17.1.0'
     implementation "com.anggrayudi:storage:0.13.0"
     //ndk support /64 bit
-  //  implementation 'org.adblockplus:adblock-android-webview:3.16'
+    implementation 'org.adblockplus:adblock-android-webview:3.16'
     implementation 'commons-io:commons-io:2.5'
+   // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation 'com.github.CodeBoy722:ViewPager2_Transformers:1.0.0'
 }
 // Apply the Crashlytics Gradle plugin
 apply plugin: 'com.google.firebase.crashlytics'

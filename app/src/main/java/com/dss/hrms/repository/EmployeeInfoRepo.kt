@@ -1,15 +1,15 @@
 package com.dss.hrms.repository
 
 import android.app.Application
-import android.util.JsonReader
 import android.util.Log
-import android.widget.Toast
 import com.btbapp.alquranapp.retrofit.ApiService
+import com.dss.hrms.di.mainScope.EmployeePendingData
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ErrorUtils2
+import com.dss.hrms.model.pendingDataModel.PendingDataModel
 import com.dss.hrms.retrofit.NotificationApiService
+import com.dss.hrms.util.HelperClass
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -33,6 +33,9 @@ class EmployeeInfoRepo @Inject constructor() {
     @Inject
     lateinit var employeeProfileData: EmployeeProfileData
 
+    @Inject
+    lateinit var employeePendingData: EmployeePendingData
+
 
     suspend fun getAllNotifications(platform: String?, limit: Int?, page: Int?): Any? {
         val token = preparence?.getToken()
@@ -46,8 +49,14 @@ class EmployeeInfoRepo @Inject constructor() {
                     limit
                 )
 
-                Log.e("messagebody","message ......................"+response?.message()+"             headers  "+response?.headers())
-                Log.e("messagebody","message ......................"+response?.message()+"             headers  "+response?.headers())
+                Log.e(
+                    "messagebody",
+                    "message ......................" + response?.message() + "             headers  " + response?.headers()
+                )
+                Log.e(
+                    "messagebody",
+                    "message ......................" + response?.message() + "             headers  " + response?.headers()
+                )
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) {
                     response?.body()
                 } else response?.let {
@@ -68,12 +77,36 @@ class EmployeeInfoRepo @Inject constructor() {
             try {
                 val response = apiService?.getEmployeeInfo("Bearer ${token}", employeeId)
 
-                Log.e("employee","...................response................${response?.body()}...........")
 
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) {
-                    employeeProfileData.employee = response?.body()?.data as Employee
-                    response?.body()?.data as Employee
-                    Log.d("response  tariqul ", ""+ response?.body()!!.data?.employee_quotas?.get(0)!!.quotaInformation)
+
+                    val obj = response.body()
+
+                    val pedingDataObj: PendingDataModel? =
+                        preparence.get(HelperClass.PEDING_DATA)
+                    if (pedingDataObj != null && !pedingDataObj.presentAddress.isNullOrEmpty()) {
+
+                        val list:MutableList<Employee.PresentAddresses>? =
+                            obj?.data?.presentAddresses?.toMutableList()
+
+                        // concant the model here
+                        for (item in pedingDataObj.presentAddress!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.PresentAddresses? = HelperClass.SavePresentAddresssModel(item)
+                            if (newObj != null) {
+                                newObj.isPendingData = true
+                                list?.add(newObj)
+                            }
+                        }
+
+                        obj?.data?.presentAddresses = list
+
+                    }
+
+                    employeeProfileData.employee =obj?.data as Employee
+
+                    obj.data as Employee
+                     Log.d("response  tariqul ", ""+ employeeProfileData.employee!!.presentAddresses?.size)
 
                 } else response?.let {
                     var apiError = ErrorUtils2.parseError(
@@ -83,11 +116,44 @@ class EmployeeInfoRepo @Inject constructor() {
                 }
             } catch (e: Exception) {
                 null
-                Log.e("employee","...................Exception................${e.message}...........")
+                Log.e(
+                    "employee",
+                    "...................Exception................${e.message}..........."
+                )
 
             }
         }
     }
+
+
+    suspend fun getPendingData(employeeId: Int?): Any? {
+        val token = preparence?.getToken()
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService?.getPendingData("Bearer ${token}", employeeId)
+                if (response?.body()?.code == 200 || response?.body()?.code == 201) {
+                    employeePendingData.PendingData = response?.body()?.data as PendingDataModel
+                    val msg = response?.body()
+                    Log.d("PENDING", "getPendingData: ${ msg?.message } ")
+                    response?.body()?.data as PendingDataModel
+
+                } else response?.let {
+                    var apiError = ErrorUtils2.parseError(
+                        it
+                    )
+                    apiError
+                }
+            } catch (e: Exception) {
+                null
+                Log.e(
+                    "employee",
+                    "...................Exception................${e.message}..........."
+                )
+
+            }
+        }
+    }
+
 
     suspend fun getUserPermissions(): Any? {
         val token = preparence?.getToken()

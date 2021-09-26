@@ -6,10 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.dss.hrms.di.mainScope.EmployeePendingData
 import com.dss.hrms.model.PermissionResponse
 import com.dss.hrms.model.ReportResponse
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.model.pendingDataModel.PendingDataModel
 import com.dss.hrms.repository.EmployeeInfoRepo
 import com.dss.hrms.util.Status
 import com.dss.hrms.view.notification.model.NotificationResponse
@@ -26,6 +28,9 @@ class EmployeeViewModel @Inject constructor(application: Application) :
     @Inject
     lateinit var employeeInfoRepo: EmployeeInfoRepo
 
+//    @Inject
+//    lateinit var employeePendingData: EmployeePendingData
+
 
     private var _notifications: MutableLiveData<List<NotificationResponse.Notification>>? =
         MutableLiveData()
@@ -41,6 +46,13 @@ class EmployeeViewModel @Inject constructor(application: Application) :
         //   val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
         //  viewModelScope.launch(dispatcher.Main) {
         emit(employeeInfoRepo?.getEmployeeInfo(employeeId))
+        // }
+    }
+    suspend fun getPendingData(employeeId: Int?): Flow<Any?> = flow {
+        //   val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
+        //  viewModelScope.launch(dispatcher.Main) {
+       val obbj = employeeInfoRepo.getPendingData(employeeId)  as PendingDataModel
+        emit(obbj)
         // }
     }
 

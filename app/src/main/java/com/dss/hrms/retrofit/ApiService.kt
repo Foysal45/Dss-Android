@@ -6,6 +6,7 @@ import com.dss.hrms.model.PermissionResponse
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.employeeProfile.EmployeeResponse
 import com.dss.hrms.model.login.*
+import com.dss.hrms.model.pendingDataModel.PendingDataResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -31,6 +32,14 @@ interface ApiService {
         @Header("X-Localization") language: String?,
         @Header("Authorization") token: String?
     ): Response<PermissionResponse?>?
+
+
+    @Headers("Accept: application/json")
+    @GET("/api/auth/pending-approve-data/{Id}")
+    suspend fun getPendingData(
+        @Header("Authorization") token: String,
+        @Path("Id") employee_id: Int?
+    ): Response<PendingDataResponse?>?
 
 
     @Headers("Accept: application/json")
@@ -277,16 +286,16 @@ interface ApiService {
     ): Response<Any?>?
 
 
-   // @Headers("Content-Type: application/json", "Accept: application/json")
+    // @Headers("Content-Type: application/json", "Accept: application/json")
 
     @POST("/api/auth/spouse")
 
     @JvmSuppressWildcards
 
     suspend fun addSpouseInfo(
-       @Header("X-Localization") language: String,
-       @Header("Authorization") token: String?,
-       @Body map: List<HashMap<Any, Any?>?>
+        @Header("X-Localization") language: String,
+        @Header("Authorization") token: String?,
+        @Body map: List<HashMap<Any, Any?>?>
     ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
@@ -478,7 +487,6 @@ interface ApiService {
         @Part("type") type: RequestBody?,
         @Part file: MultipartBody.Part?
     ): Call<Any?>?
-
 
 
 }

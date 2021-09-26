@@ -160,7 +160,7 @@ class ConvertNumber {
                     //          triggerWebView(ctx, link)
                     val browserIntent = Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse(RetrofitInstance.FILE_BASE + link.toString())
+                        Uri.parse(RetrofitInstance.BASE_URL + link.toString())
                     )
                     MainActivity.isViewIntent = 1
                     ctx.startActivity(browserIntent)

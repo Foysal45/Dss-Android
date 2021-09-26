@@ -4,9 +4,22 @@ import android.content.Context
 import android.widget.Spinner
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.model.pendingDataModel.PresentAddressPendingModel
+import com.google.gson.GsonBuilder
 
 class HelperClass {
     companion object {
+        val PEDING_DATA = "pending_data_obj"
+
+
+        fun  SavePresentAddresssModel(obj: PresentAddressPendingModel): Employee.PresentAddresses {
+            var model = Employee.PresentAddresses()
+            if(obj.data != null){
+                model = obj.data!!
+            }
+            return model
+        }
 
         fun decideWhatToLoadInNomineee(
             childSpinner: Spinner,

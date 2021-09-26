@@ -11,32 +11,29 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.FileUtils
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.graphics.createBitmap
-import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.anggrayudi.storage.SimpleStorage
 import com.anggrayudi.storage.SimpleStorageHelper
-import com.anggrayudi.storage.callback.FilePickerCallback
 import com.anggrayudi.storage.file.*
 import com.dss.hrms.R
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.model.employeeProfile.Employee.PresentAddresses
+import com.dss.hrms.model.pendingDataModel.PendingDataModel
 import com.dss.hrms.util.ConvertNumber
-import com.dss.hrms.util.ConvertNumber.Companion.getRealPathFromURI
 import com.dss.hrms.util.FilePath
+import com.dss.hrms.util.HelperClass
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.allInterface.FileClickListener
 import com.dss.hrms.view.allInterface.OnEmployeeInfoClickListener
@@ -47,7 +44,6 @@ import com.dss.hrms.view.personalinfo.dialog.*
 import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
-import com.theartofdev.edmodo.cropper.CropImage
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_employee_info.view.*
 import java.io.File
@@ -55,7 +51,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.lang.Exception
-import java.nio.file.Files
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -282,12 +277,24 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                     v.fab.visibility = View.VISIBLE
                 }
 //                    dataList = listOf(Employee().PermanentAddresses())
-                Log.e("list size", "list size :  " + dataList?.size)
             }
             StaticKey.PRESENT_ADDRESS -> {
                 employee?.presentAddresses?.let {
                     if (it.size > 0) {
-                        dataList = arrayListOf(it.get(0))
+                        dataList = it
+//                        val pedingDataObj: PendingDataModel? =
+//                            preparence.get(HelperClass.PEDING_DATA)
+//                        if (pedingDataObj != null && !pedingDataObj.presentAddress.isNullOrEmpty()) {
+//                            // concate the model here
+//                            for (item in pedingDataObj.presentAddress!!) {
+//                                item.data?.isPendingData = true
+//                                val newObj: PresentAddresses? = HelperClass.SavePresentAddresssModel(item)
+//                                if (newObj != null) {
+//                                    newObj.isPendingData = true
+//                                    dataList?.add(newObj)
+//                                }
+//                            }
+//                        }
                     }
                 }
 
@@ -302,26 +309,26 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 //                    dataList = listOf(Employee().PresentAddresses())
             }
             StaticKey.EducationalQualifications -> {
-                dataList = employee?.educationalQualifications
+                dataList = employee?.educationalQualifications?.toMutableList()
                 this.title = getString(R.string.educational_qualification)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().EducationalQualifications())
             }
             StaticKey.Jobjoining -> {
-                dataList = employee?.jobjoinings
+                dataList = employee?.jobjoinings?.toMutableList()
                 this.title = getString(R.string.job_joining_information)
 
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().Jobjoinings())
             }
             StaticKey.Quota -> {
-                dataList = employee?.employee_quotas
+                dataList = employee?.employee_quotas?.toMutableList()
                 this.title = getString(R.string.quota_information)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().EmployeeQuotas())
             }
             StaticKey.Spouse -> {
-                dataList = employee?.spouses
+                dataList = employee?.spouses?.toMutableList()
                 this.title = getString(R.string.spouse)
                 //   if (dataList == null || dataList?.size == 0)
                 //    v.fab.visibility = View.VISIBLE
@@ -329,14 +336,14 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                 //     v.fab.visibility = View.GONE
             }
             StaticKey.Children -> {
-                dataList = employee?.childs
+                dataList = employee?.childs?.toMutableList()
                 this.title = getString(R.string.child_information)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().Childs())
             }
 
             StaticKey.Language -> {
-                dataList = employee?.languages
+                dataList = employee?.languages?.toMutableList()
                 this.title = getString(R.string.language_information)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().Languages())
@@ -344,7 +351,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
 
             StaticKey.LocalTraining -> {
-                dataList = employee?.local_trainings
+                dataList = employee?.local_trainings?.toMutableList()
                 this.title = getString(R.string.local_training)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().LocalTrainings())
@@ -352,7 +359,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
 
             StaticKey.ForeingTraining -> {
-                dataList = employee?.foreigntrainings
+                dataList = employee?.foreigntrainings?.toMutableList()
                 this.title = getString(R.string.foreign_training)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().Foreigntrainings())
@@ -360,7 +367,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
 
             StaticKey.OfficialResidentials -> {
-                dataList = employee?.official_residentials
+                dataList = employee?.official_residentials?.toMutableList()
                 this.title = getString(R.string.official_residential_information)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().OfficialResidentials())
@@ -368,7 +375,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
 
             StaticKey.ForeignTravel -> {
-                dataList = employee?.foreign_travels
+                dataList = employee?.foreign_travels?.toMutableList()
                 this.title = getString(R.string.foreign_travel)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().ForeignTravels())
@@ -376,7 +383,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
 
             StaticKey.AdditionalQualifications -> {
-                dataList = employee?.additional_qualifications
+                dataList = employee?.additional_qualifications?.toMutableList()
                 this.title = getString(R.string.additional_professional_qualification)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().AdditionalQualifications())
@@ -384,7 +391,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
 
             StaticKey.Publication -> {
-                dataList = employee?.publications
+                dataList = employee?.publications?.toMutableList()
                 this.title = getString(R.string.publication)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().Publications())
@@ -392,7 +399,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
 
             StaticKey.HonoursAwards -> {
-                dataList = employee?.honours_awards
+                dataList = employee?.honours_awards?.toMutableList()
                 this.title = getString(R.string.honours_and_award)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().HonoursAwards())
@@ -400,7 +407,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
 
             StaticKey.DisciplinaryAction -> {
-                dataList = employee?.disciplinaryActions
+                dataList = employee?.disciplinaryActions?.toMutableList()
                 this.title = getString(R.string.disciplinary_action)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().DisciplinaryAction())
@@ -408,14 +415,14 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
 
             StaticKey.Promotion -> {
-                dataList = employee?.promotions
+                dataList = employee?.promotions?.toMutableList()
                 this.title = getString(R.string.promotion)
 //                if (dataList == null || dataList?.size == 0)
 //                    dataList = listOf(Employee().Promotions())
             }
 
             StaticKey.References -> {
-                dataList = employee?.references
+                dataList = employee?.references?.toMutableList()
                 this.title = getString(R.string.reference)
                 if (dataList != null && dataList?.size!! > 0) {
                     v.fab.visibility = View.GONE
@@ -426,7 +433,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 //                    dataList = listOf(Employee().References())
             }
             StaticKey.Nominee -> {
-                dataList = employee?.nominees
+                dataList = employee?.nominees?.toMutableList()
                 this.title = getString(R.string.nominee_info)
                 if (dataList != null && dataList?.size!! > 0) {
                     v.fab.visibility = View.VISIBLE
@@ -459,11 +466,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 //                    )
 //                }
 //            }!!
-            v.recyclerView.layoutManager = LinearLayoutManager(
-                activity,
-                RecyclerView.VERTICAL,
-                false
-            )
+            v.recyclerView.layoutManager = LinearLayoutManager(activity)
             v.recyclerView.adapter = adapter
 
 

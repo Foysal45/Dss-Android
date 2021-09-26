@@ -9,11 +9,15 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer
+import com.codeboy.pager2_transformers.Pager2_CubeInDepthTransformer
+import com.codeboy.pager2_transformers.Pager2_FadeOutTransformer
 import com.dss.hrms.R
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.login.LoginInfo
@@ -37,6 +41,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
+import kotlin.math.abs
 
 
 class EmployeeInfoActivity : BaseActivity() {
@@ -50,7 +55,7 @@ class EmployeeInfoActivity : BaseActivity() {
     @Inject
     lateinit var loginInfo: LoginInfo
 
-    @Inject
+
     lateinit var adapter: EmployeeViewPagerAdapter
     var personalFrg = BasicInformationFragment()
     private var pos = 0
@@ -62,11 +67,13 @@ class EmployeeInfoActivity : BaseActivity() {
         setContentView(R.layout.activity_employee_info)
 
         employeeViewModel =
-           ViewModelProviders.of(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
+            ViewModelProviders.of(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
         // setSupportActionBar(toolBar)
         toolBar.post {
             toolBar.inflateMenu(R.menu.my_profile)
         }
+
+        adapter = EmployeeViewPagerAdapter(this)
 
         appContext = application
         context = this
@@ -74,10 +81,12 @@ class EmployeeInfoActivity : BaseActivity() {
             onBackPressed()
         }
         setSupportActionBar(toolBar);
- //       fun init() {
+        //       fun init() {
 //        employeeViewModel =
 //            ViewModelProviders.of(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
 //    }
+
+
 
         var personal = Bundle()
         personal.putString("key", StaticKey.PersonalInformation)
@@ -242,6 +251,11 @@ class EmployeeInfoActivity : BaseActivity() {
         nomineeFrg.arguments = nomineeBundle
         adapter.addFragment(nomineeFrg, getString(R.string.nominee_info))
 
+
+
+     //   viewpager_go.adapter = adapter
+
+       // viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
         Log.e("position", "selected position ; " + MainActivity.selectedPosition)
 
     }
@@ -255,23 +269,30 @@ class EmployeeInfoActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        if(MainActivity.isViewIntent == 0 ){
+        if (MainActivity.isViewIntent == 0) {
             MainActivity.isViewIntent = 0
-            Thread(Runnable {
-                Thread.sleep(100)
-                kotlin.run {
-                    runOnUiThread(Runnable {
-                        viewpager_go.adapter = adapter
-                        viewpager_go.setPageTransformer(true, RotateUpTransformer())
-                        viewpager_go.currentItem = MainActivity.selectedPosition
-                    })
-                }
-            }).start()
-        }else {
+
+         //   viewpager_go.setPageTransformer(Pager2_FadeOutTransformer())
+            viewpager_go.adapter = adapter
+            viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
+//            viewpager_go.post(Runnable {
+//                viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
+//            })
+//            Thread(Runnable {
+//                Thread.sleep(100)
+//                kotlin.run {
+//                    runOnUiThread(Runnable {
+//
+//                        //    viewpager_go.setPageTransformer(RotateUpTransformer())
+//
+//                    })
+//                }
+//            }).start()
+        } else {
             MainActivity.isViewIntent = 0
-          //  viewpager_go.adapter = adapter
-         //   viewpager_go.setPageTransformer(true, RotateUpTransformer())
-         //   viewpager_go.currentItem = MainActivity.selectedPosition
+            //  viewpager_go.adapter = adapter
+            //   viewpager_go.setPageTransformer(true, RotateUpTransformer())
+            //   viewpager_go.currentItem = MainActivity.selectedPosition
         }
 
     }
@@ -361,7 +382,12 @@ class EmployeeInfoActivity : BaseActivity() {
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
         galleryIntent.setType("*/*")
-        val mimetypes = arrayOf("image/*", "application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword")
+        val mimetypes = arrayOf(
+            "image/*",
+            "application/pdf",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/msword"
+        )
         galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
         startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
     }
@@ -421,4 +447,46 @@ class EmployeeInfoActivity : BaseActivity() {
         }
     }
 
+}
+
+class ZoomOutPageTransformer : ViewPager2.PageTransformer {
+    private val MIN_SCALE = 0.75f
+    private val MIN_ALPHA = 0.5f
+    override fun transformPage(view: View, position: Float) {
+        view.apply {
+            val pageWidth = width
+            when {
+                position < -1 -> { // [-Infinity,-1)
+                    // This page is way off-screen to the left.
+                    alpha = 0f
+                }
+                position <= 0 -> { // [-1,0]
+                    // Use the default slide transition when moving to the left page
+                    alpha = 1f
+                    translationX = 0f
+                    translationZ = 0f
+                    scaleX = 1f
+                    scaleY = 1f
+                }
+                position <= 1 -> { // (0,1]
+                    // Fade the page out.
+                    alpha = 1 - position
+
+                    // Counteract the default slide transition
+                    translationX = pageWidth * -position
+                    // Move it behind the left page
+                    translationZ = -1f
+
+                    // Scale the page down (between MIN_SCALE and 1)
+                    val scaleFactor = (MIN_SCALE + (1 - MIN_SCALE) * (1 - Math.abs(position)))
+                    scaleX = scaleFactor
+                    scaleY = scaleFactor
+                }
+                else -> { // (1,+Infinity]
+                    // This page is way off-screen to the right.
+                    alpha = 0f
+                }
+            }
+        }
+    }
 }

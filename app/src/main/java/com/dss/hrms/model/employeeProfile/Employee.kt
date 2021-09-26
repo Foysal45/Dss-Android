@@ -135,7 +135,7 @@ class Employee {
     val employee_quotas: List<EmployeeQuotas>? = null
 
     @SerializedName("present_addresses")
-    val presentAddresses: List<PresentAddresses>? = null
+    var presentAddresses: List<PresentAddresses>? = null
 
     @SerializedName("permanent_addresses")
     val permanentAddresses: List<PermanentAddresses>? = null
@@ -443,7 +443,7 @@ class Employee {
         val prl_date: String? = null
 
         @SerializedName("status")
-        val status: Int = 0
+        val status: Int? = null
 
         @SerializedName("deleted_at")
         val deleted_at: String? = null
@@ -834,7 +834,9 @@ class Employee {
         val marital_status: MaritalStatus? = null
     }
 
-    inner class PresentAddresses {
+     class PresentAddresses() {
+
+        var  isPendingData: Boolean = false
 
         @SerializedName("id")
         val id: Int = 0
@@ -843,7 +845,7 @@ class Employee {
         val employee_id: Int = 0
 
         @SerializedName("division_id")
-        val division_id: Int = 0
+        var division_id: Int = 0
 
         @SerializedName("district_id")
         val district_id: Int = 0
@@ -928,6 +930,8 @@ class Employee {
 
         @SerializedName("union")
         var Union: union? = null
+
+
     }
 
     inner class PermanentAddresses {
@@ -1619,7 +1623,7 @@ class Employee {
         }
     }
 
-     class Childs {
+    class Childs {
 
         @SerializedName("id")
         val id: Int = 0

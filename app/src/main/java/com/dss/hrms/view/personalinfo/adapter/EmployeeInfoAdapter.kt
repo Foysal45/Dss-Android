@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelEmployeeInfoBinding
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.model.pendingDataModel.PendingDataModel
+import com.dss.hrms.util.HelperClass
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.allInterface.OnEmployeeInfoClickListener
 import com.dss.hrms.view.personalinfo.adapter.employeeInfo.EmployeeInfoDataBinding
@@ -44,6 +46,7 @@ class EmployeeInfoAdapter @Inject constructor() :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
         val binding: ModelEmployeeInfoBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.model_employee_info,
@@ -58,34 +61,43 @@ class EmployeeInfoAdapter @Inject constructor() :
 
         when (key) {
             StaticKey.PERMANENT_ADDRESS -> {
-                holder.binding?.hAddress?.tvEdit?.setOnClickListener({
-                    onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                holder.binding?.hAddress?.tvEdit?.setOnClickListener {
+                    onEmployeeInfoClickListener.onClick(dataList[position], key, position)
+                }
                 holder.binding?.llAddress?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindPermanentAddressData(
                     holder.binding!!,
-                    dataList.get(position) as Employee.PermanentAddresses,
+                    dataList[position] as Employee.PermanentAddresses,
                     context,
                     context.getString(R.string.permanent_address)
                 )
 
             }
             StaticKey.PRESENT_ADDRESS -> {
-                holder.binding?.hAddress?.tvEdit?.setOnClickListener({
+                holder.binding?.hAddress?.tvEdit?.setOnClickListener {
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                }
                 holder.binding?.llAddress?.visibility = View.VISIBLE
+                /*
+                here we going to check if there is any  stored
+                pending data then concat the data to  actual
+                list
+                */
+                val dataList = dataList[position] as Employee.PresentAddresses
+
+
                 employeeInfoDataBinding.bindPrensentAddressData(
                     holder.binding!!,
-                    dataList.get(position) as Employee.PresentAddresses,
+                    dataList,
                     context,
                     context.getString(R.string.present_address)
                 )
+
             }
             StaticKey.EducationalQualifications -> {
-                holder.binding?.hEducationQualification?.tvEdit?.setOnClickListener({
+                holder.binding?.hEducationQualification?.tvEdit?.setOnClickListener {
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                }
                 holder.binding?.llEducationQualificaion?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindEducationalQualificationData(
                     holder.binding!!,
