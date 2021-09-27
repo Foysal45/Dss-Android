@@ -3,6 +3,7 @@ package com.dss.hrms.view.personalinfo.adapter.employeeInfo
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.opengl.Visibility
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
@@ -73,11 +74,147 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAddressEmailAddress.tvTitle.text = context.getString(R.string.email)
 
 
+        if (addresses.isPendingData == false) {
 
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                addresses.village_house_no?.let {
+                    binding.fAddressVillageOrHouseNo.tvText.setText(it)
+                }
+                addresses.village_house_no?.let {
+                    binding.fAddressVillageOrHouseNo.tvText.setText(
+                        it
+                    )
+                }
+                addresses.village_house_no_bn?.let {
+                    binding.fAddressVillageOrHouseNoBn.tvText.setText(
+                        it
+                    )
+                }
+                addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.setText(it) }
+                addresses.road_word_no_bn?.let {
+                    binding.fAddressRoadOrWordNoBn.tvText.setText(
+                        it
+                    )
+                }
+                addresses.localGovernmentType?.name?.let {
+                    binding.fAddressUnion.tvText.text = it
+                }
+                addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
+                addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
+                addresses.post_code?.let { binding.fAddressPostCode.tvText.setText(it) }
+                addresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
+                addresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
+                addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
+                addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
+                addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
+                addresses.police_station_bn?.let { binding.fAddressPoliceStationBn.tvText.setText(it) }
+//            addresses.upazila?.name?.let { binding.fAddressUpazila.tvText.setText(it) }
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
+                when (addresses.local_government_type_id) {
+                    1 -> {
+                        // city corpo
+                        addresses.cityCorporation?.name?.let {
+                            binding.fAddressLocalName.tvText.text = it
+                        }
+                        //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                        binding.fAddressLocalName.tvTitle.text =
+                            context.getString(R.string.citycorporation)
+                        binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.name
+                        binding.fAddressUnionName.llBody.visibility = View.GONE
+
+                    }
+                    2 -> {
+                        // municipility
+
+                        binding.fAddressLocalName.tvTitle.text =
+                            context.getString(R.string.municipalities)
+                        binding.fAddressLocalName.tvText.text = addresses.municipality?.name
+                        binding.fAddressUnionName.llBody.visibility = View.GONE
+
+                    }
+                    3 -> {
+                        // upzilla
+                        binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                        binding.fAddressLocalName.tvText.text = addresses.upazila?.name
+
+                        binding.fAddressUnionName.tvTitle.text = context.getString(R.string.union)
+                        binding.fAddressUnionName.tvText.text = addresses.union?.name
+                        binding.fAddressUnionName.llBody.visibility = View.VISIBLE
+
+                    }
+                }
+            } else {
+                addresses.localGovernmentType?.name_bn?.let {
+                    binding.fAddressUnion.tvText.text = it
+                }
+                addresses.district?.name_bn?.let {
+                    binding.fAddressDistrict.tvText.text = it
+
+                }
+                addresses.village_house_no?.let {
+                    binding.fAddressVillageOrHouseNo.tvText.text = it
+                }
+                addresses.village_house_no_bn?.let {
+                    binding.fAddressVillageOrHouseNoBn.tvText.text = it
+                }
+                addresses.road_word_no_bn?.let {
+                    binding.fAddressRoadOrWordNoBn.tvText.text = it
+                }
+                addresses.post_code?.let { binding.fAddressPostCode.tvText.text = it }
+                addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.text = it }
+                addresses.post_office?.let { binding.fAddressPostOffice.tvText.text = it }
+                addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.text = it }
+                addresses.police_station_bn?.let {
+                    binding.fAddressPoliceStationBn.tvText.text = it
+                }
+                addresses.division?.name_bn?.let { binding.fAddressDivision.tvText.text = it }
+                addresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.text = it }
+                addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.text = it }
+                addresses.police_station?.let { binding.fAddressPoliceStation.tvText.text = it }
+                addresses.upazila?.name_bn?.let { binding.fAddressUpazila.tvText.text = it }
+
+                when (addresses.local_government_type_id) {
+                    1 -> {
+                        // city corpo
+                        addresses.cityCorporation?.name?.let {
+                            binding.fAddressLocalName.tvText.text = it
+                        }
+                        //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                        binding.fAddressLocalName.tvTitle.text =
+                            context.getString(R.string.citycorporation)
+                        binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.nameBn
+
+                        binding.fAddressUnionName.llBody.visibility = View.GONE
+                    }
+                    2 -> {
+                        // municipility
+
+                        binding.fAddressLocalName.tvTitle.text =
+                            context.getString(R.string.municipalities)
+                        binding.fAddressLocalName.tvText.text = addresses.municipality?.name_bn
+                        binding.fAddressUnionName.llBody.visibility = View.GONE
+                    }
+                    3 -> {
+                        // upzilla
+                        binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                        binding.fAddressLocalName.tvText.text = addresses.upazila?.name_bn
+
+                        binding.fAddressUnionName.tvTitle.text = context.getString(R.string.union)
+                        binding.fAddressUnionName.tvText.text = addresses.union?.name_bn
+
+                        binding.fAddressUnionName.llBody.visibility = View.VISIBLE
+
+                    }
+                }
+
+            }
+        } else {
+
+            binding.hAddress.tvTitle.text = context.getString(R.string.pending_data)
+            binding.hAddress.tvEdit.visibility = View.GONE
+
             addresses.village_house_no?.let {
                 binding.fAddressVillageOrHouseNo.tvText.setText(it)
             }
@@ -97,118 +234,21 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     it
                 )
             }
-            addresses.localGovernmentType?.name?.let {
-                binding.fAddressUnion.tvText.text = it
-            }
+
+            binding.fAddressUnion.tvText.text = "${addresses.local_government_type_id}"
+
             addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
             addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
             addresses.post_code?.let { binding.fAddressPostCode.tvText.setText(it) }
-            addresses.division?.name?.let { binding.fAddressDivision.tvText.setText(it) }
-            addresses.district?.name?.let { binding.fAddressDistrict.tvText.setText(it) }
+            binding.fAddressDivision.tvText.setText("${addresses.division_id}")
+            binding.fAddressDistrict.tvText.setText("${addresses.district_id}")
             addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
             addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
             addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
             addresses.police_station_bn?.let { binding.fAddressPoliceStationBn.tvText.setText(it) }
 //            addresses.upazila?.name?.let { binding.fAddressUpazila.tvText.setText(it) }
-
-            when (addresses.local_government_type_id) {
-                1 -> {
-                    // city corpo
-                    addresses.cityCorporation?.name?.let {
-                        binding.fAddressLocalName.tvText.text = it
-                    }
-                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
-                    binding.fAddressLocalName.tvTitle.text =
-                        context.getString(R.string.citycorporation)
-                    binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.name
-                    binding.fAddressUnionName.llBody.visibility = View.GONE
-
-                }
-                2 -> {
-                    // municipility
-
-                    binding.fAddressLocalName.tvTitle.text =
-                        context.getString(R.string.municipalities)
-                    binding.fAddressLocalName.tvText.text = addresses.municipality?.name
-                    binding.fAddressUnionName.llBody.visibility = View.GONE
-
-                }
-                3 -> {
-                    // upzilla
-                    binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
-                    binding.fAddressLocalName.tvText.text = addresses.upazila?.name
-
-                    binding.fAddressUnionName.tvTitle.text = context.getString(R.string.union)
-                    binding.fAddressUnionName.tvText.text = addresses.union?.name
-                    binding.fAddressUnionName.llBody.visibility = View.VISIBLE
-
-                }
-            }
-        } else {
-            addresses.localGovernmentType?.name_bn?.let {
-                binding.fAddressUnion.tvText.text = it
-            }
-            addresses.district?.name_bn?.let {
-                binding.fAddressDistrict.tvText.text = it
-
-            }
-            addresses.village_house_no?.let {
-                binding.fAddressVillageOrHouseNo.tvText.text = it
-            }
-            addresses.village_house_no_bn?.let {
-                binding.fAddressVillageOrHouseNoBn.tvText.text = it
-            }
-            addresses.road_word_no_bn?.let {
-                binding.fAddressRoadOrWordNoBn.tvText.text = it
-            }
-            addresses.post_code?.let { binding.fAddressPostCode.tvText.text = it }
-            addresses.road_word_no?.let { binding.fAddressRoadOrWordNo.tvText.text = it }
-            addresses.post_office?.let { binding.fAddressPostOffice.tvText.text = it }
-            addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.text = it }
-            addresses.police_station_bn?.let {
-                binding.fAddressPoliceStationBn.tvText.text = it
-            }
-            addresses.division?.name_bn?.let { binding.fAddressDivision.tvText.text = it }
-            addresses.district?.name_bn?.let { binding.fAddressDistrict.tvText.text = it }
-            addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.text = it }
-            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.text = it }
-            addresses.upazila?.name_bn?.let { binding.fAddressUpazila.tvText.text = it }
-
-            when (addresses.local_government_type_id) {
-                1 -> {
-                    // city corpo
-                    addresses.cityCorporation?.name?.let {
-                        binding.fAddressLocalName.tvText.text = it
-                    }
-                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
-                    binding.fAddressLocalName.tvTitle.text =
-                        context.getString(R.string.citycorporation)
-                    binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.nameBn
-
-                    binding.fAddressUnionName.llBody.visibility = View.GONE
-                }
-                2 -> {
-                    // municipility
-
-                    binding.fAddressLocalName.tvTitle.text =
-                        context.getString(R.string.municipalities)
-                    binding.fAddressLocalName.tvText.text = addresses.municipality?.name_bn
-                    binding.fAddressUnionName.llBody.visibility = View.GONE
-                }
-                3 -> {
-                    // upzilla
-                    binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
-                    binding.fAddressLocalName.tvText.text = addresses.upazila?.name_bn
-
-                    binding.fAddressUnionName.tvTitle.text = context.getString(R.string.union)
-                    binding.fAddressUnionName.tvText.text = addresses.union?.name_bn
-
-                    binding.fAddressUnionName.llBody.visibility = View.VISIBLE
-
-                }
-            }
-
         }
+
     }
 
 
@@ -241,8 +281,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAddressVillageOrHouseNoBn.tvTitle.setText(context.getString(R.string.vill_house_bn))
         binding.fAddressEmailAddress.tvTitle.setText(context.getString(R.string.email))
 
-        if (addresses.isPendingData == false)
-        {
+        if (addresses.isPendingData == false) {
             if (preparence.getLanguage()
                     .equals("en")
             ) {
@@ -388,10 +427,9 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 }
 
             }
-        }
-        else if ( addresses.isPendingData == true) {
+        } else if (addresses.isPendingData) {
 
-            binding.hAddress.tvTitle.setText("Pending Data")
+            binding.hAddress.tvTitle.setText(context.getString(R.string.pending_data))
             binding.hAddress.tvEdit.visibility = View.GONE
 
             binding.fAddressDistrict.tvText.setText(addresses.district_id.toString())
@@ -416,13 +454,15 @@ class EmployeeInfoDataBinding @Inject constructor() {
             addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
             addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
             binding.fAddressPoliceStationBn.tvText.setText(
-                    addresses.police_station_bn + ""
-                )
+                addresses.police_station_bn + ""
+            )
 
             addresses.division_id?.let { binding.fAddressDivision.tvText.setText(it.toString()) }
             addresses.district_id?.let { binding.fAddressDistrict.tvText.text = it.toString() }
             addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.text = it }
-            addresses.police_station?.let { binding.fAddressPoliceStation.tvText.text = it.toString() }
+            addresses.police_station?.let {
+                binding.fAddressPoliceStation.tvText.text = it.toString()
+            }
             addresses.upazila_id?.let { binding.fAddressUpazila.tvText.setText(it.toString()) }
 
 //            addresses.localGovernmentType?.name_bn?.let {
@@ -463,6 +503,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
 //                }
 //            }
         }
+
     }
 
 
@@ -472,6 +513,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         context: Context,
         heading: String
     ) {
+
         binding.fEQBoardOrUniversity.llBody.visibility = View.GONE
         binding.fEQNameOIn.llBody.visibility = View.GONE
         binding.hEducationQualification.tvTitle.setText(heading)
@@ -519,31 +561,49 @@ class EmployeeInfoDataBinding @Inject constructor() {
             binding.fEQNameOIn.llBody.visibility = View.VISIBLE
         }
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            qualifications.examination?.name?.let { binding.fEQNameOfD.tvText.setText(it) }
-            qualifications.educational_institute?.name.let {
-                binding.fEQNameOIn.tvText.setText(
-                    it
-                )
-            }
-            qualifications.board?.name.let { binding.fEQBoardOrUniversity.tvText.setText(it) }
-            qualifications.passing_year?.let { binding.fEQPassingYear.tvText.setText(it) }
-            qualifications.division_cgpa?.let { binding.fEQDivisionOrCgpa.tvText.setText(it) }
-        } else {
 
-            qualifications.examination?.name_bn?.let { binding.fEQNameOfD.tvText.setText(it) }
-            qualifications.educational_institute?.name_bn.let {
-                binding.fEQNameOIn.tvText.setText(
-                    it
-                )
+        if (!qualifications.isPendingData) {
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                qualifications.examination?.name?.let { binding.fEQNameOfD.tvText.setText(it) }
+                qualifications.educational_institute?.name.let {
+                    binding.fEQNameOIn.tvText.setText(
+                        it
+                    )
+                }
+                qualifications.board?.name.let { binding.fEQBoardOrUniversity.tvText.setText(it) }
+                qualifications.passing_year?.let { binding.fEQPassingYear.tvText.setText(it) }
+                qualifications.division_cgpa?.let { binding.fEQDivisionOrCgpa.tvText.setText(it) }
+            } else {
+
+                qualifications.examination?.name_bn?.let { binding.fEQNameOfD.tvText.setText(it) }
+                qualifications.educational_institute?.name_bn.let {
+                    binding.fEQNameOIn.tvText.setText(
+                        it
+                    )
+                }
+                qualifications.board?.name_bn.let { binding.fEQBoardOrUniversity.tvText.setText(it) }
+                qualifications.passing_year?.let { binding.fEQPassingYear.tvText.setText(it) }
+                qualifications.division_cgpa?.let { binding.fEQDivisionOrCgpa.tvText.setText(it) }
+
             }
-            qualifications.board?.name_bn.let { binding.fEQBoardOrUniversity.tvText.setText(it) }
+
+        } else {
+            binding.hEducationQualification.tvTitle.setText(context.getString(R.string.pending_data))
+            binding.hEducationQualification.tvEdit.visibility = View.GONE
+
+            binding.fEQNameOfD.tvText.setText("${qualifications.examination_id}")
+
+            binding.fEQNameOIn.tvText.setText(
+                "${qualifications.educational_institute_id}"
+            )
+            binding.fEQBoardOrUniversity.tvText.setText("${qualifications.board_id}")
             qualifications.passing_year?.let { binding.fEQPassingYear.tvText.setText(it) }
             qualifications.division_cgpa?.let { binding.fEQDivisionOrCgpa.tvText.setText(it) }
 
         }
+
     }
 
 
@@ -854,7 +914,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fJobJoiningCurrentJob.tvTitle.setText(context.getString(R.string.current_job))
         binding.tvLanguageCertificate.setText(context.getString(R.string.certificate))
 
-        context?.let {
+        context.let {
             Glide.with(it).applyDefaultRequestOptions(
                 RequestOptions()
                     .placeholder(R.drawable.ic_baseline_person_24)
@@ -872,55 +932,116 @@ class EmployeeInfoDataBinding @Inject constructor() {
             binding?.fJobJoiningCurrentJob?.tvText.setText(context.getString(R.string.no))
         }
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            jobjoinings.office?.office_name?.let { binding.fJobJoiningOffice.tvText.setText(it) }
-            jobjoinings.designation?.name?.let { binding.fJobJoiningDesignation.tvText.setText(it) }
-            jobjoinings.additional_designation?.name?.let {
-                binding.fJobJoiningAdditionalDesignation.tvText.setText(
-                    it
-                )
-            }
-            //  jobjoinings.department?.name?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
-            jobjoinings.job_type?.name?.let { binding.fJobJoiningJobType.tvText.setText(it) }
-            jobjoinings.joining_date?.let {
-                binding.fJobJoiningJoiningDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(it)
-                )
-            }
-            jobjoinings.confirmation_date?.let {
-                binding.fJobJoiningConfirmationDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(it)
-                )
-            }
-            jobjoinings.pension_date?.let {
-                binding.fJobJoiningPensionDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(it)
-                )
-            }
-            jobjoinings.employee_class?.name?.let { binding.fJobJoiningClass.tvText.setText(it) }
-            jobjoinings.grade?.name?.let { binding.fJobJoiningGrade.tvText.setText(it) }
-            jobjoinings.prl_date?.let {
-                binding.fJobJoiningPrlDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(
+        if (!jobjoinings.isPendingData) {
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                jobjoinings.office?.office_name?.let { binding.fJobJoiningOffice.tvText.setText(it) }
+                jobjoinings.designation?.name?.let {
+                    binding.fJobJoiningDesignation.tvText.setText(
                         it
                     )
-                )
+                }
+                jobjoinings.additional_designation?.name?.let {
+                    binding.fJobJoiningAdditionalDesignation.tvText.setText(
+                        it
+                    )
+                }
+                //  jobjoinings.department?.name?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
+                jobjoinings.job_type?.name?.let { binding.fJobJoiningJobType.tvText.setText(it) }
+                jobjoinings.joining_date?.let {
+                    binding.fJobJoiningJoiningDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                jobjoinings.confirmation_date?.let {
+                    binding.fJobJoiningConfirmationDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                jobjoinings.pension_date?.let {
+                    binding.fJobJoiningPensionDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                jobjoinings.employee_class?.name?.let { binding.fJobJoiningClass.tvText.setText(it) }
+                jobjoinings.grade?.name?.let { binding.fJobJoiningGrade.tvText.setText(it) }
+                jobjoinings.prl_date?.let {
+                    binding.fJobJoiningPrlDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(
+                            it
+                        )
+                    )
+                }
+
+
+                // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
+            } else {
+                jobjoinings.office?.office_name_bn?.let {
+                    binding.fJobJoiningOffice.tvText.setText(
+                        it
+                    )
+                }
+                jobjoinings.designation?.name_bn?.let {
+                    binding.fJobJoiningDesignation.tvText.setText(
+                        it
+                    )
+                }
+                jobjoinings.additional_designation?.name_bn?.let {
+                    binding.fJobJoiningAdditionalDesignation.tvText.setText(
+                        it
+                    )
+                }
+                // jobjoinings.department?.name_bn?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
+                jobjoinings.job_type?.name_bn?.let { binding.fJobJoiningJobType.tvText.setText(it) }
+                jobjoinings.joining_date?.let {
+                    binding.fJobJoiningJoiningDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                jobjoinings.confirmation_date?.let {
+                    binding.fJobJoiningConfirmationDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+
+                jobjoinings.pension_date?.let {
+                    binding.fJobJoiningPensionDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                jobjoinings.employee_class?.name_bn?.let {
+                    binding.fJobJoiningClass.tvText.setText(
+                        it
+                    )
+                }
+                jobjoinings.grade?.name_bn?.let { binding.fJobJoiningGrade.tvText.setText(it) }
+                jobjoinings.prl_date?.let {
+                    binding.fJobJoiningPrlDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(
+                            it
+                        )
+                    )
+                }
+                // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
             }
-
-
-            // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
         } else {
-            jobjoinings.office?.office_name_bn?.let { binding.fJobJoiningOffice.tvText.setText(it) }
-            jobjoinings.designation?.name_bn?.let { binding.fJobJoiningDesignation.tvText.setText(it) }
-            jobjoinings.additional_designation?.name_bn?.let {
-                binding.fJobJoiningAdditionalDesignation.tvText.setText(
-                    it
-                )
-            }
-            // jobjoinings.department?.name_bn?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
-            jobjoinings.job_type?.name_bn?.let { binding.fJobJoiningJobType.tvText.setText(it) }
+
+            binding.hJobJoiningInformation.tvTitle.setText(context.getString(R.string.pending_data))
+            binding.hJobJoiningInformation.tvEdit.visibility = View.GONE
+
+            binding.fJobJoiningOffice.tvText.setText("${jobjoinings.office_id}")
+
+            binding.fJobJoiningDesignation.tvText.setText("${jobjoinings.designation_id}")
+
+
+            binding.fJobJoiningAdditionalDesignation.tvText.setText(
+                "${jobjoinings.additional_designation_id}"
+            )
+
+            //  jobjoinings.department?.name?.let { binding.fJobJoiningDepartment.tvText.setText(it) }
+            binding.fJobJoiningJobType.tvText.setText("${jobjoinings.job_type_id}")
+
             jobjoinings.joining_date?.let {
                 binding.fJobJoiningJoiningDate.tvText.setText(
                     DateConverter.changeDateFormateForShowing(it)
@@ -931,14 +1052,15 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     DateConverter.changeDateFormateForShowing(it)
                 )
             }
-
             jobjoinings.pension_date?.let {
                 binding.fJobJoiningPensionDate.tvText.setText(
                     DateConverter.changeDateFormateForShowing(it)
                 )
             }
-            jobjoinings.employee_class?.name_bn?.let { binding.fJobJoiningClass.tvText.setText(it) }
-            jobjoinings.grade?.name_bn?.let { binding.fJobJoiningGrade.tvText.setText(it) }
+            binding.fJobJoiningClass.tvText.setText("${jobjoinings.employee_class_id}")
+
+            binding.fJobJoiningGrade.tvText.setText("${jobjoinings.grade_id}")
+
             jobjoinings.prl_date?.let {
                 binding.fJobJoiningPrlDate.tvText.setText(
                     DateConverter.changeDateFormateForShowing(
@@ -946,8 +1068,13 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     )
                 )
             }
+
+
             // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
+
         }
+
+
     }
 
     fun bindChildrenData(
@@ -1078,10 +1205,53 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     .into(it1)
             }
         }
+        if (!languages.isPendingData) {
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                languages.name_of_language?.let { binding.fLanguageNOLanguage.tvText.setText(it) }
+                languages.name_of_language_bn?.let { binding.fLanguageNOLanguageBn.tvText.setText(it) }
+                languages.name_of_institute?.let { binding.fLanguageNOInstitute.tvText.setText(it) }
+                languages.name_of_institute_bn?.let {
+                    binding.fLanguageNOInstituteBn.tvText.setText(
+                        it
+                    )
+                }
+                languages.expertise_level?.let { binding.fLanguageExperienceLevel.tvText.setText(it) }
+                languages.certification_date?.let {
+                    binding.fLanguageCertificationDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
+            } else {
+                languages.name_of_language?.let { binding.fLanguageNOLanguage.tvText.setText(it) }
+                languages.name_of_language_bn?.let { binding.fLanguageNOLanguageBn.tvText.setText(it) }
+                languages.name_of_institute?.let { binding.fLanguageNOInstitute.tvText.setText(it) }
+                languages.name_of_institute_bn?.let {
+                    binding.fLanguageNOInstituteBn.tvText.setText(
+                        it
+                    )
+                }
+                languages.expertise_level?.let {
+                    when (it.toLowerCase()) {
+                        "medium" -> binding.fLanguageExperienceLevel.tvText.setText("মধ্যম")
+                        "expert" -> binding.fLanguageExperienceLevel.tvText.setText("বিশেষজ্ঞ")
+                        "average" -> binding.fLanguageExperienceLevel.tvText.setText("গড়")
+                        else -> binding.fLanguageExperienceLevel.tvText.setText("কম")
+                    }
+                }
+                languages.certification_date?.let {
+                    binding.fLanguageCertificationDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+            }
+        } else {
+            binding.hLanguage.tvTitle.setText(context.getString(R.string.pending_data))
+            binding.hLanguage.tvEdit.visibility = View.GONE
+
+
             languages.name_of_language?.let { binding.fLanguageNOLanguage.tvText.setText(it) }
             languages.name_of_language_bn?.let { binding.fLanguageNOLanguageBn.tvText.setText(it) }
             languages.name_of_institute?.let { binding.fLanguageNOInstitute.tvText.setText(it) }
@@ -1093,25 +1263,9 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 )
             }
 
-        } else {
-            languages.name_of_language?.let { binding.fLanguageNOLanguage.tvText.setText(it) }
-            languages.name_of_language_bn?.let { binding.fLanguageNOLanguageBn.tvText.setText(it) }
-            languages.name_of_institute?.let { binding.fLanguageNOInstitute.tvText.setText(it) }
-            languages.name_of_institute_bn?.let { binding.fLanguageNOInstituteBn.tvText.setText(it) }
-            languages.expertise_level?.let {
-                when (it.toLowerCase()) {
-                    "medium" -> binding.fLanguageExperienceLevel.tvText.setText("মধ্যম")
-                    "expert" -> binding.fLanguageExperienceLevel.tvText.setText("বিশেষজ্ঞ")
-                    "average" -> binding.fLanguageExperienceLevel.tvText.setText("গড়")
-                    else -> binding.fLanguageExperienceLevel.tvText.setText("কম")
-                }
-            }
-            languages.certification_date?.let {
-                binding.fLanguageCertificationDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(it)
-                )
-            }
         }
+
+
     }
 
 
@@ -1182,35 +1336,84 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
         }
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            localTrainings.course_title?.let { binding.fLocalTrainingCourseT.tvText.setText(it) }
-            localTrainings.course_title_bn?.let { binding.fLocalTrainingCourseTBn.tvText.setText(it) }
-            localTrainings.name_of_institute?.let { binding.fLocalTrainingNOInst.tvText.setText(it) }
-            localTrainings.name_of_institute_bn?.let {
-                binding.fLocalTrainingNOInstBn.tvText.setText(
-                    it
-                )
-            }
-            localTrainings.location?.let { binding.fLocalTrainingLocation.tvText.setText(it) }
-            localTrainings.location_bn?.let { binding.fLocalTrainingLocationBn.tvText.setText(it) }
 
-            localTrainings.from_date?.let {
-                binding.fLocalTrainingFromDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(it)
-                )
-            }
-            localTrainings.to_date?.let {
-                binding.fLocalTrainingToDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(
+        if (!localTrainings.isPendingData) {
+
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                localTrainings.course_title?.let { binding.fLocalTrainingCourseT.tvText.setText(it) }
+                localTrainings.course_title_bn?.let {
+                    binding.fLocalTrainingCourseTBn.tvText.setText(
                         it
                     )
-                )
-            }
+                }
+                localTrainings.name_of_institute?.let {
+                    binding.fLocalTrainingNOInst.tvText.setText(
+                        it
+                    )
+                }
+                localTrainings.name_of_institute_bn?.let {
+                    binding.fLocalTrainingNOInstBn.tvText.setText(
+                        it
+                    )
+                }
+                localTrainings.location?.let { binding.fLocalTrainingLocation.tvText.setText(it) }
+                localTrainings.location_bn?.let { binding.fLocalTrainingLocationBn.tvText.setText(it) }
 
+                localTrainings.from_date?.let {
+                    binding.fLocalTrainingFromDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                localTrainings.to_date?.let {
+                    binding.fLocalTrainingToDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(
+                            it
+                        )
+                    )
+                }
+
+
+            } else {
+                localTrainings.course_title?.let { binding.fLocalTrainingCourseT.tvText.setText(it) }
+                localTrainings.course_title_bn?.let {
+                    binding.fLocalTrainingCourseTBn.tvText.setText(
+                        it
+                    )
+                }
+                localTrainings.name_of_institute?.let {
+                    binding.fLocalTrainingNOInst.tvText.setText(
+                        it
+                    )
+                }
+                localTrainings.name_of_institute_bn?.let {
+                    binding.fLocalTrainingNOInstBn.tvText.setText(
+                        it
+                    )
+                }
+                localTrainings.location?.let { binding.fLocalTrainingLocation.tvText.setText(it) }
+                localTrainings.location_bn?.let { binding.fLocalTrainingLocationBn.tvText.setText(it) }
+
+                localTrainings.from_date?.let {
+                    binding.fLocalTrainingFromDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                localTrainings.to_date?.let {
+                    binding.fLocalTrainingToDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(
+                            it
+                        )
+                    )
+                }
+
+            }
 
         } else {
+            binding.hLocaltraining.tvTitle.setText(context.getString(R.string.pending_data))
+            binding.hLocaltraining.tvEdit.visibility = View.GONE
+
             localTrainings.course_title?.let { binding.fLocalTrainingCourseT.tvText.setText(it) }
             localTrainings.course_title_bn?.let { binding.fLocalTrainingCourseTBn.tvText.setText(it) }
             localTrainings.name_of_institute?.let { binding.fLocalTrainingNOInst.tvText.setText(it) }
@@ -1235,7 +1438,10 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 )
             }
 
+
         }
+
+
     }
 
     fun bindForeignTrainingData(
@@ -1288,48 +1494,99 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     .into(it1)
             }
         }
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            foreigntrainings.course_title?.let { binding.fLocalTrainingCourseT.tvText.setText(it) }
-            foreigntrainings.course_title_bn?.let {
-                binding.fLocalTrainingCourseTBn.tvText.setText(
-                    it
-                )
-            }
-            foreigntrainings.name_of_institute?.let { binding.fLocalTrainingNOInst.tvText.setText(it) }
-            foreigntrainings.name_of_institute_bn?.let {
-                binding.fLocalTrainingNOInstBn.tvText.setText(
-                    it
-                )
-            }
-            foreigntrainings.from_date?.let {
-                binding.fLocalTrainingFromDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(it)
-                )
-            }
-            foreigntrainings.to_date?.let {
-                binding.fLocalTrainingToDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(it)
-                )
-            }
+
+        if (!foreigntrainings.isPendingData) {
+
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                foreigntrainings.course_title?.let { binding.fLocalTrainingCourseT.tvText.setText(it) }
+                foreigntrainings.course_title_bn?.let {
+                    binding.fLocalTrainingCourseTBn.tvText.setText(
+                        it
+                    )
+                }
+                foreigntrainings.name_of_institute?.let {
+                    binding.fLocalTrainingNOInst.tvText.setText(
+                        it
+                    )
+                }
+                foreigntrainings.name_of_institute_bn?.let {
+                    binding.fLocalTrainingNOInstBn.tvText.setText(
+                        it
+                    )
+                }
+                foreigntrainings.from_date?.let {
+                    binding.fLocalTrainingFromDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                foreigntrainings.to_date?.let {
+                    binding.fLocalTrainingToDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
 
 
-            foreigntrainings.country?.name?.let {
-                binding.fLocalTrainingCountry.tvText.setText(
-                    it
-                )
-            }
+                foreigntrainings.country?.name?.let {
+                    binding.fLocalTrainingCountry.tvText.setText(
+                        it
+                    )
+                }
 
+
+            } else {
+                foreigntrainings.course_title?.let { binding.fLocalTrainingCourseT.tvText.setText(it) }
+                foreigntrainings.course_title_bn?.let {
+                    binding.fLocalTrainingCourseTBn.tvText.setText(
+                        it
+                    )
+                }
+                foreigntrainings.name_of_institute?.let {
+                    binding.fLocalTrainingNOInst.tvText.setText(
+                        it
+                    )
+                }
+                foreigntrainings.name_of_institute_bn?.let {
+                    binding.fLocalTrainingNOInstBn.tvText.setText(
+                        it
+                    )
+                }
+                foreigntrainings.from_date?.let {
+                    binding.fLocalTrainingFromDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                foreigntrainings.to_date?.let {
+                    binding.fLocalTrainingToDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+
+
+                foreigntrainings.country?.name_bn?.let {
+                    binding.fLocalTrainingCountry.tvText.setText(
+                        it
+                    )
+                }
+
+            }
 
         } else {
+            binding.hLocaltraining.tvTitle.setText(context.getString(R.string.pending_data))
+            binding.hLocaltraining.tvEdit.visibility = View.GONE
+
             foreigntrainings.course_title?.let { binding.fLocalTrainingCourseT.tvText.setText(it) }
             foreigntrainings.course_title_bn?.let {
                 binding.fLocalTrainingCourseTBn.tvText.setText(
                     it
                 )
             }
-            foreigntrainings.name_of_institute?.let { binding.fLocalTrainingNOInst.tvText.setText(it) }
+            foreigntrainings.name_of_institute?.let {
+                binding.fLocalTrainingNOInst.tvText.setText(
+                    it
+                )
+            }
             foreigntrainings.name_of_institute_bn?.let {
                 binding.fLocalTrainingNOInstBn.tvText.setText(
                     it
@@ -1347,13 +1604,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
 
 
-            foreigntrainings.country?.name_bn?.let {
-                binding.fLocalTrainingCountry.tvText.setText(
-                    it
-                )
-            }
+            binding.fLocalTrainingCountry.tvText.setText(
+                "${foreigntrainings.country_id}"
+            )
 
         }
+
     }
 
 
@@ -1379,9 +1635,127 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fORInfoFlatNo.tvTitle.setText(context.getString(R.string.flat_no))
         binding.fORInfoStatus.tvTitle.setText(context.getString(R.string.status))
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
+        if (!officialResidentials.isPendingData) {
+
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                officialResidentials.memo_no?.let { binding.fORInfoMemoNo.tvText.setText(it) }
+                officialResidentials.memo_no_bn?.let { binding.fORInfoMemoNoBn.tvText.setText(it) }
+                officialResidentials.memo_date?.let {
+                    binding.fORInfoMemoDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                officialResidentials.office_zone?.let { binding.fORInfoOfficeZone.tvText.setText(it) }
+
+                officialResidentials.designation?.name?.let {
+                    binding.fORInfoDesignation.tvText.setText(
+                        it
+                    )
+                }
+                officialResidentials.division?.name?.let { binding.fORInfoDivision.tvText.setText(it) }
+                officialResidentials.district?.name?.let { binding.fORInfoDistrict.tvText.setText(it) }
+                officialResidentials.upazila?.name?.let { binding.fORInfoUpazila.tvText.setText(it) }
+                officialResidentials.location?.let {
+                    binding.fORInfoLocation.tvText.setText(
+                        it
+                    )
+                }
+
+                officialResidentials.quarter_name?.let {
+                    binding.fORInfoQuarterName.tvText.setText(
+                        it
+                    )
+                }
+
+                officialResidentials.flat_no_flat_type?.let {
+                    binding.fORInfoFlatNo.tvText.setText(
+                        it
+                    )
+                }
+
+                officialResidentials.status?.let {
+                    if (it == 1) {
+                        binding.fORInfoStatus.tvText.setText(
+                            EditOfficialResidentialIInfo().getStatusList().get(0).name
+                        )
+                    } else {
+                        binding.fORInfoStatus.tvText.setText(
+                            EditOfficialResidentialIInfo().getStatusList().get(1).name
+                        )
+                    }
+
+                }
+
+
+            } else {
+                officialResidentials.memo_no?.let { binding.fORInfoMemoNo.tvText.setText(it) }
+                officialResidentials.memo_no_bn?.let { binding.fORInfoMemoNoBn.tvText.setText(it) }
+                officialResidentials.memo_date?.let {
+                    binding.fORInfoMemoDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                officialResidentials.office_zone?.let { binding.fORInfoOfficeZone.tvText.setText(it) }
+
+                officialResidentials.designation?.name_bn?.let {
+                    binding.fORInfoDesignation.tvText.setText(
+                        it
+                    )
+                }
+                officialResidentials.division?.name_bn?.let {
+                    binding.fORInfoDivision.tvText.setText(
+                        it
+                    )
+                }
+                officialResidentials.district?.name_bn?.let {
+                    binding.fORInfoDistrict.tvText.setText(
+                        it
+                    )
+                }
+                officialResidentials.upazila?.name_bn?.let {
+                    binding.fORInfoUpazila.tvText.setText(
+                        it
+                    )
+                }
+                officialResidentials.location?.let {
+                    binding.fORInfoLocation.tvText.setText(
+                        it
+                    )
+                }
+
+                officialResidentials.quarter_name?.let {
+                    binding.fORInfoQuarterName.tvText.setText(
+                        it
+                    )
+                }
+
+                officialResidentials.flat_no_flat_type?.let {
+                    binding.fORInfoFlatNo.tvText.setText(
+                        it
+                    )
+                }
+
+                officialResidentials.status?.let {
+                    if (it == 1) {
+                        binding.fORInfoStatus.tvText.setText(
+                            EditOfficialResidentialIInfo().getStatusList().get(0).name_bn
+                        )
+                    } else {
+                        binding.fORInfoStatus.tvText.setText(
+                            EditOfficialResidentialIInfo().getStatusList().get(1).name_bn
+                        )
+                    }
+
+                }
+
+            }
+
+        } else {
+            binding.hOfficialResidentialInfo.tvTitle.setText(context.getString(R.string.pending_data))
+            binding.hOfficialResidentialInfo.tvEdit.visibility = View.GONE
+
             officialResidentials.memo_no?.let { binding.fORInfoMemoNo.tvText.setText(it) }
             officialResidentials.memo_no_bn?.let { binding.fORInfoMemoNoBn.tvText.setText(it) }
             officialResidentials.memo_date?.let {
@@ -1391,14 +1765,19 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
             officialResidentials.office_zone?.let { binding.fORInfoOfficeZone.tvText.setText(it) }
 
-            officialResidentials.designation?.name?.let {
-                binding.fORInfoDesignation.tvText.setText(
-                    it
-                )
-            }
-            officialResidentials.division?.name?.let { binding.fORInfoDivision.tvText.setText(it) }
-            officialResidentials.district?.name?.let { binding.fORInfoDistrict.tvText.setText(it) }
-            officialResidentials.upazila?.name?.let { binding.fORInfoUpazila.tvText.setText(it) }
+            binding.fORInfoDesignation.tvText.setText(
+                "${officialResidentials.designation_id}"
+            )
+
+            binding.fORInfoDivision.tvText.setText(
+                "${officialResidentials.division_id}"
+            )
+            binding.fORInfoDistrict.tvText.setText(
+                "${officialResidentials.district_id}"
+            )
+            binding.fORInfoUpazila.tvText.setText(
+                "${officialResidentials.upazila_id}"
+            )
             officialResidentials.location?.let {
                 binding.fORInfoLocation.tvText.setText(
                     it
@@ -1429,58 +1808,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 }
 
             }
-
-
-        } else {
-            officialResidentials.memo_no?.let { binding.fORInfoMemoNo.tvText.setText(it) }
-            officialResidentials.memo_no_bn?.let { binding.fORInfoMemoNoBn.tvText.setText(it) }
-            officialResidentials.memo_date?.let {
-                binding.fORInfoMemoDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(it)
-                )
-            }
-            officialResidentials.office_zone?.let { binding.fORInfoOfficeZone.tvText.setText(it) }
-
-            officialResidentials.designation?.name_bn?.let {
-                binding.fORInfoDesignation.tvText.setText(
-                    it
-                )
-            }
-            officialResidentials.division?.name_bn?.let { binding.fORInfoDivision.tvText.setText(it) }
-            officialResidentials.district?.name_bn?.let { binding.fORInfoDistrict.tvText.setText(it) }
-            officialResidentials.upazila?.name_bn?.let { binding.fORInfoUpazila.tvText.setText(it) }
-            officialResidentials.location?.let {
-                binding.fORInfoLocation.tvText.setText(
-                    it
-                )
-            }
-
-            officialResidentials.quarter_name?.let {
-                binding.fORInfoQuarterName.tvText.setText(
-                    it
-                )
-            }
-
-            officialResidentials.flat_no_flat_type?.let {
-                binding.fORInfoFlatNo.tvText.setText(
-                    it
-                )
-            }
-
-            officialResidentials.status?.let {
-                if (it == 1) {
-                    binding.fORInfoStatus.tvText.setText(
-                        EditOfficialResidentialIInfo().getStatusList().get(0).name_bn
-                    )
-                } else {
-                    binding.fORInfoStatus.tvText.setText(
-                        EditOfficialResidentialIInfo().getStatusList().get(1).name_bn
-                    )
-                }
-
-            }
-
         }
+
     }
 
     fun bindForeignTravelInfoData(
@@ -1516,11 +1845,59 @@ class EmployeeInfoDataBinding @Inject constructor() {
         }
 
 
+        if (!foreignTravels.isPendingData) {
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            foreignTravels.country?.name?.let { binding.fForeignTravelCountry.tvText.setText(it) }
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                foreignTravels.country?.name?.let { binding.fForeignTravelCountry.tvText.setText(it) }
+                foreignTravels.purpose?.let { binding.fForeignTravelPurpose.tvText.setText(it) }
+                foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
+                foreignTravels.details?.let { binding.fForeignTravelDetailsEn.tvText.setText(it) }
+                foreignTravels.details_bn?.let { binding.fForeignTravelDetailsBn.tvText.setText(it) }
+                foreignTravels.from_date?.let {
+                    binding.fForeignTravelFromDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                foreignTravels.to_date?.let {
+                    binding.fForeignTravelToDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(
+                            it
+                        )
+                    )
+                }
+
+
+            } else {
+                foreignTravels.country?.name_bn?.let {
+                    binding.fForeignTravelCountry.tvText.setText(
+                        it
+                    )
+                }
+                foreignTravels.purpose_bn?.let { binding.fForeignTravelPurpose.tvText.setText(it) }
+                //  foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
+                foreignTravels.details?.let { binding.fForeignTravelDetailsEn.tvText.setText(it) }
+                foreignTravels.details_bn?.let { binding.fForeignTravelDetailsBn.tvText.setText(it) }
+                foreignTravels.from_date?.let {
+                    binding.fForeignTravelFromDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
+                foreignTravels.to_date?.let {
+                    binding.fForeignTravelToDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(
+                            it
+                        )
+                    )
+                }
+
+            }
+        } else {
+            binding.hForeignTravelInfo.tvTitle.setText(context.getString(R.string.pending_data))
+            binding.hForeignTravelInfo.tvEdit.visibility = View.GONE
+
+            binding.fForeignTravelCountry.tvText.setText("${foreignTravels.country_id}")
             foreignTravels.purpose?.let { binding.fForeignTravelPurpose.tvText.setText(it) }
             foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
             foreignTravels.details?.let { binding.fForeignTravelDetailsEn.tvText.setText(it) }
@@ -1537,28 +1914,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     )
                 )
             }
-
-
-        } else {
-            foreignTravels.country?.name_bn?.let { binding.fForeignTravelCountry.tvText.setText(it) }
-            foreignTravels.purpose_bn?.let { binding.fForeignTravelPurpose.tvText.setText(it) }
-            //  foreignTravels.purpose_bn?.let { binding.fForeignTravelPurposeBn.tvText.setText(it) }
-            foreignTravels.details?.let { binding.fForeignTravelDetailsEn.tvText.setText(it) }
-            foreignTravels.details_bn?.let { binding.fForeignTravelDetailsBn.tvText.setText(it) }
-            foreignTravels.from_date?.let {
-                binding.fForeignTravelFromDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(it)
-                )
-            }
-            foreignTravels.to_date?.let {
-                binding.fForeignTravelToDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(
-                        it
-                    )
-                )
-            }
-
         }
+
     }
 
     fun bindAdditionalQualificationData(
@@ -2098,33 +2455,60 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
         Log.d("TAG", "LENGTH: ${mAdapter.itemCount} ")
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
+        if (!quotas.isPendingData) {
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
 
 
-            quotas.description?.let {
-                binding.fQuotaDescription.tvText.setText(
-                    it
-                )
-            }
-            quotas.description_bn?.let {
-                binding.fQuotaDescriptionBn.tvText.setText(
-                    it
-                )
-            }
-            quotas.quotaInformation?.name?.let {
-                binding.fQuotaName.tvText.setText(
-                    it
-                )
-            }
-            quotas.quotaInformationDetails?.name.let {
-                binding.fQuotaType.tvText.setText(
-                    it
-                )
+                quotas.description?.let {
+                    binding.fQuotaDescription.tvText.setText(
+                        it
+                    )
+                }
+                quotas.description_bn?.let {
+                    binding.fQuotaDescriptionBn.tvText.setText(
+                        it
+                    )
+                }
+                quotas.quotaInformation?.name?.let {
+                    binding.fQuotaName.tvText.setText(
+                        it
+                    )
+                }
+                quotas.quotaInformationDetails?.name.let {
+                    binding.fQuotaType.tvText.setText(
+                        it
+                    )
+                }
+
+            } else {
+                quotas.description?.let {
+                    binding.fQuotaDescription.tvText.setText(
+                        it
+                    )
+                }
+                quotas.description_bn?.let {
+                    binding.fQuotaDescriptionBn.tvText.setText(
+                        it
+                    )
+                }
+                quotas.quotaInformation?.name_bn?.let {
+                    binding.fQuotaName.tvText.setText(
+                        it
+                    )
+                }
+                quotas.quotaInformationDetails?.name_bn.let {
+                    binding.fQuotaType.tvText.setText(
+                        it
+                    )
+                }
             }
 
         } else {
+
+            binding.hQuota.tvTitle.setText(context.getString(R.string.pending_data))
+            binding.hQuota.tvEdit.visibility = View.GONE
             quotas.description?.let {
                 binding.fQuotaDescription.tvText.setText(
                     it
@@ -2135,16 +2519,19 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     it
                 )
             }
-            quotas.quotaInformation?.name_bn?.let {
-                binding.fQuotaName.tvText.setText(
-                    it
-                )
-            }
-            quotas.quotaInformationDetails?.name_bn.let {
-                binding.fQuotaType.tvText.setText(
-                    it
-                )
-            }
+
+            binding.fQuotaName.tvText.setText(
+                "${quotas.quota_information_id}"
+            )
+
+
+            binding.fQuotaType.tvText.setText(
+                "${quotas.quota_information_detail_id}"
+            )
+
+
         }
+
+
     }
 }

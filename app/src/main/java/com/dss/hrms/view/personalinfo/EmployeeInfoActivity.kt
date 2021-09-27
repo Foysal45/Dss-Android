@@ -3,8 +3,11 @@ package com.dss.hrms.view.personalinfo
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
+import android.icu.lang.UCharacter
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
@@ -87,6 +90,8 @@ class EmployeeInfoActivity : BaseActivity() {
 //    }
 
 
+        viewpager_go.adapter = adapter
+      viewpager_go.offscreenPageLimit = 1
 
         var personal = Bundle()
         personal.putString("key", StaticKey.PersonalInformation)
@@ -252,10 +257,7 @@ class EmployeeInfoActivity : BaseActivity() {
         adapter.addFragment(nomineeFrg, getString(R.string.nominee_info))
 
 
-
-     //   viewpager_go.adapter = adapter
-
-       // viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
+        // viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
         Log.e("position", "selected position ; " + MainActivity.selectedPosition)
 
     }
@@ -272,9 +274,12 @@ class EmployeeInfoActivity : BaseActivity() {
         if (MainActivity.isViewIntent == 0) {
             MainActivity.isViewIntent = 0
 
-         //   viewpager_go.setPageTransformer(Pager2_FadeOutTransformer())
-            viewpager_go.adapter = adapter
+            //   viewpager_go.setPageTransformer(Pager2_FadeOutTransformer())
+
             viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
+
+//            Handler(Looper.getMainLooper()).postDelayed(
+//                { }, 200)
 //            viewpager_go.post(Runnable {
 //                viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
 //            })
@@ -283,7 +288,11 @@ class EmployeeInfoActivity : BaseActivity() {
 //                kotlin.run {
 //                    runOnUiThread(Runnable {
 //
-//                        //    viewpager_go.setPageTransformer(RotateUpTransformer())
+//                           viewpager_go.setPageTransformer(Pager2_FadeOutTransformer())
+//
+//
+//                        viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
+//                        ///   viewpager_go.setPageTransformer(RotateUpTransformer())
 //
 //                    })
 //                }

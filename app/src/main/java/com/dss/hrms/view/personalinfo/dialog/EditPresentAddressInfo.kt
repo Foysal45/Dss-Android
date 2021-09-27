@@ -196,7 +196,7 @@ class EditPresentAddressInfo @Inject constructor() {
             try {
                 if (any.getError().isEmpty()) {
                     toast(EmployeeInfoActivity?.context, any.getMessage())
-                    Log.d("ok", "error")
+
                 } else {
                     for (n in any.getError().indices) {
                         val error = any.getError()[n].getField()

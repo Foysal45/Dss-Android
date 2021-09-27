@@ -8,9 +8,13 @@ class PendingDataModel {
     var employee: MutableList<EmployeeModel>? = null
     var quotaInformation: MutableList<QuotaInformationPendingModel>? = null
     var presentAddress: MutableList<PresentAddressPendingModel>? = null
-
-
-
+    var permanentAddress: MutableList<PermanentAddressPendingModel>? = null
+    var educationQuality: MutableList<EducationalQualificationsPendingModel>? = null
+    var languageInfo: MutableList<languageInfoPendingModel>? = null
+    var localTrainig: MutableList<localTrainigPendingModel>? = null
+    var foreignTraining: MutableList<foreignTrainingPendingModel>? = null
+    var foreignTravel: MutableList<foreignTravelPendingModel>? = null
+    var officialResidentialInfo : MutableList<officialResidentialInfoPendingModel>? = null
 
     inner class jobJoiningInformationPendingModel {
 
@@ -18,7 +22,42 @@ class PendingDataModel {
         val data: Employee.Jobjoinings? = null
 
     }
+}
 
+class officialResidentialInfoPendingModel {
+    @SerializedName("data")
+    var data: Employee.OfficialResidentials? = null
+}
+
+class foreignTravelPendingModel {
+    @SerializedName("data")
+    var data: Employee.ForeignTravels? = null
+}
+
+class foreignTrainingPendingModel {
+    @SerializedName("data")
+    var data: Employee.Foreigntrainings? = null
+}
+
+class localTrainigPendingModel {
+    @SerializedName("data")
+    var data: Employee.LocalTrainings? = null
+}
+
+
+class languageInfoPendingModel {
+    @SerializedName("data")
+    var data: Employee.Languages? = null
+}
+
+class EducationalQualificationsPendingModel {
+    @SerializedName("data")
+    var data: Employee.EducationalQualifications? = null
+}
+
+class PermanentAddressPendingModel {
+    @SerializedName("data")
+    var data: Employee.PermanentAddresses? = null
 }
 
 class PresentAddressPendingModel {

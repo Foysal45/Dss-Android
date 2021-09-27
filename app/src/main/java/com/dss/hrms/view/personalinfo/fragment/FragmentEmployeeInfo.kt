@@ -246,6 +246,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
         return v
     }
 
+
     fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
         inputStream.use { input ->
             val outputStream = FileOutputStream(outputFile)
@@ -266,7 +267,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
             StaticKey.PERMANENT_ADDRESS -> {
                 employee?.permanentAddresses?.let {
                     if (it.size > 0) {
-                        dataList = arrayListOf(it.get(0))
+                        dataList = it
                     }
                 }
 
@@ -467,6 +468,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 //                }
 //            }!!
             v.recyclerView.layoutManager = LinearLayoutManager(activity)
+            v.recyclerView.setHasFixedSize(true)
             v.recyclerView.adapter = adapter
 
 
@@ -479,10 +481,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        // Toast.makeText(context , "asd" , Toast.LENGTH_SHORT).show()
-    }
+
 
 
     companion object {

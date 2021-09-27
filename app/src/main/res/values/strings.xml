@@ -458,6 +458,7 @@
     <string name="privacy_other">Privacy and others</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms">Terms and Condition</string>
+    <string name="pending_data">Pending Data</string>
 
     <!--    -->
     <!--    <string name="full_name">Full Name</string>-->

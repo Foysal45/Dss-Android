@@ -455,5 +455,6 @@
     <string name="privacy_other">গোপনীয়তা এবং অন্যান্য</string>
     <string name="privacy_policy">গোপনীয়তা নীতি</string>
     <string name="terms">শর্তাবলী</string>
+    <string name="pending_data">Pending Data</string>
 
 </resources>

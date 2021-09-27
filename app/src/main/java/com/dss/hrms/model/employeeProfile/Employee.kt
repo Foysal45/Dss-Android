@@ -129,19 +129,19 @@ class Employee {
     val employment_job_status: EmploymentJobStatus? = null
 
     @SerializedName("jobjoinings")
-    val jobjoinings: List<Jobjoinings>? = null
+    var jobjoinings: List<Jobjoinings>? = null
 
     @SerializedName("employee_quotas")
-    val employee_quotas: List<EmployeeQuotas>? = null
+    var employee_quotas: List<EmployeeQuotas>? = null
 
     @SerializedName("present_addresses")
     var presentAddresses: List<PresentAddresses>? = null
 
     @SerializedName("permanent_addresses")
-    val permanentAddresses: List<PermanentAddresses>? = null
+    var permanentAddresses: List<PermanentAddresses>? = null
 
     @SerializedName("educational_qualifications")
-    val educationalQualifications: List<EducationalQualifications>? = null
+    var educationalQualifications: List<EducationalQualifications>? = null
 
     @SerializedName("disciplinary_actions")
     val disciplinaryActions: List<DisciplinaryAction>? = null
@@ -166,13 +166,13 @@ class Employee {
     val childs: List<Childs>? = null
 
     @SerializedName("languages")
-    val languages: List<Languages>? = null
+    var languages: List<Languages>? = null
 
     @SerializedName("local_trainings")
-    val local_trainings: List<LocalTrainings>? = null
+    var local_trainings: List<LocalTrainings>? = null
 
     @SerializedName("foreigntrainings")
-    val foreigntrainings: List<Foreigntrainings>? = null
+    var foreigntrainings: List<Foreigntrainings>? = null
 
     @SerializedName("foreign_travels")
     var foreign_travels: List<ForeignTravels>? = null
@@ -187,7 +187,7 @@ class Employee {
     val honours_awards: List<HonoursAwards>? = null
 
     @SerializedName("official_residentials")
-    val official_residentials: List<OfficialResidentials>? = null
+    var official_residentials: List<OfficialResidentials>? = null
 
     //    @SerializedName("posting_records")
 //    val posting_records: List<PostingRecords>? = null
@@ -396,9 +396,11 @@ class Employee {
         val guard_name_bn: String? = null
     }
 
-    inner class Jobjoinings {
+    class Jobjoinings() {
         @SerializedName("id")
         val id: Int = 0
+
+        var isPendingData: Boolean = false
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -670,9 +672,10 @@ class Employee {
         }
     }
 
-    inner class EmployeeQuotas {
+    class EmployeeQuotas() {
         @SerializedName("id")
         val id: Int = 0
+        var isPendingData: Boolean = false
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -834,9 +837,9 @@ class Employee {
         val marital_status: MaritalStatus? = null
     }
 
-     class PresentAddresses() {
+    class PresentAddresses() {
 
-        var  isPendingData: Boolean = false
+        var isPendingData: Boolean = false
 
         @SerializedName("id")
         val id: Int = 0
@@ -934,10 +937,11 @@ class Employee {
 
     }
 
-    inner class PermanentAddresses {
+    class PermanentAddresses() {
         @SerializedName("id")
         var id: Int = 0
 
+        var isPendingData: Boolean = false
 
         @SerializedName("employee_id")
         var employee_id: Int = 0
@@ -1080,7 +1084,8 @@ class Employee {
     }
 
 
-    inner class EducationalQualifications {
+    class EducationalQualifications() {
+        var isPendingData: Boolean = false
 
         @SerializedName("id")
         val id: Int = 0
@@ -1706,10 +1711,11 @@ class Employee {
         }
     }
 
-    inner class Languages {
+    class Languages() {
 
         @SerializedName("id")
         val id: Int = 0
+        var isPendingData: Boolean = false
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -1751,10 +1757,12 @@ class Employee {
         val updated_at: String? = null
     }
 
-    inner class LocalTrainings {
+    class LocalTrainings() {
 
         @SerializedName("id")
         val id: Int = 0
+
+        var isPendingData: Boolean = false
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -1814,10 +1822,11 @@ class Employee {
 
     }
 
-    inner class Foreigntrainings {
+    class Foreigntrainings() {
 
         @SerializedName("id")
         val id: Int = 0
+        var isPendingData: Boolean = false
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -1894,10 +1903,11 @@ class Employee {
         }
     }
 
-    inner class ForeignTravels {
+    class ForeignTravels() {
 
         @SerializedName("id")
         val id: Int = 0
+        var isPendingData: Boolean = false
 
         @SerializedName("document_path")
         val document_path: String? = null
@@ -2110,10 +2120,12 @@ class Employee {
     }
 
 
-    inner class OfficialResidentials {
+     class OfficialResidentials() {
 
         @SerializedName("id")
         val id: Int = 0
+
+         var isPendingData : Boolean = false
 
         @SerializedName("employee_id")
         val employee_id: Int = 0

@@ -72,7 +72,7 @@ class EmployeeInfoRepo @Inject constructor() {
     }
 
     suspend fun getEmployeeInfo(employeeId: Int?): Any? {
-        val token = preparence?.getToken()
+        val token = preparence.getToken()
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiService?.getEmployeeInfo("Bearer ${token}", employeeId)
@@ -85,28 +85,178 @@ class EmployeeInfoRepo @Inject constructor() {
                     val pedingDataObj: PendingDataModel? =
                         preparence.get(HelperClass.PEDING_DATA)
                     if (pedingDataObj != null && !pedingDataObj.presentAddress.isNullOrEmpty()) {
-
-                        val list:MutableList<Employee.PresentAddresses>? =
+                        val list: MutableList<Employee.PresentAddresses>? =
                             obj?.data?.presentAddresses?.toMutableList()
 
                         // concant the model here
                         for (item in pedingDataObj.presentAddress!!) {
                             item.data?.isPendingData = true
-                            val newObj: Employee.PresentAddresses? = HelperClass.SavePresentAddresssModel(item)
-                            if (newObj != null) {
-                                newObj.isPendingData = true
-                                list?.add(newObj)
-                            }
+                            val newObj: Employee.PresentAddresses =
+                                HelperClass.SavePresentAddresssModel(item)
+                            newObj.isPendingData = true
+                            list?.add(newObj)
                         }
 
                         obj?.data?.presentAddresses = list
 
                     }
+                    if (pedingDataObj != null && !pedingDataObj.permanentAddress.isNullOrEmpty()) {
 
-                    employeeProfileData.employee =obj?.data as Employee
+                        val list: MutableList<Employee.PermanentAddresses>? =
+                            obj?.data?.permanentAddresses?.toMutableList()
+
+                        // concant the model here
+                        for (item in pedingDataObj.permanentAddress!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.PermanentAddresses =
+                                HelperClass.SavePeramnentAddresssModel(item)
+                            newObj.isPendingData = true
+                            list?.add(newObj)
+                        }
+
+                        obj?.data?.permanentAddresses = list
+                    }
+
+                    pedingDataObj?.jobJoiningInformation.let {
+                        val list: MutableList<Employee.Jobjoinings>? =
+                            obj?.data?.jobjoinings?.toMutableList()
+
+                        // concant the model here
+                        for (item in pedingDataObj?.jobJoiningInformation!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.Jobjoinings =
+                                HelperClass.saveJobJoiningModel(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+
+                        obj?.data?.jobjoinings = list
+                    }
+
+                    pedingDataObj?.quotaInformation.let {
+                        val list: MutableList<Employee.EmployeeQuotas>? =
+                            obj?.data?.employee_quotas?.toMutableList()
+
+                        // concant the model here
+                        for (item in pedingDataObj?.quotaInformation!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.EmployeeQuotas =
+                                HelperClass.saveQuotaModel(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+
+                        obj?.data?.employee_quotas = list
+                    }
+
+                    pedingDataObj?.educationQuality.let {
+                        val list: MutableList<Employee.EducationalQualifications>? =
+                            obj?.data?.educationalQualifications?.toMutableList()
+
+                        // concant the model here
+                        for (item in pedingDataObj?.educationQuality!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.EducationalQualifications =
+                                HelperClass.saveEducationQualityModel(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.educationalQualifications = list
+                    }
+
+                    pedingDataObj?.languageInfo.let {
+                        val list: MutableList<Employee.Languages>? =
+                            obj?.data?.languages?.toMutableList()
+
+                        // concant the model here
+                        for (item in pedingDataObj?.languageInfo!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.Languages =
+                                HelperClass.saveLanguageModel(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.languages = list
+                    }
+
+
+                    pedingDataObj?.localTrainig.let {
+                        val list: MutableList<Employee.LocalTrainings>? =
+                            obj?.data?.local_trainings?.toMutableList()
+
+                        // concant the model here
+                        for (item in pedingDataObj?.localTrainig!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.LocalTrainings =
+                                HelperClass.saveLocalTrainingsModel(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.local_trainings = list
+                    }
+
+
+                    pedingDataObj?.foreignTraining.let {
+                        val list: MutableList<Employee.Foreigntrainings>? =
+                            obj?.data?.foreigntrainings?.toMutableList()
+
+                        // concant the model here
+                        for (item in pedingDataObj?.foreignTraining!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.Foreigntrainings =
+                                HelperClass.saveForeignTrainingsModel(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.foreigntrainings = list
+                    }
+
+                    pedingDataObj?.foreignTravel.let {
+                        val list: MutableList<Employee.ForeignTravels>? =
+                            obj?.data?.foreign_travels?.toMutableList()
+
+                        // concant the model here
+                        for (item in pedingDataObj?.foreignTravel!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.ForeignTravels =
+                                HelperClass.saveForeignTravelModel(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.foreign_travels = list
+                    }
+                    pedingDataObj?.officialResidentialInfo.let {
+                        val list: MutableList<Employee.OfficialResidentials>? =
+                            obj?.data?.official_residentials?.toMutableList()
+
+
+                        for (item in pedingDataObj?.officialResidentialInfo!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.OfficialResidentials =
+                                HelperClass.saveOfficialResidentialModel(item)
+                             newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.official_residentials = list
+                    }
+
+
+
+                    employeeProfileData.employee = obj?.data as Employee
 
                     obj.data as Employee
-                     Log.d("response  tariqul ", ""+ employeeProfileData.employee!!.presentAddresses?.size)
+                    Log.d(
+                        "presesentAddress",
+                        "" + employeeProfileData.employee!!.jobjoinings?.size
+                    )
 
                 } else response?.let {
                     var apiError = ErrorUtils2.parseError(
@@ -134,7 +284,7 @@ class EmployeeInfoRepo @Inject constructor() {
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) {
                     employeePendingData.PendingData = response?.body()?.data as PendingDataModel
                     val msg = response?.body()
-                    Log.d("PENDING", "getPendingData: ${ msg?.message } ")
+                    Log.d("PENDING", "getPendingData: ${msg?.message} ")
                     response?.body()?.data as PendingDataModel
 
                 } else response?.let {

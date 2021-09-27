@@ -319,10 +319,10 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 1))
         })
 
-        menu_profile_child_information.setOnClickListener({ view ->
+        menu_profile_child_information.setOnClickListener { view ->
             selectedPosition = 2
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 2))
-        })
+        }
         menu_profile_present_address.setOnClickListener({ view ->
             selectedPosition = 3
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 3))
