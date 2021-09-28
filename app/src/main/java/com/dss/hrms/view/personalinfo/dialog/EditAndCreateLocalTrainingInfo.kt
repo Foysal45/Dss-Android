@@ -243,8 +243,8 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         if (any is String) {
             toast(EmployeeInfoActivity.context, "" + context?.getString(R.string.updated))
             MainActivity.selectedPosition = 9
-            EmployeeInfoActivity.refreshEmployeeInfo()
             dialogCustome?.dismiss()
+            EmployeeInfoActivity.refreshEmployeeInfo()
         } else if (any is ApiError) {
             try {
                 if (any.getError().isEmpty()) {

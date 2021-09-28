@@ -14,9 +14,17 @@ class PendingDataModel {
     var localTrainig: MutableList<localTrainigPendingModel>? = null
     var foreignTraining: MutableList<foreignTrainingPendingModel>? = null
     var foreignTravel: MutableList<foreignTravelPendingModel>? = null
-    var officialResidentialInfo : MutableList<officialResidentialInfoPendingModel>? = null
+    var officialResidentialInfo: MutableList<officialResidentialInfoPendingModel>? = null
+    var additionalProfessionalQualifications: MutableList<addtionalProfeQualiPendingModel>? = null
+    var publications: MutableList<publicationsPendingModel>? = null
+    var honoursAndAward: MutableList<honoursAndAwardPendingModel>? = null
+    var desciplinaryAction: MutableList<desciplinaryActionPendingModel>? = null
+    var reference: MutableList<referencePendingModel>? = null
+
 
     inner class jobJoiningInformationPendingModel {
+        @SerializedName("id")
+        val id: Int = 0
 
         @SerializedName("data")
         val data: Employee.Jobjoinings? = null
@@ -24,53 +32,123 @@ class PendingDataModel {
     }
 }
 
+class referencePendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
+    @SerializedName("data")
+    var data: Employee.References? = null
+}
+
+class desciplinaryActionPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
+    @SerializedName("data")
+    var data: Employee.DisciplinaryAction? = null
+}
+
+class honoursAndAwardPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
+    @SerializedName("data")
+    var data: Employee.HonoursAwards? = null
+}
+
+class publicationsPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
+    @SerializedName("data")
+    var data: Employee.Publications? = null
+}
+
+class addtionalProfeQualiPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
+    @SerializedName("data")
+    var data: Employee.AdditionalQualifications? = null
+}
+
 class officialResidentialInfoPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
     @SerializedName("data")
     var data: Employee.OfficialResidentials? = null
 }
 
 class foreignTravelPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
     @SerializedName("data")
     var data: Employee.ForeignTravels? = null
 }
 
 class foreignTrainingPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
     @SerializedName("data")
     var data: Employee.Foreigntrainings? = null
 }
 
 class localTrainigPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
     @SerializedName("data")
     var data: Employee.LocalTrainings? = null
 }
 
 
 class languageInfoPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
     @SerializedName("data")
     var data: Employee.Languages? = null
 }
 
 class EducationalQualificationsPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
     @SerializedName("data")
     var data: Employee.EducationalQualifications? = null
 }
 
 class PermanentAddressPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
     @SerializedName("data")
     var data: Employee.PermanentAddresses? = null
 }
 
 class PresentAddressPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
     @SerializedName("data")
     var data: Employee.PresentAddresses? = null
 }
 
 class QuotaInformationPendingModel {
+    @SerializedName("id")
+    val id: Int = 0
+
     @SerializedName("data")
     val data: Employee.EmployeeQuotas? = null
 }
 
 class EmployeeModel {
+    @SerializedName("id")
+    val id: Int = 0
+
     @SerializedName("data")
     val data: PendingEmployeeModel? = null
 }

@@ -5,6 +5,7 @@ import android.util.Log
 import com.btbapp.alquranapp.retrofit.ApiService
 import com.dss.hrms.di.mainScope.EmployeePendingData
 import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.commonSpinnerDataLoad.CommonDataResponse
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.model.pendingDataModel.PendingDataModel
@@ -241,12 +242,91 @@ class EmployeeInfoRepo @Inject constructor() {
                             item.data?.isPendingData = true
                             val newObj: Employee.OfficialResidentials =
                                 HelperClass.saveOfficialResidentialModel(item)
-                             newObj.isPendingData = true
+                            newObj.isPendingData = true
 
                             list?.add(newObj)
                         }
                         obj?.data?.official_residentials = list
                     }
+
+                    pedingDataObj?.additionalProfessionalQualifications.let {
+                        val list: MutableList<Employee.AdditionalQualifications>? =
+                            obj?.data?.additional_qualifications?.toMutableList()
+
+
+                        for (item in pedingDataObj?.additionalProfessionalQualifications!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.AdditionalQualifications =
+                                HelperClass.saveAddiiontalQualificationModel(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.additional_qualifications = list
+                    }
+
+                    pedingDataObj?.publications.let {
+                        val list: MutableList<Employee.Publications>? =
+                            obj?.data?.publications?.toMutableList()
+
+                        for (item in pedingDataObj?.publications!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.Publications =
+                                HelperClass.savePublication(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.publications = list
+                    }
+
+                    pedingDataObj?.honoursAndAward.let {
+                        val list: MutableList<Employee.HonoursAwards>? =
+                            obj?.data?.honours_awards?.toMutableList()
+
+                        for (item in pedingDataObj?.honoursAndAward!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.HonoursAwards =
+                                HelperClass.saveHonoursAndAward(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.honours_awards = list
+                    }
+
+
+                    pedingDataObj?.desciplinaryAction.let {
+                        val list: MutableList<Employee.DisciplinaryAction>? =
+                            obj?.data?.disciplinaryActions?.toMutableList()
+
+                        for (item in pedingDataObj?.desciplinaryAction!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.DisciplinaryAction =
+                                HelperClass.savDesciplinary(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.disciplinaryActions = list
+                    }
+
+                    pedingDataObj?.reference.let {
+                        val list: MutableList<Employee.References>? =
+                            obj?.data?.references?.toMutableList()
+
+                        for (item in pedingDataObj?.reference!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.References =
+                                HelperClass.saveReference(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.references = list
+                    }
+
+
 
 
 
@@ -300,6 +380,35 @@ class EmployeeInfoRepo @Inject constructor() {
                     "...................Exception................${e.message}..........."
                 )
 
+            }
+        }
+    }
+
+    suspend fun getCommonDataDropdown(): Any? {
+        val token = preparence?.getToken()
+        return withContext(Dispatchers.Default) {
+            try {
+                val response =
+                    apiService?.getCommonDataDropDown(
+                        preparence.getLanguage()!!,
+                        "Bearer ${token}"
+                    )
+//                Log.e(
+//                    "employeerepository",
+//                    "........................................response : ${response?.body()}"
+//                )
+                if (response?.body()?.code == 200 || response?.body()?.code == 201) {
+
+
+                    response?.body()
+                } else response?.let {
+                    var apiError = ErrorUtils2.parseError(
+                        it
+                    )
+                    apiError
+                }
+            } catch (e: Exception) {
+                null
             }
         }
     }

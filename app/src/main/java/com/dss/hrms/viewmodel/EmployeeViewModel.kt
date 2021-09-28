@@ -10,6 +10,8 @@ import com.dss.hrms.di.mainScope.EmployeePendingData
 import com.dss.hrms.model.PermissionResponse
 import com.dss.hrms.model.ReportResponse
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
+import com.dss.hrms.model.commonSpinnerDataLoad.CommonData
+import com.dss.hrms.model.commonSpinnerDataLoad.CommonDataResponse
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.pendingDataModel.PendingDataModel
 import com.dss.hrms.repository.EmployeeInfoRepo
@@ -33,6 +35,9 @@ class EmployeeViewModel @Inject constructor(application: Application) :
 
 
     private var _notifications: MutableLiveData<List<NotificationResponse.Notification>>? =
+        MutableLiveData()
+
+     var _CommonDataResp: MutableLiveData<CommonData>? =
         MutableLiveData()
     var notifications: LiveData<List<NotificationResponse.Notification>>? =
         _notifications
@@ -71,6 +76,24 @@ class EmployeeViewModel @Inject constructor(application: Application) :
 //            }
 //        }
 //    }
+
+    fun getCommonDataDropDown(
+    ) {
+        viewModelScope.launch {
+
+            var response =
+                employeeInfoRepo.getCommonDataDropdown()
+
+            if (response is CommonDataResponse) {
+                // Log.e("employeeviewmodel","response : ${response.data}")
+                _CommonDataResp?.postValue(response.data)
+            } else {
+                _CommonDataResp?.postValue(null)
+            }
+        }
+    }
+
+
 
     fun getUserPermissions(
     ) {

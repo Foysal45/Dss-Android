@@ -78,11 +78,6 @@ class EmployeeInfoAdapter @Inject constructor() :
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
                 }
                 holder.binding?.llAddress?.visibility = View.VISIBLE
-                /*
-                here we going to check if there is any  stored
-                pending data then concat the data to  actual
-                list
-                */
                 val dataList = dataList[position] as Employee.PresentAddresses
 
 

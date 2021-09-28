@@ -1,5 +1,6 @@
 package com.dss.hrms.di
 
+import com.dss.hrms.SplashScreen
 import com.dss.hrms.di.leave.LeaveFragmentBuilderModule
 import com.dss.hrms.di.leave.LeaveScope
 import com.dss.hrms.di.mainScope.MainFragmentBuildersModule
@@ -37,6 +38,9 @@ import dagger.android.ContributesAndroidInjector
  */
 @Module
 abstract class ActivityBuildersModule {
+    @MainScope
+    @ContributesAndroidInjector(modules = [MainFragmentBuildersModule::class, MainModule::class, ViewModelModule::class])
+    abstract fun contributeSplashScreen(): SplashScreen
 
     @LoginScope
     @ContributesAndroidInjector(modules = [LoginModule::class, ViewModelModule::class])

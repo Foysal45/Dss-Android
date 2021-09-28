@@ -24,8 +24,10 @@ import com.codeboy.pager2_transformers.Pager2_FadeOutTransformer
 import com.dss.hrms.R
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.login.LoginInfo
+import com.dss.hrms.model.pendingDataModel.PendingDataModel
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.FilePath
+import com.dss.hrms.util.HelperClass
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.activity.BaseActivity
@@ -91,7 +93,7 @@ class EmployeeInfoActivity : BaseActivity() {
 
 
         viewpager_go.adapter = adapter
-      viewpager_go.offscreenPageLimit = 1
+        viewpager_go.offscreenPageLimit = 1
 
         var personal = Bundle()
         personal.putString("key", StaticKey.PersonalInformation)
@@ -324,13 +326,27 @@ class EmployeeInfoActivity : BaseActivity() {
         fun refreshEmployeeInfo() {
             var dialog = CustomLoadingDialog().createLoadingDialog(context)
             context?.lifecycleScope?.launch {
-                context?.employeeViewModel?.getEmployeeInfo(context?.loginInfo?.employee_id)
+
+                context?.employeeViewModel?.getPendingData(context?.loginInfo?.employee_id)
                     ?.collect {
-                        dialog?.dismiss()
-                        if (it is Employee) {
-                            context?.restartActivity()
+                        if (it is PendingDataModel) {
+                            val pendingData = it
+                            var preparence : MySharedPreparence  = MySharedPreparence(context!!)
+                            preparence.put(pendingData, HelperClass.PEDING_DATA)
+                            context?.employeeViewModel?.getEmployeeInfo(context?.loginInfo?.employee_id)
+                                ?.collect {
+                                    dialog?.dismiss()
+                                    if (it is Employee) {
+                                        context?.restartActivity()
+                                    } else {
+                                        context?.adapter?.notifyDataSetChanged()
+                                    }
+                                }
                         }
+
                     }
+
+
             }
         }
     }

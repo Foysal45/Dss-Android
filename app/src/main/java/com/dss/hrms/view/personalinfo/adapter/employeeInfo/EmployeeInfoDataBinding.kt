@@ -16,11 +16,13 @@ import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelEmployeeInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.model.commonSpinnerDataLoad.CommonData
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.util.DateConverter
+import com.dss.hrms.util.HelperClass
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
@@ -1537,6 +1539,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
             } else {
                 foreigntrainings.course_title?.let { binding.fLocalTrainingCourseT.tvText.setText(it) }
+
+
                 foreigntrainings.course_title_bn?.let {
                     binding.fLocalTrainingCourseTBn.tvText.setText(
                         it
@@ -1573,6 +1577,27 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
 
         } else {
+            val dataobject: CommonData? = preparence.get(HelperClass.COMMON_DATA)
+            if (dataobject != null) {
+
+                binding.fLocalTrainingCatName.tvText.text =
+                    "${
+                        HelperClass.getCommonDataFilltered(
+                            foreigntrainings.hrm_training_category_id,
+                            dataobject.training_categories,
+                            false
+                        )
+                    }"
+
+                binding.fLocalTrainingCountry.tvText.text = "${
+                    HelperClass.getCommonDataFilltered(
+                        foreigntrainings.country_id,
+                        dataobject.countries,
+                        false
+                    )
+                }"
+
+            }
             binding.hLocaltraining.tvTitle.setText(context.getString(R.string.pending_data))
             binding.hLocaltraining.tvEdit.visibility = View.GONE
 
@@ -1603,10 +1628,6 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 )
             }
 
-
-            binding.fLocalTrainingCountry.tvText.setText(
-                "${foreigntrainings.country_id}"
-            )
 
         }
 
@@ -1946,29 +1967,51 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
         }
 
+        if (!additionalQualifications.isPendingData) {
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                additionalQualifications.qualification_name?.let { binding.fAQName.tvText.setText(it) }
+                additionalQualifications.qualification_name_bn?.let {
+                    binding.fAQNameBn.tvText.setText(
+                        it
+                    )
+                }
+                additionalQualifications.qualification_details?.let {
+                    binding.fAQDetails.tvText.setText(
+                        it
+                    )
+                }
+                additionalQualifications.qualification_details_bn?.let {
+                    binding.fAQDetailsBn.tvText.setText(
+                        it
+                    )
+                }
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            additionalQualifications.qualification_name?.let { binding.fAQName.tvText.setText(it) }
-            additionalQualifications.qualification_name_bn?.let {
-                binding.fAQNameBn.tvText.setText(
-                    it
-                )
-            }
-            additionalQualifications.qualification_details?.let {
-                binding.fAQDetails.tvText.setText(
-                    it
-                )
-            }
-            additionalQualifications.qualification_details_bn?.let {
-                binding.fAQDetailsBn.tvText.setText(
-                    it
-                )
-            }
 
-
+            } else {
+                additionalQualifications.qualification_name?.let { binding.fAQName.tvText.setText(it) }
+                additionalQualifications.qualification_name_bn?.let {
+                    binding.fAQNameBn.tvText.setText(
+                        it
+                    )
+                }
+                additionalQualifications.qualification_details?.let {
+                    binding.fAQDetails.tvText.setText(
+                        it
+                    )
+                }
+                additionalQualifications.qualification_details_bn?.let {
+                    binding.fAQDetailsBn.tvText.setText(
+                        it
+                    )
+                }
+            }
         } else {
+            binding.hAdditionalQualification.tvTitle.text =
+                "$heading (${context.getString(R.string.pending_data)})"
+            binding.hAdditionalQualification.tvEdit.visibility = View.GONE
+
             additionalQualifications.qualification_name?.let { binding.fAQName.tvText.setText(it) }
             additionalQualifications.qualification_name_bn?.let {
                 binding.fAQNameBn.tvText.setText(
@@ -1985,7 +2028,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     it
                 )
             }
+
+
         }
+
+
     }
 
     fun bindPublicationsData(
@@ -2017,15 +2064,73 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
         }
 
+        if (!qualifications.isPendingData) {
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                qualifications.type?.name?.let {
+                    binding.fPublicationType.tvText.setText(
+                        it
+                    )
+                }
+                qualifications.publication_details?.let {
+                    binding.fPublicationDetails.tvText.setText(
+                        it
+                    )
+                }
+                qualifications.publication_details_bn?.let {
+                    binding.fPublicationDetailsBn.tvText.setText(
+                        it
+                    )
+                }
+                qualifications.publication_name?.let {
+                    binding.fPublicationNameEn.tvText.setText(
+                        it
+                    )
+                }
+                qualifications.publication_name_bn?.let {
+                    binding.fPublicationNameBn.tvText.setText(
+                        it
+                    )
+                }
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            qualifications.type?.name?.let {
-                binding.fPublicationType.tvText.setText(
-                    it
-                )
+
+            } else {
+                qualifications.publication_details_bn?.let {
+                    binding.fPublicationDetailsBn.tvText.setText(
+                        it
+                    )
+                }
+                qualifications.type?.name_bn?.let {
+                    binding.fPublicationType.tvText.setText(
+                        it
+                    )
+                }
+                qualifications.publication_details_bn?.let {
+                    binding.fPublicationDetails.tvText.setText(
+                        it
+                    )
+                }
+                qualifications.publication_name?.let {
+                    binding.fPublicationNameEn.tvText.setText(
+                        it
+                    )
+                }
+                qualifications.publication_name_bn?.let {
+                    binding.fPublicationNameBn.tvText.setText(
+                        it
+                    )
+                }
             }
+        } else {
+            binding.hPublication.tvTitle.setText("$heading (${context.getString(R.string.pending_data)})")
+
+            binding.hPublication.tvEdit.visibility = View.GONE
+
+            binding.fPublicationType.tvText.setText(
+                "${qualifications.publication_type}"
+            )
+
             qualifications.publication_details?.let {
                 binding.fPublicationDetails.tvText.setText(
                     it
@@ -2046,35 +2151,9 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     it
                 )
             }
-
-
-        } else {
-            qualifications.publication_details_bn?.let {
-                binding.fPublicationDetailsBn.tvText.setText(
-                    it
-                )
-            }
-            qualifications.type?.name_bn?.let {
-                binding.fPublicationType.tvText.setText(
-                    it
-                )
-            }
-            qualifications.publication_details_bn?.let {
-                binding.fPublicationDetails.tvText.setText(
-                    it
-                )
-            }
-            qualifications.publication_name?.let {
-                binding.fPublicationNameEn.tvText.setText(
-                    it
-                )
-            }
-            qualifications.publication_name_bn?.let {
-                binding.fPublicationNameBn.tvText.setText(
-                    it
-                )
-            }
         }
+
+
     }
 
     fun bindHonoursAndAwardData(
@@ -2105,39 +2184,70 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
         }
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            honoursAwards.award_title?.let {
-                binding.fAwardTitle.tvText.setText(
-                    it
-                )
-            }
-            honoursAwards.award_title_bn?.let {
-                binding.fAwardTitleBn.tvText.setText(
-                    it
-                )
-            }
-            honoursAwards.award_details?.let {
-                binding.fAwardDetailsDetails.tvText.setText(
-                    it
-                )
-            }
-            honoursAwards.award_details_bn?.let {
-                binding.fAwardDetailsDetailsBn.tvText.setText(
-                    it
-                )
-            }
-            honoursAwards.award_date?.let {
-                binding.fAwardDate.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(it)
-                )
-            }
+        if (!honoursAwards.isPendingData) {
+
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                honoursAwards.award_title?.let {
+                    binding.fAwardTitle.tvText.setText(
+                        it
+                    )
+                }
+                honoursAwards.award_title_bn?.let {
+                    binding.fAwardTitleBn.tvText.setText(
+                        it
+                    )
+                }
+                honoursAwards.award_details?.let {
+                    binding.fAwardDetailsDetails.tvText.setText(
+                        it
+                    )
+                }
+                honoursAwards.award_details_bn?.let {
+                    binding.fAwardDetailsDetailsBn.tvText.setText(
+                        it
+                    )
+                }
+                honoursAwards.award_date?.let {
+                    binding.fAwardDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+                }
 
 
+            } else {
+
+                honoursAwards.award_title?.let {
+                    binding.fAwardTitle.tvText.setText(
+                        it
+                    )
+                }
+                honoursAwards.award_title_bn?.let {
+                    binding.fAwardTitleBn.tvText.setText(
+                        it
+                    )
+                }
+                honoursAwards.award_details?.let {
+                    binding.fAwardDetailsDetails.tvText.setText(
+                        it
+                    )
+                }
+                honoursAwards.award_details_bn?.let {
+                    binding.fAwardDetailsDetailsBn.tvText.setText(
+                        it
+                    )
+                }
+                honoursAwards.award_date?.let {
+                    binding.fAwardDate.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(it)
+                    )
+
+                }
+            }
         } else {
-
-
+            binding.hHonoursAndAward.tvTitle.setText("$heading (${context.getString(R.string.pending_data)})")
+            binding.hHonoursAndAward.tvEdit.visibility = View.GONE
             honoursAwards.award_title?.let {
                 binding.fAwardTitle.tvText.setText(
                     it
@@ -2163,6 +2273,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     DateConverter.changeDateFormateForShowing(it)
                 )
             }
+
 
         }
     }
@@ -2254,11 +2365,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
 //        if (preparence.getLanguage()
 //                .equals("en")
 //        ) {
-        disciplinaryAction.disciplinaryActionCategory?.name?.let {
-            binding.fDACategory.tvText.setText(
-                it
-            )
-        }
+
         disciplinaryAction.present_status.let {
             binding.fDAPresentStatus.tvText.text =
                 if (disciplinaryAction.present_status == 0) "" + context.getString(R.string.pending) else context.getText(
@@ -2288,6 +2395,22 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 )
             )
         }
+        if (!disciplinaryAction.isPendingData) {
+            disciplinaryAction.disciplinaryActionCategory?.name?.let {
+                binding.fDACategory.tvText.setText(
+                    it
+                )
+            }
+        } else {
+
+            binding.hDiscipilinaryAction.tvTitle.setText("$heading (${context.getString(R.string.pending_data)})")
+
+            binding.fDACategory.tvText.setText(
+                "${disciplinaryAction.disciplinary_action_category_id}"
+            )
+
+        }
+
         //  }
     }
 
@@ -2307,34 +2430,66 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fReferenceContactNo.tvTitle.setText(context.getString(R.string.contact))
         binding.fReferenceContactNoBn.tvTitle.setText(context.getString(R.string.contact_bn))
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            references.name?.let {
-                binding.fReferenceNameEn.tvText.setText(
-                    it
-                )
+        if (!references.isPendingData) {
+
+
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                references.name?.let {
+                    binding.fReferenceNameEn.tvText.setText(
+                        it
+                    )
+                }
+                references.name_bn?.let {
+                    binding.fReferenceNameBn.tvText.setText(
+                        it
+                    )
+                }
+                references.relation?.let {
+                    binding.fReferenceRelation.tvText.setText(
+                        it
+                    )
+                }
+                references.relation_bn?.let {
+                    binding.fReferenceRelationBn.tvText.setText(
+                        it
+                    )
+                }
+                references.address?.let { binding.fReferenceAddress.tvText.setText(it) }
+                references.address_bn?.let { binding.fReferenceAddressBn.tvText.setText(it) }
+                references.contact_no?.let { binding.fReferenceContactNo.tvText.setText(it) }
+                references.contact_no_bn?.let { binding.fReferenceContactNoBn.tvText.setText(it) }
+            } else {
+                references.name?.let {
+                    binding.fReferenceNameEn.tvText.setText(
+                        it
+                    )
+                }
+                references.name_bn?.let {
+                    binding.fReferenceNameBn.tvText.setText(
+                        it
+                    )
+                }
+                references.relation?.let {
+                    binding.fReferenceRelation.tvText.setText(
+                        it
+                    )
+                }
+                references.relation_bn?.let {
+                    binding.fReferenceRelationBn.tvText.setText(
+                        it
+                    )
+                }
+                references.address?.let { binding.fReferenceAddress.tvText.setText(it) }
+                references.address_bn?.let { binding.fReferenceAddressBn.tvText.setText(it) }
+                references.contact_no?.let { binding.fReferenceContactNo.tvText.setText(it) }
+                references.contact_no_bn?.let { binding.fReferenceContactNoBn.tvText.setText(it) }
             }
-            references.name_bn?.let {
-                binding.fReferenceNameBn.tvText.setText(
-                    it
-                )
-            }
-            references.relation?.let {
-                binding.fReferenceRelation.tvText.setText(
-                    it
-                )
-            }
-            references.relation_bn?.let {
-                binding.fReferenceRelationBn.tvText.setText(
-                    it
-                )
-            }
-            references.address?.let { binding.fReferenceAddress.tvText.setText(it) }
-            references.address_bn?.let { binding.fReferenceAddressBn.tvText.setText(it) }
-            references.contact_no?.let { binding.fReferenceContactNo.tvText.setText(it) }
-            references.contact_no_bn?.let { binding.fReferenceContactNoBn.tvText.setText(it) }
         } else {
+            binding.hReference.tvTitle.setText("$heading (${context.getString(R.string.pending_data)})")
+            binding.hReference.tvEdit.visibility = View.GONE
+
             references.name?.let {
                 binding.fReferenceNameEn.tvText.setText(
                     it
@@ -2359,6 +2514,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
             references.address_bn?.let { binding.fReferenceAddressBn.tvText.setText(it) }
             references.contact_no?.let { binding.fReferenceContactNo.tvText.setText(it) }
             references.contact_no_bn?.let { binding.fReferenceContactNoBn.tvText.setText(it) }
+
         }
     }
 

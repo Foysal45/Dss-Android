@@ -468,7 +468,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
 //                }
 //            }!!
             v.recyclerView.layoutManager = LinearLayoutManager(activity)
-            v.recyclerView.setHasFixedSize(true)
+         //   v.recyclerView.setHasFixedSize(true)
             v.recyclerView.adapter = adapter
 
 

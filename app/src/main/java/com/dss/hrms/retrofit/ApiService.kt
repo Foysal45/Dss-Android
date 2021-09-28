@@ -4,6 +4,7 @@ package com.btbapp.alquranapp.retrofit
 import com.dss.hrms.model.HeadOfficeDepartmentApiResponse
 import com.dss.hrms.model.PermissionResponse
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
+import com.dss.hrms.model.commonSpinnerDataLoad.CommonDataResponse
 import com.dss.hrms.model.employeeProfile.EmployeeResponse
 import com.dss.hrms.model.login.*
 import com.dss.hrms.model.pendingDataModel.PendingDataResponse
@@ -25,6 +26,12 @@ interface ApiService {
         @Body map: HashMap<Any, Any>
     ): Response<LoginResponse?>?
 
+    @Headers("Accept: application/json")
+    @GET("/api/auth/common-dropdown")
+    suspend fun getCommonDataDropDown(
+        @Header("X-Localization") language: String?,
+        @Header("Authorization") token: String?
+    ): Response<CommonDataResponse>
 
     @Headers("Accept: application/json")
     @GET("/api/auth/user-permissions")
