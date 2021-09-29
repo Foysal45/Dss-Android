@@ -10,6 +10,7 @@
         <item>অন্যান্য</item>
 
     </string-array>
+    <string name="union_or_municiplity">Type (City corp/Upazila/Municipality)</string>
     <string name="confirmation">Confirmation</string>
     <string name="are_you_sure">would you like to exit?</string>
     <string name="no">না</string>

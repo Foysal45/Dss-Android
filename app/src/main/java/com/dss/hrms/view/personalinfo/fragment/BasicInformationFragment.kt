@@ -26,15 +26,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
 import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.commonSpinnerDataLoad.CommonData
 import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.model.pendingDataModel.PendingDataModel
 import com.dss.hrms.retrofit.RetrofitInstance
-import com.dss.hrms.util.ConvertNumber
-import com.dss.hrms.util.DateConverter
-import com.dss.hrms.util.FilePath
-import com.dss.hrms.util.StaticKey
+import com.dss.hrms.util.*
 import com.dss.hrms.view.allInterface.FileClickListener
 import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
@@ -73,7 +71,6 @@ import kotlinx.android.synthetic.main.fragment_basic_information.view.hBasicInfo
 import kotlinx.android.synthetic.main.fragment_basic_information.view.ivEmployee
 import kotlinx.android.synthetic.main.fragment_basic_information.view.tvImageTitle
 import kotlinx.android.synthetic.main.personal_information_header_field.view.*
-import kotlinx.android.synthetic.main.personel_information_view_field.view.*
 import kotlinx.android.synthetic.main.personel_information_view_field.view.llBody
 import kotlinx.android.synthetic.main.personel_information_view_field.view.tvText
 import kotlinx.android.synthetic.main.personel_information_view_field.view.tvTitle
@@ -142,7 +139,25 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         v = inflater.inflate(R.layout.fragment_basic_information, container, false)
         this.employee = employeeProfileData.employee
         ctx = v.context
+
+        v.llJobjoningInfo1.visibility = View.GONE
         setData()
+        val pendingOBj: PendingDataModel? = preparence.get(HelperClass.PEDING_DATA)
+        val pendingEmployee = pendingOBj?.employee
+        if (!pendingEmployee.isNullOrEmpty()) {
+
+            v.llJobjoningInfo1.visibility = View.VISIBLE
+
+            pendingEmployee[0].data?.employment_job_status = employee?.employment_job_status
+            pendingEmployee[0].data?.employment_job_status?.employeementstatus =
+                employee?.employment_job_status?.employeementstatus
+            pendingEmployee[0].data?.user = employee?.user
+
+            setPendingData(pendingEmployee[0].data , employee?.employment_job_status?.employeementstatus?.name)
+        }
+
+
+
         EmployeeInfoActivity.context?.let { verifyStoragePermissions(it) }
 
         return v
@@ -255,10 +270,9 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                         .toLowerCase()
 
 
-                if(fileExtentions.isEmpty()){
+                if (fileExtentions.isEmpty()) {
                     v.fEmployeeFreedomFighterAttachment.tvText.text = " No Attachment"
-                }
-                else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+                } else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
                         "jpg"
                     )
                 ) {
@@ -301,11 +315,9 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                     .toLowerCase()
 
 
-            if(fileExtentions.isEmpty()){
+            if (fileExtentions.isEmpty()) {
                 v.fEmployeeFreedomFighterAttachment.tvText.text = " No Attachment"
-            }
-
-            else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+            } else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
                     "jpg"
                 )
             ) {
@@ -388,17 +400,17 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         v.fEmployeeFreedomFighterAttachment.tvText
             .setOnClickListener {
 
-            if (employee?.freedom_fighter_document_path.isNullOrBlank()) {
-                Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
-            } else {
-                // check action
-                val browserIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(RetrofitInstance.BASE_URL + employee?.freedom_fighter_document_path.toString())
-                )
-                startActivity(browserIntent)
+                if (employee?.freedom_fighter_document_path.isNullOrBlank()) {
+                    Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+                } else {
+                    // check action
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(RetrofitInstance.BASE_URL + employee?.freedom_fighter_document_path.toString())
+                    )
+                    startActivity(browserIntent)
+                }
             }
-        }
 
         v.fDisabilityAttachment.tvText.setOnClickListener {
             // get the extention oof the file
@@ -423,6 +435,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 activity?.let { it2 ->
                     if (page != null) {
                         editEmployeeBasicInfoDialog.showDialog(
+                            it1,
                             it2,
                             object : FileClickListener {
                                 override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
@@ -437,6 +450,369 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 }
             }
         }
+
+    }
+
+    fun setPendingData(employee1: Employee?, name: String?) {
+
+        val commonData: CommonData? = preparence.get(HelperClass.COMMON_DATA)
+
+        v.fPresentBasicSalary1.llBody.visibility = View.GONE
+        v.fPresentGrossSalary1.llBody.visibility = View.GONE
+
+        v.hBasicInformation1.tvTitle.setText(
+            " ${getString(R.string.personal_information)}(${
+                getString(
+                    R.string.pending_data
+                )
+            })"
+        )
+        v.fEmployeeId1.tvTitle.setText(getString(R.string.employee_id))
+
+        v.fNameEng1.tvTitle.setText(getString(R.string.name))
+
+        v.fNameBangla1.tvTitle.setText(getString(R.string.name_b))
+
+        v.fDOB1.tvTitle.setText(getString(R.string.birth))
+        v.fGender1.tvTitle.setText(getString(R.string.gender))
+        v.fMaritalStatus1.tvTitle.setText(getString(R.string.marital_status))
+        v.fReligion1.tvTitle.setText(getString(R.string.religion))
+        v.fBloodGroup1.tvTitle.setText(getString(R.string.blood_group))
+        v.fPresentBasicSalary1.tvTitle.setText(getString(R.string.present_basic_salary))
+        v.fPresentGrossSalary1.tvTitle.setText(getString(R.string.present_gross_salary))
+        v.fTIN1.tvTitle.setText(getString(R.string.tin_no))
+        v.fPunchId1.tvTitle.setText(getString(R.string.punch_id))
+
+        v.fFatherNameEng1.tvTitle.setText(getString(R.string.f_name))
+        v.fFatherNameBangla1.tvTitle.setText(getString(R.string.f_name_b))
+        v.fMotherNameEng1.tvTitle.setText(getString(R.string.m_name))
+        v.fMotherNameBangla1.tvTitle.setText(getString(R.string.m_name_b))
+        v.fEmail1.tvTitle.setText(getString(R.string.email))
+        v.fUserName1.tvTitle.setText(getString(R.string.user_name))
+        v.fPhone1.tvTitle.setText(getString(R.string.phone))
+        v.fEmployeeType1.tvTitle.setText(getString(R.string.employee_type))
+        v.fEmployeeJobJoiningDate1.tvTitle.setText(getString(R.string.employment_job_joining_date))
+        v.fEmployeeStatusType1.tvTitle.setText(getString(R.string.employee_status_type))
+        v.fEmployeeStatusDate1.tvTitle.setText(getString(R.string.employee_status_date))
+        v.fEmployeeFreedomFighterquota1.tvTitle.setText(getString(R.string.has_freedom_fighter_quota))
+        v.fDisability1.tvTitle.setText(getString(R.string.has_disability))
+        v.tvImageTitle1.setText(getString(R.string.photo))
+        v.fEmployeeRole1.tvTitle.setText(getString(R.string.employee_role))
+        v.fDisabilityType1.tvTitle.setText(getString(R.string.disability_type))
+        v.fDisabilityDegree1.tvTitle.setText(getString(R.string.disability_degree))
+        v.fDisabledPersonId1.tvTitle.setText(getString(R.string.disabled_person_id))
+        v.fNid1.tvTitle.setText(getString(R.string.nid_no))
+
+        v.fEmployeeId1.tvText.setText("" + employee1?.profile_id)
+        employee1?.name?.let { v.fNameEng1.tvText.setText(it) }
+        employee1?.name_bn?.let { v.fNameBangla1.tvText.setText(it) }
+        employee1?.date_of_birth?.let {
+            v.fDOB1.tvText.setText(
+                (DateConverter.changeDateFormateForShowing(
+                    it
+                ))
+            )
+        }
+        employee1?.job_joining_date?.let {
+            v.fEmployeeJobJoiningDate1.tvText.setText(
+                (DateConverter.changeDateFormateForShowing(
+                    it
+                ))
+            )
+        }
+        employee1?.fathers_name?.let { v.fFatherNameEng1.tvText.setText(it) }
+        employee1?.fathers_name_bn?.let { v.fFatherNameBangla1.tvText.setText(it) }
+        employee1?.mothers_name?.let { v.fMotherNameEng1.tvText.setText(it) }
+        employee1?.mothers_name_bn?.let { v.fMotherNameBangla1.tvText.setText(it) }
+        employee1?.user?.email?.let { v.fEmail1.tvText.setText(it) }
+        employee1?.user?.username?.let { v.fUserName1.tvText.setText(it) }
+        employee1?.phone_number?.let { v.fPhone1.tvText.setText(it) }
+        employee1?.nid_no?.let { v.fNid1.tvText.setText(it) }
+        employee1?.tin_no?.let { v.fTIN1.tvText.setText(it) }
+        employee1?.punch_id?.let { v.fPunchId1.tvText.setText(it) }
+        employee1?.present_basic_salary?.let { v.fPresentBasicSalary1.tvText.setText(it) }
+        employee1?.present_gross_salary?.let { v.fPresentGrossSalary1.tvText.setText(it) }
+
+        employee1?.employment_job_status?.status_date?.let {
+            v.fEmployeeStatusDate1.tvText.setText(
+                (DateConverter.changeDateFormateForShowing(
+                    it
+                ))
+            )
+        }
+        employee1?.user?.roles?.let {
+            if (it.size > 0) {
+                v.fEmployeeRole1.tvText.setText(it.get(0).name)
+            }
+        }
+
+        employee1?.has_freedom_fighter_quota?.let {
+            if (it) {
+                v.fEmployeeFreedomFighterquota1.tvText.text = context?.getString(R.string.yes)
+                // emp has the fredom fihter quta
+                // decide what to do
+                v.fEmployeeFreedomFighterAttachment1.llBody.visibility = View.VISIBLE
+                // assgin text to the view
+                v.fEmployeeFreedomFighterAttachment1.tvTitle.text =
+                    context?.getString(R.string.attachment)
+                v.fEmployeeFreedomFighterAttachment1.tvText.setTextColor(
+                    ContextCompat.getColor(
+                        ctx,
+                        R.color.green
+                    )
+                )
+                v.fEmployeeFreedomFighterAttachment1.tvText.text = " Tap To View"
+                val fileExtentions =
+                    ConvertNumber.getTheFileExtention(employee1?.freedom_fighter_document_path)
+                        .toLowerCase()
+
+
+                if (fileExtentions.isEmpty()) {
+                    v.fEmployeeFreedomFighterAttachment1.tvText.text = " No Attachment"
+                } else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+                        "jpg"
+                    )
+                ) {
+                    v.fEmployeeFreedomFighterAttachment1.icon.background =
+                        ContextCompat.getDrawable(ctx, R.drawable.picture)
+                } else {
+                    v.fEmployeeFreedomFighterAttachment1.icon.background =
+                        ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
+                }
+
+            } else {
+                v.fEmployeeFreedomFighterquota1.tvText.text = context?.getString(R.string.no)
+                v.fEmployeeFreedomFighterAttachment1.llBody.visibility = View.GONE
+            }
+
+        }
+
+        if (employee1?.has_disability == false)
+        {
+            Log.e("hasdisability", "" + employee1?.has_disability)
+            v.fDisability1.tvText.setText("" + context?.getString(R.string.no))
+            v.fDisabilityDegree1.llBody.visibility = View.GONE
+            v.fDisabilityType1?.llBody?.visibility = View.GONE
+            v.fDisabledPersonId1?.llBody?.visibility = View.GONE
+            v.fDisabilityAttachment1.llBody.visibility = View.GONE
+
+        }
+        else
+        {
+            v.fDisability1.tvText.setText("" + context?.getString(R.string.yes))
+            v.fDisabilityDegree1?.llBody?.visibility = View.VISIBLE
+            v.fDisabilityType1?.llBody?.visibility = View.VISIBLE
+            v.fDisabledPersonId1?.llBody?.visibility = View.VISIBLE
+            v.fDisabledPersonId1.tvText.setText(employee1?.disabled_person_id)
+
+            v.fDisabilityAttachment1.llBody.visibility = View.VISIBLE
+            v.fDisabilityAttachment1.tvTitle.text = context?.getString(R.string.attachment)
+            v.fDisabilityAttachment1.tvText.setTextColor(ContextCompat.getColor(ctx, R.color.green))
+            v.fDisabilityAttachment1.tvText.text = " Tap To View"
+
+            val fileExtentions =
+                ConvertNumber.getTheFileExtention(employee1?.disability_document_path)
+                    .toLowerCase()
+
+
+            if (fileExtentions.isEmpty()) {
+                v.fEmployeeFreedomFighterAttachment1.tvText.text = " No Attachment"
+            } else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+                    "jpg"
+                )
+            ) {
+                v.fDisabilityAttachment1.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.picture)
+            } else {
+                v.fDisabilityAttachment1.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
+            }
+
+            if (preparence?.getLanguage()
+                    .equals("en")
+            ) {
+
+
+                v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type)
+                v.fDisabilityDegree1.tvText.setText(employee1?.disability_degree?.disability_degree)
+                v.fDisabilityType1.tvText.setText(employee1?.disability_type?.disability_type)
+//                employee1?.employment_job_status?.employeementstatus?.name?.let {
+//                    v.fEmployeeStatusType1.tvText.setText(
+//                        it
+//
+                //  }
+            }
+            else {
+
+                v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type_bn)
+                v.fDisabilityDegree1.tvText.setText(employee1?.disability_degree?.disability_degree_bn)
+                v.fDisabilityType1.tvText.setText(employee1?.disability_type?.disability_type_bn)
+
+            }
+
+        }
+
+
+        if (preparence?.getLanguage()
+                .equals("en")
+        )
+        {
+
+            v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type)
+            v.fEmployeeStatusType1.tvText.setText(employee1?.employment_job_status?.employeementstatus?.name)
+            v.fGender1.tvText.text = "${
+                employee1?.gender_id?.let {
+                    HelperClass.getCommonDataFilltered(it, commonData?.genders, false)
+                }
+            }"
+
+
+            v.fMaritalStatus1.tvText.text = "${
+                employee1?.marital_status_id?.let {
+                    HelperClass.getCommonDataFilltered(it, commonData?.marital_status, false)
+                }
+            }"
+
+            v.fEmployeeType1.tvText.text = "${
+                employee1?.employee_type_id?.let {
+                    HelperClass.getCommonDataFilltered(it, commonData?.employee_types, false)
+                }
+            }"
+
+
+
+            v.fBloodGroup1.tvText.setText(
+                "${
+                    employee1?.blood_group_id?.let {
+                        it
+                    }
+                }"
+            )
+
+            v.fReligion1.tvText.setText(
+                "${
+                    employee1?.religion_id?.let {
+                        HelperClass.getCommonDataFilltered(it, commonData?.religions, false)
+                    }
+                }"
+            )
+
+//            v.fEmployeeStatusType1.tvText.setText(employee1?.employment_job_status?.employee1mentstatus?.name)
+
+        }
+        else
+        {
+            v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type)
+            v.fEmployeeStatusType1.tvText.setText(employee1?.employment_job_status?.employeementstatus?.name)
+            v.fGender1.tvText.text = "${
+                employee1?.gender_id?.let {
+                    HelperClass.getCommonDataFilltered(it, commonData?.genders, true)
+                }
+            }"
+
+
+            v.fMaritalStatus1.tvText.text = "${
+                employee1?.marital_status_id?.let {
+                    HelperClass.getCommonDataFilltered(it, commonData?.marital_status, true)
+                }
+            }"
+
+            v.fEmployeeType1.tvText.text = "${
+                employee1?.employee_type_id?.let {
+                    HelperClass.getCommonDataFilltered(it, commonData?.employee_types, true)
+                }
+            }"
+
+
+
+            v.fBloodGroup1.tvText.setText(
+                "${
+                    employee1?.blood_group_id?.let {
+                        it
+                    }
+                }"
+            )
+
+            v.fReligion1.tvText.setText(
+                "${
+                    employee1?.religion_id?.let {
+                        HelperClass.getCommonDataFilltered(it, commonData?.religions, true)
+                    }
+                }"
+            )
+
+        }
+
+//        activity?.let {
+//            Glide.with(it).applyDefaultRequestOptions(
+//                RequestOptions()
+//                    .placeholder(R.drawable.ic_baseline_image_24)
+//            ).load(RetrofitInstance.BASE_URL + employee1?.photo)
+//                .into(v.ivEmployee)
+//        }
+
+        Glide.with(ctx)
+            .load(RetrofitInstance.BASE_URL + employee1?.photo)
+            .placeholder(R.drawable.ic_baseline_image_24)
+            .into(v.ivEmployee1)
+
+        val page = activity
+
+        //
+        v.fEmployeeFreedomFighterAttachment1.tvText
+            .setOnClickListener {
+
+                if (employee1?.freedom_fighter_document_path.isNullOrBlank()) {
+                    Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+                } else {
+                    // check action
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(RetrofitInstance.BASE_URL + employee1?.freedom_fighter_document_path.toString())
+                    )
+                    startActivity(browserIntent)
+                }
+            }
+
+        v.fDisabilityAttachment1.tvText.setOnClickListener {
+            // get the extention oof the file
+
+            if (employee1?.disability_document_path.isNullOrBlank()) {
+                Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+            } else {
+
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(RetrofitInstance.BASE_URL + employee1?.disability_document_path.toString())
+                )
+                startActivity(browserIntent)
+
+            }
+        }
+
+
+
+        v.hBasicInformation1.tvEdit.setOnClickListener {
+            employee1?.let { it1 ->
+                activity?.let { it2 ->
+                    if (page != null) {
+                        editEmployeeBasicInfoDialog.showDialog(
+                            it1,
+                            it2,
+                            object : FileClickListener {
+                                override fun onFileClick(onFilevalueReceiveListener1: OnFilevalueReceiveListener) {
+                                    onFilevalueReceiveListener = onFilevalueReceiveListener1
+                                    openSelectImageBottomSheet()
+                                }
+                            },
+                            StaticKey.EDIT,
+                            page
+                        )
+                    }
+                }
+            }
+        }
+
 
     }
 

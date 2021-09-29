@@ -326,8 +326,55 @@ class EmployeeInfoRepo @Inject constructor() {
                         obj?.data?.references = list
                     }
 
+                    pedingDataObj?.nomineeInfo.let {
+                        val list: MutableList<Employee.Nominee>? =
+                            obj?.data?.nominees?.toMutableList()
+
+                        for (item in pedingDataObj?.nomineeInfo!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.Nominee =
+                                HelperClass.saveNominne(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.nominees = list
+                    }
 
 
+                    pedingDataObj?.childrenInfo.let {
+                        val list: MutableList<Employee.Childs>? =
+                            obj?.data?.childs?.toMutableList()
+
+                        for (item in pedingDataObj?.childrenInfo!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.Childs =
+                                HelperClass.saveChild(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.childs = list
+                    }
+
+                    pedingDataObj?.spouse.let {
+                        val list: MutableList<Employee.Spouses>? =
+                            obj?.data?.spouses?.toMutableList()
+
+                        for (item in pedingDataObj?.spouse!!) {
+                            item.data?.isPendingData = true
+                            val newObj: Employee.Spouses =
+                                HelperClass.saveSpouse(item)
+                            newObj.isPendingData = true
+
+                            list?.add(newObj)
+                        }
+                        obj?.data?.spouses = list
+                    }
+                    /*
+                     pending employee has only one pending object no need to create more
+
+                     */
 
 
                     employeeProfileData.employee = obj?.data as Employee

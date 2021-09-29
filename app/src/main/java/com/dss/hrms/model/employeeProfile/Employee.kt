@@ -4,10 +4,11 @@ import com.google.gson.annotations.SerializedName
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class Employee {
+class Employee() {
 
     @SerializedName("id")
     var id: Int = 0
+    var isPendingData: Boolean = false
 
     @SerializedName("profile_id")
     val profile_id: String? = null
@@ -64,6 +65,16 @@ class Employee {
     @SerializedName("freedom_fighter_document_path")
     val freedom_fighter_document_path: String? = null
 
+
+    @SerializedName("phone_number")
+    val phone_number: String? = null
+
+    @SerializedName("religion_id")
+    val religion_id: Int = 0
+
+
+    @SerializedName("blood_group_id")
+    val blood_group_id: Int = 0
 
     @SerializedName("disability_type_id")
     val disability_type_id: Int = 0
@@ -123,10 +134,10 @@ class Employee {
     val marital_status: MaritalStatus? = null
 
     @SerializedName("user")
-    val user: User? = null
+    var user: User? = null
 
     @SerializedName("employment_job_status")
-    val employment_job_status: EmploymentJobStatus? = null
+    var employment_job_status: EmploymentJobStatus? = null
 
     @SerializedName("jobjoinings")
     var jobjoinings: List<Jobjoinings>? = null
@@ -153,17 +164,17 @@ class Employee {
     var references: List<References>? = null
 
     @SerializedName("nominees")
-    val nominees: List<Nominee>? = null
+    var nominees: List<Nominee>? = null
 
 
     @SerializedName("gender")
     val gender: Gender? = null
 
     @SerializedName("spouses")
-    val spouses: List<Spouses>? = null
+    var spouses: List<Spouses>? = null
 
     @SerializedName("childs")
-    val childs: List<Childs>? = null
+    var childs: List<Childs>? = null
 
     @SerializedName("languages")
     var languages: List<Languages>? = null
@@ -205,7 +216,7 @@ class Employee {
         val status_date: String? = null
 
         @SerializedName("employeementstatus")
-        val employeementstatus: Employeementstatus? = null
+        var employeementstatus: Employeementstatus? = null
     }
 
 
@@ -768,9 +779,10 @@ class Employee {
     }
 
 
-    inner class Nominee {
+    class Nominee() {
         @SerializedName("id")
-        val id: Int = 0
+        var id: Int = 0
+        var isPendingData: Boolean = false
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -1209,7 +1221,7 @@ class Employee {
 
     }
 
-     class DisciplinaryAction() {
+    class DisciplinaryAction() {
 
         @SerializedName("id")
         var id: Int = 0
@@ -1393,7 +1405,7 @@ class Employee {
         }
     }
 
-     class References() {
+    class References() {
 
         @SerializedName("id")
         var id: Int = 0
@@ -1463,9 +1475,10 @@ class Employee {
         val updated_at: String? = null
     }
 
-    inner class Spouses {
+    class Spouses() {
         @SerializedName("id")
-        val id: Int = 0
+        var id: Int = 0
+        var isPendingData: Boolean = false
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -1633,8 +1646,10 @@ class Employee {
 
     class Childs {
 
+
         @SerializedName("id")
-        val id: Int = 0
+        var id: Int = 0
+        var isPendingData: Boolean = false
 
         @SerializedName("employee_id")
         val employee_id: Int = 0

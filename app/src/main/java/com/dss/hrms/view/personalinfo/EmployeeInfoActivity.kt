@@ -315,7 +315,9 @@ class EmployeeInfoActivity : BaseActivity() {
 
     fun restartActivity() {
         finish()
-        startActivity(Intent(this, EmployeeInfoActivity::class.java))
+        val intent = Intent(this, EmployeeInfoActivity::class.java)
+      //  intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME
+        startActivity(intent)
     }
 
     companion object {
@@ -331,7 +333,7 @@ class EmployeeInfoActivity : BaseActivity() {
                     ?.collect {
                         if (it is PendingDataModel) {
                             val pendingData = it
-                            var preparence : MySharedPreparence  = MySharedPreparence(context!!)
+                            var preparence: MySharedPreparence = MySharedPreparence(context!!)
                             preparence.put(pendingData, HelperClass.PEDING_DATA)
                             context?.employeeViewModel?.getEmployeeInfo(context?.loginInfo?.employee_id)
                                 ?.collect {
@@ -339,7 +341,7 @@ class EmployeeInfoActivity : BaseActivity() {
                                     if (it is Employee) {
                                         context?.restartActivity()
                                     } else {
-                                        context?.adapter?.notifyDataSetChanged()
+                                        context?.restartActivity()
                                     }
                                 }
                         }

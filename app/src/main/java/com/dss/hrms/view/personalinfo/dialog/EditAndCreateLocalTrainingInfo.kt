@@ -219,7 +219,7 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         binding?.fLocalTrainingFromDate?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
-                    date?.let { binding?.fLocalTrainingFromDate?.tvText?.setText("" + it) }
+                    date.let { binding?.fLocalTrainingFromDate?.tvText?.setText("" + it) }
                 }
             })
         }
@@ -243,7 +243,6 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         if (any is String) {
             toast(EmployeeInfoActivity.context, "" + context?.getString(R.string.updated))
             MainActivity.selectedPosition = 9
-            dialogCustome?.dismiss()
             EmployeeInfoActivity.refreshEmployeeInfo()
         } else if (any is ApiError) {
             try {

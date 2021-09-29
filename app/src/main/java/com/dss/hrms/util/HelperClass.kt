@@ -2,6 +2,7 @@ package com.dss.hrms.util
 
 import android.content.Context
 import android.widget.Spinner
+import android.widget.TextView
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.commonSpinnerDataLoad.CommonModel
@@ -13,6 +14,7 @@ class HelperClass {
     companion object {
         val PEDING_DATA = "pending_data_obj"
         val COMMON_DATA = "common_data_dropdown"
+
 
 
         fun SavePresentAddresssModel(obj: PresentAddressPendingModel): Employee.PresentAddresses {
@@ -165,6 +167,54 @@ class HelperClass {
             return model
         }
 
+        fun saveNominne(obj: nominePendingModel): Employee.Nominee {
+            var model = Employee.Nominee()
+            if (obj.data != null) {
+                model = obj.data!!
+                model.id = obj.id
+            }
+            model.isPendingData = true
+            return model
+        }
+
+        fun saveChild(obj: childrenInfoPendingModel): Employee.Childs {
+            var model = Employee.Childs()
+            if (obj.data != null) {
+                model = obj.data!!
+                model.id = obj.id
+            }
+            model.isPendingData = true
+            return model
+        }
+
+        fun saveEmployee(obj: EmployeeModel): Employee {
+            var model = Employee()
+            if (obj.data != null) {
+                model = obj.data
+                model.id = obj.id
+            }
+            model.isPendingData = true
+            return model
+        }
+
+        /*
+           storePassword 'lovfresh123#'
+            keyAlias 'lovfresh'
+            keyPassword 'lovfresh123#'
+         */
+        fun saveSpouse(obj: spousePendingModel): Employee.Spouses {
+            var model = Employee.Spouses()
+            if (obj.data != null) {
+                model = obj.data!!
+                model.id = obj.id
+            }
+            model.isPendingData = true
+            return model
+        }
+
+        fun SetHeaderText(heading: String, view: TextView) {
+
+        }
 
         fun decideWhatToLoadInNomineee(
             childSpinner: Spinner,
@@ -194,16 +244,18 @@ class HelperClass {
         }
 
         // fill the  common data
-        fun getCommonDataFilltered(id: Int, list: List<CommonModel>, isBangla: Boolean): String {
+        fun getCommonDataFilltered(id: Int, list: List<CommonModel>?, isBangla: Boolean): String {
             var selection = ""
 
-            for (item in list) {
-                if (item.id == id) {
-                    selection = if (isBangla) {
-                        item.name_bn
-                    } else item.name
+            if (list != null) {
+                for (item in list) {
+                    if (item.id == id) {
+                        selection = if (isBangla) {
+                            item.name_bn
+                        } else item.name
 
-                    break
+                        break
+                    }
                 }
             }
 

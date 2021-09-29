@@ -34,7 +34,8 @@ import java.lang.Exception
 import javax.inject.Inject
 
 
-class EmployeeInfoDataBinding @Inject constructor() {
+class EmployeeInfoDataBinding @Inject constructor()
+{
     //
     @Inject
     lateinit var commonRepo: CommonRepo
@@ -672,14 +673,45 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 .into(binding.ivNSignature)
         }
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            nominee.marital_status?.name?.let { binding.fNMaritalStatus.tvText.setText(it) }
-            nominee.gender?.name?.let { binding.fNGender.tvText.setText(it) }
+        if (!nominee.isPendingData) {
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                nominee.marital_status?.name?.let { binding.fNMaritalStatus.tvText.setText(it) }
+                nominee.gender?.name?.let { binding.fNGender.tvText.setText(it) }
+            } else {
+                nominee.marital_status?.name_bn?.let { binding.fNMaritalStatus.tvText.setText(it) }
+                nominee.gender?.name_bn?.let { binding.fNGender.tvText.setText(it) }
+            }
         } else {
-            nominee.marital_status?.name_bn?.let { binding.fNMaritalStatus.tvText.setText(it) }
-            nominee.gender?.name_bn?.let { binding.fNGender.tvText.setText(it) }
+            binding.hNominee.tvTitle.text =
+                " $heading (${context.getString(R.string.pending_data)})"
+
+            val objData: CommonData? = preparence.get(HelperClass.COMMON_DATA)
+            binding.fNMaritalStatus.tvText.setText(
+                "${
+                    nominee.marital_status_id?.let {
+                        objData?.marital_status?.let { it1 ->
+                            HelperClass.getCommonDataFilltered(
+                                it, it1, false
+                            )
+                        }
+                    }
+                }"
+            )
+            binding.fNGender.tvText.setText(
+                "${
+                    nominee.gender_id?.let {
+                        objData?.genders?.let { it1 ->
+                            HelperClass.getCommonDataFilltered(
+                                it, it1, false
+                            )
+                        }
+                    }
+                }"
+            )
+
+
         }
     }
 
@@ -731,109 +763,254 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fSpouseAddressVillageOrHouseNo?.tvText?.setText(spouses?.village_house_no)
         binding.fSpouseAddressVillageOrHouseNoBn?.tvText?.setText(spouses?.village_house_no_bn)
 
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
+        if (!spouses.isPendingData) {
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
 
-            spouses.name_bn?.let { binding.fSpouseNameBn.tvText.setText(it) }
-            spouses.name?.let { binding.fSpouseNameEn.tvText.setText(it) }
-            spouses.spouse_workstation?.name?.let { binding.fSpouseOffice.tvText.setText(it) }
-            spouses.upazila?.name?.let { binding.fSpouseThana.tvText.setText(it) }
-            spouses.distric?.name?.let { binding.fSpouseDistrict.tvText.setText(it) }
-            spouses.division?.name?.let { binding.fSpouseDivision.tvText.setText(it) }
-            spouses.spouse_job_type?.name?.let { binding.fSpouseJobType.tvText.setText(it) }
-            spouses.occupation?.name.let { binding.fSpouseOccupation.tvText.setText(it) }
-            spouses.relation?.let { binding.fSpouseRelation.tvText.setText(it) }
-            spouses.phone_no?.let { binding.fSpousePhoneNo.tvText.setText(it) }
-            spouses.mobile_no?.let { binding.fSpouseMobileNo.tvText.setText(it) }
-            // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
-            spouses.village_house_no?.let {
-                binding.fSpouseAddressVillageOrHouseNo.tvText.setText(it)
-            }
-            spouses.village_house_no?.let {
-                binding.fSpouseAddressVillageOrHouseNo.tvText.setText(
-                    it
-                )
-            }
-            spouses.village_house_no_bn?.let {
-                binding.fSpouseAddressVillageOrHouseNoBn.tvText.setText(
-                    it
-                )
-            }
-            spouses.road_word_no?.let { binding.fSpouseAddressRoadOrWordNo.tvText.setText(it) }
-            spouses.road_word_no_bn?.let {
-                binding.fSpouseAddressRoadOrWordNoBn.tvText.setText(
-                    it
-                )
-            }
-            spouses.post_office?.let { binding.fSpouseAddressPostOffice.tvText.setText(it) }
-            spouses.post_office_bn?.let { binding.fSpouseAddressPostOfficeBn.tvText.setText(it) }
-            spouses.post_code?.let { binding.fSpouseAddressPostCode.tvText.setText(it) }
-            spouses.division?.name?.let { binding.fSpouseDivision.tvText.setText(it) }
-            spouses.distric?.name?.let { binding.fSpouseDistrict.tvText.setText(it) }
-            spouses.phone_no?.let { binding.fSpousePhoneNo.tvText.setText(it) }
-            spouses.police_station?.let { binding.fSpouseAddressPoliceStation.tvText.setText(it) }
-            spouses.police_station_bn?.let { binding.fSpouseAddressPoliceStationBn.tvText.setText(it) }
-            spouses.upazila?.name?.let { binding.fSpouseAddressUpazila.tvText.setText(it) }
-            spouses.localGovernmentType?.name?.let {
-                binding.fSpouseAddressUnion.tvText.text = it
-            }
+                spouses.name_bn?.let { binding.fSpouseNameBn.tvText.setText(it) }
+                spouses.name?.let { binding.fSpouseNameEn.tvText.setText(it) }
+                spouses.spouse_workstation?.name?.let { binding.fSpouseOffice.tvText.setText(it) }
+                spouses.upazila?.name?.let { binding.fSpouseThana.tvText.setText(it) }
+                spouses.distric?.name?.let { binding.fSpouseDistrict.tvText.setText(it) }
+                spouses.division?.name?.let { binding.fSpouseDivision.tvText.setText(it) }
+                spouses.spouse_job_type?.name?.let { binding.fSpouseJobType.tvText.setText(it) }
+                spouses.occupation?.name.let { binding.fSpouseOccupation.tvText.setText(it) }
+                spouses.relation?.let { binding.fSpouseRelation.tvText.setText(it) }
+                spouses.phone_no?.let { binding.fSpousePhoneNo.tvText.setText(it) }
+                spouses.mobile_no?.let { binding.fSpouseMobileNo.tvText.setText(it) }
+                // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
+                spouses.village_house_no?.let {
+                    binding.fSpouseAddressVillageOrHouseNo.tvText.setText(it)
+                }
+                spouses.village_house_no?.let {
+                    binding.fSpouseAddressVillageOrHouseNo.tvText.setText(
+                        it
+                    )
+                }
+                spouses.village_house_no_bn?.let {
+                    binding.fSpouseAddressVillageOrHouseNoBn.tvText.setText(
+                        it
+                    )
+                }
+                spouses.road_word_no?.let { binding.fSpouseAddressRoadOrWordNo.tvText.setText(it) }
+                spouses.road_word_no_bn?.let {
+                    binding.fSpouseAddressRoadOrWordNoBn.tvText.setText(
+                        it
+                    )
+                }
+                spouses.post_office?.let { binding.fSpouseAddressPostOffice.tvText.setText(it) }
+                spouses.post_office_bn?.let { binding.fSpouseAddressPostOfficeBn.tvText.setText(it) }
+                spouses.post_code?.let { binding.fSpouseAddressPostCode.tvText.setText(it) }
+                spouses.division?.name?.let { binding.fSpouseDivision.tvText.setText(it) }
+                spouses.distric?.name?.let { binding.fSpouseDistrict.tvText.setText(it) }
+                spouses.phone_no?.let { binding.fSpousePhoneNo.tvText.setText(it) }
+                spouses.police_station?.let { binding.fSpouseAddressPoliceStation.tvText.setText(it) }
+                spouses.police_station_bn?.let {
+                    binding.fSpouseAddressPoliceStationBn.tvText.setText(
+                        it
+                    )
+                }
+                spouses.upazila?.name?.let { binding.fSpouseAddressUpazila.tvText.setText(it) }
+                spouses.localGovernmentType?.name?.let {
+                    binding.fSpouseAddressUnion.tvText.text = it
+                }
 
-            // adding check for  cilty , municipility  or union
+                // adding check for  cilty , municipility  or union
 
 
-            when (spouses.local_government_type_id) {
-                1 -> {
-                    // city corpo
-                    spouses.cityCorporation?.name?.let {
-                        binding.fSpouseAddressUnion.tvText.text = it
+                when (spouses.local_government_type_id) {
+                    1 -> {
+                        // city corpo
+                        spouses.cityCorporation?.name?.let {
+                            binding.fSpouseAddressUnion.tvText.text = it
+                        }
+                        //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                        binding.fSpouseAddressUnion.tvText.text =
+                            context.getString(R.string.citycorporation)
+                        binding.fSpouseAddressLocalName.tvTitle.text =
+                            context.getString(R.string.citycorporation)
+                        binding.fSpouseAddressLocalName.tvText.text = spouses.cityCorporation?.name
+                        binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+                        binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
+
                     }
-                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
-                    binding.fSpouseAddressUnion.tvText.text =
-                        context.getString(R.string.citycorporation)
-                    binding.fSpouseAddressLocalName.tvTitle.text =
-                        context.getString(R.string.citycorporation)
-                    binding.fSpouseAddressLocalName.tvText.text = spouses.cityCorporation?.name
-                    binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
-                    binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
+                    2 -> {
+                        // municipility
 
+                        binding.fSpouseAddressUnion.tvText.text =
+                            context.getString(R.string.municipalities)
+                        binding.fSpouseAddressLocalName.tvTitle.text =
+                            context.getString(R.string.municipalities)
+
+                        binding.fSpouseAddressLocalName.tvText.text = spouses.municipality?.name
+                        binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+                        binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
+                    }
+                    3 -> {
+                        // upzilla
+                        binding.fSpouseAddressUnion.tvText.text =
+                            context.getString(R.string.upazila)
+
+                        binding.fSpouseAddressLocalName.tvTitle.text =
+                            context.getString(R.string.upazila)
+                        binding.fSpouseAddressLocalName.tvText.text = spouses.upazila?.name
+
+                        binding.fSpouseAddressUnionName.tvTitle.text =
+                            context.getString(R.string.union)
+                        binding.fSpouseAddressUnionName.tvText.text = spouses.union?.name
+                        // binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+
+                    }
                 }
-                2 -> {
-                    // municipility
 
-                    binding.fSpouseAddressUnion.tvText.text =
-                        context.getString(R.string.municipalities)
-                    binding.fSpouseAddressLocalName.tvTitle.text =
-                        context.getString(R.string.municipalities)
 
-                    binding.fSpouseAddressLocalName.tvText.text = spouses.municipality?.name
-                    binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
-                    binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
+            } else {
+                spouses.name_bn?.let { binding.fSpouseNameBn.tvText.setText(it) }
+                spouses.name?.let { binding.fSpouseNameEn.tvText.setText(it) }
+                spouses.spouse_workstation?.name_bn?.let { binding.fSpouseOffice.tvText.setText(it) }
+                spouses.upazila?.name_bn?.let { binding.fSpouseThana.tvText.setText(it) }
+                spouses.distric?.name_bn?.let { binding.fSpouseDistrict.tvText.setText(it) }
+                spouses.spouse_job_type?.name_bn?.let { binding.fSpouseJobType.tvText.setText(it) }
+                spouses.occupation?.name_bn.let { binding.fSpouseOccupation.tvText.setText(it) }
+                spouses.phone_no?.let { binding.fSpousePhoneNo.tvText.setText(it) }
+                spouses.mobile_no?.let { binding.fSpouseMobileNo.tvText.setText(it) }
+                spouses.relation?.let {
+                    if (it.toLowerCase()
+                            .equals("wife")
+                    ) binding.fSpouseRelation.tvText.setText("স্ত্রী") else binding.fSpouseRelation.tvText.setText(
+                        "স্বামী"
+                    )
                 }
-                3 -> {
-                    // upzilla
-                    binding.fSpouseAddressUnion.tvText.text =
-                        context.getString(R.string.upazila)
-                    binding.fSpouseAddressLocalName.tvTitle.text =
-                        context.getString(R.string.municipalities)
-                    binding.fSpouseAddressLocalName.tvText.text = spouses.upazila?.name
-                    //    binding.fSpouseAddressUpazila.llBody.visibility = View.VISIBLE
-                    binding.fSpouseAddressUnion.tvTitle.text = context.getString(R.string.union)
-                    binding.fSpouseAddressUnion.tvText.text = spouses.union?.name
-                    binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+                spouses.division?.name_bn?.let { binding.fSpouseDivision.tvText.setText(it) }
+                // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
 
+                when (spouses.local_government_type_id) {
+                    1 -> {
+                        // city corpo
+                        spouses.cityCorporation?.name?.let {
+                            binding.fSpouseAddressLocalName.tvText.text = it
+                        }
+                        //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                        binding.fSpouseAddressLocalName.tvTitle.text =
+                            context.getString(R.string.citycorporation)
+                        binding.fSpouseAddressUnion.tvText.text =
+                            context.getString(R.string.citycorporation)
+                        binding.fSpouseAddressLocalName.tvText.text =
+                            spouses.cityCorporation?.nameBn
+                        binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+                        binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
+
+                    }
+                    2 -> {
+                        // municipility
+                        binding.fSpouseAddressLocalName.tvTitle.text =
+                            context.getString(R.string.municipalities)
+                        binding.fSpouseAddressUnion.tvText.text =
+                            context.getString(R.string.municipalities)
+
+                        binding.fSpouseAddressLocalName.tvText.text = spouses.municipality?.name_bn
+                        binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+                        binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
+                    }
+                    3 -> {
+                        ///upzilaa
+
+                        binding.fSpouseAddressUnion.tvText.text =
+                            context.getString(R.string.upazila)
+
+                        binding.fSpouseAddressLocalName.tvTitle.text =
+                            context.getString(R.string.upazila)
+                        binding.fSpouseAddressLocalName.tvText.text = spouses.upazila?.name_bn
+
+                        binding.fSpouseAddressUnionName.tvTitle.text =
+                            context.getString(R.string.union)
+                        binding.fSpouseAddressUnionName.tvText.text = spouses.union?.name_bn
+
+                        // binding.fSpouseAddressUnionName.llBody.visibility = View.GONElBody.visibility = View.GONE
+
+                    }
                 }
+
+
             }
-
 
         } else {
+
+            binding.hSpouse.tvTitle.setText("$heading (${context.getString(R.string.pending_data)})")
+
+            var obj: CommonData? = preparence.get(HelperClass.COMMON_DATA)
+
+
             spouses.name_bn?.let { binding.fSpouseNameBn.tvText.setText(it) }
             spouses.name?.let { binding.fSpouseNameEn.tvText.setText(it) }
-            spouses.spouse_workstation?.name_bn?.let { binding.fSpouseOffice.tvText.setText(it) }
-            spouses.upazila?.name_bn?.let { binding.fSpouseThana.tvText.setText(it) }
-            spouses.distric?.name_bn?.let { binding.fSpouseDistrict.tvText.setText(it) }
-            spouses.spouse_job_type?.name_bn?.let { binding.fSpouseJobType.tvText.setText(it) }
-            spouses.occupation?.name_bn.let { binding.fSpouseOccupation.tvText.setText(it) }
+
+            binding.fSpouseOffice.tvText.text = "${
+                obj?.spouse_workstations?.let {
+                    HelperClass.getCommonDataFilltered(
+                        spouses.spouse_workstation_id,
+                        it, false
+                    )
+                }
+            }"
+
+            binding.fSpouseThana.tvText.text = "${
+                obj?.upazilas?.let {
+                    spouses.upazila_id?.let { it1 ->
+                        HelperClass.getCommonDataFilltered(
+                            it1,
+                            it, false
+                        )
+                    }
+                }
+            }"
+
+            binding.fSpouseDistrict.tvText.text = "${
+                obj?.districts?.let {
+                    spouses.district_id?.let { it1 ->
+                        HelperClass.getCommonDataFilltered(
+                            it1,
+                            it, false
+                        )
+                    }
+                }
+            }"
+
+            binding.fSpouseJobType.tvText.text = "${
+                obj?.job_types?.let {
+                    spouses.spouse_job_type_id?.let { it1 ->
+                        HelperClass.getCommonDataFilltered(
+                            it1,
+                            it, false
+                        )
+                    }
+                }
+            }"
+
+            binding.fSpouseOccupation.tvText.text = "${
+                obj?.occupations?.let {
+                    spouses.occupation_id?.let { it1 ->
+                        HelperClass.getCommonDataFilltered(
+                            it1,
+                            it, false
+                        )
+                    }
+                }
+            }"
+
+            binding.fSpouseDivision.tvText.text = "${
+                obj?.divisions?.let {
+                    spouses.division_id?.let { it1 ->
+                        HelperClass.getCommonDataFilltered(
+                            it1,
+                            it, false
+                        )
+                    }
+                }
+            }"
+
+
+
             spouses.phone_no?.let { binding.fSpousePhoneNo.tvText.setText(it) }
             spouses.mobile_no?.let { binding.fSpouseMobileNo.tvText.setText(it) }
             spouses.relation?.let {
@@ -843,21 +1020,34 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     "স্বামী"
                 )
             }
-            spouses.division?.name_bn?.let { binding.fSpouseDivision.tvText.setText(it) }
+
             // spouses.address?.let { binding.fSpouseReligion.tvText.setText(it) }
 
             when (spouses.local_government_type_id) {
                 1 -> {
                     // city corpo
-                    spouses.cityCorporation?.name?.let {
-                        binding.fSpouseAddressLocalName.tvText.text = it
-                    }
-                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+
+                    binding.fSpouseAddressLocalName.tvText.text = "${
+                        obj?.city_corporations?.let {
+                            spouses.city_corporation_id?.let { it1 ->
+                                HelperClass.getCommonDataFilltered(
+                                    it1,
+                                    it, false
+                                )
+                            }
+                        }
+                    }"
+
+
                     binding.fSpouseAddressLocalName.tvTitle.text =
                         context.getString(R.string.citycorporation)
                     binding.fSpouseAddressUnion.tvText.text =
                         context.getString(R.string.citycorporation)
-                    binding.fSpouseAddressLocalName.tvText.text = spouses.cityCorporation?.nameBn
+
+                    binding.fSpouseAddressLocalName.tvText.text =
+                        binding.fSpouseAddressLocalName.tvText.text.toString()
+
+
                     binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
                     binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
 
@@ -866,28 +1056,68 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     // municipility
                     binding.fSpouseAddressLocalName.tvTitle.text =
                         context.getString(R.string.municipalities)
+
                     binding.fSpouseAddressUnion.tvText.text =
                         context.getString(R.string.municipalities)
 
-                    binding.fSpouseAddressLocalName.tvText.text = spouses.municipality?.name_bn
+
+                    binding.fSpouseAddressLocalName.tvText.text = "${
+                        obj?.upazilla_municipalities?.let {
+                            spouses.municipality_id?.let { it1 ->
+                                HelperClass.getCommonDataFilltered(
+                                    it1,
+                                    it, false
+                                )
+                            }
+                        }
+                    }"
+
                     binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
                     binding.fSpouseAddressUpazila.llBody.visibility = View.GONE
                 }
                 3 -> {
-                    // upzilla
+                    ///upzilaa
+
                     binding.fSpouseAddressUnion.tvText.text =
                         context.getString(R.string.upazila)
+
                     binding.fSpouseAddressLocalName.tvTitle.text =
                         context.getString(R.string.upazila)
-                    binding.fSpouseAddressLocalName.tvText.text = spouses.upazila?.name_bn
-                    //    binding.fSpouseAddressUpazila.llBody.visibility = View.VISIBLE
-                    binding.fSpouseAddressUnion.tvTitle.text = context.getString(R.string.union)
-                    binding.fSpouseAddressUnion.tvText.text = spouses.union?.name_bn
-                    binding.fSpouseAddressUnionName.llBody.visibility = View.GONE
+
+                    binding.fSpouseAddressLocalName.tvText.text = "${
+                        obj?.upazilas?.let {
+                            spouses.upazila_id?.let { it1 ->
+                                HelperClass.getCommonDataFilltered(
+                                    it1,
+                                    it, false
+                                )
+                            }
+                        }
+                    }"
+
+                    binding.fSpouseAddressUnionName.tvText.text = "${
+                        obj?.unions?.let {
+                            spouses.union_id?.let { it1 ->
+                                HelperClass.getCommonDataFilltered(
+                                    it1,
+                                    it, false
+                                )
+                            }
+                        }
+                    }"
+
+
+                    binding.fSpouseAddressUnionName.tvTitle.text = context.getString(R.string.union)
+
+                    // binding.fSpouseAddressUnionName.llBody.visibility = View.GONElBody.visibility = View.GONE
 
                 }
             }
+
+
         }
+
+
     }
 
     fun bindJobjoningInfoData(
@@ -1130,24 +1360,49 @@ class EmployeeInfoDataBinding @Inject constructor() {
             ConvertNumber.viewFileInShareIntent(context, childs.nid_document_path)
         }
 
-
-        if (preparence.getLanguage()
-                .equals("en")
-        ) {
-            childs.name_of_children?.let { binding.fChildrenNameOChEn.tvText.setText(it) }
-            childs.name_of_children_bn?.let { binding.fChildrenNameOChBn.tvText.setText(it) }
-            childs.date_of_birth?.let {
-                binding.fChildrenDOB.tvText.setText(
-                    DateConverter.changeDateFormateForShowing(
+        if (!childs.isPendingData) {
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                childs.name_of_children?.let { binding.fChildrenNameOChEn.tvText.setText(it) }
+                childs.name_of_children_bn?.let { binding.fChildrenNameOChBn.tvText.setText(it) }
+                childs.date_of_birth?.let {
+                    binding.fChildrenDOB.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(
+                            it
+                        )
+                    )
+                }
+                childs.gender?.name?.let { binding.fChildrenGenderOrSex.tvText.setText(it) }
+                childs.birth_certificate?.let {
+                    binding.fChildrenBirthCertificateNo.tvText.setText(
                         it
                     )
-                )
+                }
+                childs.nid?.let { binding.fChildrenNidNo.tvText.setText(it) }
+                childs.passport?.let { binding.fChildrenPassportNo.tvText.setText(it) }
+            } else {
+                childs.name_of_children?.let { binding.fChildrenNameOChEn.tvText.setText(it) }
+                childs.name_of_children_bn?.let { binding.fChildrenNameOChBn.tvText.setText(it) }
+                childs.date_of_birth?.let {
+                    binding.fChildrenDOB.tvText.setText(
+                        DateConverter.changeDateFormateForShowing(
+                            it
+                        )
+                    )
+                }
+                childs.gender?.name_bn?.let { binding.fChildrenGenderOrSex.tvText.setText(it) }
+                childs.birth_certificate?.let {
+                    binding.fChildrenBirthCertificateNo.tvText.setText(
+                        it
+                    )
+                }
+                childs.nid?.let { binding.fChildrenNidNo.tvText.setText(it) }
+                childs.passport?.let { binding.fChildrenPassportNo.tvText.setText(it) }
             }
-            childs.gender?.name?.let { binding.fChildrenGenderOrSex.tvText.setText(it) }
-            childs.birth_certificate?.let { binding.fChildrenBirthCertificateNo.tvText.setText(it) }
-            childs.nid?.let { binding.fChildrenNidNo.tvText.setText(it) }
-            childs.passport?.let { binding.fChildrenPassportNo.tvText.setText(it) }
         } else {
+            binding.hChildren.tvTitle.setText("$heading (${context.getString(R.string.pending_data)})")
+
             childs.name_of_children?.let { binding.fChildrenNameOChEn.tvText.setText(it) }
             childs.name_of_children_bn?.let { binding.fChildrenNameOChBn.tvText.setText(it) }
             childs.date_of_birth?.let {
@@ -1157,11 +1412,25 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     )
                 )
             }
-            childs.gender?.name_bn?.let { binding.fChildrenGenderOrSex.tvText.setText(it) }
+            val obj: CommonData? = preparence.get(HelperClass.COMMON_DATA)
+            binding.fChildrenGenderOrSex.tvText.setText(
+                "${
+                    childs.gender_id?.let {
+                        obj?.genders?.let { it1 ->
+                            HelperClass.getCommonDataFilltered(
+                                it, it1, false
+                            )
+                        }
+                    }
+                }"
+            )
             childs.birth_certificate?.let { binding.fChildrenBirthCertificateNo.tvText.setText(it) }
             childs.nid?.let { binding.fChildrenNidNo.tvText.setText(it) }
             childs.passport?.let { binding.fChildrenPassportNo.tvText.setText(it) }
+
         }
+
+
     }
 
 

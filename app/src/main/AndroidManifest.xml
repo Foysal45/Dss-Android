@@ -51,7 +51,7 @@
         <activity
             android:name=".view.personalinfo.EmployeeInfoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustNothing"/>
         <activity
             android:name=".view.auth.ForgetPAssActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />

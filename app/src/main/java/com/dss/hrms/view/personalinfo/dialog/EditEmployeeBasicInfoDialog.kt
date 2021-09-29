@@ -1,15 +1,10 @@
 package com.dss.hrms.view.personalinfo.dialog
 
 
-import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
-import android.provider.MediaStore
-import android.provider.Settings
 import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
@@ -20,7 +15,6 @@ import android.view.Window
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -91,12 +85,13 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
 
     fun showDialog(
-        context: Context,
+        model: Employee,
+        context: FragmentActivity,
         fileClickListener: FileClickListener,
         key: String,
         activity: FragmentActivity
     ) {
-        this.employee = employeeProfileData?.employee!!
+        this.employee = model
         this.context = context
         this.fileClickListener = fileClickListener
         this.key = key
@@ -164,7 +159,14 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 )
             )
         }
-        employee?.user?.phone_number?.let { binding?.fPhone?.etText?.setText("" + it) }
+        if(employee.phone_number.isNullOrBlank()){
+            employee?.user?.phone_number?.let { binding?.fPhone?.etText?.setText("" + it) }
+        }else {
+            employee?.phone_number?.let { binding?.fPhone?.etText?.setText("" + it) }
+        }
+
+
+
         employee?.disabled_person_id?.let { binding?.fDisabledPersonId?.etText?.setText("" + it) }
         employee?.user?.username?.let { binding?.fUserName?.etText?.setText("" + it) }
 
@@ -480,7 +482,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 if (fileSizeInKB > (2 * 1024)) {
                     Toast.makeText(
                         context,
-                        context.getString(R.string.error_file_size) ,
+                        context.getString(R.string.error_file_size),
                         Toast.LENGTH_LONG
                     ).show()
                     dialog?.dismiss()
