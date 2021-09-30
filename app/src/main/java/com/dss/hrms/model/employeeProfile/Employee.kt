@@ -53,10 +53,10 @@ class Employee() {
     val marital_status_id: Int = 0
 
     @SerializedName("has_disability")
-    val has_disability: Boolean = false
+    val has_disability: Boolean? = false
 
     @SerializedName("has_freedom_fighter_quota")
-    val has_freedom_fighter_quota: Boolean = false
+    val has_freedom_fighter_quota: Boolean? = false
 
 
     @SerializedName("disability_document_path")

@@ -12,7 +12,7 @@ object RetrofitInstance {
     // var BASE_URL = "http://dss.aws.simecsystem.com:10014"
     //var BASE_URL = "http://dss.aws.simecsystem.com:10014"
    var BASE_URL = "http://dss.stage.simecsystem.com:8080"
-    //   var BASE_URL = "http://dss.dev.simecsystem.com:10014"
+  //   var BASE_URL = "http://dss.dev.simecsystem.com:10014"
     //  var BASE_URL_FOR_WEBVIEW = "http://dss.dev.simecsystem.com:10015"
   //  var BASE_URL = "http://192.168.10.124:8000";
 

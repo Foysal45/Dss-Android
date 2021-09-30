@@ -364,7 +364,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 binding?.fDisability?.spinner!!,
                 context,
                 it,
-                if (employee?.has_disability) 1 else 0,
+                if (employee?.has_disability == true) 1 else 0,
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
                         hasDisability = any as SpinnerDataModel
@@ -381,7 +381,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 binding?.fFreedomFighterQuota?.spinner!!,
                 context,
                 it,
-                if (employee?.has_freedom_fighter_quota) 1 else 0,
+                if (employee?.has_freedom_fighter_quota == true) 1 else 0,
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
                         hasFreedomFighterQuota = any as SpinnerDataModel
