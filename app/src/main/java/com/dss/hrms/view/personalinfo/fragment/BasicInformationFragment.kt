@@ -153,7 +153,10 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 employee?.employment_job_status?.employeementstatus
             pendingEmployee[0].data?.user = employee?.user
 
-            setPendingData(pendingEmployee[0].data , employee?.employment_job_status?.employeementstatus?.name)
+            setPendingData(
+                pendingEmployee[0].data,
+                employee?.employment_job_status?.employeementstatus?.name
+            )
         }
 
 
@@ -587,8 +590,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
         }
 
-        if (employee1?.has_disability == false)
-        {
+        if (employee1?.has_disability == false) {
             Log.e("hasdisability", "" + employee1?.has_disability)
             v.fDisability1.tvText.setText("" + context?.getString(R.string.no))
             v.fDisabilityDegree1.llBody.visibility = View.GONE
@@ -596,9 +598,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             v.fDisabledPersonId1?.llBody?.visibility = View.GONE
             v.fDisabilityAttachment1.llBody.visibility = View.GONE
 
-        }
-        else
-        {
+        } else {
             v.fDisability1.tvText.setText("" + context?.getString(R.string.yes))
             v.fDisabilityDegree1?.llBody?.visibility = View.VISIBLE
             v.fDisabilityType1?.llBody?.visibility = View.VISIBLE
@@ -641,8 +641,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 //                        it
 //
                 //  }
-            }
-            else {
+            } else {
 
                 v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type_bn)
                 v.fDisabilityDegree1.tvText.setText(employee1?.disability_degree?.disability_degree_bn)
@@ -655,8 +654,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
         if (preparence?.getLanguage()
                 .equals("en")
-        )
-        {
+        ) {
 
             v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type)
             v.fEmployeeStatusType1.tvText.setText(employee1?.employment_job_status?.employeementstatus?.name)
@@ -684,7 +682,11 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             v.fBloodGroup1.tvText.setText(
                 "${
                     employee1?.blood_group_id?.let {
-                        it
+                        HelperClass.getCommonDataFilltered(
+                            it,
+                            commonData?.blood_group,
+                            false
+                        )
                     }
                 }"
             )
@@ -699,9 +701,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
 //            v.fEmployeeStatusType1.tvText.setText(employee1?.employment_job_status?.employee1mentstatus?.name)
 
-        }
-        else
-        {
+        } else {
             v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type)
             v.fEmployeeStatusType1.tvText.setText(employee1?.employment_job_status?.employeementstatus?.name)
             v.fGender1.tvText.text = "${
@@ -725,14 +725,18 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
 
 
+
             v.fBloodGroup1.tvText.setText(
                 "${
                     employee1?.blood_group_id?.let {
-                        it
+                        HelperClass.getCommonDataFilltered(
+                            it,
+                            commonData?.blood_group,
+                            true
+                        )
                     }
                 }"
             )
-
             v.fReligion1.tvText.setText(
                 "${
                     employee1?.religion_id?.let {

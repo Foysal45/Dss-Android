@@ -45,7 +45,6 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
     lateinit var commonRepo: CommonRepo
 
 
-
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
 
@@ -58,7 +57,7 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
 
     var dialogCustome: Dialog? = null
     var foreigntraining: Employee.Foreigntrainings? = null
-    var hrmTrainingId : Int? = 0
+    var hrmTrainingId: Int? = 0
     var binding: DialogPersonalInfoBinding? = null
     var context: Context? = null
     lateinit var key: String
@@ -188,7 +187,10 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
                             uploadFile(imgFile, context)
                         } else {
 
-                            ConvertNumber.errorDialogueWithProgressBar(context , context.getString(R.string.error_file_size))
+                            ConvertNumber.errorDialogueWithProgressBar(
+                                context,
+                                context.getString(R.string.error_file_size)
+                            )
 
                         }
                     } catch (e: Exception) {
@@ -316,6 +318,12 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
                                 binding?.fLocalTrainingLocation?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
+                            "hrm_training_category_id" -> {
+                                binding?.fLocalTrainingCategory?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fLocalTrainingCategory?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
                             "location_bn" -> {
                                 binding?.fLocalTrainingLocationBn?.tvError?.visibility =
                                     View.VISIBLE
@@ -340,9 +348,9 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
                                 binding?.fLocalTrainingToDate?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
-                             "hrm_training_category_id" -> {
-                                 ErrorUtils2.mainError(message)
-                             }
+                            "hrm_training_category_id" -> {
+                                ErrorUtils2.mainError(message)
+                            }
                         }
                     }
                 }
@@ -470,6 +478,8 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
         binding?.fLocalTrainingFromDate?.tvError?.visibility =
             View.GONE
         binding?.fLocalTrainingToDate?.tvError?.visibility =
+            View.GONE
+        binding?.fLocalTrainingCategory?.tvError?.visibility =
             View.GONE
     }
 

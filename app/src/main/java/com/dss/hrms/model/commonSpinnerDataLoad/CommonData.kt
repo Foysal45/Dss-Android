@@ -35,5 +35,6 @@ data class CommonData(
     val countries: List<CommonModel> = mutableListOf(),
     val publication_types: List<CommonModel> = mutableListOf(),
     val disciplinary_action_category: List<CommonModel> = mutableListOf(),
+    val  blood_group: List<CommonModel> = mutableListOf(),
 
 )

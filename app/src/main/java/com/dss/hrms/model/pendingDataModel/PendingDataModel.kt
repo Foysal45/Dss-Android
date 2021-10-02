@@ -24,6 +24,7 @@ class PendingDataModel {
     val childrenInfo: MutableList<childrenInfoPendingModel>? = null
     val spouse: MutableList<spousePendingModel>? = null
 
+
     inner class jobJoiningInformationPendingModel {
         @SerializedName("id")
         val id: Int = 0

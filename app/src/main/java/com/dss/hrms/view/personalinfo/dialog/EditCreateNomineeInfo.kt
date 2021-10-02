@@ -1008,6 +1008,26 @@ class EditCreateNomineeInfo @Inject constructor() {
                                 binding?.fNomineeRelation?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
+                            "nominees.0.local_government_type_id" -> {
+                                binding?.fNominneAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fNominneAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "nominees.0.district_id" -> {
+                                binding?.fNominneAddressDistrict?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fNominneAddressDistrict?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+                            "nominees.0.division_id" -> {
+                                binding?.fNominneAddressDivision?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fNominneAddressDivision?.tvError?.text =
+                                    ErrorUtils2.mainError(message)
+                            }
+
+
                             "nominees.0.allocated_percentage" -> {
                                 binding?.fNomineeAllocatedPercentage?.tvError?.visibility =
                                     View.VISIBLE
@@ -1131,6 +1151,11 @@ class EditCreateNomineeInfo @Inject constructor() {
             View.GONE
         binding.fNomineeHasDisability.tvError.visibility =
             View.GONE
+        binding.fNominneAddresstypeCityCorpUpazilaMunicipality.tvError.visibility =
+            View.GONE
+        binding.fNominneAddressDistrict.tvError.visibility = View.GONE
+
+        binding.fNominneAddressDivision.tvError.visibility = View.GONE
     }
 
     fun toast(context: Context?, massage: String) {

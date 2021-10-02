@@ -301,9 +301,9 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
                                     ErrorUtils2.mainError(message)
                             }
                             "hrm_training_category_id" -> {
-//                                binding?.fLocalTrainingFromDate?.tvError?.visibility =
-//                                    View.VISIBLE
-                                binding?.fLocalTrainingFromDate?.tvError?.text =
+                                binding?.fLocalTrainingCategory?.tvError?.visibility =
+                                    View.VISIBLE
+                                binding?.fLocalTrainingCategory?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
                             "from_date" -> {
@@ -448,6 +448,8 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         binding?.fLocalTrainingFromDate?.tvError?.visibility =
             View.GONE
         binding?.fLocalTrainingToDate?.tvError?.visibility =
+            View.GONE
+        binding?.fLocalTrainingCategory?.tvError?.visibility =
             View.GONE
     }
 
