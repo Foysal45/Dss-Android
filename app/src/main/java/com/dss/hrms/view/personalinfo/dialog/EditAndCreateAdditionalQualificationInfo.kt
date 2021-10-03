@@ -91,8 +91,6 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
         )
 
 
-        Log.e("editcreate", "edit create " + employeeProfileData.employee?.profile_id)
-
         additionalQualifications = position?.let {
             employeeProfileData?.employee?.additional_qualifications?.get(
                 it

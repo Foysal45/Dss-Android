@@ -1,21 +1,15 @@
 package com.dss.hrms.view.personalinfo.adapter.employeeInfo
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.opengl.Visibility
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelEmployeeInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.commonSpinnerDataLoad.CommonData
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.repository.CommonRepo
@@ -23,14 +17,9 @@ import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.util.DateConverter
 import com.dss.hrms.util.HelperClass
-import com.dss.hrms.view.allInterface.CommonDataValueListener
-import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
-import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.personalinfo.adapter.name_view_row_adapter
 import com.dss.hrms.view.personalinfo.dialog.EditOfficialResidentialIInfo
-import com.google.gson.Gson
 import com.namaztime.namaztime.database.MySharedPreparence
-import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -75,6 +64,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAddressVillageOrHouseNoBn.tvTitle.text = context.getString(R.string.vill_house_bn)
         binding.fAddressEmailAddress.tvTitle.text = context.getString(R.string.email)
 
+        HelperClass.addHeaderColor(
+            binding.hAddress,
+            context,
+            addresses.isPendingData
+        )
 
         if (!addresses.isPendingData) {
 
@@ -338,7 +332,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAddressEmailAddress.llBody.visibility = View.GONE
         binding.fAddressPhoneOrMobileNo.llBody.visibility = View.GONE
 
-
+        HelperClass.addHeaderColor(
+            binding.hAddress,
+            context,
+            addresses.isPendingData
+        )
         binding.fAddressPostOffice.tvTitle.setText(context.getString(R.string.post_off))
         binding.fAddressPostOfficeBn.tvTitle.setText(context.getString(R.string.post_off_bn))
         binding.fAddressPostCode.tvTitle.setText(context.getString(R.string.post_code))
@@ -636,7 +634,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fEQDivisionOrCgpa.tvTitle.setText(context.getString(R.string.div_cgpa))
         binding.fEQAttachment.tvTitle.setText(context.getString(R.string.attachment))
 
-
+        HelperClass.addHeaderColor(
+            binding.hEducationQualification,
+            context,
+            qualifications.isPendingData
+        )
         // check what type of attachment we are getting
 
         ConvertNumber.setIconOnTextView(
@@ -742,6 +744,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fNMaritalStatus.tvTitle.setText(context.getString(R.string.nominee_marital_status))
         binding.fNHasDisavility.tvTitle.setText(context.getString(R.string.nominee_has_disability))
         binding.tvNSignatureTitle.setText(context.getString(R.string.nominee_signature))
+        HelperClass.addHeaderColor(binding.hNominee, context, nominee.isPendingData)
 
 
         nominee.name?.let { binding.fNName.tvText.setText(it) }
@@ -864,6 +867,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fSpouseAddressRoadOrWordNoBn.tvTitle.setText(context.getString(R.string.road_word_bn))
 
 
+        HelperClass.addHeaderColor(binding.hSpouse, context, spouses.isPendingData)
 
         binding.fSpousePhoneNo.tvTitle.setText(context.getString(R.string.phone_mobile))
         binding.fSpouseAddressVillageOrHouseNo.tvTitle.setText(context.getString(R.string.vill_house))
@@ -1246,6 +1250,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
 
         employee = employeeProfileData.employee
+        HelperClass.addHeaderColor(
+            binding.hJobJoiningInformation,
+            context,
+            jobjoinings.isPendingData
+        )
 
         binding.hJobJoiningInformation.tvTitle.setText(heading)
         binding.fJobJoiningOffice.tvTitle.setText(context.getString(R.string.office))
@@ -1465,6 +1474,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fChildrenNidNo.tvTitle.setText(context.getString(R.string.nid_no))
         binding.fChildrenPassportNo.tvTitle.setText(context.getString(R.string.passport_no))
         binding.fChildrenGenderOrSex.tvTitle.setText(context.getString(R.string.gender))
+        HelperClass.addHeaderColor(binding.hChildren, context, childs.isPendingData)
 
         binding.fChildNid.tvTitle.text = context.getString(R.string.nid_attachment)
         binding.fChildPassport.tvTitle.text = context.getString(R.string.passport_attachment)
@@ -1585,6 +1595,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
     ) {
         binding.llLanguageCertificate.visibility = View.GONE
         binding.hLanguage.tvTitle.setText(heading)
+        HelperClass.addHeaderColor(
+            binding.hLanguage,
+            context,
+            languages.isPendingData
+        )
+
         binding.fLanguageNOLanguage.tvTitle.setText(context.getString(R.string.name_language))
         binding.fLanguageNOLanguageBn.tvTitle.setText(context.getString(R.string.name_language_bn))
         binding.fLanguageNOInstituteBn.tvTitle.setText(context.getString(R.string.name_institute_bn))
@@ -1690,6 +1706,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.hLocaltraining.tvTitle.setText(heading)
         binding.fLocalTrainingCountry.llBody.visibility = View.GONE
         binding.llTrainingCertification.visibility = View.GONE
+        HelperClass.addHeaderColor(
+            binding.hLocaltraining,
+            context,
+            localTrainings.isPendingData
+        )
 
         binding.fLocalTrainingCatName.tvTitle.setText(context.getString(R.string.training_category))
         binding.fLocalTrainingCourseT.tvTitle.setText(context.getString(R.string.course_title))
@@ -1867,6 +1888,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fLocalTrainingLocation.llBody.visibility = View.GONE
         binding.fLocalTrainingLocationBn.llBody.visibility = View.GONE
         binding.llTrainingCertification.visibility = View.GONE
+        HelperClass.addHeaderColor(
+            binding.hLocaltraining,
+            context,
+            foreigntrainings.isPendingData
+        )
 
         binding.fLocalTrainingCatName.tvTitle.text = context.getString(R.string.training_category)
         binding.fLocalTrainingCourseT.tvTitle.text = context.getString(R.string.course_title)
@@ -2062,6 +2088,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fORInfoQuarterName.tvTitle.setText(context.getString(R.string.quarter_name))
         binding.fORInfoFlatNo.tvTitle.setText(context.getString(R.string.flat_no))
         binding.fORInfoStatus.tvTitle.setText(context.getString(R.string.status))
+        HelperClass.addHeaderColor(
+            binding.hOfficialResidentialInfo,
+            context,
+            officialResidentials.isPendingData
+        )
+
 
         if (!officialResidentials.isPendingData) {
 
@@ -2280,6 +2312,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fForeignTravelFromDate.tvTitle.setText(context.getString(R.string.from_date))
         binding.fForeignTravelToDate.tvTitle.setText(context.getString(R.string.to_date))
 
+        HelperClass.addHeaderColor(
+            binding.hForeignTravelInfo,
+            context,
+            foreignTravels.isPendingData
+        )
 
         // decide what to show in document
         ConvertNumber.setIconOnTextView(
@@ -2389,6 +2426,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAQDetails.tvTitle.setText(context.getString(R.string.qualification_details))
         binding.fAQDetailsBn.tvTitle.setText(context.getString(R.string.qualification_details_bangla))
 
+        HelperClass.addHeaderColor(
+            binding.hAdditionalQualification,
+            context,
+            additionalQualifications.isPendingData
+        )
 
         ConvertNumber.setIconOnTextView(
             binding.fAQDocument.icon,
@@ -2482,6 +2524,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fPublicationDetailsBn.tvTitle.setText(context.getString(R.string.public_details_bn))
         binding.fPublicationNameEn.tvTitle.setText(context.getString(R.string.pub_name))
         binding.fPublicationNameBn.tvTitle.setText(context.getString(R.string.pub_name_bn))
+        HelperClass.addHeaderColor(
+            binding.hPublication,
+            context,
+            qualifications.isPendingData
+        )
 
 
         ConvertNumber.setIconOnTextView(
@@ -2611,6 +2658,13 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fAwardDetailsDetails.tvTitle.setText(context.getString(R.string.award_details))
         binding.fAwardDetailsDetailsBn.tvTitle.setText(context.getString(R.string.award_details_bn))
         binding.fAwardDate.tvTitle.setText(context.getString(R.string.award_date))
+
+        HelperClass.addHeaderColor(
+            binding.hHonoursAndAward,
+            context,
+            honoursAwards.isPendingData
+        )
+
 
         ConvertNumber.setIconOnTextView(
             binding.fAwardAttachment.icon,
@@ -2806,6 +2860,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fDARemarksBn.tvTitle.setText(context.getString(R.string.remakrs_bn))
         binding.fDADate.tvTitle.setText(context.getString(R.string.date))
 
+        HelperClass.addHeaderColor(
+            binding.hDiscipilinaryAction,
+            context,
+            disciplinaryAction.isPendingData
+        )
+
 //        if (preparence.getLanguage()
 //                .equals("en")
 //        ) {
@@ -2878,6 +2938,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fReferenceAddressBn.tvTitle.setText(context.getString(R.string.address_bn))
         binding.fReferenceContactNo.tvTitle.setText(context.getString(R.string.contact))
         binding.fReferenceContactNoBn.tvTitle.setText(context.getString(R.string.contact_bn))
+        HelperClass.addHeaderColor(binding.hReference, context, references.isPendingData)
+
 
         if (!references.isPendingData) {
 
@@ -3039,6 +3101,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fQuotaType.tvTitle.setText(context.getString(R.string.quota_type))
         binding.fQuotaDescription.tvTitle.setText(context.getString(R.string.description))
         binding.fQuotaDescriptionBn.tvTitle.setText(context.getString(R.string.description_bn))
+
+        HelperClass.addHeaderColor(binding.hQuota, context, quotas.isPendingData)
 
 
         val itemOnClick: (Int) -> Unit = {

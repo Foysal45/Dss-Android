@@ -458,6 +458,17 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
     fun setPendingData(employee1: Employee?, name: String?) {
 
+        context?.let {
+            ContextCompat.getColor(
+                it,
+                R.color.headerColor
+            )
+        }?.let {
+            v.hBasicInformation1.setBackgroundColor(
+                it
+            )
+        }
+
         val commonData: CommonData? = preparence.get(HelperClass.COMMON_DATA)
 
         v.fPresentBasicSalary1.llBody.visibility = View.GONE
@@ -691,13 +702,11 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 }"
             )
 
-            v.fReligion1.tvText.setText(
-                "${
-                    employee1?.religion_id?.let {
-                        HelperClass.getCommonDataFilltered(it, commonData?.religions, false)
-                    }
-                }"
-            )
+            v.fReligion1.tvText.text = "${
+                employee1?.religion_id?.let {
+                    HelperClass.getCommonDataFilltered(it, commonData?.religions, false)
+                }
+            }"
 
 //            v.fEmployeeStatusType1.tvText.setText(employee1?.employment_job_status?.employee1mentstatus?.name)
 
@@ -726,24 +735,20 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
 
 
-            v.fBloodGroup1.tvText.setText(
-                "${
-                    employee1?.blood_group_id?.let {
-                        HelperClass.getCommonDataFilltered(
-                            it,
-                            commonData?.blood_group,
-                            true
-                        )
-                    }
-                }"
-            )
-            v.fReligion1.tvText.setText(
-                "${
-                    employee1?.religion_id?.let {
-                        HelperClass.getCommonDataFilltered(it, commonData?.religions, true)
-                    }
-                }"
-            )
+            v.fBloodGroup1.tvText.text = "${
+                employee1?.blood_group_id?.let {
+                    HelperClass.getCommonDataFilltered(
+                        it,
+                        commonData?.blood_group,
+                        true
+                    )
+                }
+            }"
+            v.fReligion1.tvText.text = "${
+                employee1?.religion_id?.let {
+                    HelperClass.getCommonDataFilltered(it, commonData?.religions, true)
+                }
+            }"
 
         }
 

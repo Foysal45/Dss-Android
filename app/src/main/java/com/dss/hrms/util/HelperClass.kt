@@ -1,19 +1,34 @@
 package com.dss.hrms.util
 
 import android.content.Context
+import android.graphics.Color
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.dss.hrms.R
+import com.dss.hrms.databinding.PersonalInformationHeaderFieldBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.commonSpinnerDataLoad.CommonModel
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.pendingDataModel.*
-import com.google.gson.GsonBuilder
 
 class HelperClass {
     companion object {
         val PEDING_DATA = "pending_data_obj"
         val COMMON_DATA = "common_data_dropdown"
+
+
+        fun addHeaderColor(view: PersonalInformationHeaderFieldBinding, ctx: Context, isPending: Boolean ){
+            if(isPending){
+                view.headerContainer.setBackgroundColor(ContextCompat.getColor(ctx , R.color.headerColor))
+            }else {
+                view.headerContainer.setBackgroundColor(Color.TRANSPARENT)
+            }
+
+        }
+
+
 
 
 
