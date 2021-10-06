@@ -474,13 +474,11 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         v.fPresentBasicSalary1.llBody.visibility = View.GONE
         v.fPresentGrossSalary1.llBody.visibility = View.GONE
 
-        v.hBasicInformation1.tvTitle.setText(
-            " ${getString(R.string.personal_information)}(${
-                getString(
-                    R.string.pending_data
-                )
-            })"
-        )
+        v.hBasicInformation1.tvTitle.text = " ${getString(R.string.personal_information)}(${
+            getString(
+                R.string.pending_data
+            )
+        })"
         v.fEmployeeId1.tvTitle.setText(getString(R.string.employee_id))
 
         v.fNameEng1.tvTitle.setText(getString(R.string.name))
