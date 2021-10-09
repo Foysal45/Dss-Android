@@ -85,12 +85,15 @@ class MySharedPreparence {
     }
 
     fun setLoginInfo(value: String) {
+        Log.e("SAVE", "setLoginInfo: $value" )
+
         val editor = preferences!!.edit()
         editor.putString(LOGIN_INFO, value)
         editor.commit()
     }
 
     fun getLoginInfo(): String? {
+        Log.e("READ", "getLoginInfo: ${preferences!!.getString(LOGIN_INFO, null)}")
         return preferences!!.getString(LOGIN_INFO, null);
     }
 
@@ -117,7 +120,10 @@ class MySharedPreparence {
         return GsonBuilder().create().fromJson(value, T::class.java)
     }
 
+    fun removeEveryThing() {
+    //    preferences?.edit()?.clear()?.commit()
 
+    }
 
 
 }

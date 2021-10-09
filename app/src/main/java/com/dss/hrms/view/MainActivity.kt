@@ -47,7 +47,9 @@ import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.noInternetTV
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.dashboard_header.*
 import kotlinx.android.synthetic.main.nav_header.view.*
@@ -79,7 +81,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
     lateinit var employeePendingData: EmployeePendingData
 
     var employee: Employee? = null
-    var pendingData : PendingDataModel? = null
+    var pendingData: PendingDataModel? = null
 
     lateinit var notificationViewModel: NotificationViewModel
     lateinit var employeeViewModel: EmployeeViewModel
@@ -198,7 +200,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
 
     override fun onStart() {
         super.onStart()
-        drawerMenu()
+        // drawerMenu()
 
     }
 
@@ -213,16 +215,21 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
 
     fun getEmployeeInfo() {
         var dialog = CustomLoadingDialog().createLoadingDialog(this)
+        // Toast.makeText(applicationContext , "ID -> " + loginInfo.employee_id ,Toast.LENGTH_LONG).show()
         val a = lifecycleScope.launch {
             employeeViewModel.getEmployeeInfo(loginInfo.employee_id)
                 ?.collect {
                     dialog?.dismiss()
-                    if (it is Employee) {
-                        employee = employeeProfileData.employee
-                    } else if (it is ApiError) {
+                    when (it) {
+                        is Employee -> {
+                            employee = employeeProfileData.employee
+                        }
+                        is ApiError -> {
 
-                    } else if (it is Throwable) {
-                        toast(appContext!!, it.toString())
+                        }
+                        is Throwable -> {
+                            toast(appContext!!, it.toString())
+                        }
                     }
                 }
         }
@@ -243,7 +250,10 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
                     if (it is PendingDataModel) {
                         pendingData = employeePendingData.PendingData
 
-                        Log.d("TAGED", "getPendingData:  ${employeeProfileData.employee?.presentAddresses?.size}")
+                        Log.d(
+                            "TAGED",
+                            "getPendingData:  ${employeeProfileData.employee?.presentAddresses?.size}"
+                        )
                     } else if (it is ApiError) {
                         Log.d("TAGED", "Error :  ${it.getMessage()}")
                     } else if (it is Throwable) {
@@ -253,7 +263,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         }
 
         mm.invokeOnCompletion {
-            preparence.put(pendingData  , HelperClass.PEDING_DATA)
+            preparence.put(pendingData, HelperClass.PEDING_DATA)
             getEmployeeInfo()
         }
     }
@@ -267,16 +277,26 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         ).load(RetrofitInstance.BASE_URL + employeeProfileData.employee?.photo)
             .into(headerLayout.menu_logo)
 
+        if (preparence.getLanguage().equals("bn")) {
+            headerLayout.menu_name.text = employeeProfileData.employee?.name_bn
+        } else {
+            headerLayout.menu_name.text = employeeProfileData.employee?.name
+        }
+
 
         if (employeeProfileData.employee?.jobjoinings != null && employeeProfileData.employee?.jobjoinings!!.isNotEmpty())
             if (preparence.getLanguage().equals("en")) {
-                headerLayout.menu_name.setText(employeeProfileData.employee?.name)
-                headerLayout.menu_office_address.setText(employeeProfileData.employee?.jobjoinings!![0]?.office?.office_name)
-                headerLayout.menu_designation.setText(employeeProfileData.employee?.jobjoinings!![0]?.designation?.name)
+                headerLayout.menu_name.text = employeeProfileData.employee?.name
+                headerLayout.menu_office_address.text =
+                    employeeProfileData.employee?.jobjoinings!![0].office?.office_name
+                headerLayout.menu_designation.text =
+                    employeeProfileData.employee?.jobjoinings!![0].designation?.name
             } else {
-                headerLayout.menu_name.setText(employeeProfileData.employee?.name_bn)
-                headerLayout.menu_office_address.setText(employeeProfileData.employee?.jobjoinings!![0]?.office?.office_name_bn)
-                headerLayout.menu_designation.setText(employeeProfileData.employee?.jobjoinings!![0]?.designation?.name_bn)
+                headerLayout.menu_name.text = employeeProfileData.employee?.name_bn
+                headerLayout.menu_office_address.text =
+                    employeeProfileData.employee?.jobjoinings!![0].office?.office_name_bn
+                headerLayout.menu_designation.text =
+                    employeeProfileData.employee?.jobjoinings!![0].designation?.name_bn
             }
 
 
@@ -405,6 +425,8 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
 
             preparence?.setLanguage(null)
             preparence.setLoginStatus(false)
+            preparence.removeEveryThing()
+
             finish()
             startActivity(
                 Intent(this, LoginActivity::class.java)

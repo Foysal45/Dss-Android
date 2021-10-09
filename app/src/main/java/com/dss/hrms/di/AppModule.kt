@@ -56,7 +56,7 @@ class AppModule {
 //            return appInstance
 //        } //just return the super-type you need
 
-        @Singleton
+
         @Provides
         fun provideLoginInfo(
             preparence: MySharedPreparence

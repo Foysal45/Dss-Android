@@ -97,7 +97,7 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
             startActivity(Intent( this , HelpDeskPage::class.java))
         }
 
-        ivPassword.setOnClickListener({
+        ivPassword.setOnClickListener {
             if (isShowPassword) {
                 etPassword.inputType =
                     InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
@@ -108,7 +108,7 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
                 ivPassword.setImageResource(R.drawable.password_hide)
                 isShowPassword = true
             }
-        })
+        }
 
         cbRemenber.setOnCheckedChangeListener({ buttonView, isChecked ->
             if (isChecked) {
@@ -202,7 +202,7 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
                 ?.collect {
                     loading_dialog.visibility = View.GONE
                     login.visibility = View.VISIBLE
-                    Log.e("LoginActivity", "response : " + it)
+
                     if (it is LoginInfo) {
                         preparence?.setLoginStatus(true)
                         preparence?.setEmail(email)
@@ -210,8 +210,11 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
                         preparence?.setLoginStatus(true)
                         it.token?.let { preparence?.setToken(it) }
                         var loginInfo = it as LoginInfo
-                        preparence?.setLoginInfo(loginInfo?.apply { this.password = password }
+                        Log.d("TAGGGGE", "login: " + loginInfo.employee_id)
+
+                        preparence.setLoginInfo(loginInfo.apply { this.password = password }
                             .let { Gson().toJson(it) })
+
                         getDeviceToken()
                     } else if (it is ApiError) {
                         e_email.visibility = View.GONE
