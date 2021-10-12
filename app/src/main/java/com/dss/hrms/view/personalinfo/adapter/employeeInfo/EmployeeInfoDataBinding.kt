@@ -693,9 +693,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
                 qualifications.examination?.name_bn?.let { binding.fEQNameOfD.tvText.setText(it) }
                 qualifications.educational_institute?.name_bn.let {
-                    binding.fEQNameOIn.tvText.setText(
-                        it
-                    )
+                    binding.fEQNameOIn.tvText.text = it
                 }
                 qualifications.board?.name_bn.let { binding.fEQBoardOrUniversity.tvText.setText(it) }
                 qualifications.passing_year?.let { binding.fEQPassingYear.tvText.setText(it) }

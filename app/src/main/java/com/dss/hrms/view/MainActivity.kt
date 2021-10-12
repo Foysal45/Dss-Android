@@ -59,6 +59,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import javax.inject.Inject
 import kotlin.math.log
 
@@ -139,7 +140,13 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
 
         Log.e("mainactivity", "inject login data " + loginInfo?.email)
         Log.e("mainactivity", "inject employee data " + employeeProfileData?.employee?.profile_id)
-        getPendingData()
+        try {
+            getPendingData()
+        } catch (ex: Exception) {
+            Toast.makeText(applicationContext, "Error : ${ex.localizedMessage}", Toast.LENGTH_LONG)
+                .show()
+        }
+
 
         notification.setOnClickListener {
             Intent(this, NotificationActivity::class.java).apply {

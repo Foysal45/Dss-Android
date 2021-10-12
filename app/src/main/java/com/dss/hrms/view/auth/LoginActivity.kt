@@ -196,7 +196,7 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
         loading_dialog.visibility = View.VISIBLE
         login.visibility = View.GONE
         //  var dialog = CustomLoadingDialog().createLoadingDialog(this)
-        Log.e("LoginActivity", "login  : ")
+
         lifecycleScope.launch {
             async { loginViewModel?.login(email, password) }.await()
                 ?.collect {
@@ -210,7 +210,7 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
                         preparence?.setLoginStatus(true)
                         it.token?.let { preparence?.setToken(it) }
                         var loginInfo = it as LoginInfo
-                        Log.d("TAGGGGE", "login: " + loginInfo.employee_id)
+                          Log.d("TAGGGGE", "login: " + loginInfo.employee_id)
 
                         preparence.setLoginInfo(loginInfo.apply { this.password = password }
                             .let { Gson().toJson(it) })

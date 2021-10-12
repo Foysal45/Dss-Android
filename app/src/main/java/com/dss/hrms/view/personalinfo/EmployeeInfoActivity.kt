@@ -17,9 +17,11 @@ import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer
 import com.codeboy.pager2_transformers.Pager2_CubeInDepthTransformer
+import com.codeboy.pager2_transformers.Pager2_DefaultTransformer
 import com.codeboy.pager2_transformers.Pager2_FadeOutTransformer
 import com.dss.hrms.R
 import com.dss.hrms.model.employeeProfile.Employee
@@ -38,6 +40,7 @@ import com.dss.hrms.view.auth.LoginActivity
 import com.dss.hrms.view.settings.SettingsActivity
 import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
+import com.google.android.material.tabs.TabLayoutMediator
 import com.namaztime.namaztime.database.MySharedPreparence
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_employee_info.*
@@ -45,6 +48,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
+import java.lang.Exception
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -85,15 +89,20 @@ class EmployeeInfoActivity : BaseActivity() {
         back.setOnClickListener {
             onBackPressed()
         }
-        setSupportActionBar(toolBar);
-        //       fun init() {
-//        employeeViewModel =
-//            ViewModelProviders.of(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
-//    }
-
+        setSupportActionBar(toolBar)
 
         viewpager_go.adapter = adapter
+
+        // test ing only
+        TabLayoutMediator(tabMode, viewpager_go, true , false ) { tab, position ->
+            tab.text = "d"
+        }.attach()
+
+           viewpager_go.setPageTransformer(Pager2_FadeOutTransformer())
         viewpager_go.offscreenPageLimit = 1
+
+      //  viewpager_go.setPageTransformer(null)
+
 
         var personal = Bundle()
         personal.putString("key", StaticKey.PersonalInformation)
@@ -156,10 +165,10 @@ class EmployeeInfoActivity : BaseActivity() {
         adapter!!.addFragment(jonJoiInfoFrg, getString(R.string.job_joining_information))
 
 
-        var quotaInfoBundle = Bundle()
+        val quotaInfoBundle = Bundle()
         quotaInfoBundle.putString("key", StaticKey.Quota)
         quotaInfoBundle.putBoolean("addWillAppear", false)
-        var quotaFrg = FragmentEmployeeInfo()
+        val quotaFrg = FragmentEmployeeInfo()
         quotaFrg.arguments = quotaInfoBundle
         adapter!!.addFragment(quotaFrg, getString(R.string.quota_information))
 
@@ -316,7 +325,7 @@ class EmployeeInfoActivity : BaseActivity() {
     fun restartActivity() {
         finish()
         val intent = Intent(this, EmployeeInfoActivity::class.java)
-      //  intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME
+        //  intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME
         startActivity(intent)
     }
 
@@ -329,24 +338,32 @@ class EmployeeInfoActivity : BaseActivity() {
             var dialog = CustomLoadingDialog().createLoadingDialog(context)
             context?.lifecycleScope?.launch {
 
-                context?.employeeViewModel?.getPendingData(context?.loginInfo?.employee_id)
-                    ?.collect {
-                        if (it is PendingDataModel) {
-                            val pendingData = it
-                            var preparence: MySharedPreparence = MySharedPreparence(context!!)
-                            preparence.put(pendingData, HelperClass.PEDING_DATA)
-                            context?.employeeViewModel?.getEmployeeInfo(context?.loginInfo?.employee_id)
-                                ?.collect {
-                                    dialog?.dismiss()
-                                    if (it is Employee) {
-                                        context?.restartActivity()
-                                    } else {
-                                        context?.restartActivity()
-                                    }
-                                }
-                        }
+                try {
 
-                    }
+                    context?.employeeViewModel?.getPendingData(context?.loginInfo?.employee_id)
+                        ?.collect {
+                            if (it is PendingDataModel) {
+                                val pendingData = it
+                                var preparence: MySharedPreparence = MySharedPreparence(context!!)
+                                preparence.put(pendingData, HelperClass.PEDING_DATA)
+                                context?.employeeViewModel?.getEmployeeInfo(context?.loginInfo?.employee_id)
+                                    ?.collect {
+                                        dialog?.dismiss()
+                                        if (it is Employee) {
+                                            context?.restartActivity()
+                                        } else {
+                                            context?.restartActivity()
+                                        }
+                                    }
+                            }
+
+                        }
+                } catch (
+                    ex: Exception
+                ) {
+                    Toast.makeText(context, "Error : ${ex.localizedMessage}", Toast.LENGTH_LONG)
+                        .show()
+                }
 
 
             }
