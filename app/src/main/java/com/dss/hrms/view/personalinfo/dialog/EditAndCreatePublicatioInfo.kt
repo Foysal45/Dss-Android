@@ -282,6 +282,17 @@ class EditAndCreatePublicatioInfo @Inject constructor() {
         map.put("publication_name", binding?.fPublicationNameEn?.etText?.text.toString())
         map.put("publication_name_bn", binding?.fPublicationNameBn?.etText?.text.toString())
         map.put("publication_details", binding?.fPublicationDetails?.etText?.text.toString())
+        try{
+            if (key == StaticKey.EDIT && publications?.isPendingData == false  ) {
+                map.put("parent_id", publications?.id)
+            }
+
+            else if (  key == StaticKey.EDIT && publications?.isPendingData == true) {
+                map.put("parent_id", publications?.parent_id)
+            }
+        }catch (Ex : java.lang.Exception){
+
+        }
         map.put("publication_details_bn", binding?.fPublicationDetailsBn?.etText?.text.toString())
         map.put("document_path",document_path)
         if (publications?.status != null) map.put(

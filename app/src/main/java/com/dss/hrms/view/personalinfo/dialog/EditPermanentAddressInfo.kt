@@ -366,10 +366,23 @@ class EditPermanentAddressInfo @Inject constructor() {
         map.put("post_office_bn", binding?.fAddressPostOfficeBn?.etText?.text.toString())
         map.put("post_code", binding?.fAddressPostCode?.etText?.text.toString())
         map.put("road_word_no", binding?.fAddressRoadOrWordNo?.etText?.text.toString())
+        try{
+            if (key == StaticKey.EDIT && permanentAddresses?.isPendingData == false  ) {
+                map.put("parent_id", permanentAddresses?.id)
+            }
+
+            else if (  key == StaticKey.EDIT && permanentAddresses?.isPendingData == true) {
+                map.put("parent_id", permanentAddresses?.parent_id)
+            }
+        }catch (Ex : java.lang.Exception){
+
+        }
         map.put("road_word_no_bn", binding?.fAddressRoadOrWordNoBn?.etText?.text.toString())
         map.put("village_house_no", binding?.fAddressVillageOrHouseNo?.etText?.text.toString())
         map.put("village_house_no_bn", binding?.fAddressVillageOrHouseNoBn?.etText?.text.toString())
-        map.put("status", permanentAddresses?.status)
+        if(permanentAddresses?.status != null){
+            map.put("status",permanentAddresses?.status )
+        }else  map.put("status", 0 )
         return map
     }
 

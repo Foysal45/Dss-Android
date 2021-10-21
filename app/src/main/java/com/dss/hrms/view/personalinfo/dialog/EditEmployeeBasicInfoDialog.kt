@@ -773,6 +773,14 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("fathers_name_bn", binding?.fFatherNameBangla?.etText?.text.toString())
         map.put("mothers_name", binding?.fMotherNameEng?.etText?.text.toString())
         map.put("mothers_name_bn", binding?.fMotherNameBangla?.etText?.text.toString())
+//        try{
+//            if (em?.isPendingData == true) {
+//                var a = foreigntraining!!.parent_id
+//                map.put("parent_id", a)
+//            }
+//        }catch (Ex : java.lang.Exception){
+//
+//        }
         //  map.put("gender_id", null)
         gender?.id?.let { map.put("gender_id", gender?.id) }
         map.put("blood_group_id", bloodGroup?.id)
@@ -781,7 +789,8 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("has_disability", if (hasDisability?.id == 1) true else false)
         employeeType?.id?.let { map.put("employee_type_id", it) }
         employmentStatusType?.id?.let { map.put("employment_status_id", it) }
-        hasFreedomFighterQuota?.id?.let { map.put("has_freedom_fighter_quota", it) }
+     //   hasFreedomFighterQuota?.id?.let { map.put("", it) }
+        map.put("has_freedom_fighter_quota", if (hasFreedomFighterQuota?.id == 1) true else false)
         map.put("disability_type_id", disabilityType?.id)
         map.put("disability_degree_id", disabilityDegree?.id)
         map.put("disabled_person_id", binding?.fDisabledPersonId?.etText?.text?.toString())
@@ -978,7 +987,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
                         Toast.makeText(
                             context,
-                            "Message : File Upload Done !!! $fileUrl",
+                            "Message : File Upload Done !!!",
                             Toast.LENGTH_LONG
                         )
                             .show()

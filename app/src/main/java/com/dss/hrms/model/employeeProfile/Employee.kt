@@ -9,7 +9,7 @@ class Employee() {
     @SerializedName("id")
     var id: Int = 0
     var isPendingData: Boolean = false
-
+    var parent_id: Int? = null
     @SerializedName("profile_id")
     val profile_id: String? = null
 
@@ -412,7 +412,7 @@ class Employee() {
         var id: Int = 0
 
         var isPendingData: Boolean = false
-
+        var parent_id: Int? = null
         @SerializedName("employee_id")
         val employee_id: Int = 0
 
@@ -687,7 +687,7 @@ class Employee() {
         @SerializedName("id")
         var id: Int = 0
         var isPendingData: Boolean = false
-
+        var parent_id: Int? = null
         @SerializedName("employee_id")
         val employee_id: Int = 0
 
@@ -783,6 +783,7 @@ class Employee() {
         @SerializedName("id")
         var id: Int = 0
         var isPendingData: Boolean = false
+        var parent_id: Int? = null
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -829,6 +830,9 @@ class Employee() {
         @SerializedName("local_government_type_id")
         val local_government_type_id: Int? = null
 
+        @SerializedName("local_government_type")
+        var localGovernmentType: LocalGovernmentType? = null
+
         @SerializedName("address_details")
         val address_details: String? = null
 
@@ -843,7 +847,17 @@ class Employee() {
 
         @SerializedName("union_id")
         val union_id: Int = 0
+        @SerializedName("city_corporation")
+        var cityCorporation: CityCorporation? = null
 
+        @SerializedName("municipality")
+        var municipality: municipality? = null
+
+        @SerializedName("union")
+        var union: union? = null
+
+        @SerializedName("upazila")
+        var upazila: Upazila? = null
 
         @SerializedName("marital_status")
         val marital_status: MaritalStatus? = null
@@ -852,6 +866,8 @@ class Employee() {
     class PresentAddresses() {
 
         var isPendingData: Boolean = false
+
+        var parent_id: Int? = null
 
         @SerializedName("id")
         var id: Int = 0
@@ -954,6 +970,8 @@ class Employee() {
         var id: Int = 0
 
         var isPendingData: Boolean = false
+
+        var parent_id: Int? = null
 
         @SerializedName("employee_id")
         var employee_id: Int = 0
@@ -1098,6 +1116,7 @@ class Employee() {
 
     class EducationalQualifications() {
         var isPendingData: Boolean = false
+        var parent_id: Int? = null
 
         @SerializedName("id")
         var id: Int = 0
@@ -1226,6 +1245,7 @@ class Employee() {
         @SerializedName("id")
         var id: Int = 0
         var isPendingData: Boolean = false
+        var parent_id: Int? = null
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -1411,6 +1431,7 @@ class Employee() {
         var id: Int = 0
 
         var isPendingData: Boolean = false
+        var parent_id: Int? = null
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -1479,6 +1500,8 @@ class Employee() {
         @SerializedName("id")
         var id: Int = 0
         var isPendingData: Boolean = false
+
+        var parent_id: Int? = null
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -1651,6 +1674,8 @@ class Employee() {
         var id: Int = 0
         var isPendingData: Boolean = false
 
+        var parent_id: Int? = null
+
         @SerializedName("employee_id")
         val employee_id: Int = 0
 
@@ -1734,6 +1759,7 @@ class Employee() {
         @SerializedName("id")
         var id: Int = 0
         var isPendingData: Boolean = false
+        var parent_id: Int? = null
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -1763,7 +1789,7 @@ class Employee() {
         val certificate: String? = null
 
         @SerializedName("status")
-        val status: Int = 0
+        var status: Int = 0
 
         @SerializedName("deleted_at")
         val deleted_at: String? = null
@@ -1781,6 +1807,7 @@ class Employee() {
         var id: Int = 0
 
         var isPendingData: Boolean = false
+        var parent_id: Int? = null
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -1845,7 +1872,7 @@ class Employee() {
         @SerializedName("id")
         var id: Int = 0
         var isPendingData: Boolean = false
-
+        var parent_id: Int? = null
         @SerializedName("employee_id")
         val employee_id: Int = 0
 
@@ -1926,6 +1953,7 @@ class Employee() {
         @SerializedName("id")
         var id: Int = 0
         var isPendingData: Boolean = false
+        var parent_id: Int? = null
 
         @SerializedName("document_path")
         val document_path: String? = null
@@ -2000,6 +2028,7 @@ class Employee() {
         var id: Int = 0
 
         var isPendingData: Boolean = false
+        var parent_id: Int? = null
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -2037,6 +2066,7 @@ class Employee() {
         @SerializedName("id")
         var id: Int = 0
         var isPendingData: Boolean = false
+        var parent_id: Int? = null
 
         @SerializedName("employee_id")
         val employee_id: Int = 0
@@ -2106,7 +2136,7 @@ class Employee() {
         @SerializedName("id")
         var id: Int = 0
         var isPendingData: Boolean = false
-
+        var parent_id: Int? = null
         @SerializedName("employee_id")
         val employee_id: Int = 0
 
@@ -2148,7 +2178,7 @@ class Employee() {
         var id: Int = 0
 
         var isPendingData: Boolean = false
-
+        var parent_id: Int? = null
         @SerializedName("employee_id")
         val employee_id: Int = 0
 

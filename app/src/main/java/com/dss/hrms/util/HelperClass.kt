@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import com.dss.hrms.R
 import com.dss.hrms.databinding.PersonalInformationHeaderFieldBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.Paysacle
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.commonSpinnerDataLoad.CommonModel
 import com.dss.hrms.model.employeeProfile.Employee
@@ -19,17 +20,23 @@ class HelperClass {
         val COMMON_DATA = "common_data_dropdown"
 
 
-        fun addHeaderColor(view: PersonalInformationHeaderFieldBinding, ctx: Context, isPending: Boolean ){
-            if(isPending){
-                view.headerContainer.setBackgroundColor(ContextCompat.getColor(ctx , R.color.headerColor))
-            }else {
+        fun addHeaderColor(
+            view: PersonalInformationHeaderFieldBinding,
+            ctx: Context,
+            isPending: Boolean
+        ) {
+            if (isPending) {
+                view.headerContainer.setBackgroundColor(
+                    ContextCompat.getColor(
+                        ctx,
+                        R.color.headerColor
+                    )
+                )
+            } else {
                 view.headerContainer.setBackgroundColor(Color.TRANSPARENT)
             }
 
         }
-
-
-
 
 
         fun SavePresentAddresssModel(obj: PresentAddressPendingModel): Employee.PresentAddresses {
@@ -37,7 +44,10 @@ class HelperClass {
             if (obj.data != null) {
                 model = obj.data!!
                 model.id = obj.id
+
             }
+            model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -48,6 +58,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -58,6 +69,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -68,6 +80,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -78,6 +91,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -88,6 +102,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -99,6 +114,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -109,6 +125,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -119,6 +136,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -129,6 +147,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -139,6 +158,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -149,6 +169,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -159,6 +180,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -169,6 +191,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -179,6 +202,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -189,6 +213,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -199,6 +224,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -209,6 +235,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -224,6 +251,7 @@ class HelperClass {
                 model.id = obj.id
             }
             model.isPendingData = true
+            model.parent_id = obj.parent_id
             return model
         }
 
@@ -268,6 +296,24 @@ class HelperClass {
                         selection = if (isBangla) {
                             item.name_bn
                         } else item.name
+
+                        break
+                    }
+                }
+            }
+
+            return selection.toString()
+        }
+
+        fun getPayScallFilltered(id: Int, list: List<Paysacle>?, isBangla: Boolean): String {
+            var selection = ""
+
+            if (list != null) {
+                for (item in list) {
+                    if (item.id == id) {
+                        selection = if (isBangla) {
+                            item.amount + ""
+                        } else item.amount + ""
 
                         break
                     }

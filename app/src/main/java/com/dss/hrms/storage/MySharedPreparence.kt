@@ -85,7 +85,7 @@ class MySharedPreparence {
     }
 
     fun setLoginInfo(value: String) {
-        Log.e("SAVE", "setLoginInfo: $value" )
+
 
         val editor = preferences!!.edit()
         editor.putString(LOGIN_INFO, value)
@@ -93,7 +93,7 @@ class MySharedPreparence {
     }
 
     fun getLoginInfo(): String? {
-        Log.e("READ", "getLoginInfo: ${preferences!!.getString(LOGIN_INFO, null)}")
+
         return preferences!!.getString(LOGIN_INFO, null);
     }
 
@@ -106,7 +106,7 @@ class MySharedPreparence {
     fun <T> put(`object`: T, key: String) {
         //Convert object to JSON String.
         val jsonString = GsonBuilder().create().toJson(`object`)
-        Log.e("JSON", "JSON ->  $jsonString")
+
         //Save that String in SharedPreferences
         preferences?.edit()?.putString(key, jsonString)?.apply()
     }

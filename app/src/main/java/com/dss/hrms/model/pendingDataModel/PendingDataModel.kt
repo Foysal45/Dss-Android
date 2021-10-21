@@ -28,7 +28,7 @@ class PendingDataModel {
     inner class jobJoiningInformationPendingModel {
         @SerializedName("id")
         val id: Int = 0
-
+        var parent_id: Int? = null
         @SerializedName("data")
         val data: Employee.Jobjoinings? = null
 
@@ -38,7 +38,7 @@ class PendingDataModel {
 class employeePendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee? = null
 }
@@ -46,7 +46,7 @@ class employeePendingModel {
 class spousePendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.Spouses? = null
 }
@@ -54,12 +54,13 @@ class spousePendingModel {
 class childrenInfoPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.Childs? = null
 }
 
 class nominePendingModel {
+    var parent_id: Int? = null
     @SerializedName("id")
     val id: Int = 0
 
@@ -70,7 +71,7 @@ class nominePendingModel {
 class referencePendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.References? = null
 }
@@ -78,7 +79,7 @@ class referencePendingModel {
 class desciplinaryActionPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.DisciplinaryAction? = null
 }
@@ -86,7 +87,7 @@ class desciplinaryActionPendingModel {
 class honoursAndAwardPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.HonoursAwards? = null
 }
@@ -94,7 +95,7 @@ class honoursAndAwardPendingModel {
 class publicationsPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.Publications? = null
 }
@@ -102,7 +103,7 @@ class publicationsPendingModel {
 class addtionalProfeQualiPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.AdditionalQualifications? = null
 }
@@ -110,7 +111,7 @@ class addtionalProfeQualiPendingModel {
 class officialResidentialInfoPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.OfficialResidentials? = null
 }
@@ -118,7 +119,7 @@ class officialResidentialInfoPendingModel {
 class foreignTravelPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.ForeignTravels? = null
 }
@@ -126,7 +127,7 @@ class foreignTravelPendingModel {
 class foreignTrainingPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.Foreigntrainings? = null
 }
@@ -134,7 +135,7 @@ class foreignTrainingPendingModel {
 class localTrainigPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.LocalTrainings? = null
 }
@@ -143,7 +144,7 @@ class localTrainigPendingModel {
 class languageInfoPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.Languages? = null
 }
@@ -151,7 +152,7 @@ class languageInfoPendingModel {
 class EducationalQualificationsPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.EducationalQualifications? = null
 }
@@ -159,7 +160,7 @@ class EducationalQualificationsPendingModel {
 class PermanentAddressPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.PermanentAddresses? = null
 }
@@ -167,7 +168,7 @@ class PermanentAddressPendingModel {
 class PresentAddressPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     var data: Employee.PresentAddresses? = null
 }
@@ -175,7 +176,7 @@ class PresentAddressPendingModel {
 class QuotaInformationPendingModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     val data: Employee.EmployeeQuotas? = null
 }
@@ -183,7 +184,7 @@ class QuotaInformationPendingModel {
 class EmployeeModel {
     @SerializedName("id")
     val id: Int = 0
-
+    var parent_id: Int? = null
     @SerializedName("data")
     val data: Employee? = null
 }

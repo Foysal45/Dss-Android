@@ -333,6 +333,17 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
             map.put("purpose", purpose?.name)
             map.put("purpose_bn", purpose?.name_bn)
         }
+        try{
+            if (key == StaticKey.EDIT && foreignTravels1?.isPendingData == false  ) {
+                map.put("parent_id", foreignTravels1?.id)
+            }
+
+            else if (  key == StaticKey.EDIT && foreignTravels1?.isPendingData == true) {
+                map.put("parent_id", foreignTravels1?.parent_id)
+            }
+        }catch (Ex : java.lang.Exception){
+
+        }
         map.put("details", binding?.fForeignTravelDetailsEn?.etText?.text.toString())
         map.put("details_bn", binding?.fForeignTravelDetailsBn?.etText?.text.toString())
         map.put("from_date", fromDate)

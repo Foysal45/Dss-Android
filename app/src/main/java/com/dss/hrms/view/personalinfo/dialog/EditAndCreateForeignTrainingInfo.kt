@@ -385,6 +385,20 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
         map["country_id"] = country?.id
         map["from_date"] = fromDate
         map["to_date"] = toDate
+        try{
+
+            if (key == StaticKey.EDIT && foreigntraining?.isPendingData == false  ) {
+                map.put("parent_id", foreigntraining?.id)
+            }
+
+            else if (  key == StaticKey.EDIT && foreigntraining?.isPendingData == true) {
+                map.put("parent_id", foreigntraining?.parent_id)
+            }
+
+        }catch (Ex : java.lang.Exception){
+
+        }
+
         map["hrm_training_category_id"] = hrmTrainingId
         map["foreign_training_document_path"] = foreign_training_document_path
         imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }

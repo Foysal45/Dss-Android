@@ -263,6 +263,34 @@
                                 android:id="@+id/fNGender"
                                 layout="@layout/personel_information_view_field" />
 
+
+                            <include
+                                android:id="@+id/fNAddressDivision"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNAddressDistrict"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNAddressUpazila"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNAddressUnion"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fNAddressLocalName"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fNAddressUnionName"
+                                layout="@layout/personel_information_view_field" />
+
+
                             <include
                                 android:id="@+id/fNMaritalStatus"
                                 layout="@layout/personel_information_view_field" />

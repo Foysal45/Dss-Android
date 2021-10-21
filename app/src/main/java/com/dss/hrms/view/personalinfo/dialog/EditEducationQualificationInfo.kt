@@ -14,12 +14,11 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
@@ -27,12 +26,12 @@ import com.dss.hrms.util.ConvertNumber
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
-import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
-import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.FileClickListener
 import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
+import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
@@ -200,10 +199,15 @@ class EditEducationQualificationInfo @Inject constructor() {
                                 override fun selectedItem(any: Any?) {
                                     degreeName = any as SpinnerDataModel
                                     if (degreeName?.name?.toLowerCase()
-                                            .equals("ssc") || degreeName?.name?.toLowerCase()
-                                            .equals("hsc") || degreeName?.name?.toLowerCase()
-                                            .equals("jsc") || degreeName?.name?.toLowerCase()
-                                            .equals("psc")
+                                            .equals("ssc")
+                                        || degreeName?.name_bn?.toLowerCase().equals("মাধ্যমিক")
+                                        || degreeName?.name_bn?.toLowerCase()
+                                            .equals("উচ্চ মাধ্যমিক")
+                                        || degreeName?.name?.toLowerCase()
+                                            .equals("hsc")
+                                        || degreeName?.name?.toLowerCase()
+                                            .equals("jsc/ 8 pass") || degreeName?.name?.toLowerCase()
+                                            .equals("psc/ 5 pass")
                                     ) {
                                         binding?.fEQBoardOrUniversity?.llBody?.visibility =
                                             View.VISIBLE
@@ -422,6 +426,17 @@ class EditEducationQualificationInfo @Inject constructor() {
         var map = HashMap<Any, Any?>()
         map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
         map.put("examination_id", degreeName?.id)
+        try{
+            if (key == StaticKey.EDIT && educationalQualification?.isPendingData == false  ) {
+                map.put("parent_id", educationalQualification?.id)
+            }
+
+            else if (  key == StaticKey.EDIT && educationalQualification?.isPendingData == true) {
+                map.put("parent_id", educationalQualification?.parent_id)
+            }
+        }catch (Ex : java.lang.Exception){
+
+        }
         if (instituteId != null) map.put(
             "educational_institute_id",
             instituteId

@@ -15,8 +15,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
@@ -351,6 +351,15 @@ class EditOfficialResidentialIInfo @Inject constructor() {
         map.put("division_id", division?.id)
         map.put("district_id", district?.id)
         map.put("upazila_id", upazila?.id)
+        try {
+            if (key == StaticKey.EDIT && officialResidential?.isPendingData == false) {
+                map.put("parent_id", officialResidential?.id)
+            } else if (key == StaticKey.EDIT && officialResidential?.isPendingData == true) {
+                map.put("parent_id", officialResidential?.parent_id)
+            }
+        } catch (Ex: java.lang.Exception) {
+
+        }
         map.put("memo_no", binding?.fORInfoMemoNo?.etText?.text.toString())
         map.put("memo_no_bn", binding?.fORInfoMemoNoBn?.etText?.text.toString())
         map.put("memo_date", memo_date)

@@ -906,6 +906,17 @@ class EditCreateNomineeInfo @Inject constructor() {
         /*
          adding address
          */
+        try{
+            if (key == StaticKey.EDIT && nominee?.isPendingData == false  ) {
+                map.put("parent_id", nominee?.id)
+            }
+
+            else if (  key == StaticKey.EDIT && nominee?.isPendingData == true) {
+                map.put("parent_id", nominee?.parent_id)
+            }
+        }catch (Ex : java.lang.Exception){
+
+        }
         map.put("division_id", division?.id)
         map.put("district_id", district?.id)
         map.put("nominee_document_path", documentPath)

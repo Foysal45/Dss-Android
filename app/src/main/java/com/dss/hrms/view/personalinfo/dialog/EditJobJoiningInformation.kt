@@ -15,10 +15,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.Office
 import com.dss.hrms.model.Paysacle
 import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
@@ -113,10 +113,11 @@ class EditJobJoiningInformation @Inject constructor() {
         })
 
         if (employeeProfileData?.employee?.designation_id == jobjoining?.designation_id &&
-            employeeProfileData?.employee?.office_id == jobjoining?.office_id) {
-            currentJob=currentJobData().get(0)
-        }else{
-            currentJob=currentJobData().get(1)
+            employeeProfileData?.employee?.office_id == jobjoining?.office_id
+        ) {
+            currentJob = currentJobData().get(0)
+        } else {
+            currentJob = currentJobData().get(1)
         }
 
         binding.fJobJoiningPensionDate.llBody.visibility = View.GONE
@@ -265,7 +266,7 @@ class EditJobJoiningInformation @Inject constructor() {
             currentJob?.id,
             object : CommonSpinnerSelectedItemListener {
                 override fun selectedItem(any: Any?) {
-                     currentJob=any as SpinnerDataModel
+                    currentJob = any as SpinnerDataModel
                 }
             }
         )
@@ -328,6 +329,20 @@ class EditJobJoiningInformation @Inject constructor() {
             map.put("employee_class_id", _class?.id)
             map.put("grade_id", grade?.id)
             map.put("pay_scale_id", payScale?.id)
+
+            try {
+                if (jobjoining?.isPendingData == true) {
+                    var a = jobjoining!!.parent_id
+                    map.put("parent_id", a)
+                }
+            } catch (Ex: java.lang.Exception) {
+
+            }
+
+
+            map.put("parent_id", jobjoining?.id)
+
+
             map.put("pay_scale", payScale?.amount)
             Log.e(
                 "current",
@@ -351,7 +366,10 @@ class EditJobJoiningInformation @Inject constructor() {
                         Log.e("yousuf", "error : " + Gson().toJson(any))
 
                         if (any is String) {
-                            toast(EmployeeInfoActivity.context, "" + context?.getString(R.string.updated))
+                            toast(
+                                EmployeeInfoActivity.context,
+                                "" + context?.getString(R.string.updated)
+                            )
                             MainActivity.selectedPosition = 7
                             EmployeeInfoActivity.refreshEmployeeInfo()
                             dialogCustome?.dismiss()
@@ -485,7 +503,8 @@ class EditJobJoiningInformation @Inject constructor() {
 //                    )
                     Log.e(
                         "payscale",
-                        "payscale message ............................................................................................" + jobjoining?.pay_scale_id)
+                        "payscale message ............................................................................................" + jobjoining?.pay_scale_id
+                    )
                     spinnerDataModel?.paysacle?.let {
                         SpinnerAdapter().setPayscale(
                             binding.fJobJoiningPayScale.spinner,

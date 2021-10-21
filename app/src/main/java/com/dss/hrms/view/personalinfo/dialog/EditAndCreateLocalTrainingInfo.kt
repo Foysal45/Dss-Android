@@ -16,12 +16,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
@@ -354,7 +353,16 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         map.put("location_bn", binding?.fLocalTrainingLocationBn?.etText?.text.toString())
         map.put("from_date", fromDate)
         map.put("to_date", toDate)
-        map.put("hrm_training_category_id" , hrm_trainningId)
+        try {
+            if (key == StaticKey.EDIT && localTraining?.isPendingData == false) {
+                map.put("parent_id", localTraining?.id)
+            } else if (key == StaticKey.EDIT && localTraining?.isPendingData == true) {
+                map.put("parent_id", localTraining?.parent_id)
+            }
+        } catch (Ex: java.lang.Exception) {
+
+        }
+        map.put("hrm_training_category_id", hrm_trainningId)
         map.put("local_training_document_path", loacTrainingDocumnet)
         imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
         if (localTraining?.status != null) map.put(

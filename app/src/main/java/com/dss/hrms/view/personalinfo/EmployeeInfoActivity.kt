@@ -3,26 +3,18 @@ package com.dss.hrms.view.personalinfo
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
-import android.icu.lang.UCharacter
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer
-import com.codeboy.pager2_transformers.Pager2_CubeInDepthTransformer
-import com.codeboy.pager2_transformers.Pager2_DefaultTransformer
-import com.codeboy.pager2_transformers.Pager2_FadeOutTransformer
 import com.dss.hrms.R
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.login.LoginInfo
@@ -33,24 +25,20 @@ import com.dss.hrms.util.HelperClass
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.activity.BaseActivity
+import com.dss.hrms.view.auth.LoginActivity
 import com.dss.hrms.view.personalinfo.adapter.EmployeeViewPagerAdapter
 import com.dss.hrms.view.personalinfo.fragment.BasicInformationFragment
 import com.dss.hrms.view.personalinfo.fragment.FragmentEmployeeInfo
-import com.dss.hrms.view.auth.LoginActivity
 import com.dss.hrms.view.settings.SettingsActivity
 import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
-import com.google.android.material.tabs.TabLayoutMediator
 import com.namaztime.namaztime.database.MySharedPreparence
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_employee_info.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.io.File
 import java.io.IOException
-import java.lang.Exception
 import javax.inject.Inject
-import kotlin.math.abs
 
 
 class EmployeeInfoActivity : BaseActivity() {
@@ -82,7 +70,7 @@ class EmployeeInfoActivity : BaseActivity() {
             toolBar.inflateMenu(R.menu.my_profile)
         }
 
-        adapter = EmployeeViewPagerAdapter(this)
+        adapter = EmployeeViewPagerAdapter(supportFragmentManager)
 
         appContext = application
         context = this
@@ -91,17 +79,10 @@ class EmployeeInfoActivity : BaseActivity() {
         }
         setSupportActionBar(toolBar)
 
-        viewpager_go.adapter = adapter
 
-        // test ing only
-        TabLayoutMediator(tabMode, viewpager_go, true , false ) { tab, position ->
-            tab.text = "d"
-        }.attach()
+        // viewpager_go.offscreenPageLimit = 0
 
-           viewpager_go.setPageTransformer(Pager2_FadeOutTransformer())
-        viewpager_go.offscreenPageLimit = 1
-
-      //  viewpager_go.setPageTransformer(null)
+        //  viewpager_go.setPageTransformer(null)
 
 
         var personal = Bundle()
@@ -282,37 +263,38 @@ class EmployeeInfoActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
+
+
         if (MainActivity.isViewIntent == 0) {
             MainActivity.isViewIntent = 0
 
             //   viewpager_go.setPageTransformer(Pager2_FadeOutTransformer())
 
-            viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
+            //    viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
 
 //            Handler(Looper.getMainLooper()).postDelayed(
 //                { }, 200)
 //            viewpager_go.post(Runnable {
 //                viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
 //            })
-//            Thread(Runnable {
-//                Thread.sleep(100)
-//                kotlin.run {
-//                    runOnUiThread(Runnable {
-//
-//                           viewpager_go.setPageTransformer(Pager2_FadeOutTransformer())
-//
-//
-//                        viewpager_go.setCurrentItem(MainActivity.selectedPosition, false)
-//                        ///   viewpager_go.setPageTransformer(RotateUpTransformer())
-//
-//                    })
-//                }
-//            }).start()
+            Thread(Runnable {
+                Thread.sleep(100)
+                kotlin.run {
+                    runOnUiThread(Runnable {
+
+                        viewpager_go.adapter = adapter
+                        viewpager_go.setPageTransformer(true, RotateUpTransformer())
+                        viewpager_go.currentItem = MainActivity.selectedPosition
+                    })
+                }
+            }).start()
         } else {
             MainActivity.isViewIntent = 0
             //  viewpager_go.adapter = adapter
-            //   viewpager_go.setPageTransformer(true, RotateUpTransformer())
-            //   viewpager_go.currentItem = MainActivity.selectedPosition
+            //
+
+            viewpager_go.setPageTransformer(true, RotateUpTransformer())
+            viewpager_go.currentItem = MainActivity.selectedPosition
         }
 
     }
@@ -439,7 +421,7 @@ class EmployeeInfoActivity : BaseActivity() {
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
-        @Nullable data: Intent?
+        data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
 

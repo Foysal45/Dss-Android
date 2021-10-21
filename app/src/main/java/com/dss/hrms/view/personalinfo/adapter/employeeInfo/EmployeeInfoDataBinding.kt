@@ -237,8 +237,27 @@ class EmployeeInfoDataBinding @Inject constructor() {
             addresses.post_office?.let { binding.fAddressPostOffice.tvText.setText(it) }
             addresses.post_office_bn?.let { binding.fAddressPostOfficeBn.tvText.setText(it) }
             addresses.post_code?.let { binding.fAddressPostCode.tvText.setText(it) }
-            binding.fAddressDivision.tvText.setText("${addresses.division_id}")
-            binding.fAddressDistrict.tvText.setText("${addresses.district_id}")
+
+            binding.fAddressDistrict.tvText.setText(
+                HelperClass.getCommonDataFilltered(
+                    addresses.district_id,
+                    commonData?.districts,
+                    !preparence.getLanguage()
+                        .equals("en")
+
+                )
+            )
+
+
+            binding.fAddressDivision.tvText.setText(
+                HelperClass.getCommonDataFilltered(
+                    addresses.division_id,
+                    commonData?.divisions,
+                    !preparence.getLanguage()
+                        .equals("en")
+
+                )
+            )
             addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.setText(it) }
             addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
             addresses.police_station?.let { binding.fAddressPoliceStation.tvText.setText(it) }
@@ -266,8 +285,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     binding.fAddressUnion.tvText.text =
                         context.getString(R.string.citycorporation)
 
-                    binding.fAddressLocalName.tvText.text =
-                        binding.fAddressLocalName.tvText.text.toString()
+
 
                     binding.fAddressUnionName.llBody.visibility = View.GONE
                 }
@@ -290,9 +308,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 3 -> {
                     // upzilla
                     binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
+                    binding.fAddressUnionName.tvTitle.text = context.getString(R.string.union)
                     binding.fAddressLocalName.tvText.text = addresses.upazila_id.let {
                         HelperClass.getCommonDataFilltered(
-                            it, commonData?.upazilas, false
+                            it, commonData?.upazilas, !preparence.getLanguage()
+                                .equals("en")
                         )
                     }
 
@@ -301,15 +322,18 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
                     binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
 
-                    binding.fAddressUnion.tvText.text = "${
+                    binding.fAddressUnion.llBody.visibility = View.GONE
+
+                    binding.fAddressUnionName.tvText.text = "${
                         addresses.union_id?.let {
                             HelperClass.getCommonDataFilltered(
-                                it, commonData?.unions, false
+                                it, commonData?.unions, !preparence.getLanguage()
+                                    .equals("en")
                             )
                         }
                     }"
-
                     binding.fAddressUnionName.llBody.visibility = View.VISIBLE
+
 
                 }
             }
@@ -414,12 +438,11 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     }
                     3 -> {
                         // upzilla
-                        binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                        binding.fAddressLocalName.tvTitle.visibility = View.GONE
                         binding.fAddressLocalName.tvText.text = addresses.upazila?.name
-
                         binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
                         binding.fAddressUnion.tvText.text = addresses.Union?.name
-                        binding.fAddressUnionName.llBody.visibility = View.GONE
+                        binding.fAddressUnionName.tvText.text = context.getString(R.string.union)
 
                     }
                 }
@@ -507,8 +530,6 @@ class EmployeeInfoDataBinding @Inject constructor() {
             binding.hAddress.tvTitle.setText("$heading (${context.getString(R.string.pending_data)})")
 
 
-            binding.fAddressDistrict.tvText.setText(addresses.district_id.toString())
-
             addresses.village_house_no?.let {
                 binding.fAddressVillageOrHouseNo.tvText.setText(
                     it
@@ -532,8 +553,32 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 addresses.police_station_bn + ""
             )
 
-            addresses.division_id?.let { binding.fAddressDivision.tvText.setText(it.toString()) }
-            addresses.district_id?.let { binding.fAddressDistrict.tvText.text = it.toString() }
+
+
+            binding.fAddressDistrict.tvText.setText(
+                HelperClass.getCommonDataFilltered(
+                    addresses.district_id,
+                    commonData?.districts,
+                    !preparence.getLanguage()
+                        .equals("en")
+
+                )
+            )
+
+
+            binding.fAddressDivision.tvText.setText(
+                HelperClass.getCommonDataFilltered(
+                    addresses.division_id,
+                    commonData?.divisions,
+                    !preparence.getLanguage()
+                        .equals("en")
+
+                )
+            )
+
+
+//            addresses.division_id?.let { binding.fAddressDivision.tvText.setText(it.toString()) }
+//            addresses.district_id?.let { binding.fAddressDistrict.tvText.text = it.toString() }
             addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.text = it }
             addresses.police_station?.let {
                 binding.fAddressPoliceStation.tvText.text = it.toString()
@@ -552,7 +597,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
                         addresses.city_corporation_id?.let {
                             HelperClass.getCommonDataFilltered(
                                 it,
-                                commonData?.city_corporations, false
+                                commonData?.city_corporations, !preparence.getLanguage()
+                                    .equals("en")
                             )
                         }
                     }"
@@ -565,8 +611,6 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     binding.fAddressUnion.tvText.text =
                         context.getString(R.string.citycorporation)
 
-                    binding.fAddressLocalName.tvText.text =
-                        binding.fAddressLocalName.tvText.text.toString()
 
                     binding.fAddressUnionName.llBody.visibility = View.GONE
                 }
@@ -579,7 +623,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     binding.fAddressLocalName.tvText.text = "${
                         addresses.municipality_id?.let {
                             HelperClass.getCommonDataFilltered(
-                                it, commonData?.upazilla_municipalities, false
+                                it, commonData?.upazilla_municipalities, !preparence.getLanguage()
+                                    .equals("en")
                             )
                         }
                     }"
@@ -589,9 +634,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 3 -> {
                     // upzilla
                     binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
+                    binding.fAddressUnionName.tvTitle.text = context.getString(R.string.union)
                     binding.fAddressLocalName.tvText.text = addresses.upazila_id.let {
                         HelperClass.getCommonDataFilltered(
-                            it, commonData?.upazilas, false
+                            it, commonData?.upazilas, !preparence.getLanguage()
+                                .equals("en")
                         )
                     }
 
@@ -600,18 +648,56 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
                     binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
 
-                    binding.fAddressUnion.tvText.text = "${
+                    binding.fAddressUnion.llBody.visibility = View.GONE
+
+                    binding.fAddressUnionName.tvText.text = "${
                         addresses.union_id?.let {
                             HelperClass.getCommonDataFilltered(
-                                it, commonData?.unions, false
+                                it, commonData?.unions, !preparence.getLanguage()
+                                    .equals("en")
                             )
                         }
                     }"
-
                     binding.fAddressUnionName.llBody.visibility = View.VISIBLE
 
                 }
             }
+
+
+//            when (addresses.local_government_type_id) {
+//                1 -> {
+//                    // city corpo
+//                    addresses.cityCorporation?.name?.let {
+//                        binding.fAddressLocalName.tvText.text = it
+//                    }
+//                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+//                    binding.fAddressLocalName.tvTitle.text =
+//                        context.getString(R.string.citycorporation)
+//                    binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.name
+//                    binding.fAddressUnionName.llBody.visibility = View.GONE
+//
+//                }
+//                2 -> {
+//                    // municipility
+//
+//                    binding.fAddressLocalName.tvTitle.text =
+//                        context.getString(R.string.municipalities)
+//                    binding.fAddressLocalName.tvText.text = addresses.municipality?.name
+//                    binding.fAddressUnionName.llBody.visibility = View.GONE
+//
+//                }
+//                3 -> {
+//                    // upzilla
+//                    binding.fAddressLocalName.tvTitle.visibility =View.GONE
+//                    binding.fAddressLocalName.tvText.text = addresses.upazila?.name
+//                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
+//                    binding.fAddressUnion.tvText.text = addresses.Union?.name
+//                    binding.fAddressUnionName.tvText.text = context.getString(R.string.union)
+//
+//                }
+//            }
+
+
         }
 
     }
@@ -702,11 +788,20 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
 
         } else {
+
             val commonData: CommonData? = preparence.get(HelperClass.COMMON_DATA)
             binding.hEducationQualification.tvTitle.setText("$heading (${context.getString(R.string.pending_data)})")
             //    binding.hEducationQualification.tvEdit.visibility = View.GONE
 
-            binding.fEQNameOfD.tvText.setText("${qualifications.examination_id}")
+            binding.fEQNameOfD.tvText.setText(
+                "${
+                    HelperClass.getCommonDataFilltered(
+                        qualifications.examination_id, commonData?.examinations, false
+                    )
+                }}"
+            )
+
+
 
             binding.fEQNameOIn.tvText.setText(
                 "${qualifications.educational_institute_id}"
@@ -742,6 +837,18 @@ class EmployeeInfoDataBinding @Inject constructor() {
         binding.fNMaritalStatus.tvTitle.setText(context.getString(R.string.nominee_marital_status))
         binding.fNHasDisavility.tvTitle.setText(context.getString(R.string.nominee_has_disability))
         binding.tvNSignatureTitle.setText(context.getString(R.string.nominee_signature))
+
+        binding.fNAddressDivision.tvTitle.text = context.getString(R.string.division)
+        binding.fNAddressDistrict.tvTitle.text = context.getString(R.string.district)
+        //    binding.fNAddressUpazila.tvTitle.text = context.getString(R.string.upazila)
+        binding.fNAddressUnion.tvTitle.text = context.getString(R.string.union_or_municiplity)
+
+
+
+        nominee.localGovernmentType?.name?.let {
+            binding.fNAddressUnion.tvText.text = it
+        }
+
         HelperClass.addHeaderColor(binding.hNominee, context, nominee.isPendingData)
 
 
@@ -790,6 +897,101 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 .into(binding.ivNSignature)
         }
 
+        val commonData: CommonData? = preparence.get(HelperClass.COMMON_DATA)
+
+        //setting address data
+        binding.fNAddressDistrict.tvText.setText(
+            HelperClass.getCommonDataFilltered(
+                nominee.district_id,
+                commonData?.districts,
+                !preparence.getLanguage()
+                    .equals("en")
+
+            )
+        )
+
+
+        binding.fNAddressDivision.tvText.setText(
+            HelperClass.getCommonDataFilltered(
+                nominee.division_id,
+                commonData?.divisions,
+                !preparence.getLanguage()
+                    .equals("en")
+
+            )
+        )
+        binding.fNAddressUpazila.llBody.visibility = View.GONE
+        when (nominee.local_government_type_id) {
+            1 -> {
+                // city corpo
+
+                binding.fNAddressLocalName.tvText.text = "${
+                    nominee.city_corporation_id?.let {
+                        HelperClass.getCommonDataFilltered(
+                            it,
+                            commonData?.city_corporations, !preparence.getLanguage()
+                                .equals("en")
+                        )
+                    }
+                }"
+
+                //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
+                binding.fNAddressLocalName.tvTitle.text =
+                    context.getString(R.string.citycorporation)
+
+
+                binding.fNAddressUnion.tvText.text =
+                    context.getString(R.string.citycorporation)
+
+
+                binding.fNAddressUnionName.llBody.visibility = View.GONE
+            }
+            2 -> {
+                // municipility
+
+                binding.fNAddressLocalName.tvTitle.text =
+                    context.getString(R.string.municipalities)
+
+                binding.fNAddressLocalName.tvText.text = "${
+                    nominee.municipality_id?.let {
+                        HelperClass.getCommonDataFilltered(
+                            it, commonData?.upazilla_municipalities, !preparence.getLanguage()
+                                .equals("en")
+                        )
+                    }
+                }"
+                binding.fNAddressUnionName.llBody.visibility = View.GONE
+                binding.fNAddressUnion.tvText.text = context.getString(R.string.municipalities)
+            }
+            3 -> {
+                // upzilla
+                binding.fNAddressUpazila.llBody.visibility = View.GONE
+                binding.fNAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                binding.fNAddressLocalName.tvText.text = nominee.upazila_id.let {
+                    HelperClass.getCommonDataFilltered(
+                        it, commonData?.upazilas, !preparence.getLanguage()
+                            .equals("en")
+                    )
+                }
+
+                binding.fNAddressLocalName.tvTitle.text =
+                    context.getString(R.string.upazila)
+                binding.fNAddressUnion.tvText.text = context.getString(R.string.upazila)
+
+                binding.fNAddressUnionName.tvTitle.text = context.getString(R.string.union)
+
+                binding.fNAddressUnionName.tvText.text = nominee.union_id?.let {
+                    HelperClass.getCommonDataFilltered(
+                        it, commonData?.unions, !preparence.getLanguage()
+                            .equals("en")
+                    )
+                }
+
+                binding.fNAddressUnionName.llBody.visibility = View.VISIBLE
+
+            }
+        }
+
         if (!nominee.isPendingData) {
             if (preparence.getLanguage()
                     .equals("en")
@@ -800,16 +1002,19 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 nominee.marital_status?.name_bn?.let { binding.fNMaritalStatus.tvText.setText(it) }
                 nominee.gender?.name_bn?.let { binding.fNGender.tvText.setText(it) }
             }
-        } else {
+
+
+        } else
+        {
 
             binding.hNominee.tvTitle.text =
                 " $heading (${context.getString(R.string.pending_data)})"
 
-            val objData: CommonData? = preparence.get(HelperClass.COMMON_DATA)
+
             binding.fNMaritalStatus.tvText.setText(
                 "${
                     nominee.marital_status_id?.let {
-                        objData?.marital_status?.let { it1 ->
+                        commonData?.marital_status?.let { it1 ->
                             HelperClass.getCommonDataFilltered(
                                 it, it1, false
                             )
@@ -820,7 +1025,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
             binding.fNGender.tvText.setText(
                 "${
                     nominee.gender_id?.let {
-                        objData?.genders?.let { it1 ->
+                        commonData?.genders?.let { it1 ->
                             HelperClass.getCommonDataFilltered(
                                 it, it1, false
                             )
@@ -1438,9 +1643,21 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     DateConverter.changeDateFormateForShowing(it)
                 )
             }
-            binding.fJobJoiningClass.tvText.setText("${jobjoinings.employee_class_id}")
+            binding.fJobJoiningClass.tvText.setText(
+                "${
+                    HelperClass.getCommonDataFilltered(
+                        jobjoinings.employee_class_id, commonData?.employee_classes, false
+                    )
+                }"
+            )
 
-            binding.fJobJoiningGrade.tvText.setText("${jobjoinings.grade_id}")
+            binding.fJobJoiningGrade.tvText.setText(
+                "${
+                    HelperClass.getPayScallFilltered(
+                        jobjoinings.grade_id, commonData?.pay_scales, false
+                    )
+                }"
+            )
 
             jobjoinings.prl_date?.let {
                 binding.fJobJoiningPrlDate.tvText.setText(
@@ -1842,9 +2059,17 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
 
         } else {
+            val commonData: CommonData? = preparence.get(HelperClass.COMMON_DATA)
 
             binding.hLocaltraining.tvTitle.setText(heading + " (" + context.getString(R.string.pending_data) + ")")
             //    binding.hLocaltraining.tvEdit.visibility = View.GONE
+
+            binding.fLocalTrainingCatName.tvText.text = "${
+                HelperClass.getCommonDataFilltered(
+                    localTrainings.hrm_training_category_id,
+                    commonData?.training_categories, false
+                )
+            }"
 
             localTrainings.course_title?.let { binding.fLocalTrainingCourseT.tvText.setText(it) }
             localTrainings.course_title_bn?.let { binding.fLocalTrainingCourseTBn.tvText.setText(it) }
@@ -2545,6 +2770,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
         }
 
         if (!qualifications.isPendingData) {
+            binding.hPublication.tvTitle.setText("$heading")
             if (preparence.getLanguage()
                     .equals("en")
             ) {

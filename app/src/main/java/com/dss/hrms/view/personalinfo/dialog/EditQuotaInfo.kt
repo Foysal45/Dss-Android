@@ -206,6 +206,13 @@ class EditQuotaInfo @Inject constructor() {
             map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
             map.put("quota_information_id", quotaName?.id)
             map.put("quota_information_detail_id", quotaType?.id)
+            try{
+                    var a = employeeQuotas?.id
+                    map.put("parent_id", a)
+
+            }catch (Ex : java.lang.Exception){
+
+            }
             map.put("description", binding.fQuotaDescription.etText.text.toString())
             map.put("description_bn", binding.fQuotaDescriptionBn.etText.text.toString())
             val gson = GsonBuilder().create()

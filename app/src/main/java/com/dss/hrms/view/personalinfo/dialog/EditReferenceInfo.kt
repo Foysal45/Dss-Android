@@ -229,12 +229,24 @@ class EditReferenceInfo @Inject constructor() {
         map.put("name", binding?.fReferenceNameEn?.etText?.text.toString())
         map.put("name_bn", binding?.fReferenceNameBn?.etText?.text.toString())
         map.put("relation", binding?.fReferenceRelation?.etText?.text.toString())
+        try {
+            var a = references!!.id
+            map.put("parent_id", a)
+
+        } catch (Ex: java.lang.Exception) {
+
+        }
         map.put("relation_bn", binding?.fReferenceRelationBn?.etText?.text.toString())
         map.put("contact_no", binding?.fReferenceContactNo?.etText?.text.toString())
         map.put("contact_no_bn", binding?.fReferenceContactNoBn?.etText?.text.toString())
         map.put("address", binding?.fReferenceAddress?.etText?.text.toString())
         map.put("address_bn", binding?.fReferenceAddressBn?.etText?.text.toString())
-        map.put("status", references?.status)
+        if (references == null) {
+            map.put("status", 1)
+        } else {
+            map.put("status", references?.status)
+        }
+
         return map
     }
 

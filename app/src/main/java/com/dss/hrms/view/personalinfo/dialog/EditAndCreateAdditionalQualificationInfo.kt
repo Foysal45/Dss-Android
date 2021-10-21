@@ -323,6 +323,17 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
         map.put("qualification_details", binding.fAQDetails.etText.text.toString())
         map.put("qualification_details_bn", binding.fAQDetailsBn.etText.text.toString())
         map.put("additional_professional_qualification_document_path", documentPath)
+
+
+        if (key == StaticKey.EDIT && additionalQualifications?.isPendingData == false  ) {
+            map.put("parent_id", additionalQualifications?.id)
+        }
+
+        else if (  key == StaticKey.EDIT && additionalQualifications?.isPendingData == true) {
+            map.put("parent_id", additionalQualifications?.parent_id)
+        }
+
+
         if (additionalQualifications?.status != null) map.put(
             "status",
             additionalQualifications?.status

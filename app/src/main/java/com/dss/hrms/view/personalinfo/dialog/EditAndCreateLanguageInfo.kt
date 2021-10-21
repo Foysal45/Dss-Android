@@ -19,12 +19,15 @@ import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
-import com.dss.hrms.util.*
+import com.dss.hrms.util.CustomLoadingDialog
+import com.dss.hrms.util.DateConverter
+import com.dss.hrms.util.DatePicker
+import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.FileClickListener
@@ -289,6 +292,18 @@ class EditAndCreateLanguageInfo @Inject constructor() {
         map.put("name_of_language_bn", binding?.fLanguageNOLanguageBn?.etText?.text.toString())
         map.put("name_of_institute", binding?.fLanguageNOInstitute?.etText?.text.toString())
         map.put("name_of_institute_bn", binding?.fLanguageNOInstituteBn?.etText?.text.toString())
+        try {
+
+            if (key == StaticKey.EDIT && language?.isPendingData == false) {
+                map.put("parent_id", language?.id)
+            } else if (key == StaticKey.EDIT && language?.isPendingData == true) {
+                map.put("parent_id", language?.parent_id)
+            }
+
+
+        } catch (Ex: java.lang.Exception) {
+
+        }
 //        map.put(
 //            "expertise_level",
 //            if (context?.let {
@@ -298,8 +313,11 @@ class EditAndCreateLanguageInfo @Inject constructor() {
         map.put("expertise_level", expertLevel?.name?.toLowerCase())
         // imageUrl?.let { map.put("certificate", RetrofitInstance.BASE_URL + it) }
         map.put("certification_date", date)
-        map.put("certificate_document_path" , languageDocumentLinK)
-        map.put("status", language?.status)
+        map.put("certificate_document_path", languageDocumentLinK)
+        if (language?.status == null) {
+            language?.status = 1
+        }
+        map.put("status", 1)
         return map
     }
 

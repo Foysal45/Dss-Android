@@ -23,18 +23,18 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_20sdp" />
 
-        <com.dss.hrms.util.NestedScrollableHost
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginVertical="10dp"
-            android:visibility="gone" />
 
-        </com.dss.hrms.util.NestedScrollableHost>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginVertical="10dp"
+                android:visibility="gone" />
+
+
+
 
         <RelativeLayout
             android:id="@+id/rlEmptyView"

@@ -419,6 +419,17 @@ class EditAndCreateSpouseInfo @Inject constructor() {
             "police_station_bn",
             binding?.locationContainer?.PoliceStationBn?.etText?.text.toString()
         )
+        try{
+            if (key == StaticKey.EDIT && spouses?.isPendingData == false  ) {
+                map.put("parent_id", spouses?.id)
+            }
+
+            else if (  key == StaticKey.EDIT && spouses?.isPendingData == true) {
+                map.put("parent_id", spouses?.parent_id)
+            }
+        }catch (Ex : java.lang.Exception){
+
+        }
         map.put("post_office", binding?.locationContainer?.PostOffice?.etText?.text.toString())
         map.put("post_office_bn", binding?.locationContainer?.PostOfficeBn?.etText?.text.toString())
         map.put("post_code", binding?.locationContainer?.PostCode?.etText?.text.toString())

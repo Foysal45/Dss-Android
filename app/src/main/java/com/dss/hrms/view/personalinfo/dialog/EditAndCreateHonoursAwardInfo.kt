@@ -270,6 +270,17 @@ class EditAndCreateHonoursAwardInfo @Inject constructor() {
         map.put("award_details", binding?.fAwardDetailsDetails?.etText?.text.toString())
         map.put("honours_awards_document_path", honours_awards_document_path)
         map.put("award_date", award_date)
+        try{
+            if (key == StaticKey.EDIT && honoursAward?.isPendingData == false  ) {
+                map.put("parent_id", honoursAward?.id)
+            }
+
+            else if (  key == StaticKey.EDIT && honoursAward?.isPendingData == true) {
+                map.put("parent_id", honoursAward?.parent_id)
+            }
+        }catch (Ex : java.lang.Exception){
+
+        }
         map.put("status", honoursAward?.status)
         return map
     }

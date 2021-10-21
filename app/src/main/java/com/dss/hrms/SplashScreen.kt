@@ -13,6 +13,7 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.tasks.Task
 import android.content.IntentSender.SendIntentException
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -51,7 +52,12 @@ class SplashScreen : BaseActivity() {
         super.onStart()
         Handler(Looper.getMainLooper()).postDelayed({
             //checking for play store update
-            checkForUpdates()
+            try {
+                checkForUpdates()
+            }catch (ex : Exception){
+                Toast.makeText(applicationContext , "Error : ${ex.localizedMessage}" , Toast.LENGTH_LONG).show()
+            }
+
         }, 500)
     }
 
@@ -69,7 +75,7 @@ class SplashScreen : BaseActivity() {
         if (info.result.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
             handleImmediateUpdate(manager, info)
         } else {
-            Log.d("TAGasdfsa", "handleUpdate: ${info.result.updateAvailability()}")
+
             loadData()
         }
 
@@ -94,7 +100,12 @@ class SplashScreen : BaseActivity() {
     private fun loadData() {
         employeeViewModel.apply {
 
-            getCommonDataDropDown()
+            try {
+                getCommonDataDropDown()
+            }catch (ex : Exception){
+                Toast.makeText(applicationContext , "Error : ${ex.localizedMessage}" , Toast.LENGTH_LONG).show()
+            }
+
 
             employeeViewModel._CommonDataResp?.observe(this@SplashScreen, Observer { commonData ->
                 if (commonData != null) {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E4E4E4"
@@ -37,8 +36,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="left|center"
-                android:singleLine="true"
                 android:paddingLeft="@dimen/_15sdp"
+                android:singleLine="true"
                 android:text="@string/my_profile"
                 android:textColor="#000000"
                 android:textSize="@dimen/text_size_large" />
@@ -50,10 +49,10 @@
         android:id="@+id/tabMode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager_go"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

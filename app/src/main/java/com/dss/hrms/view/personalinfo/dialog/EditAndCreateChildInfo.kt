@@ -90,6 +90,8 @@ class EditAndCreateChildInfo @Inject constructor() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         updateEducationQualification(context)
+       // HelperClass
+//
         dialogCustome?.show()
 
     }
@@ -376,6 +378,19 @@ class EditAndCreateChildInfo @Inject constructor() {
         map.put("birth_certificate", binding?.fChildrenBirthCertificateNo?.etText?.text.toString())
         map.put("nid", binding?.fChildrenNidNo?.etText?.text.toString())
         map.put("passport", binding?.fChildrenPassportNo?.etText?.text.toString())
+        try {
+
+            if (key == StaticKey.EDIT && child?.isPendingData == false  ) {
+                map.put("parent_id", child?.id)
+            }
+
+            else if (  key == StaticKey.EDIT && child?.isPendingData == true) {
+                map.put("parent_id", child?.parent_id)
+            }
+
+        }catch (ex : java.lang.Exception){
+
+        }
         map.put(
             "birth_certificate_document_path",
             birth_certificate_document_path
