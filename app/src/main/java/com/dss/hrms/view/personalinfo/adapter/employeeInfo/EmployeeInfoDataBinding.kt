@@ -272,7 +272,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
                         addresses.city_corporation_id?.let {
                             HelperClass.getCommonDataFilltered(
                                 it,
-                                commonData?.city_corporations, false
+                                commonData?.city_corporations, !preparence.getLanguage()
+                                    .equals("en")
                             )
                         }
                     }"
@@ -298,7 +299,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     binding.fAddressLocalName.tvText.text = "${
                         addresses.municipality_id?.let {
                             HelperClass.getCommonDataFilltered(
-                                it, commonData?.upazilla_municipalities, false
+                                it, commonData?.upazilla_municipalities, !preparence.getLanguage()
+                                    .equals("en")
                             )
                         }
                     }"
@@ -1016,7 +1018,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     nominee.marital_status_id?.let {
                         commonData?.marital_status?.let { it1 ->
                             HelperClass.getCommonDataFilltered(
-                                it, it1, false
+                                it, it1, !preparence.getLanguage()
+                                    .equals("en")
                             )
                         }
                     }
@@ -1027,7 +1030,8 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     nominee.gender_id?.let {
                         commonData?.genders?.let { it1 ->
                             HelperClass.getCommonDataFilltered(
-                                it, it1, false
+                                it, it1, !preparence.getLanguage()
+                                    .equals("en")
                             )
                         }
                     }
