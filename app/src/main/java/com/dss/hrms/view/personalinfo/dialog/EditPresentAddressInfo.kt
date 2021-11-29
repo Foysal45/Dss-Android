@@ -109,7 +109,7 @@ class EditPresentAddressInfo @Inject constructor() {
             binding?.addressBtnUpdate?.btnUpdate?.setText("" + context.getString(R.string.update))
         }
 
-        binding?.cbSameAsPresentAddress?.visibility=View.GONE
+        binding?.cbSameAsPresentAddress?.visibility = View.GONE
 
         binding?.fAddressPoliceStation?.etText?.setText(presentAddress?.police_station)
         binding?.fAddressPoliceStationBn?.etText?.setText(presentAddress?.police_station_bn)
@@ -154,11 +154,18 @@ class EditPresentAddressInfo @Inject constructor() {
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
-            var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
-            key?.let {
-                if (it.equals(StaticKey.EDIT)) {
+            val dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
+            key.let {
+                if (it == StaticKey.EDIT) {
+                    var id: Int? = 0;
+                    if (key == StaticKey.EDIT && presentAddress?.isPendingData == false) {
+                        id = presentAddress?.id
+                    } else if (key == StaticKey.EDIT && presentAddress?.isPendingData == true) {
+                        id = presentAddress?.parent_id
+                    }
+
                     employeeInfoEditCreateRepo?.updatePresentInfo(
-                        presentAddress?.id,
+                        id ,
                         getMapData()
                     )
                         ?.observe(
@@ -345,27 +352,25 @@ class EditPresentAddressInfo @Inject constructor() {
         map.put("post_office_bn", binding?.fAddressPostOfficeBn?.etText?.text.toString())
         map.put("post_code", binding?.fAddressPostCode?.etText?.text.toString())
         map.put("road_word_no", binding?.fAddressRoadOrWordNo?.etText?.text.toString())
-        try{
-            if (key == StaticKey.EDIT && presentAddress?.isPendingData == false  ) {
+        try {
+            if (key == StaticKey.EDIT && presentAddress?.isPendingData == false) {
                 map.put("parent_id", presentAddress?.id)
-            }
-
-            else if (  key == StaticKey.EDIT && presentAddress?.isPendingData == true) {
+            } else if (key == StaticKey.EDIT && presentAddress?.isPendingData == true) {
                 map.put("parent_id", presentAddress?.parent_id)
             }
-        }catch (Ex : java.lang.Exception){
-
+        } catch (Ex: Exception) {
+            Log.d("TAG", "getMapData: ${Ex.message}")
         }
         map.put("road_word_no_bn", binding?.fAddressRoadOrWordNoBn?.etText?.text.toString())
         map.put("village_house_no", binding?.fAddressVillageOrHouseNo?.etText?.text.toString())
         map.put("village_house_no_bn", binding?.fAddressVillageOrHouseNoBn?.etText?.text.toString())
-        if(presentAddress?.status != null){
-            map.put("status",presentAddress?.status )
-        }else  map.put("status", 0 )
+        if (presentAddress?.status != null) {
+            map.put("status", presentAddress?.status)
+        } else map.put("status", 0)
 
-        map.put("ward_no" , presentAddress?.wardNo)
+        map.put("ward_no", presentAddress?.wardNo)
 
-        Log.d("TSA", "getMapData: ${map.toString()}" )
+        Log.d("TSA", "getMapData: ${map.toString()}")
 
         return map
     }
@@ -497,7 +502,6 @@ class EditPresentAddressInfo @Inject constructor() {
     }
 
 
-
     fun setMunicipalities(list: List<Upazilas>?, id: Int?) {
         list?.let {
             MunicipalitiesAdapter().setMunicipalitiesSpinner(
@@ -537,7 +541,6 @@ class EditPresentAddressInfo @Inject constructor() {
             )
         }
     }
-
 
 
     fun setCityMuniUpailaAccordingToType() {
@@ -602,7 +605,7 @@ class EditPresentAddressInfo @Inject constructor() {
             View.GONE
         binding?.fAddressPostOfficeBn?.tvError?.visibility =
             View.GONE
-        binding ?. fAddressPostCode ?. tvError ?. visibility =
+        binding?.fAddressPostCode?.tvError?.visibility =
             View.GONE
         binding?.fAddressRoadOrWordNo?.tvError?.visibility =
             View.GONE

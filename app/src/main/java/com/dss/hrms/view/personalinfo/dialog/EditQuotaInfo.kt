@@ -61,7 +61,7 @@ class EditQuotaInfo @Inject constructor() {
     var employeeQuotas: Employee.EmployeeQuotas? = null
     var fileClickListener: FileClickListener? = null
     var documentPaths = JSONArray()
-    val documentNameList: MutableList<String> = ArrayList()
+    var documentNameList: MutableList<String> = ArrayList()
     private lateinit var nameRowAdapter: name_row_adapter
 
     fun showDialog(
@@ -87,6 +87,7 @@ class EditQuotaInfo @Inject constructor() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         documentNameList.clear()
+        documentNameList = employeeQuotas?.quota_documnets as MutableList<String>
         documentPaths = JSONArray()
 
         val itemOnClick: (Int) -> Unit = {
@@ -220,7 +221,7 @@ class EditQuotaInfo @Inject constructor() {
             map.put("quota_documents", packagesArray)
             map.put("status", employeeQuotas?.status)
 
-            Log.d("TAGGGED", "updateJobjoiningInfo: ${map.toString()}")
+
             invisiableAllError(binding)
             var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             employeeInfoEditCreateRepo?.updateQuotaInfo(employeeQuotas?.id, map)

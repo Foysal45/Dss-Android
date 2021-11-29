@@ -148,6 +148,15 @@ class EditAndCreateHonoursAwardInfo @Inject constructor() {
 
         }
 
+        if (honoursAward?.honours_awards_document_path.toString()
+                .toLowerCase() != "null" || !honoursAward?.honours_awards_document_path.isNullOrEmpty()
+        ) {
+            binding?.fAwardAttachment?.ftvAttachment?.text =
+                context.getString(R.string.attachment) + "\n" +
+                        honoursAward?.honours_awards_document_path
+        }
+
+
 
         binding?.honoursAwardBtnAddUpdate?.btnUpdate?.setOnClickListener {
             var employeeInfoEditCreateRepo =

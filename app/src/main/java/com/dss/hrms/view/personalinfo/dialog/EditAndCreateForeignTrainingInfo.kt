@@ -176,6 +176,17 @@ class EditAndCreateForeignTrainingInfo @Inject constructor() {
         }
 
 
+        if (foreigntraining?.foreign_training_document_path.toString()
+                .toLowerCase() != "null" || !foreigntraining?.foreign_training_document_path.isNullOrEmpty()
+        ) {
+            binding?.fLocalTrainingAddAttachment?.ftvAttachment?.text =
+                context.getString(R.string.attachment) + "\n" +
+                        foreigntraining?.foreign_training_document_path
+        }
+
+
+
+
         binding?.fLocalTrainingAddAttachment?.Attachment?.setOnClickListener {
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap?) {

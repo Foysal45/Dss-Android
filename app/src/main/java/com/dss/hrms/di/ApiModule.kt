@@ -47,7 +47,7 @@ class ApiModule {
                 .connectTimeout(TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
                 .writeTimeout(TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
-            //    .addInterceptor(logging)
+                .addInterceptor(logging)
                 .cache(cache)
                 // .cache(null)
                 .build()

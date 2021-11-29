@@ -166,30 +166,38 @@ class EditPermanentAddressInfo @Inject constructor() {
             })
         getLocalGovernmentType()
 
-        binding?.addressBtnUpdate?.btnUpdate?.setOnClickListener({
-            var employeeInfoEditCreateRepo =
+        binding?.addressBtnUpdate?.btnUpdate?.setOnClickListener {
+            val employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
 
 
             invisiableAllError(binding)
-            var dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
-            key?.let {
-                if (it.equals(StaticKey.EDIT)) {
-                    employeeInfoEditCreateRepo?.updatePermanentInfo(
-                        permanentAddresses1?.id,
+            val dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
+            key.let {
+                if (it == StaticKey.EDIT) {
+                    var id: Int? = 0;
+                    if (key == StaticKey.EDIT && permanentAddresses1?.isPendingData == false) {
+                        id = permanentAddresses1.id
+                    } else if (key == StaticKey.EDIT && permanentAddresses1?.isPendingData == true) {
+                        id = permanentAddresses1.parent_id
+                    }
+
+
+                    employeeInfoEditCreateRepo.updatePermanentInfo(
+                        id,
                         getMapData()
                     )
                         ?.observe(
                             EmployeeInfoActivity.context!!,
-                            Observer { any ->
+                            { any ->
                                 dialog?.dismiss()
-                                Log.e("yousuf", "error : " + Gson().toJson(any))
+
                                 showResponse(any)
 
                             })
                 } else {
-                    employeeInfoEditCreateRepo?.addPermanentInfo(getMapData())
+                    employeeInfoEditCreateRepo.addPermanentInfo(getMapData())
                         ?.observe(
                             EmployeeInfoActivity.context!!,
                             Observer { any ->
@@ -200,7 +208,7 @@ class EditPermanentAddressInfo @Inject constructor() {
                             })
                 }
             }
-        })
+        }
 
     }
 
@@ -215,8 +223,7 @@ class EditPermanentAddressInfo @Inject constructor() {
         } else if (any is ApiError) {
             try {
                 if (any.getError().isEmpty()) {
-                    toast(EmployeeInfoActivity?.context, any.getMessage())
-                    Log.d("ok", "error")
+                    toast(EmployeeInfoActivity.context, any.getMessage())
                 } else {
                     for (n in any.getError().indices) {
                         val error = any.getError()[n].getField()
@@ -366,23 +373,23 @@ class EditPermanentAddressInfo @Inject constructor() {
         map.put("post_office_bn", binding?.fAddressPostOfficeBn?.etText?.text.toString())
         map.put("post_code", binding?.fAddressPostCode?.etText?.text.toString())
         map.put("road_word_no", binding?.fAddressRoadOrWordNo?.etText?.text.toString())
-        try{
-            if (key == StaticKey.EDIT && permanentAddresses?.isPendingData == false  ) {
+        try {
+            if (key == StaticKey.EDIT && permanentAddresses?.isPendingData == false) {
                 map.put("parent_id", permanentAddresses?.id)
-            }
-
-            else if (  key == StaticKey.EDIT && permanentAddresses?.isPendingData == true) {
+            } else if (key == StaticKey.EDIT && permanentAddresses?.isPendingData == true) {
                 map.put("parent_id", permanentAddresses?.parent_id)
             }
-        }catch (Ex : java.lang.Exception){
+        } catch (Ex: java.lang.Exception) {
 
         }
+
         map.put("road_word_no_bn", binding?.fAddressRoadOrWordNoBn?.etText?.text.toString())
         map.put("village_house_no", binding?.fAddressVillageOrHouseNo?.etText?.text.toString())
         map.put("village_house_no_bn", binding?.fAddressVillageOrHouseNoBn?.etText?.text.toString())
-        if(permanentAddresses?.status != null){
-            map.put("status",permanentAddresses?.status )
-        }else  map.put("status", 0 )
+        if (permanentAddresses?.status != null) {
+            map.put("status", permanentAddresses?.status)
+        } else map.put("status", 0)
+        Log.d("TAG", "getMapData: ${map.toString()}")
         return map
     }
 
@@ -610,8 +617,8 @@ class EditPermanentAddressInfo @Inject constructor() {
             View.GONE
         binding?.fAddressPostOfficeBn?.tvError?.visibility =
             View.GONE
-        binding ?. fAddressPostCode ?. tvError ?. visibility =
-        View.GONE
+        binding?.fAddressPostCode?.tvError?.visibility =
+            View.GONE
         binding?.fAddressRoadOrWordNo?.tvError?.visibility =
             View.GONE
         binding?.fAddressRoadOrWordNoBn?.tvError?.visibility =

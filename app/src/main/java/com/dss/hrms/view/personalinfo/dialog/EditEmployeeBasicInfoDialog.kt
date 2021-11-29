@@ -503,6 +503,24 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
         }
 
+
+        if (employee.freedom_fighter_document_path.toString()
+                .toLowerCase() != "null" || !employee?.freedom_fighter_document_path.isNullOrEmpty()
+        ) {
+            binding?.tvFreedomFighterAttachment?.text =
+                context.getString(R.string.attachment) + "\n" +
+                        employee?.freedom_fighter_document_path
+        }
+
+        if (employee.disability_document_path.toString()
+                .toLowerCase() != "null" || !employee?.disability_document_path.isNullOrEmpty()
+        ) {
+            binding?.tvAttachment?.text =
+                context.getString(R.string.attachment) + "\n" +
+                        employee?.freedom_fighter_document_path
+        }
+
+
         binding?.llFreedomFighterAttachment?.setOnClickListener {
 
             isFreedomFighter = true

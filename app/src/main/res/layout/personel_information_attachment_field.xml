@@ -39,6 +39,8 @@
                 android:drawablePadding="10dp"
                 android:text="@string/attachment"
                 android:textColor="@color/black"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:textSize="@dimen/text_size_large"
                 android:textStyle="bold" />
 

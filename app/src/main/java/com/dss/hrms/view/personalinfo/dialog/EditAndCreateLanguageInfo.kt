@@ -38,6 +38,7 @@ import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.dialog_personal_info.view.*
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -157,6 +158,12 @@ class EditAndCreateLanguageInfo @Inject constructor() {
             })
         }
 
+
+        if(language?.certificate_document_path.toString().toLowerCase() != "null" || !language?.certificate_document_path.isNullOrEmpty()){
+            binding.fLanguageAttachment.ftvAttachment.text  =context.getString(R.string.attachment) +"\n"+
+                    language?.certificate_document_path
+        }
+
         binding?.fLanguageAttachment?.Attachment?.setOnClickListener {
             // bring  fille picker
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
@@ -186,6 +193,8 @@ class EditAndCreateLanguageInfo @Inject constructor() {
                 }
             )
         }
+
+
 
         binding?.languageBtnAddUpdate?.btnUpdate?.setOnClickListener({
             dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)

@@ -35,41 +35,14 @@ import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.*
 import com.dss.hrms.view.allInterface.FileClickListener
 import com.dss.hrms.view.allInterface.OnFilevalueReceiveListener
-import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.bottomsheet.SelectImageBottomSheet
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.dialog.EditEmployeeBasicInfoDialog
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_basic_information.view.*
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fBloodGroup
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fDOB
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fDisability
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fDisabilityDegree
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fDisabilityType
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fDisabledPersonId
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fEmail
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fEmployeeType
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fFatherNameBangla
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fFatherNameEng
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fGender
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fMaritalStatus
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fMotherNameBangla
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fMotherNameEng
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fNameBangla
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fNameEng
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fNid
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fPhone
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fPresentBasicSalary
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fPresentGrossSalary
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fPunchId
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fReligion
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fTIN
-import kotlinx.android.synthetic.main.fragment_basic_information.view.fUserName
-import kotlinx.android.synthetic.main.fragment_basic_information.view.hBasicInformation
-import kotlinx.android.synthetic.main.fragment_basic_information.view.ivEmployee
-import kotlinx.android.synthetic.main.fragment_basic_information.view.tvImageTitle
 import kotlinx.android.synthetic.main.personal_information_header_field.view.*
 import kotlinx.android.synthetic.main.personel_information_view_field.view.llBody
 import kotlinx.android.synthetic.main.personel_information_view_field.view.tvText
@@ -77,7 +50,6 @@ import kotlinx.android.synthetic.main.personel_information_view_field.view.tvTit
 import kotlinx.android.synthetic.main.personel_information_view_field_with_icon.view.*
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -599,8 +571,9 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
         }
 
+
         if (employee1?.has_disability == false) {
-            Log.e("hasdisability", "" + employee1?.has_disability)
+
             v.fDisability1.tvText.setText("" + context?.getString(R.string.no))
             v.fDisabilityDegree1.llBody.visibility = View.GONE
             v.fDisabilityType1?.llBody?.visibility = View.GONE
@@ -641,10 +614,28 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                     .equals("en")
             ) {
 
+                val commonData: CommonData? = preparence.get(HelperClass.COMMON_DATA)
+
+
 
                 v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type)
-                v.fDisabilityDegree1.tvText.setText(employee1?.disability_degree?.disability_degree)
-                v.fDisabilityType1.tvText.setText(employee1?.disability_type?.disability_type)
+                v.fDisabilityDegree1.tvText.setText(employee1?.disability_degree_id?.let {
+                    HelperClass.getCommonDataFilltered(
+                        it,
+                        commonData?.disability_degrees,
+                        false
+                    )
+                })
+
+                v.fDisabilityType1.tvText.setText(
+                    employee1?.disability_type_id?.let {
+                        HelperClass.getCommonDataFilltered(
+                            it,
+                            commonData?.disability_types,
+                            false
+                        )
+                    }
+                )
 //                employee1?.employment_job_status?.employeementstatus?.name?.let {
 //                    v.fEmployeeStatusType1.tvText.setText(
 //                        it
@@ -653,8 +644,23 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             } else {
 
                 v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type_bn)
-                v.fDisabilityDegree1.tvText.setText(employee1?.disability_degree?.disability_degree_bn)
-                v.fDisabilityType1.tvText.setText(employee1?.disability_type?.disability_type_bn)
+                v.fDisabilityDegree1.tvText.setText(employee1?.disability_degree_id?.let {
+                    HelperClass.getCommonDataFilltered(
+                        it,
+                        commonData?.disability_degrees,
+                        true
+                    )
+                })
+
+                v.fDisabilityType1.tvText.setText(
+                    employee1?.disability_type_id?.let {
+                        HelperClass.getCommonDataFilltered(
+                            it,
+                            commonData?.disability_types,
+                            true
+                        )
+                    }
+                )
 
             }
 

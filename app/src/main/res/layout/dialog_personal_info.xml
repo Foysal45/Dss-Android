@@ -215,6 +215,8 @@
                                         android:drawableLeft="@drawable/ic_baseline_attachment_24"
                                         android:drawablePadding="20dp"
                                         android:text="@string/attachment"
+                                        android:maxLines="2"
+                                        android:ellipsize="end"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/text_size_large"
                                         android:textStyle="bold" />
@@ -270,6 +272,8 @@
                                         android:drawableLeft="@drawable/ic_baseline_attachment_24"
                                         android:drawablePadding="20dp"
                                         android:text="@string/attachment"
+                                        android:maxLines="2"
+                                        android:ellipsize="end"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/text_size_large"
                                         android:textStyle="bold" />
@@ -1061,6 +1065,8 @@
                                         android:drawableLeft="@drawable/ic_baseline_attachment_24"
                                         android:drawablePadding="20dp"
                                         android:text="@string/attachment"
+                                        android:maxLines="2"
+                                        android:ellipsize="end"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/text_size_large"
                                         android:textStyle="bold" />
@@ -1071,6 +1077,8 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginVertical="@dimen/_5sdp"
+
+                                        android:maxLines="2"
                                         android:ellipsize="end"
                                         android:paddingHorizontal="5dp"
                                         android:singleLine="true"

@@ -164,6 +164,16 @@ class EditAndCreatePublicatioInfo @Inject constructor() {
 
         }
 
+        if (publications?.document_path.toString()
+                .toLowerCase() != "null" || !publications?.document_path.isNullOrEmpty()
+        ) {
+            binding?.fPublicationAttachment?.ftvAttachment?.text =
+                context.getString(R.string.attachment) + "\n" +
+                        publications?.document_path
+        }
+
+
+
         binding?.publicationBtnAddUpdate?.btnUpdate?.setOnClickListener {
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
@@ -195,6 +205,9 @@ class EditAndCreatePublicatioInfo @Inject constructor() {
                 }
             }
         }
+
+
+
 
 
     }

@@ -182,6 +182,16 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
             })
         }
 
+        if (localTraining?.local_training_document_path.toString()
+                .toLowerCase() != "null" || !localTraining?.local_training_document_path.isNullOrEmpty()
+        ) {
+            binding?.fLocalTrainingAddAttachment?.ftvAttachment?.text =
+                context.getString(R.string.attachment) + "\n" +
+                        localTraining?.local_training_document_path
+        }
+
+
+
         binding?.fLocalTrainingAddAttachment?.Attachment?.setOnClickListener {
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
                 override fun onFileValue(imgFile: File, bitmap: Bitmap?) {

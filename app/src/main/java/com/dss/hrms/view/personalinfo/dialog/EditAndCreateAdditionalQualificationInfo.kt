@@ -57,7 +57,7 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
     var fileClickListener: FileClickListener? = null
     var additionalQualifications: Employee.AdditionalQualifications? = null
 
-    var documentPath : String? =null
+    var documentPath: String? = null
 
     lateinit var binding: DialogPersonalInfoBinding
 
@@ -120,6 +120,16 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
         binding?.fAQNameBn?.etText?.setText(additionalQualifications?.qualification_name_bn)
         binding?.fAQDetails?.etText?.setText(additionalQualifications?.qualification_details)
         binding?.fAQDetailsBn?.etText?.setText(additionalQualifications?.qualification_details_bn)
+
+        if (additionalQualifications?.additional_professional_qualification_document_path.toString()
+                .toLowerCase() != "null" || !additionalQualifications?.additional_professional_qualification_document_path.isNullOrEmpty()
+        ) {
+            binding.fAQAttachemnt.ftvAttachment.text =
+                context.getString(R.string.attachment) + "\n" +
+                        additionalQualifications?.additional_professional_qualification_document_path
+        }
+
+
 
 
         binding?.fAQAttachemnt?.Attachment?.setOnClickListener {
@@ -246,6 +256,7 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
 
 
     }
+
     fun showResponse(any: Any) {
         if (any is String) {
             toast(EmployeeInfoActivity.context, "" + context?.getString(R.string.updated))
@@ -325,11 +336,9 @@ class EditAndCreateAdditionalQualificationInfo @Inject constructor() {
         map.put("additional_professional_qualification_document_path", documentPath)
 
 
-        if (key == StaticKey.EDIT && additionalQualifications?.isPendingData == false  ) {
+        if (key == StaticKey.EDIT && additionalQualifications?.isPendingData == false) {
             map.put("parent_id", additionalQualifications?.id)
-        }
-
-        else if (  key == StaticKey.EDIT && additionalQualifications?.isPendingData == true) {
+        } else if (key == StaticKey.EDIT && additionalQualifications?.isPendingData == true) {
             map.put("parent_id", additionalQualifications?.parent_id)
         }
 

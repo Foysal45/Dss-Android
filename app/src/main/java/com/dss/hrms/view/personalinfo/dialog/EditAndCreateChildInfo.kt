@@ -18,8 +18,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
@@ -37,7 +37,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import javax.inject.Inject
-import kotlin.collections.HashMap
 
 class EditAndCreateChildInfo @Inject constructor() {
     @Inject
@@ -90,7 +89,7 @@ class EditAndCreateChildInfo @Inject constructor() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         updateEducationQualification(context)
-       // HelperClass
+        // HelperClass
 //
         dialogCustome?.show()
 
@@ -154,15 +153,41 @@ class EditAndCreateChildInfo @Inject constructor() {
                 }
             })
         binding.fChildNidADD.ftvAttachment.text = context.getString(R.string.nid_attachment)
-        binding.fChildPassportADD.ftvAttachment.text = context.getString(R.string.passport_attachment)
+        binding.fChildPassportADD.ftvAttachment.text =
+            context.getString(R.string.passport_attachment)
         binding.fChildbirthCertificateADD.ftvAttachment.text =
             context.getString(R.string.birth_certificate_attachment)
 
         /*
+
          1 = nid
          2 = passport
          3 = birth certificate
-         */
+        */
+
+        if (child?.nid_document_path.toString()
+                .toLowerCase() != "null" || !child?.nid_document_path.isNullOrEmpty()
+        ) {
+            binding.fChildNidADD.ftvAttachment.text =
+                context.getString(R.string.nid_attachment) + "\n" + child?.nid_document_path
+        }
+
+        if (child?.passport_document_path.toString()
+                .toLowerCase() != "null" || !child?.passport_document_path.isNullOrEmpty()
+        ) {
+
+            binding.fChildPassportADD.ftvAttachment.text =
+                context.getString(R.string.passport_attachment) + "\n" + child?.passport_document_path
+        }
+        if (child?.birth_certificate_document_path.toString()
+                .toLowerCase() != "null" || !child?.birth_certificate_document_path.isNullOrEmpty()
+        ) {
+            binding.fChildbirthCertificateADD.ftvAttachment.text =
+                context.getString(R.string.birth_certificate_attachment) + "\n" +
+                        child?.birth_certificate_document_path
+        }
+
+        // need reDesign 
 
         binding.fChildNidADD.Attachment.setOnClickListener {
 
@@ -172,7 +197,7 @@ class EditAndCreateChildInfo @Inject constructor() {
                         if (ConvertNumber.isFileLessThan2MB(imgFile)) {
                             binding.fChildNidADD.fAttachmentFileName.text =
                                 imgFile.name
-                            uploadFile(imgFile, context , 1 )
+                            uploadFile(imgFile, context, 1)
                         } else {
 
                             ConvertNumber.errorDialogueWithProgressBar(
@@ -198,7 +223,7 @@ class EditAndCreateChildInfo @Inject constructor() {
                         if (ConvertNumber.isFileLessThan2MB(imgFile)) {
                             binding.fChildPassportADD.fAttachmentFileName.text =
                                 imgFile.name
-                            uploadFile(imgFile, context , 2)
+                            uploadFile(imgFile, context, 2)
                         } else {
 
                             ConvertNumber.errorDialogueWithProgressBar(
@@ -224,7 +249,7 @@ class EditAndCreateChildInfo @Inject constructor() {
                         if (ConvertNumber.isFileLessThan2MB(imgFile)) {
                             binding.fChildbirthCertificateADD.fAttachmentFileName.text =
                                 imgFile.name
-                            uploadFile(imgFile, context , 3)
+                            uploadFile(imgFile, context, 3)
                         } else {
 
                             ConvertNumber.errorDialogueWithProgressBar(
@@ -243,8 +268,8 @@ class EditAndCreateChildInfo @Inject constructor() {
 
         }
 
-        binding?.childrenBtnAddUpdate?.btnUpdate?.setOnClickListener {
-            var employeeInfoEditCreateRepo =
+        binding.childrenBtnAddUpdate.btnUpdate?.setOnClickListener {
+            val employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
             invisiableAllError(binding)
@@ -304,9 +329,9 @@ class EditAndCreateChildInfo @Inject constructor() {
                         }
                         when (error) {
                             "name_of_children" -> {
-                                binding?.fChildrenNameOChEn?.tvError?.visibility =
+                                binding.fChildrenNameOChEn.tvError?.visibility =
                                     View.VISIBLE
-                                binding?.fChildrenNameOChEn?.tvError?.text =
+                                binding.fChildrenNameOChEn.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
                             "name_of_children_bn" -> {
@@ -380,15 +405,13 @@ class EditAndCreateChildInfo @Inject constructor() {
         map.put("passport", binding?.fChildrenPassportNo?.etText?.text.toString())
         try {
 
-            if (key == StaticKey.EDIT && child?.isPendingData == false  ) {
+            if (key == StaticKey.EDIT && child?.isPendingData == false) {
                 map.put("parent_id", child?.id)
-            }
-
-            else if (  key == StaticKey.EDIT && child?.isPendingData == true) {
+            } else if (key == StaticKey.EDIT && child?.isPendingData == true) {
                 map.put("parent_id", child?.parent_id)
             }
 
-        }catch (ex : java.lang.Exception){
+        } catch (ex: java.lang.Exception) {
 
         }
         map.put(

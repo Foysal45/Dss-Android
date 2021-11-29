@@ -17,8 +17,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
+import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
@@ -133,6 +133,18 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
                 }
             })
         }
+
+        if (foreignTravels1?.document_path.toString()
+                .toLowerCase() != "null" || !foreignTravels1?.document_path.isNullOrEmpty()
+        ) {
+            binding.fForeignTravelAttachment.ftvAttachment.text =
+                context.getString(R.string.attachment) + "\n" +
+                        foreignTravels1?.document_path
+        }
+
+
+
+
         binding.fForeignTravelAttachment.Attachment.setOnClickListener {
 
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {
@@ -333,15 +345,13 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
             map.put("purpose", purpose?.name)
             map.put("purpose_bn", purpose?.name_bn)
         }
-        try{
-            if (key == StaticKey.EDIT && foreignTravels1?.isPendingData == false  ) {
+        try {
+            if (key == StaticKey.EDIT && foreignTravels1?.isPendingData == false) {
                 map.put("parent_id", foreignTravels1?.id)
-            }
-
-            else if (  key == StaticKey.EDIT && foreignTravels1?.isPendingData == true) {
+            } else if (key == StaticKey.EDIT && foreignTravels1?.isPendingData == true) {
                 map.put("parent_id", foreignTravels1?.parent_id)
             }
-        }catch (Ex : java.lang.Exception){
+        } catch (Ex: java.lang.Exception) {
 
         }
         map.put("details", binding?.fForeignTravelDetailsEn?.etText?.text.toString())

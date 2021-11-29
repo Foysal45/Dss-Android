@@ -182,6 +182,11 @@ class EditEducationQualificationInfo @Inject constructor() {
         binding?.fEQPassingYear?.etText?.setText(educationalQualification?.passing_year)
         binding?.fEQDivisionOrCgpa?.etText?.setText(educationalQualification?.division_cgpa)
 
+        if(educationalQualification?.documentPath.toString().toLowerCase() != "null" || !educationalQualification?.documentPath.isNullOrEmpty()){
+            binding.fEQAttachment.fEQtvAttachment.text  =context.getString(R.string.attachment) +"\n"+
+                    educationalQualification?.documentPath
+        }
+
         // binding?.
 
 
@@ -308,6 +313,7 @@ class EditEducationQualificationInfo @Inject constructor() {
                 }
             }
         }
+
 
 
 

@@ -398,6 +398,16 @@ class EditCreateNomineeInfo @Inject constructor() {
         }
 
 
+        if (nominee?.nominee_document_path.toString()
+                .toLowerCase() != "null" || !nominee?.nominee_document_path.isNullOrEmpty()
+        ) {
+            binding?.fNominneAttachment?.ftvAttachment?.text =
+                context.getString(R.string.attachment) + "\n" +
+                        nominee?.nominee_document_path
+        }
+
+
+
         binding.fNominneAttachment.Attachment.setOnClickListener {
 
             fileClickListener?.onFileClick(object : OnFilevalueReceiveListener {

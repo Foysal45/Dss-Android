@@ -440,17 +440,19 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     }
                     3 -> {
                         // upzilla
-                        binding.fAddressLocalName.tvTitle.visibility = View.GONE
+                        binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
                         binding.fAddressLocalName.tvText.text = addresses.upazila?.name
-                        binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
-                        binding.fAddressUnion.tvText.text = addresses.Union?.name
-                        binding.fAddressUnionName.tvText.text = context.getString(R.string.union)
+
+                        binding.fAddressUnionName.tvTitle.text = context.getString(R.string.union)
+                        binding.fAddressUnionName.tvText.text = addresses.Union?.name
+                        binding.fAddressUnionName.llBody.visibility = View.VISIBLE
 
                     }
                 }
 
 
             } else {
+
                 addresses.district?.name_bn?.let {
                     binding.fAddressDistrict.tvText.setText(it)
 
@@ -503,25 +505,24 @@ class EmployeeInfoDataBinding @Inject constructor() {
                         binding.fAddressUnionName.llBody.visibility = View.GONE
                     }
                     2 -> {
-                        // municipility
 
+                        //municipility
                         binding.fAddressLocalName.tvTitle.text =
                             context.getString(R.string.municipalities)
                         binding.fAddressLocalName.tvText.text = addresses.municipality?.name_bn
                         binding.fAddressUnionName.llBody.visibility = View.GONE
                     }
                     3 -> {
-                        // upzilla
+                        //upzilla
                         binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
                         binding.fAddressLocalName.tvText.text = addresses.upazila?.name_bn
-
-                        binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
-                        binding.fAddressUnion.tvText.text = addresses.Union?.name_bn
-
+                        binding.fAddressUnionName.tvTitle.text = context.getString(R.string.union)
+                        binding.fAddressUnionName.tvText.text = addresses.Union?.name_bn
                         binding.fAddressUnionName.llBody.visibility = View.VISIBLE
 
                     }
                 }
+
 
             }
         } else if (addresses.isPendingData) {
@@ -579,6 +580,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
             )
 
 
+
 //            addresses.division_id?.let { binding.fAddressDivision.tvText.setText(it.toString()) }
 //            addresses.district_id?.let { binding.fAddressDistrict.tvText.text = it.toString() }
             addresses.phone_no?.let { binding.fAddressPhoneOrMobileNo.tvText.text = it }
@@ -591,10 +593,23 @@ class EmployeeInfoDataBinding @Inject constructor() {
 //                binding.fAddressUnion.tvText.text = it
 //            }
 
+
             when (addresses.local_government_type_id) {
                 1 -> {
                     // city corpo
 
+                    /*
+                     addresses.cityCorporation?.name?.let {
+                            binding.fAddressLocalName.tvText.text = it
+                        }
+
+                        binding.fAddressLocalName.tvTitle.text =
+                            context.getString(R.string.citycorporation)
+                        binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.nameBn
+
+                        binding.fAddressUnionName.llBody.visibility = View.GONE
+                     */
+                    binding.fAddressUnion.tvText.text =  context.getString(R.string.citycorporation)
                     binding.fAddressLocalName.tvText.text = "${
                         addresses.city_corporation_id?.let {
                             HelperClass.getCommonDataFilltered(
@@ -609,16 +624,18 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     binding.fAddressLocalName.tvTitle.text =
                         context.getString(R.string.citycorporation)
 
-
-                    binding.fAddressUnion.tvText.text =
-                        context.getString(R.string.citycorporation)
-
-
+                    // binding.fAddressUnion.tvText.text = context.getString(R.string.citycorporation)
                     binding.fAddressUnionName.llBody.visibility = View.GONE
                 }
                 2 -> {
                     // municipility
-
+                    /*
+                        binding.fAddressLocalName.tvTitle.text =
+                            context.getString(R.string.municipalities)
+                        binding.fAddressLocalName.tvText.text = addresses.municipality?.name_bn
+                        binding.fAddressUnionName.llBody.visibility = View.GONE
+                     */
+                    binding.fAddressUnion.tvText.text =  context.getString(R.string.municipality)
                     binding.fAddressLocalName.tvTitle.text =
                         context.getString(R.string.municipalities)
 
@@ -631,13 +648,19 @@ class EmployeeInfoDataBinding @Inject constructor() {
                         }
                     }"
                     binding.fAddressUnionName.llBody.visibility = View.GONE
-                    binding.fAddressUnion.tvText.text = context.getString(R.string.municipalities)
+                    //  binding.fAddressUnion.tvText.text = context.getString(R.string.municipalities)
                 }
                 3 -> {
                     // upzilla
+                    /*
+                         binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
+                        binding.fAddressLocalName.tvText.text = addresses.upazila?.name_bn
+                        binding.fAddressUnionName.tvTitle.text = context.getString(R.string.union)
+                        binding.fAddressUnionName.tvText.text = addresses.Union?.name_bn
+                        binding.fAddressUnionName.llBody.visibility = View.VISIBLE
+                     */
+                    binding.fAddressUnion.tvText.text =  context.getString(R.string.upazila)
                     binding.fAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
-                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
-                    binding.fAddressUnionName.tvTitle.text = context.getString(R.string.union)
                     binding.fAddressLocalName.tvText.text = addresses.upazila_id.let {
                         HelperClass.getCommonDataFilltered(
                             it, commonData?.upazilas, !preparence.getLanguage()
@@ -645,13 +668,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
                         )
                     }
 
-                    binding.fAddressLocalName.tvTitle.text =
-                        context.getString(R.string.upazila)
-
-                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
-
-                    binding.fAddressUnion.llBody.visibility = View.GONE
-
+                    binding.fAddressUnionName.tvTitle.text = context.getString(R.string.union)
                     binding.fAddressUnionName.tvText.text = "${
                         addresses.union_id?.let {
                             HelperClass.getCommonDataFilltered(
@@ -662,42 +679,20 @@ class EmployeeInfoDataBinding @Inject constructor() {
                     }"
                     binding.fAddressUnionName.llBody.visibility = View.VISIBLE
 
+                    binding.fAddressLocalName.tvTitle.text =
+                        context.getString(R.string.upazila)
+
+//
+//                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
+//
+//                    binding.fAddressUnion.llBody.visibility = View.GONE
+//
+
+//                    binding.fAddressUnionName.llBody.visibility = View.VISIBLE
+
+
                 }
             }
-
-
-//            when (addresses.local_government_type_id) {
-//                1 -> {
-//                    // city corpo
-//                    addresses.cityCorporation?.name?.let {
-//                        binding.fAddressLocalName.tvText.text = it
-//                    }
-//                    //    binding.fAddressUpazila.tvTitle.setText(context.getString(R.string.upazila))
-//                    binding.fAddressLocalName.tvTitle.text =
-//                        context.getString(R.string.citycorporation)
-//                    binding.fAddressLocalName.tvText.text = addresses.cityCorporation?.name
-//                    binding.fAddressUnionName.llBody.visibility = View.GONE
-//
-//                }
-//                2 -> {
-//                    // municipility
-//
-//                    binding.fAddressLocalName.tvTitle.text =
-//                        context.getString(R.string.municipalities)
-//                    binding.fAddressLocalName.tvText.text = addresses.municipality?.name
-//                    binding.fAddressUnionName.llBody.visibility = View.GONE
-//
-//                }
-//                3 -> {
-//                    // upzilla
-//                    binding.fAddressLocalName.tvTitle.visibility =View.GONE
-//                    binding.fAddressLocalName.tvText.text = addresses.upazila?.name
-//                    binding.fAddressUnion.tvTitle.text = context.getString(R.string.union)
-//                    binding.fAddressUnion.tvText.text = addresses.Union?.name
-//                    binding.fAddressUnionName.tvText.text = context.getString(R.string.union)
-//
-//                }
-//            }
 
 
         }
@@ -1006,8 +1001,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
 
 
-        } else
-        {
+        } else {
 
             binding.hNominee.tvTitle.text =
                 " $heading (${context.getString(R.string.pending_data)})"
@@ -3341,8 +3335,7 @@ class EmployeeInfoDataBinding @Inject constructor() {
             }
         }
 
-        val mAdapter: name_view_row_adapter =
-            name_view_row_adapter(quotas.quota_documnets.orEmpty(), itemOnClick)
+        val mAdapter = name_view_row_adapter(quotas.quota_documnets.orEmpty(), itemOnClick)
 
         binding.nameList.apply {
             adapter = mAdapter
