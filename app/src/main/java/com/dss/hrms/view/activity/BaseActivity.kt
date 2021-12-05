@@ -15,8 +15,8 @@ import java.util.*
 
 
 open class BaseActivity : DaggerAppCompatActivity() {
-    protected var dialogConfirmation: Dialog? = null
-    protected var dialogConfirmationBinding: DialogConfirmationBinding? = null
+    private var dialogConfirmation: Dialog? = null
+    private var dialogConfirmationBinding: DialogConfirmationBinding? = null
 
     protected fun setLocalLanguage(type: String?) {
         val locale = Locale(type)

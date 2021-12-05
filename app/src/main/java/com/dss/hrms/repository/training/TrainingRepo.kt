@@ -44,7 +44,7 @@ class TrainingRepo @Inject constructor() {
     suspend fun getTrainingDashboard(): Any? {
         return withContext(Dispatchers.IO) {
             try {
-                var response = trainingApiService.getTrainingDashboard(
+                val response = trainingApiService.getTrainingDashboard(
                     preparence.getLanguage()!!,
                     "Bearer ${preparence.getToken()!!}"
                 )
@@ -52,13 +52,16 @@ class TrainingRepo @Inject constructor() {
                 Log.e("dashboard "," dashboard : ${response.body()?.code}")
 //                Log.e("dashboard "," dashboard : ${response.body()?.data}")
                 if (response.body()?.code == 200 || response.body()?.code == 201)
+                {
                     response.body()
-                else
-                    null
+                }
+                else {
+                    response.body()
+                }
 
             } catch (e: Exception) {
 
-                Log.e("repo", "response:..................................... ${e.message} ......................................header ${e}")
+                Log.e("repo", "response:...................... ${e.message} ..................header ${e}")
                 null
             }
 
@@ -71,11 +74,11 @@ class TrainingRepo @Inject constructor() {
                 var response = trainingApiService.searchResourcePerson(
                     preparence.getLanguage()!!,
                     "Bearer ${preparence.getToken()!!}",
-                    map.get("person_name")?.let { it as String },
-                    map.get("short_name")?.let { it as String },
-                    map.get("designation_id")?.let { it as Int },
-                    map.get("first_email")?.let { it as String },
-                    map.get("first_mobile")?.let { it as String }
+                    map["person_name"]?.let { it as String },
+                    map["short_name"]?.let { it as String },
+                    map["designation_id"]?.let { it as Int },
+                    map["first_email"]?.let { it as String },
+                    map["first_mobile"]?.let { it as String }
 
                 )
                 if (response.body()?.code == 200 || response.body()?.code == 201)
@@ -98,7 +101,7 @@ class TrainingRepo @Inject constructor() {
     ): MutableLiveData<Any> {
         withContext(Dispatchers.IO) {
             try {
-                var response = trainingApiService.addResourcePerson(
+                val response = trainingApiService.addResourcePerson(
                     preparence.getLanguage()!!,
                     "Bearer ${preparence.getToken()!!}",
                     map
@@ -116,7 +119,7 @@ class TrainingRepo @Inject constructor() {
                 } else {
                     response?.let {
 
-                        var apiError = ErrorUtils2.parseError(response)
+                        val apiError = ErrorUtils2.parseError(response)
                         Log.e(
                             "repo",
                             "apiError apiError : ${apiError.getError().get(0).getField()}}"
@@ -140,7 +143,7 @@ class TrainingRepo @Inject constructor() {
     ): MutableLiveData<Any> {
         withContext(Dispatchers.IO) {
             try {
-                var response = trainingApiService.updateResourcePerson(
+                val response = trainingApiService.updateResourcePerson(
                     preparence.getLanguage()!!,
                     "Bearer ${preparence.getToken()!!}",
                     resourcePersonId,
@@ -157,9 +160,9 @@ class TrainingRepo @Inject constructor() {
                         liveData.postValue("Error");
                     }
                 } else {
-                    response?.let {
+                    response.let {
 
-                        var apiError = ErrorUtils2.parseError(response)
+                        val apiError = ErrorUtils2.parseError(response)
                         Log.e(
                             "repo",
                             "apiError apiError : ${apiError.getError().get(0).getField()}}"

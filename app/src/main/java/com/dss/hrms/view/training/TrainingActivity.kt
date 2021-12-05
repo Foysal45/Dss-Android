@@ -53,12 +53,8 @@ class TrainingActivity : BaseActivity() {
 
 
 
-        binding.navMenu.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { menuItem ->
+        binding.navMenu.setNavigationItemSelectedListener { menuItem ->
 
-            Log.e(
-                "drawer",
-                "...............................................................item  ${menuItem.itemId}............................................"
-            )
 
             val id = menuItem.itemId
             //This is for maintaining the behavior of the Navigation view
@@ -66,7 +62,7 @@ class TrainingActivity : BaseActivity() {
             //This is for closing the drawer after acting on it
             drawerLayout.closeDrawer(Gravity.RIGHT);
             true
-        })
+        }
     }
 
 

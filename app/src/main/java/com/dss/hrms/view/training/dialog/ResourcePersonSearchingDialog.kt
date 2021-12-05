@@ -53,16 +53,16 @@ class ResourcePersonSearchingDialog @Inject constructor() {
             null,
             false
         )
-        binding?.getRoot()?.let { dialogCustome?.setContentView(it) }
+        binding.root.let { dialogCustome.setContentView(it) }
 
-        var window: Window? = dialogCustome?.getWindow()
+        val window: Window? = dialogCustome.window
         window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
         loadDesignationList()
-        binding?.resourcePersonHeader.tvClose.setOnClickListener {
+        binding.resourcePersonHeader.tvClose.setOnClickListener {
             dialogCustome.dismiss()
         }
 
@@ -72,11 +72,11 @@ class ResourcePersonSearchingDialog @Inject constructor() {
         binding.search.setOnClickListener {
             searchOffice()
         }
-        dialogCustome?.show()
+        dialogCustome.show()
     }
 
     fun searchOffice() {
-        var dialog = CustomLoadingDialog().createLoadingDialog(context)
+        val dialog = CustomLoadingDialog().createLoadingDialog(context)
         trainingManagementViewModel.searchResourcePerson(
             getMapData(),
             object : OnResourcePersonValueListener {
@@ -90,20 +90,20 @@ class ResourcePersonSearchingDialog @Inject constructor() {
     }
 
     fun getMapData(): HashMap<Any, Any?> {
-        var map = HashMap<Any, Any?>()
+        val map = HashMap<Any, Any?>()
         designation?.id?.let {
             map.put("person_name", it)
         }
-        binding.resourcePersonShortName.etText.text.trim().toString()?.let {
+        binding.resourcePersonShortName.etText.text.trim().toString().let {
             map.put("short_name", it)
         }
-        binding.resourcePersonName.etText.text.trim().toString()?.let {
+        binding.resourcePersonName.etText.text.trim().toString().let {
             map.put("person_name", it)
         }
-        binding.resourcePersonFirstEmail.etText.text.trim().toString()?.let {
+        binding.resourcePersonFirstEmail.etText.text.trim().toString().let {
             map.put("first_email", it)
         }
-        binding.resourcePersonFirstMobile.etText.text.trim().toString()?.let {
+        binding.resourcePersonFirstMobile.etText.text.trim().toString().let {
             map.put("first_mobile", it)
         }
 

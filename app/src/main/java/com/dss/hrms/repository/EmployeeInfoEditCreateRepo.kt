@@ -235,14 +235,17 @@ class EmployeeInfoEditCreateRepo @Inject constructor() {
 
     suspend fun updateNomineeInfo(
         map: HashMap<Any, Any?>?,
-        liveData: MutableLiveData<Any>?
+        liveData: MutableLiveData<Any>? ,
+          id : Int
     ): MutableLiveData<Any>? {
         withContext(Dispatchers.IO) {
             flowOf(
                 apiService?.updateNomineeInfo(
                     preparence?.getLanguage()!!,
                     "Bearer ${preparence?.getToken()}",
-                    map
+                     id.toString() ,
+                    map ,
+
                 )
             ).catch { throwable ->
                 liveData?.postValue(null)

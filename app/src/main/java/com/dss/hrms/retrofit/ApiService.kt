@@ -232,10 +232,11 @@ interface ApiService {
     ): Response<Any?>?
 
     @Headers("Content-Type: application/json", "Accept: application/json")
-    @POST("/api/auth/nominee-information")
+    @PUT("/api/auth/nominee-information/{id}")
     suspend fun updateNomineeInfo(
         @Header("X-Localization") language: String,
         @Header("Authorization") token: String?,
+        @Path("id") id : String ,
         @Body map: HashMap<Any, Any?>?
     ): Response<Any?>?
 

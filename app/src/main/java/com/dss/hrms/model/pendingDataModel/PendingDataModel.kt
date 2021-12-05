@@ -62,7 +62,7 @@ class childrenInfoPendingModel {
 class nominePendingModel {
     var parent_id: Int? = null
     @SerializedName("id")
-    val id: Int = 0
+    val id: Int? = null
 
     @SerializedName("data")
     var data: Employee.Nominee? = null

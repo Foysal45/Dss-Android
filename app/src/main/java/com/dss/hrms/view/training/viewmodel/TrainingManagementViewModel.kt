@@ -2,6 +2,7 @@ package com.dss.hrms.view.training.viewmodel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -34,12 +35,13 @@ class TrainingManagementViewModel @Inject constructor(application: Application) 
             } else {
                 _resourcePerson.postValue(null)
                 // _resourcePerson.value = null
+
             }
         }
     }
     fun getResourcePerson() {
         viewModelScope.launch {
-            var response = trainingRepo.getResourcePersonList()
+            val response = trainingRepo.getResourcePersonList()
             if (response is TrainingResponse.ResourcePersonResponse) {
                 _resourcePerson.postValue(response.data)
             } else {
@@ -52,7 +54,7 @@ class TrainingManagementViewModel @Inject constructor(application: Application) 
 
     fun searchResourcePerson(map: HashMap<Any, Any?>,onResourcePersonValueListener : OnResourcePersonValueListener) {
         viewModelScope.launch {
-            var response = trainingRepo.searchResourcePersonList(map)
+            val response = trainingRepo.searchResourcePersonList(map)
             if (response is TrainingResponse.ResourcePersonResponse) {
                 _resourcePerson.postValue(response.data)
                 onResourcePersonValueListener.onValueChange(response.data)

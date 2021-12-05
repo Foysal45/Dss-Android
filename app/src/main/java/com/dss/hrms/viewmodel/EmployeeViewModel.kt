@@ -56,8 +56,13 @@ class EmployeeViewModel @Inject constructor(application: Application) :
     suspend fun getPendingData(employeeId: Int?): Flow<Any?> = flow {
         //   val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
         //  viewModelScope.launch(dispatcher.Main) {
-       val obbj = employeeInfoRepo.getPendingData(employeeId)  as PendingDataModel
-        emit(obbj)
+        try{
+            val obbj = employeeInfoRepo.getPendingData(employeeId)  as PendingDataModel
+            emit(obbj)
+        }catch (Ex : Exception){
+            Log.d("TAG", "getPendingData: ${Ex.message}")
+        }
+
         // }
     }
 

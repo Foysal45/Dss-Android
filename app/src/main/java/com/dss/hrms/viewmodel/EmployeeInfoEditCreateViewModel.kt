@@ -41,10 +41,10 @@ class EmployeeInfoEditCreateViewModel @Inject constructor(application: Applicati
         return liveData
     }
 
-    fun updateNomineeInfo(map: HashMap<Any, Any?>?): MutableLiveData<Any>? {
+    fun updateNomineeInfo(map: HashMap<Any, Any?>? , id : Int): MutableLiveData<Any>? {
         var liveData: MutableLiveData<Any>? = MutableLiveData<Any>()
         viewModelScope.launch(Dispatchers.Default) {
-            liveData = employeeInfoEditCreateRepo?.updateNomineeInfo(map, liveData)
+            liveData = employeeInfoEditCreateRepo?.updateNomineeInfo(map, liveData , id )
         }
         return liveData
     }

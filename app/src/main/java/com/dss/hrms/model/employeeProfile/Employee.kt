@@ -786,7 +786,7 @@ class Employee() {
         var parent_id: Int? = null
 
         @SerializedName("employee_id")
-        val employee_id: Int = 0
+        val employee_id: Int? = 0
 
         @SerializedName("name")
         val name: String? = null
@@ -808,7 +808,7 @@ class Employee() {
 
 
         @SerializedName("has_disability")
-        val has_disability: Int = 0
+        val has_disability: Boolean? = false
 
         @SerializedName("marital_status_id")
         val marital_status_id: Int? = null
@@ -837,16 +837,16 @@ class Employee() {
         val address_details: String? = null
 
         @SerializedName("division_id")
-        var division_id: Int = 0
+        var division_id: Int? = 0
 
         @SerializedName("district_id")
-        val district_id: Int = 0
+        val district_id: Int? = 0
 
         @SerializedName("upazila_id")
-        val upazila_id: Int = 0
+        val upazila_id: Int? = 0
 
         @SerializedName("union_id")
-        val union_id: Int = 0
+        val union_id: Int? = 0
         @SerializedName("city_corporation")
         var cityCorporation: CityCorporation? = null
 

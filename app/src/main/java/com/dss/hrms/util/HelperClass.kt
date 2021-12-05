@@ -209,7 +209,7 @@ class HelperClass {
             var model = Employee.Nominee()
             if (obj.data != null) {
                 model = obj.data!!
-                model.id = obj.id
+                model.id = obj.id!!
             }
             model.isPendingData = true
             model.parent_id = obj.parent_id

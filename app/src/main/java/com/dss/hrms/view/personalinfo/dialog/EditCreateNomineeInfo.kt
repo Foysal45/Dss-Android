@@ -375,20 +375,37 @@ class EditCreateNomineeInfo @Inject constructor() {
                 )
             )
         }
+        if (nominee?.has_disability == true) {
+            hasDisabilityData()?.let {
 
-        hasDisabilityData()?.let {
-            SpinnerAdapter().setSpinner(
-                binding?.fNomineeHasDisability?.spinner!!,
-                context,
-                it,
-                nominee?.has_disability,
-                object : CommonSpinnerSelectedItemListener {
-                    override fun selectedItem(any: Any?) {
-                        hasDisabaility = any as SpinnerDataModel
+                SpinnerAdapter().setSpinner(
+                    binding?.fNomineeHasDisability?.spinner!!,
+                    context,
+                    it, 1,
+                    object : CommonSpinnerSelectedItemListener {
+                        override fun selectedItem(any: Any?) {
+                            hasDisabaility = any as SpinnerDataModel
+                        }
                     }
+                )
+            }
+        } else {
+            hasDisabilityData()
+                .let {
+
+                    SpinnerAdapter().setSpinner(
+                        binding.fNomineeHasDisability.spinner,
+                        context,
+                        it, 0,
+                        object : CommonSpinnerSelectedItemListener {
+                            override fun selectedItem(any: Any?) {
+                                hasDisabaility = any as SpinnerDataModel
+                            }
+                        }
+                    )
                 }
-            )
         }
+
         binding.fNomineeDob.tvText.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
@@ -533,7 +550,7 @@ class EditCreateNomineeInfo @Inject constructor() {
                         val index = any as Int
 
                         when (index) {
-                            0->{
+                            0 -> {
 
                             }
                             1 -> {
@@ -570,7 +587,7 @@ class EditCreateNomineeInfo @Inject constructor() {
                                     resetAllSpinner()
                                 } else {
                                     binding.fNomineeRelation.etText.setText("")
-                                 //   binding.fNomineeNestedSelect.llBody.visibility = View.GONE
+                                    //   binding.fNomineeNestedSelect.llBody.visibility = View.GONE
                                     binding.fNomineeName.etText.setText("")
 //                                    binding.fNomineeGender.spinner.setSelection(0)
 //                                    binding.fNomineeMaritalStatus.spinner.setSelection(0)
@@ -905,7 +922,7 @@ class EditCreateNomineeInfo @Inject constructor() {
             DateConverter.changeDateFormateForSending(binding.fNomineeDob?.tvText?.text.toString())
         var map = java.util.HashMap<Any, Any?>()
         if (nominee?.id == null) map.put("id", 0) else nominee?.id?.let { map.put("id", it) }
-        map.put("employee_id", employee?.user?.employee_id)
+        map["employee_id"] = employee?.user?.employee_id
         map.put("name", binding?.fNomineeName.etText.text.toString().trim())
         map.put(
             "date_of_birth",
@@ -916,15 +933,13 @@ class EditCreateNomineeInfo @Inject constructor() {
         /*
          adding address
          */
-        try{
-            if (key == StaticKey.EDIT && nominee?.isPendingData == false  ) {
+        try {
+            if (key == StaticKey.EDIT && nominee?.isPendingData == false) {
                 map.put("parent_id", nominee?.id)
-            }
-
-            else if (  key == StaticKey.EDIT && nominee?.isPendingData == true) {
+            } else if (key == StaticKey.EDIT && nominee?.isPendingData == true) {
                 map.put("parent_id", nominee?.parent_id)
             }
-        }catch (Ex : java.lang.Exception){
+        } catch (Ex: java.lang.Exception) {
 
         }
         map.put("division_id", division?.id)
@@ -944,6 +959,7 @@ class EditCreateNomineeInfo @Inject constructor() {
             map.put("gender_id", it.toString())
         }
         hasDisabaility?.id?.let {
+
             map.put("has_disability", it.toString())
         }
         imageUrl?.let { map.put("nominee_signature", it) }
@@ -958,35 +974,52 @@ class EditCreateNomineeInfo @Inject constructor() {
 
 
     fun uploadData() {
-        var employeeInfoEditCreateRepo =
+        val employeeInfoEditCreateRepo =
             ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                 .get(EmployeeInfoEditCreateViewModel::class.java)
         invisiableAllError(binding)
-        key?.let {
-            if (it.equals(StaticKey.EDIT)) {
-                employeeInfoEditCreateRepo?.updateNomineeInfo(
-                    getMapData()
-                )?.observe(EmployeeInfoActivity.context!!, androidx.lifecycle.Observer { any ->
-                    dialog?.dismiss()
-                    Log.e("yousuf", "error : " + any)
-                    showResponse(any)
-                })
+        key.let {
+            if (it == StaticKey.EDIT) {
+                try {
+                    Log.d("UPDATE", "s: ${getMapData()}")
+                    nominee?.id?.let { it1 ->
+                        employeeInfoEditCreateRepo.updateNomineeInfo(
+                            getMapData(),
+                            it1
+
+                        )?.observe(EmployeeInfoActivity.context!!, { any ->
+                            dialog?.dismiss()
+                            Log.e("yousuf", "error : " + any)
+                            showResponse(any)
+                        })
+                    }
+
+
+                } catch (Ex: Exception) {
+                    Log.d("TAG", "uploadData: ${Ex.message}")
+                }
+
             } else {
-                employeeInfoEditCreateRepo?.updateNomineeInfo(
-                    getMapData()
-                )?.observe(EmployeeInfoActivity.context!!, androidx.lifecycle.Observer { any ->
-                    dialog?.dismiss()
-                    Log.e("yousuf", "error : " + any)
-                    showResponse(any)
-                })
+                nominee?.let { it1 ->
+                    employeeInfoEditCreateRepo.updateNomineeInfo(
+                        getMapData(),
+                        it1.id
+                    )?.observe(EmployeeInfoActivity.context!!, { any ->
+                        dialog?.dismiss()
+                        Log.e("yousuf", "error : " + any)
+                        showResponse(any)
+                    })
+                }
             }
         }
     }
 
     fun showResponse(any: Any) {
         if (any is String) {
-            toast(EmployeeInfoActivity.context,
-                "" + ctx?.getString(R.string.updated))
+            toast(
+                EmployeeInfoActivity.context,
+                "" + ctx?.getString(R.string.updated)
+            )
             MainActivity.selectedPosition = 18
             EmployeeInfoActivity.refreshEmployeeInfo()
             dialogCustome?.dismiss()

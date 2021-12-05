@@ -1,6 +1,7 @@
 package com.dss.hrms.view.training
 
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -176,6 +178,7 @@ class TrainingFragment : DaggerFragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     fun setTitleStyle(view: TextView) {
         view.gravity = Gravity.CENTER
         activity?.getColor(R.color.black)?.let { view.setTextColor(it) }

@@ -709,13 +709,13 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
         binding.fEQBoardOrUniversity.llBody.visibility = View.GONE
         binding.fEQNameOIn.llBody.visibility = View.GONE
-        binding.hEducationQualification.tvTitle.setText(heading)
-        binding.fEQNameOfD.tvTitle.setText(context.getString(R.string.name_deg))
-        binding.fEQNameOIn.tvTitle.setText(context.getString(R.string.name_institution))
-        binding.fEQBoardOrUniversity.tvTitle.setText(context.getString(R.string.name_of_board))
-        binding.fEQPassingYear.tvTitle.setText(context.getString(R.string.passing_year))
-        binding.fEQDivisionOrCgpa.tvTitle.setText(context.getString(R.string.div_cgpa))
-        binding.fEQAttachment.tvTitle.setText(context.getString(R.string.attachment))
+        binding.hEducationQualification.tvTitle.text = heading
+        binding.fEQNameOfD.tvTitle.text = context.getString(R.string.name_deg)
+        binding.fEQNameOIn.tvTitle.text = context.getString(R.string.name_institution)
+        binding.fEQBoardOrUniversity.tvTitle.text = context.getString(R.string.name_of_board)
+        binding.fEQPassingYear.tvTitle.text = context.getString(R.string.passing_year)
+        binding.fEQDivisionOrCgpa.tvTitle.text = context.getString(R.string.div_cgpa)
+        binding.fEQAttachment.tvTitle.text = context.getString(R.string.attachment)
 
         HelperClass.addHeaderColor(
             binding.hEducationQualification,
@@ -881,9 +881,9 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
 
         nominee?.has_disability?.let {
-            if (it == 1)
-                binding.fNHasDisavility.tvText.setText(context?.getString(R.string.yes)) else
-                binding.fNHasDisavility.tvText.setText(context?.getString(R.string.no))
+            if (it == true){
+                binding.fNHasDisavility.tvText.setText(context?.getString(R.string.yes))
+            } else binding.fNHasDisavility.tvText.setText(context?.getString(R.string.no))
         }
 
         context?.let {
@@ -898,24 +898,28 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
         //setting address data
         binding.fNAddressDistrict.tvText.setText(
-            HelperClass.getCommonDataFilltered(
-                nominee.district_id,
-                commonData?.districts,
-                !preparence.getLanguage()
-                    .equals("en")
+            nominee?.district_id?.let {
+                HelperClass.getCommonDataFilltered(
+                    it,
+                    commonData?.districts,
+                    !preparence.getLanguage()
+                        .equals("en")
 
-            )
+                )
+            }
         )
 
 
         binding.fNAddressDivision.tvText.setText(
-            HelperClass.getCommonDataFilltered(
-                nominee.division_id,
-                commonData?.divisions,
-                !preparence.getLanguage()
-                    .equals("en")
+            nominee.division_id?.let {
+                HelperClass.getCommonDataFilltered(
+                    it,
+                    commonData?.divisions,
+                    !preparence.getLanguage()
+                        .equals("en")
 
-            )
+                )
+            }
         )
         binding.fNAddressUpazila.llBody.visibility = View.GONE
         when (nominee.local_government_type_id) {
@@ -965,10 +969,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
                 binding.fNAddressUpazila.llBody.visibility = View.GONE
                 binding.fNAddressLocalName.tvTitle.text = context.getString(R.string.upazila)
                 binding.fNAddressLocalName.tvText.text = nominee.upazila_id.let {
-                    HelperClass.getCommonDataFilltered(
-                        it, commonData?.upazilas, !preparence.getLanguage()
-                            .equals("en")
-                    )
+                    it?.let { it1 ->
+                        HelperClass.getCommonDataFilltered(
+                            it1, commonData?.upazilas, !preparence.getLanguage()
+                                .equals("en")
+                        )
+                    }
                 }
 
                 binding.fNAddressLocalName.tvTitle.text =

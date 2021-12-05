@@ -36,7 +36,7 @@ class TrainingDashboardAdapter @Inject constructor() :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var binding: ModelTrainingDashboardLayoutBinding = DataBindingUtil.inflate(
+        val binding: ModelTrainingDashboardLayoutBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.model_training_dashboard_layout, parent, false
         )
@@ -48,7 +48,7 @@ class TrainingDashboardAdapter @Inject constructor() :
             holder.binding.llCourseSchedule.visibility = View.VISIBLE
             holder.binding.llBatchSchedule.visibility = View.GONE
             holder.binding.llFaq.visibility = View.GONE
-            var courseSchedule = dashBoard?.course_shedules?.get(position)
+            val courseSchedule = dashBoard?.course_shedules?.get(position)
             holder.binding.courseSchedule = courseSchedule
             holder.binding.llCourseSchedule.setOnClickListener {
                 onTrainingComponentClickListener.onShortClick(trainingModule)
@@ -57,7 +57,7 @@ class TrainingDashboardAdapter @Inject constructor() :
             holder.binding.llCourseSchedule.visibility = View.GONE
             holder.binding.llBatchSchedule.visibility = View.VISIBLE
             holder.binding.llFaq.visibility = View.GONE
-            var batch_shedules = dashBoard?.batch_shedules?.get(position)
+            val batch_shedules = dashBoard?.batch_shedules?.get(position)
             holder.binding.batchSchedule = batch_shedules
             holder.binding.llBatchSchedule.setOnClickListener {
                 onTrainingComponentClickListener.onShortClick(trainingModule)
@@ -66,7 +66,7 @@ class TrainingDashboardAdapter @Inject constructor() :
             holder.binding.llCourseSchedule.visibility = View.GONE
             holder.binding.llBatchSchedule.visibility = View.GONE
             holder.binding.llFaq.visibility = View.VISIBLE
-            var faqs = dashBoard?.faqs?.get(position)
+            val faqs = dashBoard?.faqs?.get(position)
             holder.binding.faqs = faqs
             holder.binding.llFaq.setOnClickListener {
                 onTrainingComponentClickListener.onShortClick(trainingModule)
