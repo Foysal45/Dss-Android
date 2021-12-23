@@ -140,9 +140,9 @@ class LoginActivity : BaseActivity(), OnNetworkStateChangeListener {
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
-        login.setOnClickListener({
+        login.setOnClickListener {
             login()
-        })
+        }
         f_pass.setOnClickListener {
             Intent(this, ForgetPAssActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)

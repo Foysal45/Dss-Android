@@ -157,6 +157,30 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/changePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_marginVertical="@dimen/_8sdp"
+            android:padding="@dimen/_5sdp">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingLeft="25dp"
+                android:textAllCaps="false"
+                android:text="@string/change_password"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
+
+
+
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

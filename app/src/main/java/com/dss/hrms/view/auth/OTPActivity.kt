@@ -52,14 +52,14 @@ class OTPActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setLocalLanguage(preparence!!.getLanguage())
         setContentView(R.layout.activity_o_t_p)
-        backBtnIV.setOnClickListener({
+        backBtnIV.setOnClickListener {
             onBackPressed();
-        });
+        }
         init()
         submit.setOnClickListener {
             verifyOtp()
         }
-      //  startSmsUserConsent()
+        //  startSmsUserConsent()
     }
 
     private fun startSmsUserConsent() {
@@ -83,9 +83,9 @@ class OTPActivity : BaseActivity() {
                 // We need to get the code from inside with regex
                 val message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
                 Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
-               // textViewMessage!!.text =
-                 //   String.format("%s - %s", getString(R.string.received_message), message)
-                getOtpFromMessage(message)
+                // textViewMessage!!.text =
+                //   String.format("%s - %s", getString(R.string.received_message), message)
+                //    getOtpFromMessage(message)
             }
         }
     }
@@ -96,7 +96,7 @@ class OTPActivity : BaseActivity() {
         val pattern: Pattern = Pattern.compile("(|^)\\d{6}")
         val matcher: Matcher = pattern.matcher(message)
         if (matcher.find()) {
-           // otpText.setText(matcher.group(0))
+            // otpText.setText(matcher.group(0))
         }
     }
 
@@ -133,13 +133,13 @@ class OTPActivity : BaseActivity() {
     }
 
     fun verifyOtp() {
-        var one = etFirst.text.toString().trim()
-        var two = etSecond.text.toString().trim()
-        var three = etThird.text.toString().trim()
-        var four = etFourth.text.toString().trim()
-        var five = etFifth.text.toString().trim()
-        var six = etSixth.text.toString().trim()
-        var otpSum = one + two + three + four + five + six
+        val one = etFirst.text.toString().trim()
+        val two = etSecond.text.toString().trim()
+        val three = etThird.text.toString().trim()
+        val four = etFourth.text.toString().trim()
+        val five = etFifth.text.toString().trim()
+        val six = etSixth.text.toString().trim()
+        val otpSum = one + two + three + four + five + six
         e_otp_code.visibility = View.GONE
         if (otpSum != null && otpSum.equals(intent.getStringExtra("otp"))) {
             var dialog = CustomLoadingDialog().createLoadingDialog(this)
@@ -153,6 +153,7 @@ class OTPActivity : BaseActivity() {
                         startActivity(
                             Intent(this, ChangePassActivity::class.java)
                                 .putExtra("reset_token", any.data?.reset_token)
+                                .putExtra("isReset" , true)
                                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -237,7 +238,8 @@ class OTPActivity : BaseActivity() {
                 before: Int,
                 count: Int
             ) {
-                if (count > 0) {
+                val ss = s.toString()
+                if (ss.length == 1) {
                     etThird.requestFocus()
                 }
             }
@@ -259,7 +261,8 @@ class OTPActivity : BaseActivity() {
                 before: Int,
                 count: Int
             ) {
-                if (count > 0) {
+                val ss = s.toString()
+                if (ss.length == 1) {
                     etFourth.requestFocus()
                 }
             }
@@ -283,9 +286,9 @@ class OTPActivity : BaseActivity() {
                 before: Int,
                 count: Int
             ) {
-                if (count > 0) {
-                    etFifth.requestFocus()
-                }
+//                if (count > 0) {
+//                    etFifth.requestFocus()
+//                }
             }
 
             override fun afterTextChanged(s: Editable) {}
@@ -335,11 +338,12 @@ class OTPActivity : BaseActivity() {
 
             override fun afterTextChanged(s: Editable) {}
         }
+
         etFirst.addTextChangedListener(textWatcher1)
         etSecond.addTextChangedListener(textWatcher2)
         etThird.addTextChangedListener(textWatcher3)
         etFourth.addTextChangedListener(textWatcher4)
-        etFifth.addTextChangedListener(textWatcher5)
+        // etFifth.addTextChangedListener(textWatcher5)
 
 
     }

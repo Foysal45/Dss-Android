@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.dss.hrms.R
 import com.dss.hrms.view.activity.BaseActivity
+import com.dss.hrms.view.auth.ChangePassActivity
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.android.synthetic.main.activity_employee_info.*
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -22,17 +23,22 @@ class SettingsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setLocalLanguage(preparence!!.getLanguage())
+        setLocalLanguage(preparence.getLanguage())
         setContentView(R.layout.activity_settings)
-        back.setOnClickListener({
+        back.setOnClickListener {
             onBackPressed()
-        })
+        }
         loadScreen()
 
+        changePassword.setOnClickListener {
+            startActivity(Intent(applicationContext , ChangePassActivity::class.java))
+        }
+
+
         tvEn.setOnClickListener {
-            if (preparence!!.getLanguage().equals("en"))
+            if (preparence.getLanguage().equals("en"))
                 return@setOnClickListener
-            preparence?.setLanguage("en")
+            preparence.setLanguage("en")
             finish()
             startActivity(
                 Intent(this, SettingsActivity::class.java)
@@ -40,9 +46,9 @@ class SettingsActivity : BaseActivity() {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
         tvBn.setOnClickListener {
-            if (preparence!!.getLanguage().equals("bn"))
+            if (preparence.getLanguage().equals("bn"))
                 return@setOnClickListener
-            preparence?.setLanguage("bn")
+            preparence.setLanguage("bn")
             finish()
             startActivity(
                 Intent(this, SettingsActivity::class.java)

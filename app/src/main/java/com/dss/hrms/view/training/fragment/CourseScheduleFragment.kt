@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentCourseScheduleBinding
+import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.error.ApiError
@@ -25,10 +26,10 @@ import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.Operation
 import com.dss.hrms.util.Role
-import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
-import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
+import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.training.TrainingActivity
 import com.dss.hrms.view.training.`interface`.OnCourseScheduleClickListener
 import com.dss.hrms.view.training.adaoter.CourseScheduleAdapter
@@ -42,7 +43,7 @@ import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
-import java.util.HashMap
+import java.util.*
 import javax.inject.Inject
 
 
@@ -126,6 +127,16 @@ class CourseScheduleFragment : DaggerFragment() {
         ).get(BudgetAndScheduleViewModel::class.java)
         employeeViewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
+
+        val list = preparence.get("permissionList") as List<Any>?
+
+        if (!JsonKeyReader.hasPermission(
+                "budgetandschedulecourseschedule-add",
+                list
+            )
+        ) {
+            binding.fab.visibility = View.GONE
+        }
     }
 
     fun prepareRecycleView() {
@@ -143,8 +154,18 @@ class CourseScheduleFragment : DaggerFragment() {
                         operation: Operation
                     ) {
                         when (operation) {
-                            Operation.EDIT ->
-                                showEditCreateDialog(operation, courseSchedule)
+                            Operation.EDIT -> {
+                                val list = preparence.get("permissionList") as List<Any>?
+
+                                if (JsonKeyReader.hasPermission(
+                                        "budgetandschedulecourseschedule-edit",
+                                        list
+                                    )
+                                ) {
+                                    showEditCreateDialog(operation, courseSchedule)
+                                }
+                            }
+
 
                             Operation.CREATE ->
                                 Toast.makeText(activity, "" + operation, Toast.LENGTH_LONG).show()

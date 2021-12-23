@@ -52,10 +52,15 @@ class ContentsContentAdapter @Inject constructor() :
         holder.binding?.tvContentName?.setText(content?.content_title)
         holder.binding?.tvContentNameBn?.setText(content?.content_title_bn)
         holder.binding?.tvCategory?.setText( context?.getString(R.string.catagory) + ": " +
+
+
             if (preparence?.getLanguage()
                     .equals("en")
             ) content?.category?.category_name else content?.category?.category_name_bn
         )
+
+
+
         holder.binding?.tvIsPublished?.setText(
             context?.getString(R.string.is_published) + ": " +
                     if (content?.is_published == 1) "" + context?.getString(

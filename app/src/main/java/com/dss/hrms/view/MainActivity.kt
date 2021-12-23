@@ -99,12 +99,15 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         init()
 
 
-        employeeViewModel?.apply {
+        employeeViewModel.apply {
             getUserPermissions()
 
             userPermission.observe(this@MainActivity, Observer { list ->
                 list?.let {
 
+                    preparence.put(list , "permissionList")
+
+                    Log.d("TUU", "onCreate: SAVED ")
                     if (JsonKeyReader.hasPermission("reports", it)) {
                         rlReport.visibility = View.VISIBLE
                         menu_dashboard_report.visibility = View.VISIBLE
@@ -114,6 +117,7 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
                     }
                     Log.e(
                         "permission",
+
                         ".......................................permission result ${
                             JsonKeyReader.hasPermission(
                                 "commonstationary-edit",
@@ -155,28 +159,28 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
-        btnPersonalInfo.setOnClickListener({
+        btnPersonalInfo.setOnClickListener {
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 0))
             selectedPosition = 0
-        })
-        btnSettings.setOnClickListener({
+        }
+        btnSettings.setOnClickListener {
             Intent(this, SettingsActivity::class.java).apply {
                 startActivity(this)
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        })
-        btnTraining.setOnClickListener({
+        }
+        btnTraining.setOnClickListener {
             Intent(this, TrainingActivity::class.java).apply {
                 startActivity(this)
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        })
-        btnMessaging.setOnClickListener({
+        }
+        btnMessaging.setOnClickListener {
             Intent(this, MessagingActivity::class.java).apply {
                 startActivity(this)
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        })
+        }
         btnPayroll.setOnClickListener({
             Intent(this, PayrollActivity::class.java).apply {
                 startActivity(this)

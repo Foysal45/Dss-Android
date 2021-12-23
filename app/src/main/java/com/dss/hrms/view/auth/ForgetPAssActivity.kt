@@ -53,9 +53,9 @@ class ForgetPAssActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setLocalLanguage(preparence?.getLanguage())
         setContentView(R.layout.activity_forget_p_ass)
-        backBtnIV.setOnClickListener({
+        backBtnIV.setOnClickListener {
             onBackPressed();
-        });
+        };
         init()
         sent.setOnClickListener {
             forgetPassword()

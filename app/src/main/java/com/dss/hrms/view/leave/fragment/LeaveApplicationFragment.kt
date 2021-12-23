@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,22 +14,16 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogLeaveManagementLayoutBinding
 import com.dss.hrms.databinding.FragmentLeaveApplicationBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.RoleWiseEmployeeResponseClass
-import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.util.*
-import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OnDateListener
 import com.dss.hrms.view.leave.`interface`.OnLeaveApplicationClickListener
@@ -38,16 +31,8 @@ import com.dss.hrms.view.leave.adapter.LeaveApplicationAdapter
 import com.dss.hrms.view.leave.adapter.spinner.LeavePolicySpinnerAdapter
 import com.dss.hrms.view.leave.model.LeaveApplicationApiResponse
 import com.dss.hrms.view.leave.viewmodel.LeaveApplicationViewmodel
-import com.dss.hrms.view.messaging.fragment.SearchEmployeeFragmentDirections
-import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
-import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
-import com.dss.hrms.view.training.adaoter.spinner.HonorariumHeadAdapter
-import com.dss.hrms.view.training.model.BudgetAndSchedule
-import com.dss.hrms.view.training.model.HonorariumHead
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
-import com.namaztime.namaztime.database.MySharedPreparence
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.dialog_leave_management_layout.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -109,13 +94,13 @@ class LeaveApplicationFragment : DaggerFragment() {
 
 
         leaveApplicationViewModel.apply {
-            var loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
+            val loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
             getLeaveApplication(employee?.user?.employee_id.toString())
             leaveApplication.observe(viewLifecycleOwner, Observer { leaaveAppList ->
                 loadingDialog?.dismiss()
 
                 leaaveAppList?.let {
-                    var list = arrayListOf<LeaveApplicationApiResponse.LeaveApplication>()
+                    val list = arrayListOf<LeaveApplicationApiResponse.LeaveApplication>()
                     list.addAll(leaaveAppList)
                     dataList = list
                     prepareRecyleView()
@@ -171,15 +156,15 @@ class LeaveApplicationFragment : DaggerFragment() {
     ) {
 
         dialogCustome = activity?.let { Dialog(it) }!!
-        dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogCustome.requestWindowFeature(Window.FEATURE_NO_TITLE)
         leaveApplicationBinding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
             R.layout.dialog_leave_management_layout,
             null,
             false
         )
-        leaveApplicationBinding?.getRoot()?.let { dialogCustome?.setContentView(it) }
-        var window: Window? = dialogCustome?.getWindow()
+        leaveApplicationBinding.root.let { dialogCustome.setContentView(it) }
+        var window: Window? = dialogCustome.window
         window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -202,45 +187,41 @@ class LeaveApplicationFragment : DaggerFragment() {
         )
 
 
-        leaveApplicationBinding.lFromDate.tvText?.setText(
-            leaveApplication?.leave_application_details?.get(
-                0
-            )?.date_form?.let {
-                DateConverter.changeDateFormateForShowing(
-                    it
-                )
-            }
-        )
-        leaveApplicationBinding.lToDate.tvText?.setText(
-            leaveApplication?.leave_application_details?.get(
-                0
-            )?.date_to?.let {
-                DateConverter.changeDateFormateForShowing(
-                    it
-                )
-            }
-        )
+        leaveApplicationBinding.lFromDate.tvText.text = leaveApplication?.leave_application_details?.get(
+            0
+        )?.date_form?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        }
+        leaveApplicationBinding.lToDate.tvText.text = leaveApplication?.leave_application_details?.get(
+            0
+        )?.date_to?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        }
 
         leaveApplicationBinding.hLeaveApplication.tvClose.setOnClickListener {
             dialogCustome.dismiss()
         }
 
 
-        leaveApplicationBinding?.lFromDate?.tvText?.setOnClickListener({
+        leaveApplicationBinding.lFromDate.tvText.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
-                    date?.let { leaveApplicationBinding?.lFromDate?.tvText?.setText("" + it) }
+                    date.let { leaveApplicationBinding.lFromDate.tvText.text = "" + it }
                 }
             })
-        })
+        }
 
-        leaveApplicationBinding?.lToDate?.tvText?.setOnClickListener({
+        leaveApplicationBinding.lToDate.tvText.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
-                    date?.let { leaveApplicationBinding?.lToDate?.tvText?.setText("" + it) }
+                    date?.let { leaveApplicationBinding.lToDate.tvText.setText("" + it) }
                 }
             })
-        })
+        }
 
         leaveApplicationViewModel.getLeavePolicyList()
             .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -297,7 +278,7 @@ class LeaveApplicationFragment : DaggerFragment() {
         if (any is String) {
             toast(activity, any)
             leaveApplicationViewModel.getLeaveApplication(employee?.user?.employee_id.toString())
-            dialogCustome?.dismiss()
+            dialogCustome.dismiss()
         } else if (any is ApiError) {
             try {
                 if (any.getError().isEmpty()) {
@@ -308,25 +289,25 @@ class LeaveApplicationFragment : DaggerFragment() {
                         val error = any.getError()[n].getField()
                         val message = any.getError()[n].getMessage()
                         if (TextUtils.isEmpty(error)) {
-                            message?.let {
-                                leaveApplicationBinding?.tvAttachmentError?.visibility =
+                            message.let {
+                                leaveApplicationBinding.tvAttachmentError.visibility =
                                     View.VISIBLE
-                                leaveApplicationBinding?.tvAttachmentError?.text =
+                                leaveApplicationBinding.tvAttachmentError.text =
                                     ErrorUtils2.mainError(message)
                             }
                         }
                         Log.e("ok", "error ${ErrorUtils2.mainError(message)}")
                         when (error) {
                             "leave_request_ref" -> {
-                                leaveApplicationBinding?.lLeaveRequestReference?.tvError?.visibility =
+                                leaveApplicationBinding.lLeaveRequestReference.tvError.visibility =
                                     View.VISIBLE
-                                leaveApplicationBinding?.lLeaveRequestReference?.tvError?.text =
+                                leaveApplicationBinding.lLeaveRequestReference.tvError.text =
                                     ErrorUtils2.mainError(message)
                             }
                             "leave_policy_id" -> {
-                                leaveApplicationBinding?.lLeaveType?.tvError?.visibility =
+                                leaveApplicationBinding.lLeaveType.tvError.visibility =
                                     View.VISIBLE
-                                leaveApplicationBinding?.lLeaveType?.tvError?.text =
+                                leaveApplicationBinding.lLeaveType.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
                             "approval_status" -> {

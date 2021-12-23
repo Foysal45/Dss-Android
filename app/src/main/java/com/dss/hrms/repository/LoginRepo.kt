@@ -9,7 +9,6 @@ import com.dss.hrms.model.login.ResetPasswordReq
 import com.dss.hrms.model.login.VerifyOtp
 import com.namaztime.namaztime.database.MySharedPreparence
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
@@ -97,6 +96,33 @@ class LoginRepo @Inject constructor() {
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiService?.resetPass(preparence?.getLanguage()!!, map)
+                Log.e("apiresponse", "response ${response?.body()?.code}")
+                if (response?.body()?.code == 200 || response?.body()?.code == 201) response?.body() as ResetPassword
+                else response?.let {
+                    var apiError = ErrorUtils2.parseError(
+                        it
+                    )
+                    apiError
+                }
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
+    suspend fun changePass(
+        current_password: String,
+        confirm_password: String,
+        password: String,
+        bearerToken: String
+    ): Any? {
+        var map = HashMap<Any, Any>()
+        map.put("current_password", current_password)
+        map.put("password", password)
+        map.put("confirm_password", confirm_password)
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService?.changePass(preparence?.getLanguage()!!, bearerToken,  map)
                 Log.e("apiresponse", "response ${response?.body()?.code}")
                 if (response?.body()?.code == 200 || response?.body()?.code == 201) response?.body() as ResetPassword
                 else response?.let {

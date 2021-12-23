@@ -11,10 +11,10 @@ object RetrofitInstance {
     //  var BASE_URL = "http://192.168.10.180:8000"
     // var BASE_URL = "http://dss.aws.simecsystem.com:10014"
     //var BASE_URL = "http://dss.aws.simecsystem.com:10014"
-   //var BASE_URL = "http://dss.stage.simecsystem.com:8080"
+   var BASE_URL = "http://dss.stage.simecsystem.com:8080"
   //   var BASE_URL = "http://dss.dev.simecsystem.com:10014"
     //  var BASE_URL_FOR_WEBVIEW = "http://dss.dev.simecsystem.com:10015"
-   var BASE_URL = "http://10.11.105.125:8000"; //10.11.105.125
+   /// var BASE_URL = "http://10.11.105.112:8000";
 
  //    var BASE_URL = "http://192.168.10.177:8000"
   // var BASE_URL = "http://dss.dev.simecsystem.com:10014"
@@ -28,11 +28,35 @@ object RetrofitInstance {
     const val BASE_URL_FCM = "https://fcm.googleapis.com"
     private var retrofit: Retrofit? = null
 
+/*
+        playerControlView.setProgressUpdateListener((position, bufferedPosition) -> {
 
+            long newPos = position / 1000;
+
+            if (newPos - prevSec == 1) {
+                //    newSec = newSec + 1;
+                prevSec = (int) newPos;
+                if (newPos % 16 == 0) {
+                    callForGift(16);
+                    Log.d("BUFFERED", "onCreate: " + newSec + " -> " + prevSec);
+
+                }
+
+
+            } else {
+                prevSec = (int) newPos;
+            }
+
+            Log.d("TESTY", "onCreate: " + newPos + "    OLD POS    " + prevSec);
+
+
+        });
+ */
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(25, TimeUnit.SECONDS)
         .readTimeout(25, TimeUnit.SECONDS)
         .writeTimeout(25, TimeUnit.SECONDS)
+
         .build()
 
 

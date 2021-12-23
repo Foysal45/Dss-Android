@@ -63,6 +63,39 @@
                 app:neumorph_shapeType="pressed">
 
                 <EditText
+                    android:id="@+id/old_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:hint="@string/old_password"
+                    android:inputType="textPassword"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="14sp" />
+            </soup.neumorphism.NeumorphCardView>
+
+            <TextView
+                android:id="@+id/e_old_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="10sp"
+                android:visibility="gone" />
+
+            <soup.neumorphism.NeumorphCardView
+                style="@style/Widget.Neumorph.CardView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:neumorph_shadowElevation="2dp"
+                app:neumorph_shapeType="pressed">
+
+                <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

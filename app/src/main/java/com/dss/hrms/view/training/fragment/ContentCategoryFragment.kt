@@ -5,41 +5,33 @@ import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Switch
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dss.hrms.R
-import com.dss.hrms.databinding.DialogPersonalInfoBinding
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentContentCategoryBinding
+import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.model.TrainingResponse
 import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.Operation
-import com.dss.hrms.view.MainActivity
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
-import com.dss.hrms.view.receiver.NetworkChangeReceiver
 import com.dss.hrms.view.training.`interface`.OnContentCategoryClickListener
 import com.dss.hrms.view.training.adaoter.ContentCategoryAdapter
 import com.dss.hrms.view.training.viewmodel.ContentManagementViewModel
-import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.HashMap
 
 
 class ContentCategoryFragment : DaggerFragment() {
@@ -108,8 +100,18 @@ class ContentCategoryFragment : DaggerFragment() {
                         position: Int?
                     ) {
                         when (operation) {
-                            Operation.EDIT ->
-                                showEditCreateDialog(operation, category)
+                            Operation.EDIT -> {
+                                val list = preparence.get("permissionList") as List<Any>?
+
+                                if (JsonKeyReader.hasPermission(
+                                        "contentmanagementcategory-edit",
+                                        list
+                                    )
+                                ) {
+                                    showEditCreateDialog(operation, category)
+                                }
+
+                            }//
 
                             Operation.DELETE -> {
                             }
@@ -129,6 +131,16 @@ class ContentCategoryFragment : DaggerFragment() {
                 this,
                 viewModelProviderFactory
             ).get(ContentManagementViewModel::class.java)
+
+        val list = preparence.get("permissionList") as List<Any>?
+
+        if (!JsonKeyReader.hasPermission(
+                "contentmanagementcategory-add",
+                list
+            )
+        ) {
+            binding.fab.visibility = View.GONE
+        }
     }
 
 
@@ -141,8 +153,8 @@ class ContentCategoryFragment : DaggerFragment() {
             null,
             false
         )
-        dialogTrainingLoyeoutBinding?.getRoot()?.let { dialogCustome?.setContentView(it) }
-        var window: Window? = dialogCustome?.getWindow()
+        dialogTrainingLoyeoutBinding.root.let { dialogCustome?.setContentView(it) }
+        var window: Window? = dialogCustome?.window
         window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -251,9 +263,9 @@ class ContentCategoryFragment : DaggerFragment() {
     }
 
     fun invisiableAllError() {
-        dialogTrainingLoyeoutBinding.categoryNameEn?.tvError?.visibility =
+        dialogTrainingLoyeoutBinding.categoryNameEn.tvError.visibility =
             View.GONE
-        dialogTrainingLoyeoutBinding.categoryNameBn?.tvError?.visibility =
+        dialogTrainingLoyeoutBinding.categoryNameBn.tvError.visibility =
             View.GONE
     }
 

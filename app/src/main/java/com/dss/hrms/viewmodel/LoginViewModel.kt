@@ -2,12 +2,17 @@ package com.dss.hrms.viewmodel
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.dss.hrms.repository.LoginRepo
 import com.namaztime.namaztime.database.MySharedPreparence
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
@@ -46,13 +51,42 @@ class LoginViewModel @Inject constructor(application: Application) : AndroidView
     }
 
     fun resetPassword(
-        reset_token: String,
-        password: String
+        password: String,
+        reset_token: String
+
     ): MutableLiveData<Any>? {
         val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
         viewModelScope.launch {
-            var value = async { loginRepo?.resetPass(reset_token, password) }.await()
+            var value = withContext(Dispatchers.Default) {
+                loginRepo.resetPass(
+                    reset_token,
+                    password
+                )
+            }
             liveData?.postValue(value)
+        }
+        return liveData
+        //  return loginRepo?.resetPass(reset_token, password)
+    }
+
+
+    fun changePassword(
+        current_password: String,
+        password: String,
+        bearerToken: String
+    ): MutableLiveData<Any> {
+        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
+        viewModelScope.launch {
+            val value =
+                withContext(Dispatchers.Default) {
+                    loginRepo.changePass(
+                        current_password,
+                        password,
+                        password,
+                        bearerToken
+                    )
+                }
+            liveData.postValue(value)
         }
         return liveData
         //  return loginRepo?.resetPass(reset_token, password)

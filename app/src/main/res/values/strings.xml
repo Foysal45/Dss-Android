@@ -14,6 +14,7 @@
     </string-array>
 
 
+    <string name="objective">Objective</string>
     <string name="notifications">Notifications</string>
     <string name="no_notification_found">No notification found</string>
     <string name="confirmation">Confirmation</string>
@@ -268,8 +269,9 @@
     <string name="otp">OTP</string>
     <string name="enter_otp_code">Enter Your OTP Number</string>
     <string name="submit">SUBMIT</string>
-    <string name="change_password">CHANGE PASSWORD</string>
+    <string name="change_password">Change Password</string>
     <string name="new_password">New Password</string>
+    <string name="old_password">Old Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="dashboard">Dashboard</string>
     <string name="copyright"><![CDATA[©DSS , Design & Developed by SIMEC System Ltd.]]></string>
@@ -415,6 +417,7 @@
     <string name="session">Session</string>
     <string name="session_name">Session Name</string>
     <string name="faq_question">FAQ Question</string>
+    <string name="time_in_hour">Time In Hour</string>
 
     <string name="same_as_present_address">Same As Present Address</string>
     <string name="nominee_info">Nominee Information</string>
@@ -459,6 +462,11 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms">Terms and Condition</string>
     <string name="pending_data">Pending Data</string>
+    <string name="course_management">Course Management</string>
+    <string name="total_modules">Total Modules</string>
+<!--    <string name="total_number">Total Number</string>-->
+    <string name="total_eval_methods">Total Evaluation Methods</string>
+    <string name="time">Time (Hours)</string>
 
     <!--    -->
     <!--    <string name="full_name">Full Name</string>-->

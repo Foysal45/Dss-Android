@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentContentsContentBinding
+import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.model.TrainingResponse
 import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
@@ -58,6 +59,17 @@ class ContentsContentFragment : DaggerFragment() {
             this,
             viewModelProviderFactory
         ).get(ContentManagementViewModel::class.java)
+
+
+        val list = preparence.get("permissionList") as List<Any>?
+
+        if (!JsonKeyReader.hasPermission(
+                "contentmanagementcontents-add",
+                list
+            )
+        ) {
+            binding.fab.visibility = View.GONE
+        }
 
     }
 

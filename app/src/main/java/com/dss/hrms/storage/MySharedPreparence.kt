@@ -60,6 +60,7 @@ class MySharedPreparence {
         editor.commit()
     }
 
+
     fun isRemember(): Boolean? {
         return preferences!!.getBoolean(REMEMBER, false);
     }

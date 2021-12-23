@@ -34,7 +34,7 @@
     </item>
     <item
         android:id="@+id/training_management"
-        android:title="@string/training_management">
+        android:title="@string/course_management">
         <menu>
             <group
                 android:id="@+id/group_training_management"
@@ -45,6 +45,18 @@
                     android:id="@+id/resourcePersonFragment"
                     android:icon="@drawable/ic_payroll"
                     android:title="@string/resource_person" />
+                <item
+                    android:id="@+id/resourcePersonModule"
+                    android:icon="@drawable/ic_payroll"
+                    android:title="@string/course_modules" />
+
+
+                <item
+                    android:id="@+id/resourcePersonCourse"
+                    android:icon="@drawable/ic_payroll"
+                    android:title="@string/course" />
+
+
             </group>
 
         </menu>

@@ -32,7 +32,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentResourcePersonBinding
-import com.dss.hrms.model.JsonKeyReader
+import com.dss.hrms.model.CourseModel
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.TrainingResponse
 import com.dss.hrms.model.error.ApiError
@@ -48,7 +48,7 @@ import com.dss.hrms.view.bottomsheet.SelectImageBottomSheet
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.view.training.`interface`.OnResourcePersonClickListener
-import com.dss.hrms.view.training.adaoter.ResourceAdapter
+import com.dss.hrms.view.training.adaoter.CoursesAdapter
 import com.dss.hrms.view.training.adaoter.spinner.ExpertiseFieldAdapter
 import com.dss.hrms.view.training.adaoter.spinner.HonorariumHeadAdapter
 import com.dss.hrms.view.training.dialog.ResourcePersonSearchingDialog
@@ -58,7 +58,6 @@ import com.dss.hrms.view.training.viewmodel.TrainingManagementViewModel
 import com.dss.hrms.view.training.viewmodel.TrainingSimpleViewModel
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
-import com.namaztime.namaztime.database.MySharedPreparence
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
@@ -72,7 +71,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSheetListener {
+class CourseFragment : DaggerFragment(), SelectImageBottomSheet.BottomSheetListener {
     // Storage Permissions
     private val REQUEST_EXTERNAL_STORAGE = 1
     private val PERMISSIONS_STORAGE = arrayOf(
@@ -101,9 +100,9 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
 
     lateinit var trainingManagementViewModel: TrainingManagementViewModel
     lateinit var linearLayoutManager: LinearLayoutManager
-    lateinit var adapter: ResourceAdapter
+    lateinit var adapter: CoursesAdapter
     lateinit var binding: FragmentResourcePersonBinding
-    lateinit var dataLIst: List<TrainingResponse.ResourcePerson>
+    lateinit var dataLIst: List<CourseModel>
     lateinit var dialogTrainingLoyeoutBinding: DialogTrainingLoyeoutBinding
 
 
@@ -128,10 +127,11 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
         binding = FragmentResourcePersonBinding.inflate(inflater, container, false)
 
         init()
-        var dialog = CustomLoadingDialog().createLoadingDialog(activity)
+        val dialog = CustomLoadingDialog().createLoadingDialog(activity)
+
         trainingManagementViewModel.apply {
-            getResourcePerson()
-            resourcePerson.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            getTrainingManagementCourses()
+            courses.observe(viewLifecycleOwner, {
                 dialog?.dismiss()
                 it?.let {
                     dataLIst = it
@@ -141,6 +141,8 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
 
             })
         }
+
+        binding.llSearch.visibility = View.GONE
 
         binding.llSearch.setOnClickListener {
             resourcePersonSearchingDialog.showResourcePersonSearchDialog(
@@ -166,21 +168,14 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
             this,
             viewModelProviderFactory
         ).get(TrainingSimpleViewModel::class.java)
-        val list = MySharedPreparence(binding.root.context).get("permissionList") as List<Any>?
-
-        if (!JsonKeyReader.hasPermission(
-                "coursemanagementresourceperson-add",
-                list
-            )
-        ) {
-            binding.fab.visibility = View.GONE
-        }
+        // val list = MySharedPreparence(binding.root.context).get("permissionList") as List<Any>?
+        binding.fab.visibility = View.GONE
     }
 
     fun prepareRecycleView() {
         linearLayoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = linearLayoutManager
-        adapter = ResourceAdapter()
+        adapter = CoursesAdapter()
         activity?.let {
             adapter.setInitialData(dataLIst, it, object : OnResourcePersonClickListener {
                 override fun onClick(
@@ -190,15 +185,15 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
                 ) {
                     when (operation) {
                         Operation.EDIT -> {
-                            val list =
-                                MySharedPreparence(binding.root.context).get("permissionList") as List<Any>?
-                            if (!JsonKeyReader.hasPermission(
-                                    "coursemanagementresourceperson-edit",
-                                    list
-                                )
-                            ) {
-                                showEditCreateDialog(operation, resourcePerson)
-                            }
+//                            val list =
+//                                MySharedPreparence(binding.root.context).get("permissionList") as List<Any>?
+//                            if (!JsonKeyReader.hasPermission(
+//                                    "coursemanagementresourceperson-edit",
+//                                    list
+//                                )
+//                            ) {
+//                             //   showEditCreateDialog(operation, resourcePerson)
+//                            }
                         }
 
                     }
@@ -257,7 +252,7 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
         ).load(RetrofitInstance.BASE_URL + resourcePerson?.resource_person_image_path)
             .into(dialogTrainingLoyeoutBinding?.ivResourcePerson)
 
-        commonRepo?.getCommonData("/api/auth/designation/list",
+        commonRepo.getCommonData("/api/auth/designation/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     list?.let {

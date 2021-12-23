@@ -267,7 +267,7 @@
     <string name="dashboard">ড্যাশবোর্ড</string>
     <string name="copyright"><![CDATA[©DSS , Design & Developed by SIMEC System Ltd.]]></string>
     <string name="edit">পরিবর্তন করুন</string>
-
+    <string name="old_password">Old Password</string>
 
     <string name="create">তৈরি করুন</string>
     <string name="create_leave_application">দরখাস্ত করুন</string>
@@ -279,11 +279,12 @@
     <string name="category_name">বিভাগ নাম</string>
     <string name="category_name_bn">বিভাগ নাম (বাংলা)</string>
     <string name="content">বিষয়বস্তু</string>
+    <string name="time_in_hour">Time In Hour</string>
     <string name="banner">ব্যানার</string>
     <string name="faq">সচরাচর জিজ্ঞাসিত প্রশ্ন</string>
     <string name="title_bn">শিরোনাম (বাংলা)</string>
     <string name="is_published">প্রকাশিত ?</string>
-
+    <string name="objective">Objective</string>
     <string name="training_management">প্রশিক্ষণ ব্যবস্থাপনা</string>
     <string name="training_management_home_page">প্রশিক্ষণ\n ব্যবস্থাপনা</string>
     <string name="resource_person">রিসোস পারসন</string>
@@ -457,5 +458,8 @@
     <string name="privacy_policy">গোপনীয়তা নীতি</string>
     <string name="terms">শর্তাবলী</string>
     <string name="pending_data">Pending Data</string>
-
+    <string name="course_management">Course Management</string>
+    <string name="total_modules">Total Modules</string>
+    <string name="total_eval_methods">Total Evaluation Methods</string>
+    <string name="time">Time (Hours)</string>
 </resources>

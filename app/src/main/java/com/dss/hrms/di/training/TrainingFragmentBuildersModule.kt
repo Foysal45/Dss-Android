@@ -28,4 +28,12 @@ abstract class TrainingFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeTrainingFragment(): TrainingFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeModuleFragment(): ModuleFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeCourseFragment(): CourseFragment
+
+
 }

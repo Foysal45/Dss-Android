@@ -65,7 +65,7 @@
         android:id="@+id/courseScheduleFragment"
         android:name="com.dss.hrms.view.training.fragment.CourseScheduleFragment"
         android:label="@string/course_schedule"
-        tools:layout="@layout/fragment_course_schedule" >
+        tools:layout="@layout/fragment_course_schedule">
         <action
             android:id="@+id/action_courseScheduleFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
@@ -74,7 +74,7 @@
         android:id="@+id/batchScheduleFragment"
         android:name="com.dss.hrms.view.training.fragment.BatchScheduleFragment"
         android:label="@string/batch_schedule"
-        tools:layout="@layout/fragment_batch_schedule" >
+        tools:layout="@layout/fragment_batch_schedule">
         <action
             android:id="@+id/action_batchScheduleFragment_to_trainingFragment"
             app:destination="@id/trainingFragment" />
@@ -83,4 +83,14 @@
         android:id="@+id/webViewActivity"
         android:name="com.dss.hrms.view.activity.WebViewActivity"
         android:label="WebViewActivity" />
+    <fragment
+        android:id="@+id/resourcePersonModule"
+        android:name="com.dss.hrms.view.training.fragment.ModuleFragment"
+        android:label="ModuleFragment"
+        tools:layout="@layout/fragment_course_schedule" />
+    <fragment
+        android:id="@+id/resourcePersonCourse"
+        android:name="com.dss.hrms.view.training.fragment.CourseFragment"
+        android:label="CourseFragment"
+        tools:layout="@layout/fragment_course_schedule" />
 </navigation>

@@ -96,6 +96,8 @@ class TrainingFragment : DaggerFragment() {
             binding.llFaq.setOnClickListener {
                 gotoDestination(R.id.action_trainingFragment_to_contentFaqFragment)
             }
+
+
         }
         // Inflate the layout for this fragment
 

@@ -17,7 +17,7 @@ android {
         versionCode 21 // internal test started at 11
         versionName "1.0.18"
 
-        ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
+        ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -102,7 +102,6 @@ android {
 
 
 dependencies {
-
     //https://github.com/jeancsanchez/JcPlayer
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'
@@ -133,12 +132,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
 
 
-  /*  // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:26.1.1')
-    // Declare the dependencies for the Crashlytics and Analytics libraries
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'*/
+    /*  // Import the BoM for the Firebase platform
+      implementation platform('com.google.firebase:firebase-bom:26.1.1')
+      // Declare the dependencies for the Crashlytics and Analytics libraries
+      // When using the BoM, you don't specify versions in Firebase library dependencies
+      implementation 'com.google.firebase:firebase-crashlytics-ktx'
+      implementation 'com.google.firebase:firebase-analytics-ktx'*/
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     // Declare the dependencies for the Crashlytics and Analytics libraries
@@ -243,7 +242,7 @@ dependencies {
     //ndk support /64 bit
     implementation 'org.adblockplus:adblock-android-webview:3.16'
     implementation 'commons-io:commons-io:2.5'
-   // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+    // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
     implementation("androidx.viewpager2:viewpager2:1.1.0-beta01")
     implementation 'com.github.CodeBoy722:ViewPager2_Transformers:1.0.0'
 }

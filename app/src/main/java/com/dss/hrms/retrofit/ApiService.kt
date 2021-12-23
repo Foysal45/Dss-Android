@@ -116,6 +116,16 @@ interface ApiService {
     ): Response<ResetPassword?>?
 
 
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("/api/auth/change-password")
+    suspend fun changePass(
+        @Header("X-Localization") language: String,
+        @Header("Authorization") token: String,
+        @Body map: HashMap<Any, Any>
+    ): Response<ResetPassword?>?
+
+
     @Headers("Content-Type: application/json", "Accept: application/json")
     @GET("/api/auth/division")
     fun getDivision(

@@ -1,9 +1,5 @@
 package com.dss.hrms.model
 
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
-import java.util.*
-
 class TrainingResponse {
     data class ContentCategory(
         var status: String?,
@@ -14,7 +10,8 @@ class TrainingResponse {
     data class Category(
         val id: Int,
         val category_name: String?,
-        val category_name_bn: String?)
+        val category_name_bn: String?
+    )
 
     data class ContentsContent(
         var status: String?,
@@ -44,6 +41,7 @@ class TrainingResponse {
         var code: Int?,
         var data: List<ResourcePerson>
     )
+
     data class ResourcePerson(
         val id: Int?,
         val person_name: String?,
@@ -72,6 +70,7 @@ class TrainingResponse {
         val status: Int?,
         val designation: Desingnation?
     )
+
     data class Desingnation(
         val id: Int?,
         val name: String?,
@@ -79,5 +78,48 @@ class TrainingResponse {
         val priority_order: Int?,
         val status: Int?
     )
+
+
+
+
+    data class ResourcePersonModulesResponse(
+        var status: String?,
+        var message: String?,
+        var code: Int?,
+        var data: TrainingModulesResponse
+    )
+
+    data class TrainingModulesResponse(
+
+        var data: List<TrainingModules>
+    )
+
+    data class ResourcePersonCourseResponse(
+        var status: String?,
+        var message: String?,
+        var code: Int?,
+        var data: TrainingCourseResponse
+    )
+    data class TrainingCourseResponse(
+
+        var data: List<CourseModel>
+    )
+
+
+    data class TrainingModules(
+
+        val id: Int,
+        val module_name: String,
+        val module_name_bn: String,
+        val user_id: Int,
+        val time_in_hour: Int,
+        val marks: Int,
+        val objective: String,
+        val status: Int,
+        val deleted_at: String,
+        val created_at: String,
+        val updated_at: String
+    )
+
 
 }

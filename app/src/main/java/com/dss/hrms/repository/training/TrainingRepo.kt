@@ -22,6 +22,47 @@ class TrainingRepo @Inject constructor() {
     @Inject
     lateinit var preparence: MySharedPreparence
 
+    suspend fun getTrainingModules(): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.getModules(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}"
+                )
+                if (response.body()?.code == 200 || response.body()?.code == 201)
+                    response.body()
+                else
+                    null
+
+            } catch (e: Exception) {
+                null
+            }
+
+        }
+
+    }
+
+
+    suspend fun getTrainingCourses(): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = trainingApiService.getCourses(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}"
+                )
+                if (response.body()?.code == 200 || response.body()?.code == 201)
+                    response.body()
+                else
+                    null
+
+            } catch (e: Exception) {
+                null
+            }
+
+        }
+
+    }
+
     suspend fun getResourcePersonList(): Any? {
         return withContext(Dispatchers.IO) {
             try {

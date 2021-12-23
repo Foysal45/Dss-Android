@@ -76,6 +76,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:maxLength="1"
                         android:textColor="@color/light_black"
                         android:textSize="14sp" />
                 </soup.neumorphism.NeumorphCardView>
@@ -97,6 +98,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:maxLength="1"
                         android:textColor="@color/light_black"
                         android:textSize="14sp" />
                 </soup.neumorphism.NeumorphCardView>
@@ -118,6 +120,7 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:maxLength="1"
                         android:textColor="@color/light_black"
                         android:textSize="14sp" />
                 </soup.neumorphism.NeumorphCardView>
@@ -139,11 +142,13 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:maxLength="1"
                         android:textColor="@color/light_black"
                         android:textSize="14sp" />
                 </soup.neumorphism.NeumorphCardView>
 
                 <soup.neumorphism.NeumorphCardView
+                    android:visibility="gone"
                     style="@style/Widget.Neumorph.CardView"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
@@ -165,6 +170,7 @@
                 </soup.neumorphism.NeumorphCardView>
 
                 <soup.neumorphism.NeumorphCardView
+                    android:visibility="gone"
                     style="@style/Widget.Neumorph.CardView"
                     android:layout_width="55dp"
                     android:layout_height="55dp"

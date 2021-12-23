@@ -1,12 +1,11 @@
 package com.dss.hrms.view.training.viewmodel
 
 import android.app.Application
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.dss.hrms.model.CourseModel
 import com.dss.hrms.model.TrainingResponse
 import com.dss.hrms.repository.training.TrainingRepo
 import com.dss.hrms.view.training.`interface`.OnResourcePersonValueListener
@@ -20,9 +19,12 @@ class TrainingManagementViewModel @Inject constructor(application: Application) 
     @Inject
     lateinit var trainingRepo: TrainingRepo
 
+    private var _courseResponse = MutableLiveData<List<CourseModel>>()
     private var _resourcePerson = MutableLiveData<List<TrainingResponse.ResourcePerson>>()
+    private var _modulesResponse = MutableLiveData<List<TrainingResponse.TrainingModules>>()
     var resourcePerson: LiveData<List<TrainingResponse.ResourcePerson>> = _resourcePerson
-
+    var modules: LiveData<List<TrainingResponse.TrainingModules>> = _modulesResponse
+    var courses: LiveData<List<CourseModel>> = _courseResponse
     private var _trainingDashboard = MutableLiveData<TrainingDashBoard.Dashboard?>()
     var trainingDashboard: LiveData<TrainingDashBoard.Dashboard?> = _trainingDashboard
 
@@ -39,6 +41,7 @@ class TrainingManagementViewModel @Inject constructor(application: Application) 
             }
         }
     }
+
     fun getResourcePerson() {
         viewModelScope.launch {
             val response = trainingRepo.getResourcePersonList()
@@ -52,7 +55,37 @@ class TrainingManagementViewModel @Inject constructor(application: Application) 
 
     }
 
-    fun searchResourcePerson(map: HashMap<Any, Any?>,onResourcePersonValueListener : OnResourcePersonValueListener) {
+    fun getTrainingManagementCourses() {
+
+        viewModelScope.launch {
+            val response = trainingRepo.getTrainingCourses()
+            if (response is TrainingResponse.ResourcePersonCourseResponse) {
+                _courseResponse.postValue(response.data.data)
+            } else {
+                _courseResponse.postValue(null)
+                // _resourcePerson.value = null
+            }
+        }
+    }
+
+
+    fun getTrainingManagementModule() {
+
+        viewModelScope.launch {
+            val response = trainingRepo.getTrainingModules()
+            if (response is TrainingResponse.ResourcePersonModulesResponse) {
+                _modulesResponse.postValue(response.data.data)
+            } else {
+                _modulesResponse.postValue(null)
+                // _resourcePerson.value = null
+            }
+        }
+    }
+
+    fun searchResourcePerson(
+        map: HashMap<Any, Any?>,
+        onResourcePersonValueListener: OnResourcePersonValueListener
+    ) {
         viewModelScope.launch {
             val response = trainingRepo.searchResourcePersonList(map)
             if (response is TrainingResponse.ResourcePersonResponse) {
@@ -66,6 +99,7 @@ class TrainingManagementViewModel @Inject constructor(application: Application) 
         }
 
     }
+
     fun addResourcePerson(map: HashMap<Any, Any?>): MutableLiveData<Any> {
         var liveData = MutableLiveData<Any>()
         viewModelScope.launch {
@@ -73,6 +107,7 @@ class TrainingManagementViewModel @Inject constructor(application: Application) 
         }
         return liveData
     }
+
     fun updateResourcePerson(map: HashMap<Any, Any?>, id: Int): MutableLiveData<Any> {
         var liveData = MutableLiveData<Any>()
         viewModelScope.launch {

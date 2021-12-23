@@ -104,7 +104,7 @@ class EmployeeViewModel @Inject constructor(application: Application) :
     ) {
         viewModelScope.launch {
 
-            var response =
+            val  response =
                 employeeInfoRepo.getUserPermissions()
 
             if (response is PermissionResponse) {

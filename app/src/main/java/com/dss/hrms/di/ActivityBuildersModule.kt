@@ -70,6 +70,11 @@ abstract class ActivityBuildersModule {
     @ContributesAndroidInjector(modules = [MainModule::class, ViewModelModule::class])
     abstract fun contributeSettingsActivity(): SettingsActivity
 
+
+
+
+
+
     @MainScope
     @ContributesAndroidInjector(modules = [MainModule::class, ViewModelModule::class])
     abstract fun contributeNotificationActivity(): NotificationActivity

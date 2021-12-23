@@ -1,11 +1,8 @@
 package com.dss.hrms.view.training
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
-import android.view.MenuItem
-import android.widget.Toast
+import android.view.Menu
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -13,8 +10,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ActivityTrainingBinding
+import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.view.activity.BaseActivity
-import com.dss.hrms.view.activity.WebViewActivity
 import com.google.android.material.navigation.NavigationView
 import com.namaztime.namaztime.database.MySharedPreparence
 import javax.inject.Inject
@@ -25,6 +22,7 @@ class TrainingActivity : BaseActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var binding: ActivityTrainingBinding
+    private lateinit var navView: NavigationView
 
     @Inject
     lateinit var preparence: MySharedPreparence
@@ -36,6 +34,7 @@ class TrainingActivity : BaseActivity() {
         context = this
         navController = this.findNavController(R.id.fragment)
         setSupportActionBar(binding.toolBar)
+        navView = findViewById(R.id.nav_menu)
         //   getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         drawerLayout = binding.drawerLayout
         binding?.navMenu.setupWithNavController(navController)
@@ -52,6 +51,8 @@ class TrainingActivity : BaseActivity() {
         }
 
 
+        // nav menu  manipulation based on user rules
+        hideOrShowNavMenu()
 
         binding.navMenu.setNavigationItemSelectedListener { menuItem ->
 
@@ -63,6 +64,40 @@ class TrainingActivity : BaseActivity() {
             drawerLayout.closeDrawer(Gravity.RIGHT);
             true
         }
+    }
+
+    private fun hideOrShowNavMenu() {
+        val list = preparence.get("permissionList") as List<Any>?
+
+        val nav_Menu: Menu = navView.menu
+
+        nav_Menu.findItem(R.id.contentCategoryFragment).isVisible =
+            JsonKeyReader.hasPermission("contentmanagementcategory", list)
+
+        nav_Menu.findItem(R.id.webViewActivity).isVisible =
+            JsonKeyReader.hasPermission("contentmanagementcontents", list)
+
+        nav_Menu.findItem(R.id.training_management).isVisible =
+            JsonKeyReader.hasPermission("coursemanagementresourceperson", list)
+
+        nav_Menu.findItem(R.id.budget_schedule).isVisible =
+            JsonKeyReader.hasPermission("budgetandschedule", list)
+
+        nav_Menu.findItem(R.id.courseScheduleFragment).isVisible =
+            JsonKeyReader.hasPermission("budgetandschedulecourseschedule", list)
+        nav_Menu.findItem(R.id.batchScheduleFragment).isVisible =
+            JsonKeyReader.hasPermission("budgetandschedulebatchschedule", list)
+
+        nav_Menu.findItem(R.id.resourcePersonModule).isVisible =
+            JsonKeyReader.hasPermission("coursemanagementmodules", list)
+
+        nav_Menu.findItem(R.id.resourcePersonCourse).isVisible =
+            JsonKeyReader.hasPermission("coursemanagementcourses", list)
+
+
+
+        nav_Menu.findItem(R.id.contentFaqFragment).isVisible = true
+
     }
 
 

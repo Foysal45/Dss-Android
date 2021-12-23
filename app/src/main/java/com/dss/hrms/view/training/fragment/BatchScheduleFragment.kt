@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogTrainingLoyeoutBinding
 import com.dss.hrms.databinding.FragmentBatchScheduleBinding
+import com.dss.hrms.model.JsonKeyReader
 import com.dss.hrms.model.RoleWiseEmployeeResponseClass
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.error.ApiError
@@ -36,9 +37,10 @@ import com.dss.hrms.view.training.model.BudgetAndSchedule
 import com.dss.hrms.view.training.viewmodel.BudgetAndScheduleViewModel
 import com.dss.hrms.viewmodel.EmployeeViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
+import com.namaztime.namaztime.database.MySharedPreparence
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
-import java.util.HashMap
+import java.util.*
 import javax.inject.Inject
 
 
@@ -115,6 +117,17 @@ class BatchScheduleFragment : DaggerFragment() {
 
 
     fun init() {
+
+        val list = MySharedPreparence(binding.root.context).get("permissionList") as List<Any>?
+
+        if (!JsonKeyReader.hasPermission(
+                "budgetandschedulebatchschedule-add",
+                list
+            )
+        ) {
+            binding.fab.visibility = View.GONE
+        }
+
         budgetAndScheduleViewModel = ViewModelProvider(
             this,
             viewModelProviderFactory
@@ -139,9 +152,20 @@ class BatchScheduleFragment : DaggerFragment() {
                         operation: Operation
                     ) {
                         when (operation) {
-                            Operation.EDIT ->
-                                //  Toast.makeText(activity, "" + operation, Toast.LENGTH_LONG).show()
-                                showEditCreateDialog(operation, batchSchedule)
+                            Operation.EDIT -> {
+                                val list =
+                                    MySharedPreparence(binding.root.context).get("permissionList") as List<Any>?
+
+                                if (JsonKeyReader.hasPermission(
+                                        "budgetandschedulebatchschedule-edit",
+                                        list
+                                    )
+                                ) {
+                                    showEditCreateDialog(operation, batchSchedule)
+                                }
+                            }
+                            //  Toast.makeText(activity, "" + operation, Toast.LENGTH_LONG).show()
+                            //
                             Operation.CREATE ->
                                 Toast.makeText(activity, "" + operation, Toast.LENGTH_LONG).show()
 
@@ -667,7 +691,7 @@ class BatchScheduleFragment : DaggerFragment() {
         )
         map.put(
             "course_coordinator_is_external",
-             dialogTrainingLoyeoutBinding.cbBastchCoordinatorExternal.isChecked
+            dialogTrainingLoyeoutBinding.cbBastchCoordinatorExternal.isChecked
         )
         map.put(
             "course_coordinator",

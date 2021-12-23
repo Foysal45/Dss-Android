@@ -25,7 +25,7 @@ class JsonKeyReader {
         fun hasPermission(targetKey: String, data: List<Any>?): Boolean {
             var result = false
 
-            data?.forEach({ element ->
+            data?.forEach { element ->
                 var jsonString = Gson().toJson(element)
                 var jsonObject = JSONObject(jsonString)
                 for (key in iterate(jsonObject.keys())!!) {
@@ -39,7 +39,7 @@ class JsonKeyReader {
                         return jsonObject.getBoolean(key)
                     }
                 }
-            })
+            }
             return result
         }
     }
