@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_5sdp"
+        android:orientation="vertical"
+        tools:context=".view.messaging.fragment.MsgFragment">
+
+        <LinearLayout
+            android:id="@+id/llEmployee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_4sdp">
+
+            <TextView
+                android:id="@+id/tvEmployeeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:text="@string/employee_name"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tvEmployee"
+                android:layout_width="match_parent"
+                android:minHeight="@dimen/_40sdp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_bg"
+                android:gravity="center|left"
+                android:hint="@string/select_employee"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingRight="10dp"
+                android:textColor="@color/light_black"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/text_size_medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:text="@string/office"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/officeName"
+                android:layout_width="match_parent"
+                android:minHeight="@dimen/_40sdp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_bg"
+                android:gravity="center|left"
+                android:hint="@string/office"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingRight="10dp"
+                android:textColor="@color/light_black"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/text_size_medium" />
+
+            <TextView
+                android:id="@+id/tvEmployeeError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="3dp"
+                android:text=""
+                android:textColor="@color/gray"
+                android:textSize="12sp" />
+
+            <!--            </androidx.cardview.widget.CardView>-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_4sdp">
+
+            <TextView
+                android:id="@+id/tvBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/message_body"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/etBody"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="top"
+                android:background="@drawable/edittext_bg"
+                android:gravity="top"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:textColor="@color/light_black"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/text_size_medium" />
+
+            <TextView
+                android:id="@+id/tvBodyError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:gravity="center|left"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingVertical="5dp"
+                android:text="error"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="gone" />
+
+            <!--            </androidx.cardview.widget.CardView>-->
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</layout>

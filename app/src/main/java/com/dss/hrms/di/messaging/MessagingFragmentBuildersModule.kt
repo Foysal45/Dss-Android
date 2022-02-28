@@ -18,6 +18,16 @@ abstract class MessagingFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSearchEmployeeFragment(): SearchEmployeeFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeMsgListFragment(): MsgListFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeMsgFragment(): MsgFragment
+
+
 //
 //    @ContributesAndroidInjector
 //    abstract fun contributeEmployeeBottomSheetFragment(): EmployeeBottomSheetFragment

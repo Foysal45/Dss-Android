@@ -29,14 +29,14 @@ class TopMessagingFragment : DaggerFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentTopMessagingBinding.inflate(inflater, container, false)
 
 
         binding.cardMessage.setOnClickListener {
             Navigation.findNavController(binding.root)
-                .navigate(R.id.action_topMessagingFragment_to_messageFragment)
+                .navigate(R.id.action_topMessagingFragment_to_msgListFragment)
         }
 
         binding.cardEmail.setOnClickListener {

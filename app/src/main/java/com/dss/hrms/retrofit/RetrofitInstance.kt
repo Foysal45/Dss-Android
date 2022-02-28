@@ -10,8 +10,8 @@ object RetrofitInstance {
     //  var BASE_URL = "https://api.alquran.cloud/"
     //  var BASE_URL = "http://192.168.10.180:8000"
     // var BASE_URL = "http://dss.aws.simecsystem.com:10014"
-    //var BASE_URL = "http://dss.aws.simecsystem.com:10014"
-   var BASE_URL = "http://dss.stage.simecsystem.com:8080"
+    var BASE_URL = "http://hrmdss.gov.bd:10014"
+  // var BASE_URL = "http://dss.stage.simecsystem.com:8080"
   //   var BASE_URL = "http://dss.dev.simecsystem.com:10014"
     //  var BASE_URL_FOR_WEBVIEW = "http://dss.dev.simecsystem.com:10015"
    /// var BASE_URL = "http://10.11.105.112:8000";
@@ -21,7 +21,7 @@ object RetrofitInstance {
 
     var BASE_URL_FOR_WEBVIEW = "http://dss.stage.simecsystem.com:8080"
     var IMAGE_BASE = "http://192.168.10.124:8000/uploads/photos/"
-  //  var FILE_BASE = "http://dss.dev.simecsystem.com:10014"
+  //  var FILE_BASE = "http://dss.dev.simecsystem.com:10014" 
 
     //  var BASE_URL = "http://182.160.111.81:10014"
     const val BASE_URL_PLACE_API = "https://maps.googleapis.com/maps/api"

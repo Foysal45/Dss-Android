@@ -87,7 +87,7 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
             false
         )
         binding?.getRoot()?.let { dialogCustome?.setContentView(it) }
-        var window: Window? = dialogCustome?.getWindow()
+        var window: Window? = dialogCustome?.window
         window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -97,7 +97,7 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
 
     }
 
-    fun updateLocalTraining(
+    private fun updateLocalTraining(
         context: Context
     ) {
 
@@ -390,17 +390,17 @@ class EditAndCreateLocalTrainingInfo @Inject constructor() {
         invisiableAllError(binding)
         key?.let {
             if (it.equals(StaticKey.EDIT)) {
-                employeeInfoEditCreateRepo?.updateLocalTrainingInfo(
+                employeeInfoEditCreateRepo.updateLocalTrainingInfo(
                     localTraining?.id,
                     getMapData()
                 )
                     ?.observe(
-                        EmployeeInfoActivity.context!!,
-                        Observer { any ->
-                            dialog?.dismiss()
-                            Log.e("yousuf", "error : " + Gson().toJson(any))
-                            showResponse(any)
-                        })
+                        EmployeeInfoActivity.context!!
+                    ) { any ->
+                        dialog?.dismiss()
+                        Log.e("yousuf", "error : " + Gson().toJson(any))
+                        showResponse(any)
+                    }
             } else {
                 employeeInfoEditCreateRepo?.addLocalTrainingInfo(getMapData())
                     ?.observe(

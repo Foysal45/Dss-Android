@@ -451,7 +451,6 @@
     <string name="director_general"> Director General </string>
 
 
-
     <string name="offices">Office</string>
     <string name="phone_office">Phone (Office)</string>
     <string name="moobile">Mobile</string>
@@ -464,7 +463,7 @@
     <string name="pending_data">Pending Data</string>
     <string name="course_management">Course Management</string>
     <string name="total_modules">Total Modules</string>
-<!--    <string name="total_number">Total Number</string>-->
+    <!--    <string name="total_number">Total Number</string>-->
     <string name="total_eval_methods">Total Evaluation Methods</string>
     <string name="time">Time (Hours)</string>
 

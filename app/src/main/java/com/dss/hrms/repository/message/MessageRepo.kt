@@ -123,4 +123,25 @@ class MessageRepo @Inject constructor() {
         }
         return liveData
     }
+
+
+    suspend fun getMsgList(): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = messageApiService.getMsgList(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}"
+                )
+                if (response.body()?.code == 200 || response.body()?.code == 201)
+                    response.body()
+                else
+                    null
+
+            } catch (e: Exception) {
+                null
+            }
+
+        }
+
+    }
 }

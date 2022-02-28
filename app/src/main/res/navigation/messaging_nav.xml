@@ -12,10 +12,14 @@
         tools:layout="@layout/fragment_top_messaging">
         <action
             android:id="@+id/action_topMessagingFragment_to_messageFragment"
+
             app:destination="@id/messageFragment" />
         <action
             android:id="@+id/action_topMessagingFragment_to_emailFragment"
             app:destination="@id/emailFragment" />
+        <action
+            android:id="@+id/action_topMessagingFragment_to_msgListFragment"
+            app:destination="@id/msgListFragment" />
     </fragment>
     <fragment
         android:id="@+id/emailFragment"
@@ -68,15 +72,15 @@
             app:destination="@id/employeeBottomSheetFragment" />
         <argument
             android:name="employee"
+            android:defaultValue="@null"
             app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
     <dialog
         android:id="@+id/employeeBottomSheetFragment"
         android:name="com.dss.hrms.view.messaging.fragment.EmployeeBottomSheetFragment"
         android:label="fragment_employee_bottom_sheet"
-        tools:layout="@layout/fragment_employee_bottom_sheet" >
+        tools:layout="@layout/fragment_employee_bottom_sheet">
         <action
             android:id="@+id/action_employeeBottomSheetFragment_to_searchEmployeeFragment"
             app:destination="@id/searchEmployeeFragment" />
@@ -84,4 +88,24 @@
             android:name="employee"
             app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]" />
     </dialog>
+    <fragment
+        android:id="@+id/msgListFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.MsgListFragment"
+        android:label="@string/messaging"
+        tools:layout="@layout/fragment_working_employee_list">
+        <action
+            android:id="@+id/action_msgListFragment_to_messageFragment"
+            app:destination="@id/messageFragment" />
+        <action
+            android:id="@+id/action_msgListFragment_to_msgFragment"
+            app:destination="@id/msgFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/msgFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.MsgFragment"
+        android:label="MsgFragment"
+        tools:layout="@layout/fragment_msg" />
+
+
 </navigation>
