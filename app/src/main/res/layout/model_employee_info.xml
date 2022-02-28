@@ -18,20 +18,21 @@
                 android:id="@+id/llAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white"
-                    app:neumorph_strokeWidth="-50dp">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -61,7 +62,30 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
+                                android:id="@+id/fAddressUpazila"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAddressUnion"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fAddressLocalName"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fAddressUnionName"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
                                 android:id="@+id/fAddressPoliceStation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAddressPoliceStationBn"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
@@ -70,6 +94,10 @@
 
                             <include
                                 android:id="@+id/fAddressPostOfficeBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAddressPostCode"
                                 layout="@layout/personel_information_view_field" />
 
 
@@ -101,7 +129,7 @@
 
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <!-- ...........................Quota info start ........................................ -->
@@ -110,19 +138,21 @@
                 android:id="@+id/llQuotaInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -157,11 +187,222 @@
                             <include
                                 android:id="@+id/fQuotaDescriptionBn"
                                 layout="@layout/personel_information_view_field" />
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:id="@+id/nameList"
+                                android:clipToPadding="false"
+                                android:minHeight="@dimen/_200sdp"
+                                android:nestedScrollingEnabled="false"
+                                android:layout_height="wrap_content"/>
+
+
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
+            <!-- ...........................Nominee info start ........................................ -->
+
+            <LinearLayout
+                android:id="@+id/llNomineeInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E4E4E4"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hNominee"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fNName"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNDOB"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNRelation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNAllocatedPercentage"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNGender"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fNAddressDivision"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNAddressDistrict"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNAddressUpazila"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNAddressUnion"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fNAddressLocalName"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fNAddressUnionName"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fNMaritalStatus"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNHasDisavility"
+                                layout="@layout/personel_information_view_field" />
+
+                            <LinearLayout
+                                android:id="@+id/llBody"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/shape_rectangale"
+                                android:clickable="true"
+
+                                android:focusable="true"
+                                android:orientation="horizontal"
+                                android:paddingVertical="@dimen/_8sdp"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:id="@+id/tvTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="@dimen/_2sdp"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_weight="1"
+                                    android:text="@string/docoument"
+                                    android:textColor="@color/light_black"
+                                    android:textSize="@dimen/text_size_small"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=":  "
+                                    android:textColor="@color/light_black" />
+
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.2"
+                                    android:gravity="center_vertical"
+                                    android:weightSum="5">
+
+                                    <ImageView
+                                        android:id="@+id/icon"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:layout_marginHorizontal="@dimen/_3sdp" />
+
+                                    <TextView
+                                        android:id="@+id/tvText"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="4"
+                                        android:clickable="true"
+                                        android:focusable="true"
+                                        android:paddingHorizontal="@dimen/_5sdp"
+                                        android:paddingVertical="@dimen/_2sdp"
+                                        android:text=""
+                                        android:textColor="@color/green"
+                                        android:textSize="@dimen/text_size_small"
+                                        android:textStyle="bold" />
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <!--                            <include-->
+                            <!--                                android:id="@+id/fNAttachment"-->
+                            <!--                                layout="@layout/personel_information_view_field_with_icon" />-->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvNSignatureTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_weight="1"
+                                    android:text="@string/nominee_signature"
+                                    android:textColor="@color/light_black"
+                                    android:textSize="@dimen/text_size_small"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=":" />
+
+                                <ImageView
+                                    android:id="@+id/ivNSignature"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_weight="1.5"
+                                    android:paddingLeft="@dimen/_5sdp"
+                                    android:paddingRight="@dimen/_10sdp"
+                                    android:src="@drawable/ic_baseline_image_24" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
             <!-- ...........................JobJoining info start ........................................ -->
 
@@ -169,19 +410,20 @@
                 android:id="@+id/llJobjoningInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -210,8 +452,12 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
-                                android:id="@+id/fJobJoiningDepartment"
+                                android:id="@+id/fJobJoiningAdditionalDesignation"
                                 layout="@layout/personel_information_view_field" />
+
+                            <!--           <include
+                                           android:id="@+id/fJobJoiningDepartment"
+                                           layout="@layout/personel_information_view_field" />-->
 
                             <include
                                 android:id="@+id/fJobJoiningJobType"
@@ -226,20 +472,33 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
+                                android:id="@+id/fJobJoiningPayScale"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
                                 android:id="@+id/fJobJoiningJoiningDate"
                                 layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningConfirmationDate"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningPrlDate"
+                                layout="@layout/personel_information_view_field" />
+
 
                             <include
                                 android:id="@+id/fJobJoiningPensionDate"
                                 layout="@layout/personel_information_view_field" />
 
-
                             <include
-                                android:id="@+id/fJobJoiningPrlDate"
+                                android:id="@+id/fJobJoiningCurrentJob"
                                 layout="@layout/personel_information_view_field" />
+
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <!-- ...........................Education Qualification start ........................................ -->
@@ -248,19 +507,20 @@
                 android:id="@+id/llEducationQualificaion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -299,9 +559,15 @@
                             <include
                                 android:id="@+id/fEQDivisionOrCgpa"
                                 layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEQAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <!-- ...........................Spouse start ........................................ -->
@@ -310,19 +576,20 @@
                 android:id="@+id/llSpouse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -343,11 +610,11 @@
                             android:paddingVertical="@dimen/personal_information_body_padding_vertical">
 
                             <include
-                                android:id="@+id/fSpouseNameBn"
+                                android:id="@+id/fSpouseNameEn"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
-                                android:id="@+id/fSpouseNameEn"
+                                android:id="@+id/fSpouseNameBn"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
@@ -374,6 +641,68 @@
                                 android:id="@+id/fSpouseDistrict"
                                 layout="@layout/personel_information_view_field" />
 
+                            <include
+                                android:id="@+id/fSpouseThana"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressUpazila"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressUnion"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fSpouseAddressLocalName"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fSpouseAddressUnionName"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fSpouseAddressPoliceStation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressPoliceStationBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressPostOffice"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressPostOfficeBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressPostCode"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fSpouseAddressRoadOrWordNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressRoadOrWordNoBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fSpouseAddressVillageOrHouseNo"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fSpouseAddressVillageOrHouseNoBn"
+                                layout="@layout/personel_information_view_field" />
+
 
                             <include
                                 android:id="@+id/fSpousePhoneNo"
@@ -388,7 +717,7 @@
                                 layout="@layout/personel_information_view_field" />
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <!-- ...........................children information start ........................................ -->
@@ -396,19 +725,20 @@
                 android:id="@+id/llChildrenInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -455,9 +785,27 @@
                             <include
                                 android:id="@+id/fChildrenGenderOrSex"
                                 layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fChildbirth_certificate"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+                            <include
+                                android:id="@+id/fChildNid"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+                            <include
+                                android:id="@+id/fChildPassport"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+
+
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <!-- ...........................Language info start ........................................ -->
@@ -466,19 +814,20 @@
                 android:id="@+id/llLanguageInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -517,12 +866,50 @@
                             <include
                                 android:id="@+id/fLanguageExperienceLevel"
                                 layout="@layout/personel_information_view_field" />
+
                             <include
                                 android:id="@+id/fLanguageCertificationDate"
                                 layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fLanguageCertificationAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+                            <LinearLayout
+                                android:id="@+id/llLanguageCertificate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvLanguageCertificate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_weight="1"
+                                    android:text="Photo"
+                                    android:textColor="@color/light_black"
+                                    android:textSize="@dimen/text_size_small"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=":" />
+
+                                <ImageView
+                                    android:id="@+id/ivLanguageCertificate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_weight="1.5"
+                                    android:paddingLeft="@dimen/_5sdp"
+                                    android:paddingRight="@dimen/_10sdp"
+                                    android:src="@drawable/ic_baseline_image_24" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <!-- ...........................Local Training info start ........................................ -->
@@ -531,19 +918,20 @@
                 android:id="@+id/llLocalTrainingInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -599,6 +987,54 @@
                                 android:id="@+id/fLocalTrainingToDate"
                                 layout="@layout/personel_information_view_field" />
 
+                            <include
+                                android:id="@+id/fLocalTrainingCategory"
+                                layout="@layout/personal_info_spinner"
+                                android:visibility="gone"
+                                app:title="@{@string/training_category}"
+                                />
+
+                            <include
+                                android:id="@+id/fLocalTrainingCatName"
+                                layout="@layout/personel_information_view_field" />
+
+
+
+                            <include
+                                android:id="@+id/fLocalTrainingDocument"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+                            <LinearLayout
+                                android:id="@+id/llTrainingCertification"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvTrainingTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_weight="1"
+                                    android:text="@string/certificate"
+                                    android:textColor="@color/light_black"
+                                    android:textSize="@dimen/text_size_small"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=":" />
+
+                                <ImageView
+                                    android:id="@+id/ivTraining"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_weight="1.5"
+                                    android:paddingLeft="@dimen/_5sdp"
+                                    android:paddingRight="@dimen/_10sdp"
+                                    android:src="@drawable/ic_baseline_image_24" />
+                            </LinearLayout>
 
                             <!--                            <include-->
                             <!--                                android:id="@+id/fLocalTrainingCertificate"-->
@@ -607,9 +1043,8 @@
 
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
-
 
             <!-- ...........................Local OfficialResidentialInfo  start ........................................ -->
 
@@ -617,19 +1052,20 @@
                 android:id="@+id/llOfficialResidentialInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -690,13 +1126,18 @@
                                 android:id="@+id/fORInfoQuarterName"
                                 layout="@layout/personel_information_view_field" />
 
+
                             <include
                                 android:id="@+id/fORInfoFlatNo"
                                 layout="@layout/personel_information_view_field" />
 
+                            <include
+                                android:id="@+id/fORInfoStatus"
+                                layout="@layout/personel_information_view_field" />
+
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <!-- ...........................Foreign travel start ........................................ -->
@@ -705,19 +1146,20 @@
                 android:id="@+id/llForeingTravelInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -743,11 +1185,6 @@
 
 
                             <include
-                                android:id="@+id/fForeignTravelPurpose"
-                                layout="@layout/personel_information_view_field" />
-
-
-                            <include
                                 android:id="@+id/fForeignTravelFromDate"
                                 layout="@layout/personel_information_view_field" />
 
@@ -756,10 +1193,31 @@
                                 android:id="@+id/fForeignTravelToDate"
                                 layout="@layout/personel_information_view_field" />
 
+                            <include
+                                android:id="@+id/fForeignTravelPurpose"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fForeignTravelPurposeBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fForeignTravelDetailsEn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fForeignTravelDetailsBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fForeignAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
 
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
 
@@ -769,18 +1227,20 @@
                 android:id="@+id/llAdditionalQualification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
-
 
                 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:layout_marginTop="15dp"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="4dp">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -816,6 +1276,12 @@
                             <include
                                 android:id="@+id/fAQDetailsBn"
                                 layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fAQDocument"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -828,19 +1294,20 @@
                 android:id="@+id/llPublication"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -876,13 +1343,19 @@
                                 android:id="@+id/fPublicationDetails"
                                 layout="@layout/personel_information_view_field" />
 
+
+                            <include
+                                android:id="@+id/fPublicationAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
                             <include
                                 android:id="@+id/fPublicationDetailsBn"
                                 layout="@layout/personel_information_view_field" />
 
+
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <!-- ...........................Honours and award start ........................................ -->
@@ -891,19 +1364,20 @@
                 android:id="@+id/llHonoursAndAward"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -945,10 +1419,15 @@
                                 android:id="@+id/fAwardDetailsDetailsBn"
                                 layout="@layout/personel_information_view_field" />
 
+                            <include
+                                android:id="@+id/fAwardAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
 
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <!-- ...........................posting record start ........................................ -->
@@ -956,19 +1435,20 @@
                 android:id="@+id/llPostingRecord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1007,7 +1487,7 @@
 
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
 
@@ -1016,19 +1496,20 @@
                 android:id="@+id/llDisciplinaryAction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1057,11 +1538,11 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
-                                android:id="@+id/fDADescription"
+                                android:id="@+id/fDAJud"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
-                                android:id="@+id/fDAJudgment"
+                                android:id="@+id/fDAJudBn"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
@@ -1069,17 +1550,34 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
+                                android:id="@+id/fDAFinalJudBn"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fDADescription"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fDADescriptionBn"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
                                 android:id="@+id/fDARemarks"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fDARemarksBn"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
                                 android:id="@+id/fDADate"
                                 layout="@layout/personel_information_view_field" />
-
-
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
 
@@ -1088,19 +1586,20 @@
                 android:id="@+id/llPromotion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1147,7 +1646,7 @@
 
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
 
@@ -1156,19 +1655,20 @@
                 android:id="@+id/llReference"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E4E4E4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <soup.neumorphism.NeumorphCardView
+                <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:outlineSpotShadowColor="@color/off_white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:neumorph_shadowColorLight="@color/off_white"
-                    app:neumorph_shadowElevation="4dp"
-                    app:neumorph_strokeColor="@color/off_white">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:outlineAmbientShadowColor="@color/gray"
+                    android:outlineSpotShadowColor="@color/gray"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1228,7 +1728,7 @@
 
                         </LinearLayout>
                     </LinearLayout>
-                </soup.neumorphism.NeumorphCardView>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
 

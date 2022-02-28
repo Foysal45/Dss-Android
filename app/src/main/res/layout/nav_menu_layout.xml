@@ -3,27 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/off_white"
+
+    android:background="@drawable/selected"
     android:orientation="vertical">
 
-    <include layout="@layout/nav_header" />
+    <include
+        android:id="@+id/headerLayout"
+        layout="@layout/nav_header" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/selected">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/navigation_bg"
             android:orientation="vertical">
 
+<!--            android:background="@drawable/button_click_for_menu"-->
             <LinearLayout
                 android:id="@+id/menu_dashboard_lay_head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_click"
+
                 android:gravity="center|left"
-                android:minHeight="40dp"
+                android:minHeight="60dp"
+
                 android:orientation="horizontal">
 
                 <ImageView
@@ -61,16 +68,18 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@drawable/shape_line_white" />
+                android:background="@drawable/shape_line_white"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/menu_profile_lay_head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:background="@drawable/button_click"
+
+
                 android:gravity="center|left"
-                android:minHeight="40dp"
+                android:minHeight="60dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -90,7 +99,7 @@
                     android:layout_toLeftOf="@id/more_profile"
                     android:layout_toRightOf="@id/icon_profile"
                     android:gravity="center|left"
-                    android:text="@string/profile"
+                    android:text="@string/my_profile"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
@@ -269,7 +278,7 @@
                         android:paddingLeft="64dp"
                         android:text="@string/quota_information"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_medium"/>
+                        android:textSize="@dimen/text_size_medium" />
 
                     <View
                         android:layout_width="match_parent"
@@ -337,7 +346,7 @@
                         android:paddingLeft="64dp"
                         android:text="@string/foreign_travel"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_medium"/>
+                        android:textSize="@dimen/text_size_medium" />
 
                     <View
                         android:layout_width="match_parent"
@@ -460,8 +469,9 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="64dp"
                         android:text="@string/promotion"
+                        android:visibility="gone"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_medium"/>
+                        android:textSize="@dimen/text_size_medium" />
 
                     <View
                         android:layout_width="match_parent"
@@ -478,24 +488,241 @@
                         android:paddingLeft="64dp"
                         android:text="@string/reference"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_medium"/>
+                        android:textSize="@dimen/text_size_medium" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@drawable/shape_line_green" />
+
+                    <TextView
+                        android:id="@+id/menu_profile_nominee"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/button_click"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="64dp"
+                        android:text="@string/nominee_info"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_medium" />
 
                 </LinearLayout>
             </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@drawable/shape_line_white" />
+                android:background="@drawable/shape_line_white"
+                android:visibility="visible" />
+            <LinearLayout
+                android:id="@+id/menu_dashboard_training"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:gravity="center|left"
+                android:minHeight="60dp"
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/icon_training"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="8dp"
+                    android:padding="8dp"
+                    android:src="@drawable/training_management_icon"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|left"
+                    android:gravity="center|left"
+                    android:text="@string/training_management"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/shape_line_white"
+                android:visibility="visible" />
+            <LinearLayout
+                android:id="@+id/menu_dashboard_leave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:gravity="center|left"
+                android:minHeight="60dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/icon_leave"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="8dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_leave_management"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|left"
+                    android:gravity="center|left"
+                    android:text="@string/leave_management"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/shape_line_white"
+                android:visibility="visible" />
+            <LinearLayout
+                android:id="@+id/menu_dashboard_payroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:gravity="center|left"
+                android:minHeight="60dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/icon_payroll"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="8dp"
+                    android:padding="8dp"
+                    android:src="@drawable/training_management_icon"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|left"
+                    android:gravity="center|left"
+                    android:text="@string/payroll_management"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/shape_line_white"
+                android:visibility="visible" />
+            <LinearLayout
+                android:id="@+id/menu_dashboard_messaging"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:gravity="center|left"
+                android:minHeight="60dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/icon_messaging"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="8dp"
+                    android:padding="8dp"
+                    android:src="@drawable/training_management_icon"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|left"
+                    android:gravity="center|left"
+                    android:text="@string/messaging"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/shape_line_white"
+                android:visibility="visible" />
+            <LinearLayout
+                android:id="@+id/menu_dashboard_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:gravity="center|left"
+                android:minHeight="60dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/icon_report"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="8dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_baseline_settings_24"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|left"
+                    android:layout_toRightOf="@id/icon_settings"
+                    android:gravity="center|left"
+                    android:text="@string/report"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/shape_line_white"
+                android:visibility="visible" />
+            <LinearLayout
+                android:id="@+id/menu_dashboard_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+
+                android:gravity="center|left"
+                android:minHeight="60dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/icon_settings"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="8dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_baseline_settings_24"
+                    app:tint="@color/green" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|left"
+                    android:layout_toRightOf="@id/icon_settings"
+                    android:gravity="center|left"
+                    android:text="@string/action_settings"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/shape_line_white"
+                android:visibility="visible" />
             <LinearLayout
                 android:id="@+id/menu_dashboard_signout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:background="@drawable/button_click"
                 android:gravity="center|left"
-                android:minHeight="40dp"
+                android:minHeight="60dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -504,7 +731,7 @@
                     android:layout_height="30dp"
                     android:layout_marginLeft="8dp"
                     android:padding="8dp"
-                    android:src="@drawable/logout" />
+                    android:src="@drawable/ic_logout_icon" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -512,7 +739,7 @@
                     android:layout_gravity="center|left"
                     android:layout_toRightOf="@id/icon_signout"
                     android:gravity="center|left"
-                    android:text="Sign Out"
+                    android:text="@string/sign_out"
                     android:textColor="@color/red"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />

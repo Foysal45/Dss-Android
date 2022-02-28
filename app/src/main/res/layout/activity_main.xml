@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_menu"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.MainActivity"
-    tools:openDrawer="start">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -52,6 +50,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="@string/copyright"
+            android:textSize="@dimen/text_size_extra_small"
             android:textAlignment="center" />
     </RelativeLayout>
 

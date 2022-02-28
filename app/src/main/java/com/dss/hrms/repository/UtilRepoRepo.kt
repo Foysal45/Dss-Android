@@ -10,28 +10,52 @@ import com.dss.hrms.retrofit.RetrofitInstance.retrofitInstance
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.namaztime.namaztime.database.MySharedPreparence
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.reflect.Type
+import javax.inject.Inject
 
 
-class UtilRepoRepo {
-    private var application: Application? = null
-    private var apiService: ApiService? = null
+class UtilRepoRepo @Inject constructor() {
+    @Inject
+    lateinit var application: Application
 
-    constructor(application: Application?) {
-        this.application = application
-        apiService = retrofitInstance!!.create(ApiService::class.java)
+    @Inject
+    lateinit var apiService: ApiService
+
+    @Inject
+    lateinit var preparence: MySharedPreparence
+
+
+    suspend fun getHeadOfficeDepartMent(): Any? {
+        return withContext(Dispatchers.IO) {
+            try {
+                var response = apiService.headOfficeDepartmentList(
+                    preparence.getLanguage()!!,
+                    "Bearer ${preparence.getToken()!!}"
+                )
+                Log.e("response", "response : ")
+                if (response?.body()?.code == 200 || response?.body()?.code == 201)
+                    response?.body()
+                else
+                    null
+            } catch (e: Exception) {
+                Log.e("responseexceotion", "response : exceotion: ${e.message}")
+                null
+            }
+
+        }
     }
+
 
     fun getDivision(): MutableLiveData<List<SpinnerDataModel>>? {
         val liveData: MutableLiveData<List<SpinnerDataModel>> =
             MutableLiveData<List<SpinnerDataModel>>()
-        var preparence = application?.let { MySharedPreparence(it) }
-
         val call: Call<Any?>? =
             apiService?.getDivision(preparence?.getLanguage()!!, "Bearer ${preparence?.getToken()}")
         call?.enqueue(object : Callback<Any?> {
@@ -44,7 +68,7 @@ class UtilRepoRepo {
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
 
-                        if (code == 200 && !TextUtils.isEmpty(status) && status.equals("success")) {
+                        if (code == 200 || code == 201) {
                             val dObj = jsonObjectParent.getJSONObject("data")
                             val dataJA = dObj.getJSONArray("data")
                             val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
@@ -75,7 +99,6 @@ class UtilRepoRepo {
     fun getDistrict(divisionId: Int): MutableLiveData<List<SpinnerDataModel>>? {
         val liveData: MutableLiveData<List<SpinnerDataModel>> =
             MutableLiveData<List<SpinnerDataModel>>()
-        var preparence = application?.let { MySharedPreparence(it) }
         val call: Call<Any?>? =
             apiService?.getDistrict(
                 preparence?.getLanguage()!!,
@@ -91,7 +114,7 @@ class UtilRepoRepo {
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
 
-                        if (code == 200 && !TextUtils.isEmpty(status) && status.equals("success")) {
+                        if (code == 200 || code == 201) {
                             val dataJO = jsonObjectParent.getJSONObject("data")
                             val dataJA = dataJO.getJSONArray("districts")
                             val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
@@ -121,7 +144,6 @@ class UtilRepoRepo {
     fun getUpazila(districtId: Int): MutableLiveData<List<SpinnerDataModel>>? {
         val liveData: MutableLiveData<List<SpinnerDataModel>> =
             MutableLiveData<List<SpinnerDataModel>>()
-        var preparence = application?.let { MySharedPreparence(it) }
         val call: Call<Any?>? =
             apiService?.getUpazila(
                 preparence?.getLanguage()!!,
@@ -137,7 +159,7 @@ class UtilRepoRepo {
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
 
-                        if (code == 200 && !TextUtils.isEmpty(status) && status.equals("success")) {
+                        if (code == 200 || code == 201) {
                             val dataJO = jsonObjectParent.getJSONObject("data")
                             val dataJA = dataJO.getJSONArray("upazilas")
                             val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
@@ -167,7 +189,6 @@ class UtilRepoRepo {
     fun getCommonData(identity: String): MutableLiveData<List<SpinnerDataModel>>? {
         val liveData: MutableLiveData<List<SpinnerDataModel>> =
             MutableLiveData<List<SpinnerDataModel>>()
-        var preparence = application?.let { MySharedPreparence(it) }
         val call: Call<Any?>? =
             apiService?.getCommonData(
                 preparence?.getLanguage()!!,
@@ -183,7 +204,7 @@ class UtilRepoRepo {
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
 
-                        if (code == 200 && !TextUtils.isEmpty(status) && status.equals("success")) {
+                        if (code == 200 || code == 201) {
                             val dataJA = jsonObjectParent.getJSONArray("data")
                             val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
                             val upazila: List<SpinnerDataModel> =
@@ -209,10 +230,9 @@ class UtilRepoRepo {
         return liveData
     }
 
-  fun getCommonData2(identity: String): MutableLiveData<List<SpinnerDataModel>>? {
+    fun getCommonData2(identity: String): MutableLiveData<List<SpinnerDataModel>>? {
         val liveData: MutableLiveData<List<SpinnerDataModel>> =
             MutableLiveData<List<SpinnerDataModel>>()
-        var preparence = application?.let { MySharedPreparence(it) }
         val call: Call<Any?>? =
             apiService?.getCommonData(
                 preparence?.getLanguage()!!,
@@ -228,7 +248,7 @@ class UtilRepoRepo {
                         val code: Int = jsonObjectParent.getInt("code")
                         val status = jsonObjectParent.getString("status")
 
-                        if (code == 200 && !TextUtils.isEmpty(status) && status.equals("success")) {
+                        if (code == 200 || code == 201) {
                             val dObj = jsonObjectParent.getJSONObject("data")
                             val dataJA = dObj.getJSONArray("data")
                             val type: Type = object : TypeToken<List<SpinnerDataModel?>?>() {}.type
@@ -254,6 +274,4 @@ class UtilRepoRepo {
         })
         return liveData
     }
-
-
 }

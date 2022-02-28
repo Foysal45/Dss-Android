@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="title"
+            type="java.lang.String" />
+
+        <variable
+            name="hint"
+            type="java.lang.String" />
+
+        <variable
+            name="text"
+            type="java.lang.String" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_marginVertical="5dp"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/Attachment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/ftvAttachment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:drawableLeft="@drawable/ic_baseline_attachment_24"
+                android:drawablePadding="10dp"
+                android:text="@string/attachment"
+                android:textColor="@color/black"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/fAttachmentFileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:ellipsize="end"
+                android:paddingHorizontal="5dp"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fAtrtachmentError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:gravity="center|left"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingVertical="5dp"
+                android:text=""
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="visible" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

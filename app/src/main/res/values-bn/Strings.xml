@@ -1,46 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DSS-HRMS</string>
+    <string-array name="nominee_list">
+        <item>সম্পর্ক নির্বাচন করুন</item>
+        <item>পিতা</item>
+        <item>মা</item>
+        <item>স্বামী বা স্ত্রী</item>
+        <item>সন্তান</item>
+        <item>অন্যান্য</item>
 
+    </string-array>
+    <string name="union_or_municiplity">Type (City corp/Upazila/Municipality)</string>
     <string name="confirmation">Confirmation</string>
     <string name="are_you_sure">would you like to exit?</string>
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
+    <string name="no">না</string>
+    <string name="yes">হ্যাঁ</string>
     <string name="required_field_cannot_be_empty">required field cannot be empty</string>
-
+    <string name="training_category">Training Category</string>
     <string name="failed">ব্যর্থ হয়েছে</string>
     <string name="wrong_otp">ভুল ওটিপি</string>
     <string name="password_mismatch">পাসওয়ার্ড মেলেনি</string>
     <string name="back_online">অনলাইনে ফিরুন</string>
     <string name="no_internet_connection">ইন্টারনেট সংযোগ নেই</string>
-
+    <string name="sign_out">সাইন আউট</string>
     <string name="choose_option_text">পছন্দ করুন</string>
     <string name="from_camera_text">ক্যামেরা থেকে</string>
-    <string name="from_gallery_text">গ্যালারী থেকে</string>
+    <string name="document">Document</string>
+    <string name="from_gallery_text">স্টোরেজ থেকে</string>
+    <string name="certificate_doc">Certificate Document</string>
+    <string name="nominee_attachment">Nominee Document</string>
     <string name="select_language">ভাষা নির্বাচন করুন</string>
+    <string name="version">ভার্সন</string>
+    <string name="select_option">অপসন সিলেক্ট করুন</string>
     <string name="login_to_ndss_hrm_system">লগইন</string>
     <string name="user_id_email_address">ব্যবহারকারী আইডি/ইমেল</string>
+    <string name="user_name">ব্যবহারকারীর নাম</string>
     <string name="password">পাসওয়ার্ড</string>
     <string name="remember_me">আমাকে মনে রাখুন</string>
     <string name="forgot_password">পাসওয়ার্ড ভুলে গেছেন?</string>
     <string name="login">প্রবেশ করুন</string>
+
     <string name="hrm">এইচ আর এম</string>
+    <string name="my_profile">আমার প্রোফাইল</string>
+    <string name="my_profile_home_page">আমার\n প্রোফাইল</string>
+    <string name="coming">আসছে...</string>
     <string name="profile">ব্যক্তিগত তথ্য</string>
-    <string name="title_activity_main2">MainActivity</string>
+    <string name="title">শিরোনাম</string>
+    <string name="no_data_found">কোনও তথ্য পাওয়া যায় নি</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">সেটিংস</string>
 
-    <string name="menu_home">Home</string>
+    <string name="employee_role">কর্মকর্তা/কর্মচারী ভূমিকা</string>
+    <string name="disability_type">অক্ষমতার প্রকার</string>
+    <string name="disability_degree">প্রতিবন্ধী ডিগ্রি</string>
+    <string name="disabled_person_id">অক্ষম ব্যক্তির আইডি</string>
+
+
+    <string name="menu_home">হোম</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="permanent_address">স্থায়ী ঠিকানা</string>
     <string name="present_address">বর্তমান ঠিকানা</string>
+    <string name="only_address">ঠিকানা</string>
 
     <!--Spouse-->
     <string name="name">নাম (ইংরেজি)</string>
@@ -49,14 +76,20 @@
     <string name="district">জেলা</string>
     <string name="email">ই-মেইল</string>
     <string name="occupation">পেশা</string>
-    <string name="mobile">মোবাইল নাম্বার</string>
+    <string name="mobile">মোবাইল নম্বর</string>
     <string name="religion">ধর্ম</string>
-    <string name="phone">ফোন নাম্বার</string>
+    <string name="phone">ফোন নম্বর</string>
     <!-- menu-->
+    <string name="personal_info_for_home">মৌলিক তথ্য</string>
+    <string name="training">প্রশিক্ষণ</string>
+    <string name="messaging">মেসেজিং </string>
+    <string name="message">মেসেজ </string>
+    <string name="payroll">বেতন</string>
     <string name="personal_information">মৌলিক তথ্য</string>
+    <string name="leave">ছুটি </string>
     <string name="employee_name">কর্মকর্তার নাম</string>
     <string name="personal_information_management">মৌলিক তথ্য</string>
-    <string name="job_joining_information">যোগদানের তথ্য</string>
+    <string name="job_joining_information">চাকরি যোগদানের তথ্য</string>
     <string name="quota_information">কোটার তথ্য</string>
     <string name="educational_qualification">শিক্ষাগত যোগ্যতা</string>
     <string name="spouse">স্বামী/স্ত্রী</string>
@@ -71,7 +104,7 @@
     <string name="honours_and_award">সম্মাননা এবং পুরষ্কার</string>
     <string name="posting_record"> বদলির তথ্য</string>
     <string name="disciplinary_action">শাস্তিমূলক ব্যবস্থা</string>
-    <string name="leave">ছুটি </string>
+
     <string name="job_information">চাকুরীর তথ্য</string>
     <string name="promotion">পদোন্নতি</string>
     <string name="reference">রেফারেন্স</string>
@@ -80,75 +113,90 @@
     <string name="child_bd">জন্ম তারিখ</string>
     <string name="child_sex">লিঙ্গ</string>
     <string name="update">আপডেট</string>
+    <string name="updated">"আপনার তথ্য অনুমোদনের জন্য অপেক্ষমান"</string>
     <string name="profile_id">প্রোফাইল আইডি</string>
 
-    <string name="name_language">ভাষার নাম</string>
-    <string name="name_institute">প্রতিষ্ঠানের নাম</string>
+    <string name="name_language">ভাষার নাম (ইংরেজি)</string>
+    <string name="name_institute">প্রতিষ্ঠানের নাম (ইংরেজি)</string>
     <string name="exp_level">দক্ষতার (লেভেল)</string>
-    <string name="memo_no">মেমো নং</string>
-    <string name="memo_no_bn">মেমো নং(বাংলা)</string>
-    <string name="memo_date">মেমো তারিখ</string>
+    <string name="memo_no">স্মারক নম্বর(ইংরেজি)</string>
+    <string name="memo_no_bn">স্মারক নম্বর (বাংলা)</string>
+    <string name="memo_date">স্মারক তারিখ</string>
     <string name="desi">পদবি</string>
     <string name="office_zoon">অফিস/জোন</string>
-    <string name="location">অবস্থান</string>
+    <string name="location">অবস্থান(ইংরেজি)</string>
     <string name="quarter_name">কোয়ার্টারের নাম</string>
     <string name="flat_no"><![CDATA[ফ্ল্যাট নং এবং ফ্ল্যাট প্রকার]]></string>
     <string name="country">দেশ</string>
-    <string name="status">অবস্থা</string>
-    <string name="purpose">উদ্দেশ্য</string>
-    <string name="purpose_bangla">উদ্দেশ্য(বাংলা)</string>
+    <string name="status">স্থিতি</string>
+    <string name="purpose">উদ্দেশ্য (ইংরেজি)</string>
+    <string name="purpose_bangla">উদ্দেশ্য (বাংলা)</string>
     <string name="from_date">তারিখ (হইতে)</string>
     <string name="to_date">এখন (পর্যন্ত)</string>
     <string name="type_of_pub">প্রকাশনার ধরণ</string>
-    <string name="public_details">প্রকাশের বিবরণ</string>
-    <string name="public_details_bn">প্রকাশের বিবরণ(বাংলা)</string>
-    <string name="pub_name">প্রকাশের নাম(ইংরেজি)</string>
+    <string name="public_details">প্রকাশের বিবরণ (ইংরেজি)</string>
+    <string name="details_bn">বিস্তারিত (বাংলা)</string>
+    <string name="details_en">বিস্তারিত (ইংরেজি)</string>
+    <string name="public_details_bn">প্রকাশের বিবরণ (বাংলা)</string>
+    <string name="pub_name">প্রকাশের নাম (ইংরেজি)</string>
     <string name="pub_name_bn">প্রকাশের নাম (বাংলা)</string>
     <string name="transfer_type">স্থানান্তর প্রকার</string>
     <string name="transfer_from"> বদলির পূর্ববর্তী স্থান</string>
-    <string name="transfer_to">বদলির পরবর্তী স্থান(কর্মস্থল)</string>
+    <string name="transfer_to">বদলির পরবর্তী স্থান (কর্মস্থল)</string>
     <string name="eff_date">কার্যকর দিন</string>
     <string name="relation">সম্পর্ক</string>
-    <string name="relation_bn">সম্পর্ক(বাংলা)</string>
-    <string name="address">ঠিকানা</string>
-    <string name="address_bn">ঠিকানা(বাংলা)</string>
+    <string name="relation_bn">সম্পর্ক (বাংলা)</string>
+    <string name="address">ঠিকানা (ইংরেজি)</string>
+    <string name="address_details">বিস্তারিত ঠিকানা</string>
+    <string name="address_bn">ঠিকানা (বাংলা)</string>
     <string name="contact">যোগাযোগের নম্বর</string>
-    <string name="contact_bn">যোগাযোগের নম্বর(বাংলা)</string>
-    <string name="course_title">কোর্সের শিরোনাম</string>
-    <string name="course_title_bn">কোর্সের শিরোনাম(বাংলা)</string>
-    <string name="name_institute_bn">প্রতিষ্ঠানের নাম(বাংলা)</string>
+    <string name="contact_bn">যোগাযোগের নম্বর (বাংলা)</string>
+    <string name="course_title">কোর্সের শিরোনাম (ইংরেজি)</string>
+    <string name="course_title_bn">কোর্সের শিরোনাম (বাংলা)</string>
+    <string name="name_institute_bn">প্রতিষ্ঠানের নাম (বাংলা)</string>
     <string name="location_bn">অবস্থান(বাংলা)</string>
-    <string name="name_institution">প্রতিষ্ঠানের নাম</string>
+    <string name="name_institution">প্রতিষ্ঠানের নাম (ইংরেজি)</string>
     <string name="certificate">সনদপত্র</string>
-    <string name="aware_t">পুরষ্কার শিরোনাম</string>
-    <string name="aware_t_bn">পুরষ্কার শিরোনাম(বাংলা)</string>
-    <string name="award_details">পুরষ্কার বিশদ</string>
-    <string name="award_details_bn">পুরষ্কার বিশদ(বাংলা)</string>
+    <string name="aware_t">পুরষ্কার শিরোনাম (ইংরেজি)</string>
+    <string name="aware_t_bn">পুরষ্কার শিরোনাম (বাংলা)</string>
+    <string name="award_details">পুরষ্কার বিশদ (ইংরেজি)</string>
+    <string name="award_details_bn">পুরষ্কার বিশদ (বাংলা)</string>
     <string name="award_date">পুরুস্কারের দিন</string>
     <string name="designation">পদবি</string>
+    <string name="additional_designation">অতিরিক্ত পদবি</string>
     <string name="depertment">বিভাগ</string>
     <string name="job_type">কাজের ধরন</string>
     <string name="joning_date">যোগদানের তারিখ</string>
+    <string name="confirmation_date">নিশ্চিতকরণের তারিখ</string>
     <string name="pension">পেনশনের তারিখ</string>
     <string name="_class">শ্রেণী</string>
-    <string name="grade">গ্রেড (স্কেল)</string>
+    <string name="pay_scale_grade">পে স্কেল গ্রেড </string>
+    <string name="basic_pay">বেসিক পে</string>
     <string name="prl_date">পিআরএল তারিখ</string>
     <string name="pention_date">পেনশনের তারিখ</string>
-    <string name="vill_house">গ্রাম/বাড়ি নং</string>
-    <string name="vill_house_bn">গ্রাম/বাড়ি নং(বাংলা)</string>
-    <string name="road_word">রাস্তা/ওয়ার্ড নং</string>
-    <string name="name_of_spouse">Name Of Spouse(English)</string>
-    <string name="name_of_spouse_bn">Name Of Spouse(Bangla)</string>
+    <string name="vill_house">গ্রাম/বাড়ি নং (ইংরেজি)</string>
+    <string name="vill_house_bn">গ্রাম/বাড়ি নং (বাংলা)</string>
+    <string name="road_word">রাস্তা/ওয়ার্ড নং (ইংরেজি)</string>
+    <string name="name_of_spouse">স্বামী/স্ত্রীর নাম (ইংরেজি)</string>
+    <string name="name_of_spouse_bn">স্বামী/স্ত্রীর নাম (বাংলা)</string>
+    <string name="name_language_bn">ভাষার নাম (বাংলা)</string>
     <string name="workstation">দপ্তর</string>
     <string name="nid_no">এন আই ডি</string>
+
+    <string name="blood_group">রক্তের গ্রুপ</string>
+    <string name="tin_no">টিআইএন নং</string>
+    <string name="punch_id">পাঞ্চ আইডি</string>
+    <string name="present_basic_salary">বর্তমান বেসিক বেতন</string>
+    <string name="present_gross_salary">বর্তমান গ্রস বেতন</string>
+
     <string name="birth_certificate_no">জন্ম সনদ নং</string>
 
     <string name="passport_no">পাসপোর্ট নম্বর</string>
-    <string name="road_word_bn">রাস্তা/ওয়ার্ড নং(বাংলা)</string>
-    <string name="post_off">ডাকঘর</string>
-    <string name="post_off_bn">ডাকঘর(বাংলা)</string>
-    <string name="police_station">থানা</string>
-    <string name="police_station_bn">থানা(বাংলা)</string>
+    <string name="road_word_bn">রাস্তা/ওয়ার্ড নং (বাংলা)</string>
+    <string name="post_off">ডাকঘর (ইংরেজি)</string>
+    <string name="post_off_bn">ডাকঘর (বাংলা)</string>
+    <string name="police_station">থানা (ইংরেজি)</string>
+    <string name="police_station_bn">থানা (বাংলা)</string>
     <string name="upazila">উপজেলা</string>
     <string name="division">বিভাগ</string>
     <string name="phone_mobile"><![CDATA[ফোন/মোবাইল নং]]></string>
@@ -157,35 +205,53 @@
     <string name="board_uni">বোর্ড/বিশ্ববিদ্যালয়</string>
     <string name="name_of_board">বোর্ডের নাম</string>
     <string name="passing_year">পাশের সন</string>
-    <string name="div_cgpa">বিভাগ/সিজিপিএ(রেজাল্ট)</string>
+    <string name="div_cgpa">বিভাগ/সিজিপিএ (রেজাল্ট)</string>
     <string name="catagory">বিভাগ</string>
     <string name="present_status">বর্তমান অবস্থা</string>
-    <string name="description">বর্ণনা</string>
-    <string name="judgment">বিচার</string>
-    <string name="final_judment">চূড়ান্ত রায়</string>
-    <string name="pending">বিচারাধীন</string>
+    <string name="description">বর্ণনা (ইংরেজি)</string>
+    <string name="judgment">রায় (ইংরেজি)</string>
+    <string name="final_judment">চূড়ান্ত রায় (ইংরেজি)</string>
+    <string name="judgment_bn">রায় (বাংলা)</string>
+    <string name="final_judment_bn">চূড়ান্ত রায় (বাংলা)</string>
+
+    <string name="disciplinary_action_category">শাস্তিমূলক ব্যবস্থার ধরণ</string>
+    <string name="disciplinary_action_details">ডিসিপ্লিনারি অ্যাকশন বিবরণ (ইংরেজি)</string>
+    <string name="disciplinary_action_details_bn">ডিসিপ্লিনারি অ্যাকশন বিবরণ (বাংলা)</string>
+    <string name="remakrs_bn">মন্তব্য (বাংলা)</string>
+    <string name="remakrs">মন্তব্য (ইংরেজি)</string>
+    <string name="pending">Pending</string>
     <string name="dismiss">খারিজ</string>
-    <string name="remakrs">মন্তব্য</string>
+    <string name="close">Close</string>
+
     <string name="date">তারিখ</string>
     <string name="certification_date">সার্টিফিকেশনের তারিখ</string>
 
     Description
     <string name="quota_name">কোটার নাম</string>
     <string name="description_bn">বর্ণনা (বাংলা)</string>
-    <string name="qualification_name">যোগ্যতার নাম</string>
-    <string name="qualification_name_bangla">যোগ্যতার নাম(বাংলা)</string>
-    <string name="qualification_details">যোগ্যতার বিবরণ</string>
-    <string name="qualification_details_bangla">যোগ্যতার বিবরণ(বাংলা)</string>
+    <string name="qualification_name">যোগ্যতার নাম (ইংরেজি)</string>
+    <string name="qualification_name_bangla">যোগ্যতার নাম (বাংলা)</string>
+    <string name="qualification_details">যোগ্যতার বিবরণ (ইংরেজি)</string>
+    <string name="qualification_details_bangla">যোগ্যতার বিবরণ (বাংলা)</string>
     <string name="employee_id">কর্মকর্তা/কর্মচারী আইডি</string>
-    <string name="photo">ফটো</string>
+    <string name="employee_type">কর্মকর্তা/কর্মচারী প্রকার</string>
+    <string name="has_disability">অক্ষমতা আছে</string>
+    <string name="employment_job_joining_date">চাকরি যোগদানের তারিখ</string>
+    <string name="employee_status_type">কর্মসংস্থান স্থিতির ধরণ</string>
+    <string name="employee_status_date">কর্মসংস্থান স্থিতির তারিখ</string>
+    <string name="has_freedom_fighter_quota">মুক্তিযোদ্ধা কোটা আছে ?</string>
+    <string name="current_job">বর্তমান চাকরি</string>
+
+    <string name="photo">ছবি</string>
     <string name="birth">জন্ম তারিখ</string>
     <string name="f_name">পিতার নাম (ইংরেজি)</string>
     <string name="f_name_b">পিতার নাম (বাংলা)</string>
-    <string name="m_name">মায়ের নাম (ইংরেজি)</string>
+    <string name="m_name">মাতার নাম (ইংরেজি)</string>
     <string name="m_name_b">মাতার নাম (বাংলা)</string>
     <string name="male">পুরুষ</string>
     <string name="female">মহিলা</string>
     <string name="gender">লিঙ্গ</string>
+    <string name="marital_status">বৈবাহিক অবস্থা</string>
     <string name="previous_post">পূর্ববর্তী পোস্ট</string>
     <string name="curent_post">বর্তমান অবস্থান</string>
     <string name="quota_type">কোটার ধরণ</string>
@@ -201,6 +267,199 @@
     <string name="dashboard">ড্যাশবোর্ড</string>
     <string name="copyright"><![CDATA[©DSS , Design & Developed by SIMEC System Ltd.]]></string>
     <string name="edit">পরিবর্তন করুন</string>
+    <string name="old_password">Old Password</string>
+
+    <string name="create">তৈরি করুন</string>
+    <string name="create_leave_application">দরখাস্ত করুন</string>
+    <string name="content_management">বিষয়বস্তু ব্যবস্থাপনা</string>
+    <string name="category">বিভাগ</string>
+    <string name="add_category">বিভাগ যুক্ত করুন</string>
+    <string name="update_category">বিভাগ আপডেট করুন</string>
+    <string name="update_resource_perosn">আপডেট রিসোর্স পার্সন</string>
+    <string name="category_name">বিভাগ নাম</string>
+    <string name="category_name_bn">বিভাগ নাম (বাংলা)</string>
+    <string name="content">বিষয়বস্তু</string>
+    <string name="time_in_hour">Time In Hour</string>
+    <string name="banner">ব্যানার</string>
+    <string name="faq">সচরাচর জিজ্ঞাসিত প্রশ্ন</string>
+    <string name="title_bn">শিরোনাম (বাংলা)</string>
+    <string name="is_published">প্রকাশিত ?</string>
+    <string name="objective">Objective</string>
+    <string name="training_management">প্রশিক্ষণ ব্যবস্থাপনা</string>
+    <string name="training_management_home_page">প্রশিক্ষণ\n ব্যবস্থাপনা</string>
+    <string name="resource_person">রিসোস পারসন</string>
+    <string name="resource_person_name">রিসোস পারসন নাম</string>
+    <string name="short_name">সংক্ষিপ্ত নাম</string>
+    <string name="first_email">প্রথম ইমেইল</string>
+    <string name="first_mobile">প্রথম মোবাইল</string>
+    <string name="honorarium_head">অনারিয়াম হেড</string>
+    <string name="field_of_expertise">বিশেষজ্ঞের ক্ষেত্র</string>
+    <string name="optional_email">বিকল্প ইমেইল</string>
+    <string name="optional_mobile">বিকল্প মোবাইল</string>
+    <string name="office_address">দপ্তর ঠিকানা</string>
+
+    <string name="budget_and_schedule">বাজেট এবং সময়সূচী</string>
+    <string name="course_schedule">কোর্স সময়সূচী</string>
+    <string name="batch_schedule">ব্যাচ সময়সূচী</string>
+    <string name="batch">ব্যাচ</string>
+    <string name="course">কোর্স</string>
+    <string name="name_only">নাম</string>
+    <string name="batch_name">ব্যাচ নাম</string>
+    <string name="batch_name_bn">ব্যাচ নাম (বাংলা)</string>
+    <string name="coordinator">কো-অর্ডিনেটর</string>
+    <string name="if_co_cordinator_is_external_dss">IF Co-Cordinator is External DSS</string>
+    <string name="if_cordinator_is_external_dss">IF Cordinator is External DSS</string>
+    <string name="start_date">শুরুর তারিখ</string>
+    <string name="end_date">শেষ তারিখ</string>
+    <string name="registration_start_date">নিবন্ধন শুরুর তারিখ</string>
+    <string name="registration_end_date">নিবন্ধন শেষ তারিখ</string>
+    <string name="co_ordinator">কো-অর্ডিনেটর</string>
+    <string name="co_co_ordinator">কো-কো-অর্ডিনেটর</string>
+    <string name="total_seats">মোট আসন</string>
+    <string name="staff_1">স্টাফ-১</string>
+    <string name="staff_2">স্টাফ-২</string>
+    <string name="staff_3">স্টাফ-৩</string>
+    <string name="course_id">কোর্স আইডি</string>
+    <string name="eligible">যোগ্য</string>
+    <string name="email_text">ই-মেইল</string>
+    <string name="message_subject">বার্তা বিষয়</string>
+    <string name="message_body">বার্তাংশ</string>
+    <string name="select_employee">কর্মচারী নির্বাচন করুন</string>
+    <string name="search_employee">কর্মচারী অনুসন্ধান করুন</string>
+    <string name="search">অনুসন্ধান করুন</string>
+    <string name="office_lead_category">অফিস মুখ্য শ্রেণী</string>
+    <string name="employee_name_or_id">কর্মকর্তা/কর্মচারীর নাম/আইডি</string>
+    <string name="attachment">সংযুক্তি</string>
+    <string name="ok">ঠিক আছে</string>
+    <string name="ok_for_employee_selection">নির্বাচন করুন</string>
+    <string name="cancel">বাতিল</string>
+    <string name="done">সম্পন্ন করুন</string>
 
 
+    <string name="draft">ড্রাফট করুন</string>
+    <string name="head_office_branches">প্রধান অফিসের শাখা সূমুহ</string>
+    <string name="branches_wise_section">শাখা অনুযায়ী উপশাখা</string>
+    <string name="section_wise_subsection">শাখা অনুযায়ী উপ-উপ-শাখা</string>
+
+    <string name="leave_management">ছুটির ব্যবস্থাপনা</string>
+    <string name="leave_management_home_page">ছুটির\n ব্যবস্থাপনা</string>
+    <string name="leave_application">ছুটির দরখাস্ত</string>
+    <string name="leave_summary_dashboard">ছুটির সামারি</string>
+    <string name="payroll_management_home_page">বেতন\n ব্যবস্থাপনা</string>
+    <string name="payroll_management">বেতন ব্যবস্থাপনা</string>
+    <string name="bank_information">ব্যাংক তথ্য</string>
+    <string name="salary_process">বেতন ভাতার পলিসি</string>
+
+    <string name="type">টাইপ</string>
+    <string name="casual_leave">নৈমিত্তিক ছুটি</string>
+    <string name="sick_leave">অসুস্থতাজনিত ছুটি</string>
+    <string name="ex_bangladesh_leave">	বহিঃ বাংলাদেশ ছুটি</string>
+    <string name="applied">আবেদন করেছেন</string>
+    <string name="leave_balance">Leave Balance</string>
+    <string name="enjoyed">উপভোগ করেছেন</string>
+    <string name="total">Total</string>
+    <string name="total_bn">মোট</string>
+    <string name="remaining_balance">অবশিষ্ট পরিমান</string>
+    <string name="balance">পরিমান</string>
+    <string name="account_type">অ্যাকাউন্ট ধরন</string>
+    <string name="bank_name">ব্যাংকের নাম</string>
+    <string name="bank_routing_number">ব্যাংক রাউটিং নম্বর</string>
+    <string name="branch_name">শাখার নাম</string>
+    <string name="account_no">হিসাব নম্বর</string>
+    <string name="account_name">হিসাবের নাম</string>
+    <string name="branch_district_name">জেলা</string>
+    <string name="branch_routing_no">Branch Routing No</string>
+    <string name="year_and_month">Year and Month</string>
+    <string name="select_notify">সিলেক্ট নোটিফাই</string>
+    <string name="select_responsible">দায়িত্বপ্রাপ্ত ব্যাক্তি নির্বাচন করুন</string>
+    <string name="leave_date">ছুটির তারিখ</string>
+    <string name="leave_type">ছুটির ধরণ</string>
+    <string name="leave_request_reference">ছুটির আবেদন এর জন্য রেফারেন্স</string>
+    <string name="emergency_contact_no">জরুরি যোগাযোগ নং</string>
+    <string name="reason_details">কারন (বিস্তারিত)</string>
+    <string name="please_select_month_and_year">দয়া করে মাস এবং বছর নির্বাচন করুন</string>
+    <string name="office_search">অফিস অনুসন্ধান</string>
+
+
+    <string name="same_as_present_address">Same As Present Address</string>
+    <string name="nominee_info">নমিনি তথ্য</string>
+    <string name="name_of_nominee">নমিনির নাম</string>
+    <string name="nominee_relation">নমিনির সাথে সম্পর্ক</string>
+    <string name="nominee_allocated_percentage">মনোনয়ন প্রত্যাশিত শতাংশ</string>
+    <string name="nominee_marital_status">নমিনির বৈবাহিক অবস্থা</string>
+    <string name="nominee_gender">নমিনি লিঙ্গ</string>
+    <string name="nominee_has_disability">নমিনির অক্ষমতা আছে</string>
+    <string name="nominee_signature">নমিনির স্বাক্ষর</string>
+    <string name="download_pdf">Pdf ডাউনলোড করুন </string>
+    <string name="show_pdf">Show Pdf</string>
+    <string name="no_responsible_person_found">কোনও রেস্পন্সিবল পারসন  পাওয়া যায়নি</string>
+    <string name="downloading_see_progess_on_notification_bar">Downloading... See progress on notification bar</string>
+    <string name="post_code">Post Code</string>
+
+    <string name="citycorporation">সিটি কর্পোরেশন</string>
+    <string name="municipality">পৌরসভা</string>
+    <string name="union">ইউনিয়ন</string>
+
+    <string name="course_schedule_title">কোর্সের সময়সূচীর শিরোনাম</string>
+    <string name="course_schedule_title_bn">কোর্সের সময়সূচীর শিরোনাম (বাংলা)</string>
+    <string name="course_schedule_search">কোর্সের সময়সূচী অনুসন্ধান</string>
+    <string name="batch_schedule_search">ব্যাচের সময়সূচী অনুসন্ধান</string>
+    <string name="resource_person_search">রিসৌর্স পারসন অনুসন্ধান</string>
+    <string name="search_resource_person">রিসৌর্স পারসন অনুসন্ধান করুন</string>
+    <string name="search_course_schedule">কোর্সের সময়সূচী অনুসন্ধান করুন</string>
+    <string name="search_batch_schedule">ব্যাচের সময়সূচী অনুসন্ধান করুন</string>
+    <string name="search_vacant_position">শূন্য পদের তালিকা অনুসন্ধান করুন</string>
+    <string name="working_employee_list">কর্মরত কর্মকর্তা/কর্মচারী তালিকা</string>
+    <string name="vacant_position_list">শূন্য পদের তালিকা সংক্ষিপ্তসার</string>
+    <string name="vacant_position_summary">শূন্য পদের তালিকা সংক্ষিপ্তসার </string>
+    <string name="working_employee_list_filters_form">কর্মরত কর্মকর্তা/কর্মচারী অনুসন্ধান করুন</string>
+    <string name="vacant_position_list_filters_form">শূন্য পদের তালিকা সংক্ষিপ্তসার অনুসন্ধান ফর্ম</string>
+    <string name="report">রিপোর্টসমুহ</string>
+    <string name="permitted">অনুমোদিত</string>
+    <string name="working">কর্মরত</string>
+    <string name="empty">খালি</string>
+    <string name="designaiton">পদবি</string>
+    <string name="sl">ক্রমিক</string>
+    <string name="courses">কোর্স </string>
+    <string name="course_name">কোর্সের নাম</string>
+    <string name="total_number">মোট সংখ্যা</string>
+    <string name="course_modules">কোর্স মডিউল</string>
+    <string name="module_name">মডিউলের নাম</string>
+    <string name="marks">মার্ক্স্</string>
+    <string name="session">সেশন</string>
+    <string name="help_desk">হেল্প ডেস্ক</string>
+
+    <string name="session_name">সেশনের নাম</string>
+    <string name="faq_question">সচরাচর জিজ্ঞাসিত প্রশ্ন</string>
+    <string name="docoument">সংযুক্তি</string>
+    <string name="error_disaiblity_doc">আপনার অক্ষমতার নথি আপলোড করুন</string>
+    <string name="error_freedom_fighter">আপনার মুক্তিযোদ্ধা ডকুমেন্ট আপলোড করুন</string>
+    <string name="error_file_size">ফাইলের আকার সীমা অতিক্রম করেছে। সর্বোচ্চ ফাইলের আকার 2 এমবি . পুনরায় চেষ্টা করুন </string>
+    <string name="tap_to_view">"  Tap To View "</string>
+    <string name="successMsg">নথিটি আপলোড সম্পূর্ণ হয়েছে</string>
+    <string name="uploadFailed" />
+    <string name="namee">নাম</string>
+    <string name="no_attachment"> No Attachment </string>
+    <string name="error">Error</string>
+    <string name="nid_attachment">এনআইডি ডকুমেন্ট</string>
+    <string name="passport_attachment">পাসপোর্ট ডকুমেন্ট</string>
+    <string name="birth_certificate_attachment">জন্ম সনদ ডকুমেন্ট</string>
+    <string name="nominne_from">Nominee From</string>
+    <string name="director_general">মহাপরিচালক</string>
+
+
+    <string name="offices">দপ্তর</string>
+    <string name="phone_office">ফোন (দপ্তর)</string>
+    <string name="moobile">মোবাইল</string>
+    <string name="fax">ফ্যাক্স</string>
+    <string name="ooffice_addres">অফিসের ঠিকানা</string>
+    <string name="pabx">পিএবিএক্স</string>
+    <string name="privacy_other">গোপনীয়তা এবং অন্যান্য</string>
+    <string name="privacy_policy">গোপনীয়তা নীতি</string>
+    <string name="terms">শর্তাবলী</string>
+    <string name="pending_data">Pending Data</string>
+    <string name="course_management">Course Management</string>
+    <string name="total_modules">Total Modules</string>
+    <string name="total_eval_methods">Total Evaluation Methods</string>
+    <string name="time">Time (Hours)</string>
 </resources>

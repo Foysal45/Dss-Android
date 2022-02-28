@@ -5,7 +5,7 @@
 
         <variable
             name="employee"
-            type="com.dss.hrms.model.Employee" />
+            type="com.dss.hrms.model.employeeProfile.Employee" />
 
     </data>
 
@@ -90,7 +90,48 @@
                                 <include
                                     android:id="@+id/fMaritalStatus"
                                     layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/gender}" />
+                                    app:title="@{@string/marital_status}" />
+
+                                <include
+                                    android:id="@+id/fReligion"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/religion}" />
+
+                                <include
+                                    android:id="@+id/fBloodGroup"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/blood_group}" />
+
+
+                                <include
+                                    android:id="@+id/fPresentBasicSalary"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/present_basic_salary}"
+                                    app:title="@{@string/present_basic_salary}" />
+
+                                <include
+                                    android:id="@+id/fPresentGrossSalary"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/present_gross_salary}"
+                                    app:title="@{@string/present_gross_salary}" />
+
+                                <include
+                                    android:id="@+id/fNid"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/nid_no}"
+                                    app:title="@{@string/nid_no}" />
+
+                                <include
+                                    android:id="@+id/fTIN"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/tin_no}"
+                                    app:title="@{@string/tin_no}" />
+
+                                <include
+                                    android:id="@+id/fPunchId"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/punch_id}"
+                                    app:title="@{@string/punch_id}" />
 
                                 <include
                                     android:id="@+id/fFatherNameEng"
@@ -104,11 +145,13 @@
                                     app:hint="@{@string/f_name_b}"
                                     app:title="@{@string/f_name_b}" />
 
+
                                 <include
                                     android:id="@+id/fMotherNameEng"
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/m_name}"
                                     app:title="@{@string/m_name}" />
+
 
                                 <include
                                     android:id="@+id/fMotherNameBangla"
@@ -116,10 +159,174 @@
                                     app:hint="@{@string/m_name_b}"
                                     app:title="@{@string/m_name_b}" />
 
+                                <include
+                                    android:id="@+id/fEmail"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/email}"
+                                    app:title="@{@string/email}" />
+
+                                <include
+                                    android:id="@+id/fUserName"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/user_name}"
+                                    app:title="@{@string/user_name}" />
+
+                                <include
+                                    android:id="@+id/fPhone"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/phone}"
+                                    app:title="@{@string/phone}" />
+
+                                <include
+                                    android:id="@+id/fEmployeeType"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/employee_type}" />
+
+                                <include
+                                    android:id="@+id/fEmploymentStatusType"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/employee_status_type}" />
+
+                                <include
+                                    android:id="@+id/fEmploymentStatusDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/employee_status_date}" />
+
+                                <include
+                                    android:id="@+id/fFreedomFighterQuota"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/has_freedom_fighter_quota}" />
+
+                                <LinearLayout
+                                    android:id="@+id/llFreedomFighterAttachment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    app:layout_constraintBottom_toTopOf="@id/send"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/llBody">
+
+                                    <TextView
+                                        android:id="@+id/tvFreedomFighterAttachment"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:drawableLeft="@drawable/ic_baseline_attachment_24"
+                                        android:drawablePadding="20dp"
+                                        android:text="@string/attachment"
+                                        android:maxLines="2"
+                                        android:ellipsize="end"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_large"
+                                        android:textStyle="bold" />
+
+
+                                    <TextView
+                                        android:id="@+id/tvllFreedomFighterAttachmentFileName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:ellipsize="end"
+                                        android:paddingHorizontal="5dp"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        android:textColor="@color/light_black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tvFreedomFighterAttachmentError"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center|left"
+                                        android:gravity="center|left"
+                                        android:paddingHorizontal="@dimen/_5sdp"
+                                        android:paddingVertical="5dp"
+                                        android:text="error"
+                                        android:textColor="@color/red"
+                                        android:textSize="@dimen/text_size_small"
+                                        android:visibility="gone" />
+                                </LinearLayout>
+
+                                <include
+                                    android:id="@+id/fDisability"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/has_disability}" />
+
+                                <LinearLayout
+                                    android:id="@+id/llDiasabiltyAttachment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    app:layout_constraintBottom_toTopOf="@id/send"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/llBody">
+
+                                    <TextView
+                                        android:id="@+id/tvAttachment"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:drawableLeft="@drawable/ic_baseline_attachment_24"
+                                        android:drawablePadding="20dp"
+                                        android:text="@string/attachment"
+                                        android:maxLines="2"
+                                        android:ellipsize="end"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_large"
+                                        android:textStyle="bold" />
+
+
+                                    <TextView
+                                        android:id="@+id/tvllDiasabiltyAttachmentFileName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:ellipsize="end"
+                                        android:paddingHorizontal="5dp"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        android:textColor="@color/light_black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tvAttachmentError"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center|left"
+                                        android:gravity="center|left"
+                                        android:paddingHorizontal="@dimen/_5sdp"
+                                        android:paddingVertical="5dp"
+                                        android:text="error"
+                                        android:textColor="@color/red"
+                                        android:textSize="@dimen/text_size_small"
+                                        android:visibility="gone" />
+                                </LinearLayout>
+
+                                <include
+                                    android:id="@+id/fDisabilityType"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/disability_type}" />
+
+                                <include
+                                    android:id="@+id/fDisabilityDegree"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/disability_degree}" />
+
+                                <include
+                                    android:id="@+id/fDisabledPersonId"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/disabled_person_id}"
+                                    app:title="@{@string/disabled_person_id}" />
+
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginBottom="20dp"
                                     android:orientation="horizontal">
 
                                     <LinearLayout
@@ -139,18 +346,25 @@
                                             android:textSize="@dimen/text_size_small"
                                             android:textStyle="bold" />
 
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text=":" />
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="@dimen/_110sdp"
+                                            android:layout_height="@dimen/_110sdp"
+                                            android:elevation="5dp"
+                                            android:outlineSpotShadowColor="@color/gray"
+                                            android:padding="5dp"
+                                            app:cardCornerRadius="10dp">
 
-                                        <ImageView
-                                            android:id="@+id/ivEmployee"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="@dimen/_100sdp"
-                                            android:paddingLeft="@dimen/_5sdp"
-                                            android:paddingRight="@dimen/_10sdp"
-                                            android:src="@drawable/ic_baseline_person_24" />
+                                            <ImageView
+                                                android:id="@+id/ivEmployee"
+                                                android:layout_width="@dimen/_100sdp"
+                                                android:layout_height="@dimen/_100sdp"
+                                                android:layout_gravity="center"
+                                                android:layout_margin="10dp"
+                                                android:src="@drawable/ic_baseline_image_24" />
+
+                                        </androidx.cardview.widget.CardView>
+
+
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -195,10 +409,8 @@
 
                             <include
                                 android:id="@+id/hJobJoiningInformation"
-
                                 layout="@layout/personal_information_create_field_header"
                                 app:title="@{@string/job_joining_information}" />
-
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -209,10 +421,80 @@
                                 android:paddingVertical="@dimen/personal_information_body_padding_vertical">
 
 
-                                <include
-                                    android:id="@+id/fJobJoiningOffice"
-                                    layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/office}" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:id="@+id/llJobJoiningOfficeBody"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:paddingVertical="@dimen/_4sdp"
+                                        app:layout_constraintTop_toTopOf="parent">
+
+                                        <TextView
+                                            android:id="@+id/tvJobJoiningOfficeTitle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginVertical="@dimen/_5sdp"
+                                            android:text="@string/office"
+                                            android:textColor="@color/light_black"
+                                            android:textSize="@dimen/text_size_small"
+                                            android:textStyle="bold" />
+
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:background="@drawable/edittext_bg"
+                                            android:gravity="center"
+                                            android:orientation="horizontal">
+
+                                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                                android:id="@+id/JobJoiningOfficeSpinner"
+                                                android:layout_width="0dp"
+                                                android:layout_height="@dimen/edittext_height_large"
+                                                android:layout_weight="1" />
+
+                                            <LinearLayout
+                                                android:layout_width="34dp"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:paddingRight="10dp">
+
+                                                <ImageView
+                                                    android:id="@+id/JobJoiningIvSearch"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="24dp"
+                                                    android:layout_gravity="center"
+                                                    android:src="@drawable/ic_baseline_search_24" />
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+
+                                        <TextView
+                                            android:id="@+id/tvJobJoiningOfficeError"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center|left"
+                                            android:gravity="center|left"
+                                            android:paddingHorizontal="10dp"
+                                            android:paddingVertical="5dp"
+                                            android:text="error"
+                                            android:textColor="@color/red"
+                                            android:textSize="@dimen/text_size_small"
+                                            android:visibility="gone" />
+
+                                        <!--            </androidx.cardview.widget.CardView>-->
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
 
                                 <include
                                     android:id="@+id/fJobJoiningDesignation"
@@ -220,8 +502,14 @@
                                     app:title="@{@string/designation}" />
 
                                 <include
+                                    android:id="@+id/fJobJoiningAdditionalDesignation"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/additional_designation}" />
+
+                                <include
                                     android:id="@+id/fJobJoiningDepartment"
                                     layout="@layout/personal_info_spinner"
+                                    android:visibility="gone"
                                     app:title="@{@string/depertment}" />
 
                                 <include
@@ -238,7 +526,17 @@
                                 <include
                                     android:id="@+id/fJobJoiningGrade"
                                     layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/grade}" />
+                                    app:title="@{@string/pay_scale_grade}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningPayScale"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/basic_pay}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningConfirmationDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/confirmation_date}" />
 
                                 <include
                                     android:id="@+id/fJobJoiningJoiningDate"
@@ -246,14 +544,19 @@
                                     app:title="@{@string/joning_date}" />
 
                                 <include
+                                    android:id="@+id/fJobJoiningPrlDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/prl_date}" />
+
+                                <include
                                     android:id="@+id/fJobJoiningPensionDate"
                                     layout="@layout/personal_info_textview"
                                     app:title="@{@string/pention_date}" />
 
                                 <include
-                                    android:id="@+id/fJobJoiningPrlDate"
-                                    layout="@layout/personal_info_textview"
-                                    app:title="@{@string/prl_date}" />
+                                    android:id="@+id/fJobJoiningCurrentJob"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/current_job}" />
 
                                 <include
                                     android:id="@+id/jobjoiningUpdateButton"
@@ -323,8 +626,209 @@
                                     app:title="@{@string/description_bn}" />
 
                                 <include
+                                    android:id="@+id/fQuotaAttachment"
+                                    layout="@layout/personel_information_attachment_field" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/NameList"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:nestedScrollingEnabled="false" />
+
+
+                                <include
                                     android:id="@+id/quotaBtnUpdate"
                                     layout="@layout/personal_info_update_button" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+                <!-- ...........................nominee info start ........................................ -->
+                <LinearLayout
+                    android:id="@+id/llNomineeInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hNominee"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/nominee_info}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+
+                                <include
+                                    android:id="@+id/fNomineeSelect"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/nominne_from}"/>
+
+                                <include
+                                    android:id="@+id/fNomineeNestedSelect"
+                                    layout="@layout/personal_info_spinner"
+                                />
+
+                                <include
+                                    android:id="@+id/fNomineeName"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/name_of_nominee}"
+                                    app:title="@{@string/name_of_nominee}" />
+
+                                <include
+                                    android:id="@+id/fNomineeDob"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/birth}" />
+
+                                <include
+                                    android:id="@+id/fNomineeRelation"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/nominee_relation}"
+                                    app:title="@{@string/nominee_relation}" />
+
+                                <include
+                                    android:id="@+id/fNomineeAllocatedPercentage"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/nominee_allocated_percentage}"
+                                    app:title="@{@string/nominee_allocated_percentage}" />
+
+
+                                <include
+                                    android:id="@+id/fNomineeMaritalStatus"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/nominee_marital_status}" />
+
+
+                                <include
+                                    android:id="@+id/fNomineeGender"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/nominee_gender}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddressDivision"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/division}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddressDistrict"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/district}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddresstype_city_corp_upazila_municipality"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/type_city_corp_upazila_municipality}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddressMunicipalities"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/municipalities}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddressCityCorporations"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/citycorporations}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddressUpazila"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/upazila}" />
+
+                                <include
+                                    android:id="@+id/fNominneAddressUnio"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/union}" />
+
+
+                                <include
+                                    android:id="@+id/fNomineeHasDisability"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/nominee_has_disability}" />
+
+
+                                <include
+                                    android:id="@+id/fNomineeFullAddress"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/address_details}"
+                                    app:title="@{@string/address_details}" />
+
+
+                                <include
+                                    android:id="@+id/fNominneAttachment"
+                                    layout="@layout/personel_information_attachment_field"
+                                    app:title="@{@string/nominee_attachment}" />
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tvNomineeImageTitle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_weight="1"
+                                            android:text="@string/nominee_signature"
+                                            android:textColor="@color/light_black"
+                                            android:textSize="@dimen/text_size_small"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text=":" />
+
+                                        <ImageView
+                                            android:id="@+id/ivNomineeEmployee"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_100sdp"
+                                            android:paddingLeft="@dimen/_5sdp"
+                                            android:paddingRight="@dimen/_10sdp" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom"
+                                        android:layout_weight="1">
+
+                                        <include
+                                            android:id="@+id/nomineeUpdate"
+                                            layout="@layout/personal_info_update_button" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -381,9 +885,29 @@
                                     app:title="@{@string/district}" />
 
                                 <include
+                                    android:id="@+id/fAddresstype_city_corp_upazila_municipality"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/type_city_corp_upazila_municipality}" />
+
+                                <include
+                                    android:id="@+id/fAddressMunicipalities"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/municipalities}" />
+
+                                <include
+                                    android:id="@+id/fAddressCityCorporations"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/citycorporations}" />
+
+                                <include
                                     android:id="@+id/fAddressUpazila"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/upazila}" />
+
+                                <include
+                                    android:id="@+id/fAddressUnio"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/union}" />
 
                                 <include
                                     android:id="@+id/fAddressPoliceStation"
@@ -411,6 +935,12 @@
                                     app:title="@{@string/post_off_bn}" />
 
                                 <include
+                                    android:id="@+id/fAddressPostCode"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/post_code}"
+                                    app:title="@{@string/post_code}" />
+
+                                <include
                                     android:id="@+id/fAddressRoadOrWordNo"
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/road_word}"
@@ -433,6 +963,16 @@
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/vill_house_bn}"
                                     app:title="@{@string/vill_house_bn}" />
+
+                                <CheckBox
+                                    android:id="@+id/cbSameAsPresentAddress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_above="@+id/button"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginVertical="10dp"
+                                    android:text="@string/same_as_present_address"
+                                    android:textColor="@color/black" />
 
                                 <include
                                     android:id="@+id/addressBtnUpdate"
@@ -506,6 +1046,60 @@
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/div_cgpa}"
                                     app:title="@{@string/div_cgpa}" />
+
+                                <LinearLayout
+                                    android:id="@+id/fEQAttachment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    app:layout_constraintBottom_toTopOf="@id/send"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/llBody">
+
+                                    <TextView
+                                        android:id="@+id/fEQtvAttachment"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:drawableLeft="@drawable/ic_baseline_attachment_24"
+                                        android:drawablePadding="20dp"
+                                        android:text="@string/attachment"
+                                        android:maxLines="2"
+                                        android:ellipsize="end"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_large"
+                                        android:textStyle="bold" />
+
+
+                                    <TextView
+                                        android:id="@+id/fEQAttachmentFileName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+
+                                        android:maxLines="2"
+                                        android:ellipsize="end"
+                                        android:paddingHorizontal="5dp"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        android:textColor="@color/light_black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/fEQAtrtachmentError"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center|left"
+                                        android:gravity="center|left"
+                                        android:paddingHorizontal="@dimen/_5sdp"
+                                        android:paddingVertical="5dp"
+                                        android:text="error"
+                                        android:textColor="@color/red"
+                                        android:textSize="@dimen/text_size_small"
+                                        android:visibility="gone" />
+                                </LinearLayout>
 
                                 <include
                                     android:id="@+id/educationBtnUpdate"
@@ -598,6 +1192,15 @@
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/district}" />
 
+                                <include
+                                    android:id="@+id/fSpouseThana"
+                                    layout="@layout/personal_info_spinner"
+                                    android:visibility="gone"
+                                    app:title="@{@string/upazila}" />
+
+                                <include
+                                    android:id="@+id/location_container"
+                                    layout="@layout/location_container" />
 
                                 <include
                                     android:id="@+id/fSpousePhoneNo"
@@ -698,6 +1301,21 @@
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/gender}" />
 
+
+                                <include
+                                    android:id="@+id/fChildbirth_certificateADD"
+                                    layout="@layout/personel_information_attachment_field" />
+
+                                <include
+                                    android:id="@+id/fChildNidADD"
+                                    layout="@layout/personel_information_attachment_field" />
+
+
+                                <include
+                                    android:id="@+id/fChildPassportADD"
+                                    layout="@layout/personel_information_attachment_field" />
+
+
                                 <include
                                     android:id="@+id/childrenBtnAddUpdate"
                                     layout="@layout/personal_info_update_button" />
@@ -781,8 +1399,55 @@
 
 
                                 <include
-                                    android:id="@+id/languageBtnAddUpdate"
-                                    layout="@layout/personal_info_update_button" />
+                                    android:id="@+id/fLanguageAttachment"
+                                    layout="@layout/personel_information_attachment_field"
+                                    app:title="@{@string/document}" />
+
+
+                                <LinearLayout
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:id="@+id/llLanguageCertificate"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tvLanguageCertificate"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_weight="1"
+                                            android:text="@string/certificate"
+                                            android:textColor="@color/light_black"
+                                            android:textSize="@dimen/text_size_small"
+                                            android:textStyle="bold" />
+
+                                        <ImageView
+                                            android:id="@+id/ivLanguage"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_100sdp"
+                                            android:paddingLeft="@dimen/_5sdp"
+                                            android:paddingRight="@dimen/_10sdp"
+                                            android:src="@drawable/ic_baseline_image_24" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom"
+                                        android:layout_weight="1">
+
+                                        <include
+                                            android:id="@+id/languageBtnAddUpdate"
+                                            layout="@layout/personal_info_update_button" />
+                                    </LinearLayout>
+                                </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -829,7 +1494,7 @@
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/course_title}"
                                     app:title="@{@string/course_title}" />
-                                
+
                                 <include
                                     android:id="@+id/fLocalTrainingCourseTBn"
                                     layout="@layout/personel_information_edittext"
@@ -866,6 +1531,11 @@
                                     app:title="@{@string/country}" />
 
                                 <include
+                                    android:id="@+id/fLocalTrainingCategory"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/training_category}" />
+
+                                <include
                                     android:id="@+id/fLocalTrainingFromDate"
                                     layout="@layout/personal_info_textview"
                                     app:hint="@{@string/from_date}"
@@ -878,9 +1548,54 @@
                                     app:title="@{@string/to_date}" />
 
                                 <include
-                                    android:id="@+id/trainingBtnAddUpdate"
-                                    layout="@layout/personal_info_update_button" />
+                                    android:id="@+id/fLocalTrainingAddAttachment"
+                                    layout="@layout/personel_information_attachment_field"
+                                    app:title="@{@string/attachment}" />
 
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:id="@+id/llTraining"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/tvTrainingCertificate"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_weight="1"
+                                            android:text="@string/certificate"
+                                            android:textColor="@color/light_black"
+                                            android:textSize="@dimen/text_size_small"
+                                            android:textStyle="bold" />
+
+                                        <ImageView
+                                            android:id="@+id/ivTraining"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_100sdp"
+                                            android:paddingLeft="@dimen/_5sdp"
+                                            android:paddingRight="@dimen/_10sdp"
+                                            android:src="@drawable/ic_baseline_image_24" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom"
+                                        android:layout_weight="1">
+
+                                        <include
+                                            android:id="@+id/trainingBtnAddUpdate"
+                                            layout="@layout/personal_info_update_button" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -1058,19 +1773,41 @@
                                     layout="@layout/personal_info_textview"
                                     app:title="@{@string/to_date}" />
 
-
                                 <include
                                     android:id="@+id/fForeignTravelPurpose"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/purpose}"
+                                    layout="@layout/personal_info_spinner"
                                     app:title="@{@string/purpose}" />
+
+                                <!--                                <include-->
+                                <!--                                    android:id="@+id/fForeignTravelPurpose"-->
+                                <!--                                    layout="@layout/personel_information_edittext"-->
+                                <!--                                    app:hint="@{@string/purpose}"-->
+                                <!--                                    app:title="@{@string/purpose}" />-->
+
+
+                                <!--                                <include-->
+                                <!--                                    android:id="@+id/fForeignTravelPurposeBn"-->
+                                <!--                                    layout="@layout/personel_information_edittext"-->
+                                <!--                                    app:hint="@{@string/purpose_bangla}"-->
+                                <!--                                    app:title="@{@string/purpose_bangla}" />-->
 
 
                                 <include
-                                    android:id="@+id/fForeignTravelPurposeBn"
+                                    android:id="@+id/fForeignTravelDetailsEn"
                                     layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/purpose_bangla}"
-                                    app:title="@{@string/purpose_bangla}" />
+                                    app:hint="@{@string/details_en}"
+                                    app:title="@{@string/details_en}" />
+
+                                <include
+                                    android:id="@+id/fForeignTravelDetailsBn"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/details_bn}"
+                                    app:title="@{@string/details_bn}" />
+
+
+                                <include
+                                    android:id="@+id/fForeignTravelAttachment"
+                                    layout="@layout/personel_information_attachment_field" />
 
                                 <include
                                     android:id="@+id/foreignTravelBtnAddUpdate"
@@ -1142,6 +1879,11 @@
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/qualification_details_bangla}"
                                     app:title="@{@string/qualification_details_bangla}" />
+
+                                <include
+                                    android:id="@+id/fAQAttachemnt"
+                                    layout="@layout/personel_information_attachment_field" />
+
 
                                 <include
                                     android:id="@+id/additionalPQBtnAddUpdate"
@@ -1216,6 +1958,10 @@
                                     layout="@layout/personel_information_edittext"
                                     app:hint="@{@string/public_details_bn}"
                                     app:title="@{@string/public_details_bn}" />
+
+                                <include
+                                    android:id="@+id/fPublicationAttachment"
+                                    layout="@layout/personel_information_attachment_field" />
 
 
                                 <include
@@ -1294,6 +2040,10 @@
                                     app:title="@{@string/award_details_bn}" />
 
                                 <include
+                                    android:id="@+id/fAwardAttachment"
+                                    layout="@layout/personel_information_attachment_field" />
+
+                                <include
                                     android:id="@+id/honoursAwardBtnAddUpdate"
                                     layout="@layout/personal_info_update_button" />
                             </LinearLayout>
@@ -1302,6 +2052,7 @@
                 </LinearLayout>
 
                 <!-- ...........................Reference start ........................................ -->
+
                 <LinearLayout
                     android:id="@+id/llReference"
                     android:layout_width="match_parent"
@@ -1395,7 +2146,6 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
-
 
             </LinearLayout>
         </ScrollView>

@@ -50,7 +50,8 @@ class FilePath {
                         selectionArgs
                     )
                 }
-            } else if ("content".equals(uri.getScheme(), ignoreCase = true)) {
+            }
+            else if ("content".equals(uri.getScheme(), ignoreCase = true)) {
 
                 // Return the remote address
                 return if (isGooglePhotosUri(uri)) uri.getLastPathSegment() else getDataColumn(

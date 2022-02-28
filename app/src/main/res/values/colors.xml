@@ -11,9 +11,6 @@
     <color name="statusbar_color_deep">#008F4C</color>
 
 
-
-
-
     <color name="white">#ffffff</color>
     <color name="off_white">#F5F5F5</color>
     <color name="black">#000000</color>
@@ -23,13 +20,16 @@
     <color name="green_light">#62BA90</color>
     <color name="red">#D31D10</color>
     <color name="blue">#0089F8</color>
+    <color name="light_blue">#E2EEF8</color>
     <color name="yellow">#FFD24B</color>
     <color name="pink">#E1C4C2</color>
     <color name="purpel">#600DF4</color>
 
     <color name="color_accent">#000000</color>
     <color name="background">#EFEEEE</color>
-<!--    <color name="background">#ECF3FB</color>-->
+    <!--    <color name="background">#ECF3FB</color>-->
+
+    <color name="headerColor">#F79C9C</color>
 
     <color name="gradient_start_accent_color">#BF0966B1</color>
     <color name="gradient_center_accent_color">#D90966B1</color>

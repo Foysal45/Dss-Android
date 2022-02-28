@@ -2,6 +2,8 @@ package com.namaztime.namaztime.database
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
+import com.google.gson.GsonBuilder
 
 class MySharedPreparence {
 
@@ -39,7 +41,7 @@ class MySharedPreparence {
     }
 
     fun getLanguage(): String? {
-        return preferences!!.getString(LANGUAGE, "en");
+        return preferences!!.getString(LANGUAGE, "bn");
     }
 
     fun setLoginStatus(value: Boolean) {
@@ -57,6 +59,7 @@ class MySharedPreparence {
         editor.putBoolean(REMEMBER, value)
         editor.commit()
     }
+
 
     fun isRemember(): Boolean? {
         return preferences!!.getBoolean(REMEMBER, false);
@@ -83,13 +86,45 @@ class MySharedPreparence {
     }
 
     fun setLoginInfo(value: String) {
+
+
         val editor = preferences!!.edit()
         editor.putString(LOGIN_INFO, value)
         editor.commit()
     }
 
     fun getLoginInfo(): String? {
+
         return preferences!!.getString(LOGIN_INFO, null);
     }
+
+    /**
+     * Saves object into the Preferences.
+     *
+     * @param `object` Object of model class (of type [T]) to save
+     * @param key Key with which Shared preferences to
+     **/
+    fun <T> put(`object`: T, key: String) {
+        //Convert object to JSON String.
+        val jsonString = GsonBuilder().create().toJson(`object`)
+
+        //Save that String in SharedPreferences
+        preferences?.edit()?.putString(key, jsonString)?.apply()
+    }
+
+    inline fun <reified T> get(key: String): T? {
+        //We read JSON String which was saved.
+        val value = preferences?.getString(key, null)
+        //JSON String was found which means object can be read.
+        //We convert this JSON String to model object. Parameter "c" (of
+        //type Class < T >" is used to cast.
+        return GsonBuilder().create().fromJson(value, T::class.java)
+    }
+
+    fun removeEveryThing() {
+    //    preferences?.edit()?.clear()?.commit()
+
+    }
+
 
 }

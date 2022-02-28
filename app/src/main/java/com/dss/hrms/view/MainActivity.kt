@@ -6,109 +6,316 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.chaadride.network.error.ApiError
-import com.chaadride.network.error.ErrorUtils2
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
-import com.dss.hrms.model.Employee
-import com.dss.hrms.model.LoginInfo
+import com.dss.hrms.di.mainScope.EmployeePendingData
+import com.dss.hrms.di.mainScope.EmployeeProfileData
+import com.dss.hrms.model.JsonKeyReader
+import com.dss.hrms.model.employeeProfile.Employee
+import com.dss.hrms.model.error.ApiError
+import com.dss.hrms.model.login.LoginInfo
+import com.dss.hrms.model.pendingDataModel.PendingDataModel
+import com.dss.hrms.retrofit.RetrofitInstance
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.CustomVisibility
-import com.dss.hrms.view.`interface`.OnNetworkStateChangeListener
+import com.dss.hrms.util.HelperClass
 import com.dss.hrms.view.activity.BaseActivity
-import com.dss.hrms.view.activity.EmployeeInfoActivity
-import com.dss.hrms.view.activity.LoginActivity
-import com.dss.hrms.view.adapter.employeeInfo.CustomeView
+import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
+import com.dss.hrms.view.auth.LoginActivity
+import com.dss.hrms.view.settings.SettingsActivity
+import com.dss.hrms.view.allInterface.OnNetworkStateChangeListener
+import com.dss.hrms.view.leave.LeaveActivity
+import com.dss.hrms.view.messaging.MessagingActivity
+import com.dss.hrms.view.notification.NotificationActivity
+import com.dss.hrms.view.notification.viewmodel.NotificationViewModel
+import com.dss.hrms.view.payroll.PayrollActivity
 import com.dss.hrms.view.receiver.NetworkChangeReceiver
-import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
+import com.dss.hrms.view.report.ReportActivity
+import com.dss.hrms.view.training.TrainingActivity
 import com.dss.hrms.viewmodel.EmployeeViewModel
-import com.dss.hrms.viewmodel.LoginViewModel
 import com.dss.hrms.viewmodel.UtilViewModel
-import com.google.gson.Gson
+import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.namaztime.namaztime.database.MySharedPreparence
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.noInternetTV
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.dashboard_header.*
-import kotlinx.android.synthetic.main.nav_header.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.android.synthetic.main.nav_menu_layout.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.Exception
+import javax.inject.Inject
+import kotlin.math.log
 
 class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProviderFactory
+
+    @Inject
     lateinit var preparence: MySharedPreparence
+
+    @Inject
+    lateinit var loginInfo: LoginInfo
+
+    @Inject
+    // @Named("employee")
+    lateinit var employeeProfileData: EmployeeProfileData
+
+    @Inject
+    // @Named("employee")
+    lateinit var employeePendingData: EmployeePendingData
+
+    var employee: Employee? = null
+    var pendingData: PendingDataModel? = null
+
+    lateinit var notificationViewModel: NotificationViewModel
     lateinit var employeeViewModel: EmployeeViewModel
     var mNetworkReceiver: NetworkChangeReceiver? = null
-    var loginInfo: LoginInfo? = null
     var utilViewModel: UtilViewModel? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        preparence = MySharedPreparence(this)
         setLocalLanguage(preparence.getLanguage())
         setContentView(R.layout.activity_main)
         appContext = application
         context = this
         init()
 
-        drawerMenu()
-        getEmployeeInfo()
-        utilData()
+
+        employeeViewModel.apply {
+            getUserPermissions()
+
+            userPermission.observe(this@MainActivity, Observer { list ->
+                list?.let {
+
+                    preparence.put(list , "permissionList")
+
+                    Log.d("TUU", "onCreate: SAVED ")
+                    if (JsonKeyReader.hasPermission("reports", it)) {
+                        rlReport.visibility = View.VISIBLE
+                        menu_dashboard_report.visibility = View.VISIBLE
+                    } else {
+                        rlReport.visibility = View.GONE
+                        menu_dashboard_report.visibility = View.GONE
+                    }
+                    Log.e(
+                        "permission",
+
+                        ".......................................permission result ${
+                            JsonKeyReader.hasPermission(
+                                "commonstationary-edit",
+                                it
+                            )
+                        }"
+                    )
+                }
+            })
+
+
+        }
+
+        notificationViewModel.apply {
+            getAllNotifications()
+            totalUnRead?.observe(this@MainActivity, Observer { notificatiosList ->
+                notificatiosList?.let { totalUnreadNotificaiton ->
+                    totalUnreadNotificaiton?.let {
+                        tvNotification.setText("${it}")
+                    }
+                }
+            })
+        }
+
+        Log.e("mainactivity", "inject login data " + loginInfo?.email)
+        Log.e("mainactivity", "inject employee data " + employeeProfileData?.employee?.profile_id)
+        try {
+            getPendingData()
+        } catch (ex: Exception) {
+            Toast.makeText(applicationContext, "Error : ${ex.localizedMessage}", Toast.LENGTH_LONG)
+                .show()
+        }
+
+
+        notification.setOnClickListener {
+            Intent(this, NotificationActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+
+        btnPersonalInfo.setOnClickListener {
+            startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 0))
+            selectedPosition = 0
+        }
+        btnSettings.setOnClickListener {
+            Intent(this, SettingsActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        btnTraining.setOnClickListener {
+            Intent(this, TrainingActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        btnMessaging.setOnClickListener {
+            Intent(this, MessagingActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        btnPayroll.setOnClickListener({
+            Intent(this, PayrollActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        })
+        btnLeave.setOnClickListener({
+            Intent(this, LeaveActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        })
+        btnReport.setOnClickListener({
+            Intent(this, ReportActivity::class.java).apply {
+                startActivity(this)
+            }
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        })
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        finish()
+        startActivity(Intent(this, MainActivity::class.java))
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        // drawerMenu()
+
     }
 
     fun init() {
-        preparence = MySharedPreparence(this)
-        employeeViewModel = ViewModelProviders.of(this).get(EmployeeViewModel::class.java)
+        employeeViewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(EmployeeViewModel::class.java)
+        notificationViewModel =
+            ViewModelProvider(this, viewModelProviderFactory).get(NotificationViewModel::class.java)
         mNetworkReceiver = NetworkChangeReceiver(this)
-        loginInfo = Gson().fromJson(preparence.getLoginInfo(), LoginInfo::class.java)
         registerNetworkBroadcast()
     }
 
     fun getEmployeeInfo() {
         var dialog = CustomLoadingDialog().createLoadingDialog(this)
-        employeeViewModel?.getEmployeeInfo(loginInfo?.employee_id)
-            ?.observe(this, Observer { any ->
-                dialog?.dismiss()
-                //   Log.e("LoginActivity", "response : " + Gson().toJson(any))
-                if (any is Employee) {
-                    employee = any
-                    //   Log.e("MainActivity", "response : " + any)
-                } else if (any is ApiError) {
+        // Toast.makeText(applicationContext , "ID -> " + loginInfo.employee_id ,Toast.LENGTH_LONG).show()
+        val a = lifecycleScope.launch {
+            employeeViewModel.getEmployeeInfo(loginInfo.employee_id)
+                ?.collect {
+                    dialog?.dismiss()
+                    when (it) {
+                        is Employee -> {
+                            employee = employeeProfileData.employee
+                        }
+                        is ApiError -> {
 
-                } else if (any is Throwable) {
-                    toast(this, any.toString())
+                        }
+                        is Throwable -> {
+                            toast(appContext!!, it.toString())
+                        }
+                    }
                 }
-            })
+        }
+
+        a.invokeOnCompletion {
+            drawerMenu()
+
+        }
     }
 
-    fun utilData() {
-        llContent.addView(CustomeView().getEditextText(this, "first edittext"))
 
-//        utilViewModel = ViewModelProviders.of(this).get(UtilViewModel::class.java)
-//        utilViewModel?.getDivision()
-//            ?.observe(this, Observer { any ->
-//                Log.e("division", "division " + Gson().toJson(any))
-//            })
-//        utilViewModel?.getDistrict(1)
-//            ?.observe(this, Observer { any ->
-//                Log.e("district", "district " + Gson().toJson(any))
-//            })
-//        utilViewModel?.getUpozila(1)
-//            ?.observe(this, Observer { any ->
-//                Log.e("upazila", "upazila " + Gson().toJson(any))
-//            })
+    fun getPendingData() {
+        var dialog = CustomLoadingDialog().createLoadingDialog(this)
+        val mm = lifecycleScope.launch {
+            employeeViewModel.getPendingData(loginInfo.employee_id)
+                .collect {
+                    dialog?.dismiss()
+                    if (it is PendingDataModel) {
+                        pendingData = employeePendingData.PendingData
 
+                        Log.d(
+                            "TAGED",
+                            "getPendingData:  ${employeeProfileData.employee?.presentAddresses?.size}"
+                        )
+                    } else if (it is ApiError) {
+                        Log.d("TAGED", "Error :  ${it.getMessage()}")
+                    } else if (it is Throwable) {
+                        toast(appContext!!, it.toString())
+                    }
+                }
+        }
 
+        mm.invokeOnCompletion {
+            preparence.put(pendingData, HelperClass.PEDING_DATA)
+            getEmployeeInfo()
+        }
     }
 
     fun drawerMenu() {
+
+
+        Glide.with(this).applyDefaultRequestOptions(
+            RequestOptions()
+                .placeholder(R.drawable.ic_baseline_image_24)
+        ).load(RetrofitInstance.BASE_URL + employeeProfileData.employee?.photo)
+            .into(headerLayout.menu_logo)
+
+        if (preparence.getLanguage().equals("bn")) {
+            headerLayout.menu_name.text = employeeProfileData.employee?.name_bn
+        } else {
+            headerLayout.menu_name.text = employeeProfileData.employee?.name
+        }
+
+
+        if (employeeProfileData.employee?.jobjoinings != null && employeeProfileData.employee?.jobjoinings!!.isNotEmpty())
+            if (preparence.getLanguage().equals("en")) {
+                headerLayout.menu_name.text = employeeProfileData.employee?.name
+                headerLayout.menu_office_address.text =
+                    employeeProfileData.employee?.jobjoinings!![0].office?.office_name
+                headerLayout.menu_designation.text =
+                    employeeProfileData.employee?.jobjoinings!![0].designation?.name
+            } else {
+                headerLayout.menu_name.text = employeeProfileData.employee?.name_bn
+                headerLayout.menu_office_address.text =
+                    employeeProfileData.employee?.jobjoinings!![0].office?.office_name_bn
+                headerLayout.menu_designation.text =
+                    employeeProfileData.employee?.jobjoinings!![0].designation?.name_bn
+            }
+
+
+        headerLayout.rlPersonalInfo.setOnClickListener {
+            startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 0))
+        }
+
+
         menu_profile_lay_expandableLayout.collapse()
         menu_dashboard_lay_head.setOnClickListener {
             drawer_menu.closeDrawer(GravityCompat.START)
@@ -116,16 +323,16 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
         menu_profile_lay_head.setOnClickListener {
             menu_profile_lay_expandableLayout.toggle()
             if (!menu_profile_lay_expandableLayout.isExpanded) {
-                menu_profile_lay_head.setBackgroundResource(
-                    R.drawable.selected
-                )
+//                menu_profile_lay_head.setBackgroundResource(
+//                    R.drawable.selected
+//                )
                 menu_profile.setTextColor(ContextCompat.getColor(this, R.color.black))
-              //  more_profile.setImageDrawable(getDrawable(R.drawable.ic_baseline_expand_more_white_24))
+                //  more_profile.setImageDrawable(getDrawable(R.drawable.ic_baseline_expand_more_white_24))
                 more_profile.animate().setDuration(300).rotation(180.0f).start()
             } else {
-                menu_profile_lay_head.setBackgroundResource(
-                    R.drawable.focused
-                )
+//                menu_profile_lay_head.setBackgroundResource(
+//                    R.drawable.focused
+//                )
                 menu_profile.setTextColor(ContextCompat.getColor(this, R.color.black))
                 more_profile.setImageDrawable(getDrawable(R.drawable.ic_baseline_expand_more_24))
                 more_profile.animate().setDuration(300).rotation(360.0f).start()
@@ -143,10 +350,10 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 1))
         })
 
-        menu_profile_child_information.setOnClickListener({ view ->
+        menu_profile_child_information.setOnClickListener { view ->
             selectedPosition = 2
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 2))
-        })
+        }
         menu_profile_present_address.setOnClickListener({ view ->
             selectedPosition = 3
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 3))
@@ -207,12 +414,16 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 16))
         })
 
-
-        menu_profile_promotion.setOnClickListener({ view ->
+//
+//        menu_profile_promotion.setOnClickListener({ view ->
+//            selectedPosition = 17
+//            startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 17))
+//        })
+        menu_profile_reference.setOnClickListener({ view ->
             selectedPosition = 17
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 17))
         })
-        menu_profile_reference.setOnClickListener({ view ->
+        menu_profile_nominee.setOnClickListener({ view ->
             selectedPosition = 18
             startActivity(Intent(this, EmployeeInfoActivity::class.java).putExtra("position", 18))
         })
@@ -225,10 +436,51 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
 
             preparence?.setLanguage(null)
             preparence.setLoginStatus(false)
+            preparence.removeEveryThing()
+
             finish()
             startActivity(
                 Intent(this, LoginActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+
+
+        this.menu_dashboard_settings.setOnClickListener {
+            startActivity(
+                Intent(this, SettingsActivity::class.java)
+            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+
+        menu_dashboard_training.setOnClickListener {
+            startActivity(
+                Intent(this, TrainingActivity::class.java)
+            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        this.menu_dashboard_leave.setOnClickListener {
+            startActivity(
+                Intent(this, LeaveActivity::class.java)
+            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        this.menu_dashboard_payroll.setOnClickListener {
+            startActivity(
+                Intent(this, PayrollActivity::class.java)
+            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        this.menu_dashboard_messaging.setOnClickListener {
+            startActivity(
+                Intent(this, MessagingActivity::class.java)
+            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        menu_dashboard_report.setOnClickListener {
+            startActivity(
+                Intent(this, ReportActivity::class.java)
             )
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
@@ -291,9 +543,10 @@ class MainActivity : BaseActivity(), OnNetworkStateChangeListener {
     }
 
     companion object {
-        var employee: Employee? = null
+        // var employee: Employee? = null
         var appContext: Application? = null
         var context: MainActivity? = null
         var selectedPosition: Int = 0
+        var isViewIntent: Int = 0
     }
 }

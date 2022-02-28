@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.leave.fragment.CreateEditLeaveApplicationFragment">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/llLeaveApplication"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="25dp"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_marginTop="15dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="4dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <include
+                                    android:id="@+id/hLeaveApplication"
+                                    layout="@layout/personal_information_create_field_header"
+                                    app:title="@{@string/leave_application}" />
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/off_white"
+                                    android:orientation="vertical"
+                                    android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                    android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                    <LinearLayout
+                                        android:id="@+id/llNotifyEmployee"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:paddingVertical="@dimen/_4sdp">
+
+                                        <TextView
+                                            android:id="@+id/tvNotifyEmployeeTitle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginVertical="@dimen/_5sdp"
+                                            android:text="@string/select_notify"
+                                            android:textColor="@color/light_black"
+                                            android:textSize="@dimen/text_size_large"
+                                            android:textStyle="bold" />
+
+
+                                        <TextView
+                                            android:id="@+id/tvNotifyText"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/edittext_height_large"
+                                            android:background="@drawable/edittext_bg"
+                                            android:gravity="center|left"
+                                            android:hint="@string/select_notify"
+                                            android:paddingHorizontal="@dimen/_5sdp"
+                                            android:paddingRight="10dp"
+                                            android:textColor="@color/light_black"
+                                            android:textColorHint="@color/gray"
+                                            android:textSize="@dimen/text_size_medium" />
+
+
+                                        <TextView
+                                            android:id="@+id/tvNotifyEmployeeError"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center|left"
+                                            android:gravity="center|left"
+                                            android:paddingHorizontal="@dimen/_5sdp"
+                                            android:paddingVertical="5dp"
+                                            android:text="error"
+                                            android:textColor="@color/red"
+                                            android:textSize="@dimen/text_size_small"
+                                            android:visibility="gone" />
+
+                                        <!--            </androidx.cardview.widget.CardView>-->
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llResponsibleEmployee"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:paddingVertical="@dimen/_4sdp">
+
+                                        <TextView
+                                            android:id="@+id/tvResponsibleEmployeeTitle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginVertical="@dimen/_5sdp"
+                                            android:text="@string/select_responsible"
+                                            android:textColor="@color/light_black"
+                                            android:textSize="@dimen/text_size_large"
+                                            android:textStyle="bold" />
+
+
+                                        <TextView
+                                            android:id="@+id/tvResponsibleText"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/edittext_height_large"
+                                            android:background="@drawable/edittext_bg"
+                                            android:gravity="center|left"
+                                            android:hint="@string/select_responsible"
+                                            android:paddingHorizontal="@dimen/_5sdp"
+                                            android:paddingRight="10dp"
+                                            android:textColor="@color/light_black"
+                                            android:textColorHint="@color/gray"
+                                            android:textSize="@dimen/text_size_medium" />
+
+                                        <TextView
+                                            android:id="@+id/tvResponsibleEmployeeError"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center|left"
+                                            android:gravity="center|left"
+                                            android:paddingHorizontal="@dimen/_5sdp"
+                                            android:paddingVertical="5dp"
+                                            android:text="error"
+                                            android:textColor="@color/red"
+                                            android:textSize="@dimen/text_size_small"
+                                            android:visibility="gone" />
+
+                                        <!--            </androidx.cardview.widget.CardView>-->
+                                    </LinearLayout>
+
+                                    <include
+                                        android:id="@+id/lLeaveType"
+                                        layout="@layout/personal_info_spinner"
+                                        app:title="@{@string/leave_type}" />
+
+
+                                    <include
+                                        android:id="@+id/lFromDate"
+                                        layout="@layout/personal_info_textview"
+                                        app:title="@{@string/from_date}" />
+
+                                    <include
+                                        android:id="@+id/lToDate"
+                                        layout="@layout/personal_info_textview"
+                                        app:title="@{@string/to_date}" />
+
+                                    <include
+                                        android:id="@+id/lLeaveRequestReference"
+                                        layout="@layout/personel_information_edittext"
+                                        app:hint="@{@string/leave_request_reference}"
+                                        app:title="@{@string/leave_request_reference}" />
+
+                                    <include
+                                        android:id="@+id/lEmergencyContantNo"
+                                        layout="@layout/personel_information_edittext"
+                                        app:hint="@{@string/emergency_contact_no}"
+                                        app:title="@{@string/emergency_contact_no}" />
+
+                                    <LinearLayout
+                                        android:id="@+id/llReasonDetails"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:paddingVertical="@dimen/_4sdp"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/llEmployee">
+
+                                        <TextView
+                                            android:id="@+id/tvReason"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginVertical="5dp"
+                                            android:text="@string/reason_details"
+                                            android:textColor="@color/light_black"
+                                            android:textSize="@dimen/text_size_large"
+                                            android:textStyle="bold" />
+
+                                        <EditText
+                                            android:id="@+id/etBody"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="120dp"
+                                            android:layout_gravity="top"
+                                            android:background="@drawable/edittext_bg"
+                                            android:gravity="top"
+                                            android:hint="@string/reason_details"
+                                            android:inputType="text"
+                                            android:paddingHorizontal="@dimen/_5sdp"
+                                            android:paddingLeft="5dp"
+                                            android:paddingTop="5dp"
+                                            android:textColor="@color/light_black"
+                                            android:textColorHint="@color/gray"
+                                            android:textSize="@dimen/text_size_medium" />
+
+                                        <TextView
+                                            android:id="@+id/tvReasonDetailsError"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center|left"
+                                            android:gravity="center|left"
+                                            android:paddingHorizontal="@dimen/_5sdp"
+                                            android:paddingVertical="5dp"
+                                            android:text="error"
+                                            android:textColor="@color/red"
+                                            android:textSize="@dimen/text_size_small"
+                                            android:visibility="gone" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:id="@+id/ivAttachement"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_100sdp"
+                                            android:paddingLeft="@dimen/_5sdp"
+                                            android:paddingRight="@dimen/_10sdp"
+                                            android:src="@drawable/ic_baseline_image_24" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llAttachment"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        app:layout_constraintBottom_toTopOf="@id/send"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/llBody">
+
+                                        <TextView
+                                            android:id="@+id/tvAttachment"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginVertical="@dimen/_5sdp"
+                                            android:drawableLeft="@drawable/ic_baseline_attachment_24"
+                                            android:drawablePadding="20dp"
+                                            android:text="@string/attachment"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/text_size_large"
+                                            android:textStyle="bold" />
+
+
+                                        <TextView
+                                            android:id="@+id/tvFileName"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginVertical="@dimen/_5sdp"
+                                            android:ellipsize="end"
+                                            android:paddingHorizontal="5dp"
+                                            android:singleLine="true"
+                                            android:text=""
+                                            android:textColor="@color/light_black"
+                                            android:textSize="@dimen/text_size_medium"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:id="@+id/tvAttachmentError"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center|left"
+                                            android:gravity="center|left"
+                                            android:paddingHorizontal="@dimen/_5sdp"
+                                            android:paddingVertical="5dp"
+                                            android:text="error"
+                                            android:textColor="@color/red"
+                                            android:textSize="@dimen/text_size_small"
+                                            android:visibility="gone" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+
+
+                                        <Button
+                                            android:id="@+id/leaveApplicatoinBtnDraft"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_marginHorizontal="10dp"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginBottom="15dp"
+                                            android:gravity="center"
+                                            android:text="@string/draft"
+                                            android:textAllCaps="false"
+                                            android:textColor="@color/green"
+                                            android:textSize="@dimen/text_size_small" />
+
+                                        <Button
+                                            android:id="@+id/leaveApplicatoinBtnUpdate"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_marginHorizontal="10dp"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginBottom="15dp"
+                                            android:gravity="center"
+                                            android:text="@string/update"
+                                            android:textAllCaps="false"
+                                            android:textColor="@color/green"
+                                            android:textSize="@dimen/text_size_small" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

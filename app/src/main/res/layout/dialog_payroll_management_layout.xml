@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/llBankInformation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="25dp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/hBankInformation"
+                                layout="@layout/personal_information_create_field_header"
+                                app:title="@{@string/bank_information}" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/off_white"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                                <include
+                                    android:id="@+id/BIBankName"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/bank_name}"
+                                    app:title="@{@string/bank_name}" />
+
+
+                                <include
+                                    android:id="@+id/BIBranchName"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/branch_name}"
+                                    app:title="@{@string/branch_name}" />
+
+                                <include
+                                    android:id="@+id/BIAccountNumber"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/account_no}"
+                                    app:title="@{@string/account_no}" />
+
+                                <include
+                                    android:id="@+id/BIAccountName"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/account_name}"
+                                    app:title="@{@string/account_name}" />
+
+                                <include
+                                    android:id="@+id/BIDistrict"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/district}" />
+
+                                <include
+                                    android:id="@+id/BIBankRoutingNumber"
+                                    layout="@layout/personel_information_edittext"
+                                    app:hint="@{@string/bank_routing_number}"
+                                    app:title="@{@string/bank_routing_number}" />
+
+
+                                <include
+                                    android:id="@+id/BIAccountType"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/account_type}" />
+
+                                <Button
+                                    android:id="@+id/bankAccountBtnUpdate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:gravity="center"
+                                    android:text="@string/update"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/green"
+                                    android:textSize="@dimen/text_size_small" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

@@ -1,4 +1,4 @@
-package com.chaadride.network.error
+package com.dss.hrms.model.error
 import com.google.gson.annotations.SerializedName
 
 class ApiError (

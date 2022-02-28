@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="resourcePerson"
+            type="com.dss.hrms.model.TrainingResponse.ResourcePerson" />
+
+        <variable
+            name="language"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_corner_shape_bg_white"
+        android:paddingVertical="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp"
+        app:layoutDescription="@xml/model_resource_person_xml_constraintlayout_scene">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintMain"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/constraingRight"
+            app:layout_constraintBottom_toTopOf="@+id/constraintExpand"
+            app:layout_constraintTop_toTopOf="parent"></androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingVertical="2dp"
+            android:text="@{resourcePerson.person_name+`(`+resourcePerson.short_name+`)`}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_extra_large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tvTitle"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="@id/constraintMain"
+            app:layout_constraintRight_toRightOf="@id/constraintMain"
+            app:layout_constraintTop_toTopOf="@id/constraintMain" />
+
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:paddingVertical="2dp"
+            android:singleLine="true"
+            android:text="@{(@string/designation)+`:`+((language.equals(`en`))? resourcePerson.designation.name : resourcePerson.designation.name_bn)}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="@id/constraintMain"
+            app:layout_constraintLeft_toLeftOf="@id/constraintMain"
+            app:layout_constraintRight_toRightOf="@id/constraintMain"
+            app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraingRight"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/constraintMain"
+            app:layout_constraintLeft_toRightOf="@id/constraintMain"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/imgEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|right"
+            android:paddingHorizontal="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/constraingRight"
+            app:layout_constraintRight_toLeftOf="@id/imgDelete"
+            app:layout_constraintTop_toTopOf="@id/constraingRight"
+            app:srcCompat="@drawable/edit_icon_24"
+            app:tint="@color/green" />
+
+
+        <ImageView
+            android:id="@+id/imgDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="1.0"
+            android:gravity="center|right"
+            android:paddingHorizontal="5dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/imgEdit"
+            app:layout_constraintTop_toTopOf="@id/imgEdit"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            app:tint="@color/gray" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintExpand"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constraintMain"></androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:paddingVertical="2dp"
+            android:singleLine="true"
+            android:text="@{(@string/phone+`:`)+resourcePerson.first_mobile}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@id/tvEmail"
+            app:layout_constraintLeft_toLeftOf="@id/constraintExpand"
+            app:layout_constraintRight_toRightOf="@id/constraintExpand"
+            app:layout_constraintTop_toTopOf="@id/constraintExpand" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:singleLine="true"
+            android:text="@{(@string/email+`:`)+resourcePerson.first_email}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintExpand"
+            app:layout_constraintLeft_toLeftOf="@id/constraintExpand"
+            app:layout_constraintRight_toRightOf="@id/constraintExpand"
+            app:layout_constraintTop_toBottomOf="@id/tvPhone" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

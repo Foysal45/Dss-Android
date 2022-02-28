@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.ForgetPAssActivity">
+    tools:context=".view.auth.ForgetPAssActivity">
 
     <ImageView
         android:id="@+id/backBtnIV"
@@ -83,6 +83,7 @@
                     android:gravity="center_vertical"
                     android:hint="@string/email_address_phone"
                     android:paddingLeft="10dp"
+                    android:textColor="@color/light_black"
                     android:paddingRight="10dp"
                     android:textSize="14sp" />
             </soup.neumorphism.NeumorphCardView>
