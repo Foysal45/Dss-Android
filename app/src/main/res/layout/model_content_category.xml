@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:background="@drawable/round_corner_shape_bg_white"
+        android:paddingHorizontal="10dp"
+        app:layoutDescription="@xml/model_content_category_xml_mainlayout_scene">
+
+        <TextView
+            android:id="@+id/tvCategoryName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:paddingHorizontal="5dp"
+            android:text="@string/category"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_extra_large"
+            app:layout_constraintBottom_toTopOf="@id/constraintDes"
+            app:layout_constraintRight_toLeftOf="@id/imgEdit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.8" />
+
+        <ImageView
+            android:id="@+id/imgEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:paddingHorizontal="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCategoryName"
+            app:layout_constraintEnd_toStartOf="@id/imgDelete"
+            app:layout_constraintLeft_toRightOf="@id/tvCategoryName"
+            app:layout_constraintTop_toTopOf="@id/tvCategoryName"
+            app:srcCompat="@drawable/edit_icon_24"
+            app:tint="@color/green" />
+
+        <ImageView
+            android:id="@+id/imgDelete"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:alpha="1.0"
+            android:gravity="center|left"
+            android:paddingHorizontal="5dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/tvCategoryName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="@id/imgEdit"
+            app:layout_constraintTop_toTopOf="@id/tvCategoryName"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            app:tint="@color/gray" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintDes"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCategoryName"></androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvDes"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="10dp"
+            android:gravity="center|left"
+            android:paddingHorizontal="5dp"
+            android:text="By default, Android resizes your app layout to fit the current screen. To ensure your layout resizes well for even small variations in screen size, you need to implement your layout with flexibility in mind. The core principle you must follow is to avoid hard-coding the position and size of your UI components. Instead, allow view sizes to stretch and specify view positions relative to the parent view or other sibling views so your intended order and relative sizes remain the same as the layout grows."
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_extra_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/constraintDes"
+            app:layout_constraintRight_toRightOf="@+id/constraintDes"
+            app:layout_constraintTop_toTopOf="@+id/constraintDes"
+            app:layout_constraintVertical_bias="0.5" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>

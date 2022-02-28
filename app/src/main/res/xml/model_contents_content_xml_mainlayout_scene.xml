@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="500">
+       <KeyFrameSet>
+       </KeyFrameSet>
+        <OnClick motion:targetId="@+id/conItemLeft" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/constraintDes"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toBottomOf="@id/constraintBottom"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp" />
+        <Constraint
+            android:id="@+id/tvDes"
+            motion:layout_constraintEnd_toEndOf="@+id/constraintDes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            motion:layout_constraintBottom_toBottomOf="@+id/constraintDes"
+            motion:layout_constraintVertical_bias="0.5"
+            motion:layout_constraintTop_toTopOf="@+id/constraintDes"
+            motion:layout_constraintStart_toStartOf="@id/constraintDes"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp" />
+    </ConstraintSet>
+</MotionScene>

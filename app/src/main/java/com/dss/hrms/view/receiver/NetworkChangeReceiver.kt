@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import com.dss.hrms.view.`interface`.OnNetworkStateChangeListener
+import com.dss.hrms.view.allInterface.OnNetworkStateChangeListener
 
 class NetworkChangeReceiver() : BroadcastReceiver() {
 

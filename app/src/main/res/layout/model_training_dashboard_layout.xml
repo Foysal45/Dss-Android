@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="dashboard"
+            type="com.dss.hrms.view.training.model.TrainingDashBoard.Dashboard" />
+
+        <variable
+            name="courseSchedule"
+            type="com.dss.hrms.view.training.model.BudgetAndSchedule.CourseSchedule" />
+
+        <variable
+            name="batchSchedule"
+            type="com.dss.hrms.view.training.model.BudgetAndSchedule.BatchSchedule" />
+
+        <variable
+            name="course"
+            type="com.dss.hrms.view.training.model.BudgetAndSchedule.Course" />
+
+        <variable
+            name="courseSessions"
+            type="com.dss.hrms.view.training.model.TrainingDashBoard.CourseSessions" />
+
+        <variable
+            name="courseModules"
+            type="com.dss.hrms.view.training.model.TrainingDashBoard.CourseModules" />
+
+        <variable
+            name="faqs"
+            type="com.dss.hrms.model.TrainingResponse.Faq" />
+
+        <variable
+            name="language"
+            type="String" />
+
+        <variable
+            name="position"
+            type="Integer" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        //.................................course schedule.............................
+
+        <LinearLayout
+            android:id="@+id/llCourseSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="10dp">
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray"
+                    android:visibility="gone" />
+                <!--             android:text="@{((position+1).toString())}"   -->
+                <TextView
+                    android:id="@+id/tvSl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dp"
+                    android:text="@{(position.toString())}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/tvCourseScheduleTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:paddingHorizontal="5dp"
+                    android:text="@{(((language.equals(`en`))?courseSchedule.course_schedule_title :courseSchedule.course_schedule_title_bn))}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/tvCasualEnjoyed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.5"
+                    android:gravity="left"
+                    android:paddingHorizontal="5dp"
+                    android:text="@{(courseSchedule.total_seat.toString())}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/horizontalView"
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/gray" />
+        </LinearLayout>
+
+        //.................................batch schedule.............................
+
+        <LinearLayout
+            android:id="@+id/llBatchSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="10dp">
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray"
+                    android:visibility="gone" />
+                <!--             android:text="@{((position+1).toString())}"   -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dp"
+                    android:text="@{(position.toString())}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:paddingHorizontal="5dp"
+                    android:text="@{(((language.equals(`en`))?batchSchedule.batch_name :batchSchedule.batch_name_bn))}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.5"
+                    android:gravity="left"
+                    android:paddingHorizontal="5dp"
+                    android:text="@{(batchSchedule.total_seat.toString())}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/horizontalViewBatch"
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/gray" />
+        </LinearLayout>
+        //.................................Faq.............................
+
+        <LinearLayout
+            android:id="@+id/llFaq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="10dp">
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray"
+                    android:visibility="gone" />
+                <!--             android:text="@{((position+1).toString())}"   -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dp"
+                    android:text="@{(position.toString())}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:paddingHorizontal="5dp"
+                    android:text="@{(((language.equals(`en`))?faqs.faq_question :faqs.faq_question))}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/horizontalViewFaq"
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/gray" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

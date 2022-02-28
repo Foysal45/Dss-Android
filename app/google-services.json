@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "48888288229",
+    "firebase_url": "https://simec-dss.firebaseio.com",
+    "project_id": "simec-dss",
+    "storage_bucket": "simec-dss.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48888288229:android:66e0701d7cc9d06893d50c",
+        "android_client_info": {
+          "package_name": "com.dss.hrms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48888288229-bg17g6eg272ua8ioa7u3k4q7i1lichl1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQhHH9CrUr5f1fESlgvQS6-ckIvdhvMr4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48888288229-bg17g6eg272ua8ioa7u3k4q7i1lichl1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

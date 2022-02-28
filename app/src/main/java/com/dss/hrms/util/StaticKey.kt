@@ -1,7 +1,5 @@
 package com.dss.hrms.util
 
-import com.dss.hrms.model.Employee
-
 class StaticKey {
     companion object {
         val PersonalInformation = "personalinformation"
@@ -24,8 +22,14 @@ class StaticKey {
         val Promotion = "promotion"
         val DisciplinaryAction = "disciplinary_actions"
         val References = "references"
+        val Nominee = "nominee"
         val CREATE = "create"
         val EDIT = "edit"
-
+        val PENDING = "Pending"
+        val FORWARDED = "Forwarded"
+        val REJECTED = "Rejected"
+        val APPROVED = "Approved"
+        val DRAFT = "Draft"
+        val PLATFORM = "mobile"
     }
 }

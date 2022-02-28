@@ -1,62 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="wrap_content">
+<layout>
 
-    <LinearLayout
-        android:id="@+id/llVillage"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_rectangale"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="#E4E4E4"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingHorizontal="@dimen/_5sdp"
-            android:paddingVertical="@dimen/_5sdp"
-            android:text="@string/vill_house"
-            android:textSize="@dimen/text_size_medium" />
 
-        <TextView
-            android:layout_width="0dp"
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:paddingHorizontal="@dimen/_5sdp"
-            android:paddingVertical="@dimen/_5sdp"
-            android:text=":"
-            android:textSize="@dimen/text_size_medium" />
+            android:outlineSpotShadowColor="@color/gray"
+            android:outlineAmbientShadowColor="@color/gray"
+            app:cardCornerRadius="7dp"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:layout_marginHorizontal="15dp"
+            app:cardElevation="10dp">
+
+
+            <LinearLayout
+                android:id="@+id/llAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/hAddress"
+                        layout="@layout/personal_information_header_field" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/off_white"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                        android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+
+                        <include
+                            android:id="@+id/fAddressDivision"
+                            layout="@layout/personel_information_view_field" />
+
+                        <include
+                            android:id="@+id/fAddressDistrict"
+                            layout="@layout/personel_information_view_field" />
+
+                        <include
+                            android:id="@+id/fAddressUpazila"
+                            layout="@layout/personel_information_view_field" />
+
+                        <include
+                            android:id="@+id/fAddressPoliceStation"
+                            layout="@layout/personel_information_view_field" />
+
+                        <include
+                            android:id="@+id/fAddressPoliceStationBn"
+                            layout="@layout/personel_information_view_field" />
+
+                        <include
+                            android:id="@+id/fAddressPostOffice"
+                            layout="@layout/personel_information_view_field" />
+
+                        <include
+                            android:id="@+id/fAddressPostOfficeBn"
+                            layout="@layout/personel_information_view_field" />
+
+
+                        <include
+                            android:id="@+id/fAddressRoadOrWordNo"
+                            layout="@layout/personel_information_view_field" />
+
+                        <include
+                            android:id="@+id/fAddressRoadOrWordNoBn"
+                            layout="@layout/personel_information_view_field" />
+
+
+                        <include
+                            android:id="@+id/fAddressVillageOrHouseNo"
+                            layout="@layout/personel_information_view_field" />
+
+                        <include
+                            android:id="@+id/fAddressVillageOrHouseNoBn"
+                            layout="@layout/personel_information_view_field" />
+
+                        <include
+                            android:id="@+id/fAddressPhoneOrMobileNo"
+                            layout="@layout/personel_information_view_field" />
+
+                        <include
+                            android:id="@+id/fAddressEmailAddress"
+                            layout="@layout/personel_information_view_field" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llRoadNo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_rectangale"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/llVillage">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingHorizontal="@dimen/_5sdp"
-            android:paddingVertical="@dimen/_5sdp"
-            android:text="@string/vill_house"
-            android:textSize="@dimen/text_size_medium" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:paddingHorizontal="@dimen/_5sdp"
-            android:paddingVertical="@dimen/_5sdp"
-            android:text=":"
-            android:textSize="@dimen/text_size_medium" />
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

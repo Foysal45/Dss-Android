@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/messaging_nav"
+    app:startDestination="@id/topMessagingFragment">
+
+    <fragment
+        android:id="@+id/topMessagingFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.TopMessagingFragment"
+        android:label="@string/messaging"
+        tools:layout="@layout/fragment_top_messaging">
+        <action
+            android:id="@+id/action_topMessagingFragment_to_messageFragment"
+
+            app:destination="@id/messageFragment" />
+        <action
+            android:id="@+id/action_topMessagingFragment_to_emailFragment"
+            app:destination="@id/emailFragment" />
+        <action
+            android:id="@+id/action_topMessagingFragment_to_msgListFragment"
+            app:destination="@id/msgListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/emailFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.EmailFragment"
+        android:label="@string/email_text"
+        tools:layout="@layout/fragment_email">
+        <action
+            android:id="@+id/action_emailFragment_to_topMessagingFragment"
+            app:destination="@id/topMessagingFragment" />
+        <action
+            android:id="@+id/action_emailFragment_to_searchEmployeeFragment"
+            app:destination="@id/searchEmployeeFragment" />
+        <argument
+            android:name="messageRoleWiseemployee"
+            app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.MessagingFragment"
+        android:label="@string/messaging"
+        tools:layout="@layout/fragment_message">
+        <action
+            android:id="@+id/action_messageFragment_to_topMessagingFragment"
+            app:destination="@id/topMessagingFragment" />
+        <action
+            android:id="@+id/action_messageFragment_to_searchEmployeeFragment"
+            app:destination="@id/searchEmployeeFragment" />
+        <argument
+            android:name="emailRoleWiseemployee"
+            app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_messageFragment_to_searchEmployeeFragment2"
+            app:destination="@id/searchEmployeeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchEmployeeFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.SearchEmployeeFragment"
+        android:label="@string/search_employee"
+        tools:layout="@layout/fragment_search_employee">
+        <action
+            android:id="@+id/action_searchEmployeeFragment_to_messageFragment"
+            app:destination="@id/messageFragment" />
+        <action
+            android:id="@+id/action_searchEmployeeFragment_to_emailFragment"
+            app:destination="@id/emailFragment" />
+        <action
+            android:id="@+id/action_searchEmployeeFragment_to_employeeBottomSheetFragment"
+            app:destination="@id/employeeBottomSheetFragment" />
+        <argument
+            android:name="employee"
+            android:defaultValue="@null"
+            app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]"
+            app:nullable="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/employeeBottomSheetFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.EmployeeBottomSheetFragment"
+        android:label="fragment_employee_bottom_sheet"
+        tools:layout="@layout/fragment_employee_bottom_sheet">
+        <action
+            android:id="@+id/action_employeeBottomSheetFragment_to_searchEmployeeFragment"
+            app:destination="@id/searchEmployeeFragment" />
+        <argument
+            android:name="employee"
+            app:argType="com.dss.hrms.model.RoleWiseEmployeeResponseClass$RoleWiseEmployee[]" />
+    </dialog>
+    <fragment
+        android:id="@+id/msgListFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.MsgListFragment"
+        android:label="@string/messaging"
+        tools:layout="@layout/fragment_working_employee_list">
+        <action
+            android:id="@+id/action_msgListFragment_to_messageFragment"
+            app:destination="@id/messageFragment" />
+        <action
+            android:id="@+id/action_msgListFragment_to_msgFragment"
+            app:destination="@id/msgFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/msgFragment"
+        android:name="com.dss.hrms.view.messaging.fragment.MsgFragment"
+        android:label="MsgFragment"
+        tools:layout="@layout/fragment_msg" />
+
+
+</navigation>

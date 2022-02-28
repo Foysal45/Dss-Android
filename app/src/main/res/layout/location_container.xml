@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+
+            android:id="@+id/city_corp_upazila_municipality"
+            layout="@layout/personal_info_spinner"
+            app:title="@{@string/type_city_corp_upazila_municipality}" />
+
+        <include
+            android:id="@+id/Municipalities"
+            layout="@layout/personal_info_spinner"
+            app:title="@{@string/municipalities}" />
+
+        <include
+            android:id="@+id/CityCorporations"
+            layout="@layout/personal_info_spinner"
+            app:title="@{@string/citycorporations}" />
+
+        <include
+            android:id="@+id/Upazila"
+            layout="@layout/personal_info_spinner"
+            app:title="@{@string/upazila}" />
+
+        <include
+            android:id="@+id/Unio"
+            layout="@layout/personal_info_spinner"
+            app:title="@{@string/union}" />
+
+        <include
+            android:id="@+id/PoliceStation"
+            layout="@layout/personel_information_edittext"
+            app:hint="@{@string/police_station}"
+            app:title="@{@string/police_station}" />
+
+        <include
+            android:id="@+id/PoliceStationBn"
+            layout="@layout/personel_information_edittext"
+            app:hint="@{@string/police_station_bn}"
+            app:title="@{@string/police_station_bn}" />
+
+        <include
+            android:id="@+id/PostOffice"
+            layout="@layout/personel_information_edittext"
+            app:hint="@{@string/post_off}"
+            app:title="@{@string/post_off}" />
+
+        <include
+            android:id="@+id/PostOfficeBn"
+            layout="@layout/personel_information_edittext"
+            app:hint="@{@string/post_off_bn}"
+            app:title="@{@string/post_off_bn}" />
+
+        <include
+            android:id="@+id/PostCode"
+            layout="@layout/personel_information_edittext"
+            app:hint="@{@string/post_code}"
+            app:title="@{@string/post_code}" />
+
+        <include
+            android:id="@+id/RoadOrWordNo"
+            layout="@layout/personel_information_edittext"
+            app:hint="@{@string/road_word}"
+            app:title="@{@string/road_word}" />
+
+        <include
+            android:id="@+id/RoadOrWordNoBn"
+            layout="@layout/personel_information_edittext"
+            app:hint="@{@string/road_word_bn}"
+            app:title="@{@string/road_word_bn}" />
+
+        <include
+            android:id="@+id/VillageOrHouseNo"
+            layout="@layout/personel_information_edittext"
+            app:hint="@{@string/vill_house}"
+            app:title="@{@string/vill_house}" />
+
+        <include
+            android:id="@+id/VillageOrHouseNoBn"
+            layout="@layout/personel_information_edittext"
+            app:hint="@{@string/vill_house_bn}"
+            app:title="@{@string/vill_house_bn}" />
+
+
+    </LinearLayout>
+</layout>

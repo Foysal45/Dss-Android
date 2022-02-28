@@ -1,6 +1,4 @@
-package com.chaadride.network.error
-
-
+package com.dss.hrms.model.error
 import com.dss.hrms.retrofit.RetrofitInstance
 
 import okhttp3.ResponseBody

@@ -7,30 +7,43 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.Window
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogConfirmationBinding
-
+import dagger.android.support.DaggerAppCompatActivity
 import java.util.*
 
 
-open class BaseActivity : AppCompatActivity() {
-    protected var dialogConfirmation: Dialog? = null
-    protected var dialogConfirmationBinding: DialogConfirmationBinding? = null
+open class BaseActivity : DaggerAppCompatActivity() {
+    private var dialogConfirmation: Dialog? = null
+    private var dialogConfirmationBinding: DialogConfirmationBinding? = null
 
     protected fun setLocalLanguage(type: String?) {
         val locale = Locale(type)
         Locale.setDefault(locale)
         val configuration: Configuration = resources.configuration
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+            val configuration = Configuration()
             configuration.setLocale(locale)
-            createConfigurationContext(configuration)
+            configuration.setLayoutDirection(locale)
+            resources.updateConfiguration(configuration, resources.displayMetrics)
+//            configuration.setLocale(locale)
+//            createConfigurationContext(configuration)
+        }else{
+            configuration.locale = locale
+            configuration.setLayoutDirection(locale)
+            resources.updateConfiguration(configuration, resources.displayMetrics)
         }
-        configuration.locale = locale
-        configuration.setLayoutDirection(locale)
-        resources.updateConfiguration(configuration, resources.displayMetrics)
+
     }
+
+//
+//     protected fun changeStatusBarColor(){
+//         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//             val flag = android.view.Sta.LightStatusBar as Android.Views.StatusBarVisibility
+//             SystemColor.window.DecorView.SystemUiVisibility = if (darkStatusBarTint) flag else 0
+//         }
+//     }
 
     protected open fun showConfirmationDialog(context: Context?) {
         dialogConfirmation = Dialog(context!!)
@@ -46,4 +59,6 @@ open class BaseActivity : AppCompatActivity() {
         window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         dialogConfirmation!!.show()
     }
+
+
 }

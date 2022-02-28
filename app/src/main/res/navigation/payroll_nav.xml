@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/payroll_nav"
+    app:startDestination="@id/payrollTopFragment">
+
+    <fragment
+        android:id="@+id/payrollTopFragment"
+        android:name="com.dss.hrms.view.payroll.fragment.PayrollTopFragment"
+        android:label="@string/payroll_management"
+        tools:layout="@layout/fragment_payroll_top">
+        <action
+            android:id="@+id/action_payrollTopFragment_to_employeeSalaryProcessFragment"
+            app:destination="@id/employeeSalaryProcessFragment" />
+        <action
+            android:id="@+id/action_payrollTopFragment_to_employeeBankInformationFragment"
+            app:destination="@id/employeeBankInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employeeBankInformationFragment"
+        android:name="com.dss.hrms.view.payroll.fragment.EmployeeBankInformationFragment"
+        android:label="@string/bank_information"
+        tools:layout="@layout/fragment_employee_bank_information">
+        <action
+            android:id="@+id/action_employeeBankInformationFragment_to_payrollTopFragment"
+            app:destination="@id/payrollTopFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/employeeSalaryProcessFragment"
+        android:name="com.dss.hrms.view.payroll.fragment.EmployeeSalaryProcessFragment"
+        android:label="@string/salary_process"
+        tools:layout="@layout/fragment_employee_salary_process">
+        <action
+            android:id="@+id/action_employeeSalaryProcessFragment_to_payrollTopFragment"
+            app:destination="@id/payrollTopFragment" />
+    </fragment>
+</navigation>

@@ -48,17 +48,17 @@ class SelectImageBottomSheet : BottomSheetDialogFragment {
     ): View? {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.bottom_sheet_select_image, container, false)
-        binding?.cameraImageL?.setOnClickListener({
+        binding?.cameraImageL?.setOnClickListener {
             mListener!!.onCameraButtonClicked()
-        })
-        binding?.galleryImageL?.setOnClickListener({
+        }
+        binding?.galleryImageL?.setOnClickListener {
             mListener!!.onGalleryButtonClicked()
-        })
+        }
         return binding?.getRoot()
     }
 
 
-    interface BottomSheetListener {
+  open  interface BottomSheetListener {
         fun onCameraButtonClicked()
         fun onGalleryButtonClicked()
     }

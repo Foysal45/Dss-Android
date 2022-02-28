@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="courseSchedule"
+            type="com.dss.hrms.view.training.model.BudgetAndSchedule.CourseSchedule" />
+
+        <variable
+            name="language"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintRootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_corner_shape_bg_white"
+        android:padding="10dp">
+
+
+        <LinearLayout
+            android:id="@+id/llMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:paddingHorizontal="4dp"
+                    android:paddingVertical="2dp"
+                    android:text="@{((language.equals(`en`))?courseSchedule.course_schedule_title :courseSchedule.course_schedule_title_bn)}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_extra_large"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/imgEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|right"
+                    android:paddingHorizontal="5dp"
+                    app:srcCompat="@drawable/edit_icon_24"
+                    app:tint="@color/green" />
+
+                <ImageView
+                    android:id="@+id/imgDelete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:alpha="1.0"
+                    android:gravity="center|right"
+                    android:paddingHorizontal="5dp"
+                    android:visibility="gone"
+                    app:tint="@color/gray" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCourseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="2dp"
+                android:text="@{((language.equals(`en`))?(@string/course)+`: `+courseSchedule.course.course_name:(@string/course)+`: `+courseSchedule.course.course_name_bn)}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tvCoordinator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="2dp"
+                android:text="@{((language.equals(`en`))?(@string/coordinator)+`: `+((courseSchedule.coordinator_is_external==0)? courseSchedule.course_coordinator.name : courseSchedule.external_coordinator.name) :(@string/coordinator)+`: `+((courseSchedule.coordinator_is_external==0)?courseSchedule.course_co_coordinator.name_bn:courseSchedule.external_coordinator.name))}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tvCourseCoordinator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="2dp"
+                android:text="@{((language.equals(`en`))?(@string/co_ordinator)+`: `+((courseSchedule.co_coordinator_is_external==0)? courseSchedule.course_co_coordinator.name : courseSchedule.external_co_coordinator.name) :(@string/co_ordinator)+`: `+((courseSchedule.co_coordinator_is_external==0)?courseSchedule.course_co_coordinator.name_bn:courseSchedule.external_co_coordinator.name))}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="normal" />
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
