@@ -35,6 +35,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
 import kotlinx.android.synthetic.main.personel_information_edittext.view.*
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -244,22 +245,24 @@ class EditCreateNomineeInfo @Inject constructor() {
 
 
     fun setUpaila(upazilaId: Int?) {
-        UpazilaAdapter().setUpazilaSpinner(
-            binding?.fNominneAddressUpazila.spinner,
-            ctx,
-            specificDistrictModel?.upazilas,
-            upazilaId,
-            object : CommonSpinnerSelectedItemListener {
-                override fun selectedItem(any: Any?) {
-                    //upazila = any as SpinnerDataModel
-                    upazila = null
-                    any?.let {
-                        upazila = any as Upazilas
-                        setUnion(upazila?.id, nominee?.union_id)
+        binding?.fNominneAddressUpazila?.spinner?.let {
+            UpazilaAdapter().setUpazilaSpinner(
+                it,
+                ctx,
+                specificDistrictModel?.upazilas,
+                upazilaId,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        //upazila = any as SpinnerDataModel
+                        upazila = null
+                        any?.let {
+                            upazila = any as Upazilas
+                            setUnion(upazila?.id, nominee?.union_id)
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
     }
 
     fun setUnion(upazilaId: Int?, unionId: Int?) {
@@ -868,14 +871,14 @@ class EditCreateNomineeInfo @Inject constructor() {
         var filePart: MultipartBody.Part?
 
         val requestFile: RequestBody =
-            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
         profilePic =
             MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
 //        profilePic =
 //            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
 
         val profile_photo: RequestBody =
-            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+            RequestBody.create("text/plain".toMediaTypeOrNull(), "profile_ph")
 
         val employeeInfoEditCreateRepo =
             ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)
@@ -923,13 +926,13 @@ class EditCreateNomineeInfo @Inject constructor() {
         var map = java.util.HashMap<Any, Any?>()
         if (nominee?.id == null) map.put("id", 0) else nominee?.id?.let { map.put("id", it) }
         map["employee_id"] = employee?.user?.employee_id
-        map.put("name", binding?.fNomineeName.etText.text.toString().trim())
+        map.put("name", binding?.fNomineeName?.etText?.text.toString().trim())
         map.put(
             "date_of_birth",
             dob
         )
-        map.put("relation", binding?.fNomineeRelation.etText.text.toString().trim())
-        map.put("allocated_percentage", binding?.fNomineeAllocatedPercentage.etText.text.toString())
+        map.put("relation", binding?.fNomineeRelation?.etText?.text.toString().trim())
+        map.put("allocated_percentage", binding?.fNomineeAllocatedPercentage?.etText?.text.toString())
         /*
          adding address
          */
@@ -1140,12 +1143,12 @@ class EditCreateNomineeInfo @Inject constructor() {
         if (imageFile != null) {
 
             val requestFile: RequestBody =
-                RequestBody.create(MediaType.parse("multipart/form-data"), imageFile)
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), imageFile)
             profilePic =
                 MultipartBody.Part.createFormData("filenames[]", "${imageFile.name}", requestFile)
 
             val profile_photo: RequestBody =
-                RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+                RequestBody.create("text/plain".toMediaTypeOrNull(), "profile_ph")
 
             var employeeInfoEditCreateRepo =
                 ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)

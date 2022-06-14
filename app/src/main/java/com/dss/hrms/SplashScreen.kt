@@ -53,7 +53,7 @@ class SplashScreen : BaseActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             //checking for play store update
             try {
-              //  loadData()
+                loadData()
                 checkForUpdates()
             }catch (ex : Exception){
                 Toast.makeText(applicationContext , "Error : ${ex.localizedMessage}" , Toast.LENGTH_LONG).show()

@@ -46,6 +46,7 @@ import com.namaztime.namaztime.database.MySharedPreparence
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.android.support.DaggerFragment
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -628,12 +629,12 @@ class CreateEditLeaveApplicationFragment : DaggerFragment() {
         var profilePic: MultipartBody.Part?
         if (imageFile != null) {
             val requestFile: RequestBody =
-                RequestBody.create(MediaType.parse("multipart/form-data"), imageFile)
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), imageFile)
             profilePic =
                 MultipartBody.Part.createFormData("filenames[]", "filenames[]", requestFile)
 
             val profile_photo: RequestBody =
-                RequestBody.create(MediaType.parse("text/plain"), "profile_photo")
+                RequestBody.create("text/plain".toMediaTypeOrNull(), "profile_photo")
 
             var employeeInfoEditCreateRepo =
                 activity?.let {

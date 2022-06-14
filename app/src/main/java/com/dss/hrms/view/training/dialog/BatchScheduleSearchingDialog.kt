@@ -66,7 +66,7 @@ class BatchScheduleSearchingDialog @Inject constructor() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        binding?.batchScheduleHeader.tvClose.setOnClickListener {
+        binding?.batchScheduleHeader?.tvClose?.setOnClickListener {
             dialogCustome.dismiss()
         }
 

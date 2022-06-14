@@ -37,7 +37,7 @@ class TrainingActivity : BaseActivity() {
         navView = findViewById(R.id.nav_menu)
         //   getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         drawerLayout = binding.drawerLayout
-        binding?.navMenu.setupWithNavController(navController)
+        binding?.navMenu?.setupWithNavController(navController)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         setupToolbar()

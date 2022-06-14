@@ -63,7 +63,7 @@ class CourseScheduleSearchingDialog @Inject constructor() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        binding?.courceScheduleHeader.tvClose.setOnClickListener {
+        binding?.courceScheduleHeader?.tvClose?.setOnClickListener {
             dialogCustome.dismiss()
         }
 

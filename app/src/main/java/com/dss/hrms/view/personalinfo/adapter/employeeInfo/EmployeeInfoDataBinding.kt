@@ -1492,9 +1492,9 @@ class EmployeeInfoDataBinding @Inject constructor() {
         if (employeeProfileData?.employee?.designation_id == jobjoinings?.designation_id &&
             employeeProfileData?.employee?.office_id == jobjoinings?.office_id
         ) {
-            binding?.fJobJoiningCurrentJob?.tvText.setText(context.getString(R.string.yes))
+            binding?.fJobJoiningCurrentJob?.tvText?.setText(context.getString(R.string.yes))
         } else {
-            binding?.fJobJoiningCurrentJob?.tvText.setText(context.getString(R.string.no))
+            binding?.fJobJoiningCurrentJob?.tvText?.setText(context.getString(R.string.no))
         }
 
         if (!jobjoinings.isPendingData) {
