@@ -278,13 +278,17 @@ class VacantPositionFragment : DaggerFragment() {
                         downloadManager.getUriForDownloadedFile(downloadID)
                     }"
                 )
-                val action =
-                    VacantPositionFragmentDirections.actionVacantPositionFragmentToPdfViewerFragment(
-                        downloadManager.getUriForDownloadedFile(downloadID).toString(),
-                        getString(R.string.vacant_position_summary)
-                    )
+                try {
+                    val action =
+                        VacantPositionFragmentDirections.actionVacantPositionFragmentToPdfViewerFragment(
+                            downloadManager.getUriForDownloadedFile(downloadID).toString(),
+                            getString(R.string.vacant_position_summary)
+                        )
 
-                findNavController().navigate(action)
+                    findNavController().navigate(action)
+                } catch (e: Exception) {
+                    Log.d("error", e.message.toString());
+                }
             }
         }
     }
@@ -304,6 +308,9 @@ class VacantPositionFragment : DaggerFragment() {
         commonReportViewModel?.vacantPositionSummary?.observe(viewLifecycleOwner, Observer { list ->
             val templist = arrayListOf<ReportResponse.VacantPositionSummary>()
             dialog?.dismiss()
+            if (list == null){
+                return@Observer
+            }
             templist += list
             if (templist != null && templist?.size!! > 0) {
                 var permitted = 0

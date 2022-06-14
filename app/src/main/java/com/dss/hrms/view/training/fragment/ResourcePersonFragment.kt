@@ -63,6 +63,7 @@ import com.theartofdev.edmodo.cropper.CropImage
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -201,6 +202,7 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
                             }
                         }
 
+                        else -> {}
                     }
                     // Toast.makeText(activity, "${operation}", Toast.LENGTH_LONG).show()
                 }
@@ -251,11 +253,13 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
         dialogTrainingLoyeoutBinding.resourcePersonHeader.tvTitle.setText(getString(R.string.update_resource_perosn))
 
 
-        requestOption?.applyDefaultRequestOptions(
-            RequestOptions()
-                .placeholder(R.drawable.ic_baseline_image_24)
-        ).load(RetrofitInstance.BASE_URL + resourcePerson?.resource_person_image_path)
-            .into(dialogTrainingLoyeoutBinding?.ivResourcePerson)
+        dialogTrainingLoyeoutBinding?.ivResourcePerson?.let {
+            requestOption?.applyDefaultRequestOptions(
+                RequestOptions()
+                    .placeholder(R.drawable.ic_baseline_image_24)
+            )?.load(RetrofitInstance.BASE_URL + resourcePerson?.resource_person_image_path)
+                ?.into(it) ?: ""
+        }
 
         commonRepo?.getCommonData("/api/auth/designation/list",
             object : CommonDataValueListener {
@@ -351,6 +355,8 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
                     Log.e("yousuf", "error : " + any)
                     showResponse(any)
                 })
+            } else {
+
             }
         }
     }
@@ -571,12 +577,12 @@ class ResourcePersonFragment : DaggerFragment(), SelectImageBottomSheet.BottomSh
         if (imageFile != null) {
 
             val requestFile: RequestBody =
-                RequestBody.create(MediaType.parse("multipart/form-data"), imageFile)
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), imageFile)
             profilePic =
                 MultipartBody.Part.createFormData("filenames[]", "filenames[]", requestFile)
 
             val profile_photo: RequestBody =
-                RequestBody.create(MediaType.parse("text/plain"), "profile_photo")
+                RequestBody.create("text/plain".toMediaTypeOrNull(), "profile_photo")
 
             var employeeInfoEditCreateRepo =
                 activity?.let {

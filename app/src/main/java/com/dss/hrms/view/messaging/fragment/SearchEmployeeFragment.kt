@@ -202,7 +202,7 @@ class SearchEmployeeFragment : DaggerFragment() {
                             if (it.size > 0) {
                                 val action =
                                     SearchEmployeeFragmentDirections.actionSearchEmployeeFragmentToEmployeeBottomSheetFragment(
-                                        dataList?.toTypedArray()
+                                        dataList.toTypedArray()
                                     )
                                 findNavController().navigate(action)
 //                        Navigation.findNavController(binding.root)

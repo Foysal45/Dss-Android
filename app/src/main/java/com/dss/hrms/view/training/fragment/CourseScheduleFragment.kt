@@ -25,6 +25,7 @@ import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.Operation
+import com.dss.hrms.util.Operation.*
 import com.dss.hrms.util.Role
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
@@ -114,7 +115,7 @@ class CourseScheduleFragment : DaggerFragment() {
             )
         }
         binding.fab.setOnClickListener {
-            showEditCreateDialog(Operation.CREATE, null)
+            showEditCreateDialog(CREATE, null)
         }
         return binding.root
     }
@@ -154,7 +155,7 @@ class CourseScheduleFragment : DaggerFragment() {
                         operation: Operation
                     ) {
                         when (operation) {
-                            Operation.EDIT -> {
+                            EDIT -> {
                                 val list = preparence.get("permissionList") as List<Any>?
 
                                 if (JsonKeyReader.hasPermission(
@@ -167,9 +168,10 @@ class CourseScheduleFragment : DaggerFragment() {
                             }
 
 
-                            Operation.CREATE ->
+                            CREATE ->
                                 Toast.makeText(activity, "" + operation, Toast.LENGTH_LONG).show()
 
+                            else -> {}
                         }
                     }
 
@@ -328,7 +330,9 @@ class CourseScheduleFragment : DaggerFragment() {
                             dialogTrainingLoyeoutBinding?.courseDesignation?.spinner!!,
                             context,
                             list,
-                            if (designationList?.size >= 1) designationList?.get(designationList?.size - 1)?.id else 0,
+                            if (designationList?.size!! >= 1) designationList?.get(designationList?.size?.minus(
+                                1
+                            ) ?: 0)?.id else 0,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     var spinnerDataModel = any as SpinnerDataModel
@@ -481,14 +485,14 @@ class CourseScheduleFragment : DaggerFragment() {
             dialogCustome?.dismiss()
         }
 
-        if (operation == Operation.EDIT) dialogTrainingLoyeoutBinding.courseScheduleUpdateButton.btnUpdate.setText(
+        if (operation == EDIT) dialogTrainingLoyeoutBinding.courseScheduleUpdateButton.btnUpdate.setText(
             getString(R.string.update)
         ) else dialogTrainingLoyeoutBinding.courseScheduleUpdateButton.btnUpdate.setText(getString(R.string.create))
         dialogTrainingLoyeoutBinding.courseScheduleUpdateButton.btnUpdate.setOnClickListener {
             invisiableAllError()
             loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
             when (operation) {
-                Operation.EDIT ->
+                EDIT ->
                     courseSchedule?.id?.let { it1 ->
                         budgetAndScheduleViewModel.updateCourseSchedule(
                             getMapData(courseSchedule),
@@ -498,7 +502,7 @@ class CourseScheduleFragment : DaggerFragment() {
                             showResponse(it)
                         })
                     }
-                Operation.CREATE -> {
+                CREATE -> {
                     budgetAndScheduleViewModel.addCourseSchedule(
                         getMapData(courseSchedule)
                     ).observe(viewLifecycleOwner, Observer {
@@ -506,6 +510,8 @@ class CourseScheduleFragment : DaggerFragment() {
                         showResponse(it)
                     })
                 }
+                VIEW -> TODO()
+                DELETE -> TODO()
             }
         }
         dialogCustome?.show()
@@ -590,7 +596,7 @@ class CourseScheduleFragment : DaggerFragment() {
                                     ErrorUtils2.mainError(message)
                             }
                             "staff3" -> {
-                                dialogTrainingLoyeoutBinding?.courseStaff3?.tvError.visibility =
+                                dialogTrainingLoyeoutBinding?.courseStaff3?.tvError?.visibility =
                                     View.VISIBLE
                                 dialogTrainingLoyeoutBinding?.courseStaff3?.tvError?.text =
                                     ErrorUtils2.mainError(message)

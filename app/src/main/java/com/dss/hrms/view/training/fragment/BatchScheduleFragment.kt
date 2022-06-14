@@ -24,6 +24,7 @@ import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.repository.CommonRepo
 import com.dss.hrms.util.*
+import com.dss.hrms.util.Operation.*
 import com.dss.hrms.view.allInterface.CommonDataValueListener
 import com.dss.hrms.view.allInterface.CommonSpinnerSelectedItemListener
 import com.dss.hrms.view.allInterface.OnDateListener
@@ -109,7 +110,7 @@ class BatchScheduleFragment : DaggerFragment() {
         }
 
         binding.fab.setOnClickListener {
-            showEditCreateDialog(Operation.CREATE, null)
+            showEditCreateDialog(CREATE, null)
         }
 
         return binding.root
@@ -152,7 +153,7 @@ class BatchScheduleFragment : DaggerFragment() {
                         operation: Operation
                     ) {
                         when (operation) {
-                            Operation.EDIT -> {
+                            EDIT -> {
                                 val list =
                                     MySharedPreparence(binding.root.context).get("permissionList") as List<Any>?
 
@@ -166,9 +167,10 @@ class BatchScheduleFragment : DaggerFragment() {
                             }
                             //  Toast.makeText(activity, "" + operation, Toast.LENGTH_LONG).show()
                             //
-                            Operation.CREATE ->
+                            CREATE ->
                                 Toast.makeText(activity, "" + operation, Toast.LENGTH_LONG).show()
-
+                            VIEW -> TODO()
+                            DELETE -> TODO()
                         }
                     }
 
@@ -490,14 +492,14 @@ class BatchScheduleFragment : DaggerFragment() {
         dialogTrainingLoyeoutBinding.batchScheduleHeader.tvClose.setOnClickListener {
             dialogCustome?.dismiss()
         }
-        if (operation == Operation.EDIT) dialogTrainingLoyeoutBinding.batchScheduleUpdateButton.btnUpdate.setText(
+        if (operation == EDIT) dialogTrainingLoyeoutBinding.batchScheduleUpdateButton.btnUpdate.setText(
             getString(R.string.update)
         ) else dialogTrainingLoyeoutBinding.batchScheduleUpdateButton.btnUpdate.setText(getString(R.string.create))
         dialogTrainingLoyeoutBinding.batchScheduleUpdateButton.btnUpdate.setOnClickListener {
             invisiableAllError()
             loadingDialog = CustomLoadingDialog().createLoadingDialog(activity)
             when (operation) {
-                Operation.EDIT ->
+                EDIT ->
                     batchSchedule?.id?.let { it1 ->
                         budgetAndScheduleViewModel.updateBatchSchedule(
                             getMapData(batchSchedule),
@@ -507,7 +509,7 @@ class BatchScheduleFragment : DaggerFragment() {
                             showResponse(it)
                         })
                     }
-                Operation.CREATE -> {
+                CREATE -> {
                     budgetAndScheduleViewModel.addBatchSchedule(
                         getMapData(batchSchedule)
                     ).observe(viewLifecycleOwner, Observer {
@@ -515,6 +517,8 @@ class BatchScheduleFragment : DaggerFragment() {
                         showResponse(it)
                     })
                 }
+                VIEW -> TODO()
+                DELETE -> TODO()
             }
         }
         dialogCustome?.show()
@@ -618,7 +622,7 @@ class BatchScheduleFragment : DaggerFragment() {
                                     ErrorUtils2.mainError(message)
                             }
                             "staff3" -> {
-                                dialogTrainingLoyeoutBinding?.batchStaff3?.tvError.visibility =
+                                dialogTrainingLoyeoutBinding?.batchStaff3?.tvError?.visibility =
                                     View.VISIBLE
                                 dialogTrainingLoyeoutBinding?.batchStaff3?.tvError?.text =
                                     ErrorUtils2.mainError(message)
@@ -670,15 +674,15 @@ class BatchScheduleFragment : DaggerFragment() {
         )
         map.put(
             "batch_name",
-            dialogTrainingLoyeoutBinding.batchBatchName.etText?.text.trim().toString()
+            dialogTrainingLoyeoutBinding.batchBatchName.etText?.text?.trim().toString()
         )
         map.put(
             "batch_name_bn",
-            dialogTrainingLoyeoutBinding.batchBatchNameBn.etText?.text.trim().toString()
+            dialogTrainingLoyeoutBinding.batchBatchNameBn.etText?.text?.trim().toString()
         )
         map.put(
             "total_seat",
-            dialogTrainingLoyeoutBinding.batchTotalSeatts.etText?.text.trim().toString()
+            dialogTrainingLoyeoutBinding.batchTotalSeatts.etText?.text?.trim().toString()
         )
         map.put("start_date", batchStartDate)
         map.put("end_date", batchEndDate)

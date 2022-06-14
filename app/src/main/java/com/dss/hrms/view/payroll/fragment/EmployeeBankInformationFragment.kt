@@ -259,9 +259,9 @@ class EmployeeBankInformationFragment : DaggerFragment() {
                         val message = any.getError()[n].getMessage()
                         if (TextUtils.isEmpty(error)) {
                             message?.let {
-                                bankInformationBinding?.BIAccountType?.llBody.visibility =
+                                bankInformationBinding?.BIAccountType?.llBody?.visibility =
                                     View.VISIBLE
-                                bankInformationBinding?.BIAccountType?.tvError.text =
+                                bankInformationBinding?.BIAccountType?.tvError?.text =
                                     ErrorUtils2.mainError(message)
                             }
                         }
@@ -361,19 +361,19 @@ class EmployeeBankInformationFragment : DaggerFragment() {
     }
 
     fun invisiableAllError() {
-        bankInformationBinding?.BIBankName?.llBody.visibility =
+        bankInformationBinding?.BIBankName?.llBody?.visibility =
             View.GONE
-        bankInformationBinding?.BIBranchName?.llBody.visibility =
+        bankInformationBinding?.BIBranchName?.llBody?.visibility =
             View.GONE
-        bankInformationBinding?.BIAccountNumber?.llBody.visibility =
+        bankInformationBinding?.BIAccountNumber?.llBody?.visibility =
             View.GONE
-        bankInformationBinding?.BIAccountName?.llBody.visibility =
+        bankInformationBinding?.BIAccountName?.llBody?.visibility =
             View.GONE
-        bankInformationBinding?.BIDistrict?.llBody.visibility =
+        bankInformationBinding?.BIDistrict?.llBody?.visibility =
             View.GONE
-        bankInformationBinding?.BIBankRoutingNumber?.llBody.visibility =
+        bankInformationBinding?.BIBankRoutingNumber?.llBody?.visibility =
             View.GONE
-        bankInformationBinding?.BIAccountType?.llBody.visibility =
+        bankInformationBinding?.BIAccountType?.llBody?.visibility =
             View.GONE
 
     }

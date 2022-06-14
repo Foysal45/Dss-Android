@@ -23,6 +23,7 @@ import com.dss.hrms.model.error.ApiError
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.util.CustomLoadingDialog
 import com.dss.hrms.util.Operation
+import com.dss.hrms.util.Operation.*
 import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.training.`interface`.OnContentCategoryClickListener
 import com.dss.hrms.view.training.adaoter.ContentCategoryAdapter
@@ -79,7 +80,7 @@ class ContentCategoryFragment : DaggerFragment() {
         }
 
         binding.fab.setOnClickListener {
-            showEditCreateDialog(Operation.CREATE, null)
+            showEditCreateDialog(CREATE, null)
         }
         return binding.root
     }
@@ -100,7 +101,7 @@ class ContentCategoryFragment : DaggerFragment() {
                         position: Int?
                     ) {
                         when (operation) {
-                            Operation.EDIT -> {
+                            EDIT -> {
                                 val list = preparence.get("permissionList") as List<Any>?
 
                                 if (JsonKeyReader.hasPermission(
@@ -113,8 +114,10 @@ class ContentCategoryFragment : DaggerFragment() {
 
                             }//
 
-                            Operation.DELETE -> {
+                            DELETE -> {
                             }
+                            VIEW -> TODO()
+                            CREATE -> TODO()
                         }
                         //   Toast.makeText(activity, "" + operation, Toast.LENGTH_LONG).show()
                     }
@@ -165,20 +168,20 @@ class ContentCategoryFragment : DaggerFragment() {
         dialogTrainingLoyeoutBinding.categoryHeader.tvClose.setOnClickListener { dialogCustome?.dismiss() }
         dialogTrainingLoyeoutBinding.categoryHeader.tvTitle.setText(getString(R.string.update_category))
 
-        if (operation == Operation.EDIT) dialogTrainingLoyeoutBinding.categoryUpdateButton.btnUpdate.setText(
+        if (operation == EDIT) dialogTrainingLoyeoutBinding.categoryUpdateButton.btnUpdate.setText(
             getString(R.string.update)
         ) else dialogTrainingLoyeoutBinding.categoryUpdateButton.btnUpdate.setText(getString(R.string.create))
         dialogTrainingLoyeoutBinding.categoryUpdateButton.btnUpdate.setOnClickListener {
             invisiableAllError()
             var dialog = CustomLoadingDialog().createLoadingDialog(activity)
-            if (operation == Operation.CREATE) {
+            if (operation == CREATE) {
                 contentManagementViewModel.addCategory(getMapData(category))
                     .observe(viewLifecycleOwner,
                         Observer {
                             dialog?.dismiss()
                             showResponse(it)
                         })
-            } else if (operation == Operation.EDIT) {
+            } else if (operation == EDIT) {
                 contentManagementViewModel.updateCategory(getMapData(category), category?.id!!)
                     .observe(viewLifecycleOwner,
                         Observer {

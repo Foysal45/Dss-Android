@@ -91,9 +91,9 @@ class HonorariumHeadAdapter {
         var name: String? = null
         when (typeId) {
             1 ->
-                name = if (language?.equals("en")) "Participant" else "অংশগ্রহণকারী"
+                name = if (language?.equals("en") == true) "Participant" else "অংশগ্রহণকারী"
             2 ->
-                name = if (language?.equals("en")) "Resource Person" else "রিসোর্স পার্সন"
+                name = if (language?.equals("en") == true) "Resource Person" else "রিসোর্স পার্সন"
         }
 
         return name

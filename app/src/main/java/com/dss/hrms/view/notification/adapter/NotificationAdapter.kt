@@ -63,7 +63,7 @@ class NotificationAdapter @Inject constructor() :
                     .placeholder(R.drawable.ic_empty_user_icon)
             ).load(RetrofitInstance.BASE_URL + notification?.notified_by?.photo)
                 .placeholder(R.drawable.ic_empty_user_icon)
-                .into(holder.binding?.imageView)
+                .into(holder.binding.imageView)
         }
 
 

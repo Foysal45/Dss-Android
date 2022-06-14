@@ -143,6 +143,9 @@ class MsgListFragment : DaggerFragment() {
                             findNavController().navigate(R.id.action_msgListFragment_to_msgFragment , bundle)
                         }
 
+                        else -> {
+
+                        }
                     }
                 }
 

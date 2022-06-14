@@ -19,7 +19,8 @@ object RetrofitInstance {
  //    var BASE_URL = "http://192.168.10.177:8000"
   // var BASE_URL = "http://dss.dev.simecsystem.com:10014"
 
-    var BASE_URL_FOR_WEBVIEW = "http://dss.stage.simecsystem.com:8080"
+ //   var BASE_URL_FOR_WEBVIEW = "http://dss.stage.simecsystem.com:8080"
+    var BASE_URL_FOR_WEBVIEW = "http://hrmdss.gov.bd"
     var IMAGE_BASE = "http://192.168.10.124:8000/uploads/photos/"
   //  var FILE_BASE = "http://dss.dev.simecsystem.com:10014" 
 

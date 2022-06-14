@@ -79,7 +79,7 @@ class OfficeSearchingDialog @Inject constructor() {
         )
 
 
-        binding?.officeHeader.tvClose.setOnClickListener {
+        binding?.officeHeader?.tvClose?.setOnClickListener {
             dialogCustome.dismiss()
         }
 

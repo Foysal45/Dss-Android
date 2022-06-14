@@ -32,6 +32,7 @@ import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.personal_info_update_button.view.*
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -301,7 +302,7 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
                                     ErrorUtils2.mainError(message)
                             }
                             "from_date" -> {
-                                binding?.fForeignTravelFromDate.tvError?.visibility =
+                                binding?.fForeignTravelFromDate?.tvError?.visibility =
                                     View.VISIBLE
                                 binding?.fForeignTravelFromDate?.tvError?.text =
                                     ErrorUtils2.mainError(message)
@@ -375,14 +376,14 @@ class EditAndCreateForeignTravelInfo @Inject constructor() {
         var filePart: MultipartBody.Part?
 
         val requestFile: RequestBody =
-            RequestBody.create(MediaType.parse("multipart/form-data"), file)
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
         profilePic =
             MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
 //        profilePic =
 //            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
 
         val profile_photo: RequestBody =
-            RequestBody.create(MediaType.parse("text/plain"), "profile_ph")
+            RequestBody.create("text/plain".toMediaTypeOrNull(), "profile_ph")
 
         val employeeInfoEditCreateRepo =
             ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)

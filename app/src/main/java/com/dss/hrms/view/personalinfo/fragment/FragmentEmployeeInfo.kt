@@ -637,7 +637,7 @@ class FragmentEmployeeInfo : DaggerFragment(), OnEmployeeInfoClickListener,
                         )
                     }
 
-                } else if (operation?.equals(StaticKey.CREATE)) {
+                } else if (operation?.equals(StaticKey.CREATE)!!) {
                     activity?.let { it2 ->
                         editCreateNomineeInfo.showDialog(
                             it2,
