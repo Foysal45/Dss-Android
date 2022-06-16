@@ -60,6 +60,9 @@
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/personel_information_view_field_with_right_icon.xml" value="0.34375" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/layout/practice_activity.xml" value="0.34375" />
         <entry key="..\:/Users/SIMEC/Documents/project/dss-android/app/src/main/res/menu/training_menu.xml" value="0.33958333333333335" />
+        <entry key="app/src/main/res/layout/activity_change_pass.xml" value="0.2765625" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.2765625" />
+        <entry key="app/src/main/res/layout/activity_forget_p_ass.xml" value="0.2765625" />
       </map>
     </option>
   </component>

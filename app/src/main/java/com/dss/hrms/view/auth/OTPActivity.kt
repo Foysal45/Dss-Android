@@ -150,7 +150,11 @@ class OTPActivity : BaseActivity() {
                 if (any is VerifyOtp) {
                     dialog?.dismiss()
                     if (any.code == 200) {
+
+                        Log.d("resetToken ", " otp "+any.data?.reset_token)
                         startActivity(
+
+
                             Intent(this, ChangePassActivity::class.java)
                                 .putExtra("reset_token", any.data?.reset_token)
                                 .putExtra("isReset" , true)

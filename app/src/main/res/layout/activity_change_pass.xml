@@ -60,6 +60,8 @@
                 android:layout_height="@dimen/_60sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:neumorph_shadowElevation="2dp"
+                android:visibility="gone"
+                android:id="@+id/nmOldPassword"
                 app:neumorph_shapeType="pressed">
 
                 <EditText

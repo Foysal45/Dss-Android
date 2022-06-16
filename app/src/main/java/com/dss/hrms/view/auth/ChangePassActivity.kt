@@ -49,7 +49,12 @@ class ChangePassActivity : BaseActivity() {
         submit.setOnClickListener {
             if(isReset){
                 resetPassword()
+                old_password.visibility = View.GONE
             }else changePassword()
+            old_password.visibility = View.VISIBLE
+        }
+        if (!isReset){
+            nmOldPassword.visibility = View.VISIBLE
         }
 
     }
@@ -137,6 +142,7 @@ class ChangePassActivity : BaseActivity() {
 
     fun resetPassword() {
 
+        Log.d("resetToken", " resetPassword "+preparence.getToken()+" "+intent.getStringExtra("reset_token"));
         val password = password.text.toString().trim()
         val confirm_password = confirm_password.text.toString().trim()
 
@@ -144,7 +150,7 @@ class ChangePassActivity : BaseActivity() {
         e_confirm_password.visibility = View.GONE
         if (password != null && password.equals(confirm_password)) {
             val dialog = CustomLoadingDialog().createLoadingDialog(this)
-            loginViewModel!!.resetPassword( password, "Bearer ${preparence.getToken()}")
+            loginViewModel!!.resetPassword( password, "${intent.getStringExtra("reset_token")}")
                 ?.observe(this, Observer { any ->
                     dialog?.dismiss()
 
