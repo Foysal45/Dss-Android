@@ -2,10 +2,9 @@ package com.dss.hrms.repository
 
 import android.app.Application
 import android.util.Log
-import com.btbapp.alquranapp.retrofit.ApiService
+import com.dss.hrms.retrofit.ApiService
 import com.dss.hrms.di.mainScope.EmployeePendingData
 import com.dss.hrms.di.mainScope.EmployeeProfileData
-import com.dss.hrms.model.commonSpinnerDataLoad.CommonDataResponse
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.model.pendingDataModel.PendingDataModel

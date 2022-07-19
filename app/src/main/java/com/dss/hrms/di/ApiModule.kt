@@ -1,7 +1,7 @@
 package com.dss.hrms.di
 
 import android.app.Application
-import com.btbapp.alquranapp.retrofit.ApiService
+import com.dss.hrms.retrofit.ApiService
 import com.dss.hrms.retrofit.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

@@ -2,7 +2,6 @@ package com.dss.hrms.repository.training
 
 import android.app.Application
 import android.util.Log
-import com.btbapp.alquranapp.retrofit.ApiService
 import com.dss.hrms.model.error.ErrorUtils2
 import com.dss.hrms.retrofit.TrainingApiService
 import com.namaztime.namaztime.database.MySharedPreparence

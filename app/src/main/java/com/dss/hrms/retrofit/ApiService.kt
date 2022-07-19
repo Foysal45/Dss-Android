@@ -1,4 +1,4 @@
-package com.btbapp.alquranapp.retrofit
+package com.dss.hrms.retrofit
 
 
 import com.dss.hrms.model.HeadOfficeDepartmentApiResponse

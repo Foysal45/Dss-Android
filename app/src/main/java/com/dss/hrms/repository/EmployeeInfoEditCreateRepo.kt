@@ -3,7 +3,7 @@ package com.dss.hrms.repository
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.btbapp.alquranapp.retrofit.ApiService
+import com.dss.hrms.retrofit.ApiService
 import com.dss.hrms.model.ListOfMap
 import com.dss.hrms.model.SpinnerDataModel
 import com.dss.hrms.model.error.ErrorUtils2

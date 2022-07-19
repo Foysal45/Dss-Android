@@ -1,4 +1,4 @@
-package com.chaadride.shared_pref
+package com.dss.hrms.storage
 
 import android.content.Context
 import android.content.SharedPreferences
