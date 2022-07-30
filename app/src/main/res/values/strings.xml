@@ -177,6 +177,18 @@
     <string name="designation">Designation</string>
     <string name="depertment">Department</string>
     <string name="job_type">Job Type</string>
+    <string name="permanent_confirm_date">Permanent Confirmation Date</string>
+    <string name="permanent_document">Permanent Document</string>
+
+    <string name="temporary_revenue_type">Temporary Revenue Type</string>
+    <string name="temporary_revenue_transfer_date">Temporary Revenue Transfer Date</string>
+    <string name="temporary_revenue_transfer_doc">Temporary Revenue Document</string>
+    <string name="regularization_date">Regularization Date</string>
+    <string name="regularization_date_doc">Regularization Document</string>
+
+
+
+
     <string name="help_desk">Help Desk</string>
     <string name="joning_date">Joining Date</string>
     <string name="confirmation_date">Confirmation Date</string>
@@ -233,8 +245,10 @@
     <string name="disability_type">Disability Type</string>
     <string name="disability_degree">Disability Degree</string>
     <string name="disabled_person_id">Disabled Person ID</string>
+    <string name="home_district">Home District</string>
     <string name="employee_type">Employee Type</string>
-    <string name="employment_job_joining_date">Employment Job Joining Date</string>
+    <string name="employment_job_joining_date">First Job Joining date</string>
+    <string name="pension_date">Pension Date</string>
     <string name="employee_status_type">Employee Status Type</string>
     <string name="employee_status_date">Employment Status Date</string>
     <string name="has_freedom_fighter_quota">Has Freedom Fighter Quota ?</string>

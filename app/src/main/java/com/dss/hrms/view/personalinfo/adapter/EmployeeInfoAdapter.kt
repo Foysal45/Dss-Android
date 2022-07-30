@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dss.hrms.R
 import com.dss.hrms.databinding.ModelEmployeeInfoBinding
 import com.dss.hrms.model.employeeProfile.Employee
-import com.dss.hrms.model.pendingDataModel.PendingDataModel
-import com.dss.hrms.util.HelperClass
 import com.dss.hrms.util.StaticKey
 import com.dss.hrms.view.allInterface.OnEmployeeInfoClickListener
 import com.dss.hrms.view.personalinfo.adapter.employeeInfo.EmployeeInfoDataBinding
@@ -73,6 +71,7 @@ class EmployeeInfoAdapter @Inject constructor() :
                 )
 
             }
+
             StaticKey.PRESENT_ADDRESS -> {
                 holder.binding?.hAddress?.tvEdit?.setOnClickListener {
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
@@ -87,8 +86,8 @@ class EmployeeInfoAdapter @Inject constructor() :
                     context,
                     context.getString(R.string.present_address)
                 )
-
             }
+
             StaticKey.EducationalQualifications -> {
                 holder.binding?.hEducationQualification?.tvEdit?.setOnClickListener {
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
@@ -102,9 +101,9 @@ class EmployeeInfoAdapter @Inject constructor() :
                 )
             }
             StaticKey.Jobjoining -> {
-                holder.binding?.hJobJoiningInformation?.tvEdit?.setOnClickListener({
+                holder.binding?.hJobJoiningInformation?.tvEdit?.setOnClickListener {
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                }
                 holder.binding?.llJobjoningInfo?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindJobjoningInfoData(
                     holder.binding!!,
@@ -115,9 +114,9 @@ class EmployeeInfoAdapter @Inject constructor() :
                 )
             }
             StaticKey.Quota -> {
-                holder.binding?.hQuota?.tvEdit?.setOnClickListener({
+                holder.binding?.hQuota?.tvEdit?.setOnClickListener {
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                }
                 holder.binding?.llQuotaInfo?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindQuotaData(
                     holder.binding!!,
@@ -127,9 +126,9 @@ class EmployeeInfoAdapter @Inject constructor() :
                 )
             }
             StaticKey.Spouse -> {
-                holder.binding?.hSpouse?.tvEdit?.setOnClickListener({
+                holder.binding?.hSpouse?.tvEdit?.setOnClickListener {
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                }
                 holder.binding?.llSpouse?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindSpouseData(
                     holder.binding!!,
@@ -139,9 +138,9 @@ class EmployeeInfoAdapter @Inject constructor() :
                 )
             }
             StaticKey.Children -> {
-                holder.binding?.hChildren?.tvEdit?.setOnClickListener({
+                holder.binding?.hChildren?.tvEdit?.setOnClickListener {
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                }
                 holder.binding?.llChildrenInfo?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindChildrenData(
                     holder.binding!!,
@@ -151,9 +150,9 @@ class EmployeeInfoAdapter @Inject constructor() :
                 )
             }
             StaticKey.Language -> {
-                holder.binding?.hLanguage?.tvEdit?.setOnClickListener({
+                holder.binding?.hLanguage?.tvEdit?.setOnClickListener {
                     onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                }
                 holder.binding?.llLanguageInfo?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindLanguageData(
                     holder.binding!!,
@@ -192,7 +191,7 @@ class EmployeeInfoAdapter @Inject constructor() :
 
             StaticKey.OfficialResidentials -> {
                 holder.binding?.hOfficialResidentialInfo?.tvEdit?.setOnClickListener {
-                    onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
+                    onEmployeeInfoClickListener.onClick(dataList[position], key, position)
                 }
                 holder.binding?.llOfficialResidentialInfo?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindOfficialResidentialInfoData(
@@ -204,9 +203,9 @@ class EmployeeInfoAdapter @Inject constructor() :
             }
 
             StaticKey.ForeignTravel -> {
-                holder.binding?.hForeignTravelInfo?.tvEdit?.setOnClickListener({
-                    onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                holder.binding?.hForeignTravelInfo?.tvEdit?.setOnClickListener {
+                    onEmployeeInfoClickListener.onClick(dataList[position], key, position)
+                }
                 holder.binding?.llForeingTravelInfo?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindForeignTravelInfoData(
                     holder.binding!!,
@@ -217,9 +216,9 @@ class EmployeeInfoAdapter @Inject constructor() :
             }
 
             StaticKey.AdditionalQualifications -> {
-                holder.binding?.hAdditionalQualification?.tvEdit?.setOnClickListener({
-                    onEmployeeInfoClickListener.onClick(dataList.get(position), key, position)
-                })
+                holder.binding?.hAdditionalQualification?.tvEdit?.setOnClickListener {
+                    onEmployeeInfoClickListener.onClick(dataList[position], key, position)
+                }
                 holder.binding?.llAdditionalQualification?.visibility = View.VISIBLE
                 employeeInfoDataBinding.bindAdditionalQualificationData(
                     holder.binding!!,

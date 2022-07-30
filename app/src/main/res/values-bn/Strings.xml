@@ -166,6 +166,15 @@
     <string name="additional_designation">অতিরিক্ত পদবি</string>
     <string name="depertment">বিভাগ</string>
     <string name="job_type">কাজের ধরন</string>
+    <string name="permanent_confirm_date">স্থায়ী সংযুক্তি</string>
+    <string name="permanent_document">Permanent Document</string>
+    <string name="temporary_revenue_type">অস্থায়ী রাজস্ব ধরন</string>
+    <string name="temporary_revenue_transfer_date">অস্থায়ী রাজস্ব স্থানান্তর তারিখ</string>
+    <string name="temporary_revenue_transfer_doc">অস্থায়ী রাজস্ব সংযুক্তি</string>
+    <string name="regularization_date">Regularization Date</string>
+    <string name="regularization_date_doc">সংযুক্তি</string>
+
+
     <string name="joning_date">যোগদানের তারিখ</string>
     <string name="confirmation_date">নিশ্চিতকরণের তারিখ</string>
     <string name="pension">পেনশনের তারিখ</string>
@@ -234,9 +243,12 @@
     <string name="qualification_details">যোগ্যতার বিবরণ (ইংরেজি)</string>
     <string name="qualification_details_bangla">যোগ্যতার বিবরণ (বাংলা)</string>
     <string name="employee_id">কর্মকর্তা/কর্মচারী আইডি</string>
+    <string name="home_district">নিজ জেলা</string>
     <string name="employee_type">কর্মকর্তা/কর্মচারী প্রকার</string>
     <string name="has_disability">অক্ষমতা আছে</string>
-    <string name="employment_job_joining_date">চাকরি যোগদানের তারিখ</string>
+    <string name="employment_job_joining_date">প্রথম চাকরিতে যোগদানের তারিখ</string>
+
+    <string name="pension_date">পেনশনের তারিখ</string>
     <string name="employee_status_type">কর্মসংস্থান স্থিতির ধরণ</string>
     <string name="employee_status_date">কর্মসংস্থান স্থিতির তারিখ</string>
     <string name="has_freedom_fighter_quota">মুক্তিযোদ্ধা কোটা আছে ?</string>

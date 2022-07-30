@@ -138,8 +138,13 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
+                                android:id="@+id/fHomeDistrict"
+                                layout="@layout/personel_information_view_field" />
+                            <include
                                 android:id="@+id/fEmployeeType"
                                 layout="@layout/personel_information_view_field" />
+
+
 
                             <include
                                 android:id="@+id/fEmployeeRole"
@@ -149,14 +154,55 @@
                             <include
                                 android:id="@+id/fEmployeeJobJoiningDate"
                                 layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fPRLDate"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fPension_date"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fJobType"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEmployeePermanentConfirmDate"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fEmployeePermanentDocument"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
+                            <include
+                                android:id="@+id/fTemporaryRevenueType"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fTemporaryRevenueTransferDate"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fTemporaryRevenueTransferDoc"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
+                            <include
+                                android:id="@+id/fRegularizationDate"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fRegularizationDateDoc"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
 
                             <include
                                 android:id="@+id/fEmployeeStatusType"
+                                android:visibility="gone"
                                 layout="@layout/personel_information_view_field" />
 
 
                             <include
                                 android:id="@+id/fEmployeeStatusDate"
+                                android:visibility="gone"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
@@ -386,17 +432,58 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
+                                android:id="@+id/fHomeDistrict1"
+                                layout="@layout/personel_information_view_field" />
+                            <include
                                 android:id="@+id/fEmployeeType1"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
                                 android:id="@+id/fEmployeeRole1"
                                 layout="@layout/personel_information_view_field" />
-
-
                             <include
                                 android:id="@+id/fEmployeeJobJoiningDate1"
                                 layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPRLDate1"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fPension_date1"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fJobType1"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fEmployeePermanentConfirmDate1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fEmployeePermanentDocument1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+                            <include
+                                android:id="@+id/fTemporaryRevenueType1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fTemporaryRevenueTransferDate1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fTemporaryRevenueTransferDoc1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
+                            <include
+                                android:id="@+id/fRegularizationDate1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fRegularizationDateDoc1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
 
                             <include
                                 android:id="@+id/fEmployeeStatusType1"

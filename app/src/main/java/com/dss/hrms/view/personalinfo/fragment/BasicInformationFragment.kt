@@ -25,6 +25,7 @@ import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.transition.Visibility
 import com.bumptech.glide.Glide
 import com.dss.hrms.R
 import com.dss.hrms.di.mainScope.EmployeeProfileData
@@ -143,84 +144,99 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         v.fPresentBasicSalary.llBody.visibility = View.GONE
         v.fPresentGrossSalary.llBody.visibility = View.GONE
 
-        v.hBasicInformation.tvTitle.setText(getString(R.string.personal_information))
-        v.fEmployeeId.tvTitle.setText(getString(R.string.employee_id))
+        v.hBasicInformation.tvTitle.text = getString(R.string.personal_information)
+        v.fEmployeeId.tvTitle.text = getString(R.string.employee_id)
 
-        v.fNameEng.tvTitle.setText(getString(R.string.name))
+        v.fNameEng.tvTitle.text = getString(R.string.name)
 
-        v.fNameBangla.tvTitle.setText(getString(R.string.name_b))
+        v.fNameBangla.tvTitle.text = getString(R.string.name_b)
 
-        v.fDOB.tvTitle.setText(getString(R.string.birth))
-        v.fGender.tvTitle.setText(getString(R.string.gender))
-        v.fMaritalStatus.tvTitle.setText(getString(R.string.marital_status))
-        v.fReligion.tvTitle.setText(getString(R.string.religion))
-        v.fBloodGroup.tvTitle.setText(getString(R.string.blood_group))
-        v.fPresentBasicSalary.tvTitle.setText(getString(R.string.present_basic_salary))
-        v.fPresentGrossSalary.tvTitle.setText(getString(R.string.present_gross_salary))
-        v.fTIN.tvTitle.setText(getString(R.string.tin_no))
-        v.fPunchId.tvTitle.setText(getString(R.string.punch_id))
+        v.fDOB.tvTitle.text = getString(R.string.birth)
+        v.fGender.tvTitle.text = getString(R.string.gender)
+        v.fMaritalStatus.tvTitle.text = getString(R.string.marital_status)
+        v.fReligion.tvTitle.text = getString(R.string.religion)
+        v.fBloodGroup.tvTitle.text = getString(R.string.blood_group)
+        v.fPresentBasicSalary.tvTitle.text = getString(R.string.present_basic_salary)
+        v.fPresentGrossSalary.tvTitle.text = getString(R.string.present_gross_salary)
+        v.fTIN.tvTitle.text = getString(R.string.tin_no)
+        v.fPunchId.tvTitle.text = getString(R.string.punch_id)
 
-        v.fFatherNameEng.tvTitle.setText(getString(R.string.f_name))
-        v.fFatherNameBangla.tvTitle.setText(getString(R.string.f_name_b))
-        v.fMotherNameEng.tvTitle.setText(getString(R.string.m_name))
-        v.fMotherNameBangla.tvTitle.setText(getString(R.string.m_name_b))
-        v.fEmail.tvTitle.setText(getString(R.string.email))
-        v.fUserName.tvTitle.setText(getString(R.string.user_name))
-        v.fPhone.tvTitle.setText(getString(R.string.phone))
-        v.fEmployeeType.tvTitle.setText(getString(R.string.employee_type))
-        v.fEmployeeJobJoiningDate.tvTitle.setText(getString(R.string.employment_job_joining_date))
-        v.fEmployeeStatusType.tvTitle.setText(getString(R.string.employee_status_type))
-        v.fEmployeeStatusDate.tvTitle.setText(getString(R.string.employee_status_date))
-        v.fEmployeeFreedomFighterquota.tvTitle.setText(getString(R.string.has_freedom_fighter_quota))
-        v.fDisability.tvTitle.setText(getString(R.string.has_disability))
-        v.tvImageTitle.setText(getString(R.string.photo))
-        v.fEmployeeRole.tvTitle.setText(getString(R.string.employee_role))
-        v.fDisabilityType.tvTitle.setText(getString(R.string.disability_type))
-        v.fDisabilityDegree.tvTitle.setText(getString(R.string.disability_degree))
-        v.fDisabledPersonId.tvTitle.setText(getString(R.string.disabled_person_id))
-        v.fNid.tvTitle.setText(getString(R.string.nid_no))
+        v.fFatherNameEng.tvTitle.text = getString(R.string.f_name)
+        v.fFatherNameBangla.tvTitle.text = getString(R.string.f_name_b)
+        v.fMotherNameEng.tvTitle.text = getString(R.string.m_name)
+        v.fMotherNameBangla.tvTitle.text = getString(R.string.m_name_b)
+        v.fEmail.tvTitle.text = getString(R.string.email)
+        v.fUserName.tvTitle.text = getString(R.string.user_name)
+        v.fPhone.tvTitle.text = getString(R.string.phone)
+        v.fHomeDistrict.tvTitle.text = getString(R.string.home_district)
+        v.fEmployeeType.tvTitle.text = getString(R.string.employee_type)
+        v.fEmployeeJobJoiningDate.tvTitle.text = getString(R.string.employment_job_joining_date)
+        v.fPRLDate.tvTitle.text = getString(R.string.prl_date)
+        v.fPension_date.tvTitle.text = getString(R.string.pension_date)
+        v.fJobType.tvTitle.text = getString(R.string.job_type)
+
+        v.fEmployeePermanentConfirmDate.tvTitle.text = getString(R.string.permanent_confirm_date)
+        v.fEmployeePermanentDocument.tvTitle.text = getString(R.string.permanent_document)
 
 
+        v.fTemporaryRevenueType.tvTitle.text = getString(R.string.temporary_revenue_type)
+        v.fTemporaryRevenueTransferDate.tvTitle.text = getString(R.string.temporary_revenue_transfer_date)
+        v.fTemporaryRevenueTransferDoc.tvTitle.text = getString(R.string.temporary_revenue_transfer_doc)
+        v.fRegularizationDate.tvTitle.text = getString(R.string.regularization_date)
+        v.fRegularizationDateDoc.tvTitle.text = getString(R.string.regularization_date_doc)
 
-        v.fEmployeeId.tvText.setText("" + employee?.profile_id)
-        employee?.name?.let { v.fNameEng.tvText.setText(it) }
-        employee?.name_bn?.let { v.fNameBangla.tvText.setText(it) }
+        v.fEmployeeStatusType.tvTitle.text = getString(R.string.employee_status_type)
+        v.fEmployeeStatusDate.tvTitle.text = getString(R.string.employee_status_date)
+
+        v.fEmployeeFreedomFighterquota.tvTitle.text = getString(R.string.has_freedom_fighter_quota)
+        v.fDisability.tvTitle.text = getString(R.string.has_disability)
+        v.tvImageTitle.text = getString(R.string.photo)
+        v.fEmployeeRole.tvTitle.text = getString(R.string.employee_role)
+        v.fDisabilityType.tvTitle.text = getString(R.string.disability_type)
+        v.fDisabilityDegree.tvTitle.text = getString(R.string.disability_degree)
+        v.fDisabledPersonId.tvTitle.text = getString(R.string.disabled_person_id)
+        v.fNid.tvTitle.text = getString(R.string.nid_no)
+
+
+
+        v.fEmployeeId.tvText.text = "" + employee?.profile_id
+        employee?.name?.let { v.fNameEng.tvText.text = it }
+        employee?.name_bn?.let { v.fNameBangla.tvText.text = it }
         employee?.date_of_birth?.let {
-            v.fDOB.tvText.setText(
-                (DateConverter.changeDateFormateForShowing(
-                    it
-                ))
-            )
+            v.fDOB.tvText.text = (DateConverter.changeDateFormateForShowing(
+                it
+            ))
         }
+
         employee?.job_joining_date?.let {
-            v.fEmployeeJobJoiningDate.tvText.setText(
-                (DateConverter.changeDateFormateForShowing(
-                    it
-                ))
-            )
+            v.fEmployeeJobJoiningDate.tvText.text = (DateConverter.changeDateFormateForShowing(
+                it
+            ))
         }
-        employee?.fathers_name?.let { v.fFatherNameEng.tvText.setText(it) }
-        employee?.fathers_name_bn?.let { v.fFatherNameBangla.tvText.setText(it) }
-        employee?.mothers_name?.let { v.fMotherNameEng.tvText.setText(it) }
-        employee?.mothers_name_bn?.let { v.fMotherNameBangla.tvText.setText(it) }
-        employee?.user?.email?.let { v.fEmail.tvText.setText(it) }
-        employee?.user?.username?.let { v.fUserName.tvText.setText(it) }
-        employee?.user?.phone_number?.let { v.fPhone.tvText.setText(it) }
-        employee?.nid_no?.let { v.fNid.tvText.setText(it) }
-        employee?.tin_no?.let { v.fTIN.tvText.setText(it) }
-        employee?.punch_id?.let { v.fPunchId.tvText.setText(it) }
-        employee?.present_basic_salary?.let { v.fPresentBasicSalary.tvText.setText(it) }
-        employee?.present_gross_salary?.let { v.fPresentGrossSalary.tvText.setText(it) }
+
+        employee?.prl_date?.let { v.fPRLDate.tvText.text = it }
+        employee?.pension_date?.let { v.fPension_date.tvText.text = it }
+
+        employee?.fathers_name?.let { v.fFatherNameEng.tvText.text = it }
+        employee?.fathers_name_bn?.let { v.fFatherNameBangla.tvText.text = it }
+        employee?.mothers_name?.let { v.fMotherNameEng.tvText.text = it }
+        employee?.mothers_name_bn?.let { v.fMotherNameBangla.tvText.text = it }
+        employee?.user?.email?.let { v.fEmail.tvText.text = it }
+        employee?.user?.username?.let { v.fUserName.tvText.text = it }
+        employee?.user?.phone_number?.let { v.fPhone.tvText.text = it }
+        employee?.nid_no?.let { v.fNid.tvText.text = it }
+        employee?.tin_no?.let { v.fTIN.tvText.text = it }
+        employee?.punch_id?.let { v.fPunchId.tvText.text = it }
+        employee?.present_basic_salary?.let { v.fPresentBasicSalary.tvText.text = it }
+        employee?.present_gross_salary?.let { v.fPresentGrossSalary.tvText.text = it }
         employee?.employment_job_status?.status_date?.let {
-            v.fEmployeeStatusDate.tvText.setText(
-                (DateConverter.changeDateFormateForShowing(
-                    it
-                ))
-            )
+            v.fEmployeeStatusDate.tvText.text = (DateConverter.changeDateFormateForShowing(
+                it
+            ))
         }
         employee?.user?.roles?.let {
             if (it.size > 0) {
-                v.fEmployeeRole.tvText.setText(it.get(0).name)
+                v.fEmployeeRole.tvText.text = it.get(0).name
             }
         }
 
@@ -242,7 +258,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 v.fEmployeeFreedomFighterAttachment.tvText.text = " Tap To View"
                 val fileExtentions =
                     ConvertNumber.getTheFileExtention(employee?.freedom_fighter_document_path)
-                        .toLowerCase()
+                        .lowercase(Locale.getDefault())
 
 
                 if (fileExtentions.isEmpty()) {
@@ -267,18 +283,18 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
         if (employee?.has_disability == false) {
             Log.e("hasdisability", "" + employee?.has_disability)
-            v.fDisability.tvText.setText("" + context?.getString(R.string.no))
+            v.fDisability.tvText.text = "" + context?.getString(R.string.no)
             v.fDisabilityDegree.llBody.visibility = View.GONE
             v.fDisabilityType?.llBody?.visibility = View.GONE
             v.fDisabledPersonId?.llBody?.visibility = View.GONE
             v.fDisabilityAttachment.llBody.visibility = View.GONE
 
         } else {
-            v.fDisability.tvText.setText("" + context?.getString(R.string.yes))
+            v.fDisability.tvText.text = "" + context?.getString(R.string.yes)
             v.fDisabilityDegree?.llBody?.visibility = View.VISIBLE
             v.fDisabilityType?.llBody?.visibility = View.VISIBLE
             v.fDisabledPersonId?.llBody?.visibility = View.VISIBLE
-            v.fDisabledPersonId.tvText.setText(employee?.disabled_person_id)
+            v.fDisabledPersonId.tvText.text = employee?.disabled_person_id
 
             v.fDisabilityAttachment.llBody.visibility = View.VISIBLE
             v.fDisabilityAttachment.tvTitle.text = context?.getString(R.string.attachment)
@@ -287,7 +303,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
             val fileExtentions =
                 ConvertNumber.getTheFileExtention(employee?.disability_document_path)
-                    .toLowerCase()
+                    .lowercase(Locale.getDefault())
 
 
             if (fileExtentions.isEmpty()) {
@@ -303,57 +319,204 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                     ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
             }
 
-            if (preparence?.getLanguage()
+            if (preparence.getLanguage()
                     .equals("en")
             ) {
 
 
-                v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type)
-                v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree)
-                v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type)
+                v.fEmployeeType.tvText.text = employee?.employee_type?.employee_type
+
+                v.fDisabilityDegree.tvText.text = employee?.disability_degree?.disability_degree
+                v.fDisabilityType.tvText.text = employee?.disability_type?.disability_type
                 employee?.employment_job_status?.employeementstatus?.name?.let {
-                    v.fPresentGrossSalary.tvText.setText(
-                        it
-                    )
+                    v.fPresentGrossSalary.tvText.text = it
                 }
             } else {
-                v.fEmployeeType.tvText.setText(employee?.employee_type?.employee_type_bn)
-                v.fDisabilityDegree.tvText.setText(employee?.disability_degree?.disability_degree_bn)
-                v.fDisabilityType.tvText.setText(employee?.disability_type?.disability_type_bn)
+
+                v.fEmployeeType.tvText.text = employee?.employee_type?.employee_type_bn
+                v.fDisabilityDegree.tvText.text = employee?.disability_degree?.disability_degree_bn
+                v.fDisabilityType.tvText.text = employee?.disability_type?.disability_type_bn
                 employee?.employment_job_status?.employeementstatus?.name_bn?.let {
-                    v.fPresentGrossSalary.tvText.setText(
-                        it
-                    )
+                    v.fPresentGrossSalary.tvText.text = it
                 }
             }
 
         }
-        if (preparence?.getLanguage()
+
+        if ( employee?.employee_job_type_revenue?.job_type_id == 2){
+            v.fEmployeePermanentConfirmDate.visibility = View.VISIBLE
+            v.fEmployeePermanentDocument.visibility = View.VISIBLE
+            employee?.employee_job_type_revenue?.permanent_confirmation_date.let { v.fEmployeePermanentConfirmDate.tvText.text =
+                it }
+            v.fEmployeePermanentDocument.tvText.setTextColor(
+                ContextCompat.getColor(
+                    ctx,
+                    R.color.green
+                )
+            )
+            v.fEmployeePermanentDocument.tvText.text = " Tap To View"
+            val fileExtentions =
+                ConvertNumber.getTheFileExtention( employee?.employee_job_type_revenue?.permanent_confirmation_attachment)
+                    .lowercase(Locale.getDefault())
+
+
+            if (fileExtentions.isEmpty()) {
+                v.fEmployeePermanentDocument.tvText.text = " No Attachment"
+            } else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+                    "jpg"
+                )
+            ) {
+                v.fEmployeePermanentDocument.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.picture)
+            } else {
+                v.fEmployeePermanentDocument.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
+            }
+            v.fEmployeePermanentDocument.tvText.setOnClickListener {
+
+                if (employee?.employee_job_type_revenue?.permanent_confirmation_attachment.isNullOrBlank()) {
+                    Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+                } else {
+                    // check action
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(RetrofitInstance.BASE_URL + employee?.employee_job_type_revenue?.permanent_confirmation_attachment.toString())
+                    )
+                    startActivity(browserIntent)
+                }
+            }
+        }else{
+            v.fTemporaryRevenueType.visibility = View.VISIBLE
+            v.fTemporaryRevenueTransferDate.visibility = View.VISIBLE
+            v.fTemporaryRevenueTransferDoc.visibility = View.VISIBLE
+            v.fRegularizationDate.visibility = View.VISIBLE
+            v.fRegularizationDateDoc.visibility = View.VISIBLE
+
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                employee?.employee_job_type_revenue?.temporary_revenue_type?.name.let {
+                    v.fTemporaryRevenueType.tvText.text = it
+                }
+            }else{
+                employee?.employee_job_type_revenue?.temporary_revenue_type?.name_bn.let {
+                    v.fTemporaryRevenueType.tvText.text = it
+                }
+            }
+            employee?.employee_job_type_revenue?.temporary_revenue_transfer_date.let {
+                v.fTemporaryRevenueTransferDate.tvText.text = it
+            }
+
+            // Temporary Revenue TransferDate attachment
+            v.fTemporaryRevenueTransferDoc.tvText.setTextColor(
+                ContextCompat.getColor(
+                    ctx,
+                    R.color.green
+                )
+            )
+            v.fTemporaryRevenueTransferDoc.tvText.text = " Tap To View"
+            val fileExtentions =
+                ConvertNumber.getTheFileExtention( employee?.employee_job_type_revenue?.temporary_revenue_transfer_attachment)
+                    .lowercase(Locale.getDefault())
+
+
+            if (fileExtentions.isEmpty()) {
+                v.fTemporaryRevenueTransferDoc.tvText.text = " No Attachment"
+            } else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+                    "jpg"
+                )
+            ) {
+                v.fTemporaryRevenueTransferDoc.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.picture)
+            } else {
+                v.fTemporaryRevenueTransferDoc.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
+            }
+            v.fTemporaryRevenueTransferDoc.tvText.setOnClickListener {
+
+                if (employee?.employee_job_type_revenue?.temporary_revenue_transfer_attachment.isNullOrBlank()) {
+                    Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+                } else {
+                    // check action
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(RetrofitInstance.BASE_URL + employee?.employee_job_type_revenue?.temporary_revenue_transfer_attachment.toString())
+                    )
+                    startActivity(browserIntent)
+                }
+            }
+
+            employee?.employee_job_type_revenue?.regularization_date.let {
+                v.fRegularizationDate.tvText.text = it
+            }
+
+            // RegularizationDate attachment
+            v.fRegularizationDateDoc.tvText.setTextColor(
+                ContextCompat.getColor(
+                    ctx,
+                    R.color.green
+                )
+            )
+            v.fRegularizationDateDoc.tvText.text = " Tap To View"
+            val fileExtentions1 =
+                ConvertNumber.getTheFileExtention( employee?.employee_job_type_revenue?.regularization_attachment)
+                    .lowercase(Locale.getDefault())
+
+
+            if (fileExtentions1.isEmpty()) {
+                v.fRegularizationDateDoc.tvText.text = " No Attachment"
+            } else if (fileExtentions1.contains("png") || fileExtentions1.contains("jpeg") || fileExtentions.contains(
+                    "jpg"
+                )
+            ) {
+                v.fRegularizationDateDoc.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.picture)
+            } else {
+                v.fRegularizationDateDoc.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
+            }
+            v.fRegularizationDateDoc.tvText.setOnClickListener {
+
+                if (employee?.employee_job_type_revenue?.regularization_attachment.isNullOrBlank()) {
+                    Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+                } else {
+                    // check action
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(RetrofitInstance.BASE_URL + employee?.employee_job_type_revenue?.regularization_attachment.toString())
+                    )
+                    startActivity(browserIntent)
+                }
+            }
+
+        }
+
+        if (preparence.getLanguage()
                 .equals("en")
         ) {
-            employee?.gender?.name.let { v.fGender.tvText.setText(it) }
-            employee?.marital_status?.name.let { v.fMaritalStatus.tvText.setText(it) }
+            employee?.birth_place?.name.let { v.fHomeDistrict.tvText.text = it }
+            employee?.employee_job_type_revenue?.job_type?.name.let { v.fJobType.tvText.text = it }
+            employee?.gender?.name.let { v.fGender.tvText.text = it }
+            employee?.marital_status?.name.let { v.fMaritalStatus.tvText.text = it }
             employee?.employee_type?.employee_type.let {
-                v.fEmployeeType.tvText.setText(
-                    it
-                )
+                v.fEmployeeType.tvText.text = it
             }
 
-            v.fBloodGroup.tvText.setText(employee?.blood_group?.name)
-            v.fReligion.tvText.setText(employee?.religion?.name)
-            v.fEmployeeStatusType.tvText.setText(employee?.employment_job_status?.employeementstatus?.name)
+            v.fBloodGroup.tvText.text = employee?.blood_group?.name
+            v.fReligion.tvText.text = employee?.religion?.name
+            v.fEmployeeStatusType.tvText.text = employee?.employment_job_status?.employeementstatus?.name
 
         } else {
-            employee?.gender?.name_bn.let { v.fGender.tvText.setText(it) }
-            employee?.marital_status?.name_bn.let { v.fMaritalStatus.tvText.setText(it) }
+            employee?.birth_place?.name_bn.let { v.fHomeDistrict.tvText.text = it }
+            employee?.employee_job_type_revenue?.job_type?.name_bn.let { v.fJobType.tvText.text = it }
+            employee?.gender?.name_bn.let { v.fGender.tvText.text = it }
+            employee?.marital_status?.name_bn.let { v.fMaritalStatus.tvText.text = it }
             employee?.employee_type?.employee_type_bn.let {
-                v.fEmployeeType.tvText.setText(
-                    it
-                )
+                v.fEmployeeType.tvText.text = it
             }
-            v.fBloodGroup.tvText.setText(employee?.blood_group?.name_bn)
-            v.fReligion.tvText.setText(employee?.religion?.name_bn)
-            v.fEmployeeStatusType.tvText.setText(employee?.employment_job_status?.employeementstatus?.name_bn)
+            v.fBloodGroup.tvText.text = employee?.blood_group?.name_bn
+            v.fReligion.tvText.text = employee?.religion?.name_bn
+            v.fEmployeeStatusType.tvText.text = employee?.employment_job_status?.employeementstatus?.name_bn
         }
 
 //        activity?.let {
@@ -451,82 +614,97 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 R.string.pending_data
             )
         })"
-        v.fEmployeeId1.tvTitle.setText(getString(R.string.employee_id))
+        v.fEmployeeId1.tvTitle.text = getString(R.string.employee_id)
 
-        v.fNameEng1.tvTitle.setText(getString(R.string.name))
+        v.fNameEng1.tvTitle.text = getString(R.string.name)
 
-        v.fNameBangla1.tvTitle.setText(getString(R.string.name_b))
+        v.fNameBangla1.tvTitle.text = getString(R.string.name_b)
 
-        v.fDOB1.tvTitle.setText(getString(R.string.birth))
-        v.fGender1.tvTitle.setText(getString(R.string.gender))
-        v.fMaritalStatus1.tvTitle.setText(getString(R.string.marital_status))
-        v.fReligion1.tvTitle.setText(getString(R.string.religion))
-        v.fBloodGroup1.tvTitle.setText(getString(R.string.blood_group))
-        v.fPresentBasicSalary1.tvTitle.setText(getString(R.string.present_basic_salary))
-        v.fPresentGrossSalary1.tvTitle.setText(getString(R.string.present_gross_salary))
-        v.fTIN1.tvTitle.setText(getString(R.string.tin_no))
-        v.fPunchId1.tvTitle.setText(getString(R.string.punch_id))
+        v.fDOB1.tvTitle.text = getString(R.string.birth)
+        v.fGender1.tvTitle.text = getString(R.string.gender)
+        v.fMaritalStatus1.tvTitle.text = getString(R.string.marital_status)
+        v.fReligion1.tvTitle.text = getString(R.string.religion)
+        v.fBloodGroup1.tvTitle.text = getString(R.string.blood_group)
+        v.fPresentBasicSalary1.tvTitle.text = getString(R.string.present_basic_salary)
+        v.fPresentGrossSalary1.tvTitle.text = getString(R.string.present_gross_salary)
+        v.fTIN1.tvTitle.text = getString(R.string.tin_no)
+        v.fPunchId1.tvTitle.text = getString(R.string.punch_id)
 
-        v.fFatherNameEng1.tvTitle.setText(getString(R.string.f_name))
-        v.fFatherNameBangla1.tvTitle.setText(getString(R.string.f_name_b))
-        v.fMotherNameEng1.tvTitle.setText(getString(R.string.m_name))
-        v.fMotherNameBangla1.tvTitle.setText(getString(R.string.m_name_b))
-        v.fEmail1.tvTitle.setText(getString(R.string.email))
-        v.fUserName1.tvTitle.setText(getString(R.string.user_name))
-        v.fPhone1.tvTitle.setText(getString(R.string.phone))
-        v.fEmployeeType1.tvTitle.setText(getString(R.string.employee_type))
-        v.fEmployeeJobJoiningDate1.tvTitle.setText(getString(R.string.employment_job_joining_date))
-        v.fEmployeeStatusType1.tvTitle.setText(getString(R.string.employee_status_type))
-        v.fEmployeeStatusDate1.tvTitle.setText(getString(R.string.employee_status_date))
-        v.fEmployeeFreedomFighterquota1.tvTitle.setText(getString(R.string.has_freedom_fighter_quota))
-        v.fDisability1.tvTitle.setText(getString(R.string.has_disability))
-        v.tvImageTitle1.setText(getString(R.string.photo))
-        v.fEmployeeRole1.tvTitle.setText(getString(R.string.employee_role))
-        v.fDisabilityType1.tvTitle.setText(getString(R.string.disability_type))
-        v.fDisabilityDegree1.tvTitle.setText(getString(R.string.disability_degree))
-        v.fDisabledPersonId1.tvTitle.setText(getString(R.string.disabled_person_id))
-        v.fNid1.tvTitle.setText(getString(R.string.nid_no))
+        v.fFatherNameEng1.tvTitle.text = getString(R.string.f_name)
+        v.fFatherNameBangla1.tvTitle.text = getString(R.string.f_name_b)
+        v.fMotherNameEng1.tvTitle.text = getString(R.string.m_name)
+        v.fMotherNameBangla1.tvTitle.text = getString(R.string.m_name_b)
+        v.fEmail1.tvTitle.text = getString(R.string.email)
+        v.fUserName1.tvTitle.text = getString(R.string.user_name)
+        v.fPhone1.tvTitle.text = getString(R.string.phone)
+        v.fHomeDistrict1.tvTitle.text = getString(R.string.home_district)
+        v.fEmployeeType1.tvTitle.text = getString(R.string.employee_type)
+        v.fEmployeeJobJoiningDate1.tvTitle.text = getString(R.string.employment_job_joining_date)
+        v.fPRLDate1.tvTitle.text = getString(R.string.prl_date)
+        v.fPension_date1.tvTitle.text = getString(R.string.pension_date)
+        v.fJobType1.tvTitle.text = getString(R.string.job_type)
 
-        v.fEmployeeId1.tvText.setText("" + employee1?.profile_id)
-        employee1?.name?.let { v.fNameEng1.tvText.setText(it) }
-        employee1?.name_bn?.let { v.fNameBangla1.tvText.setText(it) }
+        v.fEmployeePermanentConfirmDate1.tvTitle.text = getString(R.string.permanent_confirm_date)
+        v.fEmployeePermanentDocument1.tvTitle.text = getString(R.string.permanent_document)
+
+
+        v.fTemporaryRevenueType1.tvTitle.text = getString(R.string.temporary_revenue_type)
+        v.fTemporaryRevenueTransferDate1.tvTitle.text = getString(R.string.temporary_revenue_transfer_date)
+        v.fTemporaryRevenueTransferDoc1.tvTitle.text = getString(R.string.temporary_revenue_transfer_doc)
+        v.fRegularizationDate1.tvTitle.text = getString(R.string.regularization_date)
+        v.fRegularizationDateDoc1.tvTitle.text = getString(R.string.regularization_date_doc)
+
+
+        v.fEmployeeStatusType1.tvTitle.text = getString(R.string.employee_status_type)
+        v.fEmployeeStatusDate1.tvTitle.text = getString(R.string.employee_status_date)
+        v.fEmployeeFreedomFighterquota1.tvTitle.text = getString(R.string.has_freedom_fighter_quota)
+        v.fDisability1.tvTitle.text = getString(R.string.has_disability)
+        v.tvImageTitle1.text = getString(R.string.photo)
+        v.fEmployeeRole1.tvTitle.text = getString(R.string.employee_role)
+        v.fDisabilityType1.tvTitle.text = getString(R.string.disability_type)
+        v.fDisabilityDegree1.tvTitle.text = getString(R.string.disability_degree)
+        v.fDisabledPersonId1.tvTitle.text = getString(R.string.disabled_person_id)
+        v.fNid1.tvTitle.text = getString(R.string.nid_no)
+
+        v.fEmployeeId1.tvText.text = "" + employee1?.profile_id
+        employee1?.name?.let { v.fNameEng1.tvText.text = it }
+        employee1?.name_bn?.let { v.fNameBangla1.tvText.text = it }
         employee1?.date_of_birth?.let {
-            v.fDOB1.tvText.setText(
-                (DateConverter.changeDateFormateForShowing(
-                    it
-                ))
-            )
+            v.fDOB1.tvText.text = (DateConverter.changeDateFormateForShowing(
+                it
+            ))
         }
+
         employee1?.job_joining_date?.let {
-            v.fEmployeeJobJoiningDate1.tvText.setText(
-                (DateConverter.changeDateFormateForShowing(
-                    it
-                ))
-            )
+            v.fEmployeeJobJoiningDate1.tvText.text = (DateConverter.changeDateFormateForShowing(
+                it
+            ))
         }
-        employee1?.fathers_name?.let { v.fFatherNameEng1.tvText.setText(it) }
-        employee1?.fathers_name_bn?.let { v.fFatherNameBangla1.tvText.setText(it) }
-        employee1?.mothers_name?.let { v.fMotherNameEng1.tvText.setText(it) }
-        employee1?.mothers_name_bn?.let { v.fMotherNameBangla1.tvText.setText(it) }
-        employee1?.user?.email?.let { v.fEmail1.tvText.setText(it) }
-        employee1?.user?.username?.let { v.fUserName1.tvText.setText(it) }
-        employee1?.phone_number?.let { v.fPhone1.tvText.setText(it) }
-        employee1?.nid_no?.let { v.fNid1.tvText.setText(it) }
-        employee1?.tin_no?.let { v.fTIN1.tvText.setText(it) }
-        employee1?.punch_id?.let { v.fPunchId1.tvText.setText(it) }
-        employee1?.present_basic_salary?.let { v.fPresentBasicSalary1.tvText.setText(it) }
-        employee1?.present_gross_salary?.let { v.fPresentGrossSalary1.tvText.setText(it) }
+        employee1?.prl_date?.let { v.fPRLDate1.tvText.text = it }
+        employee1?.pension_date?.let { v.fPension_date1.tvText.text = it }
+        employee1?.fathers_name?.let { v.fFatherNameEng1.tvText.text = it }
+        employee1?.fathers_name_bn?.let { v.fFatherNameBangla1.tvText.text = it }
+        employee1?.mothers_name?.let { v.fMotherNameEng1.tvText.text = it }
+        employee1?.mothers_name_bn?.let { v.fMotherNameBangla1.tvText.text = it }
+        employee1?.user?.email?.let { v.fEmail1.tvText.text = it }
+        employee1?.user?.username?.let { v.fUserName1.tvText.text = it }
+        employee1?.phone_number?.let { v.fPhone1.tvText.text = it }
+        employee1?.nid_no?.let { v.fNid1.tvText.text = it }
+        employee1?.tin_no?.let { v.fTIN1.tvText.text = it }
+        employee1?.punch_id?.let { v.fPunchId1.tvText.text = it }
+
+
+        employee1?.present_basic_salary?.let { v.fPresentBasicSalary1.tvText.text = it }
+        employee1?.present_gross_salary?.let { v.fPresentGrossSalary1.tvText.text = it }
 
         employee1?.employment_job_status?.status_date?.let {
-            v.fEmployeeStatusDate1.tvText.setText(
-                (DateConverter.changeDateFormateForShowing(
-                    it
-                ))
-            )
+            v.fEmployeeStatusDate1.tvText.text = (DateConverter.changeDateFormateForShowing(
+                it
+            ))
         }
         employee1?.user?.roles?.let {
             if (it.size > 0) {
-                v.fEmployeeRole1.tvText.setText(it.get(0).name)
+                v.fEmployeeRole1.tvText.text = it.get(0).name
             }
         }
 
@@ -547,8 +725,8 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 )
                 v.fEmployeeFreedomFighterAttachment1.tvText.text = " Tap To View"
                 val fileExtentions =
-                    ConvertNumber.getTheFileExtention(employee1?.freedom_fighter_document_path)
-                        .toLowerCase()
+                    ConvertNumber.getTheFileExtention(employee1.freedom_fighter_document_path)
+                        .lowercase(Locale.getDefault())
 
 
                 if (fileExtentions.isEmpty()) {
@@ -574,18 +752,18 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
         if (employee1?.has_disability == false) {
 
-            v.fDisability1.tvText.setText("" + context?.getString(R.string.no))
+            v.fDisability1.tvText.text = "" + context?.getString(R.string.no)
             v.fDisabilityDegree1.llBody.visibility = View.GONE
             v.fDisabilityType1?.llBody?.visibility = View.GONE
             v.fDisabledPersonId1?.llBody?.visibility = View.GONE
             v.fDisabilityAttachment1.llBody.visibility = View.GONE
 
         } else {
-            v.fDisability1.tvText.setText("" + context?.getString(R.string.yes))
+            v.fDisability1.tvText.text = "" + context?.getString(R.string.yes)
             v.fDisabilityDegree1?.llBody?.visibility = View.VISIBLE
             v.fDisabilityType1?.llBody?.visibility = View.VISIBLE
             v.fDisabledPersonId1?.llBody?.visibility = View.VISIBLE
-            v.fDisabledPersonId1.tvText.setText(employee1?.disabled_person_id)
+            v.fDisabledPersonId1.tvText.text = employee1?.disabled_person_id
 
             v.fDisabilityAttachment1.llBody.visibility = View.VISIBLE
             v.fDisabilityAttachment1.tvTitle.text = context?.getString(R.string.attachment)
@@ -594,7 +772,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
             val fileExtentions =
                 ConvertNumber.getTheFileExtention(employee1?.disability_document_path)
-                    .toLowerCase()
+                    .lowercase(Locale.getDefault())
 
 
             if (fileExtentions.isEmpty()) {
@@ -610,7 +788,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                     ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
             }
 
-            if (preparence?.getLanguage()
+            if (preparence.getLanguage()
                     .equals("en")
             ) {
 
@@ -618,24 +796,23 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
 
 
-                v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type)
-                v.fDisabilityDegree1.tvText.setText(employee1?.disability_degree_id?.let {
+
+                v.fEmployeeType1.tvText.text = employee1?.employee_type?.employee_type
+                v.fDisabilityDegree1.tvText.text = employee1?.disability_degree_id?.let {
                     HelperClass.getCommonDataFilltered(
                         it,
                         commonData?.disability_degrees,
                         false
                     )
-                })
+                }
 
-                v.fDisabilityType1.tvText.setText(
-                    employee1?.disability_type_id?.let {
-                        HelperClass.getCommonDataFilltered(
-                            it,
-                            commonData?.disability_types,
-                            false
-                        )
-                    }
-                )
+                v.fDisabilityType1.tvText.text = employee1?.disability_type_id?.let {
+                    HelperClass.getCommonDataFilltered(
+                        it,
+                        commonData?.disability_types,
+                        false
+                    )
+                }
 //                employee1?.employment_job_status?.employeementstatus?.name?.let {
 //                    v.fEmployeeStatusType1.tvText.setText(
 //                        it
@@ -643,36 +820,173 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                 //  }
             } else {
 
-                v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type_bn)
-                v.fDisabilityDegree1.tvText.setText(employee1?.disability_degree_id?.let {
+                v.fEmployeeType1.tvText.text = employee1?.employee_type?.employee_type_bn
+
+                v.fDisabilityDegree1.tvText.text = employee1?.disability_degree_id?.let {
                     HelperClass.getCommonDataFilltered(
                         it,
                         commonData?.disability_degrees,
                         true
                     )
-                })
+                }
 
-                v.fDisabilityType1.tvText.setText(
-                    employee1?.disability_type_id?.let {
-                        HelperClass.getCommonDataFilltered(
-                            it,
-                            commonData?.disability_types,
-                            true
-                        )
-                    }
-                )
+                v.fDisabilityType1.tvText.text = employee1?.disability_type_id?.let {
+                    HelperClass.getCommonDataFilltered(
+                        it,
+                        commonData?.disability_types,
+                        true
+                    )
+                }
 
             }
 
         }
 
+        if ( employee1?.employee_job_type_revenue?.job_type_id == 2){
+            v.fEmployeePermanentConfirmDate1.visibility = View.VISIBLE
+            v.fEmployeePermanentDocument1.visibility = View.VISIBLE
+            employee1.employee_job_type_revenue.permanent_confirmation_date.let { v.fEmployeePermanentConfirmDate1.tvText.text =
+                it }
+            v.fEmployeePermanentDocument1.tvText.setTextColor(
+                ContextCompat.getColor(
+                    ctx,
+                    R.color.green
+                )
+            )
+            v.fEmployeePermanentDocument1.tvText.text = " Tap To View"
+            val fileExtentions =
+                ConvertNumber.getTheFileExtention( employee?.employee_job_type_revenue?.permanent_confirmation_attachment)
+                    .lowercase(Locale.getDefault())
 
-        if (preparence?.getLanguage()
+
+            if (fileExtentions.isEmpty()) {
+                v.fEmployeePermanentDocument1.tvText.text = " No Attachment"
+            } else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+                    "jpg"
+                )
+            ) {
+                v.fEmployeePermanentDocument1.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.picture)
+            } else {
+                v.fEmployeePermanentDocument1.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
+            }
+
+        }else{
+            v.fTemporaryRevenueType1.visibility = View.VISIBLE
+            v.fTemporaryRevenueTransferDate1.visibility = View.VISIBLE
+            v.fTemporaryRevenueTransferDoc1.visibility = View.VISIBLE
+            v.fEmployeePermanentDocument1.visibility = View.VISIBLE
+            v.fRegularizationDate1.visibility = View.VISIBLE
+            v.fRegularizationDateDoc1.visibility = View.VISIBLE
+
+
+            if (preparence.getLanguage()
+                    .equals("en")
+            ) {
+                employee1?.employee_job_type_revenue?.temporary_revenue_type?.name.let {
+                    v.fTemporaryRevenueType1.tvText.text = it
+                }
+            }else{
+                employee1?.employee_job_type_revenue?.temporary_revenue_type?.name_bn.let {
+                    v.fTemporaryRevenueType1.tvText.text = it
+                }
+            }
+            employee1?.employee_job_type_revenue?.temporary_revenue_transfer_date.let {
+                v.fTemporaryRevenueTransferDate1.tvText.text = it
+            }
+
+            // Temporary Revenue TransferDate attachment
+            v.fTemporaryRevenueTransferDoc1.tvText.setTextColor(
+                ContextCompat.getColor(
+                    ctx,
+                    R.color.green
+                )
+            )
+            v.fTemporaryRevenueTransferDoc1.tvText.text = " Tap To View"
+            val fileExtentions =
+                ConvertNumber.getTheFileExtention( employee1?.employee_job_type_revenue?.temporary_revenue_transfer_attachment)
+                    .lowercase(Locale.getDefault())
+
+
+            if (fileExtentions.isEmpty()) {
+                v.fTemporaryRevenueTransferDoc1.tvText.text = " No Attachment"
+            } else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+                    "jpg"
+                )
+            ) {
+                v.fTemporaryRevenueTransferDoc1.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.picture)
+            } else {
+                v.fTemporaryRevenueTransferDoc1.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
+            }
+            v.fTemporaryRevenueTransferDoc1.tvText.setOnClickListener {
+
+                if (employee1?.employee_job_type_revenue?.temporary_revenue_transfer_attachment.isNullOrBlank()) {
+                    Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+                } else {
+                    // check action
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(RetrofitInstance.BASE_URL + employee1?.employee_job_type_revenue?.temporary_revenue_transfer_attachment.toString())
+                    )
+                    startActivity(browserIntent)
+                }
+            }
+
+            employee1?.employee_job_type_revenue?.regularization_date.let {
+                v.fRegularizationDate1.tvText.text = it
+            }
+
+            // RegularizationDate attachment
+            v.fRegularizationDateDoc1.tvText.setTextColor(
+                ContextCompat.getColor(
+                    ctx,
+                    R.color.green
+                )
+            )
+            v.fRegularizationDateDoc1.tvText.text = " Tap To View"
+            val fileExtentions1 =
+                ConvertNumber.getTheFileExtention( employee1?.employee_job_type_revenue?.regularization_attachment)
+                    .lowercase(Locale.getDefault())
+
+
+            if (fileExtentions1.isEmpty()) {
+                v.fRegularizationDateDoc1.tvText.text = " No Attachment"
+            } else if (fileExtentions1.contains("png") || fileExtentions1.contains("jpeg") || fileExtentions.contains(
+                    "jpg"
+                )
+            ) {
+                v.fRegularizationDateDoc1.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.picture)
+            } else {
+                v.fRegularizationDateDoc1.icon.background =
+                    ContextCompat.getDrawable(ctx, R.drawable.ic_pdf)
+            }
+            v.fRegularizationDateDoc1.tvText.setOnClickListener {
+
+                if (employee1?.employee_job_type_revenue?.regularization_attachment.isNullOrBlank()) {
+                    Toast.makeText(ctx, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+                } else {
+                    // check action
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(RetrofitInstance.BASE_URL + employee?.employee_job_type_revenue?.regularization_attachment.toString())
+                    )
+                    startActivity(browserIntent)
+                }
+            }
+
+        }
+
+        if (preparence.getLanguage()
                 .equals("en")
         ) {
-
-            v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type)
-            v.fEmployeeStatusType1.tvText.setText(employee1?.employment_job_status?.employeementstatus?.name)
+            employee1?.birth_place?.name.let { v.fHomeDistrict1.tvText.text = it }
+            v.fEmployeeType1.tvText.text = employee1?.employee_type?.employee_type
+            employee1?.employee_job_type_revenue?.job_type?.name.let { v.fJobType1.tvText.text = it }
+            v.fEmployeeStatusType1.tvText.text = employee1?.employment_job_status?.employeementstatus?.name
             v.fGender1.tvText.text = "${
                 employee1?.gender_id?.let {
                     HelperClass.getCommonDataFilltered(it, commonData?.genders, false)
@@ -694,17 +1008,15 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
 
 
-            v.fBloodGroup1.tvText.setText(
-                "${
-                    employee1?.blood_group_id?.let {
-                        HelperClass.getCommonDataFilltered(
-                            it,
-                            commonData?.blood_group,
-                            false
-                        )
-                    }
-                }"
-            )
+            v.fBloodGroup1.tvText.text = "${
+                employee1?.blood_group_id?.let {
+                    HelperClass.getCommonDataFilltered(
+                        it,
+                        commonData?.blood_group,
+                        false
+                    )
+                }
+            }"
 
             v.fReligion1.tvText.text = "${
                 employee1?.religion_id?.let {
@@ -715,8 +1027,12 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 //            v.fEmployeeStatusType1.tvText.setText(employee1?.employment_job_status?.employee1mentstatus?.name)
 
         } else {
-            v.fEmployeeType1.tvText.setText(employee1?.employee_type?.employee_type)
-            v.fEmployeeStatusType1.tvText.setText(employee1?.employment_job_status?.employeementstatus?.name)
+
+            employee1?.employee_job_type_revenue?.job_type?.name_bn.let { v.fJobType1.tvText.text =
+                it }
+            employee1?.birth_place?.name_bn.let { v.fHomeDistrict1.tvText.text = it }
+            v.fEmployeeType1.tvText.text = employee1?.employee_type?.employee_type
+            v.fEmployeeStatusType1.tvText.text = employee1?.employment_job_status?.employeementstatus?.name
             v.fGender1.tvText.text = "${
                 employee1?.gender_id?.let {
                     HelperClass.getCommonDataFilltered(it, commonData?.genders, true)
@@ -847,7 +1163,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
     private fun openSelectImageBottomSheet() {
         selectImageBottomSheet = SelectImageBottomSheet(this)
-        activity?.getSupportFragmentManager()
+        activity?.supportFragmentManager
             ?.let { selectImageBottomSheet?.show(it, "selectImage") }
     }
 
@@ -878,7 +1194,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
             Intent.ACTION_PICK,
             android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
-        galleryIntent.setType("*/*");
+        galleryIntent.type = "*/*"
         val mimetypes = arrayOf("image/*", "application/pdf", "application/msword")
         galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
         startActivityForResult(galleryIntent, REQUEST_SELECT_PHOTO)
@@ -893,7 +1209,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1030) {
-            onCameraButtonClicked();
+            onCameraButtonClicked()
         }
     }
 
@@ -914,14 +1230,14 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                             it1
                         )?.let { getImageFile(it) }
                     }
-                };
+                }
             } catch (e: IOException) {
                 e.printStackTrace()
             }
             var bitmap: Bitmap? = null
             try {
                 bitmap =
-                    MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
+                    MediaStore.Images.Media.getBitmap(activity?.contentResolver, resultUri)
             } catch (e: Exception) {
                 bitmap = null
 
@@ -947,12 +1263,12 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
                             it1
                         )?.let { getImageFile(it) }
                     }
-                };
+                }
             } catch (e: IOException) {
                 e.printStackTrace()
             }
             val bitmap =
-                MediaStore.Images.Media.getBitmap(activity?.getContentResolver(), resultUri)
+                MediaStore.Images.Media.getBitmap(activity?.contentResolver, resultUri)
 
             imageFile?.let {
                 bitmap?.let { it1 ->
@@ -995,7 +1311,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
     private fun dispatchTakePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (activity?.getPackageManager()?.let { takePictureIntent.resolveActivity(it) } != null) {
+        if (activity?.packageManager?.let { takePictureIntent.resolveActivity(it) } != null) {
             var photoFile: File? = null
             try {
                 photoFile = createImageFile()
@@ -1017,7 +1333,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         val projection =
             arrayOf(MediaStore.Images.Media.DATA)
         val cursor: Cursor =
-            uri?.let { activity?.getContentResolver()?.query(it, projection, null, null, null) }
+            uri?.let { activity?.contentResolver?.query(it, projection, null, null, null) }
                 ?: return null
         val column_index: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
         cursor.moveToFirst()

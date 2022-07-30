@@ -200,9 +200,21 @@ class Employee() {
     @SerializedName("official_residentials")
     var official_residentials: List<OfficialResidentials>? = null
 
+    @SerializedName("prl_date")
+    val prl_date: String? = null
+
+    @SerializedName("pension_date")
+    val pension_date: String? = null
+
+     @SerializedName("birth_place")
+     val birth_place: District? = null
+
+     @SerializedName("employee_job_type_revenue")
+     val employee_job_type_revenue: EmployeeJobTypeRevenue? = null
+
     //    @SerializedName("posting_records")
 //    val posting_records: List<PostingRecords>? = null
-    inner class EmploymentJobStatus {
+      inner class EmploymentJobStatus {
         @SerializedName("id")
         val id: Int? = 0
 
@@ -219,7 +231,54 @@ class Employee() {
         var employeementstatus: Employeementstatus? = null
     }
 
+    inner class EmployeeJobTypeRevenue {
+        @SerializedName("id")
+        val id: Int? = 0
 
+        @SerializedName("job_type_id")
+        val job_type_id: Int? = 0
+
+        @SerializedName("employee_id")
+        val employee_id: Int? = 0
+
+        @SerializedName("permanent_confirmation_date")
+        val permanent_confirmation_date: String? = null
+
+        @SerializedName("permanent_confirmation_attachment")
+        var permanent_confirmation_attachment: String? = null
+        @SerializedName("temporary_revenue_type_id")
+        val temporary_revenue_type_id: Int? = 0
+        @SerializedName("direct_confirmation_date")
+        val direct_confirmation_date: String? = null
+
+
+        @SerializedName("direct_confirmation_attachment")
+        val direct_confirmation_attachment: String? = null
+        @SerializedName("temporary_revenue_transfer_attachment")
+        val temporary_revenue_transfer_attachment: String? = null
+        @SerializedName("regularization_date")
+        val regularization_date: String? = null
+        @SerializedName("regularization_attachment")
+        val regularization_attachment: String? = null
+
+        @SerializedName("temporary_revenue_transfer_date")
+        val temporary_revenue_transfer_date: String? = null
+        @SerializedName("job_type")
+        val job_type: Jobjoinings.Job_type? = null
+        @SerializedName("temporary_revenue_type")
+        val temporary_revenue_type: TemporaryRevenueType? = null
+
+    }
+    inner class TemporaryRevenueType {
+        @SerializedName("id")
+        val id: Int? = 0
+        @SerializedName("name")
+        val name: String? = null
+        @SerializedName("name_bn")
+        val name_bn: String? = null
+        @SerializedName("status")
+        val status: Int? = 0
+    }
     inner class Employeementstatus {
         @SerializedName("id")
         val id: Int? = 0

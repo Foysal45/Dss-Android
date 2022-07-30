@@ -610,8 +610,10 @@
 
                                 <include
                                     android:id="@+id/fQuotaType"
+                                    android:visibility="gone"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/quota_type}" />
+
 
                                 <include
                                     android:id="@+id/fQuotaDescription"

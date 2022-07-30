@@ -178,6 +178,7 @@
 
                             <include
                                 android:id="@+id/fQuotaType"
+                                android:visibility="gone"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
