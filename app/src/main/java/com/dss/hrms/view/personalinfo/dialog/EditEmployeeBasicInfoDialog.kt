@@ -73,6 +73,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
     var disabilityType: SpinnerDataModel? = null
     var disabilityDegree: SpinnerDataModel? = null
     var employmentStatusType: SpinnerDataModel? = null
+    var homeDistrict: SpinnerDataModel? = null
     var employeeType: SpinnerDataModel? = null
     var maritalStatus: SpinnerDataModel? = null
     var hasDisability: SpinnerDataModel? = null
@@ -84,6 +85,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
     lateinit var employee: Employee
     var dialog: Dialog? = null
 
+    var jobType: SpinnerDataModel? = null
 
     fun showDialog(
         model: Employee,
@@ -133,7 +135,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         binding?.fPresentBasicSalary?.llBody?.visibility = View.GONE
         binding?.fPresentGrossSalary?.llBody?.visibility = View.GONE
 
-        employee?.profile_id?.let { binding?.fProfileId?.etText?.setText("" + it) }
+        employee.profile_id?.let { binding?.fProfileId?.etText?.setText("" + it) }
         employee?.nid_no?.let { binding?.fNid?.etText?.setText("" + it) }
         employee?.tin_no?.let { binding?.fTIN?.etText?.setText("" + it) }
         employee?.punch_id?.let { binding?.fPunchId?.etText?.setText("" + it) }
@@ -146,8 +148,30 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         employee?.mothers_name?.let { binding?.fMotherNameEng?.etText?.setText("" + it) }
         employee?.mothers_name_bn?.let { binding?.fMotherNameBangla?.etText?.setText("" + it) }
         employee?.user?.email?.let { binding?.fEmail?.etText?.setText("" + it) }
+
         employee?.date_of_birth?.let {
             binding?.fDOB?.tvText?.setText(
+                "" + DateConverter.changeDateFormateForShowing(
+                    it
+                )
+            )
+        }
+        employee?.job_joining_date?.let {
+            binding?.fJobJoiningDate?.tvText?.setText(
+                "" + DateConverter.changeDateFormateForShowing(
+                    it
+                )
+            )
+        }
+        employee?.prl_date?.let {
+            binding?.fPRLDate?.tvText?.setText(
+                "" + DateConverter.changeDateFormateForShowing(
+                    it
+                )
+            )
+        }
+        employee?.pension_date?.let {
+            binding?.fPensionDate?.tvText?.setText(
                 "" + DateConverter.changeDateFormateForShowing(
                     it
                 )
@@ -358,6 +382,50 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 }
             })
 
+        commonRepo.getAllDistrict(
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding?.fHomeDistrict?.spinner!!,
+                            context,
+                            list,
+                            employee.birth_place?.id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    homeDistrict = any as SpinnerDataModel
+                                }
+                            }
+                        )
+                    }
+                }
+
+            }
+        )
+
+
+        //Job Type full process
+        commonRepo.getCommonData("/api/auth/job-type/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding?.fJobType?.spinner!!,
+                            context,
+                            list,
+                            employee?.employee_job_type_revenue?.job_type?.id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    jobType = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
+
 
 
         hasDisabilityData()?.let {
@@ -412,7 +480,28 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 }
             })
         }
+        binding?.fJobJoiningDate?.tvText?.setOnClickListener {
+            DatePicker().showDatePicker(context, object : OnDateListener {
+                override fun onDate(date: String) {
+                    date?.let { binding?.fJobJoiningDate?.tvText?.setText("" + it) }
+                }
+            })
+        }
+        binding?.fPRLDate?.tvText?.setOnClickListener {
+            DatePicker().showDatePicker(context, object : OnDateListener {
+                override fun onDate(date: String) {
+                    date?.let { binding?.fPRLDate?.tvText?.setText("" + it) }
+                }
+            })
+        }
 
+        binding?.fPensionDate?.tvText?.setOnClickListener {
+            DatePicker().showDatePicker(context, object : OnDateListener {
+                override fun onDate(date: String) {
+                    date?.let { binding?.fPensionDate?.tvText?.setText("" + it) }
+                }
+            })
+        }
 
         binding?.fEmploymentStatusDate?.tvText?.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
@@ -771,6 +860,9 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         //  rolesList.add(1)
 
         var date = DateConverter.changeDateFormateForSending(binding?.fDOB?.tvText?.text.toString())
+        var jobJoiningDate = DateConverter.changeDateFormateForSending(binding?.fJobJoiningDate?.tvText?.text.toString())
+        var pRLDate = DateConverter.changeDateFormateForSending(binding?.fPRLDate?.tvText?.text.toString())
+        var pensionDate = DateConverter.changeDateFormateForSending(binding?.fPensionDate?.tvText?.text.toString())
         var employeeStatusTyypeDate =
             DateConverter.changeDateFormateForSending(binding?.fEmploymentStatusDate?.tvText?.text.toString())
         var map = HashMap<Any, Any?>()
@@ -806,7 +898,8 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("religion_id", religion?.id)
         map.put("employee_type_id", employee?.employee_type_id)
         map.put("has_disability", if (hasDisability?.id == 1) true else false)
-        employeeType?.id?.let { map.put("employee_type_id", it) }
+        homeDistrict?.id?.let { map.put("employee_type_id", it) }
+        employeeType?.id?.let { map.put("birth_place_id", it) }
         employmentStatusType?.id?.let { map.put("employment_status_id", it) }
      //   hasFreedomFighterQuota?.id?.let { map.put("", it) }
         map.put("has_freedom_fighter_quota", if (hasFreedomFighterQuota?.id == 1) true else false)
@@ -823,6 +916,10 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("punch_id", binding?.fPunchId?.etText?.text?.toString())
         map.put("present_basic_salary", binding?.fPresentBasicSalary?.etText?.text?.toString())
         map.put("present_gross_salary", binding?.fPresentGrossSalary?.etText?.text?.toString())
+        map.put("job_joining_date", jobJoiningDate)
+        map.put("prl_date", pRLDate)
+        map.put("pension_date", pensionDate)
+
         map.put("status", employee?.status)
         // adding document path
         map["freedom_fighter_document_path"] = freedomFighterUrl
@@ -926,7 +1023,13 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         binding?.fDisabilityDegree?.tvError?.visibility = View.GONE
         binding?.fDisabledPersonId?.tvError?.visibility = View.GONE
         binding?.fNid?.tvError?.visibility = View.GONE
+        binding?.fHomeDistrict?.tvError?.visibility = View.GONE
         binding?.fEmployeeType?.tvError?.visibility = View.GONE
+        binding?.fJobJoiningDate?.tvError?.visibility = View.GONE
+        binding?.fPRLDate?.tvError?.visibility = View.GONE
+        binding?.fPensionDate?.tvError?.visibility = View.GONE
+        binding?.fJobType?.tvError?.visibility = View.GONE
+
         binding?.fEmploymentStatusType?.tvError?.visibility = View.GONE
         binding?.fFreedomFighterQuota?.tvError?.visibility = View.GONE
 
