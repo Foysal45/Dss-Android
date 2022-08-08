@@ -7,13 +7,13 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.dss.hrms"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 31
         versionCode 26 // internal test started at 11
         versionName "1.0.5"
 

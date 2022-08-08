@@ -279,6 +279,7 @@ class Employee() {
         @SerializedName("status")
         val status: Int? = 0
     }
+
     inner class Employeementstatus {
         @SerializedName("id")
         val id: Int? = 0
@@ -505,6 +506,12 @@ class Employee() {
         @SerializedName("joining_date")
         val joining_date: String? = null
 
+        @SerializedName("employment_status_effective_date")
+        val employment_status_effective_date: String? = null
+
+        @SerializedName("employment_status_release_date")
+        val employment_status_release_date: String? = null
+
         @SerializedName("confirmation_date")
         val confirmation_date: String? = null
 
@@ -513,6 +520,12 @@ class Employee() {
 
         @SerializedName("prl_date")
         val prl_date: String? = null
+
+        @SerializedName("office_type")
+        val office_type: String? = null
+
+        @SerializedName("employment_status_description")
+        val employment_status_description: String? = null
 
         @SerializedName("status")
         val status: Int? = null
@@ -528,6 +541,9 @@ class Employee() {
 
         @SerializedName("office")
         val office: Office? = null
+
+        @SerializedName("additional_office")
+        val additional_office: AdditionalOffice? = null
 
         @SerializedName("designation")
         val designation: Designation? = null
@@ -547,6 +563,21 @@ class Employee() {
         @SerializedName("grade")
         val grade: Grade? = null
 
+        @SerializedName("head_office_section")
+        val head_office_section: HeadOfficeSection? = null
+
+        @SerializedName("head_office_sub_section")
+        val head_office_sub_section: HeadOfficeSubSection? = null
+
+        @SerializedName("employeementstatus")
+        val employeementstatus: Employeementstatus? = null
+
+        @SerializedName("district")
+        val district: District? = null
+
+        @SerializedName("division")
+        val division: Division? = null
+
 
         inner class Office {
             @SerializedName("id")
@@ -558,6 +589,9 @@ class Employee() {
             @SerializedName("division_id")
             val division_id: Int = 0
 
+            @SerializedName("head_office_department_id")
+            val head_office_department_id: Int = 0
+
             @SerializedName("district_id")
             val district_id: Int = 0
 
@@ -566,6 +600,65 @@ class Employee() {
 
             @SerializedName("office_category_id")
             val office_category_id: String? = null
+
+            @SerializedName("office_name")
+            val office_name: String? = null
+
+            @SerializedName("office_name_bn")
+            val office_name_bn: String? = null
+
+            @SerializedName("office_code")
+            val office_code: String? = null
+
+            @SerializedName("status")
+            val status: Int = 0
+
+            @SerializedName("deleted_at")
+            val deleted_at: String? = null
+
+            @SerializedName("created_at")
+            val created_at: String? = null
+
+            @SerializedName("updated_at")
+            val updated_at: String? = null
+        }
+
+        inner class AdditionalOffice {
+            @SerializedName("id")
+            val id: Int = 0
+
+            @SerializedName("office_type_id")
+            val office_type_id: Int = 0
+
+            @SerializedName("head_office_department_id")
+            val head_office_department_id: Int = 0
+
+            @SerializedName("head_office_section_id")
+            val head_office_section_id: Int = 0
+
+            @SerializedName("head_office_sub_section_id")
+            val head_office_sub_section_id: Int = 0
+
+            @SerializedName("head_office_sub_sub_section_id")
+            val head_office_sub_sub_section_id: Int = 0
+
+            @SerializedName("column_no")
+            val column_no: Int = 0
+
+            @SerializedName("row_no")
+            val row_no: Int = 0
+
+            @SerializedName("division_id")
+            val division_id: Int = 0
+
+            @SerializedName("district_id")
+            val district_id: Int = 0
+
+            @SerializedName("upazila_id")
+            val upazila_id: Int = 0
+
+            @SerializedName("office_category_id")
+            val office_category_id: Int = 0
 
             @SerializedName("office_name")
             val office_name: String? = null
@@ -727,6 +820,122 @@ class Employee() {
 
             @SerializedName("rank")
             val rank: String? = null
+
+            @SerializedName("status")
+            val status: Int = 0
+
+            @SerializedName("deleted_at")
+            val deleted_at: String? = null
+
+            @SerializedName("created_at")
+            val created_at: String? = null
+
+            @SerializedName("updated_at")
+            val updated_at: String? = null
+        }
+
+        inner class HeadOfficeSection {
+
+            @SerializedName("id")
+            val id: Int = 0
+
+            @SerializedName("name")
+            val name: String? = null
+
+            @SerializedName("name_bn")
+            val name_bn: String? = null
+
+            @SerializedName("status")
+            val status: Int = 0
+
+            @SerializedName("deleted_at")
+            val deleted_at: String? = null
+
+            @SerializedName("created_at")
+            val created_at: String? = null
+
+            @SerializedName("updated_at")
+            val updated_at: String? = null
+        }
+
+        inner class HeadOfficeSubSection {
+
+            @SerializedName("id")
+            val id: Int = 0
+
+            @SerializedName("name")
+            val name: String? = null
+
+            @SerializedName("name_bn")
+            val name_bn: String? = null
+
+            @SerializedName("status")
+            val status: Int = 0
+
+            @SerializedName("deleted_at")
+            val deleted_at: String? = null
+
+            @SerializedName("created_at")
+            val created_at: String? = null
+
+            @SerializedName("updated_at")
+            val updated_at: String? = null
+        }
+
+        inner class Employeementstatus {
+            @SerializedName("id")
+            val id: Int = 0
+
+            @SerializedName("name")
+            val name: String? = null
+
+            @SerializedName("name_bn")
+            val name_bn: String? = null
+
+            @SerializedName("priority_order")
+            val priority_order: String? = null
+
+            @SerializedName("status")
+            val status: Int = 0
+        }
+
+        inner class District {
+
+            @SerializedName("id")
+            val id: Int = 0
+
+            @SerializedName("name")
+            val name: String? = null
+
+            @SerializedName("name_bn")
+            val name_bn: String? = null
+
+            @SerializedName("is_cht")
+            val is_cht: Int = 0
+
+            @SerializedName("status")
+            val status: Int = 0
+
+            @SerializedName("deleted_at")
+            val deleted_at: String? = null
+
+            @SerializedName("created_at")
+            val created_at: String? = null
+
+            @SerializedName("updated_at")
+            val updated_at: String? = null
+        }
+
+        inner class Division {
+
+            @SerializedName("id")
+            val id: Int = 0
+
+            @SerializedName("name")
+            val name: String? = null
+
+            @SerializedName("name_bn")
+            val name_bn: String? = null
 
             @SerializedName("status")
             val status: Int = 0

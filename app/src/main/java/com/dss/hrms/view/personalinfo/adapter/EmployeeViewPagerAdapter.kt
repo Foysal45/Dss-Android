@@ -11,7 +11,7 @@ class EmployeeViewPagerAdapter(fm: FragmentManager) :
     private val fragmentListTitle: MutableList <String> = ArrayList()
 
     override fun getItem(position: Int): Fragment {
-        return fragmentList.get(position)
+        return fragmentList[position]
     }
 
     override fun getCount(): Int {
@@ -19,7 +19,7 @@ class EmployeeViewPagerAdapter(fm: FragmentManager) :
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        return fragmentListTitle.get(position)
+        return fragmentListTitle[position]
     }
 
     fun addFragment(fragment: Fragment,title:String){

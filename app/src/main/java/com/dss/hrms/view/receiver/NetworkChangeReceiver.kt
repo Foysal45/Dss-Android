@@ -28,7 +28,7 @@ class NetworkChangeReceiver() : BroadcastReceiver() {
         }
     }
 
-    fun isInternetOnCheck(aContext: Context): Boolean {
+    private fun isInternetOnCheck(aContext: Context): Boolean {
         var aResult = false
         val aConnecMan =
             aContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

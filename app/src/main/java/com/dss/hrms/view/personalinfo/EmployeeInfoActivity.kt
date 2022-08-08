@@ -106,7 +106,7 @@ class EmployeeInfoActivity : BaseActivity() {
         childreanBundle.putBoolean("addWillAppear", true)
         var childreanFrg2 = FragmentEmployeeInfo()
         childreanFrg2.arguments = childreanBundle
-        adapter!!.addFragment(childreanFrg2, getString(R.string.child_information))
+        adapter.addFragment(childreanFrg2, getString(R.string.child_information))
 
 
         var presentAddressBundle = Bundle()
@@ -358,7 +358,7 @@ class EmployeeInfoActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        var id = item.itemId
+        val id = item.itemId
         when (id) {
             R.id.action_home -> {
                 onBackPressed()

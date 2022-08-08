@@ -258,7 +258,7 @@
                         android:layout_centerVertical="true"
                         android:background="@drawable/button_click"
                         android:gravity="center_vertical"
-                        android:paddingLeft="64dp"
+                        android:paddingStart="64dp"
                         android:text="@string/job_joining_information"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_medium" />

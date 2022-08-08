@@ -481,6 +481,41 @@
     <string name="total_eval_methods">Total Evaluation Methods</string>
     <string name="time">Time (Hours)</string>
 
+    <!--added by Md.Foysal Ahmed....................-->
+    <string name="loading">Loading...</string>
+    <string name="office_type">Office Type</string>
+    <string name="divisional">Divisional</string>
+    <string name="office_division">Division</string>
+    <string name="head_office">Head Office</string>
+    <string name="head_office_department">Head Office Department</string>
+
+    <string name="division_barisal">Barisal</string>
+    <string name="division_chattogram">Chattogram</string>
+    <string name="division_dhaka">Dhaka</string>
+    <string name="division_khulna">Khulna</string>
+    <string name="division_mymensing">Mymensing</string>
+    <string name="division_rajshahi">Rajshahi</string>
+    <string name="division_rangpur">Rangpur</string>
+    <string name="division_sylhet">Sylhet</string>
+
+
+    <string name="dept_dg_office">DG Office</string>
+    <string name="dept_administration_finance">ADMINISTRATION and FINANCE</string>
+    <string name="dept_communiutey_service">COMMUNITY BASED AND YOUTH SERVICE REGISTRATION AND CONTROL (PROGRAM)</string>
+    <string name="dept_institute">INSTITUTE</string>
+    <string name="dept_social_safety_net">SOCIAL SAFETY NET</string>
+    <string name="dept_national_institution">NATIONAL INSTITUTION</string>
+    <string name="dept_somaj_seba_bhaban">SOMAJ SEBA BHABON</string>
+
+    <string name="current_designation">Current Designation</string>
+    <string name="department_wise_section">Department Wise Section</string>
+    <string name="section_wise_sub_section">Section Wise Sub-Section</string>
+    <string name="other_service_particular">Other Service Particulars</string>
+    <string name="where_to_lien">Where to Lien</string>
+    <string name="division_district">District</string>
+    <string name="current_office">Current Office</string>
+    <string name="where_to_deputed">Where to Deputed</string>
+
     <!--    -->
     <!--    <string name="full_name">Full Name</string>-->
     <!--    <string name="basic_salary">Basic Salary</string>-->

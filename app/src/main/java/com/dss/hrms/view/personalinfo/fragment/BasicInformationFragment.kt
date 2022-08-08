@@ -139,7 +139,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         return v
     }
 
-    fun setData() {
+    private fun setData() {
 
         v.fPresentBasicSalary.llBody.visibility = View.GONE
         v.fPresentGrossSalary.llBody.visibility = View.GONE
@@ -591,7 +591,7 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
     }
 
-    fun setPendingData(employee1: Employee?, name: String?) {
+    private fun setPendingData(employee1: Employee?, name: String?) {
 
         context?.let {
             ContextCompat.getColor(

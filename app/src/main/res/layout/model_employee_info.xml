@@ -413,7 +413,7 @@
                 android:layout_height="wrap_content"
                 android:background="#E4E4E4"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -449,19 +449,39 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
+                                android:id="@+id/fJobJoiningOfficeDeptAndDivision"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningDepartmentWiseSection"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningSectionWiseSubSection"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
                                 android:id="@+id/fJobJoiningDesignation"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
-                                android:id="@+id/fJobJoiningAdditionalDesignation"
+                                android:id="@+id/fJobJoiningOtherServiceParticulars"
                                 layout="@layout/personel_information_view_field" />
 
-                            <!--           <include
-                                           android:id="@+id/fJobJoiningDepartment"
-                                           layout="@layout/personel_information_view_field" />-->
+                            <include
+                                android:id="@+id/fJobJoiningWhereToLien"
+                                layout="@layout/personel_information_view_field" />
 
                             <include
-                                android:id="@+id/fJobJoiningJobType"
+                                android:id="@+id/fJobJoiningAdditionalChargeDesignation"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningDateOf"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fJobJoiningReleaseDateOf"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
@@ -469,7 +489,7 @@
                                 layout="@layout/personel_information_view_field" />
 
                             <include
-                                android:id="@+id/fJobJoiningGrade"
+                                android:id="@+id/fJobJoiningCurrentPayScaleGrade"
                                 layout="@layout/personel_information_view_field" />
 
                             <include
@@ -480,22 +500,26 @@
                                 android:id="@+id/fJobJoiningJoiningDate"
                                 layout="@layout/personel_information_view_field" />
 
-                            <include
+                            <!--<include
                                 android:id="@+id/fJobJoiningConfirmationDate"
-                                layout="@layout/personel_information_view_field" />
+                                layout="@layout/personel_information_view_field" />-->
 
-                            <include
+                          <!--  <include
                                 android:id="@+id/fJobJoiningPrlDate"
-                                layout="@layout/personel_information_view_field" />
+                                layout="@layout/personel_information_view_field" />-->
 
 
-                            <include
+                            <!--<include
                                 android:id="@+id/fJobJoiningPensionDate"
-                                layout="@layout/personel_information_view_field" />
+                                layout="@layout/personel_information_view_field" />-->
 
-                            <include
+                          <!--  <include
                                 android:id="@+id/fJobJoiningCurrentJob"
-                                layout="@layout/personel_information_view_field" />
+                                layout="@layout/personel_information_view_field" />-->
+
+                            <!--<include
+                                android:id="@+id/fJobJoiningCurrentJob"
+                                layout="@layout/personel_information_view_field" />-->
 
                         </LinearLayout>
                     </LinearLayout>

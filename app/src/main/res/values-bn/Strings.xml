@@ -474,4 +474,41 @@
     <string name="total_modules">Total Modules</string>
     <string name="total_eval_methods">Total Evaluation Methods</string>
     <string name="time">Time (Hours)</string>
+
+    <!--added by Md.Foysal Ahmed....................-->
+    <string name="loading">Loading...</string>
+    <string name="office_type">অফিসের ধরন</string>
+    <string name="divisional">বিভাগীয়</string>
+    <string name="office_division">বিভাগ</string>
+    <string name="head_office">হেড অফিস</string>
+    <string name="head_office_department">হেড অফিস বিভাগ</string>
+
+    <string name="division_barisal">বরিশাল</string>
+    <string name="division_chattogram">চট্টগ্রাম</string>
+    <string name="division_dhaka">ঢাকা</string>
+    <string name="division_khulna">খুলনা</string>
+    <string name="division_mymensing">ময়মনসিংহ</string>
+    <string name="division_rajshahi">রাজশাহী</string>
+    <string name="division_rangpur">রংপুর</string>
+    <string name="division_sylhet">সিলেট</string>
+
+
+    <string name="dept_dg_office">ডিজি অফিস</string>
+    <string name="dept_administration_finance">প্রশাসন ও অর্থ অধিশাখা</string>
+    <string name="dept_communiutey_service">কার্যক্রম অধিশাখা</string>
+    <string name="dept_institute">প্রতিষ্ঠান অধিশাখা</string>
+    <string name="dept_social_safety_net">সামাজিক নিরাপত্তা অধিশাখা</string>
+    <string name="dept_national_institution">জাতীয় অফিস অধিশাখা</string>
+    <string name="dept_somaj_seba_bhaban">সমাজ সেবা ভবন</string>
+
+    <string name="current_designation">বর্তমান পদবী</string>
+    <string name="department_wise_section">বিভাগ অনুযায়ী উপবিভাগ</string>
+
+    <string name="section_wise_sub_section">সেকশন ওয়াইজ সাব-সেকশন</string>
+    <string name="other_service_particular">চাকরি সংক্রান্ত অন্যান্য বিবরণী</string>
+    <string name="where_to_lien">লিয়েন কোথায়</string>
+    <string name="division_district">জেলা</string>
+    <string name="current_office">বর্তমান অফিস</string>
+    <string name="where_to_deputed">কোথায় ডেপুটেড করতে হবে</string>
+
 </resources>
