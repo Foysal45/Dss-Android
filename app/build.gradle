@@ -247,6 +247,12 @@ dependencies {
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
     implementation("androidx.viewpager2:viewpager2:1.1.0-beta01")
     implementation 'com.github.CodeBoy722:ViewPager2_Transformers:1.0.0'
+
+    //Added by Md.Foysal ahmed
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.8.1'
+    implementation "io.grpc:grpc-okhttp:1.32.2"
+    implementation 'com.localebro:okhttpprofiler:1.0.8'
 }
 // Apply the Crashlytics Gradle plugin
 apply plugin: 'com.google.firebase.crashlytics'

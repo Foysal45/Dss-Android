@@ -1,5 +1,6 @@
 package com.dss.hrms.retrofit
 
+import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -52,20 +53,23 @@ object RetrofitInstance {
 
         });
  */
-    private val okHttpClient = OkHttpClient.Builder()
-        .connectTimeout(25, TimeUnit.SECONDS)
-        .readTimeout(25, TimeUnit.SECONDS)
-        .writeTimeout(25, TimeUnit.SECONDS)
-
-        .build()
-
 
     val retrofitInstance: Retrofit?
         get() {
+
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+
+            val okHttpClient = OkHttpClient.Builder()
+                .connectTimeout(25, TimeUnit.SECONDS)
+                .readTimeout(25, TimeUnit.SECONDS)
+                .writeTimeout(25, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .addInterceptor(OkHttpProfilerInterceptor())
+                .build()
+
             if (retrofit == null) {
-                retrofit = Retrofit.Builder().baseUrl(
-                    BASE_URL
-                )
+                retrofit = Retrofit.Builder().baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient).build()
             }
