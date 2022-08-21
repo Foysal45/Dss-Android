@@ -217,6 +217,14 @@
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/job_type}" />
 
+
+                                <include
+                                    android:id="@+id/fNotConfirmYet"
+                                    android:visibility="gone"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/not_confirm_yet}" />
+
+
                                 <include
                                     android:id="@+id/fFreedomFighterQuota"
                                     layout="@layout/personal_info_spinner"

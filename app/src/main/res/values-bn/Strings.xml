@@ -346,7 +346,7 @@
     <string name="ok_for_employee_selection">নির্বাচন করুন</string>
     <string name="cancel">বাতিল</string>
     <string name="done">সম্পন্ন করুন</string>
-
+    <string name="not_confirm_yet">এখনো নিশ্চিত নই</string>
 
     <string name="draft">ড্রাফট করুন</string>
     <string name="head_office_branches">প্রধান অফিসের শাখা সূমুহ</string>

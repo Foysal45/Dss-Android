@@ -34,7 +34,6 @@ import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
-import kotlinx.android.synthetic.main.personal_info_update_button.view.*
 import kotlinx.android.synthetic.main.personel_information_edittext.view.*
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -79,6 +78,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
     var hasDisability: SpinnerDataModel? = null
     var roles: List<SpinnerDataModel>? = null
     var hasFreedomFighterQuota: SpinnerDataModel? = null
+    var hasNotConfirmYet: SpinnerDataModel? = null
     var fileClickListener: FileClickListener? = null
     open var imageFile: File? = null
     var imageUrl: String? = null
@@ -417,6 +417,12 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     jobType = any as SpinnerDataModel
+
+                                    if (jobType?.id == 1){
+                                        Toast.makeText(context, "jobType?.id 1", Toast.LENGTH_LONG).show()
+                                    }else{
+                                        Toast.makeText(context, "jobType?.id 2", Toast.LENGTH_LONG).show()
+                                    }
                                 }
 
                             }
@@ -425,7 +431,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 }
             })
 
-
+        print("jobType: "+jobType?.id)
 
 
         hasDisabilityData()?.let {
@@ -444,7 +450,33 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 }
             )
         }
+        notConfirmYet()?.let {
+            SpinnerAdapter().setSpinner(
+                binding?.fNotConfirmYet?.spinner!!,
+                context,
+                it,
+                if (employee?.employee_job_type_revenue?.job_type?.id == 1) 1 else 0,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        hasNotConfirmYet = any as SpinnerDataModel
+                        try {
 
+                            if (hasFreedomFighterQuota!!.id == 0) {
+                                // no quta
+                                binding.tvFreedomFighterAttachment.visibility = View.GONE
+                            } else {
+
+                                binding.tvFreedomFighterAttachment.visibility = View.VISIBLE
+                            }
+
+
+                        } catch (ex: Exception) {
+                        }
+
+                    }
+                }
+            )
+        }
         hasDisabilityData()?.let {
             SpinnerAdapter().setSpinner(
                 binding?.fFreedomFighterQuota?.spinner!!,
@@ -463,10 +495,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
                                 binding.tvFreedomFighterAttachment.visibility = View.VISIBLE
                             }
-
-
                         } catch (ex: Exception) {
-
                         }
 
                     }
@@ -662,8 +691,6 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                             }
 
                         }
-
-
                         when (error) {
                             "profile_id" -> {
                                 binding?.fProfileId?.tvError?.visibility =
@@ -917,6 +944,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("present_basic_salary", binding?.fPresentBasicSalary?.etText?.text?.toString())
         map.put("present_gross_salary", binding?.fPresentGrossSalary?.etText?.text?.toString())
         map.put("job_joining_date", jobJoiningDate)
+        map.put("job_type_id", jobType?.id)
         map.put("prl_date", pRLDate)
         map.put("pension_date", pensionDate)
 
@@ -1038,6 +1066,28 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
     fun toast(context: Context?, massage: String) {
         Toast.makeText(context, massage, Toast.LENGTH_LONG).show()
     }
+
+
+    fun notConfirmYet(): List<SpinnerDataModel> {
+
+        var rel = SpinnerDataModel()
+        rel.apply {
+            id = 1
+            name = "Yes"
+            name_bn = "হ্যাঁ"
+
+        }
+        var rel1 = SpinnerDataModel()
+        rel1.apply {
+            id = 0
+            name = "No"
+            name_bn = "না"
+
+
+        }
+        return arrayListOf(rel, rel1)
+    }
+
 
     fun hasDisabilityData(): List<SpinnerDataModel> {
 

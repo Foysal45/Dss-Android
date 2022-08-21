@@ -257,7 +257,7 @@
     <string name="profile_id">Profile  ID</string>
     <string name="birth">Date of Birth</string>
     <string name="birth_certificate_no">Birth Certificate No</string>
-
+    <string name="not_confirm_yet">Not Confirmed Yet</string>
     <string name="nid_no">NID No</string>
     <string name="tin_no">TIN No</string>
     <string name="blood_group">Blood Group</string>
