@@ -416,7 +416,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -445,6 +445,16 @@
                                 android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
                                 android:paddingVertical="@dimen/personal_information_body_padding_vertical">
 
+                                <include
+                                    android:id="@+id/fJobJoiningOfficeType"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/office_type}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningOfficeDeptAndDivision"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/division}" />
+
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -465,7 +475,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginVertical="@dimen/_5sdp"
-                                            android:text="@string/office"
+                                            android:text="@string/current_office"
                                             android:textColor="@color/light_black"
                                             android:textSize="@dimen/text_size_small"
                                             android:textStyle="bold" />
@@ -484,20 +494,6 @@
                                                 android:layout_width="0dp"
                                                 android:layout_height="@dimen/edittext_height_large"
                                                 android:layout_weight="1" />
-
-                                            <LinearLayout
-                                                android:layout_width="34dp"
-                                                android:layout_height="wrap_content"
-                                                android:gravity="center"
-                                                android:paddingRight="10dp">
-
-                                                <ImageView
-                                                    android:id="@+id/JobJoiningIvSearch"
-                                                    android:layout_width="wrap_content"
-                                                    android:layout_height="24dp"
-                                                    android:layout_gravity="center"
-                                                    android:src="@drawable/ic_baseline_search_24" />
-                                            </LinearLayout>
 
                                         </LinearLayout>
 
@@ -522,66 +518,48 @@
 
 
                                 <include
-                                    android:id="@+id/fJobJoiningDesignation"
+                                    android:id="@+id/fJobJoiningEditDesignation"
                                     layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/designation}" />
+                                    app:title="@{@string/current_designation}" />
 
                                 <include
-                                    android:id="@+id/fJobJoiningAdditionalDesignation"
+                                    android:id="@+id/fJobJoiningEditOtherServiceParticulars"
                                     layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/additional_designation}" />
-
-                                <include
-                                    android:id="@+id/fJobJoiningDepartment"
-                                    layout="@layout/personal_info_spinner"
-                                    android:visibility="gone"
-                                    app:title="@{@string/depertment}" />
-
-                                <include
-                                    android:id="@+id/fJobJoiningJobType"
-                                    layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/job_type}" />
+                                    app:title="@{@string/other_service_particular}" />
 
 
                                 <include
-                                    android:id="@+id/fJobJoiningClass"
+                                    android:id="@+id/fJobJoiningEditDateOf"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/joining_date_of_lien}"
+                                     />
+
+
+                                <include
+                                    android:id="@+id/fJobJoiningEditReleaseDateFrom"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/released_date_from_lien}" />
+
+
+                                <include
+                                    android:id="@+id/fJobJoiningEditClass"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/_class}" />
 
                                 <include
-                                    android:id="@+id/fJobJoiningGrade"
+                                    android:id="@+id/fJobJoiningEditGrade"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/pay_scale_grade}" />
 
                                 <include
-                                    android:id="@+id/fJobJoiningPayScale"
+                                    android:id="@+id/fJobJoiningEditPayScale"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/basic_pay}" />
-
-                                <include
-                                    android:id="@+id/fJobJoiningConfirmationDate"
-                                    layout="@layout/personal_info_textview"
-                                    app:title="@{@string/confirmation_date}" />
 
                                 <include
                                     android:id="@+id/fJobJoiningJoiningDate"
                                     layout="@layout/personal_info_textview"
                                     app:title="@{@string/joning_date}" />
-
-                                <include
-                                    android:id="@+id/fJobJoiningPrlDate"
-                                    layout="@layout/personal_info_textview"
-                                    app:title="@{@string/prl_date}" />
-
-                                <include
-                                    android:id="@+id/fJobJoiningPensionDate"
-                                    layout="@layout/personal_info_textview"
-                                    app:title="@{@string/pention_date}" />
-
-                                <include
-                                    android:id="@+id/fJobJoiningCurrentJob"
-                                    layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/current_job}" />
 
                                 <include
                                     android:id="@+id/jobjoiningUpdateButton"

@@ -2,7 +2,6 @@ package com.dss.hrms.view.personalinfo.dialog
 
 import android.app.Dialog
 import android.content.Context
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +33,6 @@ import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.personal_info_update_button.view.*
 import javax.inject.Inject
 
 class EditJobJoiningInformation @Inject constructor() {
@@ -68,6 +66,7 @@ class EditJobJoiningInformation @Inject constructor() {
     var department: SpinnerDataModel? = null;
     var jobType: SpinnerDataModel? = null
     var currentJob: SpinnerDataModel? = null
+    var currentOfficeType: SpinnerDataModel? = null
     var _class: SpinnerDataModel? = null
     var grade: SpinnerDataModel? = null
     lateinit var context: Context
@@ -112,40 +111,56 @@ class EditJobJoiningInformation @Inject constructor() {
             dialogCustome?.dismiss()
         })
 
-        if (employeeProfileData?.employee?.designation_id == jobjoining?.designation_id &&
-            employeeProfileData?.employee?.office_id == jobjoining?.office_id
-        ) {
-            currentJob = currentJobData().get(0)
+
+        //for Office Type
+        Log.d("office_type ",""+employeeProfileData.employee?.jobjoinings?.get(0)?.office_type)
+        if (employeeProfileData.employee?.jobjoinings?.get(0)?.office_type == "head_office")
+        {
+            currentOfficeType?.id = 1
+            Log.d("office_type ",""+ employeeProfileData.employee?.jobjoinings?.get(0)?.office_type +"  "+currentOfficeType?.id)
         } else {
-            currentJob = currentJobData().get(1)
+            currentOfficeType?.id = 4
         }
 
-        binding.fJobJoiningPensionDate.llBody.visibility = View.GONE
-        binding.fJobJoiningPrlDate.llBody.visibility = View.GONE
+        //for Joining Date
+        binding.fJobJoiningJoiningDate.tvText.text = jobjoining?.joining_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        }
 
-        binding.fJobJoiningJoiningDate.tvText.setText(jobjoining?.joining_date?.let {
-            DateConverter.changeDateFormateForShowing(
-                it
-            )
-        })
-        binding.fJobJoiningConfirmationDate.tvText.setText(jobjoining?.confirmation_date?.let {
-            DateConverter.changeDateFormateForShowing(
-                it
-            )
-        })
-        binding.fJobJoiningPensionDate.tvText.setText(jobjoining?.pension_date?.let {
-            DateConverter.changeDateFormateForShowing(
-                it
-            )
-        })
-        binding.fJobJoiningPrlDate.tvText.setText(jobjoining?.prl_date?.let {
-            DateConverter.changeDateFormateForShowing(
-                it
-            )
-        })
+        //setting joining Date and Release Date according the employeementstatus?.id
+        val idForJoiningAndReleaseDate = jobjoining?.employeementstatus?.id
+        when(idForJoiningAndReleaseDate){
+            1->{
+                binding.fJobJoiningEditDateOf.tvTitle.text = "Joining Date Of ${jobjoining?.employeementstatus?.name}"
+                binding.fJobJoiningEditReleaseDateFrom.tvTitle.text = "Release Date from ${jobjoining?.employeementstatus?.name}"
+                binding.fJobJoiningEditDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoining?.employment_status_effective_date}}")
+                binding.fJobJoiningEditReleaseDateFrom.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoining?.employment_status_release_date}")
+            }
+            2->{
+                binding.fJobJoiningEditDateOf.tvTitle.text = "Joining Date Of ${jobjoining?.employeementstatus?.name}"
+                binding.fJobJoiningEditReleaseDateFrom.tvTitle.text = "Release Date from ${jobjoining?.employeementstatus?.name}"
+                binding.fJobJoiningEditDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoining?.employment_status_effective_date}}")
+                binding.fJobJoiningEditReleaseDateFrom.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoining?.employment_status_release_date}")
+            }
+            4->{
+                binding.fJobJoiningEditDateOf.tvTitle.text = "Joining Date Of ${jobjoining?.employeementstatus?.name}"
+                binding.fJobJoiningEditReleaseDateFrom.tvTitle.text = "Release Date from ${jobjoining?.employeementstatus?.name}"
+                binding.fJobJoiningEditDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoining?.employment_status_effective_date}}")
+                binding.fJobJoiningEditReleaseDateFrom.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoining?.employment_status_release_date}")
+            }
+            5->{
+                //binding.fJobJoiningWhereToLien.llBody.visibility = View.GONE
+                binding.fJobJoiningEditDateOf.tvTitle.text = "Suspension Date"
+                binding.fJobJoiningEditReleaseDateFrom.tvTitle.text = "Released Date from Suspension"
+                binding.fJobJoiningEditDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoining?.employment_status_effective_date}")
+                binding.fJobJoiningEditReleaseDateFrom.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoining?.employment_status_release_date}")
+            }
+        }
 
 
-        binding.JobJoiningIvSearch.setOnClickListener {
+     /*   binding.JobJoiningIvSearch.setOnClickListener {
             officeSearchingDialog.showOfficeSearchDialog(
                 context,
                 utilViewmodel,
@@ -155,7 +170,7 @@ class EditJobJoiningInformation @Inject constructor() {
                         setOffice(context, binding)
                     }
                 })
-        }
+        }*/
 
 
         Log.e("officeid", "office id : " + jobjoining?.office_id)
@@ -169,7 +184,7 @@ class EditJobJoiningInformation @Inject constructor() {
                     }
                 }
             })
-        commonRepo.getCommonData("/api/auth/department/list",
+     /*   commonRepo.getCommonData("/api/auth/department/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //    Log.e("gender", "gender message " + Gson().toJson(list))
@@ -188,9 +203,9 @@ class EditJobJoiningInformation @Inject constructor() {
                         )
                     }
                 }
-            })
+            })*/
 
-        commonRepo.getCommonData("/api/auth/job-type/list",
+     /*   commonRepo.getCommonData("/api/auth/job-type/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     //  Log.e("gender", "gender message " + Gson().toJson(list))
@@ -209,7 +224,7 @@ class EditJobJoiningInformation @Inject constructor() {
                         )
                     }
                 }
-            })
+            })*/
 
         commonRepo.getCommonData2("/api/auth/employee-class",
             object : CommonDataValueListener {
@@ -217,7 +232,7 @@ class EditJobJoiningInformation @Inject constructor() {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
                     list?.let {
                         SpinnerAdapter().setSpinner(
-                            binding.fJobJoiningClass.spinner,
+                            binding.fJobJoiningEditClass.spinner,
                             context,
                             list,
                             jobjoining?.employee_class_id,
@@ -231,13 +246,34 @@ class EditJobJoiningInformation @Inject constructor() {
                     }
                 }
             })
+
+        commonRepo.getCommonData2("/api/auth/employee-class",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                       Log.e("gender", "gender message " + Gson().toJson(list))
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding.fJobJoiningEditOtherServiceParticulars.spinner,
+                            context, list,
+                            jobjoining?.employeementstatus?.id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    _class = any as SpinnerDataModel
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
         commonRepo.getCommonData("/api/auth/salary-grade/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     Log.e("grade", "grade message " + Gson().toJson(list))
                     list?.let {
                         SpinnerAdapter().setSpinner(
-                            binding.fJobJoiningGrade.spinner,
+                            binding.fJobJoiningEditGrade.spinner,
                             context,
                             list,
                             jobjoining?.grade_id,
@@ -259,63 +295,77 @@ class EditJobJoiningInformation @Inject constructor() {
                 }
             })
 
+        //set spinner for the Office Type Divisional/Head Office
         SpinnerAdapter().setSpinner(
-            binding.fJobJoiningCurrentJob.spinner,
-            context,
-            currentJobData(),
-            currentJob?.id,
+            binding.fJobJoiningOfficeType.spinner, context,
+            currentOfficeTypeData(), employeeProfileData.employee?.jobjoinings?.get(0)?.office?.office_type_id,
             object : CommonSpinnerSelectedItemListener {
                 override fun selectedItem(any: Any?) {
-                    currentJob = any as SpinnerDataModel
+                    currentOfficeType = any as SpinnerDataModel
                 }
             }
         )
 
+        //for Joining Date
+        binding.fJobJoiningJoiningDate.tvText.setOnClickListener {
+            DatePicker().showDatePicker(context, object : OnDateListener {
+                override fun onDate(date: String) {
+                    date.let { binding.fJobJoiningJoiningDate.tvText.text = "" + it }
+                }
+            })
+        }
 
-        binding.fJobJoiningJoiningDate.tvText.setOnClickListener({
+        //for Joining Date Of
+        binding.fJobJoiningEditDateOf.tvText.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
-                    date?.let { binding.fJobJoiningJoiningDate.tvText.setText("" + it) }
+                    date.let { binding.fJobJoiningEditDateOf.tvText.text = "" + it }
                 }
             })
-        })
-        binding.fJobJoiningConfirmationDate.tvText.setOnClickListener({
+        }
+
+        //for Joining Release Date from
+        binding.fJobJoiningEditReleaseDateFrom.tvText.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
-                    date?.let { binding.fJobJoiningConfirmationDate.tvText.setText("" + it) }
+                    date.let { binding.fJobJoiningEditReleaseDateFrom.tvText.text = "" + it }
                 }
             })
-        })
-        binding.fJobJoiningPensionDate.tvText.setOnClickListener({
+        }
+        /*  binding.fJobJoiningConfirmationDate.tvText.setOnClickListener({
+              DatePicker().showDatePicker(context, object : OnDateListener {
+                  override fun onDate(date: String) {
+                      date?.let { binding.fJobJoiningConfirmationDate.tvText.setText("" + it) }
+                  }
+              })
+          })*/
+      /*  binding.fJobJoiningPensionDate.tvText.setOnClickListener({
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding.fJobJoiningPensionDate.tvText.setText("" + it) }
                 }
             })
-        })
-        binding.fJobJoiningPrlDate.tvText.setOnClickListener({
+        })*/
+     /*   binding.fJobJoiningPrlDate.tvText.setOnClickListener({
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date?.let { binding.fJobJoiningPrlDate.tvText.setText("" + it) }
                 }
             })
-        })
+        })*/
 
         binding.jobjoiningUpdateButton.btnUpdate.setOnClickListener {
-            var employeeInfoEditCreateRepo =
+            val employeeInfoEditCreateRepo =
                 ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
                     .get(EmployeeInfoEditCreateViewModel::class.java)
 
-            var joininfDate =
-                DateConverter.changeDateFormateForSending(binding.fJobJoiningJoiningDate.tvText.text.toString())
-            var confirmation_date =
-                DateConverter.changeDateFormateForSending(binding.fJobJoiningConfirmationDate.tvText.text.toString())
-            var pension_date =
-                DateConverter.changeDateFormateForSending(binding.fJobJoiningPensionDate.tvText.text.toString())
-            var prl_date =
-                DateConverter.changeDateFormateForSending(binding.fJobJoiningPrlDate.tvText.text.toString())
+            val joiningDate = DateConverter.changeDateFormateForSending(binding.fJobJoiningJoiningDate.tvText.text.toString())
 
-            var map = HashMap<Any, Any?>()
+            val joiningDateOf = DateConverter.changeDateFormateForSending(binding.fJobJoiningEditDateOf.tvText.text.toString())
+            val joiningReleaseDateFrom = DateConverter.changeDateFormateForSending(binding.fJobJoiningEditReleaseDateFrom.tvText.text.toString())
+
+
+            val map = HashMap<Any, Any?>()
             Log.e(
                 "employeeid",
                 "employee id ${employeeProfileData?.employee?.id} jobjoining?.id  ${jobjoining?.id}"
@@ -327,6 +377,7 @@ class EditJobJoiningInformation @Inject constructor() {
             map.put("department_id", department?.id)
             map.put("job_type_id", jobType?.id)
             map.put("employee_class_id", _class?.id)
+            map.put("other_service_particulars", _class?.id)
             map.put("grade_id", grade?.id)
             map.put("pay_scale_id", payScale?.id)
 
@@ -350,10 +401,9 @@ class EditJobJoiningInformation @Inject constructor() {
             )
 
             map.put("current", if (currentJob?.id == 1) true else false)
-            map.put("joining_date", joininfDate)
-            map.put("confirmation_date", confirmation_date)
-            map.put("pension_date", pension_date)
-            map.put("prl_date", prl_date)
+            map.put("joining_date", joiningDate)
+            map.put("joining_date_of", joiningDateOf)
+            map.put("joining_release_date_from", joiningReleaseDateFrom)
             map.put("status", jobjoining?.status)
 
             invisiableAllError(binding)
@@ -382,15 +432,7 @@ class EditJobJoiningInformation @Inject constructor() {
                                     for (n in any.getError().indices) {
                                         val error = any.getError()[n].getField()
                                         val message = any.getError()[n].getMessage()
-                                        if (TextUtils.isEmpty(error)) {
-                                            message?.let {
-                                                binding.fJobJoiningPrlDate.tvError.visibility =
-                                                    View.VISIBLE
-                                                binding.fJobJoiningPrlDate.tvError.text =
-                                                    ErrorUtils2.mainError(message)
-                                            }
 
-                                        }
                                         when (error) {
                                             "office_id" -> {
                                                 binding.tvJobJoiningOfficeError.visibility =
@@ -399,51 +441,53 @@ class EditJobJoiningInformation @Inject constructor() {
                                                     ErrorUtils2.mainError(message)
                                             }
                                             "designation_id" -> {
-                                                binding.fJobJoiningDesignation.tvError.visibility =
+                                                binding.fJobJoiningEditDesignation.tvError.visibility =
                                                     View.VISIBLE
-                                                binding.fJobJoiningDesignation.tvError.text =
+                                                binding.fJobJoiningEditDesignation.tvError.text =
                                                     ErrorUtils2.mainError(message)
                                             }
-                                            "additional_designation_id" -> {
-                                                binding.fJobJoiningAdditionalDesignation.tvError.visibility =
-                                                    View.VISIBLE
-                                                binding.fJobJoiningAdditionalDesignation.tvError.text =
-                                                    ErrorUtils2.mainError(message)
-                                            }
-                                            "department_id" -> {
+                                          /*  "department_id" -> {
                                                 binding.fJobJoiningDepartment.tvError.visibility =
                                                     View.VISIBLE
                                                 binding.fJobJoiningDepartment.tvError.text =
                                                     ErrorUtils2.mainError(message)
-                                            }
-                                            "job_type_id" -> {
+                                            }*/
+                                         /*   "job_type_id" -> {
                                                 binding.fJobJoiningJobType.tvError.visibility =
                                                     View.VISIBLE
                                                 binding.fJobJoiningJobType.tvError.text =
                                                     ErrorUtils2.mainError(message)
-                                            }
+                                            }*/
                                             "employee_class_id" -> {
-                                                binding.fJobJoiningClass.tvError.visibility =
+                                                binding.fJobJoiningEditClass.tvError.visibility =
                                                     View.VISIBLE
-                                                binding.fJobJoiningClass.tvError.text =
+                                                binding.fJobJoiningEditClass.tvError.text =
                                                     ErrorUtils2.mainError(message)
                                             }
-                                            "grade_id" -> {
-                                                binding.fJobJoiningGrade.tvError.visibility =
+
+                                            "other_service_particulars" -> {
+                                                binding.fJobJoiningEditOtherServiceParticulars.tvError.visibility =
                                                     View.VISIBLE
-                                                binding.fJobJoiningGrade.tvError.text =
+                                                binding.fJobJoiningEditOtherServiceParticulars.tvError.text =
+                                                    ErrorUtils2.mainError(message)
+                                            }
+
+                                            "grade_id" -> {
+                                                binding.fJobJoiningEditGrade.tvError.visibility =
+                                                    View.VISIBLE
+                                                binding.fJobJoiningEditGrade.tvError.text =
                                                     ErrorUtils2.mainError(message)
                                             }
                                             "pay_scale_id" -> {
-                                                binding.fJobJoiningPayScale.tvError.visibility =
+                                                binding.fJobJoiningEditPayScale.tvError.visibility =
                                                     View.VISIBLE
-                                                binding.fJobJoiningPayScale.tvError.text =
+                                                binding.fJobJoiningEditPayScale.tvError.text =
                                                     ErrorUtils2.mainError(message)
                                             }
                                             "pay_scale" -> {
-                                                binding.fJobJoiningGrade.tvError.visibility =
+                                                binding.fJobJoiningEditGrade.tvError.visibility =
                                                     View.VISIBLE
-                                                binding.fJobJoiningGrade.tvError.text =
+                                                binding.fJobJoiningEditGrade.tvError.text =
                                                     ErrorUtils2.mainError(message)
                                             }
                                             "joining_date" -> {
@@ -452,24 +496,17 @@ class EditJobJoiningInformation @Inject constructor() {
                                                 binding.fJobJoiningJoiningDate.tvError.text =
                                                     ErrorUtils2.mainError(message)
                                             }
-                                            "confirmation_date" -> {
-                                                binding.fJobJoiningConfirmationDate.tvError.visibility =
-                                                    View.VISIBLE
-                                                binding.fJobJoiningConfirmationDate.tvError.text =
-                                                    ErrorUtils2.mainError(message)
+
+                                            "joining_date_of" -> {
+                                                binding.fJobJoiningEditDateOf.tvError.visibility = View.VISIBLE
+                                                binding.fJobJoiningEditDateOf.tvError.text = ErrorUtils2.mainError(message)
                                             }
-                                            "pension_date" -> {
-                                                binding.fJobJoiningPensionDate.tvError.visibility =
-                                                    View.VISIBLE
-                                                binding.fJobJoiningPensionDate.tvError.text =
-                                                    ErrorUtils2.mainError(message)
+
+                                            "joining_release_date_from" -> {
+                                                binding.fJobJoiningEditReleaseDateFrom.tvError.visibility = View.VISIBLE
+                                                binding.fJobJoiningEditReleaseDateFrom.tvError.text = ErrorUtils2.mainError(message)
                                             }
-                                            "prl_date" -> {
-                                                binding.fJobJoiningPrlDate.tvError.visibility =
-                                                    View.VISIBLE
-                                                binding.fJobJoiningPrlDate.tvError.text =
-                                                    ErrorUtils2.mainError(message)
-                                            }
+
                                         }
                                     }
                                 }
@@ -507,7 +544,7 @@ class EditJobJoiningInformation @Inject constructor() {
                     )
                     spinnerDataModel?.paysacle?.let {
                         SpinnerAdapter().setPayscale(
-                            binding.fJobJoiningPayScale.spinner,
+                            binding.fJobJoiningEditPayScale.spinner,
                             context,
                             it,
                             jobjoining?.pay_scale_id,
@@ -529,15 +566,13 @@ class EditJobJoiningInformation @Inject constructor() {
     ) {
         mainOfficeList?.let {
             SpinnerAdapter().setOfficeSpinner(
-                binding.JobJoiningOfficeSpinner,
-                context,
-                it,
+                binding.JobJoiningOfficeSpinner, context, it,
                 jobjoining?.office_id,
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
                         office = any as Office
                         loadDesignation(office?.id, context, binding)
-                        loadAdditionalDesignation(office?.id, context, binding)
+                       // loadAdditionalDesignation(office?.id, context, binding)
                         Log.e("selected item", " item : " + office?.name)
                     }
 
@@ -546,6 +581,7 @@ class EditJobJoiningInformation @Inject constructor() {
         }
     }
 
+    //for Designation
     fun loadDesignation(officeId: Int?, context: Context, binding: DialogPersonalInfoBinding) {
         commonRepo.getDesignationData("/api/auth/office/${officeId}",
             object : CommonDataValueListener {
@@ -553,9 +589,8 @@ class EditJobJoiningInformation @Inject constructor() {
                     //   Log.e("gender", "gender message " + Gson().toJson(list))
                     list?.let {
                         SpinnerAdapter().setSpinner(
-                            binding.fJobJoiningDesignation.spinner,
-                            context,
-                            list,
+                            binding.fJobJoiningEditDesignation.spinner,
+                            context, list,
                             jobjoining?.designation_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
@@ -569,91 +604,49 @@ class EditJobJoiningInformation @Inject constructor() {
             })
     }
 
-    fun loadAdditionalDesignation(
-        officeId: Int?,
-        context: Context,
-        binding: DialogPersonalInfoBinding
-    ) {
-        commonRepo.getDesignationData("/api/auth/office/${officeId}",
-            object : CommonDataValueListener {
-                override fun valueChange(list: List<SpinnerDataModel>?) {
-                    //   Log.e("gender", "gender message " + Gson().toJson(list))
-                    list?.let {
-                        SpinnerAdapter().setSpinner(
-                            binding.fJobJoiningAdditionalDesignation.spinner,
-                            context,
-                            list,
-                            jobjoining?.additional_designation_id,
-                            object : CommonSpinnerSelectedItemListener {
-                                override fun selectedItem(any: Any?) {
-                                    additionalDesingNation = any as SpinnerDataModel
-                                }
+    //For OfficeType
+    private fun currentOfficeTypeData(): List<SpinnerDataModel> {
 
-                            }
-                        )
-                    }
-                }
-            })
-    }
-
-    fun currentJobData(): List<SpinnerDataModel> {
-
-        var rel = SpinnerDataModel()
-        rel.apply {
+        val headOffice = SpinnerDataModel()
+        headOffice.apply {
             id = 1
-            name = "Yes"
-            name_bn = "হ্যাঁ"
+            name = "Head Office"
+            name_bn = "হেড অফিস"
 
         }
-        var rel1 = SpinnerDataModel()
-        rel1.apply {
-            id = 0
-            name = "No"
-            name_bn = "না"
+        val divisionalOffice = SpinnerDataModel()
+        divisionalOffice.apply {
+            id = 4
+            name = "Divisional"
+            name_bn = "বিভাগীয়"
 
 
         }
-        return arrayListOf(rel, rel1)
+        return arrayListOf(headOffice, divisionalOffice)
     }
 
+    //For Hiding the Error
     fun invisiableAllError(binding: DialogPersonalInfoBinding) {
-        binding.tvJobJoiningOfficeError.visibility =
-            View.GONE
+        binding.tvJobJoiningOfficeError.visibility = View.GONE
 
-        binding.fJobJoiningDesignation.tvError.visibility =
-            View.GONE
-        binding.fJobJoiningAdditionalDesignation.tvError.visibility =
-            View.GONE
+        binding.fJobJoiningEditDesignation.tvError.visibility = View.GONE
 
-        binding.fJobJoiningDepartment.tvError.visibility =
-            View.GONE
+        /*binding.fJobJoiningDepartment.tvError.visibility =
+            View.GONE*/
 
-        binding.fJobJoiningJobType.tvError.visibility =
-            View.GONE
+        binding.fJobJoiningEditClass.tvError.visibility = View.GONE
 
-        binding.fJobJoiningClass.tvError.visibility =
-            View.GONE
+        binding.fJobJoiningEditOtherServiceParticulars.tvError.visibility = View.GONE
 
-        binding.fJobJoiningGrade.tvError.visibility =
-            View.GONE
+        binding.fJobJoiningEditGrade.tvError.visibility = View.GONE
 
-        binding.fJobJoiningPayScale.tvError.visibility =
-            View.GONE
+        binding.fJobJoiningEditPayScale.tvError.visibility = View.GONE
 
-        binding.fJobJoiningJoiningDate.tvError.visibility =
-            View.GONE
+        binding.fJobJoiningJoiningDate.tvError.visibility = View.GONE
 
-        binding.fJobJoiningConfirmationDate.tvError.visibility =
-            View.GONE
+        binding.fJobJoiningEditDateOf.tvError.visibility = View.GONE
 
-        binding.fJobJoiningPensionDate.tvError.visibility =
-            View.GONE
-
-
-        binding.fJobJoiningPrlDate.tvError.visibility =
-            View.GONE
-
-
+        binding.fJobJoiningEditReleaseDateFrom.tvError.visibility = View.GONE
     }
 
     fun toast(context: Context?, massage: String) {

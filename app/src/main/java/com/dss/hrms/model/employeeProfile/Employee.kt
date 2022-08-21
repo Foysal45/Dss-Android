@@ -570,7 +570,7 @@ class Employee() {
         val head_office_sub_section: HeadOfficeSubSection? = null
 
         @SerializedName("employeementstatus")
-        val employeementstatus: Employeementstatus? = null
+        val  employeementstatus: Employeementstatus? = null
 
         @SerializedName("district")
         val district: District? = null
