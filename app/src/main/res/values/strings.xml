@@ -518,6 +518,8 @@
     <string name="division_district">District</string>
     <string name="current_office">Current Office</string>
     <string name="where_to_deputed">Where to Deputed</string>
+    <string name="joining_date_of_lien">Joining Date of Lien</string>
+    <string name="released_date_from_lien">Released Date from Lien</string>
 
     <!--    -->
     <!--    <string name="full_name">Full Name</string>-->

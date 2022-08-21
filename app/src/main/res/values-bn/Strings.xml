@@ -513,4 +513,7 @@
     <string name="current_office">বর্তমান অফিস</string>
     <string name="where_to_deputed">কোথায় ডেপুটেড করতে হবে</string>
 
+    <string name="joining_date_of_lien">Joining Date of Lien</string>
+    <string name="released_date_from_lien">Released Date from Lien</string>
+
 </resources>

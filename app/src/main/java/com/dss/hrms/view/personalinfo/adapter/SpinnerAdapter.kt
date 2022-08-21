@@ -27,30 +27,27 @@ class SpinnerAdapter {
         id: Int?,
         commonSpinnerSelectedItemListener: CommonSpinnerSelectedItemListener
     ) {
-        var preparence: MySharedPreparence? = context?.let { MySharedPreparence(it) }
-        var list = ArrayList<String?>()
+        val preparence: MySharedPreparence? = context?.let { MySharedPreparence(it) }
+        val list = ArrayList<String?>()
         var selectedPosition = 0
         var i = 0
         list.add(context?.getString(R.string.select_option))
         dataList?.let {
             while (i < it.size) {
                 if (preparence?.getLanguage().equals("en"))
-                    list.add(dataList.get(i).name)
+                    list.add(dataList[i].name)
                 else
                     list.add(
-                        if (dataList.get(i).name_bn != null) dataList.get(i).name_bn else dataList.get(
-                            i
-                        ).name
-                    )
-                if (it.get(i).id == id) {
+                        if (dataList[i].name_bn != null) dataList[i].name_bn else dataList[i].name)
+                if (it[i].id == id) {
                     selectedPosition = i + 1
                 }
                 i++
             }
         }
-        if (list != null && list.size > 0 && context != null) {
-            var adapter = ArrayAdapter(context!!, R.layout.spinner_layout, R.id.tvContent, list)
-            adapter?.let { spinner.setAdapter(it) }
+        if (list.size > 0 && context != null) {
+            val adapter = ArrayAdapter(context, R.layout.spinner_layout, R.id.tvContent, list)
+            adapter.let { spinner.adapter = it }
             spinner.setSelection(selectedPosition)
         }
 
@@ -249,8 +246,8 @@ class SpinnerAdapter {
         id: Int?,
         commonSpinnerSelectedItemListener: CommonSpinnerSelectedItemListener
     ) {
-        var preparence: MySharedPreparence? = context?.let { MySharedPreparence(it) }
-        var list = ArrayList<String?>()
+        val preparence: MySharedPreparence? = context?.let { MySharedPreparence(it) }
+        val list = ArrayList<String?>()
         list.add(context?.getString(R.string.select_option))
         var selectedPosition = 0
         var i = 0
@@ -267,8 +264,8 @@ class SpinnerAdapter {
             }
         }
         if (list != null && list.size > 0 && context != null) {
-            var adapter = ArrayAdapter(context!!, R.layout.spinner_layout, R.id.tvContent, list)
-            adapter?.let { spinner.setAdapter(it) }
+            val adapter = ArrayAdapter(context!!, R.layout.spinner_layout, R.id.tvContent, list)
+            adapter.let { spinner.setAdapter(it) }
             spinner.setSelection(selectedPosition)
         }
         spinner.setOnItemSelectedListener(object : OnItemSelectedListener {
