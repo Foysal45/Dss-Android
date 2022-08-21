@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dss.hrms.R
-import com.dss.hrms.databinding.DialogPersonalInfoBinding
+import com.dss.hrms.databinding.DialogPersonalInfoEditBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.SpinnerDataModel
@@ -56,6 +56,8 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
     var position: Int? = 0
     private var isFreedomFighter: Boolean = false
+    private var isPermanentConfirmation: Boolean = false
+    private var isTemporaryRevenueAttachment: Boolean = false
 
     var dialogCustome: Dialog? = null
 
@@ -63,7 +65,9 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
     var disabilityURL = ""
     var freedomFighterUrl = ""
-    var binding: DialogPersonalInfoBinding? = null
+    var permanentConfirmationUrl = ""
+    var temporaryRevenueAttachmentUrl = ""
+    var binding: DialogPersonalInfoEditBinding? = null
     var context: Context? = null
     lateinit var key: String
     var bloodGroup: SpinnerDataModel? = null
@@ -86,6 +90,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
     var dialog: Dialog? = null
 
     var jobType: SpinnerDataModel? = null
+    var dateTransferTemporary: SpinnerDataModel? = null
 
     fun showDialog(
         model: Employee,
@@ -103,7 +108,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
-            R.layout.dialog_personal_info,
+            R.layout.dialog_personal_info_edit,
             null,
             false
         )
@@ -121,7 +126,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
     fun editBasicInfo(
         context: Context,
-        binding: DialogPersonalInfoBinding?
+        binding: DialogPersonalInfoEditBinding?
     ) {
 
         binding?.fNid?.etText?.inputType = InputType.TYPE_CLASS_NUMBER
@@ -177,6 +182,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 )
             )
         }
+
         employee?.employment_job_status?.status_date?.let {
             binding?.fEmploymentStatusDate?.tvText?.setText(
                 "" + DateConverter.changeDateFormateForShowing(
@@ -184,6 +190,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 )
             )
         }
+
         if(employee.phone_number.isNullOrBlank()){
             employee?.user?.phone_number?.let { binding?.fPhone?.etText?.setText("" + it) }
         }else {
@@ -403,6 +410,11 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
             }
         )
 
+//        if (  employee?.employee_job_type_revenue?.job_type?.id == 1){
+//            binding?.fNotConfirmYet?.llBody?.visibility = View.GONE
+//        }else{
+//            binding?.fNotConfirmYet?.llBody?.visibility =  View.VISIBLE
+//        }
 
         //Job Type full process
         commonRepo.getCommonData("/api/auth/job-type/list",
@@ -419,11 +431,12 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                                     jobType = any as SpinnerDataModel
                                     if(jobType?.id == 1)
                                     {
-                                        binding?.fNotConfirmYetLL?.visibility =
-                                        View.GONE
+                                        binding.fNotConfirmYet.llBody.visibility =  View.GONE
+                                        binding.fDateTransferTemporaryRevenue.llBody.visibility = View.VISIBLE
                                     }else{
-                                        binding?.fNotConfirmYetLL?.visibility =
-                                            View.VISIBLE
+                                        binding.fNotConfirmYet.llBody.visibility =  View.VISIBLE
+                                        binding.fDateTransferTemporaryRevenue.llBody.visibility = View.GONE
+
                                     }
                                 }
 
@@ -433,20 +446,33 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 }
             })
 
-        // Date of Transfer in Temporary Revenue
-        commonRepo.getCommonData("/api/auth/job-type/list",
+         //Date of Transfer in Temporary Revenue
+        commonRepo.getCommonData("/api/auth/temporary-revenue-type/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     list?.let {
                         SpinnerAdapter().setSpinner(
-                            binding?.fJobType?.spinner!!,
+                            binding?.fDateTransferTemporaryRevenue?.spinner!!,
                             context,
                             list,
-                            employee?.employee_job_type_revenue?.job_type?.id,
+                            employee?.employee_job_type_revenue?.temporary_revenue_type_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
-                                    jobType = any as SpinnerDataModel
+                                    dateTransferTemporary = any as SpinnerDataModel
 
+                                    binding.fNotConfirmYetAttachment.visibility = View.GONE
+
+                                    if(dateTransferTemporary?.id == 1)
+                                    {
+                                        binding.fNotConfirmYet.llBody.visibility =  View.VISIBLE
+                                        binding.fTemporaryRevenueAttachment.visibility = View.GONE
+
+                                    }else{
+
+                                        binding.fNotConfirmYet.llBody.visibility =  View.GONE
+                                        binding.fTemporaryRevenueAttachment.visibility = View.VISIBLE
+
+                                    }
                                 }
 
                             }
@@ -483,19 +509,18 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                     override fun selectedItem(any: Any?) {
                         hasNotConfirmYet = any as SpinnerDataModel
 
-//                        try {
-//
-//                            if (hasFreedomFighterQuota!!.id == 0) {
-//                                // no quta
-//                                binding.tvFreedomFighterAttachment.visibility = View.GONE
-//                            } else {
-//
-//                                binding.tvFreedomFighterAttachment.visibility = View.VISIBLE
-//                            }
-//
-//
-//                        } catch (ex: Exception) {
-//                        }
+                        try {
+
+                            if (hasNotConfirmYet!!.id == 0) {
+                                // no quta
+                                binding.fNotConfirmYetAttachment.visibility = View.GONE
+                            } else {
+
+                                binding.fNotConfirmYetAttachment.visibility = View.VISIBLE
+                            }
+
+                        } catch (ex: Exception) {
+                        }
 
                     }
                 }
@@ -514,10 +539,11 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
                             if (hasFreedomFighterQuota!!.id == 0) {
                                 // no quta
-                                binding.tvFreedomFighterAttachment.visibility = View.GONE
+                                binding.llFreedomFighterAttachment.visibility = View.GONE
+
                             } else {
 
-                                binding.tvFreedomFighterAttachment.visibility = View.VISIBLE
+                                binding.llFreedomFighterAttachment.visibility = View.VISIBLE
                             }
                         } catch (ex: Exception) {
                         }
@@ -636,6 +662,74 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
             }
         }
 
+        // Not Confirmed Yet
+
+        employee?.employee_job_type_revenue?.permanent_confirmation_date?.let {
+            binding?.fPermanentConfirmationDate?.tvText?.setText(
+                "" + DateConverter.changeDateFormateForShowing(
+                    it
+                )
+            )
+        }
+        binding?.fPermanentConfirmationDate?.tvText?.setOnClickListener {
+            DatePicker().showDatePicker(context, object : OnDateListener {
+                override fun onDate(date: String) {
+                    date?.let { binding?.fPermanentConfirmationDate?.tvText?.setText("" + it) }
+                }
+            })
+        }
+
+
+        binding?.llPermanentConfirmationAttachment?.setOnClickListener {
+            isPermanentConfirmation = true
+            empolyInfoPage?.galleryButtonClicked()
+
+
+        }
+
+
+        if (employee.employee_job_type_revenue?.permanent_confirmation_attachment.toString()
+                .toLowerCase() != "null" || !employee.employee_job_type_revenue?.permanent_confirmation_attachment.isNullOrEmpty()
+        ) {
+            binding?.tvPermanentAttachment?.text =
+                context.getString(R.string.attachment) + "\n" +
+                        employee.employee_job_type_revenue?.permanent_confirmation_attachment
+        }
+
+
+        // temporary revenue transfer date
+
+        employee?.employee_job_type_revenue?.temporary_revenue_transfer_date?.let {
+            binding?.fDateOfTransferTemporaryRevenueDate?.tvText?.setText(
+                "" + DateConverter.changeDateFormateForShowing(
+                    it
+                )
+            )
+        }
+
+        if (employee.employee_job_type_revenue?.temporary_revenue_transfer_attachment.toString()
+                .toLowerCase() != "null" || !employee.employee_job_type_revenue?.temporary_revenue_transfer_attachment.isNullOrEmpty()
+        ) {
+            binding?.tvTemporaryRevenueAttachment?.text =
+                context.getString(R.string.attachment) + "\n" +
+                        employee.employee_job_type_revenue?.temporary_revenue_transfer_attachment
+        }
+        binding?.fDateOfTransferTemporaryRevenueDate?.tvText?.setOnClickListener {
+            DatePicker().showDatePicker(context, object : OnDateListener {
+                override fun onDate(date: String) {
+                    date?.let { binding?.fDateOfTransferTemporaryRevenueDate?.tvText?.setText("" + it) }
+                }
+            })
+        }
+        binding?.llTemporaryRevenueAttachment?.setOnClickListener {
+
+            isTemporaryRevenueAttachment = false
+
+            empolyInfoPage?.galleryButtonClicked()
+        }
+
+        //Diasabilty Attachment data load
+
 
         binding?.llDiasabiltyAttachment?.setOnClickListener {
 
@@ -706,15 +800,16 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                     for (n in any.getError().indices) {
                         val error = any.getError()[n].getField()
                         val message = any.getError()[n].getMessage()
-                        if (TextUtils.isEmpty(error)) {
-                            message?.let {
-                                binding?.fAwardDate?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAwardDate?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
 
-                        }
+//                        if (TextUtils.isEmpty(error)) {
+//                            message?.let {
+//                                binding?.fAwardDate?.tvError?.visibility =
+//                                    View.VISIBLE
+//                                binding?.fAwardDate?.tvError?.text =
+//                                    ErrorUtils2.mainError(message)
+//                            }
+//
+//                        }
                         when (error) {
                             "profile_id" -> {
                                 binding?.fProfileId?.tvError?.visibility =
@@ -970,6 +1065,12 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("job_joining_date", jobJoiningDate)
         map.put("job_type_id", jobType?.id)
         map.put("is_permanent_confirmation", hasNotConfirmYet?.id)
+        map.put("permanent_confirmation_date", binding?.fPermanentConfirmationDate?.tvText?.text?.toString())
+        map.put("permanent_confirmation_attachment", permanentConfirmationUrl)
+        map.put("temporary_revenue_transfer_date", binding?.fDateOfTransferTemporaryRevenueDate?.tvText?.text.toString())
+        map.put("temporary_revenue_transfer_attachment", temporaryRevenueAttachmentUrl)
+
+
 
         map.put("prl_date", pRLDate)
         map.put("pension_date", pensionDate)
@@ -978,6 +1079,9 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         // adding document path
         map["freedom_fighter_document_path"] = freedomFighterUrl
         map["disability_document_path"] = disabilityURL
+
+
+
         return map
     }
 
@@ -1046,7 +1150,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 //
 //    }
 
-    fun invisiableAllError(binding: DialogPersonalInfoBinding?) {
+    fun invisiableAllError(binding: DialogPersonalInfoEditBinding?) {
         binding?.fProfileId?.tvError?.visibility =
             View.GONE
         binding?.fNameEng?.tvError?.visibility =
@@ -1177,7 +1281,15 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                         if (isFreedomFighter) {
                             binding?.tvllFreedomFighterAttachmentFileName?.setText("${file.name}")
                             freedomFighterUrl = fileUrl
-                        } else {
+                        }else if (isPermanentConfirmation) {
+                            binding?.tvPermanentAttachment?.setText("${file.name}")
+                            permanentConfirmationUrl = fileUrl
+                        }
+                        else if (isTemporaryRevenueAttachment) {
+                            binding?.tvTemporaryRevenueAttachment?.setText("${file.name}")
+                            temporaryRevenueAttachmentUrl = fileUrl
+                        }
+                        else {
                             binding?.tvllDiasabiltyAttachmentFileName?.setText("${file.name}")
                             disabilityURL = fileUrl
 

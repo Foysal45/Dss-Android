@@ -237,7 +237,7 @@
     <string name="date">তারিখ</string>
     <string name="certification_date">সার্টিফিকেশনের তারিখ</string>
 
-    Description
+
     <string name="quota_name">কোটার নাম</string>
     <string name="description_bn">বর্ণনা (বাংলা)</string>
     <string name="qualification_name">যোগ্যতার নাম (ইংরেজি)</string>
@@ -349,6 +349,7 @@
     <string name="cancel">বাতিল</string>
     <string name="done">সম্পন্ন করুন</string>
     <string name="not_confirm_yet">এখনো নিশ্চিত নই</string>
+    <string name="permanent_confirmation_date">স্থায়ী নিশ্চিতকরণ তারিখ</string>
 
     <string name="draft">ড্রাফট করুন</string>
     <string name="head_office_branches">প্রধান অফিসের শাখা সূমুহ</string>
