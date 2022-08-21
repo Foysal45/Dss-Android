@@ -166,6 +166,8 @@
     <string name="additional_designation">অতিরিক্ত পদবি</string>
     <string name="depertment">বিভাগ</string>
     <string name="job_type">কাজের ধরন</string>
+    <string name="dateof_transfer_in_temporary_revenue">অস্থায়ী রাজস্ব ধরন</string>
+
     <string name="permanent_confirm_date">স্থায়ী সংযুক্তি</string>
     <string name="permanent_document">Permanent Document</string>
     <string name="temporary_revenue_type">অস্থায়ী রাজস্ব ধরন</string>

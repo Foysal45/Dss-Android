@@ -417,11 +417,13 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     jobType = any as SpinnerDataModel
-
-                                    if (jobType?.id == 1){
-                                        Toast.makeText(context, "jobType?.id 1", Toast.LENGTH_LONG).show()
+                                    if(jobType?.id == 1)
+                                    {
+                                        binding?.fNotConfirmYetLL?.visibility =
+                                        View.GONE
                                     }else{
-                                        Toast.makeText(context, "jobType?.id 2", Toast.LENGTH_LONG).show()
+                                        binding?.fNotConfirmYetLL?.visibility =
+                                            View.VISIBLE
                                     }
                                 }
 
@@ -431,7 +433,28 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 }
             })
 
-        print("jobType: "+jobType?.id)
+        // Date of Transfer in Temporary Revenue
+        commonRepo.getCommonData("/api/auth/job-type/list",
+            object : CommonDataValueListener {
+                override fun valueChange(list: List<SpinnerDataModel>?) {
+                    list?.let {
+                        SpinnerAdapter().setSpinner(
+                            binding?.fJobType?.spinner!!,
+                            context,
+                            list,
+                            employee?.employee_job_type_revenue?.job_type?.id,
+                            object : CommonSpinnerSelectedItemListener {
+                                override fun selectedItem(any: Any?) {
+                                    jobType = any as SpinnerDataModel
+
+                                }
+
+                            }
+                        )
+                    }
+                }
+            })
+
 
 
         hasDisabilityData()?.let {
@@ -459,19 +482,20 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
                         hasNotConfirmYet = any as SpinnerDataModel
-                        try {
 
-                            if (hasFreedomFighterQuota!!.id == 0) {
-                                // no quta
-                                binding.tvFreedomFighterAttachment.visibility = View.GONE
-                            } else {
-
-                                binding.tvFreedomFighterAttachment.visibility = View.VISIBLE
-                            }
-
-
-                        } catch (ex: Exception) {
-                        }
+//                        try {
+//
+//                            if (hasFreedomFighterQuota!!.id == 0) {
+//                                // no quta
+//                                binding.tvFreedomFighterAttachment.visibility = View.GONE
+//                            } else {
+//
+//                                binding.tvFreedomFighterAttachment.visibility = View.VISIBLE
+//                            }
+//
+//
+//                        } catch (ex: Exception) {
+//                        }
 
                     }
                 }
@@ -945,6 +969,8 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("present_gross_salary", binding?.fPresentGrossSalary?.etText?.text?.toString())
         map.put("job_joining_date", jobJoiningDate)
         map.put("job_type_id", jobType?.id)
+        map.put("is_permanent_confirmation", hasNotConfirmYet?.id)
+
         map.put("prl_date", pRLDate)
         map.put("pension_date", pensionDate)
 

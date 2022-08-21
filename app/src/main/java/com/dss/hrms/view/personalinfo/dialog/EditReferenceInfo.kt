@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogPersonalInfoBinding
+import com.dss.hrms.databinding.DialogReferenceEditBinding
 import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.employeeProfile.Employee
 import com.dss.hrms.model.error.ApiError
@@ -43,7 +44,7 @@ class EditReferenceInfo @Inject constructor() {
     var position: Int? = 0
     var dialogCustome: Dialog? = null
     var references: Employee.References? = null
-    var binding: DialogPersonalInfoBinding? = null
+    var binding: DialogReferenceEditBinding? = null
     var context: Context? = null
 
     lateinit var key: String
@@ -61,7 +62,7 @@ class EditReferenceInfo @Inject constructor() {
         dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
-            R.layout.dialog_personal_info,
+            R.layout.dialog_reference_edit,
             null,
             false
         )
@@ -250,7 +251,7 @@ class EditReferenceInfo @Inject constructor() {
         return map
     }
 
-    fun invisiableAllError(binding: DialogPersonalInfoBinding?) {
+    fun invisiableAllError(binding: DialogReferenceEditBinding?) {
         binding?.fReferenceNameEn?.tvError?.visibility =
             View.GONE
 

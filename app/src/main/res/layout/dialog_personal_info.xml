@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -176,6 +176,7 @@
                                     app:title="@{@string/phone}" />
 
 
+
                                 <include
                                     android:id="@+id/fHomeDistrict"
                                     layout="@layout/personal_info_spinner"
@@ -216,13 +217,23 @@
                                     android:id="@+id/fJobType"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/job_type}" />
+<!--                                <include-->
+<!--                                    android:id="@+id/fDateTransferTemporaryRevenue"-->
+<!--                                    layout="@layout/personal_info_spinner"-->
+<!--                                    android:visibility="gone"-->
+<!--                                    app:title="@{@string/dateof_transfer_in_temporary_revenue}" />-->
 
-
-                                <include
-                                    android:id="@+id/fNotConfirmYet"
+                                <LinearLayout
+                                    android:id="@+id/fNotConfirmYetLL"
+                                    android:layout_width="match_parent"
                                     android:visibility="gone"
-                                    layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/not_confirm_yet}" />
+                                    android:layout_height="wrap_content">
+                                    <include
+                                        android:id="@+id/fNotConfirmYet"
+                                        layout="@layout/personal_info_spinner"
+                                        app:title="@{@string/not_confirm_yet}" />
+                                </LinearLayout>
+
 
 
                                 <include
@@ -2086,104 +2097,9 @@
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
-                <!-- ...........................Reference start ........................................ -->
-
-                <LinearLayout
-                    android:id="@+id/llReference"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_10sdp"
-                        android:layout_marginTop="15dp"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="4dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <include
-                                android:id="@+id/hReference"
-                                layout="@layout/personal_information_create_field_header"
-                                app:title="@{@string/reference}" />
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@color/off_white"
-                                android:orientation="vertical"
-                                android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
-                                android:paddingVertical="@dimen/personal_information_body_padding_vertical">
-
-                                <include
-                                    android:id="@+id/fReferenceNameEn"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/name}"
-                                    app:title="@{@string/name}" />
-
-
-                                <include
-                                    android:id="@+id/fReferenceNameBn"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/name_b}"
-                                    app:title="@{@string/name_b}" />
-
-
-                                <include
-                                    android:id="@+id/fReferenceRelation"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/relation}"
-                                    app:title="@{@string/relation}" />
-
-                                <include
-                                    android:id="@+id/fReferenceRelationBn"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/relation_bn}"
-                                    app:title="@{@string/relation_bn}" />
-
-                                <include
-                                    android:id="@+id/fReferenceContactNo"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/contact}"
-                                    app:title="@{@string/contact}" />
-
-                                <include
-                                    android:id="@+id/fReferenceContactNoBn"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/contact_bn}"
-                                    app:title="@{@string/contact_bn}" />
-
-                                <include
-                                    android:id="@+id/fReferenceAddress"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/address}"
-                                    app:title="@{@string/address}" />
-
-
-                                <include
-                                    android:id="@+id/fReferenceAddressBn"
-                                    layout="@layout/personel_information_edittext"
-                                    app:hint="@{@string/address_bn}"
-                                    app:title="@{@string/address_bn}" />
-
-                                <include
-                                    android:id="@+id/referenceBtnAddUpdate"
-                                    layout="@layout/personal_info_update_button" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
 
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </layout>
 

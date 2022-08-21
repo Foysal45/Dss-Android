@@ -177,6 +177,9 @@
     <string name="designation">Designation</string>
     <string name="depertment">Department</string>
     <string name="job_type">Job Type</string>
+    <string name="dateof_transfer_in_temporary_revenue">Date of Transfer in Temporary Revenue</string>
+
+
     <string name="permanent_confirm_date">Permanent Confirmation Date</string>
     <string name="permanent_document">Permanent Document</string>
 
