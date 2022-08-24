@@ -470,6 +470,9 @@ class Employee() {
     class Jobjoinings() {
         @SerializedName("id")
         var id: Int = 0
+        @SerializedName("current")
+        val current: Boolean = false
+
 
         var isPendingData: Boolean = false
         var parent_id: Int? = null
@@ -578,6 +581,8 @@ class Employee() {
         @SerializedName("division")
         val division: Division? = null
 
+        @SerializedName("employment_status_attachment")
+        val employment_status_attachment: String? = null
 
         inner class Office {
             @SerializedName("id")
@@ -1594,6 +1599,8 @@ class Employee() {
     inner class Promotions {
         @SerializedName("id")
         val id: Int = 0
+
+
 
         @SerializedName("employee_id")
         val employee_id: Int = 0

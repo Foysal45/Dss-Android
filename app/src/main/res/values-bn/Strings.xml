@@ -509,6 +509,9 @@
 
     <string name="section_wise_sub_section">সেকশন ওয়াইজ সাব-সেকশন</string>
     <string name="other_service_particular">চাকরি সংক্রান্ত অন্যান্য বিবরণী</string>
+    <string name="attachment_office">সংযুক্তি অফিস</string>
+    <string name="attachment_designation">সংযুক্তি পদবী</string>
+
     <string name="where_to_lien">লিয়েন কোথায়</string>
     <string name="division_district">জেলা</string>
     <string name="current_office">বর্তমান অফিস</string>

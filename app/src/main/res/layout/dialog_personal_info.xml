@@ -474,84 +474,161 @@
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/division}" />
 
+                                <include
+                                    android:id="@+id/fDepartmentWiseSection"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/department_wise_section}"/>
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:id="@+id/llJobJoiningOfficeBody"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="vertical"
-                                        android:paddingVertical="@dimen/_4sdp"
-                                        app:layout_constraintTop_toTopOf="parent">
-
-                                        <TextView
-                                            android:id="@+id/tvJobJoiningOfficeTitle"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginVertical="@dimen/_5sdp"
-                                            android:text="@string/current_office"
-                                            android:textColor="@color/light_black"
-                                            android:textSize="@dimen/text_size_small"
-                                            android:textStyle="bold" />
-
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:background="@drawable/edittext_bg"
-                                            android:gravity="center"
-                                            android:orientation="horizontal">
-
-                                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                                android:id="@+id/JobJoiningOfficeSpinner"
-                                                android:layout_width="0dp"
-                                                android:layout_height="@dimen/edittext_height_large"
-                                                android:layout_weight="1" />
-
-                                        </LinearLayout>
-
-
-                                        <TextView
-                                            android:id="@+id/tvJobJoiningOfficeError"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center|left"
-                                            android:gravity="center|left"
-                                            android:paddingHorizontal="10dp"
-                                            android:paddingVertical="5dp"
-                                            android:text="error"
-                                            android:textColor="@color/red"
-                                            android:textSize="@dimen/text_size_small"
-                                            android:visibility="gone" />
-
-                                        <!--            </androidx.cardview.widget.CardView>-->
-                                    </LinearLayout>
-
-                                </LinearLayout>
+                                <include
+                                    android:id="@+id/fDepartmentWiseSubSection"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/section_wise_sub_section}"/>
 
 
                                 <include
                                     android:id="@+id/fJobJoiningEditDesignation"
                                     layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/current_designation}" />
+                                    app:title="@{@string/designation}" />
 
+
+                                <!--  Start Other Service Particulars from here-->
                                 <include
                                     android:id="@+id/fJobJoiningEditOtherServiceParticulars"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/other_service_particular}" />
 
+                                <include
+                                    android:id="@+id/fWhereToParticular"
+                                    layout="@layout/personel_information_edittext"
+                                     />
+
+
+                                <LinearLayout
+                                    android:id="@+id/llOffice"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:visibility="gone"
+                                    android:paddingVertical="@dimen/_4sdp">
+                                    <TextView
+                                        android:id="@+id/tvOfficeTitle"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/attachment_office"
+                                        android:textColor="@color/light_black"
+                                        android:paddingBottom="5dp"
+                                        android:textSize="@dimen/text_size_large"
+                                       />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/edittext_bg"
+                                        android:orientation="horizontal">
+
+
+                                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                            android:id="@+id/spinner"
+                                            android:layout_width="0dp"
+                                            android:layout_height="@dimen/edittext_height_large"
+                                            android:layout_weight="1" />
+
+                                        <ImageView
+                                            android:id="@+id/ivSearch"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:paddingHorizontal="10dp"
+                                            android:src="@drawable/ic_baseline_search_24" />
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:id="@+id/tvOffice"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:paddingVertical="3dp"
+                                        android:text=""
+                                        android:textColor="@color/gray"
+                                        android:textSize="12sp" />
+
+                                    <TextView
+                                        android:id="@+id/tvOfficeError"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center|left"
+                                        android:gravity="center|left"
+                                        android:paddingHorizontal="10dp"
+                                        android:paddingVertical="5dp"
+                                        android:text="error"
+                                        android:textColor="@color/red"
+                                        android:textSize="@dimen/text_size_small"
+                                        android:visibility="gone" />
+
+                                </LinearLayout>
+
+                                <include
+                                    android:id="@+id/fAttachmentDesignation"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/attachment_designation}" />
+
+                                <LinearLayout
+                                    android:id="@+id/fParticularAttachment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    app:layout_constraintBottom_toTopOf="@id/send"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/llBody">
+
+                                    <TextView
+                                        android:id="@+id/tvParticularAttachment"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:drawableLeft="@drawable/ic_baseline_attachment_24"
+                                        android:drawablePadding="20dp"
+                                        android:text="@string/attachment"
+                                        android:maxLines="2"
+                                        android:ellipsize="end"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/text_size_large"
+                                        android:textStyle="bold" />
+
+
+                                    <TextView
+                                        android:id="@+id/tvParticularAttachmentFileName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:ellipsize="end"
+                                        android:paddingHorizontal="5dp"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        android:textColor="@color/light_black"
+                                        android:textSize="@dimen/text_size_medium"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/tvParticularAttachmentError"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center|left"
+                                        android:gravity="center|left"
+                                        android:paddingHorizontal="@dimen/_5sdp"
+                                        android:paddingVertical="5dp"
+                                        android:text="error"
+                                        android:textColor="@color/red"
+                                        android:textSize="@dimen/text_size_small"
+                                        android:visibility="gone" />
+                                </LinearLayout>
 
                                 <include
                                     android:id="@+id/fJobJoiningEditDateOf"
                                     layout="@layout/personal_info_textview"
                                     app:title="@{@string/joining_date_of_lien}"
                                      />
+
 
 
                                 <include

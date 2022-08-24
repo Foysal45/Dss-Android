@@ -1,9 +1,13 @@
 package com.dss.hrms.view.personalinfo.adapter.employeeInfo
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -1284,6 +1288,57 @@ class EmployeeInfoDataBinding @Inject constructor() {
         }
 
 
+        // Set data for Current job
+        binding.fCurrentJob.tvTitle.text =
+            context?.getString(R.string.current_job)
+       binding.fCurrentJob.tvText.text = jobjoinings.current.toString()
+
+   // attachment
+
+        binding.fAttachment.llBody.visibility = View.VISIBLE
+        // assgin text to the view
+        binding.fAttachment.tvTitle.text =
+            context?.getString(R.string.attachment)
+        binding.fAttachment.tvText.setTextColor(
+            ContextCompat.getColor(
+                context,
+                R.color.green
+            )
+        )
+        binding.fAttachment.tvText.text = " Tap To View"
+        val fileExtentions =
+            ConvertNumber.getTheFileExtention(jobjoinings.employment_status_attachment)
+                .lowercase(Locale.getDefault())
+
+
+        if (fileExtentions.isEmpty()) {
+            binding.fAttachment.tvText.text = " No Attachment"
+        } else if (fileExtentions.contains("png") || fileExtentions.contains("jpeg") || fileExtentions.contains(
+                "jpg"
+            )
+        ) {
+            binding.fAttachment.icon.background =
+                ContextCompat.getDrawable(context, R.drawable.picture)
+        } else {
+            binding.fAttachment.icon.background =
+                ContextCompat.getDrawable(context, R.drawable.ic_pdf)
+        }
+
+        binding.fAttachment.tvText
+            .setOnClickListener {
+
+                if (jobjoinings.employment_status_attachment.isNullOrBlank()) {
+                    Toast.makeText(context, "Something Went Wrong !!", Toast.LENGTH_LONG).show()
+                } else {
+                    // check action
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(RetrofitInstance.BASE_URL + jobjoinings.employment_status_attachment.toString())
+                    )
+                    context.startActivity(browserIntent)
+                }
+            }
+
         if (!jobjoinings.isPendingData) {
             if (preparence.getLanguage().equals("en")) {
 
@@ -1319,6 +1374,14 @@ class EmployeeInfoDataBinding @Inject constructor() {
                             }
                             2->{
                                 binding.fJobJoiningWhereToLien.tvTitle.text = "Where to ${jobjoinings.employeementstatus.name}" //context.getString(R.string.where_to_deputed)
+                            }
+                            3->{
+                                binding.fJobJoiningWhereToLien.tvTitle.text = "${jobjoinings.employeementstatus.name} Office" //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningWhereToLien.tvText.text = jobjoinings.additional_office?.office_name //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningAdditionalChargeDesignation.llBody.visibility=View.VISIBLE
+                                binding.fJobJoiningAdditionalChargeDesignation.tvTitle.text = "${jobjoinings.employeementstatus.name} Designation" //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningAdditionalChargeDesignation.tvText.text = jobjoinings.additional_designation?.name //context.getString(R.string.where_to_deputed)
+
                             }
                             4->{
                                 binding.fJobJoiningWhereToLien.tvTitle.text = "${jobjoinings.employeementstatus.name} Office"
@@ -1393,6 +1456,14 @@ class EmployeeInfoDataBinding @Inject constructor() {
                             2->{
                                 binding.fJobJoiningWhereToLien.tvTitle.text = "Where to ${jobjoinings.employeementstatus.name}" //context.getString(R.string.where_to_deputed)
                             }
+                            3->{
+                                binding.fJobJoiningWhereToLien.tvTitle.text = "${jobjoinings.employeementstatus.name} Office" //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningWhereToLien.tvText.text = jobjoinings.additional_office?.office_name //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningAdditionalChargeDesignation.llBody.visibility=View.VISIBLE
+                                binding.fJobJoiningAdditionalChargeDesignation.tvTitle.text = "${jobjoinings.employeementstatus.name} Designation" //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningAdditionalChargeDesignation.tvText.text = jobjoinings.additional_designation?.name //context.getString(R.string.where_to_deputed)
+
+                            }
                             4->{
                                 binding.fJobJoiningWhereToLien.tvTitle.text = "${jobjoinings.employeementstatus.name} Office"
                                 binding.fJobJoiningWhereToLien.tvText.text = "${jobjoinings.additional_office?.office_name}"
@@ -1452,6 +1523,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
                         binding.fJobJoiningReleaseDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoinings.employment_status_release_date}")
                     }
                     2->{
+                        binding.fJobJoiningDateOf.tvTitle.text = "Joining Date Of ${jobjoinings.employeementstatus.name}"
+                        binding.fJobJoiningReleaseDateOf.tvTitle.text = "Release Date from ${jobjoinings.employeementstatus.name}"
+                        binding.fJobJoiningDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoinings.employment_status_effective_date}")
+                        binding.fJobJoiningReleaseDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoinings.employment_status_release_date}")
+                    }
+                    3->{
                         binding.fJobJoiningDateOf.tvTitle.text = "Joining Date Of ${jobjoinings.employeementstatus.name}"
                         binding.fJobJoiningReleaseDateOf.tvTitle.text = "Release Date from ${jobjoinings.employeementstatus.name}"
                         binding.fJobJoiningDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoinings.employment_status_effective_date}")
@@ -1534,6 +1611,13 @@ class EmployeeInfoDataBinding @Inject constructor() {
                             2->{
                                 binding.fJobJoiningWhereToLien.tvTitle.text = "Where to ${jobjoinings.employeementstatus.name}" //context.getString(R.string.where_to_deputed)
                             }
+                            3->{
+                                binding.fJobJoiningWhereToLien.tvTitle.text = "${jobjoinings.employeementstatus.name_bn} Office" //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningWhereToLien.tvText.text = jobjoinings.additional_office?.office_name_bn //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningAdditionalChargeDesignation.llBody.visibility=View.VISIBLE
+                                binding.fJobJoiningAdditionalChargeDesignation.tvTitle.text = "${jobjoinings.employeementstatus.name_bn} Designation" //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningAdditionalChargeDesignation.tvText.text = jobjoinings.additional_designation?.name_bn //context.getString(R.string.where_to_deputed)
+                            }
                             4->{
                                 binding.fJobJoiningWhereToLien.tvTitle.text = "${jobjoinings.employeementstatus.name} Office"
                                 binding.fJobJoiningWhereToLien.tvText.text = "${jobjoinings.additional_office?.office_name_bn}"
@@ -1601,6 +1685,14 @@ class EmployeeInfoDataBinding @Inject constructor() {
                             2->{
                                 binding.fJobJoiningWhereToLien.tvTitle.text = "Where to ${jobjoinings.employeementstatus.name}" //context.getString(R.string.where_to_deputed)
                             }
+                            3->{
+                                binding.fJobJoiningWhereToLien.tvTitle.text = "${jobjoinings.employeementstatus.name} Office" //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningWhereToLien.tvText.text = jobjoinings.additional_office?.office_name //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningAdditionalChargeDesignation.llBody.visibility=View.VISIBLE
+                                binding.fJobJoiningAdditionalChargeDesignation.tvTitle.text = "${jobjoinings.employeementstatus.name} Designation" //context.getString(R.string.where_to_deputed)
+                                binding.fJobJoiningAdditionalChargeDesignation.tvText.text = jobjoinings.additional_designation?.name //context.getString(R.string.where_to_deputed)
+
+                            }
                             4->{
                                 binding.fJobJoiningWhereToLien.tvTitle.text = "${jobjoinings.employeementstatus.name} Office"
                                 binding.fJobJoiningWhereToLien.tvText.text = "${jobjoinings.additional_office?.office_name_bn}"
@@ -1661,6 +1753,12 @@ class EmployeeInfoDataBinding @Inject constructor() {
                         binding.fJobJoiningReleaseDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoinings.employment_status_release_date}")
                     }
                     2->{
+                        binding.fJobJoiningDateOf.tvTitle.text = "Joining Date Of ${jobjoinings.employeementstatus.name}"
+                        binding.fJobJoiningReleaseDateOf.tvTitle.text = "Release Date from ${jobjoinings.employeementstatus.name}"
+                        binding.fJobJoiningDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoinings.employment_status_effective_date}")
+                        binding.fJobJoiningReleaseDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoinings.employment_status_release_date}")
+                    }
+                    3->{
                         binding.fJobJoiningDateOf.tvTitle.text = "Joining Date Of ${jobjoinings.employeementstatus.name}"
                         binding.fJobJoiningReleaseDateOf.tvTitle.text = "Release Date from ${jobjoinings.employeementstatus.name}"
                         binding.fJobJoiningDateOf.tvText.text = DateConverter.changeDateFormateForShowing("${jobjoinings.employment_status_effective_date}")

@@ -445,6 +445,9 @@
                             android:paddingVertical="@dimen/personal_information_body_padding_vertical">
 
                             <include
+                                android:id="@+id/fCurrentJob"
+                                layout="@layout/personel_information_view_field" />
+                            <include
                                 android:id="@+id/fJobJoiningOffice"
                                 layout="@layout/personel_information_view_field" />
 
@@ -464,6 +467,7 @@
                                 android:id="@+id/fJobJoiningDesignation"
                                 layout="@layout/personel_information_view_field" />
 
+
                             <include
                                 android:id="@+id/fJobJoiningOtherServiceParticulars"
                                 layout="@layout/personel_information_view_field" />
@@ -475,6 +479,9 @@
                             <include
                                 android:id="@+id/fJobJoiningAdditionalChargeDesignation"
                                 layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
 
                             <include
                                 android:id="@+id/fJobJoiningDateOf"

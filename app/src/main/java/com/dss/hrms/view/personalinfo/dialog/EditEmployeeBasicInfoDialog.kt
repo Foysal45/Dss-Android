@@ -1,12 +1,10 @@
 package com.dss.hrms.view.personalinfo.dialog
 
-
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.text.InputType
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +42,8 @@ import java.util.*
 import javax.inject.Inject
 
 
-class EditEmployeeBasicInfoDialog @Inject constructor() {
+open class EditEmployeeBasicInfoDialog @Inject constructor() {
+
     @Inject
     lateinit var commonRepo: CommonRepo
 
@@ -124,7 +123,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 
     }
 
-    fun editBasicInfo(
+    private fun editBasicInfo(
         context: Context,
         binding: DialogPersonalInfoEditBinding?
     ) {
@@ -1067,11 +1066,8 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
         map.put("is_permanent_confirmation", hasNotConfirmYet?.id)
         map.put("permanent_confirmation_date", binding?.fPermanentConfirmationDate?.tvText?.text?.toString())
         map.put("permanent_confirmation_attachment", permanentConfirmationUrl)
-        map.put("temporary_revenue_transfer_date", binding?.fDateOfTransferTemporaryRevenueDate?.tvText?.text.toString())
+        map.put("temporary_revenue_transfer_date", DateConverter.changeDateFormateForSending(binding?.fDateOfTransferTemporaryRevenueDate?.tvText?.text.toString()))
         map.put("temporary_revenue_transfer_attachment", temporaryRevenueAttachmentUrl)
-
-
-
         map.put("prl_date", pRLDate)
         map.put("pension_date", pensionDate)
 
@@ -1092,8 +1088,6 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                 .get(EmployeeInfoEditCreateViewModel::class.java)
         invisiableAllError(binding)
         key?.let {
-
-
             if (it.equals(StaticKey.EDIT)) {
                 employeeInfoEditCreateRepo?.updateBasicInfo(
                     employee?.id,
@@ -1103,7 +1097,6 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
                     Log.e("yousuf", "error : " + any)
                     showResponse(any)
                 })
-            } else {
             }
         }
     }
@@ -1145,9 +1138,7 @@ class EditEmployeeBasicInfoDialog @Inject constructor() {
 //        binding?.ivEmployee?.setImageBitmap(bitmap)
 //        //   Toast.makeText(context, "image", Toast.LENGTH_LONG).show()
 //        Log.e("image", "dialog imageFile  : " + imageFile)
-//
 //        this.imageFile = imageFile
-//
 //    }
 
     fun invisiableAllError(binding: DialogPersonalInfoEditBinding?) {

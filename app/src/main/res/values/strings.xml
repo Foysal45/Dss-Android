@@ -358,7 +358,8 @@
     <string name="search">Search</string>
     <string name="office_lead_category">Office Lead Category</string>
     <string name="employee_name_or_id">Employee Name / ID</string>
-    <string name="attachment">attachment</string>
+    <string name="attachment">Attachment</string>
+
     <string name="ok">Ok</string>
     <string name="ok_for_employee_selection">Ok</string>
     <string name="cancel">Cancel</string>
@@ -516,6 +517,8 @@
     <string name="department_wise_section">Department Wise Section</string>
     <string name="section_wise_sub_section">Section Wise Sub-Section</string>
     <string name="other_service_particular">Other Service Particulars</string>
+    <string name="attachment_office">Attachment Office</string>
+    <string name="attachment_designation">Attachment Designation</string>
     <string name="where_to_lien">Where to Lien</string>
     <string name="division_district">District</string>
     <string name="current_office">Current Office</string>
