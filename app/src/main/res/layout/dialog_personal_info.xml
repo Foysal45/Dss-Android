@@ -486,6 +486,11 @@
 
 
                                 <include
+                                    android:id="@+id/fJobJoiningEditCurrentOffice"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/current_office}" />
+
+                                <include
                                     android:id="@+id/fJobJoiningEditDesignation"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/designation}" />

@@ -26,6 +26,7 @@ import com.dss.hrms.view.dialog.OfficeSearchingDialog
 import com.dss.hrms.view.messaging.viewmodel.MessagingViewModel
 import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
+import com.google.gson.Gson
 import com.namaztime.namaztime.database.MySharedPreparence
 import dagger.android.support.DaggerFragment
 import java.util.HashMap
@@ -87,7 +88,7 @@ class MessagingFragment : DaggerFragment() {
             commonRepo.getOffice("/api/auth/office/list/basic",
                 object : OfficeDataValueListener {
                     override fun valueChange(list: List<Office>?) {
-                        //   Log.e("gender", "gender message " + Gson().toJson(list))
+                          Log.e("gender", "gender message " + Gson().toJson(list))
 
                        if (mainOfficeList==null){
                            mainOfficeList = officeList
