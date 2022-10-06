@@ -10,6 +10,7 @@ import android.view.Window
 import androidx.databinding.DataBindingUtil
 import com.dss.hrms.R
 import com.dss.hrms.databinding.DialogOfficeSearchBinding
+import com.dss.hrms.di.mainScope.EmployeeProfileData
 import com.dss.hrms.model.HeadOfficeDepartmentApiResponse
 import com.dss.hrms.model.Office
 import com.dss.hrms.model.SpinnerDataModel
@@ -36,6 +37,9 @@ class OfficeSearchingDialog @Inject constructor() {
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProviderFactory
 
+    @Inject
+    lateinit var employeeProfileData: EmployeeProfileData
+
 
     lateinit var dialogCustome: Dialog
     lateinit var binding: DialogOfficeSearchBinding
@@ -60,37 +64,38 @@ class OfficeSearchingDialog @Inject constructor() {
         officeDataValueListener: OfficeDataValueListener
     ) {
         dialogCustome = context?.let { Dialog(it) }!!
-        dialogCustome?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogCustome.requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.context = context
         this.officeValueListener = officeDataValueListener
         this.utilViewModel = utilViewModel
-        binding = DataBindingUtil.inflate(
-            LayoutInflater.from(context),
-            R.layout.dialog_office_search,
-            null,
-            false
-        )
-        binding?.getRoot()?.let { dialogCustome?.setContentView(it) }
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_office_search, null, false)
+        binding.root.let { dialogCustome.setContentView(it) }
 
-        var window: Window? = dialogCustome?.getWindow()
-        window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+        val window: Window? = dialogCustome.window
+        window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
 
-        binding?.officeHeader?.tvClose?.setOnClickListener {
+        binding.officeHeader.tvClose.setOnClickListener {
             dialogCustome.dismiss()
         }
 
+        binding.headOfficeDepartmentDialog.llBody.visibility = View.GONE
+        binding.departmentWiseSectionDialog.llBody.visibility = View.GONE
+        binding.sectionWiseSubSectionDialog.llBody.visibility = View.GONE
+        binding.sectionWiseSubSubSectionDialog.llBody.visibility = View.GONE
+        binding.division.llBody.visibility = View.GONE
+        binding.district.llBody.visibility = View.GONE
+        binding.officeDialog.llBody.visibility = View.GONE
         binding.designation.llBody.visibility = View.GONE
+
         loadDesignationList()
+
         commonRepo.getAllDistrict(
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     list?.let {
                         SpinnerAdapter().setSpinner(
-                            binding.district?.spinner!!,
+                            binding.district.spinner,
                             context,
                             list,
                             null,
@@ -107,20 +112,55 @@ class OfficeSearchingDialog @Inject constructor() {
         )
 
 
-        binding.headOfficesBranches.llBody.visibility =
-            View.GONE
-        binding.branchesWiseSection.llBody.visibility =
-            View.GONE
-        binding.sectionWiseSubsection.llBody.visibility =
-            View.GONE
+        //set spinner for the Office Type Divisional/Head Office
+        SpinnerAdapter().setSpinner(
+            binding.officeTypeDialog.spinner, context,
+            currentOfficeTypeData(),headOfficeBranches?.id, //employeeProfileData.employee?.jobjoinings?.get(0)?.office?.office_type_id,
+            object : CommonSpinnerSelectedItemListener {
+                override fun selectedItem(any: Any?) {
+                   // currentOfficeType = any as SpinnerDataModel
+                    officeLeadCategory = any as SpinnerDataModel
+                   // headOfficeBranches = any as HeadOfficeDepartmentApiResponse.HeadOfficeBranch
+                    if (officeLeadCategory?.id == 1){
+                        district = null
+                        division = null
+                        binding.headOfficeDepartmentDialog.llBody.visibility = View.VISIBLE
+                        binding.departmentWiseSectionDialog.llBody.visibility = View.VISIBLE
+                        binding.sectionWiseSubSectionDialog.llBody.visibility = View.VISIBLE
+                        binding.sectionWiseSubSubSectionDialog.llBody.visibility = View.VISIBLE
+                        /*binding.fJobJoiningOfficeDeptAndDivision.tvTitle.text = "Head Office Department"
+                        loadHeadOfficeDepartment()*/
+                    }else if (officeLeadCategory?.id == 4){
+                        headOfficeBranches = null
+                        section = null
+                        subSection = null
+                        binding.division.llBody.visibility = View.VISIBLE
+                        binding.district.llBody.visibility = View.VISIBLE
+                        binding.officeDialog.llBody.visibility = View.VISIBLE
+                       /* binding.fJobJoiningOfficeDeptAndDivision.tvTitle.text = "Division"
+                        setDivision()*/
+                    }else{
+                        binding.headOfficeDepartmentDialog.llBody.visibility = View.GONE
+                        binding.departmentWiseSectionDialog.llBody.visibility = View.GONE
+                        binding.sectionWiseSubSectionDialog.llBody.visibility = View.GONE
+                        binding.sectionWiseSubSubSectionDialog.llBody.visibility = View.GONE
+                        binding.division.llBody.visibility = View.GONE
+                        binding.district.llBody.visibility = View.GONE
+                        binding.officeDialog.llBody.visibility = View.GONE
+                        binding.designation.llBody.visibility = View.GONE
+                    }
+                }
+            }
+        )
+
         headOfficeBranches()
 
-        commonRepo.getCommonData("/api/auth/sixteen-category/list",
+    /*    commonRepo.getCommonData("/api/auth/sixteen-category/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
                     list?.let {
                         SpinnerAdapter().setSpinner(
-                            binding?.officeLeadCategory?.spinner!!,
+                            binding.officeTypeDialog.spinner,
                             context,
                             list,
                             null,
@@ -128,32 +168,24 @@ class OfficeSearchingDialog @Inject constructor() {
                                 override fun selectedItem(any: Any?) {
                                     officeLeadCategory = any as SpinnerDataModel
                                     officeLeadCategory?.let { oflC ->
-                                        oflC?.id?.let {
+                                        oflC.id?.let {
                                             if (it == 1) {
                                                 district = null
                                                 division = null
-                                                binding.headOfficesBranches.llBody.visibility =
-                                                    View.VISIBLE
-                                                binding.branchesWiseSection.llBody.visibility =
-                                                    View.VISIBLE
-                                                binding.sectionWiseSubsection.llBody.visibility =
-                                                    View.VISIBLE
+                                                binding.headOfficeDepartmentDialog.llBody.visibility = View.VISIBLE
+                                                binding.departmentWiseSectionDialog.llBody.visibility = View.VISIBLE
+                                                binding.sectionWiseSubSectionDialog.llBody.visibility = View.VISIBLE
                                                 binding.division.llBody.visibility = View.GONE
                                                 binding.district.llBody.visibility = View.GONE
                                             } else {
                                                 headOfficeBranches = null
                                                 section = null
                                                 subSection = null
-                                                binding.headOfficesBranches.llBody.visibility =
-                                                    View.GONE
-                                                binding.branchesWiseSection.llBody.visibility =
-                                                    View.GONE
-                                                binding.sectionWiseSubsection.llBody.visibility =
-                                                    View.GONE
-                                                binding.division.llBody.visibility =
-                                                    View.VISIBLE
-                                                binding.district.llBody.visibility =
-                                                    View.VISIBLE
+                                                binding.headOfficeDepartmentDialog.llBody.visibility = View.GONE
+                                                binding.departmentWiseSectionDialog.llBody.visibility = View.GONE
+                                                binding.sectionWiseSubSectionDialog.llBody.visibility = View.GONE
+                                                binding.division.llBody.visibility = View.VISIBLE
+                                                binding.district.llBody.visibility = View.VISIBLE
                                             }
                                         }
                                     }
@@ -163,13 +195,13 @@ class OfficeSearchingDialog @Inject constructor() {
                     }
                 }
 
-            })
+            })*/
 
         commonRepo.getCommonData("/api/auth/division/list", object : CommonDataValueListener {
             override fun valueChange(list: List<SpinnerDataModel>?) {
                 list?.let {
                     SpinnerAdapter().setSpinner(
-                        binding?.division?.spinner!!,
+                        binding.division.spinner,
                         context,
                         list,
                         null,
@@ -185,14 +217,37 @@ class OfficeSearchingDialog @Inject constructor() {
             }
         })
 
+        //Submit search data
         binding.search.setOnClickListener {
             searchOffice()
         }
-        dialogCustome?.show()
+        dialogCustome.show()
     }
 
-    fun searchOffice() {
-        var dialog = CustomLoadingDialog().createLoadingDialog(context)
+    //For OfficeType
+    private fun currentOfficeTypeData(): List<SpinnerDataModel> {
+
+        val headOffice = SpinnerDataModel()
+        headOffice.apply {
+            id = 1
+            name = "Head Office"
+            name_bn = "হেড অফিস"
+
+        }
+        val divisionalOffice = SpinnerDataModel()
+        divisionalOffice.apply {
+            id = 4
+            name = "Divisional"
+            name_bn = "বিভাগীয়"
+
+
+        }
+        return arrayListOf(headOffice, divisionalOffice)
+    }
+
+
+    private fun searchOffice() {
+        val dialog = CustomLoadingDialog().createLoadingDialog(context)
         commonRepo.getOfficeWithWhereClause(
             getMapData(),
             object : OfficeDataValueListener {
@@ -207,18 +262,18 @@ class OfficeSearchingDialog @Inject constructor() {
     }
 
     fun getMapData(): HashMap<Any, Any?> {
-        var map = HashMap<Any, Any?>()
+        val map = HashMap<Any, Any?>()
         officeLeadCategory?.id?.let {
-            map.put("sixteen_category_id", it)
+            map.put("office_type_id", it)
         }
         headOfficeBranches?.id?.let {
             map.put("head_office_department_id", it)
         }
         section?.id?.let {
-            map.put("head_office_section_id", it)
+            map.put("department_wise_section_id", it)
         }
         subSection?.id?.let {
-            map.put("head_office_sub_section_id", it)
+            map.put("section_wise_sub_section_id", it)
         }
         division?.id?.let {
             map.put("division_id", it)
@@ -238,7 +293,7 @@ class OfficeSearchingDialog @Inject constructor() {
             override fun valueChange(list: List<SpinnerDataModel>?) {
                 list?.let {
                     SpinnerAdapter().setSpinner(
-                        binding?.district?.spinner!!,
+                        binding.district.spinner,
                         context,
                         list,
                         districtId,
@@ -255,12 +310,12 @@ class OfficeSearchingDialog @Inject constructor() {
 
     }
 
-    fun headOfficeBranches() {
+    private fun headOfficeBranches() {
         utilViewModel.getHeadOfficeDepartment(object : HeadOfficeDepartmentDataValueListener {
             override fun valueChange(branches: List<HeadOfficeDepartmentApiResponse.HeadOfficeBranch>?) {
                 branches?.let {
                     CommonSpinnerAdapter().setBranchSpinner(
-                        binding?.headOfficesBranches?.spinner!!,
+                        binding.headOfficeDepartmentDialog.spinner,
                         context,
                         branches,
                         null,
@@ -284,9 +339,9 @@ class OfficeSearchingDialog @Inject constructor() {
 
 
     fun setSection(dataList: List<HeadOfficeDepartmentApiResponse.Section>) {
-        dataList?.let { list ->
+        dataList.let { list ->
             CommonSpinnerAdapter().setSectionSpinner(
-                binding?.branchesWiseSection?.spinner!!,
+                binding.departmentWiseSectionDialog.spinner,
                 context,
                 list,
                 null,
@@ -307,9 +362,9 @@ class OfficeSearchingDialog @Inject constructor() {
     }
 
     fun setSubSection(dataList: List<HeadOfficeDepartmentApiResponse.Subsection>) {
-        dataList?.let { list ->
+        dataList.let { list ->
             CommonSpinnerAdapter().setSubSectionSpinner(
-                binding?.sectionWiseSubsection?.spinner!!,
+                binding.sectionWiseSubSectionDialog.spinner,
                 context,
                 list,
                 null,
@@ -348,7 +403,7 @@ class OfficeSearchingDialog @Inject constructor() {
 
     }
 
-    fun loadDesignationList() {
+    private fun loadDesignationList() {
         commonRepo.getCommonData("/api/auth/designation/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {

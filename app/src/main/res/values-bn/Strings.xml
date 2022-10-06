@@ -506,8 +506,8 @@
 
     <string name="current_designation">বর্তমান পদবী</string>
     <string name="department_wise_section">বিভাগ অনুযায়ী উপবিভাগ</string>
-
     <string name="section_wise_sub_section">সেকশন ওয়াইজ সাব-সেকশন</string>
+    <string name="section_wise_sub_sub_section">সেকশন ওয়াইজ সাব-সাব-সেকশন</string>
     <string name="other_service_particular">চাকরি সংক্রান্ত অন্যান্য বিবরণী</string>
     <string name="attachment_office">সংযুক্তি অফিস</string>
     <string name="attachment_designation">সংযুক্তি পদবী</string>
@@ -519,5 +519,8 @@
 
     <string name="joining_date_of_lien">Joining Date of Lien</string>
     <string name="released_date_from_lien">Released Date from Lien</string>
+
+    <string name="additional_charge_office">অতিরিক্ত চার্জ অফিস</string>
+
 
 </resources>

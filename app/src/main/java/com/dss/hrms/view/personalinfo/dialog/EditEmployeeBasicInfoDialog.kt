@@ -33,7 +33,6 @@ import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.personel_information_edittext.view.*
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -998,37 +997,37 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
     }
 
     fun getMapData(): HashMap<Any, Any?> {
-        var rolesList = arrayListOf<Int?>()
+        val rolesList = arrayListOf<Int?>()
         roles?.forEach { element ->
-            rolesList.add(element?.id)
+            rolesList.add(element.id)
         }
         //  rolesList.add(1)
 
-        var date = DateConverter.changeDateFormateForSending(binding?.fDOB?.tvText?.text.toString())
-        var jobJoiningDate = DateConverter.changeDateFormateForSending(binding?.fJobJoiningDate?.tvText?.text.toString())
-        var pRLDate = DateConverter.changeDateFormateForSending(binding?.fPRLDate?.tvText?.text.toString())
-        var pensionDate = DateConverter.changeDateFormateForSending(binding?.fPensionDate?.tvText?.text.toString())
-        var employeeStatusTyypeDate =
+        val date = DateConverter.changeDateFormateForSending(binding?.fDOB?.tvText?.text.toString())
+        val jobJoiningDate = DateConverter.changeDateFormateForSending(binding?.fJobJoiningDate?.tvText?.text.toString())
+        val pRLDate = DateConverter.changeDateFormateForSending(binding?.fPRLDate?.tvText?.text.toString())
+        val pensionDate = DateConverter.changeDateFormateForSending(binding?.fPensionDate?.tvText?.text.toString())
+        val employeeStatusTypeDate =
             DateConverter.changeDateFormateForSending(binding?.fEmploymentStatusDate?.tvText?.text.toString())
-        var map = HashMap<Any, Any?>()
+        val map = HashMap<Any, Any?>()
         Log.e(
             "basicinfo",
             "....................................................roles date ${employeeProfileData?.employee?.user?.employee_id}"
         )
-        map.put("employee_id", employeeProfileData?.employee?.user?.employee_id)
-        map.put("role", rolesList)
-        map.put("job_joining_date", employeeProfileData?.employee?.job_joining_date)
-        map.put("profile_id", binding?.fProfileId?.etText?.text.toString())
-        map.put("name", binding?.fNameEng?.etText?.text.toString())
-        map.put("name_bn", binding?.fNameBangla?.etText?.text.toString())
-        Log.e("dob", "dob : ${date}")
+        map["employee_id"] = employeeProfileData.employee?.user?.employee_id
+        map["role"] = rolesList
+        map["job_joining_date"] = employeeProfileData.employee?.job_joining_date
+        map["profile_id"] = binding?.fProfileId?.etText?.text.toString()
+        map["name"] = binding?.fNameEng?.etText?.text.toString()
+        map["name_bn"] = binding?.fNameBangla?.etText?.text.toString()
+        Log.e("dob", "dob : $date")
 
-        map.put("date_of_birth", date)
-        map.put("status_date", employeeStatusTyypeDate)
-        map.put("fathers_name", binding?.fFatherNameEng?.etText?.text.toString())
-        map.put("fathers_name_bn", binding?.fFatherNameBangla?.etText?.text.toString())
-        map.put("mothers_name", binding?.fMotherNameEng?.etText?.text.toString())
-        map.put("mothers_name_bn", binding?.fMotherNameBangla?.etText?.text.toString())
+        map["date_of_birth"] = date
+        map["status_date"] = employeeStatusTypeDate
+        map["fathers_name"] = binding?.fFatherNameEng?.etText?.text.toString()
+        map["fathers_name_bn"] = binding?.fFatherNameBangla?.etText?.text.toString()
+        map["mothers_name"] = binding?.fMotherNameEng?.etText?.text.toString()
+        map["mothers_name_bn"] = binding?.fMotherNameBangla?.etText?.text.toString()
 //        try{
 //            if (em?.isPendingData == true) {
 //                var a = foreigntraining!!.parent_id
@@ -1039,62 +1038,59 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
 //        }
         //  map.put("gender_id", null)
         gender?.id?.let { map.put("gender_id", gender?.id) }
-        map.put("blood_group_id", bloodGroup?.id)
-        map.put("religion_id", religion?.id)
-        map.put("employee_type_id", employee?.employee_type_id)
-        map.put("has_disability", if (hasDisability?.id == 1) true else false)
+        map["blood_group_id"] = bloodGroup?.id
+        map["religion_id"] = religion?.id
+        map["employee_type_id"] = employee.employee_type_id
+        map["has_disability"] = if (hasDisability?.id == 1) true else false
         homeDistrict?.id?.let { map.put("employee_type_id", it) }
         employeeType?.id?.let { map.put("birth_place_id", it) }
         employmentStatusType?.id?.let { map.put("employment_status_id", it) }
      //   hasFreedomFighterQuota?.id?.let { map.put("", it) }
-        map.put("has_freedom_fighter_quota", if (hasFreedomFighterQuota?.id == 1) true else false)
-        map.put("disability_type_id", disabilityType?.id)
-        map.put("disability_degree_id", disabilityDegree?.id)
-        map.put("disabled_person_id", binding?.fDisabledPersonId?.etText?.text?.toString())
+        map["has_freedom_fighter_quota"] = if (hasFreedomFighterQuota?.id == 1) true else false
+        map["disability_type_id"] = disabilityType?.id
+        map["disability_degree_id"] = disabilityDegree?.id
+        map["disabled_person_id"] = binding?.fDisabledPersonId?.etText?.text?.toString()
         maritalStatus?.id?.let { map.put("marital_status_id", maritalStatus?.id) }
-        map.put("email", binding?.fEmail?.etText?.text.toString())
+        map["email"] = binding?.fEmail?.etText?.text.toString()
         imageUrl?.let { map.put("photo", it) }
-        map.put("username", binding?.fUserName?.etText?.text?.toString())
-        map.put("phone_number", binding?.fPhone?.etText?.text?.toString())
-        map.put("nid_no", binding?.fNid?.etText?.text?.toString())
-        map.put("tin_no", binding?.fTIN?.etText?.text?.toString())
-        map.put("punch_id", binding?.fPunchId?.etText?.text?.toString())
-        map.put("present_basic_salary", binding?.fPresentBasicSalary?.etText?.text?.toString())
-        map.put("present_gross_salary", binding?.fPresentGrossSalary?.etText?.text?.toString())
-        map.put("job_joining_date", jobJoiningDate)
-        map.put("job_type_id", jobType?.id)
-        map.put("is_permanent_confirmation", hasNotConfirmYet?.id)
-        map.put("permanent_confirmation_date", binding?.fPermanentConfirmationDate?.tvText?.text?.toString())
-        map.put("permanent_confirmation_attachment", permanentConfirmationUrl)
-        map.put("temporary_revenue_transfer_date", DateConverter.changeDateFormateForSending(binding?.fDateOfTransferTemporaryRevenueDate?.tvText?.text.toString()))
-        map.put("temporary_revenue_transfer_attachment", temporaryRevenueAttachmentUrl)
-        map.put("prl_date", pRLDate)
-        map.put("pension_date", pensionDate)
+        map["username"] = binding?.fUserName?.etText?.text?.toString()
+        map["phone_number"] = binding?.fPhone?.etText?.text?.toString()
+        map["nid_no"] = binding?.fNid?.etText?.text?.toString()
+        map["tin_no"] = binding?.fTIN?.etText?.text?.toString()
+        map["punch_id"] = binding?.fPunchId?.etText?.text?.toString()
+        map["present_basic_salary"] = binding?.fPresentBasicSalary?.etText?.text?.toString()
+        map["present_gross_salary"] = binding?.fPresentGrossSalary?.etText?.text?.toString()
+        map["job_joining_date"] = jobJoiningDate
+        map["job_type_id"] = jobType?.id
+        map["is_permanent_confirmation"] = hasNotConfirmYet?.id
+        map["permanent_confirmation_date"] = binding?.fPermanentConfirmationDate?.tvText?.text?.toString()
+        map["permanent_confirmation_attachment"] = permanentConfirmationUrl
+        map["temporary_revenue_transfer_date"] = DateConverter.changeDateFormateForSending(binding?.fDateOfTransferTemporaryRevenueDate?.tvText?.text.toString())
+        map["temporary_revenue_transfer_attachment"] = temporaryRevenueAttachmentUrl
+        map["prl_date"] = pRLDate
+        map["pension_date"] = pensionDate
 
-        map.put("status", employee?.status)
+        map["status"] = employee.status
         // adding document path
         map["freedom_fighter_document_path"] = freedomFighterUrl
         map["disability_document_path"] = disabilityURL
-
-
 
         return map
     }
 
 
     fun uploadData() {
-        var employeeInfoEditCreateRepo =
-            ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
-                .get(EmployeeInfoEditCreateViewModel::class.java)
+        val employeeInfoEditCreateRepo =
+            ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)[EmployeeInfoEditCreateViewModel::class.java]
         invisiableAllError(binding)
-        key?.let {
-            if (it.equals(StaticKey.EDIT)) {
-                employeeInfoEditCreateRepo?.updateBasicInfo(
-                    employee?.id,
+        key.let {
+            if (it == StaticKey.EDIT) {
+                employeeInfoEditCreateRepo.updateBasicInfo(
+                    employee.id,
                     getMapData()
                 )?.observe(EmployeeInfoActivity.context!!, androidx.lifecycle.Observer { any ->
                     dialog?.dismiss()
-                    Log.e("yousuf", "error : " + any)
+                    Log.e("yousuf", "error : $any")
                     showResponse(any)
                 })
             }

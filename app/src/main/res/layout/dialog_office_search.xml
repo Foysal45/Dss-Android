@@ -49,25 +49,30 @@
 
 
                             <include
-                                android:id="@+id/officeLeadCategory"
+                                android:id="@+id/office_type_dialog"
                                 layout="@layout/personal_info_spinner"
-                                app:title="@{@string/office_lead_category}" />
+                                app:title="@{@string/office_type}" />
 
 
                             <include
-                                android:id="@+id/headOfficesBranches"
+                                android:id="@+id/head_office_department_dialog"
                                 layout="@layout/personal_info_spinner"
-                                app:title="@{@string/head_office_branches}" />
+                                app:title="@{@string/head_office_department}" />
 
                             <include
-                                android:id="@+id/branches_wise_section"
+                                android:id="@+id/department_wise_section_dialog"
                                 layout="@layout/personal_info_spinner"
-                                app:title="@{@string/branches_wise_section}" />
+                                app:title="@{@string/department_wise_section}" />
 
                             <include
-                                android:id="@+id/section_wise_subsection"
+                                android:id="@+id/section_wise_sub_section_dialog"
                                 layout="@layout/personal_info_spinner"
-                                app:title="@{@string/section_wise_subsection}" />
+                                app:title="@{@string/section_wise_sub_section}" />
+
+                            <include
+                                android:id="@+id/section_wise_sub_sub_section_dialog"
+                                layout="@layout/personal_info_spinner"
+                                app:title="@{@string/section_wise_sub_sub_section}" />
 
                             <include
                                 android:id="@+id/division"
@@ -78,6 +83,11 @@
                                 android:id="@+id/district"
                                 layout="@layout/personal_info_spinner"
                                 app:title="@{@string/district}" />
+
+                            <include
+                                android:id="@+id/office_dialog"
+                                layout="@layout/personal_info_spinner"
+                                app:title="@{@string/offices}" />
 
 
                             <include
@@ -114,7 +124,7 @@
                                     android:layout_height="@dimen/_60sdp"
                                     android:layout_marginHorizontal="10dp"
                                     android:layout_weight="1"
-                                    android:text="@string/search"
+                                    android:text="Submit"
                                     android:textAlignment="center"
                                     android:textColor="@color/green"
                                     android:textStyle="bold" />

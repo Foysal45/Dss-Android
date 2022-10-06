@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/additionalChargeOffice_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingVertical="@dimen/_4sdp"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:id="@+id/additionalChargeOfficeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/additional_charge_office"
+            android:textColor="@color/light_black"
+            android:paddingBottom="5dp"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_small"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_bg"
+            android:orientation="horizontal">
+
+
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/additionalChargeOfficeSpinner"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edittext_height_large"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/additionalChargeOfficeivSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingHorizontal="10dp"
+                android:src="@drawable/ic_baseline_search_24" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/additionalChargeOfficetvOffice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="3dp"
+            android:text=""
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/additionalChargeOfficetvOfficeError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:gravity="center|left"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:text="error"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_size_small"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

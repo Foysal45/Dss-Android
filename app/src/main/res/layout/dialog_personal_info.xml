@@ -522,7 +522,8 @@
                                         android:text="@string/attachment_office"
                                         android:textColor="@color/light_black"
                                         android:paddingBottom="5dp"
-                                        android:textSize="@dimen/text_size_large"
+                                        android:textStyle="bold"
+                                        android:textSize="@dimen/text_size_small"
                                        />
 
                                     <LinearLayout
@@ -572,9 +573,13 @@
                                 </LinearLayout>
 
                                 <include
+                                    android:id="@+id/additionalChargeOffice"
+                                    layout="@layout/additional_charge_office"
+                                    />
+
+                                <include
                                     android:id="@+id/fAttachmentDesignation"
-                                    layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/attachment_designation}" />
+                                    layout="@layout/personal_info_spinner" />
 
                                 <LinearLayout
                                     android:id="@+id/fParticularAttachment"

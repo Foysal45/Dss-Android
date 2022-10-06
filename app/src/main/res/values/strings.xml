@@ -516,6 +516,7 @@
     <string name="current_designation">Current Designation</string>
     <string name="department_wise_section">Department Wise Section</string>
     <string name="section_wise_sub_section">Section Wise Sub-Section</string>
+    <string name="section_wise_sub_sub_section">Section Wise Sub-Sub-Section</string>
     <string name="other_service_particular">Other Service Particulars</string>
     <string name="attachment_office">Attachment Office</string>
     <string name="attachment_designation">Attachment Designation</string>
@@ -525,6 +526,8 @@
     <string name="where_to_deputed">Where to Deputed</string>
     <string name="joining_date_of_lien">Joining Date of Lien</string>
     <string name="released_date_from_lien">Released Date from Lien</string>
+
+    <string name="additional_charge_office">Additional Charge Office</string>
 
     <!--    -->
     <!--    <string name="full_name">Full Name</string>-->

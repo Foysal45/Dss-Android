@@ -39,6 +39,8 @@ import com.dss.hrms.viewmodel.UtilViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
 import com.google.gson.Gson
 import com.namaztime.namaztime.database.MySharedPreparence
+import kotlinx.android.synthetic.main.dialog_personal_info.view.*
+import kotlinx.android.synthetic.main.personal_information_header_field.view.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -74,12 +76,14 @@ class EditJobJoiningInformation @Inject constructor() {
 
     lateinit var binding: DialogPersonalInfoBinding
     var office: Office? = null
-    var desingNation: SpinnerDataModel? = null
+    var desigNation: SpinnerDataModel? = null
     var designation: SpinnerDataModel? = null
     var serviceParticulars: SpinnerDataModel? = null
     var headOfficeBranches: HeadOfficeDepartmentApiResponse.HeadOfficeBranch? = null
 
-    var additionalDesingNation: SpinnerDataModel? = null
+    var headOfficeDepartment: HeadOfficeDepartmentApiResponse.HeadOfficeBranch? = null
+    var departmentWiseSection: HeadOfficeDepartmentApiResponse.Section? = null
+    var sectionWiseSubSection: HeadOfficeDepartmentApiResponse.Subsection? = null
     var department: SpinnerDataModel? = null
     var jobType: SpinnerDataModel? = null
     var currentJob: SpinnerDataModel? = null
@@ -126,10 +130,7 @@ class EditJobJoiningInformation @Inject constructor() {
         dialogCustome?.show()
     }
 
-    fun updateJobjoiningInfo(
-        context: Context,
-        binding: DialogPersonalInfoBinding
-    ) {
+    fun updateJobjoiningInfo(context: Context, binding: DialogPersonalInfoBinding) {
         binding.llJobjoningInfo.visibility = View.VISIBLE
         binding.hJobJoiningInformation.tvClose.setOnClickListener {
             dialogCustome?.dismiss()
@@ -156,8 +157,7 @@ class EditJobJoiningInformation @Inject constructor() {
         }
 
         //setting joining Date and Release Date according the employeementstatus?.id
-        val idForJoiningAndReleaseDate = jobjoining?.employeementstatus?.id
-        when(idForJoiningAndReleaseDate){
+        when(jobjoining?.employeementstatus?.id){
             1->{
                 binding.fJobJoiningEditDateOf.tvTitle.text = "Joining Date Of ${jobjoining?.employeementstatus?.name}"
                 binding.fJobJoiningEditReleaseDateFrom.tvTitle.text = "Release Date from ${jobjoining?.employeementstatus?.name}"
@@ -190,6 +190,7 @@ class EditJobJoiningInformation @Inject constructor() {
         // head office department start from
         binding.fDepartmentWiseSubSection.llBody.visibility = View.GONE
 
+        //employee class
         commonRepo.getCommonData2("/api/auth/employee-class",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
@@ -213,8 +214,12 @@ class EditJobJoiningInformation @Inject constructor() {
 
         // load Other Service Particulars start from
         binding.fWhereToParticular.llBody.visibility = View.GONE
+        binding.additionalChargeOffice.additionalChargeOfficeLayout.visibility = View.GONE
         binding.fAttachmentDesignation.llBody.visibility = View.GONE
         binding.llOffice.visibility = View.GONE
+
+        editCurrentOffice()
+        loadDesignationList()
 
         commonRepo.getCommonData("/api/auth/employment-status-type/list",
             object : CommonDataValueListener {
@@ -224,7 +229,7 @@ class EditJobJoiningInformation @Inject constructor() {
                         SpinnerAdapter().setSpinner(
                             binding.fJobJoiningEditOtherServiceParticulars.spinner,
                             context, list,
-                            null,
+                            serviceParticulars?.id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                  //   _class = any as SpinnerDataModel
@@ -232,10 +237,9 @@ class EditJobJoiningInformation @Inject constructor() {
                                     if (serviceParticulars?.id != null){
                                                when(serviceParticulars?.id) {
                                         1, 2 -> {
-                                            binding.fWhereToParticular.llBody.visibility =
-                                                View.VISIBLE
-                                            binding.fWhereToParticular.title =
-                                                "Where to ${serviceParticulars?.name}"
+                                            binding.fWhereToParticular.llBody.visibility = View.VISIBLE
+                                            binding.additionalChargeOffice.additionalChargeOfficeLayout.visibility = View.GONE
+                                            binding.fWhereToParticular.title = "Where to ${serviceParticulars?.name}"
 
                                             binding.fJobJoiningEditDateOf.tvTitle.text = "Joining Date Of ${serviceParticulars?.name}"
                                             binding.fJobJoiningEditReleaseDateFrom.tvTitle.text = "Release Date from ${serviceParticulars?.name}"
@@ -243,17 +247,30 @@ class EditJobJoiningInformation @Inject constructor() {
                                             binding.llOffice.visibility = View.GONE
                                         }
 
-                                        3, 4 -> {
+                                        3 -> {
                                             binding.fWhereToParticular.llBody.visibility = View.GONE
+                                            binding.additionalChargeOffice.additionalChargeOfficeLayout.visibility = View.GONE
                                             binding.fJobJoiningEditDateOf.tvTitle.text = "Joining Date Of ${serviceParticulars?.name}"
                                             binding.fJobJoiningEditReleaseDateFrom.tvTitle.text = "Release Date from ${serviceParticulars?.name}"
                                             binding.fAttachmentDesignation.llBody.visibility = View.VISIBLE
+                                            binding.fAttachmentDesignation.title = "${serviceParticulars?.name} Designation"
                                             binding.llOffice.visibility = View.VISIBLE
 
                                         }
+                                                   4 -> {
+                                                       binding.fWhereToParticular.llBody.visibility = View.GONE
+                                                       binding.additionalChargeOffice.additionalChargeOfficeLayout.visibility = View.VISIBLE
+                                                       binding.fJobJoiningEditDateOf.tvTitle.text = "Joining Date Of ${serviceParticulars?.name}"
+                                                       binding.fJobJoiningEditReleaseDateFrom.tvTitle.text = "Release Date from ${serviceParticulars?.name}"
+                                                       binding.fAttachmentDesignation.llBody.visibility = View.VISIBLE
+                                                       binding.fAttachmentDesignation.title = "${serviceParticulars?.name} Designation"
+                                                       binding.llOffice.visibility = View.GONE
+
+                                                   }
 
                                         5 -> {
                                             binding.fWhereToParticular.llBody.visibility = View.GONE
+                                            binding.additionalChargeOffice.additionalChargeOfficeLayout.visibility = View.GONE
                                             binding.fJobJoiningEditDateOf.tvTitle.text = "Suspension Date"
                                             binding.fJobJoiningEditReleaseDateFrom.tvTitle.text = "Released Date from Suspension"
                                             binding.fAttachmentDesignation.llBody.visibility = View.GONE
@@ -275,7 +292,7 @@ class EditJobJoiningInformation @Inject constructor() {
         if (jobjoining?.employment_status_attachment.toString()
                 .toLowerCase() != "null" || jobjoining?.employment_status_attachment.isNullOrEmpty()
         ) {
-            binding?.tvParticularAttachment?.text =
+            binding.tvParticularAttachment.text =
                 context.getString(R.string.attachment) + "\n" +
                         jobjoining?.employment_status_attachment
         }
@@ -283,7 +300,7 @@ class EditJobJoiningInformation @Inject constructor() {
         if (jobjoining?.employment_status_attachment.toString()
                 .toLowerCase() != "null" || !jobjoining?.employment_status_attachment.isNullOrEmpty()
         ) {
-            binding?.tvParticularAttachment?.text =
+            binding.tvParticularAttachment.text =
                 context.getString(R.string.attachment) + "\n" +
                         jobjoining?.employment_status_attachment
         }
@@ -317,7 +334,6 @@ class EditJobJoiningInformation @Inject constructor() {
 
 
         // attachment office and attachment designation
-
         binding.ivSearch.setOnClickListener {
             officeSearchingDialog.showOfficeSearchDialog(
                 context,
@@ -330,33 +346,7 @@ class EditJobJoiningInformation @Inject constructor() {
                 })
         }
 
-        //OfficeList - Current Office
-    /*    commonRepo.getOffice("/api/auth/office/list/basic",
-            object : OfficeDataValueListener {
-                override fun valueChange(spinnerDataModel: List<Office>?) {
-                    spinnerDataModel.let {
-                        SpinnerAdapter().setOfficeSpinner(
-                            binding?.fJobJoiningEditCurrentOffice?.spinner!!,
-                            context,
-                            spinnerDataModel,
-                            0,
-                            object : CommonSpinnerSelectedItemListener {
-                                override fun selectedItem(any: Any?) {
-                                    office = any as Office
-                                    office?.id?.let {
-                                       // officeList.add(office!!)
-
-                                    }
-
-                                }
-
-                            }
-                        )
-                    }
-
-                }
-            })*/
-
+    //basic pay scale
         commonRepo.getCommonData("/api/auth/salary-grade/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
@@ -404,6 +394,37 @@ class EditJobJoiningInformation @Inject constructor() {
             }
         )
 
+   /*     //Additional Charge Office at Other service particulars
+        SpinnerAdapter().setSpinner(
+            binding.additionalChargeOffice.spinner, context,
+            currentOfficeTypeData(), employeeProfileData.employee?.jobjoinings?.get(0)?.office?.office_type_id,
+            object : CommonSpinnerSelectedItemListener {
+                override fun selectedItem(any: Any?) {
+                    currentOfficeType = any as SpinnerDataModel
+                   *//* if (currentOfficeType?.id == 1){
+                        binding.fJobJoiningOfficeDeptAndDivision.tvTitle.text = "Head Office Department"
+                        loadHeadOfficeDepartment()
+                    }else{
+                        binding.fJobJoiningOfficeDeptAndDivision.tvTitle.text = "Division"
+                        setDivision()
+                    }*//*
+                }
+            }
+        )*/
+
+        //Additional Charge Office at Other service particulars
+       binding.additionalChargeOffice.additionalChargeOfficeivSearch.setOnClickListener {
+            officeSearchingDialog.showOfficeSearchDialog(
+                context,
+                utilViewmodel,
+                object : OfficeDataValueListener {
+                    override fun valueChange(officeList: List<Office>?) {
+                        mainOfficeList = officeList
+                        setAdditionalChargeOffice(context, binding)
+                    }
+                })
+        }
+
 
         //for Joining Date
         binding.fJobJoiningJoiningDate.tvText.setOnClickListener {
@@ -434,8 +455,8 @@ class EditJobJoiningInformation @Inject constructor() {
 
      //#################### [UPDATE EDITED DATA] #########################################//
         binding.jobjoiningUpdateButton.btnUpdate.setOnClickListener {
-            val employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)[EmployeeInfoEditCreateViewModel::class.java]
 
+            val employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)[EmployeeInfoEditCreateViewModel::class.java]
             val joiningDate = DateConverter.changeDateFormateForSending(binding.fJobJoiningJoiningDate.tvText.text.toString())
             val joiningDateOf = DateConverter.changeDateFormateForSending(binding.fJobJoiningEditDateOf.tvText.text.toString())
             val joiningReleaseDateFrom = DateConverter.changeDateFormateForSending(binding.fJobJoiningEditReleaseDateFrom.tvText.text.toString())
@@ -443,40 +464,51 @@ class EditJobJoiningInformation @Inject constructor() {
 
             val map = HashMap<Any, Any?>()
 
-            map["employee_id"] = employeeProfileData.employee?.id
+            map["office_type"] = currentOfficeType?.id
+            map["head_office_department_id"] = headOfficeBranches?.id
+
+            map["head_office_department"] = headOfficeBranches?.id
+            map["department-wise_section"] = headOfficeBranches?.id
+            map["section_wise_sub_section"] = headOfficeBranches?.id
+
+            map["division_id"] = division?.id
+            map["district_id"] = district?.id
             map["office_id"] = office?.id
-            map["designation_id"] = desingNation?.id
-            map["additional_designation_id"] = additionalDesingNation?.id
-            map["department_id"] = department?.id
-            map["job_type_id"] = jobType?.id
+            map["designation_id"] = designation?.id
+            map["other_service_particulars"] = serviceParticulars?.id
+            map["joining_date_of"] = joiningDateOf
+            map["joining_release_date_from"] = joiningReleaseDateFrom
+            map["employment_status_effective_date"] = joiningDateOf
+            map["employment_status_release_date"] = joiningReleaseDateFrom
             map["employee_class_id"] = _class?.id
-            map["other_service_particulars"] = _class?.id
-            map["grade_id"] = grade?.id
             map["pay_scale_id"] = payScale?.id
+            map["grade_id"] = grade?.id
+            map["pay_scale"] = payScale?.amount
+            map["joining_date"] = joiningDate
+
+
+            map["employee_id"] = employeeProfileData.employee?.id
+            map["pay_scale_id"] = payScale?.id
+            map["employeementstatus"] = Gson().toJson(serviceParticulars)
+            map["employment_status_attachment"] = serviceParticularsAttachmentUrl
+            map["employment_status_description"] = binding.fWhereToParticular.etText.text.toString()
+            map["parent_id"] = jobjoining?.id
+            //map["current"] = currentJob?.id == 1
+            map["status"] = jobjoining?.status
+
 
             try {
                 if (jobjoining?.isPendingData == true) {
                     val a = jobjoining!!.parent_id
                     map["parent_id"] = a
                 }
-            } catch (Ex: java.lang.Exception) {
+            } catch (_: java.lang.Exception) {
 
             }
-            //Other Service Particulars save
-            map["employeementstatus"] = Gson().toJson(serviceParticulars)
-            map["employment_status_attachment"] = serviceParticularsAttachmentUrl
-            map["employment_status_description"] = binding.fWhereToParticular.etText.text.toString()
-            map["employment_status_effective_date"] = joiningDateOf
-            map["employment_status_release_date"] = joiningReleaseDateFrom
-            map["parent_id"] = jobjoining?.id
-            map["pay_scale"] = payScale?.amount
-            map["current"] = currentJob?.id == 1
-            map["joining_date"] = joiningDate
-            map["joining_date_of"] = joiningDateOf
-            map["joining_release_date_from"] = joiningReleaseDateFrom
-            map["status"] = jobjoining?.status
+
 
             Log.d("requestData", map.toString())
+
             invisiableAllError(binding)
             val dialog = CustomLoadingDialog().createLoadingDialog(EmployeeInfoActivity.context)
             employeeInfoEditCreateRepo.updateJobJoiningInfo(jobjoining?.id, map)
@@ -508,50 +540,34 @@ class EditJobJoiningInformation @Inject constructor() {
 
                                             when (error) {
 
-                                                "designation_id" -> {
-                                                    binding.fJobJoiningEditDesignation.tvError.visibility =
-                                                        View.VISIBLE
-                                                    binding.fJobJoiningEditDesignation.tvError.text =
-                                                        ErrorUtils2.mainError(message)
+                                                "office_type" -> {
+                                                    binding.fJobJoiningOfficeType.tvError.visibility = View.VISIBLE
+                                                    binding.fJobJoiningOfficeType.tvError.text = ErrorUtils2.mainError(message)
                                                 }
 
-                                                "employee_class_id" -> {
-                                                    binding.fJobJoiningEditClass.tvError.visibility =
-                                                        View.VISIBLE
-                                                    binding.fJobJoiningEditClass.tvError.text =
-                                                        ErrorUtils2.mainError(message)
+                                                "division_id" -> {
+                                                    binding.fJobJoiningOfficeDeptAndDivision.tvError.visibility = View.VISIBLE
+                                                    binding.fJobJoiningOfficeDeptAndDivision.tvError.text = ErrorUtils2.mainError(message)
+                                                }
+
+                                                "district_id" -> {
+                                                    binding.fDepartmentWiseSection.tvError.visibility = View.VISIBLE
+                                                    binding.fDepartmentWiseSection.tvError.text = ErrorUtils2.mainError(message)
+                                                }
+
+                                                "office_id" -> {
+                                                    binding.fJobJoiningEditCurrentOffice.tvError.visibility = View.VISIBLE
+                                                    binding.fJobJoiningEditCurrentOffice.tvError.text = ErrorUtils2.mainError(message)
+                                                }
+
+                                                "designation_id" -> {
+                                                    binding.fJobJoiningEditDesignation.tvError.visibility = View.VISIBLE
+                                                    binding.fJobJoiningEditDesignation.tvError.text = ErrorUtils2.mainError(message)
                                                 }
 
                                                 "other_service_particulars" -> {
-                                                    binding.fJobJoiningEditOtherServiceParticulars.tvError.visibility =
-                                                        View.VISIBLE
-                                                    binding.fJobJoiningEditOtherServiceParticulars.tvError.text =
-                                                        ErrorUtils2.mainError(message)
-                                                }
-
-                                                "grade_id" -> {
-                                                    binding.fJobJoiningEditGrade.tvError.visibility =
-                                                        View.VISIBLE
-                                                    binding.fJobJoiningEditGrade.tvError.text =
-                                                        ErrorUtils2.mainError(message)
-                                                }
-                                                "pay_scale_id" -> {
-                                                    binding.fJobJoiningEditPayScale.tvError.visibility =
-                                                        View.VISIBLE
-                                                    binding.fJobJoiningEditPayScale.tvError.text =
-                                                        ErrorUtils2.mainError(message)
-                                                }
-                                                "pay_scale" -> {
-                                                    binding.fJobJoiningEditGrade.tvError.visibility =
-                                                        View.VISIBLE
-                                                    binding.fJobJoiningEditGrade.tvError.text =
-                                                        ErrorUtils2.mainError(message)
-                                                }
-                                                "joining_date" -> {
-                                                    binding.fJobJoiningJoiningDate.tvError.visibility =
-                                                        View.VISIBLE
-                                                    binding.fJobJoiningJoiningDate.tvError.text =
-                                                        ErrorUtils2.mainError(message)
+                                                    binding.fJobJoiningEditOtherServiceParticulars.tvError.visibility = View.VISIBLE
+                                                    binding.fJobJoiningEditOtherServiceParticulars.tvError.text = ErrorUtils2.mainError(message)
                                                 }
 
                                                 "joining_date_of" -> {
@@ -562,6 +578,28 @@ class EditJobJoiningInformation @Inject constructor() {
                                                 "joining_release_date_from" -> {
                                                     binding.fJobJoiningEditReleaseDateFrom.tvError.visibility = View.VISIBLE
                                                     binding.fJobJoiningEditReleaseDateFrom.tvError.text = ErrorUtils2.mainError(message)
+                                                }
+
+                                                "employee_class_id" -> {
+                                                    binding.fJobJoiningEditClass.tvError.visibility = View.VISIBLE
+                                                    binding.fJobJoiningEditClass.tvError.text = ErrorUtils2.mainError(message)
+                                                }
+
+                                                "grade_id" -> {
+                                                    binding.fJobJoiningEditGrade.tvError.visibility = View.VISIBLE
+                                                    binding.fJobJoiningEditGrade.tvError.text = ErrorUtils2.mainError(message)
+                                                }
+                                                "pay_scale_id" -> {
+                                                    binding.fJobJoiningEditPayScale.tvError.visibility = View.VISIBLE
+                                                    binding.fJobJoiningEditPayScale.tvError.text = ErrorUtils2.mainError(message)
+                                                }
+                                                "pay_scale" -> {
+                                                    binding.fJobJoiningEditGrade.tvError.visibility = View.VISIBLE
+                                                    binding.fJobJoiningEditGrade.tvError.text = ErrorUtils2.mainError(message)
+                                                }
+                                                "joining_date" -> {
+                                                    binding.fJobJoiningJoiningDate.tvError.visibility = View.VISIBLE
+                                                    binding.fJobJoiningJoiningDate.tvError.text = ErrorUtils2.mainError(message)
                                                 }
 
                                             }
@@ -590,6 +628,7 @@ class EditJobJoiningInformation @Inject constructor() {
 
     }
 
+    //head office_department
     fun loadHeadOfficeDepartment(){
         utilViewmodel.getHeadOfficeDepartment().observe(EmployeeInfoActivity.context!!
         ) { branches ->
@@ -602,11 +641,10 @@ class EditJobJoiningInformation @Inject constructor() {
                     object : CommonSpinnerSelectedItemListener {
                         override fun selectedItem(any: Any?) {
                             any?.let {
-                                headOfficeBranches =
-                                    any as HeadOfficeDepartmentApiResponse.HeadOfficeBranch
+                                headOfficeBranches = any as HeadOfficeDepartmentApiResponse.HeadOfficeBranch
                                 headOfficeBranches?.let {
                                     loadSection(it)
-                                    //loadDesignation(it.id, context, binding)
+                                   // loadDesignation(it.id, context, binding)
                                 }
                             }
                         }
@@ -619,6 +657,53 @@ class EditJobJoiningInformation @Inject constructor() {
 
     }
 
+    // Department Wise Section for head office department with out DJ office and somaj sheba bhabon
+    private fun loadSection(selectedBranch: HeadOfficeDepartmentApiResponse.HeadOfficeBranch) {
+
+        binding.fDepartmentWiseSection.tvTitle.text = context.getString(R.string.department_wise_section)
+        CommonSpinnerAdapter().setSectionSpinner(
+            binding.fDepartmentWiseSection.spinner,
+            context,
+            selectedBranch.sections,
+             null,
+            object : CommonSpinnerSelectedItemListener {
+                override fun selectedItem(any: Any?) {
+                    any?.let {
+                        //  headOfficeBranches =
+                        //      any as HeadOfficeDepartmentApiResponse.HeadOfficeBranch
+                        if ((any as HeadOfficeDepartmentApiResponse.Section).subsections?.isEmpty() != true){
+                            binding.fDepartmentWiseSubSection.llBody.visibility = View.VISIBLE
+                            loadSectionWiseSubSection(any)
+                        }else{
+                            binding.fDepartmentWiseSubSection.llBody.visibility = View.GONE
+                        }
+                    }
+                }
+
+            }
+        )
+
+
+    }
+
+    //section wise_sub_section
+    private fun loadSectionWiseSubSection(selectedSection: HeadOfficeDepartmentApiResponse.Section) {
+        CommonSpinnerAdapter().setSubSectionSpinner(
+            binding.fDepartmentWiseSubSection.spinner,
+            context,
+            selectedSection.subsections,
+            null,
+            object : CommonSpinnerSelectedItemListener {
+                override fun selectedItem(any: Any?) {
+                    any?.let {
+
+                    }
+                }
+
+            }
+        )
+    }
+
     fun setDivision() {
         commonRepo.getCommonData("/api/auth/division/list")?.observe(EmployeeInfoActivity.context!!,
             Observer { list ->
@@ -627,7 +712,7 @@ class EditJobJoiningInformation @Inject constructor() {
                         binding.fJobJoiningOfficeDeptAndDivision.spinner,
                         context,
                         list,
-                        null,
+                        jobjoining?.division?.id,
                         object : CommonSpinnerSelectedItemListener {
                             override fun selectedItem(any: Any?) {
 
@@ -637,7 +722,8 @@ class EditJobJoiningInformation @Inject constructor() {
                                     searchOffice()
                                 }
                                 getDistrict(if (division?.id == null) 1 else division?.id, null)
-                                editCurrentOffice(if (division?.id == null) 1 else division?.id, null)
+                              //  editCurrentOffice(if (division?.id == null) 1 else division?.id, null)
+                                editCurrentOffice()
                             }
 
                         }
@@ -655,15 +741,13 @@ class EditJobJoiningInformation @Inject constructor() {
                     binding.fDepartmentWiseSection.spinner,
                     context,
                     list,
-                    districtId,
+                    jobjoining?.district?.id,
                     object : CommonSpinnerSelectedItemListener {
                         override fun selectedItem(any: Any?) {
                             district = any as SpinnerDataModel
-                            /*district?.id?.let {
-                                //searchOffice()
-                                editCurrentOffice(if (division?.id == null) 1 else division?.id, null)
-                            }*/
-                            editCurrentOffice(if (district?.id == null) 1 else district?.id, null)
+                            //editCurrentOffice(if (district?.id == null) 1 else district?.id, null)
+                            editCurrentOffice()
+
                         }
 
                     }
@@ -672,32 +756,8 @@ class EditJobJoiningInformation @Inject constructor() {
         })
     }
 
-    /*fun editCurrentOffice(divisionId: Int?, districtId: Int?) {
-        binding.fDepartmentWiseSection.tvTitle.text = "District"
-        commonRepo.getOffice("/api/auth/office/${divisionId}")?.observe(EmployeeInfoActivity.context!!, Observer { list ->
-            list?.let {
-                SpinnerAdapter().setSpinner(
-                    binding.fJobJoiningEditCurrentOffice.spinner,
-                    context,
-                    null,
-                    districtId,
-                    object : CommonSpinnerSelectedItemListener {
-                        override fun selectedItem(any: Any?) {
-                            district = any as SpinnerDataModel
-                            district?.id?.let {
-
-                            }
-
-                        }
-
-                    }
-                )
-            }
-        })
-    }
-*/
     //EditCurrentOffice
-    fun editCurrentOffice(divisionId: Int?, districtId: Int?) {
+    fun editCurrentOffice() {
         commonRepo.getOffice("/api/auth/office/list",
             object : OfficeDataValueListener {
                 override fun valueChange(list: List<Office>?) {
@@ -705,13 +765,13 @@ class EditJobJoiningInformation @Inject constructor() {
                         SpinnerAdapter().setOfficeSpinner(
                             binding?.fJobJoiningEditCurrentOffice?.spinner!!,
                             context,
-                            list,
-                            districtId,
+                            it,
+                            jobjoining?.office_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     office = any as Office
                                     office?.id?.let {
-                                        officeList.add(office!!)
+                                        mainOfficeList?.get(0)
 
                                     }
 
@@ -722,53 +782,6 @@ class EditJobJoiningInformation @Inject constructor() {
                     }
                 }
             })
-    }
-
-
-    // Department Wise Section for head office department with out DJ office and somaj sheba bhabon
-    private fun loadSection(selectedBranch: HeadOfficeDepartmentApiResponse.HeadOfficeBranch) {
-
-        binding.fDepartmentWiseSection.tvTitle.text = context.getString(R.string.department_wise_section)
-        CommonSpinnerAdapter().setSectionSpinner(
-            binding.fDepartmentWiseSection.spinner,
-            context,
-            selectedBranch.sections,
-            null,
-            object : CommonSpinnerSelectedItemListener {
-                override fun selectedItem(any: Any?) {
-                    any?.let {
-                      //  headOfficeBranches =
-                      //      any as HeadOfficeDepartmentApiResponse.HeadOfficeBranch
-                        if ((any as HeadOfficeDepartmentApiResponse.Section).subsections?.isEmpty() != true){
-                            binding.fDepartmentWiseSubSection.llBody.visibility = View.VISIBLE
-                            loadSectionWiseSubSection(any)
-                        }else{
-                            binding.fDepartmentWiseSubSection.llBody.visibility = View.GONE
-                        }
-                    }
-                }
-
-            }
-        )
-
-
-    }
-
-    private fun loadSectionWiseSubSection(selectedSection: HeadOfficeDepartmentApiResponse.Section) {
-        CommonSpinnerAdapter().setSubSectionSpinner(
-            binding.fDepartmentWiseSubSection.spinner,
-            context,
-            selectedSection.subsections,
-            null,
-            object : CommonSpinnerSelectedItemListener {
-                override fun selectedItem(any: Any?) {
-                    any?.let {
-
-                    }
-                }
-
-            }
-        )
     }
 
     fun setPayScale(gradeId: Int?, payScaleAmount: String?) {
@@ -793,6 +806,7 @@ class EditJobJoiningInformation @Inject constructor() {
 
     }
 
+    //function for set AttachmentOffice under OtherServiceParticals
     fun setOffice(context: Context, binding: DialogPersonalInfoBinding) {
         mainOfficeList?.let {
             SpinnerAdapter().setOfficeSpinner(
@@ -802,9 +816,15 @@ class EditJobJoiningInformation @Inject constructor() {
                 jobjoining?.office_id,
                 object : CommonSpinnerSelectedItemListener {
                     override fun selectedItem(any: Any?) {
-                        loadDesignation(office?.id, context, binding)
+                        loadDesignationList()
+                        /*office = any as Office
+                        if (office?.id != null) {
+                            office?.id?.let { loadDesignation() }
+                        }*/
+                        // loadDesignation(office?.id, context, binding)
                         //loadAdditionalDesignation(office?.id, context, binding)
                         Log.e("selected item", " item : " + office?.name)
+                        //loadDesignationList()
                     }
 
                 }
@@ -812,12 +832,37 @@ class EditJobJoiningInformation @Inject constructor() {
         }
     }
 
-        fun loadDesignation(officeId: Int?, context: Context, binding: DialogPersonalInfoBinding) {
-        Log.d("OK11", " officeId: "+ officeId)
-        commonRepo.getDesignationData("/api/auth/office/${officeId}",
+    //function for set Additional charge Office under OtherServiceParticals
+    fun setAdditionalChargeOffice(context: Context, binding: DialogPersonalInfoBinding) {
+        mainOfficeList?.let {
+            SpinnerAdapter().setOfficeSpinner(
+                binding.additionalChargeOffice.additionalChargeOfficeSpinner,
+                context,
+                it,
+                jobjoining?.office_id,
+                object : CommonSpinnerSelectedItemListener {
+                    override fun selectedItem(any: Any?) {
+                        loadDesignationList()
+                        /*office = any as Office
+                        if (office?.id != null) {
+                            office?.id?.let { loadDesignation() }
+                        }*/
+                        // loadDesignation(office?.id, context, binding)
+                        //loadAdditionalDesignation(office?.id, context, binding)
+                        Log.e("selected item", " item : " + office?.name)
+                        //loadDesignationList()
+                    }
+
+                }
+            )
+        }
+    }
+
+
+    fun loadDesignationList() {
+        commonRepo.getCommonData("/api/auth/designation/list",
             object : CommonDataValueListener {
                 override fun valueChange(list: List<SpinnerDataModel>?) {
-                    //   Log.e("gender", "gender message " + Gson().toJson(list))
                     list?.let {
                         SpinnerAdapter().setSpinner(
                             binding.fJobJoiningEditDesignation.spinner,
@@ -826,13 +871,15 @@ class EditJobJoiningInformation @Inject constructor() {
                             jobjoining?.designation_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
-                                    desingNation = any as SpinnerDataModel
+                                    designation = any as SpinnerDataModel
                                 }
+
                             }
                         )
                     }
                 }
             })
+
     }
 
     //For OfficeType
@@ -981,31 +1028,9 @@ class EditJobJoiningInformation @Inject constructor() {
         }
     }
 
-    fun loadDesignationList() {
-        commonRepo.getCommonData("/api/auth/designation/list",
-            object : CommonDataValueListener {
-                override fun valueChange(list: List<SpinnerDataModel>?) {
-                    list?.let {
-                        SpinnerAdapter().setSpinner(
-                            binding.fJobJoiningEditDesignation.spinner,
-                            context,
-                            list,
-                            0,
-                            object : CommonSpinnerSelectedItemListener {
-                                override fun selectedItem(any: Any?) {
-                                    designation = any as SpinnerDataModel
-                                }
-
-                            }
-                        )
-                    }
-                }
-            })
-
-    }
 
     fun getMapData(): java.util.HashMap<Any, Any?> {
-        var map = java.util.HashMap<Any, Any?>()
+        val map = java.util.HashMap<Any, Any?>()
 
         headOfficeBranches?.id?.let {
             map.put("head_office_department_id", it)
@@ -1016,7 +1041,7 @@ class EditJobJoiningInformation @Inject constructor() {
         district?.id?.let {
             map.put("district_id", it)
         }
-        desingNation?.id?.let {
+        desigNation?.id?.let {
             map.put("designation_id", it)
         }
         return map
