@@ -521,6 +521,8 @@
     <string name="released_date_from_lien">Released Date from Lien</string>
 
     <string name="additional_charge_office">অতিরিক্ত চার্জ অফিস</string>
+    <string name="which_branch">কোন শাখা</string>
+    <string name="recruitement_type">নিয়োগের ধরন</string>
 
 
 </resources>

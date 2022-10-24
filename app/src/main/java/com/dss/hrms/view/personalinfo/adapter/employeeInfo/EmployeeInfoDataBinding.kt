@@ -1289,9 +1289,14 @@ class EmployeeInfoDataBinding @Inject constructor() {
 
 
         // Set data for Current job
-        binding.fCurrentJob.tvTitle.text =
-            context?.getString(R.string.current_job)
-       binding.fCurrentJob.tvText.text = jobjoinings.current.toString()
+        binding.fCurrentJob.tvTitle.text = context?.getString(R.string.current_job)
+       //binding.fCurrentJob.tvText.text = jobjoinings.current.toString()
+        if (jobjoinings.current == true){
+            binding.fCurrentJob.tvText.text = "Yes"
+        }else{
+            binding.fCurrentJob.tvText.text = "No"
+        }
+           //jobjoinings.current.toString()
 
    // attachment
 

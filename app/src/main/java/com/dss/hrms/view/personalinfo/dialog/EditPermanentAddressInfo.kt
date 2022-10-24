@@ -167,9 +167,7 @@ class EditPermanentAddressInfo @Inject constructor() {
         getLocalGovernmentType()
 
         binding?.addressBtnUpdate?.btnUpdate?.setOnClickListener {
-            val employeeInfoEditCreateRepo =
-                ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)
-                    .get(EmployeeInfoEditCreateViewModel::class.java)
+            val employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory).get(EmployeeInfoEditCreateViewModel::class.java)
 
 
             invisiableAllError(binding)
@@ -214,145 +212,147 @@ class EditPermanentAddressInfo @Inject constructor() {
 
     fun showResponse(any: Any) {
 
-        if (any is String) {
-            toast(EmployeeInfoActivity.context, "" + context?.getString(R.string.updated))
+        when (any) {
+            is String -> {
+                toast(EmployeeInfoActivity.context, "" + context?.getString(R.string.updated))
 
-            MainActivity.selectedPosition = 4
-            EmployeeInfoActivity.refreshEmployeeInfo()
-            dialogCustome?.dismiss()
-        } else if (any is ApiError) {
-            try {
-                if (any.getError().isEmpty()) {
-                    toast(EmployeeInfoActivity.context, any.getMessage())
-                } else {
-                    for (n in any.getError().indices) {
-                        val error = any.getError()[n].getField()
-                        val message = any.getError()[n].getMessage()
-                        if (TextUtils.isEmpty(error)) {
-                            message?.let {
-                                binding?.fAddressVillageOrHouseNoBn?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressVillageOrHouseNoBn?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
+                MainActivity.selectedPosition = 4
+                EmployeeInfoActivity.refreshEmployeeInfo()
+                dialogCustome?.dismiss()
+            }
+            is ApiError -> {
+                try {
+                    if (any.getError().isEmpty()) {
+                        toast(EmployeeInfoActivity.context, any.getMessage())
+                    } else {
+                        for (n in any.getError().indices) {
+                            val error = any.getError()[n].getField()
+                            val message = any.getError()[n].getMessage()
+                            if (TextUtils.isEmpty(error)) {
+                                message?.let {
+                                    binding?.fAddressVillageOrHouseNoBn?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressVillageOrHouseNoBn?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
 
-                        }
-                        when (error) {
-                            "division_id" -> {
-                                binding?.fAddressDivision?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressDivision?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
                             }
-                            "district_id" -> {
-                                binding?.fAddressDistrict?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressDistrict?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
+                            when (error) {
+                                "division_id" -> {
+                                    binding?.fAddressDivision?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressDivision?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "district_id" -> {
+                                    binding?.fAddressDistrict?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressDistrict?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
 
-                            "police_station" -> {
-                                binding?.fAddressPoliceStation?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressPoliceStation?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
+                                "police_station" -> {
+                                    binding?.fAddressPoliceStation?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressPoliceStation?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
 
-                            "police_station_bn" -> {
-                                binding?.fAddressPoliceStationBn?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressPoliceStationBn?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "post_office" -> {
-                                binding?.fAddressPostOffice?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressPostOffice?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "post_office_bn" -> {
-                                binding?.fAddressPostOfficeBn?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressPostOfficeBn?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "post_code" -> {
-                                binding?.fAddressPostCode?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressPostCode?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "road_word_no" -> {
-                                binding?.fAddressRoadOrWordNo?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressRoadOrWordNo?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
+                                "police_station_bn" -> {
+                                    binding?.fAddressPoliceStationBn?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressPoliceStationBn?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "post_office" -> {
+                                    binding?.fAddressPostOffice?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressPostOffice?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "post_office_bn" -> {
+                                    binding?.fAddressPostOfficeBn?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressPostOfficeBn?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "post_code" -> {
+                                    binding?.fAddressPostCode?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressPostCode?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "road_word_no" -> {
+                                    binding?.fAddressRoadOrWordNo?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressRoadOrWordNo?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
 
-                            "road_word_no_bn" -> {
-                                binding?.fAddressRoadOrWordNoBn?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressRoadOrWordNoBn?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "village_house_no" -> {
-                                binding?.fAddressVillageOrHouseNo?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressVillageOrHouseNo?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "village_house_no_bn" -> {
-                                binding?.fAddressVillageOrHouseNoBn?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressVillageOrHouseNoBn?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "local_government_type_id" -> {
-                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "city_corporation_id" -> {
-                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "municipality_id" -> {
-                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "upazila_id" -> {
-                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
-                            }
-                            "union_id" -> {
-                                binding?.fAddressUnio?.tvError?.visibility =
-                                    View.VISIBLE
-                                binding?.fAddressUnio?.tvError?.text =
-                                    ErrorUtils2.mainError(message)
+                                "road_word_no_bn" -> {
+                                    binding?.fAddressRoadOrWordNoBn?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressRoadOrWordNoBn?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "village_house_no" -> {
+                                    binding?.fAddressVillageOrHouseNo?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressVillageOrHouseNo?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "village_house_no_bn" -> {
+                                    binding?.fAddressVillageOrHouseNoBn?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressVillageOrHouseNoBn?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "local_government_type_id" -> {
+                                    binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "city_corporation_id" -> {
+                                    binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "municipality_id" -> {
+                                    binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "upazila_id" -> {
+                                    binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddresstypeCityCorpUpazilaMunicipality?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
+                                "union_id" -> {
+                                    binding?.fAddressUnio?.tvError?.visibility =
+                                        View.VISIBLE
+                                    binding?.fAddressUnio?.tvError?.text =
+                                        ErrorUtils2.mainError(message)
+                                }
                             }
                         }
                     }
+                } catch (e: Exception) {
+                    toast(EmployeeInfoActivity.context, e.toString())
                 }
-            } catch (e: Exception) {
-                toast(EmployeeInfoActivity.context, e.toString())
+
+
             }
-
-
-        } else if (any is Throwable) {
-            toast(EmployeeInfoActivity.context, any.toString())
-        } else {
-            EmployeeInfoActivity?.context?.getString(R.string.failed)?.let {
-                toast(
-                    EmployeeInfoActivity.context,
-                    it
-                )
+            is Throwable -> {
+                toast(EmployeeInfoActivity.context, any.toString())
+            }
+            else -> {
+                EmployeeInfoActivity?.context?.getString(R.string.failed)?.let {
+                    toast(EmployeeInfoActivity.context, it)
+                }
             }
         }
     }

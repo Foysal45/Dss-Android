@@ -6,6 +6,7 @@ class HeadOfficeDepartmentApiResponse {
         val status: String?,
         val code: Int?,
         val message: String?,
+        val office: Office,
         val data: List<HeadOfficeBranch>
     )
 
@@ -14,6 +15,7 @@ class HeadOfficeDepartmentApiResponse {
         val name: String?,
         val name_bn: String?,
         val status: Int?,
+        val office: Office,
         val sections: List<Section>?
     )
 
@@ -23,6 +25,7 @@ class HeadOfficeDepartmentApiResponse {
         val name_bn: String?,
         val head_office_department_id: Int?,
         val status: Int?,
+        val office: Office,
         val subsections: List<Subsection>?
     )
 
@@ -32,6 +35,7 @@ class HeadOfficeDepartmentApiResponse {
         val name_bn: String?,
         val head_office_department_id: Int?,
         val status: Int?,
+        val office: Office,
         val sub_subsections: List<SubSubsection>?
     )
 
@@ -39,7 +43,14 @@ class HeadOfficeDepartmentApiResponse {
         val id: Int?,
         val name: String?,
         val name_bn: String?,
+        val office: Office,
         val head_office_department_id: Int?,
         val status: Int?
+    )
+
+    data class Office(
+        val id: Int,
+        val office_name: String,
+        val office_name_bn: String
     )
 }

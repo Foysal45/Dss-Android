@@ -125,26 +125,18 @@ class CommonReportSearchingDialog @Inject constructor() {
                                             subSection = null
                                             if (it == 1) {
                                                 headOfficeBranches()
-                                                binding.headOfficesBranches.llBody.visibility =
-                                                    View.VISIBLE
-                                                binding.branchesWiseSection.llBody.visibility =
-                                                    View.VISIBLE
-                                                binding.sectionWiseSubsection.llBody.visibility =
-                                                    View.VISIBLE
+                                                binding.headOfficesBranches.llBody.visibility = View.VISIBLE
+                                                binding.branchesWiseSection.llBody.visibility = View.VISIBLE
+                                                binding.sectionWiseSubsection.llBody.visibility = View.VISIBLE
                                                 binding.division.llBody.visibility = View.GONE
                                                 binding.district.llBody.visibility = View.GONE
                                             } else {
                                                 setDivision()
-                                                binding.headOfficesBranches.llBody.visibility =
-                                                    View.GONE
-                                                binding.branchesWiseSection.llBody.visibility =
-                                                    View.GONE
-                                                binding.sectionWiseSubsection.llBody.visibility =
-                                                    View.GONE
-                                                binding.division.llBody.visibility =
-                                                    View.VISIBLE
-                                                binding.district.llBody.visibility =
-                                                    View.VISIBLE
+                                                binding.headOfficesBranches.llBody.visibility = View.GONE
+                                                binding.branchesWiseSection.llBody.visibility = View.GONE
+                                                binding.sectionWiseSubsection.llBody.visibility = View.GONE
+                                                binding.division.llBody.visibility = View.VISIBLE
+                                                binding.district.llBody.visibility = View.VISIBLE
                                             }
                                             //searchOffice()
                                         }

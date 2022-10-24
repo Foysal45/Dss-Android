@@ -9,24 +9,22 @@ class DateConverter {
         fun changeDateFormateForShowing(yyyy_mm_dd: String?): String? {
             try {
                 val currentFormate = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
-                val newDate: Date = currentFormate.parse(yyyy_mm_dd)
-                var newFormate = SimpleDateFormat("dd-MM-yyyy", Locale("en"))
-                val date: String = newFormate.format(newDate)
-                return  date
-            }catch (e:Exception){
-                return  null
+                val newDate: Date = yyyy_mm_dd?.let { currentFormate.parse(it) } as Date
+                val newFormate = SimpleDateFormat("dd-MM-yyyy", Locale("en"))
+                return newFormate.format(newDate)
+            } catch (e: Exception) {
+                return null
             }
         }
 
         fun changeDateFormateForSending(dd_mm_yyyy: String?): String? {
             try {
                 val currentFormate = SimpleDateFormat("dd-MM-yyyy", Locale("en"))
-                val newDate: Date = currentFormate.parse(dd_mm_yyyy)
-                var newFormate = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
-                val date: String = newFormate.format(newDate)
-                return date
+                val newDate: Date = dd_mm_yyyy?.let { currentFormate.parse(it) } as Date
+                val newFormate = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
+                return newFormate.format(newDate)
             } catch (e: Exception) {
-               return null
+                return null
             }
         }
     }

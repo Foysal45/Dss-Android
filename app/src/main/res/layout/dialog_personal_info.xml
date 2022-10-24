@@ -217,11 +217,6 @@
                                     android:id="@+id/fJobType"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/job_type}" />
-<!--                                <include-->
-<!--                                    android:id="@+id/fDateTransferTemporaryRevenue"-->
-<!--                                    layout="@layout/personal_info_spinner"-->
-<!--                                    android:visibility="gone"-->
-<!--                                    app:title="@{@string/dateof_transfer_in_temporary_revenue}" />-->
 
                                 <LinearLayout
                                     android:id="@+id/fNotConfirmYetLL"
@@ -430,7 +425,7 @@
 
                 <!-- ...........................JobJoining info start ........................................ -->
 
-                <LinearLayout
+              <!--  <LinearLayout
                     android:id="@+id/llJobjoningInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -484,19 +479,28 @@
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/section_wise_sub_section}"/>
 
+                                <include
+                                android:id="@+id/fDepartmentWiseSubSubSection"
+                                layout="@layout/personal_info_spinner"
+                                app:title="@{@string/section_wise_sub_sub_section}" />
+
+                               &lt;!&ndash; <include
+                                    android:id="@+id/fWhichBranch"
+                                    layout="@layout/somaj_seba_which_branch"
+                                    app:title="@{@string/which_branch}"
+                                    />&ndash;&gt;
 
                                 <include
                                     android:id="@+id/fJobJoiningEditCurrentOffice"
                                     layout="@layout/personal_info_spinner"
-                                    app:title="@{@string/current_office}" />
+                                     />
 
                                 <include
                                     android:id="@+id/fJobJoiningEditDesignation"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/designation}" />
 
-
-                                <!--  Start Other Service Particulars from here-->
+                                &lt;!&ndash;  Start Other Service Particulars from here&ndash;&gt;
                                 <include
                                     android:id="@+id/fJobJoiningEditOtherServiceParticulars"
                                     layout="@layout/personal_info_spinner"
@@ -506,7 +510,6 @@
                                     android:id="@+id/fWhereToParticular"
                                     layout="@layout/personel_information_edittext"
                                      />
-
 
                                 <LinearLayout
                                     android:id="@+id/llOffice"
@@ -640,7 +643,6 @@
                                      />
 
 
-
                                 <include
                                     android:id="@+id/fJobJoiningEditReleaseDateFrom"
                                     layout="@layout/personal_info_textview"
@@ -673,7 +675,7 @@
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-                </LinearLayout>
+                </LinearLayout>-->
 
 <!-- ...........................Quota info start ........................................ -->
                 <LinearLayout
@@ -944,7 +946,6 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
-
 
    <!-- ........................... address info start ........................................ -->
 

@@ -90,13 +90,6 @@
                                 app:title="@{@string/offices}" />
 
 
-                            <include
-                                android:id="@+id/designation"
-                                layout="@layout/personal_info_spinner"
-                                app:title="@{@string/designation}" />
-
-
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

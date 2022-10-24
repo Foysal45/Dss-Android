@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="title"
+            type="java.lang.String" />
+
+        <variable
+            name="hint"
+            type="java.lang.String" />
+
+        <variable
+            name="text"
+            type="java.lang.String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/llBody"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_4sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:text="@{title}"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/etText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height_large"
+                android:background="@drawable/edittext_bg"
+                android:hint="@{hint}"
+                android:inputType="textMultiLine"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:textColor="@color/light_black"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/tvError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:gravity="center|left"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingVertical="5dp"
+                android:text="error"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -876,6 +876,7 @@ class CommonRepo @Inject constructor() {
                 "Bearer ${preparence?.getToken()}",
                 identity
             )
+        Log.d("commonrepo",call?.request()?.url.toString())
         call?.enqueue(object : Callback<Any?> {
             override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
 
