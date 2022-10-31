@@ -59,6 +59,11 @@
                                 android:paddingVertical="@dimen/personal_information_body_padding_vertical">
 
                                 <include
+                                    android:id="@+id/fJobJoiningEditCurrentJob"
+                                    layout="@layout/personal_info_spinner"
+                                    app:title="@{@string/current_job}" />
+
+                                <include
                                     android:id="@+id/fJobJoiningOfficeType"
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/office_type}" />
@@ -272,6 +277,11 @@
                                     android:id="@+id/fJobJoiningJoiningDate"
                                     layout="@layout/personal_info_textview"
                                     app:title="@{@string/joning_date}" />
+
+                                <include
+                                    android:id="@+id/fJobJoiningReleaseDate"
+                                    layout="@layout/personal_info_textview"
+                                    app:title="@{@string/release_date}" />
 
                                 <include
                                     android:id="@+id/jobjoiningUpdateButton"

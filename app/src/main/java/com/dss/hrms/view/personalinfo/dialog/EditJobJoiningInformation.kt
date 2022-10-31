@@ -63,8 +63,6 @@ class EditJobJoiningInformation @Inject constructor() {
     @Inject
     lateinit var officeSearchingDialog: OfficeSearchingDialog
 
-    //lateinit var commonViewModel: CommonViewModel
-
     lateinit var utilViewmodel: UtilViewModel
     var officeList = arrayListOf<Office>()
     var mainOfficeList: List<Office>? = null
@@ -89,6 +87,7 @@ class EditJobJoiningInformation @Inject constructor() {
 
     var currentOfficeType: SpinnerDataModel? = null
     var recruitmentType: SpinnerDataModel? = null
+    var currentJobType: SpinnerDataModel? = null
     var _class: SpinnerDataModel? = null
     var grade: SpinnerDataModel? = null
     lateinit var context: Context
@@ -134,6 +133,13 @@ class EditJobJoiningInformation @Inject constructor() {
 
         //for Joining Date
         binding.fJobJoiningJoiningDate.tvText.text = jobjoining?.joining_date?.let {
+            DateConverter.changeDateFormateForShowing(
+                it
+            )
+        }
+
+        //for ReleaseDate if Current Job type false
+        binding.fJobJoiningReleaseDate.tvText.text = jobjoining?.joining_date?.let {
             DateConverter.changeDateFormateForShowing(
                 it
             )
@@ -392,27 +398,27 @@ class EditJobJoiningInformation @Inject constructor() {
                         }
 
                     }
-                    /*if (currentOfficeType?.id == 1){
-                        binding.fJobJoiningOfficeDeptAndDivision.tvTitle.text = "Head Office Department"
-                        binding.fDepartmentWiseSection.tvTitle.text = "Department Wise Section"
-                            //context.getString(R.string.department_wise_section)
-                        binding.fJobJoiningEditCurrentOffice.llBody.visibility = View.GONE
-                        loadHeadOfficeDepartment()
-                    }else{
-                        binding.fJobJoiningOfficeDeptAndDivision.tvTitle.text = "Division"
-                        binding.fDepartmentWiseSection.tvTitle.text = "District"
-                        binding.fJobJoiningEditCurrentOffice.llBody.visibility = View.VISIBLE
 
-                        if (jobjoining?.current == true){
-                            binding.fJobJoiningEditCurrentOffice.tvTitle.text = "Current Office"
-                        }else{
-                            binding.fJobJoiningEditCurrentOffice.tvTitle.text = "Previous Office"
+                }
+            }
+        )
+
+        //Current JobType Edit Spinner
+        SpinnerAdapter().setSpinner(
+            binding.fJobJoiningEditCurrentJob.spinner, context,
+            currentJobTypeData(), employeeProfileData.employee?.jobjoinings?.get(0)?.office?.office_type_id,
+            object : CommonSpinnerSelectedItemListener {
+                override fun selectedItem(any: Any?) {
+                    currentJobType = any as SpinnerDataModel
+                    when (currentJobType?.id) {
+                        1 -> {
+                            binding.fJobJoiningReleaseDate.llBody.visibility=View.GONE
                         }
-
-                        binding.fDepartmentWiseSubSection.llBody.visibility = View.GONE
-                        binding.fDepartmentWiseSubSubSection.llBody.visibility = View.GONE
-                        setDivision()
-                    }*/
+                        2 -> {
+                            binding.fJobJoiningReleaseDate.llBody.visibility=View.VISIBLE
+                        }
+                        else -> binding.fJobJoiningReleaseDate.llBody.visibility=View.GONE
+                    }
                 }
             }
         )
@@ -456,12 +462,20 @@ class EditJobJoiningInformation @Inject constructor() {
                 })
         }
 
-
-        //for Joining Date
+        //for JoiningDate
         binding.fJobJoiningJoiningDate.tvText.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
                 override fun onDate(date: String) {
                     date.let { binding.fJobJoiningJoiningDate.tvText.text = "" + it }
+                }
+            })
+        }
+
+        //for ReleaseDate if Current Job Type false
+        binding.fJobJoiningReleaseDate.tvText.setOnClickListener {
+            DatePicker().showDatePicker(context, object : OnDateListener {
+                override fun onDate(date: String) {
+                    date.let { binding.fJobJoiningReleaseDate.tvText.text = "" + it }
                 }
             })
         }
@@ -483,8 +497,6 @@ class EditJobJoiningInformation @Inject constructor() {
                 }
             })
         }
-
-
 
      //#################### [UPDATE EDITED DATA] #########################################//
         binding.jobjoiningUpdateButton.btnUpdate.setOnClickListener {
@@ -536,6 +548,7 @@ class EditJobJoiningInformation @Inject constructor() {
     fun updateData(): HashMap<Any, Any?> {
 
         val joiningDate = DateConverter.changeDateFormateForSending(binding.fJobJoiningJoiningDate.tvText.text.trim().toString())
+        val releaseDate = DateConverter.changeDateFormateForSending(binding.fJobJoiningReleaseDate.tvText.text.trim().toString())
         val joiningDateOf = DateConverter.changeDateFormateForSending(binding.fJobJoiningEditDateOf.tvText.text.trim().toString())
         val joiningReleaseDateFrom = DateConverter.changeDateFormateForSending(binding.fJobJoiningEditReleaseDateFrom.tvText.text.trim().toString())
 
@@ -582,7 +595,6 @@ class EditJobJoiningInformation @Inject constructor() {
         office?.id.let {
             map.put("additional_office_id", it)
         }
-       //  map.put("additional_office_id")
 
         serviceParticulars?.id.let {
             map.put("employment_status_id",it)
@@ -607,8 +619,13 @@ class EditJobJoiningInformation @Inject constructor() {
         map["pay_scale"] = payScale?.amount
         map["joining_date"] = joiningDate
 
-        jobjoining?.current.let {
-            map.put("current",it)
+
+        if (currentJobType?.name == "true")
+        {
+            map["current"] = true
+        }else{
+            map["current"] = false
+            map["release_date"] = releaseDate
         }
 
         map["employee_id"] = employeeProfileData.employee?.id
@@ -640,7 +657,6 @@ class EditJobJoiningInformation @Inject constructor() {
 
          }
 
-
         if (jobjoining?.status != null) {
             map["status"] = jobjoining?.status
         } else map["status"] = 0
@@ -653,8 +669,7 @@ class EditJobJoiningInformation @Inject constructor() {
         Log.d("okke", "response" + (any as ApiError).getError().first().getMessage()  + " "+  (any).toString())
         when (any) {
             is String -> {
-                toast(
-                    EmployeeInfoActivity.context, "" + context.getString(R.string.updated))
+                toast(EmployeeInfoActivity.context, "" + context.getString(R.string.updated))
 
                 MainActivity.selectedPosition = 7
                 EmployeeInfoActivity.refreshEmployeeInfo()
@@ -763,6 +778,11 @@ class EditJobJoiningInformation @Inject constructor() {
                                     binding.fJobJoiningJoiningDate.tvError.text = ErrorUtils2.mainError(message)
                                 }
 
+                                "release_date" ->{
+                                    binding.fJobJoiningReleaseDate.tvError.visibility = View.VISIBLE
+                                    binding.fJobJoiningReleaseDate.tvError.text = ErrorUtils2.mainError(message)
+                                }
+
                             }
                         }
                     }
@@ -782,7 +802,6 @@ class EditJobJoiningInformation @Inject constructor() {
         }
 
     }
-
 
 
     //head office_department
@@ -906,7 +925,7 @@ class EditJobJoiningInformation @Inject constructor() {
                         binding.fJobJoiningOfficeDeptAndDivision.spinner,
                         context,
                         list,
-                        jobjoining?.division?.id,
+                        division?.division_id,
                         object : CommonSpinnerSelectedItemListener {
                             override fun selectedItem(any: Any?) {
 
@@ -988,7 +1007,7 @@ class EditJobJoiningInformation @Inject constructor() {
                             binding.fJobJoiningEditPayScale.spinner,
                             context,
                             it,
-                            0,
+                            jobjoining?.pay_scale_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     payScale = any as Paysacle
@@ -1000,7 +1019,6 @@ class EditJobJoiningInformation @Inject constructor() {
             })
 
     }
-
 
     //function for set Attachment Office under OtherService Particles
     fun attachmentOffice(context: Context, binding: DialogJobHistoryBinding) {
@@ -1022,8 +1040,6 @@ class EditJobJoiningInformation @Inject constructor() {
             )
         }
     }
-
-
 
     //function for set Additional charge Office under OtherServiceParticals
     fun additionalChargeOffice(context: Context, binding: DialogJobHistoryBinding) {
@@ -1083,7 +1099,7 @@ class EditJobJoiningInformation @Inject constructor() {
                             binding.fJobJoiningEditDesignation.spinner,
                             context,
                             list,
-                           0,
+                           0,//jobjoining?.designation_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     designation = any as SpinnerDataModel
@@ -1106,7 +1122,7 @@ class EditJobJoiningInformation @Inject constructor() {
                             binding.fJobJoiningEditDesignation.spinner,
                             context,
                             list,
-                            jobjoining?.designation_id,
+                            0, //jobjoining?.designation_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     designation = any as SpinnerDataModel
@@ -1118,6 +1134,24 @@ class EditJobJoiningInformation @Inject constructor() {
                 }
             })
 
+    }
+
+    //For currentJobType
+    private fun currentJobTypeData(): List<SpinnerDataModel> {
+
+        val yes = SpinnerDataModel()
+        yes.apply {
+            id = 1
+            name = "true"
+
+        }
+        val no = SpinnerDataModel()
+        no.apply {
+            id = 2
+            name = "false"
+
+        }
+        return arrayListOf(yes, no)
     }
 
     //For OfficeType
@@ -1176,6 +1210,8 @@ class EditJobJoiningInformation @Inject constructor() {
         binding.fJobJoiningEditPayScale.tvError.visibility = View.GONE
 
         binding.fJobJoiningJoiningDate.tvError.visibility = View.GONE
+
+        binding.fJobJoiningReleaseDate.tvError.visibility = View.GONE
 
         binding.fJobJoiningEditDateOf.tvError.visibility = View.GONE
 

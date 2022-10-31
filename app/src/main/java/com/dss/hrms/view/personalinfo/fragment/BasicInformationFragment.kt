@@ -117,19 +117,15 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         setData()
         val pendingOBj: PendingDataModel? = preparence.get(HelperClass.PEDING_DATA)
         val pendingEmployee = pendingOBj?.employee
-        if (!pendingEmployee.isNullOrEmpty()) {
 
+        if (!pendingEmployee.isNullOrEmpty()) {
             v.llJobjoningInfo1.visibility = View.VISIBLE
 
             pendingEmployee[0].data?.employment_job_status = employee?.employment_job_status
-            pendingEmployee[0].data?.employment_job_status?.employeementstatus =
-                employee?.employment_job_status?.employeementstatus
+            pendingEmployee[0].data?.employment_job_status?.employeementstatus = employee?.employment_job_status?.employeementstatus
             pendingEmployee[0].data?.user = employee?.user
 
-            setPendingData(
-                pendingEmployee[0].data,
-                employee?.employment_job_status?.employeementstatus?.name
-            )
+            setPendingData(pendingEmployee[0].data, employee?.employment_job_status?.employeementstatus?.name)
         }
 
 
@@ -139,6 +135,10 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         return v
     }
 
+
+    /*....................................................
+     ................NORMAL DATA SETTING.................
+     ....................................................*/
     private fun setData() {
 
         v.fPresentBasicSalary.llBody.visibility = View.GONE
@@ -198,8 +198,14 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
         v.fNid.tvTitle.text = getString(R.string.nid_no)
 
 
+        if (employee?.profile_id != null)
+        {
+            v.fEmployeeId.tvText.text = employee?.profile_id
+        }else{
+            v.fEmployeeId.tvText.text = " "
+        }
 
-        v.fEmployeeId.tvText.text = "" + employee?.profile_id
+       // v.fEmployeeId.tvText.text = "" + employee?.profile_id
         employee?.name?.let { v.fNameEng.tvText.text = it }
         employee?.name_bn?.let { v.fNameBangla.tvText.text = it }
         employee?.date_of_birth?.let {
@@ -591,6 +597,10 @@ class BasicInformationFragment : DaggerFragment(), SelectImageBottomSheet.Bottom
 
     }
 
+
+   /*..................................................
+   ................PENDING DATA SETTING................
+   ....................................................*/
     private fun setPendingData(employee1: Employee?, name: String?) {
 
         context?.let {

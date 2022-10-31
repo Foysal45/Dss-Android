@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">DSS-HRMS</string>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
@@ -15,7 +15,7 @@
 
 
     <string name="objective">Objective</string>
-    <string name="notifications">Notifications</string>
+    <string name="notifications" tools:ignore="MissingTranslation">Notifications</string>
     <string name="no_notification_found">No notification found</string>
     <string name="confirmation">Confirmation</string>
     <string name="are_you_sure">would you like to exit?</string>
@@ -194,6 +194,7 @@
 
     <string name="help_desk">Help Desk</string>
     <string name="joning_date">Joining Date</string>
+    <string name="release_date">Release Date*</string>
     <string name="confirmation_date">Confirmation Date</string>
     <string name="pension">Pension Date</string>
     <string name="_class">Class</string>
@@ -260,7 +261,7 @@
     <string name="profile_id">Profile  ID</string>
     <string name="birth">Date of Birth</string>
     <string name="birth_certificate_no">Birth Certificate No</string>
-    <string name="not_confirm_yet">Not Confirmed Yet</string>
+    <string name="not_confirm_yet">Not Confirmed Yet ?</string>
     <string name="permanent_confirmation_date">Permanent Confirmation Date</string>
 
     <string name="nid_no">NID No</string>
@@ -358,7 +359,7 @@
     <string name="search">Search</string>
     <string name="office_lead_category">Office Lead Category</string>
     <string name="employee_name_or_id">Employee Name / ID</string>
-    <string name="attachment">Attachment</string>
+    <string name="attachment">Attachment <p><font color="red">*</font></p></string>
 
     <string name="ok">Ok</string>
     <string name="ok_for_employee_selection">Ok</string>

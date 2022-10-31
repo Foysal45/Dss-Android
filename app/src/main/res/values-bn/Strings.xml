@@ -178,6 +178,7 @@
 
 
     <string name="joning_date">যোগদানের তারিখ</string>
+    <string name="release_date">Release Date*</string>
     <string name="confirmation_date">নিশ্চিতকরণের তারিখ</string>
     <string name="pension">পেনশনের তারিখ</string>
     <string name="_class">শ্রেণী</string>
@@ -343,12 +344,12 @@
     <string name="search">অনুসন্ধান করুন</string>
     <string name="office_lead_category">অফিস মুখ্য শ্রেণী</string>
     <string name="employee_name_or_id">কর্মকর্তা/কর্মচারীর নাম/আইডি</string>
-    <string name="attachment">সংযুক্তি</string>
+    <string name="attachment">সংযুক্তি <p><font color="red">*</font></p></string>
     <string name="ok">ঠিক আছে</string>
     <string name="ok_for_employee_selection">নির্বাচন করুন</string>
     <string name="cancel">বাতিল</string>
     <string name="done">সম্পন্ন করুন</string>
-    <string name="not_confirm_yet">এখনো নিশ্চিত নই</string>
+    <string name="not_confirm_yet">এখনো নিশ্চিত নই ?</string>
     <string name="permanent_confirmation_date">স্থায়ী নিশ্চিতকরণ তারিখ</string>
 
     <string name="draft">ড্রাফট করুন</string>

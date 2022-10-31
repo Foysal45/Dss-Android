@@ -213,17 +213,17 @@
                                     layout="@layout/personal_info_spinner"
                                     app:title="@{@string/job_type}" />
                                 <include
-                                       android:id="@+id/fDateTransferTemporaryRevenue"
+                                       android:id="@+id/temporaryRevenueType"
                                        layout="@layout/personal_info_spinner"
-                                       app:title="@{@string/dateof_transfer_in_temporary_revenue}" />
+                                       app:title="@{@string/temporary_revenue_type}" />
 
                                 <LinearLayout
-                                    android:id="@+id/fTemporaryRevenueAttachment"
+                                    android:id="@+id/temporaryRevenueAttachment"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:visibility="gone"
-                                    >
+                                    android:visibility="gone">
+
                                     <include
                                         android:id="@+id/fDateOfTransferTemporaryRevenueDate"
                                         layout="@layout/personal_info_textview"
@@ -262,7 +262,7 @@
                                             android:text=""
                                             android:textColor="@color/light_black"
                                             android:textSize="@dimen/text_size_medium"
-                                            android:textStyle="bold" />
+                                            android:textStyle="bold"/>
 
                                         <TextView
                                             android:id="@+id/tvTemporaryRevenueAttachmentError"
@@ -277,7 +277,10 @@
                                             android:textSize="@dimen/text_size_small"
                                             android:visibility="gone" />
                                     </LinearLayout>
+
                                 </LinearLayout>
+
+
                                     <include
                                         android:id="@+id/fNotConfirmYet"
                                         layout="@layout/personal_info_spinner"
@@ -293,7 +296,7 @@
                                     <include
                                         android:id="@+id/fPermanentConfirmationDate"
                                         layout="@layout/personal_info_textview"
-                                        app:title="@{@string/permanent_confirmation_date}" />
+                                         />
 
                                     <LinearLayout
                                         android:id="@+id/llPermanentConfirmationAttachment"
