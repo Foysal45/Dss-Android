@@ -290,17 +290,13 @@ class EditJobJoiningInformation @Inject constructor() {
         if (jobjoining?.employment_status_attachment.toString()
                 .toLowerCase() != "null" || jobjoining?.employment_status_attachment.isNullOrEmpty()
         ) {
-            binding.tvParticularAttachment.text =
-                context.getString(R.string.attachment) + "\n" +
-                        jobjoining?.employment_status_attachment
+            binding.tvParticularAttachment.text = context.getString(R.string.attachment) + "\n" + jobjoining?.employment_status_attachment
         }
 
         if (jobjoining?.employment_status_attachment.toString()
                 .toLowerCase() != "null" || !jobjoining?.employment_status_attachment.isNullOrEmpty()
         ) {
-            binding.tvParticularAttachment.text =
-                context.getString(R.string.attachment) + "\n" +
-                        jobjoining?.employment_status_attachment
+            binding.tvParticularAttachment.text = context.getString(R.string.attachment) + "\n" + jobjoining?.employment_status_attachment
         }
 
 

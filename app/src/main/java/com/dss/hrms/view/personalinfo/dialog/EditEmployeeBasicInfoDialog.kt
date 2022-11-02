@@ -506,16 +506,14 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
             object : CommonSpinnerSelectedItemListener {
                 override fun selectedItem(any: Any?) {
                     hasNotConfirmYet = any as SpinnerDataModel
-                    if (jobType?.id == 2 && hasNotConfirmYet!!.id == 0) {
+
+                  if (jobType?.id == 2 && hasNotConfirmYet?.id == 0) {
 
                         binding.fNotConfirmYetAttachment.visibility = View.VISIBLE
                         binding.fPermanentConfirmationDate.tvTitle.text = "Date of Confirmation in Permanent Revenue"
 
-                    }else{
-                        binding.fNotConfirmYetAttachment.visibility = View.GONE
                     }
-
-                    if (temporaryRevenueType?.id == 2 && hasNotConfirmYet!!.id == 0) {
+                    else if (temporaryRevenueType?.id == 2 && hasNotConfirmYet?.id == 0) {
 
                         binding.fNotConfirmYetAttachment.visibility = View.VISIBLE
                         binding.fPermanentConfirmationDate.tvTitle.text = "Regularization Date"
@@ -525,7 +523,9 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
                         binding.fNotConfirmYetAttachment.visibility = View.VISIBLE
 
                         binding.fPermanentConfirmationDate.tvTitle.text = "Confirmation Date"
-                    }
+                    }else{
+                      binding.fNotConfirmYetAttachment.visibility = View.GONE
+                  }
                 }
             }
         )
@@ -661,21 +661,12 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
         binding.basicUpdate.btnUpdate.setOnClickListener {
 
             if (hasFreedomFighterQuota?.id == 1 && freedomFighterUrl.isEmpty()) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.error_freedom_fighter),
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(context, context.getString(R.string.error_freedom_fighter), Toast.LENGTH_LONG).show()
 
                 return@setOnClickListener
             }
             if (hasDisability?.id == 1 && disabilityURL.isEmpty()) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.error_disaiblity_doc),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
+                Toast.makeText(context, context.getString(R.string.error_disaiblity_doc), Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -695,11 +686,7 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
                 //val fileSizeInMB = fileSizeInKB / 1024
 
                 if (fileSizeInKB > (2 * 1024)) {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.error_file_size),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(context, context.getString(R.string.error_file_size), Toast.LENGTH_LONG).show()
                     dialog?.dismiss()
                 } else imageFile?.let { it1 -> uploadImage(it1) }
 
@@ -744,7 +731,7 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
         }
 
         binding.llTemporaryRevenueAttachment.setOnClickListener {
-            isTemporaryRevenueAttachment = false
+            isTemporaryRevenueAttachment = true
             employeInfoPage?.galleryButtonClicked()
         }
 
@@ -807,6 +794,120 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
             binding?.fDisabilityType?.llBody?.visibility = View.VISIBLE
         }
     }
+
+    //function for submitted update data
+    fun uploadData() {
+        val employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)[EmployeeInfoEditCreateViewModel::class.java]
+        invisibleAllError(binding)
+        key.let {
+            if (it == StaticKey.EDIT) {
+                employeeInfoEditCreateRepo.updateBasicInfo(employee.id, getMapData())?.observe(EmployeeInfoActivity.context!!, androidx.lifecycle.Observer { any ->
+                    dialog?.dismiss()
+                    Log.e("yousuf", "error : $any")
+                    showResponse(any)
+                })
+            }
+        }
+    }
+
+
+    fun getMapData(): HashMap<Any, Any?> {
+        val rolesList = arrayListOf<Int?>()
+        roles?.forEach { element ->
+            rolesList.add(element.id)
+        }
+
+
+        val date = DateConverter.changeDateFormateForSending(binding?.fDOB?.tvText?.text.toString())
+        val jobJoiningDate = DateConverter.changeDateFormateForSending(binding?.fJobJoiningDate?.tvText?.text.toString())
+        val pRLDate = DateConverter.changeDateFormateForSending(binding?.fPRLDate?.tvText?.text.toString())
+        val pensionDate = DateConverter.changeDateFormateForSending(binding?.fPensionDate?.tvText?.text.toString())
+        val employeeStatusTypeDate = DateConverter.changeDateFormateForSending(binding?.fEmploymentStatusDate?.tvText?.text.toString())
+        val permanentRevenueConfirmationDate = DateConverter.changeDateFormateForSending(binding?.fPermanentConfirmationDate?.tvText?.text?.toString())
+        val directRecruitConfirmationDate = DateConverter.changeDateFormateForSending(binding?.fPermanentConfirmationDate?.tvText?.text?.toString())
+        val temporaryRevenueTransferDate = DateConverter.changeDateFormateForSending(binding?.fDateOfTransferTemporaryRevenueDate?.tvText?.text.toString())
+
+        val map = HashMap<Any, Any?>()
+
+        map["employee_id"] = employeeProfileData.employee?.user?.employee_id
+        map["role"] = rolesList
+        map["job_joining_date"] = employeeProfileData.employee?.job_joining_date
+        map["profile_id"] = binding?.fProfileId?.etText?.text.toString()
+        map["name"] = binding?.fNameEng?.etText?.text.toString()
+        map["name_bn"] = binding?.fNameBangla?.etText?.text.toString()
+        Log.e("dob", "dob : $date")
+
+        map["date_of_birth"] = date
+        map["status_date"] = employeeStatusTypeDate
+        map["fathers_name"] = binding?.fFatherNameEng?.etText?.text.toString()
+        map["fathers_name_bn"] = binding?.fFatherNameBangla?.etText?.text.toString()
+        map["mothers_name"] = binding?.fMotherNameEng?.etText?.text.toString()
+        map["mothers_name_bn"] = binding?.fMotherNameBangla?.etText?.text.toString()
+//        try{
+//            if (em?.isPendingData == true) {
+//                var a = foreigntraining!!.parent_id
+//                map.put("parent_id", a)
+//            }
+//        }catch (Ex : java.lang.Exception){
+//
+//        }
+        //  map.put("gender_id", null)
+        gender?.id?.let { map.put("gender_id", gender?.id) }
+        map["blood_group_id"] = bloodGroup?.id
+        map["religion_id"] = religion?.id
+        map["employee_type_id"] = employee.employee_type_id
+        map["has_disability"] = if (hasDisability?.id == 1) true else false
+        homeDistrict?.id?.let { map.put("employee_type_id", it) }
+        employeeType?.id?.let { map.put("birth_place_id", it) }
+        employmentStatusType?.id?.let { map.put("employment_status_id", it) }
+     //   hasFreedomFighterQuota?.id?.let { map.put("", it) }
+        map["has_freedom_fighter_quota"] = if (hasFreedomFighterQuota?.id == 1) true else false
+        map["disability_type_id"] = disabilityType?.id
+        map["disability_degree_id"] = disabilityDegree?.id
+        map["disabled_person_id"] = binding?.fDisabledPersonId?.etText?.text?.toString()
+        maritalStatus?.id?.let { map.put("marital_status_id", maritalStatus?.id) }
+        map["email"] = binding?.fEmail?.etText?.text.toString()
+        imageUrl?.let { map.put("photo", it) }
+        map["username"] = binding?.fUserName?.etText?.text?.toString()
+        map["phone_number"] = binding?.fPhone?.etText?.text?.toString()
+        map["nid_no"] = binding?.fNid?.etText?.text?.toString()
+        map["tin_no"] = binding?.fTIN?.etText?.text?.toString()
+        map["punch_id"] = binding?.fPunchId?.etText?.text?.toString()
+        map["present_basic_salary"] = binding?.fPresentBasicSalary?.etText?.text?.toString()
+        map["present_gross_salary"] = binding?.fPresentGrossSalary?.etText?.text?.toString()
+        map["job_joining_date"] = jobJoiningDate
+
+        map["job_type_id"] = jobType?.id
+        map["is_permanent_confirmation"] = hasNotConfirmYet?.id
+        map["permanent_confirmation_date"] = permanentRevenueConfirmationDate
+        map["permanent_confirmation_attachment"] = permanentConfirmationUrl
+
+
+        map["temporary_revenue_type_id"] = temporaryRevenueType?.id
+        map["temporary_revenue_transfer_date"] = temporaryRevenueTransferDate
+        map["temporary_revenue_transfer_attachment"] = temporaryRevenueAttachmentUrl
+
+        map["is_regular_confirmation"] = hasNotConfirmYet?.id
+        map["regularization_date"] = permanentRevenueConfirmationDate
+        map["regularization_attachment"] = permanentConfirmationUrl
+
+        map["direct_confirmation_date"] = directRecruitConfirmationDate
+        map["direct_confirmation_attachment"] = permanentConfirmationUrl
+
+
+        map["prl_date"] = pRLDate
+        map["pension_date"] = pensionDate
+
+        map["status"] = employee.status
+        // adding document path
+        map["freedom_fighter_document_path"] = freedomFighterUrl
+        map["disability_document_path"] = disabilityURL
+
+        Log.d("TAG", "requestDataBasicInfo: ${map.toString()}")
+        return map
+
+    }
+
 
     @Suppress("UNCHECKED_CAST")
     fun showResponse(any: Any) {
@@ -1022,118 +1123,6 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
     }
 
 
-    fun getMapData(): HashMap<Any, Any?> {
-        val rolesList = arrayListOf<Int?>()
-        roles?.forEach { element ->
-            rolesList.add(element.id)
-        }
-
-
-        val date = DateConverter.changeDateFormateForSending(binding?.fDOB?.tvText?.text.toString())
-        val jobJoiningDate = DateConverter.changeDateFormateForSending(binding?.fJobJoiningDate?.tvText?.text.toString())
-        val pRLDate = DateConverter.changeDateFormateForSending(binding?.fPRLDate?.tvText?.text.toString())
-        val pensionDate = DateConverter.changeDateFormateForSending(binding?.fPensionDate?.tvText?.text.toString())
-        val employeeStatusTypeDate = DateConverter.changeDateFormateForSending(binding?.fEmploymentStatusDate?.tvText?.text.toString())
-        val permanentRevenueConfirmationDate = DateConverter.changeDateFormateForSending(binding?.fPermanentConfirmationDate?.tvText?.text?.toString())
-        val directRecruitConfirmationDate = DateConverter.changeDateFormateForSending(binding?.fPermanentConfirmationDate?.tvText?.text?.toString())
-        val temporaryRevenueTransferDate = DateConverter.changeDateFormateForSending(binding?.fDateOfTransferTemporaryRevenueDate?.tvText?.text.toString())
-
-        val map = HashMap<Any, Any?>()
-
-        map["employee_id"] = employeeProfileData.employee?.user?.employee_id
-        map["role"] = rolesList
-        map["job_joining_date"] = employeeProfileData.employee?.job_joining_date
-        map["profile_id"] = binding?.fProfileId?.etText?.text.toString()
-        map["name"] = binding?.fNameEng?.etText?.text.toString()
-        map["name_bn"] = binding?.fNameBangla?.etText?.text.toString()
-        Log.e("dob", "dob : $date")
-
-        map["date_of_birth"] = date
-        map["status_date"] = employeeStatusTypeDate
-        map["fathers_name"] = binding?.fFatherNameEng?.etText?.text.toString()
-        map["fathers_name_bn"] = binding?.fFatherNameBangla?.etText?.text.toString()
-        map["mothers_name"] = binding?.fMotherNameEng?.etText?.text.toString()
-        map["mothers_name_bn"] = binding?.fMotherNameBangla?.etText?.text.toString()
-//        try{
-//            if (em?.isPendingData == true) {
-//                var a = foreigntraining!!.parent_id
-//                map.put("parent_id", a)
-//            }
-//        }catch (Ex : java.lang.Exception){
-//
-//        }
-        //  map.put("gender_id", null)
-        gender?.id?.let { map.put("gender_id", gender?.id) }
-        map["blood_group_id"] = bloodGroup?.id
-        map["religion_id"] = religion?.id
-        map["employee_type_id"] = employee.employee_type_id
-        map["has_disability"] = if (hasDisability?.id == 1) true else false
-        homeDistrict?.id?.let { map.put("employee_type_id", it) }
-        employeeType?.id?.let { map.put("birth_place_id", it) }
-        employmentStatusType?.id?.let { map.put("employment_status_id", it) }
-     //   hasFreedomFighterQuota?.id?.let { map.put("", it) }
-        map["has_freedom_fighter_quota"] = if (hasFreedomFighterQuota?.id == 1) true else false
-        map["disability_type_id"] = disabilityType?.id
-        map["disability_degree_id"] = disabilityDegree?.id
-        map["disabled_person_id"] = binding?.fDisabledPersonId?.etText?.text?.toString()
-        maritalStatus?.id?.let { map.put("marital_status_id", maritalStatus?.id) }
-        map["email"] = binding?.fEmail?.etText?.text.toString()
-        imageUrl?.let { map.put("photo", it) }
-        map["username"] = binding?.fUserName?.etText?.text?.toString()
-        map["phone_number"] = binding?.fPhone?.etText?.text?.toString()
-        map["nid_no"] = binding?.fNid?.etText?.text?.toString()
-        map["tin_no"] = binding?.fTIN?.etText?.text?.toString()
-        map["punch_id"] = binding?.fPunchId?.etText?.text?.toString()
-        map["present_basic_salary"] = binding?.fPresentBasicSalary?.etText?.text?.toString()
-        map["present_gross_salary"] = binding?.fPresentGrossSalary?.etText?.text?.toString()
-        map["job_joining_date"] = jobJoiningDate
-
-        map["job_type_id"] = jobType?.id
-        map["is_permanent_confirmation"] = hasNotConfirmYet?.id
-        map["permanent_confirmation_date"] = permanentRevenueConfirmationDate
-        map["permanent_confirmation_attachment"] = permanentConfirmationUrl
-
-
-        map["temporary_revenue_type_id"] = temporaryRevenueType?.id
-        map["temporary_revenue_transfer_date"] = temporaryRevenueTransferDate
-        map["temporary_revenue_transfer_attachment"] = temporaryRevenueAttachmentUrl
-
-        map["is_regular_confirmation"] = hasNotConfirmYet?.id
-        map["regularization_date"] = permanentRevenueConfirmationDate
-        map["regularization_attachment"] = permanentConfirmationUrl
-
-        map["direct_confirmation_date"] = directRecruitConfirmationDate
-        map["direct_confirmation_attachment"] = permanentConfirmationUrl
-
-
-        map["prl_date"] = pRLDate
-        map["pension_date"] = pensionDate
-
-        map["status"] = employee.status
-        // adding document path
-        map["freedom_fighter_document_path"] = freedomFighterUrl
-        map["disability_document_path"] = disabilityURL
-
-        Log.d("TAG", "requestDataBasicInfo: ${map.toString()}")
-        return map
-
-    }
-
-    //function for submitted update data
-    fun uploadData() {
-        val employeeInfoEditCreateRepo = ViewModelProviders.of(MainActivity.context!!, viewModelProviderFactory)[EmployeeInfoEditCreateViewModel::class.java]
-        invisibleAllError(binding)
-        key.let {
-            if (it == StaticKey.EDIT) {
-                employeeInfoEditCreateRepo.updateBasicInfo(employee.id, getMapData())?.observe(EmployeeInfoActivity.context!!, androidx.lifecycle.Observer { any ->
-                    dialog?.dismiss()
-                    Log.e("yousuf", "error : $any")
-                    showResponse(any)
-                })
-            }
-        }
-    }
-
 
     fun uploadImage(imageFile: File) {
         val profilePic: MultipartBody.Part?
@@ -1301,21 +1290,11 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
 
                         }
 
-                        Toast.makeText(
-                            context,
-                            "Message : File Upload Done !!!",
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
+                        Toast.makeText(context, "Message : File Upload Done !!!", Toast.LENGTH_LONG).show()
 
                     } else {
 
-                        Toast.makeText(
-                            context,
-                            "Message : File Upload Failed !!!",
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
+                        Toast.makeText(context, "Message : File Upload Failed !!!", Toast.LENGTH_LONG).show()
                     }
 
                 })
