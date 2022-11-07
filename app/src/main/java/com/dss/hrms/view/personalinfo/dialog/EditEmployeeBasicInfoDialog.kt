@@ -32,6 +32,8 @@ import com.dss.hrms.view.personalinfo.EmployeeInfoActivity
 import com.dss.hrms.view.personalinfo.adapter.SpinnerAdapter
 import com.dss.hrms.viewmodel.EmployeeInfoEditCreateViewModel
 import com.dss.hrms.viewmodel.ViewModelProviderFactory
+import kotlinx.android.synthetic.main.dialog_personal_info_edit.view.*
+import kotlinx.android.synthetic.main.model_employee_info.view.*
 import kotlinx.android.synthetic.main.personel_information_edittext.view.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -447,6 +449,7 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
                                         2 -> {
                                             binding.fNotConfirmYet.llBody.visibility =  View.VISIBLE
                                             binding.temporaryRevenueType.llBody.visibility = View.GONE
+                                            binding.temporaryRevenueAttachment.visibility = View.GONE
                                         }else ->{
                                            binding.temporaryRevenueType.llBody.visibility = View.GONE
                                         }
@@ -478,6 +481,7 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
                                          //here Temporary Revenue type id == 2 means Project and 1 means Direct Recruit
                                         2-> {
                                             binding.fNotConfirmYet.llBody.visibility =  View.VISIBLE
+                                            binding.fNotConfirmYetAttachment.visibility = View.GONE
                                             binding.fNotConfirmYet.tvTitle.text = "Not Regularized Yet ?"
                                             binding.temporaryRevenueAttachment.visibility = View.VISIBLE
 
@@ -486,8 +490,12 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
 
                                             binding.fNotConfirmYet.llBody.visibility =  View.VISIBLE
                                             binding.temporaryRevenueAttachment.visibility = View.GONE
+                                            binding.fNotConfirmYetAttachment.visibility = View.GONE
                                             binding.fNotConfirmYet.tvTitle.text = "Not Confirmed Yet ?"
 
+                                        }
+                                        else -> {
+                                            binding.fNotConfirmYet.llBody.visibility =  View.GONE
                                         }
 
                                     }
@@ -507,25 +515,34 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
                 override fun selectedItem(any: Any?) {
                     hasNotConfirmYet = any as SpinnerDataModel
 
-                  if (jobType?.id == 2 && hasNotConfirmYet?.id == 0) {
-
+                  if (jobType?.id == 2 && hasNotConfirmYet?.id == 1) {
+                        binding.fNotConfirmYet.llBody.visibility =  View.VISIBLE
                         binding.fNotConfirmYetAttachment.visibility = View.VISIBLE
                         binding.fPermanentConfirmationDate.tvTitle.text = "Date of Confirmation in Permanent Revenue"
 
-                    }
-                    else if (temporaryRevenueType?.id == 2 && hasNotConfirmYet?.id == 0) {
+                    }else if (jobType?.id == 2 && hasNotConfirmYet?.id == 0){
+                      binding.fNotConfirmYet.llBody.visibility =  View.VISIBLE
+                      binding.fNotConfirmYetAttachment.visibility = View.GONE
+                  }
+
+
+                    else if (temporaryRevenueType?.id == 2 && hasNotConfirmYet?.id == 1) {
 
                         binding.fNotConfirmYetAttachment.visibility = View.VISIBLE
                         binding.fPermanentConfirmationDate.tvTitle.text = "Regularization Date"
 
-                    } else if(temporaryRevenueType?.id == 1 && hasNotConfirmYet!!.id == 0) {
+                    } else if(temporaryRevenueType?.id == 2 && hasNotConfirmYet!!.id == 0) {
 
-                        binding.fNotConfirmYetAttachment.visibility = View.VISIBLE
+                        binding.fNotConfirmYetAttachment.visibility = View.GONE
 
-                        binding.fPermanentConfirmationDate.tvTitle.text = "Confirmation Date"
-                    }else{
+                    } else if(temporaryRevenueType?.id == 1 && hasNotConfirmYet!!.id == 1){
+                         binding.fNotConfirmYetAttachment.visibility = View.VISIBLE
+                          binding.fPermanentConfirmationDate.tvTitle.text = "Confirmation Date"
+
+                     }else if(temporaryRevenueType?.id == 1 && hasNotConfirmYet!!.id == 0){
                       binding.fNotConfirmYetAttachment.visibility = View.GONE
                   }
+
                 }
             }
         )
@@ -548,30 +565,6 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
             )
         }
 
-     /*   checkNotConfirmOrNotRegularizedYet().let {
-            SpinnerAdapter().setSpinner(binding?.fNotConfirmYet?.spinner!!, context, it, 0, //if (employee.employee_job_type_revenue?.job_type?.id == 1) 1 else 0,
-                object : CommonSpinnerSelectedItemListener {
-                    override fun selectedItem(any: Any?) {
-                        hasNotConfirmYet = any as SpinnerDataModel
-                        //app:title="@{@string/regularization_date}"
-
-                            if (temporaryRevenueType?.id == 2 && hasNotConfirmYet!!.id == 0) {
-
-                                binding.fNotConfirmYetAttachment.visibility = View.VISIBLE
-                                binding.fPermanentConfirmationDate.tvTitle.text = "Regularization Date"
-
-                            } else if(temporaryRevenueType?.id == 1 && hasNotConfirmYet!!.id == 0) {
-
-                                binding.fNotConfirmYetAttachment.visibility = View.VISIBLE
-
-                                binding.fPermanentConfirmationDate.tvTitle.text = "Confirmation Date"
-                            }
-
-
-                    }
-                }
-            )
-        }*/
 
         checkHasDisability().let {
             SpinnerAdapter().setSpinner(
@@ -698,12 +691,12 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
 
 
         employee.employee_job_type_revenue?.permanent_confirmation_date?.let {
-            binding.fPermanentConfirmationDate.tvText.text = "" + DateConverter.changeDateFormateForShowing(it)
+            binding.fPermanentConfirmationDate.tvText.text = DateConverter.changeDateFormateForShowing(it)
         }
 
         binding.fPermanentConfirmationDate.tvText.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener {
-                override fun onDate(date: String) { date.let { binding.fPermanentConfirmationDate.tvText.text = "" + it }
+                override fun onDate(date: String) { date.let { binding.fPermanentConfirmationDate.tvText.text = it }
                 }
             })
         }
@@ -711,13 +704,13 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
 
         // temporary revenue transfer date
         employee.employee_job_type_revenue?.temporary_revenue_transfer_date.let {
-            binding.fDateOfTransferTemporaryRevenueDate.tvText.text = "" + DateConverter.changeDateFormateForShowing(it)
+            binding.fDateOfTransferTemporaryRevenueDate.tvText.text =  DateConverter.changeDateFormateForShowing(it)
         }
 
 
         binding.fDateOfTransferTemporaryRevenueDate.tvText.setOnClickListener {
             DatePicker().showDatePicker(context, object : OnDateListener { override fun onDate(date: String)
-            { date.let { binding.fDateOfTransferTemporaryRevenueDate.tvText.text = "" + it } }
+            { date.let { binding.fDateOfTransferTemporaryRevenueDate.tvText.text =  it } }
             })
         }
 
@@ -830,7 +823,10 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
         val map = HashMap<Any, Any?>()
 
         map["employee_id"] = employeeProfileData.employee?.user?.employee_id
-        map["role"] = rolesList
+        map["role"] =  rolesList
+        map["roleId"] = roles?.forEach { element ->
+            rolesList.add(element.id)
+        }
         map["job_joining_date"] = employeeProfileData.employee?.job_joining_date
         map["profile_id"] = binding?.fProfileId?.etText?.text.toString()
         map["name"] = binding?.fNameEng?.etText?.text.toString()
@@ -878,18 +874,24 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
         map["job_joining_date"] = jobJoiningDate
 
         map["job_type_id"] = jobType?.id
-        map["is_permanent_confirmation"] = hasNotConfirmYet?.id
+        map["is_permanent_confirmation"] = if (hasNotConfirmYet?.id == 1) true else false //hasNotConfirmYet?.name
         map["permanent_confirmation_date"] = permanentRevenueConfirmationDate
         map["permanent_confirmation_attachment"] = permanentConfirmationUrl
 
 
         map["temporary_revenue_type_id"] = temporaryRevenueType?.id
+        map["temorary_recruite_date"] = permanentRevenueConfirmationDate
         map["temporary_revenue_transfer_date"] = temporaryRevenueTransferDate
         map["temporary_revenue_transfer_attachment"] = temporaryRevenueAttachmentUrl
+        map["is_regular_confirmation"] = if (hasNotConfirmYet?.id == 1) true else false
 
-        map["is_regular_confirmation"] = hasNotConfirmYet?.id
+
+
         map["regularization_date"] = permanentRevenueConfirmationDate
         map["regularization_attachment"] = permanentConfirmationUrl
+        map["is_direct_confirmation"] = if (hasNotConfirmYet?.id == 1) true else false
+
+
 
         map["direct_confirmation_date"] = directRecruitConfirmationDate
         map["direct_confirmation_attachment"] = permanentConfirmationUrl
@@ -1203,16 +1205,17 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
 
         val notConfirmOrNotRegularizedYes = SpinnerDataModel()
         notConfirmOrNotRegularizedYes.apply {
-            id = 1
+            id = 0
             name = "Yes"
-            name_bn = "হ্যাঁ"
+            name_bn = "না"
 
         }
         val notConfirmOrNotRegularizedNo = SpinnerDataModel()
         notConfirmOrNotRegularizedNo.apply {
-            id = 0
+            id = 1
             name = "No"
-            name_bn = "না"
+            name_bn = "হ্যাঁ"
+
 
 
         }
