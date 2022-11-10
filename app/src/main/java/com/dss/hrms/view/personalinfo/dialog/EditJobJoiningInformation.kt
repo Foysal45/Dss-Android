@@ -662,7 +662,7 @@ class EditJobJoiningInformation @Inject constructor() {
 
     @Suppress("UNCHECKED_CAST")
     fun showResponse(any: Any){
-        Log.d("okke", "response" + (any as ApiError).getError().first().getMessage()  + " "+  (any).toString())
+        //Log.d("okke", "response" + (any as ApiError).getError().first().getMessage()  + " "+  (any).toString())
         when (any) {
             is String -> {
                 toast(EmployeeInfoActivity.context, "" + context.getString(R.string.updated))
@@ -675,13 +675,13 @@ class EditJobJoiningInformation @Inject constructor() {
                 try {
                     if (any.getError().isEmpty()) {
                         toast(EmployeeInfoActivity.context, any.getMessage())
-                        Log.d("oky", "error")
+                       // Log.d("oky", "error")
                     } else {
                         for (n in any.getError().indices) {
 
                             val error = any.getError()[n].getField()
                             val message = any.getError()[n].getMessage()
-                            Log.d("tttttttt", "error:  " +error +"    message: " +message)
+                            //Log.d("tttttttt", "error:  " +error +"    message: " +message)
                             when (error) {
 
                                 "office_type" -> {
@@ -1051,7 +1051,7 @@ class EditJobJoiningInformation @Inject constructor() {
                         if (office?.id != null) {
                             office?.id?.let { attachmentAndAdditionalChargeDesignation(office?.id!!) }
                         }
-                        Log.e("selected item", " item : " + office?.name)
+                        //Log.e("selected item", " item : " + office?.name)
                     }
 
                 }
@@ -1230,10 +1230,8 @@ class EditJobJoiningInformation @Inject constructor() {
 
         val requestFile: RequestBody =
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-        profilePic =
-            MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
-//        profilePic =
-//            MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
+        profilePic = MultipartBody.Part.createFormData("filenames[]", "${file.name}", requestFile)
+//        profilePic = MultipartBody.Part.createFormData("filenames[]", "filenames[${file.name}]", requestFile)
 
         val profile_photo: RequestBody =
             RequestBody.create("text/plain".toMediaTypeOrNull(), "profile_ph")
@@ -1249,28 +1247,18 @@ class EditJobJoiningInformation @Inject constructor() {
             ?.observe(
                 EmployeeInfoActivity.context!!
             ) { any ->
-                Log.e("yousuf", "profile pic : " + any)
+                //Log.e("yousuf", "profile pic : " + any)
                 //  showResponse(any)
-                dialouge?.dismiss()
+                dialouge.dismiss()
                 if (any != null) {
                     val fileUrl = any as String
-                    Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
+                   // Log.d("TESTUPLOAD", "uploadFile: $fileUrl ")
                     serviceParticularsAttachmentUrl = fileUrl
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.successMsg),
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
+                    Toast.makeText(context, context.getString(R.string.successMsg), Toast.LENGTH_LONG).show()
 
                 } else {
 
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.uploadFailed),
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
+                    Toast.makeText(context, context.getString(R.string.uploadFailed), Toast.LENGTH_LONG).show()
                 }
 
             }

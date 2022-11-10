@@ -434,7 +434,7 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
                             binding?.fJobType?.spinner!!,
                             context,
                             jobTypeList,
-                            0,//employee.employee_job_type_revenue?.job_type?.id,
+                            employee.employee_job_type_revenue?.job_type?.id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     jobType = any as SpinnerDataModel
@@ -472,7 +472,7 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
                             binding?.temporaryRevenueType?.spinner!!,
                             context,
                             temporaryRevenueTypeList,
-                            null,//employee?.employee_job_type_revenue?.temporary_revenue_type_id,
+                            employee.employee_job_type_revenue?.temporary_revenue_type_id,
                             object : CommonSpinnerSelectedItemListener {
                                 override fun selectedItem(any: Any?) {
                                     temporaryRevenueType = any as SpinnerDataModel
@@ -913,7 +913,7 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
 
     @Suppress("UNCHECKED_CAST")
     fun showResponse(any: Any) {
-        Log.d("testBasicInfo", "response" + (any as ApiError).getError().first().getMessage() + " "+  (any).toString())
+       // Log.d("testBasicInfo", "response" + (any as ApiError).getError().first().getMessage() + " "+  (any).toString())
 
         when (any) {
             is String -> {
@@ -935,171 +935,188 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
                             Log.d("errorBasicInfo", "error:  " +error +"    message: " +message)
                             when (error) {
                                 "profile_id" -> {
-                                    binding?.fProfileId?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fProfileId?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fProfileId?.tvError?.visibility = View.VISIBLE
+                                    binding?.fProfileId?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "name" -> {
-                                    binding?.fNameEng?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fNameEng?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fNameEng?.tvError?.visibility = View.VISIBLE
+                                    binding?.fNameEng?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "name_bn" -> {
-                                    binding?.fNameBangla?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fNameBangla?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fNameBangla?.tvError?.visibility = View.VISIBLE
+                                    binding?.fNameBangla?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "date_of_birth" -> {
-                                    binding?.fDOB?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fDOB?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fDOB?.tvError?.visibility = View.VISIBLE
+                                    binding?.fDOB?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
 
                                 "gender_id" -> {
-                                    binding?.fGender?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fGender?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fGender?.tvError?.visibility = View.VISIBLE
+                                    binding?.fGender?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "religion_id" -> {
-                                    binding?.fReligion?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fReligion?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fReligion?.tvError?.visibility = View.VISIBLE
+                                    binding?.fReligion?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
+
+                                "job_type_id" -> {
+                                    binding?.fJobType?.tvError?.visibility = View.VISIBLE
+                                    binding?.fJobType?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "temporary_revenue_type_id" -> {
+                                    binding?.temporaryRevenueType?.tvError?.visibility = View.VISIBLE
+                                    binding?.temporaryRevenueType?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "permanent_confirmation_date" -> {
+                                    binding?.fPermanentConfirmationDate?.tvError?.visibility = View.VISIBLE
+                                    binding?.fPermanentConfirmationDate?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "temporary_revenue_transfer_date" -> {
+                                    binding?.fDateOfTransferTemporaryRevenueDate?.tvError?.visibility = View.VISIBLE
+                                    binding?.fDateOfTransferTemporaryRevenueDate?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "temorary_recruite_date" -> {
+                                    binding?.fPermanentConfirmationDate?.tvError?.visibility = View.VISIBLE
+                                    binding?.fPermanentConfirmationDate?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "regularization_date" -> {
+                                    binding?.fPermanentConfirmationDate?.tvError?.visibility = View.VISIBLE
+                                    binding?.fPermanentConfirmationDate?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "direct_confirmation_date" -> {
+                                    binding?.fPermanentConfirmationDate?.tvError?.visibility = View.VISIBLE
+                                    binding?.fPermanentConfirmationDate?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "temporary_revenue_transfer_attachment" -> {
+                                    binding?.tvTemporaryRevenueAttachmentError?.tvError?.visibility = View.VISIBLE
+                                    binding?.tvTemporaryRevenueAttachmentError?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "permanent_confirmation_attachment" -> {
+                                    binding?.tvPermanentAttachmentError?.tvError?.visibility = View.VISIBLE
+                                    binding?.tvPermanentAttachmentError?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "regularization_attachment" -> {
+                                    binding?.tvPermanentAttachmentError?.tvError?.visibility = View.VISIBLE
+                                    binding?.tvPermanentAttachmentError?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "direct_confirmation_attachment" -> {
+                                    binding?.tvPermanentAttachmentError?.tvError?.visibility = View.VISIBLE
+                                    binding?.tvPermanentAttachmentError?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "is_permanent_confirmation" -> {
+                                    binding?.fNotConfirmYet?.tvError?.visibility = View.VISIBLE
+                                    binding?.fNotConfirmYet?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "is_regular_confirmation" -> {
+                                    binding?.fNotConfirmYet?.tvError?.visibility = View.VISIBLE
+                                    binding?.fNotConfirmYet?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
+                                "is_direct_confirmation" -> {
+                                    binding?.fNotConfirmYet?.tvError?.visibility = View.VISIBLE
+                                    binding?.fNotConfirmYet?.tvError?.text = ErrorUtils2.mainError(message)
+                                }
+
                                 "blood_group_id" -> {
-                                    binding?.fBloodGroup?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fBloodGroup?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fBloodGroup?.tvError?.visibility = View.VISIBLE
+                                    binding?.fBloodGroup?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "marital_status_id" -> {
-                                    binding?.fMaritalStatus?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fMaritalStatus?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fMaritalStatus?.tvError?.visibility = View.VISIBLE
+                                    binding?.fMaritalStatus?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
 
                                 "tin_no" -> {
-                                    binding?.fTIN?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fTIN?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fTIN?.tvError?.visibility = View.VISIBLE
+                                    binding?.fTIN?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
 
                                 "punch_id" -> {
-                                    binding?.fPunchId?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fPunchId?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fPunchId?.tvError?.visibility = View.VISIBLE
+                                    binding?.fPunchId?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
 
                                 "present_basic_salary" -> {
-                                    binding?.fPresentBasicSalary?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fPresentBasicSalary?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fPresentBasicSalary?.tvError?.visibility = View.VISIBLE
+                                    binding?.fPresentBasicSalary?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
 
                                 "present_gross_salary" -> {
-                                    binding?.fPresentGrossSalary?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fPresentGrossSalary?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fPresentGrossSalary?.tvError?.visibility = View.VISIBLE
+                                    binding?.fPresentGrossSalary?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "fathers_name" -> {
-                                    binding?.fFatherNameEng?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fFatherNameEng?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fFatherNameEng?.tvError?.visibility = View.VISIBLE
+                                    binding?.fFatherNameEng?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "fathers_name_bn" -> {
-                                    binding?.fFatherNameBangla?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fFatherNameBangla?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fFatherNameBangla?.tvError?.visibility = View.VISIBLE
+                                    binding?.fFatherNameBangla?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "mothers_name" -> {
-                                    binding?.fMotherNameEng?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fMotherNameEng?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fMotherNameEng?.tvError?.visibility = View.VISIBLE
+                                    binding?.fMotherNameEng?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "mothers_name_bn" -> {
-                                    binding?.fMotherNameBangla?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fMotherNameBangla?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fMotherNameBangla?.tvError?.visibility = View.VISIBLE
+                                    binding?.fMotherNameBangla?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "email" -> {
-                                    binding?.fEmail?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fEmail?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fEmail?.tvError?.visibility = View.VISIBLE
+                                    binding?.fEmail?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "username" -> {
-                                    binding?.fUserName?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fUserName?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fUserName?.tvError?.visibility = View.VISIBLE
+                                    binding?.fUserName?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "phone_number" -> {
-                                    binding?.fPhone?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fPhone?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fPhone?.tvError?.visibility = View.VISIBLE
+                                    binding?.fPhone?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "has_disability" -> {
-                                    binding?.fDisability?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fDisability?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fDisability?.tvError?.visibility = View.VISIBLE
+                                    binding?.fDisability?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "disability_type_id" -> {
-                                    binding?.fDisabilityType?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fDisabilityType?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fDisabilityType?.tvError?.visibility = View.VISIBLE
+                                    binding?.fDisabilityType?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "disability_degree_id" -> {
-                                    binding?.fDisabilityDegree?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fDisabilityDegree?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fDisabilityDegree?.tvError?.visibility = View.VISIBLE
+                                    binding?.fDisabilityDegree?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "disabled_person_id" -> {
-                                    binding?.fDisabledPersonId?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fDisabledPersonId?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fDisabledPersonId?.tvError?.visibility = View.VISIBLE
+                                    binding?.fDisabledPersonId?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "nid_no" -> {
-                                    binding?.fNid?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fNid?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fNid?.tvError?.visibility = View.VISIBLE
+                                    binding?.fNid?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "employee_type_id" -> {
-                                    binding?.fNid?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fNid?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fNid?.tvError?.visibility = View.VISIBLE
+                                    binding?.fNid?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "employment_status_id" -> {
-                                    binding?.fEmploymentStatusType?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fEmploymentStatusType?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fEmploymentStatusType?.tvError?.visibility = View.VISIBLE
+                                    binding?.fEmploymentStatusType?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                                 "has_freedom_fighter_quota" -> {
-                                    binding?.fFreedomFighterQuota?.tvError?.visibility =
-                                        View.VISIBLE
-                                    binding?.fFreedomFighterQuota?.tvError?.text =
-                                        ErrorUtils2.mainError(message)
+                                    binding?.fFreedomFighterQuota?.tvError?.visibility = View.VISIBLE
+                                    binding?.fFreedomFighterQuota?.tvError?.text = ErrorUtils2.mainError(message)
                                 }
                             }
                         }
@@ -1130,15 +1147,11 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
         val profilePic: MultipartBody.Part?
         if (imageFile != null) {
 
-            val requestFile: RequestBody =
-                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), imageFile)
-            profilePic =
-                MultipartBody.Part.createFormData("filenames[]", "${imageFile.name}", requestFile)
+            val requestFile: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), imageFile)
+            profilePic = MultipartBody.Part.createFormData("filenames[]", imageFile.name, requestFile)
 
-            val profile_photo: RequestBody =
-                RequestBody.create("text/plain".toMediaTypeOrNull(), "profilto")
-            val employeeInfoEditCreateRepo =
-                ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)[EmployeeInfoEditCreateViewModel::class.java]
+            val profile_photo: RequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "profilto")
+            val employeeInfoEditCreateRepo = ViewModelProviders.of(EmployeeInfoActivity.context!!, viewModelProviderFactory)[EmployeeInfoEditCreateViewModel::class.java]
             employeeInfoEditCreateRepo.uploadProfilePic(profilePic, imageFile.name, profile_photo)
                 ?.observe(
                     EmployeeInfoActivity.context!!,
@@ -1156,14 +1169,6 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
         }
     }
 
-//    fun imagePath(imageFile: File, bitmap: Bitmap) {
-//        this.imageFile = imageFile
-//        binding?.ivEmployee?.setImageBitmap(bitmap)
-//        //   Toast.makeText(context, "image", Toast.LENGTH_LONG).show()
-//        Log.e("image", "dialog imageFile  : " + imageFile)
-//        this.imageFile = imageFile
-//    }
-
     private fun invisibleAllError(binding: DialogPersonalInfoEditBinding?) {
         binding?.fProfileId?.tvError?.visibility = View.GONE
         binding?.fNameEng?.tvError?.visibility = View.GONE
@@ -1175,6 +1180,7 @@ open class EditEmployeeBasicInfoDialog @Inject constructor() {
         binding?.fGender?.tvError?.visibility = View.GONE
         binding?.fDOB?.tvError?.visibility = View.GONE
         binding?.fEmail?.tvError?.visibility = View.GONE
+        binding?.temporaryRevenueType?.tvError?.visibility = View.GONE
 
         binding?.fPhone?.tvError?.visibility = View.GONE
         binding?.fUserName?.tvError?.visibility = View.GONE
