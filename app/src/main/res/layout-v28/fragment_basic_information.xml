@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.personalinfo.fragment.BasicInformationFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/llJobjoningInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:neumorph_shadowColorLight="#D5D5D5"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hBasicInformation"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fEmployeeId"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNameEng"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNameBangla"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDOB"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fGender"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fMaritalStatus"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fReligion"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fBloodGroup"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fPresentBasicSalary"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPresentGrossSalary"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNid"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fTIN"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fPunchId"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fFatherNameEng"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fFatherNameBangla"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fMotherNameEng"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fMotherNameBangla"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fEmail"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fUserName"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPhone"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fHomeDistrict"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fEmployeeType"
+                                layout="@layout/personel_information_view_field" />
+
+
+
+                            <include
+                                android:id="@+id/fEmployeeRole"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fEmployeeJobJoiningDate"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fPRLDate"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fPension_date"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fJobType"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEmployeePermanentConfirmDate"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fEmployeePermanentDocument"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
+                            <include
+                                android:id="@+id/fTemporaryRevenueType"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fTemporaryRevenueTransferDate"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fTemporaryRevenueTransferDoc"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
+                            <include
+                                android:id="@+id/fRegularizationDate"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fRegularizationDateDoc"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+                            <include
+                                android:id="@+id/fEmployeeStatusType"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fEmployeeStatusDate"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEmployeeFreedomFighterquota"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEmployeeFreedomFighterAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+                            <include
+                                android:id="@+id/fDisability"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fDisabilityAttachment"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+                            <include
+                                android:id="@+id/fDisabilityType"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDisabilityDegree"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fDisabledPersonId"
+                                layout="@layout/personel_information_view_field" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvImageTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_weight="1"
+                                    android:text="Photo"
+                                    android:textColor="@color/light_black"
+                                    android:textSize="@dimen/text_size_small"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=":"
+                                    android:visibility="gone" />
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="@dimen/_110sdp"
+                                    android:layout_height="@dimen/_110sdp"
+                                    android:elevation="5dp"
+                                    android:outlineSpotShadowColor="@color/gray"
+                                    android:padding="5dp"
+                                    app:cardCornerRadius="10dp">
+
+                                    <ImageView
+                                        android:id="@+id/ivEmployee"
+                                        android:layout_width="@dimen/_100sdp"
+                                        android:layout_height="@dimen/_100sdp"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="10dp"
+                                        android:src="@drawable/ic_baseline_image_24" />
+
+                                </androidx.cardview.widget.CardView>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+
+            <soup.neumorphism.NeumorphFloatingActionButton
+                android:id="@+id/fab"
+                style="@style/Widget.Neumorph.FloatingActionButton"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="24dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_baseline_add_24"
+                android:tint="@color/white"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:neumorph_backgroundColor="@color/green"
+                app:neumorph_shadowColorDark="@color/gray"
+                app:neumorph_shadowColorLight="@color/off_white"
+                app:neumorph_shadowElevation="@dimen/_3sdp"
+                app:neumorph_shapeType="flat" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/llJobjoningInfo1"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <soup.neumorphism.NeumorphCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:outlineSpotShadowColor="@color/off_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:neumorph_shadowColorLight="#D5D5D5"
+                    app:neumorph_shadowElevation="4dp"
+                    app:neumorph_strokeColor="@color/off_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/hBasicInformation1"
+                            layout="@layout/personal_information_header_field" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/off_white"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/personal_information_body_padding_horizontal"
+                            android:paddingVertical="@dimen/personal_information_body_padding_vertical">
+
+                            <include
+                                android:id="@+id/fEmployeeId1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNameEng1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNameBangla1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDOB1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fGender1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fMaritalStatus1"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fReligion1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fBloodGroup1"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fPresentBasicSalary1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPresentGrossSalary1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fNid1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fTIN1"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fPunchId1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fFatherNameEng1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fFatherNameBangla1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fMotherNameEng1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fMotherNameBangla1"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fEmail1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fUserName1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPhone1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fHomeDistrict1"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fEmployeeType1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEmployeeRole1"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fEmployeeJobJoiningDate1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fPRLDate1"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fPension_date1"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fJobType1"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fEmployeePermanentConfirmDate1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fEmployeePermanentDocument1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+                            <include
+                                android:id="@+id/fTemporaryRevenueType1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fTemporaryRevenueTransferDate1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fTemporaryRevenueTransferDoc1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
+                            <include
+                                android:id="@+id/fRegularizationDate1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field" />
+                            <include
+                                android:id="@+id/fRegularizationDateDoc1"
+                                android:visibility="gone"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+                            <include
+                                android:id="@+id/fEmployeeStatusType1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEmployeeStatusDate1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEmployeeFreedomFighterquota1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fEmployeeFreedomFighterAttachment1"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+                            <include
+                                android:id="@+id/fDisability1"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fDisabilityAttachment1"
+                                layout="@layout/personel_information_view_field_with_icon" />
+
+
+                            <include
+                                android:id="@+id/fDisabilityType1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <include
+                                android:id="@+id/fDisabilityDegree1"
+                                layout="@layout/personel_information_view_field" />
+
+
+                            <include
+                                android:id="@+id/fDisabledPersonId1"
+                                layout="@layout/personel_information_view_field" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvImageTitle1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_weight="1"
+                                    android:text="Photo"
+                                    android:textColor="@color/light_black"
+                                    android:textSize="@dimen/text_size_small"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=":"
+                                    android:visibility="gone" />
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="@dimen/_110sdp"
+                                    android:layout_height="@dimen/_110sdp"
+                                    android:elevation="5dp"
+                                    android:outlineSpotShadowColor="@color/gray"
+                                    android:padding="5dp"
+                                    app:cardCornerRadius="10dp">
+
+                                    <ImageView
+                                        android:id="@+id/ivEmployee1"
+                                        android:layout_width="@dimen/_100sdp"
+                                        android:layout_height="@dimen/_100sdp"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="10dp"
+                                        android:src="@drawable/ic_baseline_image_24" />
+
+                                </androidx.cardview.widget.CardView>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+
+<!--            <soup.neumorphism.NeumorphFloatingActionButton-->
+<!--                android:id="@+id/fab"-->
+<!--                style="@style/Widget.Neumorph.FloatingActionButton"-->
+<!--                android:layout_width="88dp"-->
+<!--                android:layout_height="88dp"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:layout_margin="24dp"-->
+<!--                android:scaleType="centerInside"-->
+<!--                android:src="@drawable/ic_baseline_add_24"-->
+<!--                android:tint="@color/white"-->
+<!--                android:visibility="gone"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:neumorph_backgroundColor="@color/green"-->
+<!--                app:neumorph_shadowColorDark="@color/gray"-->
+<!--                app:neumorph_shadowColorLight="@color/off_white"-->
+<!--                app:neumorph_shadowElevation="@dimen/_3sdp"-->
+<!--                app:neumorph_shapeType="flat" />-->
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

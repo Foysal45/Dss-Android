@@ -54,7 +54,7 @@ class SplashScreen : BaseActivity() {
             //checking for play store update
             try {
                 loadData()
-                checkForUpdates()
+               // checkForUpdates()
             }catch (ex : Exception){
                 Toast.makeText(applicationContext , "Error : ${ex.localizedMessage}" , Toast.LENGTH_LONG).show()
             }
